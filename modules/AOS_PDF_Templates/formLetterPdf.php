@@ -38,7 +38,9 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
+use SuiteCRM\PDF\Exceptions\PDFException;
+use SuiteCRM\PDF\PDFWrapper;
+
 require_once('modules/AOS_PDF_Templates/templateParser.php');
 require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates.php');
 
@@ -77,13 +79,44 @@ if (!$template) {
 
 $file_name = str_replace(" ", "_", $template->name) . ".pdf";
 
-$format = $template->page_size . ($template->orientation === 'Landscape' ? '-L' : '');
-
-$pdf = new mPDF('en', $format, '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
+try {
+    $pdf = PDFWrapper::getPDFEngine();
+    $pdf->configurePDF([
+        'mode' => 'en',
+        'page_size' => $template->page_size,
+        'font' => 'DejaVuSansCondensed',
+        'mgl' => $template->margin_left,
+        'mgr' => $template->margin_right,
+        'mgt' => $template->margin_top,
+        'mgb' => $template->margin_bottom,
+        'mgh' => $template->margin_header,
+        'mgf' => $template->margin_footer,
+        'orientation' => $template->orientation
+    ]);
+} catch (PDFException $e) {
+    LoggerManager::getLogger()->warn('PDFException: ' . $e->getMessage());
+}
 
 foreach ($recordIds as $recordId) {
     $bean->retrieve($recordId);
-    $pdf_history = new mPDF('en', $format, '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
+
+    try {
+        $pdfHistory = PDFWrapper::getPDFEngine();
+        $pdfHistory->configurePDF([
+            'mode' => 'en',
+            'page_size' => $template->page_size,
+            'font' => 'DejaVuSansCondensed',
+            'mgl' => $template->margin_left,
+            'mgr' => $template->margin_right,
+            'mgt' => $template->margin_top,
+            'mgb' => $template->margin_bottom,
+            'mgh' => $template->margin_header,
+            'mgf' => $template->margin_footer,
+            'orientation' => $template->orientation
+        ]);
+    } catch (PDFException $e) {
+        LoggerManager::getLogger()->warn('PDFException: ' . $e->getMessage());
+    }
 
     $object_arr = array();
     $object_arr[$bean->module_dir] = $bean->id;
@@ -92,7 +125,8 @@ foreach ($recordIds as $recordId) {
         $object_arr['Accounts'] = $bean->account_id;
     }
 
-    $search = array('@<script[^>]*?>.*?</script>@si',        // Strip out javascript
+    $search = array(
+        '@<script[^>]*?>.*?</script>@si',        // Strip out javascript
         '@<[\/\!]*?[^<>]*?>@si',        // Strip out HTML tags
         '@([\r\n])[\s]+@',            // Strip out white space
         '@&(quot|#34);@i',            // Replace HTML entities
@@ -104,7 +138,8 @@ foreach ($recordIds as $recordId) {
         '@<address[^>]*?>@si'
     );
 
-    $replace = array('',
+    $replace = array(
+        '',
         '',
         '\1',
         '"',
@@ -133,7 +168,6 @@ foreach ($recordIds as $recordId) {
 
     $printable = str_replace("\n", "<br />", $converted);
 
-    ob_clean();
     try {
         $note = BeanFactory::newBean('Notes');
         $note->modified_user_id = $current_user->id;
@@ -153,22 +187,20 @@ foreach ($recordIds as $recordId) {
         $fp = fopen($sugar_config['upload_dir'] . 'nfile.pdf', 'wb');
         fclose($fp);
 
-        $pdf_history->SetAutoFont();
-        $pdf_history->SetHTMLHeader($header);
-        $pdf_history->SetHTMLFooter($footer);
-        $pdf_history->WriteHTML($printable);
-        $pdf_history->Output($sugar_config['upload_dir'] . 'nfile.pdf', 'F');
+        $pdfHistory->writeHeader($header);
+        $pdfHistory->writeFooter($footer);
+        $pdfHistory->writeHTML($printable);
+        $pdfHistory->outputPDF($sugar_config['upload_dir'] . 'nfile.pdf', 'F');
 
-        $pdf->SetHTMLHeader($header);
-        $pdf->AddPage();
-        $pdf->setAutoFont();
-        $pdf->SetHTMLFooter($footer);
+        $pdf->writeHeader($header);
+        $pdf->writeBlankPage();
+        $pdf->writeFooter($footer);
         $pdf->writeHTML($printable);
 
         rename($sugar_config['upload_dir'] . 'nfile.pdf', $sugar_config['upload_dir'] . $note->id);
-    } catch (mPDF_exception $e) {
-        echo $e;
+    } catch (PDFException $e) {
+        LoggerManager::getLogger()->warn('PDFException: ' . $e->getMessage());
     }
 }
 
-$pdf->Output($file_name, "D");
+$pdf->outputPDF($file_name, 'D');
