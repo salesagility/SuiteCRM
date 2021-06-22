@@ -8484,8 +8484,7 @@ public $aliasNbPgHex;
             header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
             header('Content-Type: application/force-download');
             header('Content-Type: application/octet-stream', false);
-            header('Content-Type: application/download', false);
-            header('Content-Type: application/pdf', false);
+            header('Content-Type: application/pdf');
             if (!isset($_SERVER['HTTP_ACCEPT_ENCODING']) or empty($_SERVER['HTTP_ACCEPT_ENCODING'])) {
                 // don't use length if server using compression
                 header('Content-Length: '.strlen($this->buffer));
