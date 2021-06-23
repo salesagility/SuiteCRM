@@ -5204,14 +5204,11 @@ class InboundEmail extends SugarBean
                 $this->getImap()->setFlagFull($msgNo, '\\DELETED');
             }
         }
-        // for display - don't touch server files?
-        //imap_setflag_full($this->conn, $msgNo, '\\UNSEEN');
-
-
-        $GLOBALS['log']->debug('********************************* InboundEmail finished import of 1 email: ' . $email->name);
         ////	END DEAL WITH THE MAILBOX
         ///////////////////////////////////////////////////////////////////////
-
+        
+        $GLOBALS['log']->debug('********************************* InboundEmail finished import of 1 email: ' . $email->name);
+        
         ///////////////////////////////////////////////////////////////////////
         ////	TO SUPPORT EMAIL 2.0
         $this->email = $email;
