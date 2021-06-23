@@ -598,12 +598,16 @@ class EmailsController extends SugarController
                 // import all in folder
                 $importedEmailsId = $inboundEmail->importAllFromFolder();
                 foreach ($importedEmailsId as $importedEmailId) {
-                    $this->bean = $this->setAfterImport($importedEmailId, $_REQUEST);
+                    if ($importedEmailId !== false) {
+                        $this->setAfterImport($importedEmailId, $_REQUEST);
+                    }
                 }
             } else {
                 foreach ($_REQUEST['uid'] as $uid) {
                     $importedEmailId = $inboundEmail->returnImportedEmail($_REQUEST['msgno'], $uid);
-                    $this->bean = $this->setAfterImport($importedEmailId, $_REQUEST);
+                    if ($importedEmailId !== false) {
+                        $this->setAfterImport($importedEmailId, $_REQUEST);
+                    }
                 }
             }
         } else {
@@ -897,6 +901,9 @@ class EmailsController extends SugarController
     protected function setAfterImport($importedEmailId, $request)
     {
         $emails = BeanFactory::getBean("Emails", $importedEmailId);
+        
+        if (empty($emails->fetched_row))
+            throw new SugarException('No email was found to setAfterImport');
 
         foreach ($request as $requestKey => $requestValue) {
             if (strpos($requestKey, 'SET_AFTER_IMPORT_') !== false) {
