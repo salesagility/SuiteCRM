@@ -555,16 +555,17 @@ class EmailsController extends SugarController
             $inboundEmail->connectMailserver();
             $importedEmailId = $inboundEmail->returnImportedEmail($_REQUEST['msgno'], $_REQUEST['uid']);
 
-            // Set the fields which have been posted in the request
-            $this->bean = $this->setAfterImport($importedEmailId, $_REQUEST);
-
             if ($importedEmailId !== false) {
+                // Set the fields which have been posted in the request
+                $this->bean = $this->setAfterImport($importedEmailId, $_REQUEST);
+                
                 header('location:index.php?module=Emails&action=DetailView&record=' . $importedEmailId);
+                return;
             }
-        } else {
-            // When something fail redirect user to index
-            header('location:index.php?module=Emails&action=index');
         }
+            
+        // When something fail redirect user to index
+        header('location:index.php?module=Emails&action=index');
     }
 
     /**
