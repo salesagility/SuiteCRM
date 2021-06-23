@@ -4701,7 +4701,7 @@ class InboundEmail extends SugarBean
         } // if
         $this->compoundMessageId = md5($this->compoundMessageId);
 
-        $query = 'SELECT count(emails.id) AS c FROM emails WHERE emails.message_id = \'' . $this->compoundMessageId . '\' and emails.deleted = 0';
+        $query = 'SELECT emails.id) AS c FROM emails WHERE emails.message_id = \'' . $this->compoundMessageId . '\' and emails.deleted = 0';
         $results = $this->db->query($query, true);
         $row = $this->db->fetchByAssoc($results);
 
@@ -5492,14 +5492,11 @@ class InboundEmail extends SugarBean
                 $this->getImap()->setFlagFull($msgNo, '\\DELETED');
             }
         }
-        // for display - don't touch server files?
-        //imap_setflag_full($this->conn, $msgNo, '\\UNSEEN');
-
-
-        $GLOBALS['log']->debug('********************************* InboundEmail finished import of 1 email: ' . $email->name);
         ////	END DEAL WITH THE MAILBOX
         ///////////////////////////////////////////////////////////////////////
-
+        
+        $GLOBALS['log']->debug('********************************* InboundEmail finished import of 1 email: ' . $email->name);
+        
         ///////////////////////////////////////////////////////////////////////
         ////	TO SUPPORT EMAIL 2.0
         $this->email = $email;
