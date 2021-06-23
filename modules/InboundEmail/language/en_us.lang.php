@@ -108,6 +108,7 @@ $mod_strings = array(
     'LBL_NONE' => 'None',
     'LBL_ONLY_SINCE_NO' => 'No. Check against all emails on mail server.',
     'LBL_ONLY_SINCE_YES' => 'Yes.',
+    'LBL_ONLY_SINCE' => 'Only Check Messages Since Last Run',
     'LBL_PASSWORD' => 'Password',
     'LBL_POP3_SUCCESS' => 'Your POP3 test connection was successful.',
     'LBL_POPUP_TITLE' => 'Test Settings',
