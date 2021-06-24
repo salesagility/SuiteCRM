@@ -880,3 +880,20 @@ table #dashletPanel {
 .dashboard-title > span {
   margin-left: 0.7em;
 }
+
+.dashletcontainer {
+  .dashletPanel {
+    .bd {
+      overflow-x: auto;
+    }
+    .bd::-webkit-scrollbar-track {
+      background: $dashboard-scrollbar-bg; 
+    }      
+    .bd::-webkit-scrollbar-thumb {
+      background-color: $dashboard-scroll;   
+      border-radius: 20px; 
+    }
+  }
+}
+
+  
