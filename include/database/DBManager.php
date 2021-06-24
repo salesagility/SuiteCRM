@@ -1029,31 +1029,55 @@ abstract class DBManager
     public function compareVarDefs($fielddef1, $fielddef2, $ignoreName = false)
     {
         foreach ($fielddef1 as $key => $value) {
-            if ($key == 'name' && $ignoreName) {
+            if ($key === 'name' && $ignoreName) {
                 continue;
             }
             if (isset($fielddef2[$key])) {
-                if (!is_array($fielddef1[$key]) && !is_array($fielddef2[$key])) {
-                    if (strtolower($fielddef1[$key]) == strtolower($fielddef2[$key])) {
+                if (!is_array($value) && !is_array($fielddef2[$key])) {
+                    if (strtolower($value) == strtolower($fielddef2[$key])) {
                         continue;
                     }
                 } else {
-                    $f1 = fixIndexArrayFormat($fielddef1[$key]);
+                    $f1 = fixIndexArrayFormat($value);
                     $f2 = fixIndexArrayFormat($fielddef2[$key]);
                     if (array_map('strtolower', $f1) == array_map('strtolower', $f2)) {
                         continue;
                     }
                 }
             }
-            //Ignore len if its not set in the vardef
-            if ($key == 'len' && empty($fielddef2[$key])) {
-                continue;
-            }
-            // if the length in db is greather than the vardef, ignore it
-            if ($key == 'len' && ($fielddef1[$key] >= $fielddef2[$key])) {
-                continue;
-            }
+            if ($key === 'len') {
+                //Ignore len if its not set in the vardef
+                if (empty($fielddef2[$key])) {
+                    continue;
+                }
 
+                // Split into array with precision and scale
+                $defLength = explode(',', $fielddef2[$key]);
+                $dbLength = explode(',', $value);
+
+                // if the precision in db is greater than the vardef, ignore
+                if ($dbLength[0] > $defLength[0]) {
+                    continue;
+                }
+
+                // Set missing scales for comparison
+                if (!isset($defLength[1])) {
+                    $defLength[1] = 0;
+                }
+                if (!isset($dbLength[1])) {
+                    $dbLength[1] = 0;
+                }
+
+                //prevent increase in scale without corresponding increase in precision
+                if (($defLength[0] - $defLength[1]) < ($dbLength[0] - $dbLength[1])) {
+                    continue;
+                }
+
+                // if scales and precision combined are less than before, ignore
+                if (array_sum($defLength) < array_sum($dbLength)) {
+                    continue;
+                }
+            }
             return false;
         }
 
