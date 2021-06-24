@@ -105,7 +105,8 @@ class ApiBeanMapper
 
     /**
      * @param SugarBean $bean
-     * @return array
+     * @param array $values
+     * @return void
      */
     public function toBean(SugarBean $bean, array $values): void
     {
@@ -116,35 +117,7 @@ class ApiBeanMapper
                 continue;
             }
 
-            $type = $properties['type'] ?? '';
-
-            if ($type === 'relate' && isset($bean->field_defs[$field])) {
-                $idName = $bean->field_defs[$field]['id_name'] ?? '';
-
-                if ($idName !== $field) {
-                    $rName = $bean->field_defs[$field]['rname'] ?? '';
-                    $value = $values[$field][$rName] ?? '';
-                    $values[$field] = $value;
-                }
-            }
-
-            if (!empty($properties['isMultiSelect']) || $type === 'multienum') {
-                $multiSelectValue = $values[$field];
-                if (!is_array($values[$field])) {
-                    $multiSelectValue = [];
-                }
-                $values[$field] = encodeMultienumValue($multiSelectValue);
-            }
-
-            $fieldMapper = $this->getFieldMapper($bean->module_name, $field);
-            if (null !== $fieldMapper) {
-                $fieldMapper->toBean($bean, $values, $field);
-            }
-
-            $typeMapper = $this->getTypeMappers($bean->module_name, $type);
-            if (null !== $typeMapper) {
-                $typeMapper->toBean($bean, $values, $field, $field);
-            }
+            $this->toBeanMap($bean, $values, $properties, $field);
 
             $bean->$field = $values[$field];
         }
@@ -153,6 +126,24 @@ class ApiBeanMapper
             if (!empty($values[$field])) {
                 $bean->$field = $values[$field];
             }
+        }
+    }
+
+    /**
+     * @param SugarBean $bean
+     * @param array $values
+     * @return void
+     */
+    public function toBeanAttributes(SugarBean $bean, array &$values): void
+    {
+        require_once __DIR__ . '/../../../include/SugarFields/SugarFieldHandler.php';
+
+        foreach ($bean->field_defs as $field => $properties) {
+            if (!isset($values[$field])) {
+                continue;
+            }
+
+            $this->toBeanMap($bean, $values, $properties, $field);
         }
     }
 
@@ -354,5 +345,52 @@ class ApiBeanMapper
         }
 
         return $this->typeMappers[$type] ?? null;
+    }
+
+    /**
+     * @param SugarBean $bean
+     * @param array $values
+     * @param $properties
+     * @param $field
+     */
+    protected function toBeanMap(SugarBean $bean, array &$values, $properties, $field): void
+    {
+        $type = $properties['type'] ?? '';
+
+        if ($type === 'relate' && isset($bean->field_defs[$field])) {
+            $idName = $bean->field_defs[$field]['id_name'] ?? '';
+
+            if ($idName !== $field) {
+
+                $idValue = $values[$field]['id'] ?? '';
+                if (empty($values[$idName]) && !empty($idValue)) {
+                    $values[$idName] = $idValue;
+                }
+
+                $rName = $bean->field_defs[$field]['rname'] ?? '';
+                $value = $values[$field][$rName] ?? '';
+                $values[$field] = $value;
+
+
+            }
+        }
+
+        if (!empty($properties['isMultiSelect']) || $type === 'multienum') {
+            $multiSelectValue = $values[$field];
+            if (!is_array($values[$field])) {
+                $multiSelectValue = [];
+            }
+            $values[$field] = encodeMultienumValue($multiSelectValue);
+        }
+
+        $fieldMapper = $this->getFieldMapper($bean->module_name, $field);
+        if (null !== $fieldMapper) {
+            $fieldMapper->toBean($bean, $values, $field);
+        }
+
+        $typeMapper = $this->getTypeMappers($bean->module_name, $type);
+        if (null !== $typeMapper) {
+            $typeMapper->toBean($bean, $values, $field, $field);
+        }
     }
 }
