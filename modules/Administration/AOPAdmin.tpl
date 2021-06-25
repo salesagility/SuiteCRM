@@ -45,7 +45,7 @@
 
     <table width="100%" cellpadding="0" cellspacing="0" border="0" class="actionsContainer">
         <tr>
-            <td>
+            <td class="action-button">
                 {$BUTTONS}
                  </td>
         </tr>
@@ -85,32 +85,30 @@
     </script>
 
     <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-        <tr><th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_AOP_JOOMLA_SETTINGS}</h4></th>
+        <tr>
+            <th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_AOP_JOOMLA_SETTINGS}</h4></th>
         </tr>
         <tr>
-            <td  scope="row" width="200">{$MOD.LBL_AOP_ENABLE_AOP}: </td>
-            <td  >
+            <td  scope="row" width="15%">{$MOD.LBL_AOP_ENABLE_AOP}: </td>
+            <td>
                 <input type='checkbox' id='enable_aop' name='enable_aop' {if $config.enable_aop}checked='checked'{/if} >
             </td>
-
         </tr>
         <tr id="enable_portal_row">
-            <td  scope="row" width="200">{$MOD.LBL_AOP_ENABLE_PORTAL}: </td>
-            <td  >
+            <td scope="row" width="15%">{$MOD.LBL_AOP_ENABLE_PORTAL}: </td>
+            <td>
                 <input type='checkbox' id='enable_portal' name='enable_portal' {if $config.enable_portal}checked='checked'{/if} >
             </td>
-
         </tr>
         <tr id='joomla_url_row'>
-            <td  scope="row" width="200">{$MOD.LBL_AOP_JOOMLA_URL}: </td>
-            <td  >
+            <td scope="row" width="200">{$MOD.LBL_AOP_JOOMLA_URL}: </td>
+            <td>
                 <input type='text' name='joomla_url' value='{$config.joomla_url}' >
             </td>
-
         </tr>
         <!--<tr>
-            <td  scope="row" width="200">{$MOD.LBL_AOP_JOOMLA_ACCESS_KEY}: </td>
-            <td  >
+            <td scope="row" width="200">{$MOD.LBL_AOP_JOOMLA_ACCESS_KEY}: </td>
+            <td>
                 <input type='text' size='20' name='joomla_access_key' value='{$config.joomla_access_key}' >
             </td>
         </tr>-->
@@ -120,8 +118,8 @@
         <tr><th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_AOP_CASE_ASSIGNMENT}</h4></th>
         </tr>
         <tr>
-            <td  scope="row" width="200">{$MOD.LBL_AOP_DISTRIBUTION_METHOD}: </td>
-            <td  >
+            <td scope="row" width="200">{$MOD.LBL_AOP_DISTRIBUTION_METHOD}: </td>
+            <td>
                 <select id='distribution_method_select' name='distribution_method' tabindex='241'>{$DISTRIBUTION_METHOD}</select>
             </td>
         </tr>
@@ -130,11 +128,11 @@
             <td>{$DISTRIBUTION_OPTIONS}</td>
         </tr>
         <tr id="distribution_user_row">
-            <td  scope="row" width="200">{$MOD.LBL_AOP_ASSIGNMENT_USER}: </td>
-            <td  >
+            <td scope="row" width="200" style="padding-bottom:1em;">{$MOD.LBL_AOP_ASSIGNMENT_USER}: </td>
+            <td>
                 <input type="text" name="distribution_user_name" class="sqsEnabled" tabindex="0" id="distribution_user_name" size="" value="{$distribution_user_name}" title='' autocomplete="off"  	 >
                 <input type="hidden" name="distribution_user_id" id="distribution_user_id" value="{$config.distribution_user_id}">
-<span class="id-ff multiple">
+<span class="id-ff multiple selectcrossbtn">
 <button type="button" name="btn_distribution_user_name" id="btn_distribution_user_name" tabindex="0" title="Select User" class="button firstChild" value="Select User"
         {literal}
         onclick='open_popup(
@@ -149,8 +147,16 @@
                 true
                 );' >
     {/literal}
-    <span class="suitepicon suitepicon-action-select"></span></button><button type="button" name="btn_clr_distribution_user_name" id="btn_clr_distribution_user_name" tabindex="0" title="Clear User"  class="button lastChild"
-                                                                                                onclick="SUGAR.clearRelateField(this.form, 'distribution_user_name', 'distribution_user_id');"  value="Clear User" ><span class="suitepicon suitepicon-action-clear"></span></button>
+    <span>
+        {sugar_getimage name="cursor"}
+    </span>
+    </button>
+    <button type="button" name="btn_clr_distribution_user_name" id="btn_clr_distribution_user_name" tabindex="0" title="Clear User"  class="button lastChild"
+                                                                                                onclick="SUGAR.clearRelateField(this.form, 'distribution_user_name', 'distribution_user_id');"  value="Clear User" >
+        <span>
+            {sugar_getimage name="cross"}
+        </span>
+    </button>
 </span>
                 <script type="text/javascript">
                     {literal}
@@ -178,29 +184,30 @@
     </table>
     <table id='case_status_settings' width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
         <tr>
-            <th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_AOP_CASE_STATUS_SETTINGS}</h4></th>
+            <th align="left" scope="row" colspan="6"><h4>{$MOD.LBL_AOP_CASE_STATUS_SETTINGS}</h4></th>
         </tr>
         {$currentStatuses}
         <tr><td><button type='button' id="addStatusButton">{$MOD.LBL_AOP_ADD_STATUS}</button></td></tr>
     </table>
     <table id='email_settings' width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-        <tr><th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_AOP_EMAIL_SETTINGS}</h4></th>
+        <tr>
+            <th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_AOP_EMAIL_SETTINGS}</h4></th>
         </tr>
         <tr>
-            <td  scope="row" width="200">{$MOD.LBL_SUPPORT_FROM_ADDRESS}: </td>
-            <td  >
+            <td scope="row" width="20%">{$MOD.LBL_SUPPORT_FROM_ADDRESS}: </td>
+            <td>
                 <input type="text" name="support_from_address" id="support_from_address" value="{$config.support_from_address}">
             </td>
         </tr>
         <tr>
-            <td  scope="row" width="200">{$MOD.LBL_SUPPORT_FROM_NAME}: </td>
-            <td  >
+            <td scope="row" width="200">{$MOD.LBL_SUPPORT_FROM_NAME}: </td>
+            <td>
                 <input type="text" name="support_from_name" id="support_from_name" value="{$config.support_from_name}">
             </td>
         </tr>
         <tr id="user_email_template_row">
-            <td  scope="row" width="200">{$MOD.LBL_AOP_USER_EMAIL_TEMPLATE}: </td>
-            <td  >
+            <td scope="row" width="200">{$MOD.LBL_AOP_USER_EMAIL_TEMPLATE}: </td>
+            <td>
                 <select id='user_email_template_id_select' name='user_email_template_id' onchange='show_edit_template_link(this);'>{$USER_EMAIL_TEMPLATES}</select>
 
                 <a href='javascript:open_email_template_form("user_email_template_id")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
@@ -210,8 +217,8 @@
         </tr>
 
         <tr id="contact_email_template_row">
-            <td  scope="row" width="200">{$MOD.LBL_AOP_CONTACT_EMAIL_TEMPLATE}: </td>
-            <td  >
+            <td scope="row" width="200">{$MOD.LBL_AOP_CONTACT_EMAIL_TEMPLATE}: </td>
+            <td>
                 <select id='contact_email_template_id_select' name='contact_email_template_id' onchange='show_edit_template_link(this);'>{$CONTACT_EMAIL_TEMPLATES}</select>
 
                 <a href='javascript:open_email_template_form("contact_email_template_id")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
@@ -220,8 +227,8 @@
             </td>
         </tr>
         <tr id="case_creation_email_template_row">
-            <td  scope="row" width="200">{$MOD.LBL_AOP_CASE_CREATION_EMAIL_TEMPLATE}: </td>
-            <td  >
+            <td scope="row" width="200">{$MOD.LBL_AOP_CASE_CREATION_EMAIL_TEMPLATE}: </td>
+            <td>
                 <select id='case_creation_email_template_id_select' name='case_creation_email_template_id' onchange='show_edit_template_link(this);'>{$CREATION_EMAIL_TEMPLATES}</select>
 
                 <a href='javascript:open_email_template_form("case_creation_email_template_id")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
@@ -232,8 +239,8 @@
 
 
         <tr id="case_closure_email_template_row">
-            <td  scope="row" width="200">{$MOD.LBL_AOP_CASE_CLOSURE_EMAIL_TEMPLATE}: </td>
-            <td  >
+            <td scope="row" width="200">{$MOD.LBL_AOP_CASE_CLOSURE_EMAIL_TEMPLATE}: </td>
+            <td>
                 <select id='case_closure_email_template_id_select' name='case_closure_email_template_id' onchange='show_edit_template_link(this);'>{$CLOSURE_EMAIL_TEMPLATES}</select>
 
                 <a href='javascript:open_email_template_form("case_closure_email_template_id")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
@@ -243,8 +250,8 @@
         </tr>
 
         <tr id="joomla_account_creation_email_template_row">
-            <td  scope="row" width="200">{$MOD.LBL_AOP_JOOMLA_ACCOUNT_CREATION_EMAIL_TEMPLATE}: </td>
-            <td  >
+            <td scope="row" width="200">{$MOD.LBL_AOP_JOOMLA_ACCOUNT_CREATION_EMAIL_TEMPLATE}: </td>
+            <td>
                 <select id='joomla_account_creation_email_template_id_select' name='joomla_account_creation_email_template_id' onchange='show_edit_template_link(this);'>{$JOOMLA_EMAIL_TEMPLATES}</select>
 
                 <a href='javascript:open_email_template_form("joomla_account_creation_email_template_id")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
@@ -255,7 +262,7 @@
 
     </table>
 
-    <div style="padding-top: 2px;">
+    <div class="hide-btn">
         {$BUTTONS}
     </div>
     {$JAVASCRIPT}

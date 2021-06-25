@@ -56,6 +56,8 @@ if (!is_admin($current_user)) {
 
 require_once('modules/Configurator/Configurator.php');
 
+echo '<div class="aop-settings">';
+
 echo getClassicModuleTitle(
     "Administration",
     array(
@@ -199,6 +201,7 @@ $sugar_smarty->display('modules/Administration/AOPAdmin.tpl');
 $javascript = new javascript();
 $javascript->setFormName('ConfigureSettings');
 echo $javascript->getScript();
+echo '</div>';
 ?>
     <script type="text/template" id="statusRowTemplate">
         <?= getStatusRowTemplate($mod_strings, $statusDropdown, $statusDropdown) ?>
