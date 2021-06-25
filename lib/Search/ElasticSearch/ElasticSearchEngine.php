@@ -48,6 +48,7 @@ use SuiteCRM\Exception\InvalidArgumentException;
 use SuiteCRM\Search\SearchEngine;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Search\SearchResults;
+use SuiteCRM\Search\SearchWrapper;
 
 /**
  * SearchEngine that use Elasticsearch index for performing almost real-time search.
@@ -56,8 +57,6 @@ class ElasticSearchEngine extends SearchEngine
 {
     /** @var Client */
     private $client;
-    /** @var string */
-    private $index = 'main';
 
     /**
      * ElasticSearchEngine constructor.
@@ -66,12 +65,7 @@ class ElasticSearchEngine extends SearchEngine
      */
     public function __construct(Client $client = null)
     {
-        global $sugar_config;
         $this->client = $client ?? ElasticSearchClientBuilder::getClient();
-
-        if (!empty($sugar_config['search']['ElasticSearch']['index'])) {
-            $this->index = $sugar_config['search']['ElasticSearch']['index'];
-        }
     }
 
     /**
@@ -88,7 +82,7 @@ class ElasticSearchEngine extends SearchEngine
         $end = microtime(true);
         $searchTime = ($end - $start);
 
-        return new SearchResults($results, true, $searchTime, $hits['hits']['total']);
+        return new SearchResults($results, true, $searchTime, $hits['hits']['total']['value']);
     }
 
     /**
@@ -110,6 +104,8 @@ class ElasticSearchEngine extends SearchEngine
     private function createSearchParams(SearchQuery $query): array
     {
         $searchStr = $query->getSearchString();
+        $searchModules = SearchWrapper::getModules();
+        $indexes = implode(',', array_map('strtolower', $searchModules));
 
         // Wildcard character required for Elasticsearch
         $wildcardBe = "*";
@@ -134,7 +130,7 @@ class ElasticSearchEngine extends SearchEngine
         }
 
         return [
-            'index' => $this->index,
+            'index' => $indexes,
             'body' => [
                 'stored_fields' => [],
                 'from' => $query->getFrom(),
@@ -176,28 +172,22 @@ class ElasticSearchEngine extends SearchEngine
     {
         $hitsArray = $hits['hits']['hits'];
 
-        $results = [];
+        $initialResults = [];
 
         foreach ($hitsArray as $hit) {
-            $results[$hit['_type']][] = $hit['_id'];
+            $recordModule = $hit['_index'];
+            $initialResults[$recordModule][] = $hit['_id'];
         }
 
-        return $results;
-    }
+        $searchResults = [];
 
-    /**
-     * @return string
-     */
-    public function getIndex(): string
-    {
-        return $this->index;
-    }
+        foreach ($initialResults as $index => $hit) {
+            $params = ['index' => $index];
+            $meta = $this->client->indices()->getMapping($params);
+            $moduleName = $meta[$index]['mappings']['_meta']['module_name'];
+            $searchResults[$moduleName] = $hit;
+        }
 
-    /**
-     * @param string $index
-     */
-    public function setIndex(string $index): void
-    {
-        $this->index = $index;
+        return $searchResults;
     }
 }
