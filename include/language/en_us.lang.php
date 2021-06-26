@@ -3870,3 +3870,5 @@ $app_strings['LBL_ADD_RECORDS_TO_TARGET_LIST_SUCCESS'] = 'Records added to targe
 $app_strings['LBL_ADD_RECORDS_TO_TARGET_LIST_FAILED'] = 'There was an error adding records to target list.';
 $app_strings['LBL_ADD_CONTACTS_TO_TARGET_LIST_SUCCESS'] = 'Contacts added to target list successfully.';
 $app_strings['LBL_ADD_CONTACTS_TO_TARGET_LIST_FAILED'] = 'There was an error adding contacts to target list.';
+$app_strings['LBL_CHANGED_TO_TEXT'] = 'changed to';
+$app_strings['LBL_RECORD_CHANGED'] = 'Record Updated';
