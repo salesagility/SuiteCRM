@@ -58,7 +58,8 @@ class SubpanelDataPort
         int $limit = -1,
         string $orderBy = '',
         string $sortOrder = ''
-    ): array {
+    ): array
+    {
 
         /* @noinspection PhpIncludeInspection */
         require_once 'include/SubPanel/SubPanelDefinitions.php';
@@ -122,6 +123,55 @@ class SubpanelDataPort
                 "sortOrder" => $sortOrder
             ]
         ];
+    }
+
+    /**
+     * @param SugarBean $bean
+     * @param string $subpanel
+     * @param int $offset
+     * @param int $limit
+     * @param string $orderBy
+     * @param string $sortOrder
+     * @param array $selectColumns
+     * @return array|null
+     * @noinspection NullPointerExceptionInspection
+     */
+    public function fetchFinalQuery(
+        SugarBean $bean,
+        string $subpanel = '',
+        int $offset = -1,
+        int $limit = -1,
+        string $orderBy = '',
+        string $sortOrder = '',
+        array $selectColumns = []
+    ): ?array
+    {
+
+        /* @noinspection PhpIncludeInspection */
+        require_once 'include/SubPanel/SubPanelDefinitions.php';
+
+        $spd = new SubPanelDefinitions($bean);
+        $aSubPanelObject = $spd->load_subpanel($subpanel);
+
+        try {
+            $response = SugarBean::get_union_related_list_query_params(
+                $bean,
+                $orderBy,
+                $sortOrder,
+                '',
+                $offset,
+                -1,
+                $limit,
+                0,
+                $aSubPanelObject,
+                $selectColumns
+            );
+            return $response;
+        } catch (Exception $ex) {
+            LoggerManager::getLogger()->fatal('[' . __METHOD__ . "] . {$ex->getMessage()}");
+
+            return null;
+        }
     }
 
 }
