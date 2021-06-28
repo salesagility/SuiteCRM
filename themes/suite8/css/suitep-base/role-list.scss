@@ -1,0 +1,13 @@
+.role-list {
+    position: relative;
+    .moduleTitle {
+        border-bottom: 1px solid lightgrey;
+    }
+    select {
+        background: url($select-edit-background-url) no-repeat right;
+        background-size: 25px 11px;
+        border-color: $bright-grey;
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+}
