@@ -19,7 +19,8 @@
       "php": "5.5.9"
     },
     "optimize-autoloader": true,
-    "sort-packages": true
+    "sort-packages": true,
+    "preferred-install": "dist"
   },
   "require": {
     "php": ">=5.5.9",
@@ -38,6 +39,7 @@
     "league/oauth2-server": "^5.1",
     "league/uri": "^4.2",
     "onelogin/php-saml": "3.4.1",
+    "oomphinc/composer-installers-extender": "^1.1",
     "paragonie/random_compat": "^2.0",
     "phpmailer/phpmailer": "^6.4",
     "psr/container": "^1.0",
@@ -49,6 +51,7 @@
     "symfony/validator": "^3.4",
     "tinymce/tinymce": "^4.9.11",
     "tuupola/slim-jwt-auth": "^2.0",
+    "vakata/jstree": "^3.3",
     "vlucas/phpdotenv": "^3.5",
     "voku/anti-xss": "^2.3",
     "wikimedia/composer-merge-plugin": "^1.4",
@@ -70,7 +73,17 @@
     "phpunit/phpunit": "^4.8",
     "symfony/yaml": "^3.4"
   },
-  "scripts": {},
+  "replace": {
+    "components/jquery": "*"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "SuiteCRM\\Utility\\ComposerEvent::cleanPackages"
+    ],
+    "post-update-cmd": [
+      "SuiteCRM\\Utility\\ComposerEvent::cleanPackages"
+    ]
+  },
   "prefer-stable": true,
   "autoload": {
     "files": [
@@ -92,18 +105,26 @@
     ]
   },
   "extra": {
-      "merge-plugin": {
-          "include": [
-              "composer.ext.json",
-              "custom/Extension/application/Ext/Composer/*/*.json"
-          ],
-          "recurse": true,
-          "replace": false,
-          "ignore-duplicates": false,
-          "merge-dev": true,
-          "merge-extra": false,
-          "merge-extra-deep": false,
-          "merge-scripts": false
-      }
+    "merge-plugin": {
+      "include": [
+        "composer.ext.json",
+        "custom/Extension/application/Ext/Composer/*/*.json"
+      ],
+      "recurse": true,
+      "replace": false,
+      "ignore-duplicates": false,
+      "merge-dev": true,
+      "merge-extra": false,
+      "merge-extra-deep": false,
+      "merge-scripts": false
+    },
+    "installer-types": [
+      "component"
+    ],
+    "installer-paths": {
+      "include/javascript/{$name}/": [
+        "vendor:vakata"
+      ]
+    }
   }
 }
