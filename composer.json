@@ -51,6 +51,7 @@
     "symfony/validator": "^3.4",
     "tinymce/tinymce": "^4.9.11",
     "tuupola/slim-jwt-auth": "^2.0",
+    "vakata/jstree": "^3.3",
     "vlucas/phpdotenv": "^3.5",
     "voku/anti-xss": "^2.3",
     "wikimedia/composer-merge-plugin": "^1.4",
@@ -71,6 +72,9 @@
     "mockery/mockery": "^0.9.9",
     "phpunit/phpunit": "^4.8",
     "symfony/yaml": "^3.4"
+  },
+  "replace": {
+    "components/jquery": "*"
   },
   "scripts": {
     "post-install-cmd": [
@@ -114,9 +118,13 @@
       "merge-extra-deep": false,
       "merge-scripts": false
     },
-    "installer-types": ["component"],
+    "installer-types": [
+      "component"
+    ],
     "installer-paths": {
-      "include/javascript/{$name}/": ["type:component"]
+      "include/javascript/{$name}/": [
+        "vendor:vakata"
+      ]
     }
   }
 }
