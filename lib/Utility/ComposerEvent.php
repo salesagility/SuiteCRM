@@ -46,26 +46,79 @@ namespace SuiteCRM\Utility;
 use Composer\Script\Event;
 
 /**
- * * Class ComposerEvent
+ * Class ComposerEvent
  * @package SuiteCRM\Utility
  */
 class ComposerEvent
 {
     /**
-     * @param Event $event
-     * @noinspection PhpUndefinedMethodInspection
+     * @var string[]
      */
-    public static function cleanPackages(Event $event)
-    {
-        // wet get ALL installed packages
-        $packages = $event->getComposer()->getRepositoryManager()->getLocalRepository()->getPackages();
-        $installationManager = $event->getComposer()->getInstallationManager();
+    private static $jstree = [
+        '.github',
+        'demo',
+        'src',
+        'test',
+        '.gitignore',
+        'bower.json',
+        'component.json',
+        'composer.json',
+        'gruntfile.js',
+        'jstree.jquery.json',
+        'LICENSE-MIT',
+        'package.json',
+        'README.md',
+    ];
 
-        foreach ($packages as $package) {
-            $installPath = $installationManager->getInstallPath($package);
-            //do my process here
+    /** @noinspection PhpUnused */
+    public static function cleanPackages(): void
+    {
+        $componentPath = __DIR__ . '/../../include/javascript/';
+        $jstreePath = $componentPath . 'jstree/';
+
+        self::deleteFiles(self::$jstree, $jstreePath);
+    }
+
+    /**
+     * @param array $fileArray
+     * @param string $directoryPath
+     */
+    private static function deleteFiles(array $fileArray, string $directoryPath): void
+    {
+        foreach ($fileArray as $file) {
+            $filePath = $directoryPath . $file;
+            if (is_file($filePath)) {
+                unlink($filePath);
+            } elseif (is_dir($filePath)) {
+                self::deleteDirectory($filePath);
+            }
+        }
+    }
+
+    /**
+     * @param string $dir
+     * @return bool
+     */
+    private static function deleteDirectory(string $dir): bool
+    {
+        if (!file_exists($dir)) {
+            return true;
         }
 
-        unlink(__DIR__ . '/../../suitecrm.log');
+        if (!is_dir($dir)) {
+            return unlink($dir);
+        }
+
+        foreach (scandir($dir, SCANDIR_SORT_NONE) as $item) {
+            if ($item === '.' || $item === '..') {
+                continue;
+            }
+
+            if (!self::deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
+                return false;
+            }
+        }
+
+        return rmdir($dir);
     }
 }
