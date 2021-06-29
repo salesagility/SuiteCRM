@@ -62,7 +62,6 @@
     "tinymce/tinymce": "^4.9.11",
     "tedivm/jshrink": "^1.3",
     "tuupola/slim-jwt-auth": "^2.0",
-    "vakata/jstree": "^3.3",
     "vlucas/phpdotenv": "^3.5",
     "voku/anti-xss": "^2.3",
     "wikimedia/composer-merge-plugin": "^2.0",
@@ -126,7 +125,11 @@
   "scripts": {
     "post-install-cmd": [
       "rm -Rf vendor/elasticsearch/elasticsearch/tests/Elasticsearch/Tests",
-      "Google\\Task\\Composer::cleanup"
+      "Google\\Task\\Composer::cleanup",
+      "SuiteCRM\\Utility\\ComposerEvent::cleanPackages"
+    ],
+    "post-update-cmd": [
+      "SuiteCRM\\Utility\\ComposerEvent::cleanPackages"
     ]
   },
   "extra": {
