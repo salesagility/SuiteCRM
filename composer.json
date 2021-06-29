@@ -51,7 +51,6 @@
     "symfony/validator": "^3.4",
     "tinymce/tinymce": "^4.9.11",
     "tuupola/slim-jwt-auth": "^2.0",
-    "vakata/jstree": "^3.3",
     "vlucas/phpdotenv": "^3.5",
     "voku/anti-xss": "^2.3",
     "wikimedia/composer-merge-plugin": "^1.4",
@@ -73,7 +72,14 @@
     "phpunit/phpunit": "^4.8",
     "symfony/yaml": "^3.4"
   },
-  "scripts": {},
+  "scripts": {
+    "post-install-cmd": [
+      "SuiteCRM\\Utility\\ComposerEvent::cleanPackages"
+    ],
+    "post-update-cmd": [
+      "SuiteCRM\\Utility\\ComposerEvent::cleanPackages"
+    ]
+  },
   "prefer-stable": true,
   "autoload": {
     "files": [
