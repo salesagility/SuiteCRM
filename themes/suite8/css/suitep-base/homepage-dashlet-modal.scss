@@ -1,0 +1,108 @@
+// Add Dashlet code
+
+.modal-add-dashlet, .modal-add-dashboard {
+   .modal-header {
+       padding: 1em;
+   }
+   input[type=text],input[type=password],input[type=email],input[type=number]{
+    background-color: $transparent-color;
+    border: 1px solid $form-border-color;       
+    }
+    .button {
+        background-color: $nepal-grey;
+        border-radius: 0.2em;
+        font-weight: bold;
+        height: 2.2em;
+        line-height: 1em;
+        letter-spacing: 0.05em;
+        padding: 0.3em 1em;
+        text-transform: capitalize;
+        &:hover {
+            background: $pale-blue;
+        }
+    }  
+    input[type=button] {
+        background-color: $nepal-grey;
+        border-radius: 0.2em;
+        font-weight: bold;
+        height: 2.2em;
+        line-height: 1em;
+        letter-spacing: 0.05em;
+        padding: 0.3em 1em;
+        text-transform: capitalize;
+        vertical-align: unset !important;
+    } 
+    ::-webkit-scrollbar-track {
+        background: $dashboard-scrollbar-bg; 
+    }
+    ::-webkit-scrollbar-thumb {
+        background: $dashboard-scrollbar-bg; 
+    }  
+    select {
+        background: url($select-edit-background-url) no-repeat right;
+        background-size: 25px 11px;
+        border-color: $bright-grey;
+        margin-top: 1em;
+    }
+}
+
+// Add Tab Code
+
+.modal-add-dashboard {
+    .modal-body  {
+        table tr {
+            vertical-align: baseline;
+        }
+    }
+    .modal-footer {
+        .btn {
+            background-color: $nepal-grey;
+            border-radius: 0.2em;
+            font-weight: bold;
+            height: 2.2em;
+            line-height: 1em;
+            letter-spacing: 0.05em;
+            padding: 0.3em 1em;
+            text-transform: capitalize;
+            border: none;
+            margin: 0 0.2em;
+        }
+    }
+}
+
+//Edit Tab Code
+
+.modal-edit-dashboard {
+    .modal-header {
+        padding: 1em;
+    }
+    .modal-body {
+        .panel {
+            margin-top: 1em;
+            .panel-heading {
+                height: 3.5rem;
+                .edit-dashboard-tabs {
+                    position: relative;
+                    top: 0.5em;
+                    display: flex;
+                    align-items: center;
+                    left: 0.4em;
+                    .suitepicon-mimetype-tab {
+                        margin-right: 0.4em;
+                    }
+                    .panel-title {
+                        .btn-danger {
+                            background: lightslategrey;
+                            border: 1px solid $white;
+                            .suitepicon-action-minus {
+                                font-size: 13px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
