@@ -1167,6 +1167,13 @@
           }
         }, 300);
 
+        var descriptionElem = document.querySelector('#ComposeView #description');
+        descriptionElem.className = "mceEditor";
+
+        opts.tinyMceOptions["editor_selector"] = "mceEditor";
+        opts.tinyMceOptions["mode"] = "specific_textareas";
+        delete opts.tinyMceOptions["selector"];
+
         tinymce.init(opts.tinyMceOptions);
 
       }
