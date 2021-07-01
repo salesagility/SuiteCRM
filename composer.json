@@ -23,9 +23,7 @@
     },
     "optimize-autoloader": true,
     "sort-packages": true,
-    "preferred-install": {
-      "elasticsearch/elasticsearch": "dist"
-    }
+    "preferred-install": "dist"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -45,9 +43,11 @@
     "gymadarasz/ace": "^1.2",
     "gymadarasz/imagesloaded": "^4.1",
     "justinrainbow/json-schema": "^5.2",
+    "lcobucci/jwt": "3.3.3",
     "league/oauth2-server": "^5.1",
     "league/uri": "^4.2.3",
     "monolog/monolog": "^1.23",
+    "neclimdul/composer-installers-extender": "^2.0",
     "nesbot/carbon": "^2.0.0",
     "onelogin/php-saml": "3.4.1",
     "paragonie/random_compat": "^2.0",
@@ -60,9 +60,10 @@
     "symfony/options-resolver": "^3.4",
     "symfony/validator": "^3.4",
     "symfony/yaml": "^5.2",
-    "tinymce/tinymce": "^4.9.11",
     "tedivm/jshrink": "^1.3",
+    "tinymce/tinymce": "^4.9.11",
     "tuupola/slim-jwt-auth": "^2.0",
+    "vakata/jstree": "^3.3",
     "vlucas/phpdotenv": "^3.5",
     "voku/anti-xss": "^2.3",
     "wikimedia/composer-merge-plugin": "^2.0",
@@ -71,8 +72,7 @@
     "zf1/zend-loader": "^1.12",
     "zf1/zend-oauth": "^1.12",
     "zf1/zend-registry": "^1.12",
-    "zf1/zend-search-lucene": "^1.12",
-    "lcobucci/jwt": "3.3.3"
+    "zf1/zend-search-lucene": "^1.12"
   },
   "require-dev": {
     "browserstack/browserstack-local": "^1.1",
@@ -123,10 +123,16 @@
       ]
     }
   },
+  "replace": {
+    "components/jquery": "*"
+  },
   "scripts": {
     "post-install-cmd": [
-      "rm -Rf vendor/elasticsearch/elasticsearch/tests/Elasticsearch/Tests",
-      "Google\\Task\\Composer::cleanup"
+      "Google\\Task\\Composer::cleanup",
+      "SuiteCRM\\Utility\\ComposerEvent::cleanPackages"
+    ],
+    "post-update-cmd": [
+      "SuiteCRM\\Utility\\ComposerEvent::cleanPackages"
     ]
   },
   "extra": {
@@ -141,10 +147,16 @@
       "merge-dev": true,
       "merge-extra": false,
       "merge-extra-deep": false,
-      "merge-scripts": false,
-      "google/apiclient-services": [
-        "Calendar"
-      ]
+      "merge-scripts": false
+    },
+    "google/apiclient-services": [
+      "Calendar"
+    ],
+    "installer-types": [
+      "component"
+    ],
+    "installer-paths": {
+      "include/javascript/{$name}/": ["vendor:vakata"]
     }
   }
 }
