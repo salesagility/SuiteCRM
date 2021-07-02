@@ -64,7 +64,7 @@
     "flow/jsonpath": "^0.4",
     "fzaninotto/faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",
-    "leafo/scssphp": "^0.7.7",
+    "leafo/scssphp": "^0.8.4",
     "mikey179/vfsstream": "1.6.*",
     "mockery/mockery": "^0.9.9",
     "phpunit/phpunit": "^4.8",
