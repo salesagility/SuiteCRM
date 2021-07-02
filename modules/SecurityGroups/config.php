@@ -8,7 +8,7 @@ require_once('XTemplate/xtpl.php');
 require_once('modules/Administration/Administration.php');
 require_once('modules/SecurityGroups/Forms.php');
 require_once('modules/SecurityGroups/SecurityGroup.php');
-
+echo '<div class="security-suite-settings">';
 global $mod_strings;
 global $app_list_strings;
 global $app_strings;
@@ -163,3 +163,5 @@ $xtpl->assign("MODULE_OPTIONS", get_select_options_with_id($security_modules, "A
 $xtpl->parse("main");
 
 $xtpl->out("main");
+
+echo '</div>';
