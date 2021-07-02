@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2020 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -1008,20 +1008,6 @@ function clean($string, $maxLength)
     $string = substr($string, 0, $maxLength);
 
     return escapeshellcmd($string);
-}
-
-/**
- * @param $string
- * @return string
- */
-function cleanCSV($string)
-{
-    $check = '/^[=@]/';
-    if (!is_numeric($string)) {
-        $check = '/^[=@+-]/';
-    }
-
-    return preg_replace($check, "", $string);
 }
 
 /**

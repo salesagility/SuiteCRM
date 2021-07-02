@@ -748,7 +748,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         SugarBean::createRelationshipMeta('User', null, null, array(), 'Contacts');
-        self::assertCount(6, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(8, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
@@ -763,7 +763,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         SugarBean::createRelationshipMeta('User', null, null, array(), 'Contacts');
-        self::assertCount(6, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(8, $GLOBALS['log']->calls['fatal']);
     }
 
     /**

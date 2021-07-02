@@ -38,58 +38,69 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+namespace SuiteCRM;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$dictionary['users_password_link'] = [
-    'table' => 'users_password_link',
-    'fields' => [
-        'id' => [
-            'name' => 'id',
-            'vname' => 'LBL_ID',
-            'type' => 'id',
-            'required' => true,
-        ],
-        'user_id' => [
-            'name' => 'user_id',
-            'vname' => 'LBL_USER_ID',
-            'type' => 'varchar',
-            'len' => 36,
-        ],
-        'username' => [
-            'name' => 'username',
-            'vname' => 'LBL_USERNAME',
-            'type' => 'varchar',
-            'len' => 36,
-        ],
-        'date_generated' => [
-            'name' => 'date_generated',
-            'vname' => 'LBL_DATE_ENTERED',
-            'type' => 'datetime',
-        ],
-        'deleted' => [
-            'name' => 'deleted',
-            'vname' => 'LBL_DELETED',
-            'type' => 'bool',
-            'required' => false,
-            'reportable' => false,
-        ],
-    ],
-    'indices' => [
-        [
-            'name' => 'users_password_link_pk',
-            'type' => 'primary',
-            'fields' => [
-                'id'
-            ]
-        ],
-        [
-            'name' => 'idx_username',
-            'type' => 'index',
-            'fields' => [
-                'username'
-            ]
-        ]
-    ],
-];
+/**
+ * Class CleanCSV
+ * @package SuiteCRM
+ */
+class CleanCSV
+{
+    /**
+     * @var string
+     */
+    protected $escapeChar;
+
+    /**
+     * @var array|string[]
+     */
+    protected $startingChars;
+
+    /**
+     * CleanCSV constructor.
+     * @param string $escapeChar character to escape each CSV field.
+     * @param array|string[] $startingChars starting characters to be escaped.
+     */
+    public function __construct($escapeChar = "'", array $startingChars = ['=', '-', '+', '@'])
+    {
+        $this->escapeChar = $escapeChar;
+        $this->startingChars = $startingChars;
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public function getStartingChars()
+    {
+        return $this->startingChars;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEscapeChar()
+    {
+        return $this->escapeChar;
+    }
+
+    /**
+     * @param string $cell
+     * @return string
+     */
+    public function escapeField($cell)
+    {
+        if (!is_string($cell)) {
+            return $cell;
+        }
+
+        if (in_array($cell[0], $this->startingChars, true)) {
+            return $this->escapeChar . $cell;
+        }
+
+        return $cell;
+    }
+}
