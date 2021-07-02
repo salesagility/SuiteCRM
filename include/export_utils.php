@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,6 +37,8 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+use SuiteCRM\CleanCSV;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -314,7 +316,8 @@ function export($type, $records = null, $members = false, $sample=false)
                 }
 
                 // Keep as $key => $value for post-processing
-                $new_arr[$key] = preg_replace("/\"/", "\"\"", cleanCSV($value));
+                $cleanCSV = new CleanCSV();
+                $new_arr[$key] = preg_replace("/\"/", "\"\"", $cleanCSV->escapeField($value));
             }
 
             // Use Bean ID as key for records

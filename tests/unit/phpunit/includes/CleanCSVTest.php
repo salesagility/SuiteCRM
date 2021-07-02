@@ -42,54 +42,44 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$dictionary['users_password_link'] = [
-    'table' => 'users_password_link',
-    'fields' => [
-        'id' => [
-            'name' => 'id',
-            'vname' => 'LBL_ID',
-            'type' => 'id',
-            'required' => true,
-        ],
-        'user_id' => [
-            'name' => 'user_id',
-            'vname' => 'LBL_USER_ID',
-            'type' => 'varchar',
-            'len' => 36,
-        ],
-        'username' => [
-            'name' => 'username',
-            'vname' => 'LBL_USERNAME',
-            'type' => 'varchar',
-            'len' => 36,
-        ],
-        'date_generated' => [
-            'name' => 'date_generated',
-            'vname' => 'LBL_DATE_ENTERED',
-            'type' => 'datetime',
-        ],
-        'deleted' => [
-            'name' => 'deleted',
-            'vname' => 'LBL_DELETED',
-            'type' => 'bool',
-            'required' => false,
-            'reportable' => false,
-        ],
-    ],
-    'indices' => [
-        [
-            'name' => 'users_password_link_pk',
-            'type' => 'primary',
-            'fields' => [
-                'id'
-            ]
-        ],
-        [
-            'name' => 'idx_username',
-            'type' => 'index',
-            'fields' => [
-                'username'
-            ]
-        ]
-    ],
-];
+use SuiteCRM\CleanCSV;
+use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
+
+/**
+ * Class CleanCSVTest
+ * @covers \SuiteCRM\CleanCSV
+ */
+class CleanCSVTest extends SuitePHPUnitFrameworkTestCase
+{
+    /**
+     * @var CleanCSV
+     */
+    protected $cleanCSV;
+
+    /**
+     * @throws \SuiteCRM\Exception\Exception
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->cleanCSV = new CleanCSV();
+    }
+
+    public function testGetEscapeChar()
+    {
+        $this->assertEquals("'", $this->cleanCSV->getEscapeChar());
+    }
+
+    public function testGetStartingChars()
+    {
+        $this->assertEquals(['=', '-', '+', '@'], $this->cleanCSV->getStartingChars());
+    }
+
+    public function testEscapeField()
+    {
+        $field = '==HYPERLINK';
+        $expected = "'==HYPERLINK";
+        $this->assertEquals($expected, $this->cleanCSV->escapeField($field));
+    }
+}
