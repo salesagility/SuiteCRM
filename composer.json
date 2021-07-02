@@ -22,10 +22,7 @@
       "php": "7.3.0"
     },
     "optimize-autoloader": true,
-    "sort-packages": true,
-    "preferred-install": {
-      "elasticsearch/elasticsearch": "dist"
-    }
+    "sort-packages": true
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -38,7 +35,7 @@
     "ext-openssl": "*",
     "ext-zip": "*",
     "consolidation/robo": "^3.0",
-    "elasticsearch/elasticsearch": "^5.3",
+    "elasticsearch/elasticsearch": "^7.13",
     "ezyang/htmlpurifier": "^4.10",
     "google/apiclient": "^2.0",
     "google/recaptcha": "^1.1",
@@ -125,7 +122,6 @@
   },
   "scripts": {
     "post-install-cmd": [
-      "rm -Rf vendor/elasticsearch/elasticsearch/tests/Elasticsearch/Tests",
       "Google\\Task\\Composer::cleanup"
     ]
   },

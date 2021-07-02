@@ -161,9 +161,11 @@ abstract class AbstractIndexer
     /**
      * Deletes all the records from the index.
      *
+     * @param string $index
+     *
      * @return void
      */
-    abstract public function removeIndex();
+    abstract public function removeIndex(string $index);
 
     /**
      * Returns whether the next indexing should be performed differentially or not.
