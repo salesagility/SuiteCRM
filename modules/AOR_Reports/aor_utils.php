@@ -53,7 +53,7 @@ function getDisplayForField($modulePath, $field, $reportModule)
     global $app_list_strings;
     $modulePathDisplay = array();
     $currentBean = BeanFactory::getBean($reportModule);
-    $modulePathDisplay[] = $currentBean->module_name;
+    $modulePathDisplay[$currentBean->module_name] = $currentBean->module_name;
     if (is_array($modulePath)) {
         $split = $modulePath;
     } else {
@@ -76,19 +76,24 @@ function getDisplayForField($modulePath, $field, $reportModule)
         $currentBean = BeanFactory::getBean($thisModule);
 
         if (!empty($moduleLabel)) {
-            $modulePathDisplay[] = $moduleLabel;
+            $modulePathDisplay[$currentBean->module_name] = $moduleLabel;
         } else {
-            $modulePathDisplay[] = $currentBean->module_name;
+            $modulePathDisplay[$currentBean->module_name] = $currentBean->module_name;
         }
     }
     $fieldType = $currentBean->field_name_map[$field]['type'];
     $fieldDisplay = $currentBean->field_name_map[$field]['vname'];
     $fieldDisplay = translate($fieldDisplay, $currentBean->module_dir);
     $fieldDisplay = trim($fieldDisplay, ':');
-    foreach ($modulePathDisplay as &$module) {
-        $module = isset($app_list_strings['aor_moduleList'][$module]) ? $app_list_strings['aor_moduleList'][$module] : (
-            isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module
-        );
+    foreach ($modulePathDisplay as $moduleName => &$moduleDisplay) {
+        if ($moduleName === $moduleDisplay && isset($app_list_strings['aor_moduleList'][$moduleDisplay])) {
+            $moduleDisplay = $app_list_strings['aor_moduleList'][$moduleDisplay];
+            continue;
+        }
+
+        if ($moduleName === $moduleDisplay && isset($app_list_strings['moduleList'][$moduleDisplay])) {
+            $moduleDisplay = $app_list_strings['moduleList'][$moduleDisplay];
+        }
     }
     return array('field' => $fieldDisplay, 'type'=>$fieldType, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
 }
