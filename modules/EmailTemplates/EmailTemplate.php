@@ -760,6 +760,11 @@ class EmailTemplate extends SugarBean
         }
 
         foreach ($repl_arr as $name => $value) {
+            if (is_numeric($value)) {
+                $value = (string) $value;
+            }
+
+
             if ($value != '' && is_string($value)) {
                 $string = str_replace("\$$name", $value, $string);
             } else {
