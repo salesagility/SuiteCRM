@@ -1008,12 +1008,18 @@ class TimeDate
      */
     public function to_display_date_time($date, $meridiem = true, $convert_tz = true, $user = null)
     {
+        $timeZone = $convert_tz ? $this->_getUserTZ($user) : self::$gmtTimezone;
+
+        $fromFormat = SugarDateTime::createFromFormat(self::DB_DATETIME_FORMAT . '.u', $date, $timeZone)
+            ? self::DB_DATETIME_FORMAT . '.u'
+            : self::DB_DATETIME_FORMAT;
+
         return $this->_convert(
             $date,
-            self::DB_DATETIME_FORMAT,
+            $fromFormat,
             self::$gmtTimezone,
             $this->get_date_time_format($user),
-            $convert_tz ? $this->_getUserTZ($user) : self::$gmtTimezone,
+            $timeZone,
             true
         );
     }
