@@ -1378,9 +1378,9 @@
     "tinyMceOptions": {
       skin_url: "themes/default/css",
       skin: "",
-      plugins: "fullscreen",
+      plugins: "fullscreen textcolor",
       menubar: false,
-      toolbar: ['fontselect | fontsizeselect | bold italic underline | styleselect'],
+      toolbar: ['fontselect | fontsizeselect | bold italic underline forecolor backcolor | styleselect'],
       formats: {
         bold: {inline: 'b'},
         italic: {inline: 'i'},
