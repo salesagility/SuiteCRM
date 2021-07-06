@@ -362,6 +362,10 @@ function saveField($field, $id, $module, $value)
         }
 
         if (($bean->ACLAccess("edit") || is_admin($current_user)) && $enabled) {
+            $bean->in_workflow=true;
+            if ($field == 'email1') {
+                $bean->email1_set_in_workflow=true;
+            }
             if (!$bean->save($check_notify)) {
                 $GLOBALS['log']->fatal("Saving probably failed or bean->save() method did not return with a positive result.");
             }
