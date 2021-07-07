@@ -6015,30 +6015,42 @@ class InboundEmail extends SugarBean
      */
     public function getCaseIdFromCaseNumber($emailName, $aCase)
     {
-        //$emailSubjectMacro
-        $exMacro = explode('%1', $aCase->getEmailSubjectMacro());
-        $open = $exMacro[0];
-        $close = $exMacro[1];
+        $macro = $aCase->getEmailSubjectMacro();
+        $match_id = null;
 
-        if ($sub = stristr($emailName, $open)) {
-            // eliminate everything up to the beginning of the macro and return the rest
-            // $sub is [CASE:XX] xxxxxxxxxxxxxxxxxxxxxx
-            $sub2 = str_replace($open, '', $sub);
-            // $sub2 is XX] xxxxxxxxxxxxxx
-            $sub3 = substr($sub2, 0, strpos($sub2, $close));
-
-            // case number is supposed to be numeric
-            if (ctype_digit($sub3)) {
-                // filter out deleted records in order to create a new case
-                // if email is related to deleted one (bug #49840)
-                $query = 'SELECT id FROM cases WHERE case_number = '
-                    . $this->db->quoted($sub3)
-                    . ' and deleted = 0';
-                $results = $this->db->query($query, true);
-                $row = $this->db->fetchByAssoc($results);
-                if (!empty($row['id'])) {
-                    return $row['id'];
+        if ($macro[0] === '/' && substr($macro, -1) === '/') {
+            if (preg_match($macro, $emailName, $matches)) {
+                if (array_key_exists('id', $matches)) {
+                    $match_id = $matches['id'];
+                } else {
+                    $match_id = $matches[1];
                 }
+            }
+        } else {
+            $exMacro = explode('%1', $macro);
+            $open = $exMacro[0];
+            $close = $exMacro[1];
+
+            if ($sub = stristr($emailName, $open)) {
+                // eliminate everything up to the beginning of the macro and return the rest
+                // $sub is [CASE:XX] xxxxxxxxxxxxxxxxxxxxxx
+                $sub2 = str_replace($open, '', $sub);
+                // $sub2 is XX] xxxxxxxxxxxxxx
+                $match_id = substr($sub2, 0, strpos($sub2, $close));
+            }
+        }
+
+        // case number is supposed to be numeric
+        if (!is_null($match_id) && ctype_digit($match_id)) {
+            // filter out deleted records in order to create a new case
+            // if email is related to deleted one (bug #49840)
+            $query = 'SELECT id FROM cases WHERE case_number = '
+                . $this->db->quoted($match_id)
+                . ' and deleted = 0';
+            $results = $this->db->query($query, true);
+            $row = $this->db->fetchByAssoc($results);
+            if (!empty($row['id'])) {
+                return $row['id'];
             }
         }
 
