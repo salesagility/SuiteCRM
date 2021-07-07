@@ -705,8 +705,5 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         $saved = $parentFolderOne->setFolder($fields);
 
         $this->assertTrue($saved);
-
-        $parentFolderOne->new_with_id = true;
-        $parentFolderOne->save();
     }
 }
