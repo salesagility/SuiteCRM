@@ -737,7 +737,10 @@ class EmailsDataAddressCollector
             $id,
             $name,
             $mailUser,
-            $defaultEmailSignature
+            [
+                'html' => utf8_encode(html_entity_decode($defaultEmailSignature['signature_html'])),
+                'plain' => $defaultEmailSignature['plain'],
+            ]
         );
     }
 
