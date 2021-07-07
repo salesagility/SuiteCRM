@@ -585,6 +585,9 @@ if ($_SESSION['demoData'] != 'no') {
     installerHook('post_installDemoData');
 }
 
+if ($_SESSION['customData'] === 'yes') {
+    include "install/populateCustomSeedData.php";
+}
 /////////////////////////////////////////////////////////////
 //// Store information by installConfig.php form
 
