@@ -491,7 +491,6 @@ class SugarEmailAddress extends SugarBean
         return $return;
     }
 
-
     /**
      * Check for User Profile EditView / Save action for
      * Email Addresses updates
@@ -501,7 +500,7 @@ class SugarEmailAddress extends SugarBean
      * @param array $request $_REQUEST
      * @return bool
      */
-    protected function isUserProfileEditViewPageSaveAction($request)
+    public function isUserProfileEditViewPageSaveAction($request)
     {
         $return =
             (isset($request['page']) && $request['page'] == 'EditView') &&
