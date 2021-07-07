@@ -59,7 +59,7 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit
                     $sample_options_array[$fileArray] = $value;
                 }
             }
-            $samples = get_select_options($sample_options_array, '');
+            $samples = get_select_options_with_id($sample_options_array, '');
             closedir($handle);
         }
 

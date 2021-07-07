@@ -114,7 +114,7 @@ class SubpanelMetaDataParser extends ListLayoutMetaDataParser
                 );
                 $labelParser::addLabels(
                     $selected_lang,
-                    array($_REQUEST['subpanel_title_key'] => remove_xss(from_html($_REQUEST['subpanel_title']))),
+                    array($_REQUEST['subpanel_title_key'] => SugarCleaner::cleanHtml(from_html($_REQUEST['subpanel_title']), false)),
                     $_REQUEST['view_module']
                 );
             }

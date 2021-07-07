@@ -523,8 +523,8 @@ class TemplateField
                     $help = htmlspecialchars_decode($this->$vardef, ENT_QUOTES);
 
                     // Fix for issue #1170 - text in studio can't accept the special language characters.
-                    //$this->$vardef = htmlentities(remove_xss($help));
-                    $this->$vardef = htmlspecialchars(remove_xss($help));
+                    //$this->$vardef = htmlentities(SugarCleaner::cleanHtml($help, false));
+                    $this->$vardef = htmlspecialchars(SugarCleaner::cleanHtml($help, false));
                 }
 
 
