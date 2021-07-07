@@ -229,7 +229,7 @@ class SugarFeed extends Basic
             }
             $d = dir($baseDir);
             while ($module = $d->read()) {
-                if (file_exists($baseDir.$module.'/SugarFeeds/')) {
+                if (is_dir($baseDir.$module) && file_exists($baseDir.$module.'/SugarFeeds/')) {
                     $dFeed = dir($baseDir.$module.'/SugarFeeds/');
                     while ($file = $dFeed->read()) {
                         if ($file[0] == '.') {
