@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once('include/Pear/Crypt_Blowfish/Blowfish.php');
+use phpseclib\Crypt\Blowfish;
 
 function sugarEncode($key, $data)
 {
@@ -51,8 +51,7 @@ function sugarEncode($key, $data)
 
 function sugarDecode($key, $encoded)
 {
-    $data = base64_decode($encoded);
-    return $data;
+    return base64_decode($encoded);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -87,6 +86,25 @@ function blowfishGetKey($type)
 }
 
 /**
+ * @param $key
+ * @return mixed|Blowfish
+ */
+function blowfishInit($key)
+{
+    static $seclib = [];
+
+    if (isset($seclib[$key])) {
+        return $seclib[$key];
+    }
+
+    $cipher = new Blowfish(Blowfish::MODE_ECB);
+    $cipher->setKey($key);
+    $cipher->disablePadding();
+
+    return $seclib[$key] = $cipher;
+}
+
+/**
  * Uses blowfish to encrypt data and base 64 encodes it. It stores the iv as part of the data
  * @param STRING key - key to base encoding off of
  * @param STRING data - string to be encrypted and encoded
@@ -94,9 +112,16 @@ function blowfishGetKey($type)
  */
 function blowfishEncode($key, $data)
 {
-    $bf = new Crypt_Blowfish($key);
-    $encrypted = $bf->encrypt($data);
-    return base64_encode($encrypted);
+    $cipher = blowfishInit($key);
+
+    // Required to match Crypt_Blowfish padding to blocksise with NUL char
+    $data_pad = str_pad(
+        $data,
+        strlen($data) + ($cipher->block_size - strlen($data) % $cipher->block_size) % $cipher->block_size,
+        chr(0)
+    );
+
+    return base64_encode($cipher->encrypt($data_pad));
 }
 
 /**
@@ -107,7 +132,8 @@ function blowfishEncode($key, $data)
  */
 function blowfishDecode($key, $encoded)
 {
-    $data = base64_decode($encoded);
-    $bf = new Crypt_Blowfish($key);
-    return trim($bf->decrypt($data));
+    $cipher = blowfishInit($key);
+
+    return trim($cipher->decrypt(base64_decode($encoded)));
+
 }
