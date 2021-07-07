@@ -228,7 +228,7 @@ function getConditionsAsParameters($report, $override = array())
  */
 function getPeriodDate($date_time_period_list_selected)
 {
-    global $sugar_config;
+    global $sugar_config, $timedate;
     $datetime_period = new DateTime();
 
     // Setup when year quarters start & end
@@ -323,6 +323,8 @@ function getPeriodDate($date_time_period_list_selected)
     }
     // set time to 00:00:00
     $datetime_period = $datetime_period->setTime(0, 0, 0);
+    
+    $datetime_period = $timedate->tzGMT($datetime_period);
 
     return $datetime_period;
 }
@@ -334,49 +336,51 @@ function getPeriodDate($date_time_period_list_selected)
  */
 function getPeriodEndDate($dateTimePeriodListSelected)
 {
+    global $timedate;
+    
     switch ($dateTimePeriodListSelected) {
         case 'today':
             $datetimePeriod = new DateTime();
             break;
         case 'yesterday':
             $datetimePeriod = new DateTime("yesterday");
-            $datetimePeriod->setTime(23, 59, 59);
+            setMaxTime($datetimePeriod);
             break;
         case 'this_week':
-            $datetimePeriod = new DateTime("next week monday");
-            $datetimePeriod->setTime(0, 0, 0);
+            $datetimePeriod = new DateTime("this week sunday");
+            setMaxTime($datetimePeriod);
             break;
         case 'last_week':
-            $datetimePeriod = new DateTime("this week monday");
-            $datetimePeriod->setTime(0, 0, 0);
+            $datetimePeriod = new DateTime("last week sunday");
+            setMaxTime($datetimePeriod);
             break;
         case 'this_month':
-            $datetimePeriod = new DateTime('first day of next month');
-            $datetimePeriod->setTime(0, 0, 0);
+            $datetimePeriod = new DateTime('last day of this month');
+            setMaxTime($datetimePeriod);
             break;
         case 'last_month':
-            $datetimePeriod = new DateTime("first day of this month");
-            $datetimePeriod->setTime(0, 0, 0);
+            $datetimePeriod = new DateTime("last day of last month");
+            setMaxTime($datetimePeriod);
             break;
         case 'this_quarter':
             $thisMonth = new DateTime('first day of this month');
             $thisMonth = $thisMonth->format('n');
             if ($thisMonth < 4) {
                 // quarter 1
-                $datetimePeriod = new DateTime('first day of april');
-                $datetimePeriod->setTime(0, 0, 0);
+                $datetimePeriod = new DateTime('last day of march');
+                setMaxTime($datetimePeriod);
             } elseif ($thisMonth > 3 && $thisMonth < 7) {
                 // quarter 2
-                $datetimePeriod = new DateTime('first day of july');
-                $datetimePeriod->setTime(0, 0, 0);
+                $datetimePeriod = new DateTime('last day of june');
+                setMaxTime($datetimePeriod);
             } elseif ($thisMonth > 6 && $thisMonth < 10) {
                 // quarter 3
-                $datetimePeriod = new DateTime('first day of october');
-                $datetimePeriod->setTime(0, 0, 0);
+                $datetimePeriod = new DateTime('last day of september');
+                setMaxTime($datetimePeriod);
             } elseif ($thisMonth > 9) {
                 // quarter 4
-                $datetimePeriod = new DateTime('next year first day of january');
-                $datetimePeriod->setTime(0, 0, 0);
+                $datetimePeriod = new DateTime('this year last day of december');
+                setMaxTime($datetimePeriod);
             }
             break;
         case 'last_quarter':
@@ -384,33 +388,37 @@ function getPeriodEndDate($dateTimePeriodListSelected)
             $thisMonth = $thisMonth->format('n');
             if ($thisMonth < 4) {
                 // previous quarter 1
-                $datetimePeriod = new DateTime('this year first day of january');
-                $datetimePeriod->setTime(0, 0, 0);
+                $datetimePeriod = new DateTime('last year last day of december');
+                setMaxTime($datetimePeriod);
             } elseif ($thisMonth > 3 && $thisMonth < 7) {
                 // previous quarter 2
-                $datetimePeriod = new DateTime('first day of april');
-                $datetimePeriod->setTime(0, 0, 0);
+                $datetimePeriod = new DateTime('last day of march');
+                setMaxTime($datetimePeriod);
             } elseif ($thisMonth > 6 && $thisMonth < 10) {
                 // previous quarter 3
-                $datetimePeriod = new DateTime('first day of july');
-                $datetimePeriod->setTime(0, 0, 0);
+                $datetimePeriod = new DateTime('last day of june');
+                setMaxTime($datetimePeriod);
             } elseif ($thisMonth > 9) {
                 // previous quarter 4
-                $datetimePeriod = new DateTime('first day of october');
-                $datetimePeriod->setTime(0, 0, 0);
+                $datetimePeriod = new DateTime('last day of september');
+                setMaxTime($datetimePeriod);
             }
             break;
         case 'this_year':
-            $datetimePeriod = new DateTime('next year first day of january');
-            $datetimePeriod->setTime(0, 0, 0);
+            $datetimePeriod = new DateTime('this year last day of december');
+            setMaxTime($datetimePeriod);
             break;
         case 'last_year':
-            $datetimePeriod = new DateTime("this year first day of january");
-            $datetimePeriod->setTime(0, 0, 0);
+            $datetimePeriod = new DateTime("last year last day of december");
+            setMaxTime($datetimePeriod);
             break;
+        default:
+            throw new InvalidArgumentException(
+                $dateTimePeriodListSelected . ' is not a valid date time period'
+            );
     }
-
-    return $datetimePeriod;
+    
+   return $timedate->tzGMT($datetimePeriod);
 }
 
 /**
@@ -441,21 +449,29 @@ function calculateQuarters($offsetMonths = 0)
     }
     $q1end = DateTime::createFromFormat(DATE_ISO8601, $q1start->format(DATE_ISO8601));
     $q1end->add(new DateInterval('P2M'));
+    $q1end->modify('last day of this month');
+    setMaxTime($q1end);
 
     $q2start = DateTime::createFromFormat(DATE_ISO8601, $q1start->format(DATE_ISO8601));
     $q2start->add(new DateInterval('P3M'));
     $q2end = DateTime::createFromFormat(DATE_ISO8601, $q2start->format(DATE_ISO8601));
     $q2end->add(new DateInterval('P2M'));
+    $q2end->modify('last day of this month');
+    setMaxTime($q2end);
 
     $q3start = DateTime::createFromFormat(DATE_ISO8601, $q2start->format(DATE_ISO8601));
     $q3start->add(new DateInterval('P3M'));
     $q3end = DateTime::createFromFormat(DATE_ISO8601, $q3start->format(DATE_ISO8601));
     $q3end->add(new DateInterval('P2M'));
+    $q3end->modify('last day of this month');
+    setMaxTime($q3end);
 
     $q4start = DateTime::createFromFormat(DATE_ISO8601, $q3start->format(DATE_ISO8601));
     $q4start->add(new DateInterval('P3M'));
     $q4end = DateTime::createFromFormat(DATE_ISO8601, $q4start->format(DATE_ISO8601));
     $q4end->add(new DateInterval('P2M'));
+    $q4end->modify('last day of this month');
+    setMaxTime($q4end);
 
     // Assign quarter boundaries
     $q['1']['start'] = $q1start;
@@ -556,10 +572,15 @@ function convertToDateTime($value)
             $formattedValue = substr_replace($formattedValue, $year, 0, 2);
             $formattedValue = date('Y-m-d', strtotime($formattedValue));
             break;
+        default:
+            throw new InvalidArgumentException(
+                $user_dateformat . ' is not a valid date format'
+            );
     }
 
     $formattedValue .= ' 00:00:00';
     $userTimezone = $current_user->getPreference('timezone');
+    
     $utz = new DateTimeZone($userTimezone);
     $dateTime = DateTime::createFromFormat(
         'Y-m-d H:i:s',
@@ -569,4 +590,20 @@ function convertToDateTime($value)
     $dateTime->setTimezone(new DateTimeZone('UTC'));
 
     return $dateTime;
+}
+
+function setMinTime(DateTime $dt){
+    if (PHP_VERSION_ID >= 70100) {
+        $dt->setTime(0, 0, 0, 0);
+    } else {
+        $dt->setTime(0, 0, 0);
+    }
+}
+
+function setMaxTime(DateTime $dt){
+    if (PHP_VERSION_ID >= 70100) {
+        $dt->setTime(23, 59, 59, 999999);
+    } else {
+        $dt->setTime(23, 59, 59);
+    }
 }
