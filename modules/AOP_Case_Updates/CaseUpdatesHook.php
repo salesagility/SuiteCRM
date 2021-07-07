@@ -104,7 +104,7 @@ class CaseUpdatesHook
 
             return;
         }
-        if ($_REQUEST['module'] === 'Import') {
+        if (isset($_REQUEST['module']) && $_REQUEST['module'] === 'Import') {
             return;
         }
         //Grab the update field and create a new update with it.
