@@ -1596,7 +1596,7 @@ class Email extends Basic
             }
 
             $GLOBALS['log']->debug('-------------------------------> Email called save()');
-            
+
             if (empty($this->date_sent_received)) {
                 global $timedate;
 
@@ -1617,7 +1617,7 @@ class Email extends Basic
                 $details = "Details:\n{$errors['messages']}\ncodes:{$errors['codes']}";
                 LoggerManager::getLogger()->error("Saving Email with invalid From name and/or Address. $details");
             }
-            
+
 
             if ((!isset($this->date_sent_received) || !$this->date_sent_received) && in_array($this->status, ['sent', 'replied'])) {
                 $this->date_sent_received = TimeDate::getInstance()->nowDb();
@@ -3099,17 +3099,17 @@ class Email extends Basic
         $mail->prepForOutbound();
         ////	END I18N TRANSLATION
         ///////////////////////////////////////////////////////////////////////
-        
+
         $validator = new EmailFromValidator();
         if (!$validator->isValid($this)) {
-            
+
             // if an email is invalid before sending,
             // maybe at this point sould "return false;" because the email having
             // invalid from address and/or name but we will trying to send it..
             // and we should log the problem at least:
-            
+
             // (needs EmailFromValidation and EmailFromFixer.. everywhere where from name and/or from email address get a value)
-            
+
             $errors = $validator->getErrorsAsText();
             $details = "Details:\n{$errors['messages']}\ncodes:{$errors['codes']}\n{$mail->ErrorInfo}";
             LoggerManager::getLogger()->error("Invalid email from address or name detected before sending. $details");
@@ -4670,13 +4670,20 @@ eoq;
 
         // When use is sending email after selecting forward or reply to
         // We need to generate a new id
-        if (isset($_REQUEST['refer_action']) && !empty($_REQUEST['refer_action'])) {
+        if (!empty($_REQUEST['refer_action'])) {
             $referActions = array('Forward', 'ReplyTo', 'ReplyToAll');
-            if (in_array($_REQUEST['refer_action'], $referActions)) {
+            /** @noinspection PhpRedundantOptionalArgumentInspection */
+            if (in_array($_REQUEST['refer_action'], $referActions, false)) {
                 $bean->id = create_guid();
                 $bean->new_with_id = true;
                 $bean->type = 'out';
                 $bean->status = 'draft';
+                $bean->date_entered = null;
+                $bean->date_modified = null;
+                $bean->uid = null;
+                $bean->date_start = null;
+                $bean->time_start = null;
+                $bean->last_synced = null;
             }
         }
 
@@ -4763,7 +4770,7 @@ eoq;
     private function sendOptInEmail(EmailAddress $emailAddress)
     {
         global $app_strings;
-        
+
         LoggerManager::getLogger()->deprecated(__FUNCTION__ . ' is deprecated.');
 
         $ret = false;

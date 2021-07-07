@@ -986,21 +986,27 @@
           contentType: false,   // tell jQuery not to set contentType
           url: 'index.php?module=Emails'
         }).done(function (response) {
-          $(self).trigger("discardDraftDone", [self, response]);
+          response = JSON.parse(response);
+          if (typeof response.errors !== "undefined") {
+            mb.showHeader();
+            mb.setBody(response.errors.title);
+            mb.showFooter();
+            $(self).trigger("discardDraftError", [self, response]);
+          } else {
+            $(self).trigger("discardDraftDone", [self, response]);
+            mb.remove();
+            if ($(self).find('input[type="hidden"][name="return_module"]').val() !== '') {
+              location.href = 'index.php?module=' + $('#' + self.attr('id') + ' input[type="hidden"][name="return_module"]').val() +
+                '&action=' +
+                $(self).find('input[type="hidden"][name="return_action"]').val();
+            } else {
+              // The user is viewing in the modal view
+              location.reload();
+            }
+          }
         }).error(function (response) {
           mb.setBody(SUGAR.language.translate('', 'LBL_ERROR_SAVING_DRAFT'));
           $(self).trigger("discardDraftBody", [self, response]);
-        }).always(function (response) {
-          $(self).trigger("discardDraftAlways", [self, response]);
-          mb.remove();
-          if ($(self).find('input[type="hidden"][name="return_module"]').val() !== '') {
-            location.href = 'index.php?module=' + $('#' + self.attr('id') + ' input[type="hidden"][name="return_module"]').val() +
-              '&action=' +
-              $(self).find('input[type="hidden"][name="return_action"]').val();
-          } else {
-            // The user is viewing in the modal view
-            location.reload();
-          }
         });
       });
       mb.on('cancel', function () {
