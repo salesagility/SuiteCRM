@@ -65,6 +65,8 @@ class CalendarViewSaveSettings extends SugarView
         $current_user->setPreference('CalendarActivities', base64_encode(serialize($_POST['activity'])));
 
         $current_user->setPreference('calendar_display_timeslots', $_REQUEST['display_timeslots'], 0, 'global', $current_user);
+        $current_user->setPreference('event_limit', $_REQUEST['event_limit'], 0, 'global', $current_user);
+        $current_user->setPreference('show_week_numbers', $_REQUEST['show_week_numbers'], 0, 'global', $current_user);
         $current_user->setPreference('show_tasks', $_REQUEST['show_tasks'], 0, 'global', $current_user);
         $current_user->setPreference('show_calls', $_REQUEST['show_calls'], 0, 'global', $current_user);
         $current_user->setPreference('show_completed', $_REQUEST['show_completed'], 0, 'global', $current_user);

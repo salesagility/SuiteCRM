@@ -65,6 +65,8 @@
 	global_day = "{$day}";
 	global_start_time = "{$day_start_time}";
 	global_end_time = "{$day_end_time}";
+	global_event_limit = {$event_limit};
+	global_show_week_numbers = {$show_week_numbers};
 	global_colorList = {$activityColors};
 	calendar_items = {$a_str};
 

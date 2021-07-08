@@ -130,6 +130,9 @@ $mod_strings = array(
     'LBL_SETTINGS_TASKS_SHOW' => 'Show Tasks:',
     'LBL_SETTINGS_COMPLETED_SHOW' => 'Show Completed Meetings, Calls and Tasks:',
     'LBL_SETTINGS_DISPLAY_SHARED_CALENDAR_SEPARATE' => 'Shared Calendar Separate:',
+    'LBL_SETTINGS_DISPLAY_EVENT_LIMIT' => 'Monthly view, events per day:',
+    'LBL_SETTINGS_EVENT_LIMIT_OPTION_ALL' => 'All',
+    'LBL_SETTINGS_SHOW_WEEK_NUMBERS' => 'Show week numbers',
 
     'LBL_SAVE_BUTTON' => 'Save',
     'LBL_DELETE_BUTTON' => 'Delete',

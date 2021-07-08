@@ -167,6 +167,18 @@ class CalendarDisplay
         }
         $ss->assign('day_end_time', $end);
 
+        $event_limit = $current_user->getPreference('event_limit');
+        if (is_null($event_limit)) {
+            $event_limit = SugarConfig::getInstance()->get('calendar.event_limit', "6");
+        }
+        $ss->assign('event_limit', $event_limit);
+
+        $show_week_numbers = $current_user->getPreference('show_week_numbers');
+        if (is_null($show_week_numbers)) {
+            $show_week_numbers = SugarConfig::getInstance()->get('calendar.show_week_numbers', "0");
+        }
+        $ss->assign('show_week_numbers', $show_week_numbers);
+
         $ss->assign('sugar_body_only', (isset($_REQUEST['to_pdf']) && $_REQUEST['to_pdf'] || isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only']));
         require_once('include/json_config.php');
         global $json;
@@ -357,6 +369,8 @@ class CalendarDisplay
         $ss->assign('TIME_END_HOUR_OPTIONS', $TIME_END_HOUR_OPTIONS);
         $ss->assign('TIME_END_MINUTES_OPTIONS', $TIME_END_MINUTES_OPTIONS);
         $ss->assign('TIME_END_MERIDIEM', $TIME_END_MERIDIEM);
+        $ss->assign('event_limit', $this->cal->event_limit);
+        $ss->assign('show_week_numbers', $this->cal->show_week_numbers);
     }
 
     /**

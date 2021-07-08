@@ -64,7 +64,9 @@ class Calendar
     public $style; // calendar style (basic or advanced)
     public $dashlet = false; // if is displayed in dashlet
     public $date_time; // current date
-    
+
+    public $event_limit = 1;
+    public $show_week_numbers = 0;
     public $show_tasks = true;
     public $show_calls = true;
     public $show_completed = true;
@@ -166,11 +168,21 @@ class Calendar
         $current_date_db = $date_arr['year']."-".str_pad($date_arr['month'], 2, "0", STR_PAD_LEFT)."-".str_pad($date_arr['day'], 2, "0", STR_PAD_LEFT);
         $this->date_time = $GLOBALS['timedate']->fromString($current_date_db);
         
+        $this->event_limit = $current_user->getPreference('event_limit');
+        if (is_null($this->event_limit)) {
+            $this->event_limit = SugarConfig::getInstance()->get('calendar.event_limit', 1);
+        }
+
+        $this->show_week_numbers = $current_user->getPreference('show_week_numbers');
+        if (is_null($this->show_week_numbers)) {
+            $this->show_week_numbers = SugarConfig::getInstance()->get('calendar.show_week_numbers', 0);
+        }
+
         $this->show_tasks = $current_user->getPreference('show_tasks');
         if (is_null($this->show_tasks)) {
             $this->show_tasks = SugarConfig::getInstance()->get('calendar.show_tasks_by_default', true);
         }
-        
+
         $this->show_calls = $current_user->getPreference('show_calls');
         if (is_null($this->show_calls)) {
             $this->show_calls = SugarConfig::getInstance()->get('calendar.show_calls_by_default', true);
