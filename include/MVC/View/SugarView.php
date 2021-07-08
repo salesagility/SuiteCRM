@@ -912,6 +912,8 @@ class SugarView
 <html {$langHeader}>
 <head>
 EOHTML;
+                echo SugarThemeRegistry::current()->getJS();
+                echo "<script type='text/javascript'> UA = YAHOO.env.ua; </script>";
             }
 
             $js_vars = array(
