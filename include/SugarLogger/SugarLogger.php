@@ -196,15 +196,18 @@ class SugarLogger implements LoggerTemplate
      */
     public function log(
         $level,
-        $message
-        ) {
+        $message,
+        $userID = null
+    ) {
         global $sugar_config;
 
         if (!$this->initialized) {
             return;
         }
         //lets get the current user id or default to -none- if it is not set yet
-        $userID = (!empty($GLOBALS['current_user']->id))?$GLOBALS['current_user']->id:'-none-';
+        if (empty($userID)) {
+            $userID = (!empty($GLOBALS['current_user']->id))?$GLOBALS['current_user']->id:'-none-';
+        }
 
         //if we haven't opened a file pointer yet let's do that
         if (! $this->fp) {
