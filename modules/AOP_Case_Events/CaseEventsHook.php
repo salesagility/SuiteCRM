@@ -89,8 +89,8 @@ class CaseEventsHook
      */
     public function saveUpdate($bean)
     {
-        if (!$bean->id) {
-            //New case so do nothing.
+        if (!$bean->id || !isAOPEnabled()) {
+            //New case or not enabled so do nothing.
             return;
         }
         if (isset($_REQUEST['module']) && $_REQUEST['module'] === 'Import') {

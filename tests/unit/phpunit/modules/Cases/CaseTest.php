@@ -128,7 +128,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
                 'ENCODED_NAME' => null,
                 'CASE_NUMBER' => null,
                 'SET_COMPLETE' => '~'
-                                .preg_quote('<a href=\'index.php?return_module=Home&return_action=index&action=EditView&module=Cases&record=&status=Closed\'><img src="themes/'.$current_theme.'/images/close_inline.png?v=')
+                                .preg_quote('<a href=\'index.php?return_module=Home&return_action=index&action=EditView&module=Cases&record=&status=Closed_Closed\'><img src="themes/'.$current_theme.'/images/close_inline.png?v=')
                                 .'[\w-]+'
                                 .preg_quote('"    title=Close border=\'0\' alt="Close" /></a>')
                                 .'~',

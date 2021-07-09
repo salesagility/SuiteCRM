@@ -104,6 +104,11 @@ class EmailTemplate extends SugarBean
     );
 
     /**
+     * @var boolean set to false to not replace incorrectly templated placeholders values
+     */
+    public static $replaceUnsetValues = true;
+
+    /**
      * @var array temp storage for template variables while cleanBean
      */
     protected $storedVariables = array();
@@ -481,10 +486,13 @@ class EmailTemplate extends SugarBean
                     }
                 }
 
-                //generate name value pair array of macros and corresponding values for the targed.
-                $macro_nv[$matches[0][$i][0]] = $value;
-
-                $template_text = substr_replace($template_text, $value, $matches[0][$i][1], strlen($matches[0][$i][0]));
+                // skip when replaceUnsetValues is false and value is not set
+                if (self::$replaceUnsetValues || isset($value)) {
+                    //generate name value pair array of macros and corresponding values for the targed.
+                    $macro_nv[$matches[0][$i][0]] = $value;
+    
+                    $template_text = substr_replace($template_text, $value, $matches[0][$i][1], strlen($matches[0][$i][0]));
+                }
             }
 
             //parse the template for tracker url strings. patter for these strings in {[a-zA-Z_0-9]+}

@@ -119,8 +119,7 @@ function write_array_to_file($the_name, $the_array, $the_file, $mode="w", $heade
     if (!empty($header) && ($mode != 'a' || !file_exists($the_file))) {
         $the_string = $header;
     } else {
-        $the_string =   "<?php\n" .
-                    '// created: ' . date('Y-m-d H:i:s') . "\n";
+        $the_string =   "<?php\n";
     }
     $the_string .=  "\$$the_name = " .
                     var_export_helper($the_array) .

@@ -169,26 +169,30 @@ class MySugar
                 $current_user->setPreference('dashlets', $dashlets, 0, $this->type);
             }
 
-            require_once($dashlets[$id]['fileLocation']);
-            $dashlet = new $dashlets[$id]['className']($id, (isset($dashlets[$id]['options']) ? $dashlets[$id]['options'] : array()));
-            if (!empty($_REQUEST['configure']) && $_REQUEST['configure']) { // save settings
-                $dashletDefs[$id]['options'] = $dashlet->saveOptions($_REQUEST);
-                $current_user->setPreference('dashlets', $dashletDefs, 0, $this->type);
+            if (!empty($dashlets[$id]['fileLocation'])) {
+                require_once($dashlets[$id]['fileLocation']);
             }
-            if (!empty($_REQUEST['dynamic']) && $_REQUEST['dynamic'] == 'true' && $dashlet->hasScript) {
-                $dashlet->isConfigurable = false;
-                echo $dashlet->getTitle('') . $app_strings['LBL_RELOAD_PAGE'];
-            } else {
-                $lvsParams = array();
-                if (!empty($dashlets[$id]['sort_options'])) {
-                    $lvsParams = $dashlets[$id]['sort_options'];
+            if (class_exists($dashlets[$id]['className'])) {
+                $dashlet = new $dashlets[$id]['className']($id, (isset($dashlets[$id]['options']) ? $dashlets[$id]['options'] : array()));
+                if (!empty($_REQUEST['configure']) && $_REQUEST['configure']) { // save settings
+                    $dashletDefs[$id]['options'] = $dashlet->saveOptions($_REQUEST);
+                    $current_user->setPreference('dashlets', $dashletDefs, 0, $this->type);
                 }
-                $dashlet->process($lvsParams);
-                $contents =  $dashlet->display();
-                // Many dashlets expect to be able to initialize in the display() function, so we have to create the header second
-                echo $dashlet->getHeader();
-                echo $contents;
-                echo $dashlet->getFooter();
+                if (!empty($_REQUEST['dynamic']) && $_REQUEST['dynamic'] == 'true' && $dashlet->hasScript) {
+                    $dashlet->isConfigurable = false;
+                    echo $dashlet->getTitle('') . $app_strings['LBL_RELOAD_PAGE'];
+                } else {
+                    $lvsParams = array();
+                    if (!empty($dashlets[$id]['sort_options'])) {
+                        $lvsParams = $dashlets[$id]['sort_options'];
+                    }
+                    $dashlet->process($lvsParams);
+                    $contents =  $dashlet->display();
+                    // Many dashlets expect to be able to initialize in the display() function, so we have to create the header second
+                    echo $dashlet->getHeader();
+                    echo $contents;
+                    echo $dashlet->getFooter();
+                }
             }
         } else {
             header("Location: index.php?action=index&module=". $this->type);

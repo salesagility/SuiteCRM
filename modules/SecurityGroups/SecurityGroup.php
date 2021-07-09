@@ -236,17 +236,14 @@ class SecurityGroup extends SecurityGroup_sugar
                 if ($defaultGroup['module'] == 'All' || $defaultGroup['module'] == $focus->module_dir) {
                     if ($focus->module_dir == 'Users') {
                         $query = 'insert into securitygroups_users(id,date_modified,deleted,securitygroup_id,user_id,noninheritable) '
-                            . "select distinct '" . create_guid() . "'," . $focus->db->convert(
-                                '',
-                                'today'
-                            ) . ",0,g.id,'$focus->id',1 "
+                            . "select distinct '" . create_guid() . "'," . $focus->db->now() . ",0,g.id,'$focus->id',1 "
                             . 'from securitygroups g '
                             . "left join securitygroups_users d on d.securitygroup_id = g.id and d.user_id = '$focus->id' and d.deleted = 0 "
                             . "where d.id is null and g.id = '" . $defaultGroup['securitygroup_id'] . "' and g.deleted = 0 ";
                     } else {
                         $query = 'insert into securitygroups_records(id,securitygroup_id,record_id,module,date_modified,deleted) '
                             . "select distinct '" . create_guid() . "',g.id,'$focus->id','$focus->module_dir',"
-                            . $focus->db->convert('', 'today') . ',0 '
+                            . $focus->db->now() . ',0 '
                             . 'from securitygroups g '
                             . "left join securitygroups_records d on d.securitygroup_id = g.id and d.record_id = '$focus->id' and d.module = '$focus->module_dir' and d.deleted = 0 "
                             . "where d.id is null and g.id = '" . $defaultGroup['securitygroup_id'] . "' and g.deleted = 0 ";
@@ -284,7 +281,7 @@ class SecurityGroup extends SecurityGroup_sugar
                 }
                 $currentUserId = isset($current_user->id) ? $current_user->id : null;
                 $query .= ",u.securitygroup_id,'$focus->id','$focus->module_dir',"
-                    . $focus->db->convert('', 'today') . ',0 '
+                    . $focus->db->now() . ',0 '
                     . 'from securitygroups_users u '
                     . 'inner join securitygroups g on u.securitygroup_id = g.id and g.deleted = 0 and (g.noninheritable is null or g.noninheritable <> 1) '
                     . "left join securitygroups_records d on d.securitygroup_id = u.securitygroup_id and d.record_id = '$focus->id' and d.module = '$focus->module_dir' and d.deleted = 0 "
@@ -316,7 +313,7 @@ class SecurityGroup extends SecurityGroup_sugar
                         $query .= ' lower(newid()) ';
                     }
                     $query .= ",u.securitygroup_id,'$focus->id','$focus->module_dir',"
-                        . $focus->db->convert('', 'today') . ',0 '
+                        . $focus->db->now() . ',0 '
                         . 'from securitygroups_users u '
                         . 'inner join securitygroups g on u.securitygroup_id = g.id and g.deleted = 0 and (g.noninheritable is null or g.noninheritable <> 1) '
                         . "left join securitygroups_records d on d.securitygroup_id = u.securitygroup_id and d.record_id = '$focus->id' and d.module = '$focus->module_dir' and d.deleted = 0 "
@@ -455,7 +452,7 @@ class SecurityGroup extends SecurityGroup_sugar
         } elseif ($focus->db->dbType == 'mssql') {
             $query .= ' lower(newid()) ';
         }
-        $query .= ",r.securitygroup_id,'$focus_id','$focus_module_dir'," . $focus->db->convert('', 'today') . ',0 '
+        $query .= ",r.securitygroup_id,'$focus_id','$focus_module_dir'," . $focus->db->now() . ',0 '
             . 'from securitygroups_records r '
             . 'inner join securitygroups g on r.securitygroup_id = g.id and g.deleted = 0 and (g.noninheritable is null or g.noninheritable <> 1) '
             . "left join securitygroups_records d on d.securitygroup_id = r.securitygroup_id and d.record_id = '"
@@ -493,7 +490,7 @@ class SecurityGroup extends SecurityGroup_sugar
         if (isset($row) && $row['results'] == 1) {
             $query = 'insert into securitygroups_records(id,securitygroup_id,record_id,module,date_modified,deleted) '
                 . "select distinct '" . create_guid() . "',u.securitygroup_id,'$record_id','$module',"
-                . $db->convert('', 'today') . ',0 '
+                . $db->now() . ',0 '
                 . 'from securitygroups_users u '
                 . 'inner join securitygroups g on u.securitygroup_id = g.id and g.deleted = 0 and (g.noninheritable is null or g.noninheritable <> 1) '
                 . "left join securitygroups_records d on d.securitygroup_id = u.securitygroup_id and d.record_id = '$record_id' and d.module = '$module' and d.deleted = 0 "
@@ -577,7 +574,7 @@ class SecurityGroup extends SecurityGroup_sugar
         $query .= ",'" . htmlspecialchars($group_id, ENT_QUOTES) . "', '" . htmlspecialchars(
             $module,
                 ENT_QUOTES
-        ) . "'," . $db->convert('', 'today') . ',0 )';
+        ) . "'," . $db->now() . ',0 )';
       
         $GLOBALS['log']->debug("SecuritySuite: Save Default Group: $query");
         $db->query($query);
@@ -670,10 +667,7 @@ class SecurityGroup extends SecurityGroup_sugar
         }
         $db = DBManagerFactory::getInstance();
         $query = 'insert into securitygroups_records(id,securitygroup_id,record_id,module,date_modified,deleted) '
-            . "values( '" . create_guid() . "','" . $securitygroup_id . "','$record_id','$module'," . $db->convert(
-                '',
-                'today'
-            ) . ',0) ';
+            . "values( '" . create_guid() . "','" . $securitygroup_id . "','$record_id','$module'," . $db->now() . ',0) ';
         $GLOBALS['log']->debug("SecuritySuite: addGroupToRecord: $query");
         $db->query($query, true);
     }
@@ -690,7 +684,7 @@ class SecurityGroup extends SecurityGroup_sugar
             return; //missing data
         }
         $db = DBManagerFactory::getInstance();
-        $query = 'update securitygroups_records set deleted = 1, date_modified = ' . $db->convert('', 'today') . ' '
+        $query = 'update securitygroups_records set deleted = 1, date_modified = ' . $db->now() . ' '
             . "where securitygroup_id = '" . $securitygroup_id . "' and record_id = '$record_id' and module = '$module'";
         $GLOBALS['log']->debug("SecuritySuite: addGroupToRecord: $query");
         $db->query($query, true);

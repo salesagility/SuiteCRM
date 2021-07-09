@@ -247,14 +247,16 @@
                                     {sugar_evalcolumn_old var=$params.customCode rowData=$rowData}
                                 {else}
                                     {sugar_field parentFieldArray=$rowData vardef=$params displayType=ListView field=$col}
-
                                 {/if}
-                                {if empty($rowData.$col) && empty($params.customCode)}&nbsp;{/if}
+                                {if empty($rowData.$col) && empty($params.customCode)}
+							        {if $params.link}-{else}&nbsp;{/if}
+						        {/if}
                                 {if $params.link && !$params.customCode}
-                            </{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN}>
-                            {/if}
-                            {if $inline_edit && ($displayColumns.$col.inline_edit == 1 || !isset($displayColumns.$col.inline_edit))}
-                                <div class="inlineEditIcon"><span class="suitepicon suitepicon-action-edit"></span></div>{/if}
+                                    </{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN}>
+                                {/if}
+                                {if $inline_edit && ($displayColumns.$col.inline_edit == 1 || !isset($displayColumns.$col.inline_edit))}
+                                    <div class="inlineEditIcon"><span class="suitepicon suitepicon-action-edit"></span></div>
+                                {/if}
                         </td>
                     {/strip}
                     {assign var='scope_row' value=false}

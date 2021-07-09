@@ -56,7 +56,7 @@ $GLOBALS['dictionary']['UserPreference'] = array('table' => 'user_preferences',
   array(
     'name' => 'category',
     'type' => 'varchar',
-    'len' => 50,
+    'len' => 100,
   ),
   'deleted' =>
   array(
