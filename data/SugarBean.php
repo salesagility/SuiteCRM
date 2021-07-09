@@ -4292,10 +4292,16 @@ class SugarBean
      */
     public function create_list_count_query($query)
     {
+        preg_match_all('/(\sORDER\s*BY)/is', $query, $matches);
         // remove the 'order by' clause which is expected to be at the end of the query
         $pattern = '/\sORDER BY.*/is';
+
+        if (count($matches[0]) > 1) {
+            $pattern = '/ORDER\s*BY(?!.*\sORDER\s*BY).*/is';
+        }
         $replacement = '';
         $query = preg_replace($pattern, $replacement, $query);
+
         //handle distinct clause
         $star = '*';
         if (substr_count(strtolower($query), 'distinct')) {
