@@ -175,7 +175,7 @@ class LoggerManager
      *
      * @param string $name name of logger level to set it to
      */
-    public function setLevel(
+    public static function setLevel(
         $name
     ) {
         if (isset(self::$_levelMapping[$name])) {
