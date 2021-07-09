@@ -839,9 +839,6 @@ option[selected] {
     }
   }
   .edit-view-row-item {
-    .yui-ac {
-      bottom: 8px;
-    }
     .edit-view-field {
       width: 100%;
       padding: 0;
@@ -1372,7 +1369,6 @@ table.dateTime {
 
 input.sqsEnabled {
   display: inline-block;
-  margin-top: 8px;
   margin-right: 8px;
   clear: both;
 }
