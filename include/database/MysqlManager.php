@@ -148,7 +148,7 @@ class MysqlManager extends DBManager
         'encrypt' => 'varchar',
         'file' => 'varchar',
         'decimal_tpl' => 'decimal(%d, %d)',
-
+        'email' => 'varchar',
     );
 
     protected $capabilities = array(
