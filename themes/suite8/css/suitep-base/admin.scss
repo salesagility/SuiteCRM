@@ -320,3 +320,29 @@ div#rollover a:hover span {
 .email table [class*=col-] {
   display: table-cell;
 }
+
+div[aria-describedby*='helpTip'] .ui-dialog-titlebar .ui-dialog-titlebar-close {
+  color: transparent;
+  border: 1px solid grey;
+  background: transparent;
+  border-radius: 0.25em;
+  .ui-icon-closethick {
+    left: 51%;
+    margin-left: -9px;
+  }
+}
+
+div[aria-describedby*='dialogHelpPopup'] .ui-dialog-titlebar .ui-dialog-titlebar-close {
+  color: transparent;
+  border: 1px solid grey;
+  background: transparent;
+  border-radius: 0.25em;
+  .ui-icon-closethick {
+    left: 51%;
+    margin-left: -9px;
+  }
+}
+
+.inlineHelpTip {
+  cursor: pointer;
+}
