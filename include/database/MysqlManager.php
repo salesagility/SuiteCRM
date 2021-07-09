@@ -909,7 +909,6 @@ class MysqlManager extends DBManager
                     $columns[] = " PRIMARY KEY ($fields)";
                     break;
                 case 'index':
-                case 'foreign':
                 case 'clustered':
                 case 'alternate_key':
                     /**
@@ -933,6 +932,18 @@ class MysqlManager extends DBManager
                             $name
                         );
                     }
+                    break;
+                case 'foreign':
+                    $reference_option = '';
+                    if (is_array($index['reference_option'])) {
+                        if (isset($index['reference_option']['on'])
+                            && in_array(strtolower($index['reference_option']['on']), ['update', 'delete'])
+                            && isset($index['reference_option']['option'])
+                        ) {
+                            $reference_option = "ON {$index['reference_option']['on']} {$index['reference_option']['option']}";
+                        }
+                    }
+                    $columns[] = " CONSTRAINT {$name} FOREIGN KEY {$name} ({$fields}) REFERENCES {$index['foreignTable']}({$index['foreignField']}) {$reference_option}";
                     break;
             }
         }
@@ -1053,7 +1064,16 @@ class MysqlManager extends DBManager
                 if ($drop) {
                     $sql = "ALTER TABLE {$table} DROP FOREIGN KEY ({$fields})";
                 } else {
-                    $sql = "ALTER TABLE {$table} ADD CONSTRAINT FOREIGN KEY {$name} ({$fields}) REFERENCES {$definition['foreignTable']}({$definition['foreignField']})";
+                    $reference_option = '';
+                    if (is_array($definition['reference_option'])) {
+                        if (isset($definition['reference_option']['on'])
+                            && in_array(strtolower($definition['reference_option']['on']), ['update', 'delete'])
+                            && isset($definition['reference_option']['option'])
+                        ) {
+                            $reference_option = "ON {$definition['reference_option']['on']} {$definition['reference_option']['option']}";
+                        }
+                    }
+                    $sql = "ALTER TABLE {$table} ADD CONSTRAINT {$name} FOREIGN KEY {$name} ({$fields}) REFERENCES {$definition['foreignTable']}({$definition['foreignField']})  {$reference_option}";
                 }
                 break;
         }
@@ -1157,6 +1177,11 @@ class MysqlManager extends DBManager
             }
             if ($index['type'] == 'primary') {
                 $sql[] = 'DROP PRIMARY KEY';
+            } elseif ($index['type'] == 'foreign') {
+                // InnoDB creates an index automatically for every Foreign key.
+                // As those indexes are not defined in vardefs.php
+                // we should not DROP it.
+                continue;
             } else {
                 $sql[] = "DROP INDEX $name";
             }
@@ -1668,5 +1693,23 @@ class MysqlManager extends DBManager
     public function getGuidSQL()
     {
         return 'UUID()';
+    }
+
+    public function getForeignKeys($tablename)
+    {
+        $db_name = SugarConfig::getInstance()->get('dbconfig.db_name');
+        $sql = "SELECT * FROM information_schema.TABLE_CONSTRAINTS
+                WHERE information_schema.TABLE_CONSTRAINTS.CONSTRAINT_TYPE = 'FOREIGN KEY'
+                AND information_schema.TABLE_CONSTRAINTS.TABLE_SCHEMA = '{$db_name}'
+                AND information_schema.TABLE_CONSTRAINTS.TABLE_NAME = '{$tablename}';";
+
+        $db = DBManagerFactory::getInstance();
+        $result = $db->query($sql);
+
+        $rows = array();
+        while ($row = $db->fetchByAssoc($result)) {
+            $rows [$row['CONSTRAINT_NAME']] = $row;
+        }
+        return $rows;
     }
 }

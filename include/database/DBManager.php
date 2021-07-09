@@ -956,7 +956,7 @@ abstract class DBManager
                 continue;
             }
 
-            if (in_array($value['type'], array('alternate_key', 'foreign'))) {
+            if (in_array($value['type'], array('alternate_key'))) {
                 $value['type'] = 'index';
             }
 
@@ -1130,6 +1130,8 @@ abstract class DBManager
      */
     public function getConstraintSql($indices, $table)
     {
+        $compareForeign = $this->getForeignKeys($table);
+
         if (!$this->isFieldArray($indices)) {
             $indices = array($indices);
         }
@@ -1144,7 +1146,13 @@ abstract class DBManager
                 continue;
             }
 
-            $sql = $this->add_drop_constraint($table, $index);
+            if ($index['type'] == 'foreign') {
+                if (!isset($compareForeign[$index['name']])) {
+                    $sql = $this->add_drop_constraint($table, $index);
+                }
+            } else {
+                $sql = $this->add_drop_constraint($table, $index);
+            }
 
             if (!empty($sql)) {
                 $columns[] = $sql;
@@ -3898,6 +3906,21 @@ abstract class DBManager
      * @return array
      */
     abstract public function get_columns($tablename);
+
+
+    /**
+     * Returns all foreign keys for passed table.
+     *
+     * return is a multi-dimensional array
+     *
+     * array(
+     *       'foreignKey_name' => array of FK definition
+     *      )
+     *
+     * @param  string $tablename
+     * @return array
+     */
+    abstract public function getForeignKeys($tablename);
 
     /**
      * Generates alter constraint statement given a table name and vardef definition.
