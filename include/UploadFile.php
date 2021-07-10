@@ -42,8 +42,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__.'/externalAPI/ExternalAPIFactory.php';
-require_once __DIR__.'/UploadStream.php';
+require_once __DIR__ . '/externalAPI/ExternalAPIFactory.php';
+require_once __DIR__ . '/UploadStream.php';
+
+use SuiteCRM\Exception\MalwareFoundException;
+use SuiteCRM\Utility\AntiMalware\AntiMalwareTrait;
 
 /**
  * @api
@@ -51,6 +54,8 @@ require_once __DIR__.'/UploadStream.php';
  */
 class UploadFile
 {
+    use AntiMalwareTrait;
+
     public $field_name;
     public $stored_file_name;
     public $uploaded_file_name;
@@ -103,10 +108,10 @@ class UploadFile
 
     /**
      * Get URL for a document
-     * @deprecated
      * @param string stored_file_name File name in filesystem
      * @param string bean_id note bean ID
      * @return string path with file name
+     * @deprecated
      */
     public static function get_url($stored_file_name, $bean_id)
     {
@@ -209,7 +214,7 @@ class UploadFile
         }
 
         $destination = "upload://$new_id";
-        
+
         if (is_dir($source)) {
             LoggerManager::getLogger()->warn('Upload File error: Argument cannot be a directory. Argument was: "' . $source . '"');
         } else {
@@ -219,7 +224,7 @@ class UploadFile
                 return true;
             }
         }
-        
+
         return false;
     }
 
@@ -295,6 +300,15 @@ class UploadFile
 
             return false;
         }
+
+        try {
+            $this->scanPathForMalware($_FILES[$this->field_name]['tmp_name']);
+        } catch (MalwareFoundException $exception) {
+            LoggerManager::getLogger()->security("Malware found, unable to save file: {$_FILES[$this->field_name]['name']}");
+
+            return false;
+        }
+
 
         $this->mime_type = $this->getMime($_FILES[$this->field_name]);
         $this->stored_file_name = $this->create_stored_filename();
@@ -449,19 +463,19 @@ class UploadFile
 
         $destination = $bean_id;
         if (substr($destination, 0, 9) != 'upload://') {
-            $destination = 'upload://'.$bean_id;
+            $destination = 'upload://' . $bean_id;
         }
 
         if ($this->use_soap) {
             if (!file_put_contents($destination, $this->file)) {
-                $log->fatal('Unable to save file to '. $destination);
+                $log->fatal('Unable to save file to ' . $destination);
                 return false;
             }
         } elseif (!UploadStream::move_uploaded_file($_FILES[$this->field_name]['tmp_name'], $destination)) {
             $log->fatal(
                 'Unable to move move_uploaded_file to ' . $destination .
-                    ' You should try making the directory writable by the webserver'
-                );
+                ' You should try making the directory writable by the webserver'
+            );
 
             return false;
         }

@@ -48,6 +48,7 @@ namespace SuiteCRM\Enumerator;
  */
 class ExceptionCode
 {
+    const APPLICATION_MALWARE_FOUND = 4000;
     const APPLICATION_UNHANDLED_BEHAVIOUR = 6000;
     const APPLICTAION_MODULE_NOT_FOUND = 6005;
     const API_EXCEPTION = 8000;
