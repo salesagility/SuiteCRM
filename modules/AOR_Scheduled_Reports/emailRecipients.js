@@ -74,7 +74,6 @@ function load_emailline(to, type, value){
 function add_emailLine(){
 
     var aor_email_type_list = document.getElementById("aor_email_type_list").value;
-    var aor_email_to_list = document.getElementById("aor_email_to_list").value;
 
     tablebody = document.createElement("tbody");
     tablebody.id = 'emailLine_body' + emailln;
@@ -84,7 +83,7 @@ function add_emailLine(){
     x.id = 'emailLine'+'_line' + emailln;
 
     var a = x.insertCell(0);
-    a.innerHTML = "<button type='button' id='emailLine_delete" + emailln+"' class='button' value='Remove Line' tabindex='116' onclick='clear_emailLine(this);'><span class='suitepicon suitepicon-action-minus'></span></button> ";
+    a.innerHTML = "<button type='button' id='emailLine_delete" + emailln+"' class='btn btn-danger email-address-remove-button' value='Remove Line' tabindex='116' onclick='clear_emailLine(this);'><span class='suitepicon suitepicon-action-minus'></span></button> ";
 
     a.innerHTML += "<select tabindex='116' name='email_recipients[email_target_type]["+emailln+"]' id='email_recipients_email_target_type"+emailln+"' onchange='show_emailField(" + emailln + ");'>" + aor_email_type_list + "</select> ";
 

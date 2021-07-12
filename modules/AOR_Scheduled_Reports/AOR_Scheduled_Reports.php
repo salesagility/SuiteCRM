@@ -95,9 +95,13 @@ class AOR_Scheduled_Reports extends basic
 
     public function save($check_notify = false)
     {
-        if (isset($_POST['email_recipients']) && is_array($_POST['email_recipients'])) {
-            $this->email_recipients = base64_encode(serialize($_POST['email_recipients']));
-        }
+        if (isset($_POST['email_recipients_list'])) {
+            $email_recipients = [];
+            if (isset($_POST['email_recipients']) && is_array($_POST['email_recipients'])) {
+                $email_recipients = $_POST['email_recipients'];
+            }
+            $this->email_recipients = base64_encode(serialize($email_recipients));
+         }
 
         return parent::save($check_notify);
     }
