@@ -465,14 +465,6 @@ fieldset[disabled] .btn-primary.active {
   border-radius: $border-radius-base;
 }
 
-#actionLines [type="button"] {
-  background-color: $danger-btn-bg;
-  padding: 0;
-  margin-right: 4px;
-  border: 1px solid $danger-btn-bg;
-  border-radius: $border-radius-base;
-}
-
 #actionLines {
   display: block;
 }

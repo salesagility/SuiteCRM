@@ -37,7 +37,7 @@
 }
 
 #aow_conditionLines > thead td {
-  background-color: $default-tab-bg;
+  background-color: $list-view-header-bg;
   padding: 8px 3px 8px 2px;
   color: $list-view-header-color;
   font-weight: bold;
@@ -64,7 +64,7 @@
 #aow_conditionLines > thead > tr {
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  background-color: $default-tab-bg;
+  background-color: $list-view-header-bg;
   display: block;
 }
 
@@ -147,6 +147,16 @@
 
   .dateTimeComboColumn {
     display: inline-block;
+    .calendarstart {
+      border: none;
+      background: transparent;
+      position: relative;
+      bottom: 0.4em;
+      opacity: 0.3;
+    }
+  }
+  .dateTimeSection {
+    margin-left: 2em;
   }
 }
 
@@ -199,18 +209,19 @@
 }
 
 #aow_conditionLines [type="button"] {
-  background-color: $danger-btn-bg;
+  background-color: $white;
   padding: 7px;
   margin-right: 4px;
-  border: 1px solid $danger-btn-bg;
+  border: 1px solid $dark-grey-line;
   border-radius: $border-radius-base;
+  color: #000;
+  height: 29px;
 }
 
 #actionLines [type="button"] {
   background-color: $danger-btn-bg;
   padding: 0;
   margin-right: 4px;
-  border: 1px solid $danger-btn-bg;
   border-radius: $border-radius-base;
 }
 
@@ -310,10 +321,17 @@
 
 #actionLines td[field=delete] .delete-btn {
   float: right;
+  margin-right: 2em;
 }
 
 #actionLines td[field=delete] .delete-btn .btn {
-  padding: 0 0 0 0;
+  background: transparent;
+  border: none;
+  color: grey;
+  vertical-align: middle;
+  position: relative;
+  top: 0.5em;
+  font-size: 16px;
 }
 
 .edit tr td [data-workflow-action] td {
@@ -490,4 +508,58 @@
 [data-workflow-action-parameter] > td {
   display: block;
   width: 100%;
+}
+
+#aow_conditionLines {
+  .selectcrossbtn {
+    button {
+      border: none!important;
+      padding: 0!important;
+      vertical-align: middle;
+    }
+  }  
+}
+
+table.lines {
+  button {
+    background: transparent !important;
+    border: 1px solid $shell-grey;
+    height: 28px!important;
+    color: $black;
+    padding: 7px!important;
+  }
+}
+
+table.relationship {
+  button {
+    background: transparent !important;
+    border: 1px solid $shell-grey;
+    height: 28px!important;
+    color: $black;
+    padding: 7px!important;
+  }
+}
+
+table.email-line {
+  button {
+    background: transparent !important;
+    border: 1px solid $shell-grey;
+    height: 28px!important;
+    color: $black;
+    padding: 7px!important;
+    top: 0.7em;
+    position: relative;
+  }
+}
+
+.computeFieldParametersContainer ,.computeFieldRelationParametersContainer ,.computeFieldFormulaContainer {
+  button {
+    background: transparent !important;
+    border: 1px solid $shell-grey;
+    height: 28px!important;
+    color: $black;
+    padding: 7px!important;
+    top: 0.7em;
+    position: relative;
+  }
 }

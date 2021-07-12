@@ -64,9 +64,9 @@ function display_action_lines(SugarBean $focus, $field, $value, $view)
 
         $html .= '<input type="hidden" name="app_list_actions" id="app_list_actions" value="'.get_select_options_with_id($app_list_actions, '').'">';
 
-        $html .= "<table style='padding-top: 10px; padding-bottom:10px;' id='actionLines'></table>";
+        $html .= "<table id='actionLines'></table>";
 
-        $html .= "<div style='padding-top: 10px; padding-bottom:10px;'>";
+        $html .= "<div>";
         $html .= "<input type=\"button\" tabindex=\"116\" class=\"button\" value=\"".$mod_strings['LBL_ADD_ACTION']."\" id=\"btn_ActionLine\" onclick=\"insertActionLine()\" disabled/>";
         $html .= "</div>";
 

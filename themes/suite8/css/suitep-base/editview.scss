@@ -2911,17 +2911,17 @@ table#lineItems tr td table tfoot tr td span {
 }
 
 #lineItems .group > thead {
-  background-color: $main-bg;
+  background-color: $white;
   min-height: 52px;
 }
 
 #lineItems .group > thead > tr {
-  background-color: $main-bg;
+  background-color: $white;
   min-height: 52px;
 }
 
 #lineItems .group > thead > tr > td {
-  background-color: $main-bg;
+  background-color: $white;
   min-height: 52px;
 }
 
@@ -2944,6 +2944,9 @@ table#lineItems tr td table tfoot tr td span {
   line-height: 0;
   width: 32px;
   height: 32px;
+  background: transparent;
+  border: none;
+  color: grey;
 }
 
 /*Labels Next to Fields*/
