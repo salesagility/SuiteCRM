@@ -54,6 +54,20 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
 {
 
     /**
+     * Returns the bind DN for a user name
+     *
+     * @param string $name
+     * @return string
+     */
+    private function getBindDN($name)
+    {
+        global $ldap_config;
+
+        return $ldap_config->settings['ldap_bind_attr'] . "=" . $name
+            . "," . $ldap_config->settings['ldap_base_dn'];
+    }
+
+    /**
      * Does the actual authentication of the user and returns an id that will be used
      * to load the current user (loadUserOnSession)
      *
@@ -97,8 +111,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
         $bind = ldap_bind($ldapconn, $bind_user, $bind_password);
         $error = ldap_errno($ldapconn);
         if ($this->loginError($error)) {
-            $full_user = $GLOBALS['ldap_config']->settings['ldap_bind_attr'] . "=" . $bind_user
-                . "," . $GLOBALS['ldap_config']->settings['ldap_base_dn'];
+            $full_user = $this->getBindDN($bind_user);
 
             $GLOBALS['log']->info("ldapauth: Binding user " . $full_user);
             $bind = ldap_bind($ldapconn, $full_user, $bind_password);
@@ -373,10 +386,20 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
         if (empty($admin_user)) {
             $bind = @ldap_bind($ldapconn, $user_name, $password);
             $error = ldap_errno($ldapconn);
+            if (!$bind) {
+                $full_user = $this->getBindDN($user_name);
+                $bind = @ldap_bind($ldapconn, $full_user, $password);
+                $error = ldap_errno($ldapconn);
+            }
         }
         if (empty($bind)) {
             $bind = @ldap_bind($ldapconn, $admin_user, $admin_password);
             $error = ldap_errno($ldapconn);
+            if (!$bind) {
+                $full_user = $this->getBindDN($admin_user);
+                $bind = @ldap_bind($ldapconn, $full_user, $password);
+                $error = ldap_errno($ldapconn);
+            }
         }
 
         if ($this->loginError($error)) {
