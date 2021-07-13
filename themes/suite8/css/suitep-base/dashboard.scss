@@ -749,6 +749,9 @@ table #dashletPanel {
   }
   input[type=submit] {
     background: #a99ac9;
+    &:hover {
+      background: $thick-blue;
+    }
   }
 }
 
@@ -838,11 +841,14 @@ table #dashletPanel {
         line-height: 9px;
         font-size: 13px;
         letter-spacing: 1px;
+        &:hover {
+          background: $action-btn-hover-bg-color;
+        }
       }
     }
     li.active {
       a {
-        background: $dashboard-active-tab-bg;
+        background: $dashboard-active-tab-bg;        
       }
     }
   }
@@ -851,7 +857,7 @@ table #dashletPanel {
       .button {
         background: $dashboard-toolbar-bg;
         &:hover {
-          background: none;
+          background: $action-btn-hover-bg-color;
         }
       }
     }
@@ -870,6 +876,9 @@ table #dashletPanel {
 #dashboard #tab-actions > a.dropdown-toggle {
   background: $dashboard-toolbar-bg;
   padding-bottom: 6px;
+  &:hover {
+    background: $action-btn-hover-bg-color;
+  }
 }
 
 .dashboard-title {

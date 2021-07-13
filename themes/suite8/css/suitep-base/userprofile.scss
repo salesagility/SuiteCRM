@@ -269,6 +269,14 @@ form.userprofile {
             right: 1em;
             #EAPM_create_button {
                 background-color: #93a4b3; 
+                font-weight: bold;
+                height: 2.2em;
+                line-height: 1.4em;
+                &:hover {
+                    border: 1px solid;
+                    background: #7096b5;
+                    color: $white;
+                }
             }
         }
     }

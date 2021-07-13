@@ -35,6 +35,9 @@ body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shado
                 line-height: 1.1em;
                 background-color: rgb(147, 164, 179);
                 text-transform: capitalize; 
+                &:hover {
+                    background: $modal-btn-hover;
+                }
             }            
         }
         select::-webkit-scrollbar-track {
