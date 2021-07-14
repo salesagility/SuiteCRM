@@ -555,16 +555,15 @@ class EmailsController extends SugarController
             $inboundEmail->connectMailserver();
             $importedEmailId = $inboundEmail->returnImportedEmail($_REQUEST['msgno'], $_REQUEST['uid']);
 
-            // Set the fields which have been posted in the request
-            $this->bean = $this->setAfterImport($importedEmailId, $_REQUEST);
-
             if ($importedEmailId !== false) {
+                $this->setAfterImport($importedEmailId, $_REQUEST);                
                 header('location:index.php?module=Emails&action=DetailView&record=' . $importedEmailId);
+                return;
             }
-        } else {
-            // When something fail redirect user to index
-            header('location:index.php?module=Emails&action=index');
         }
+            
+        // When something fail redirect user to index
+        header('location:index.php?module=Emails&action=index');
     }
 
     /**
@@ -597,12 +596,14 @@ class EmailsController extends SugarController
                 // import all in folder
                 $importedEmailsId = $inboundEmail->importAllFromFolder();
                 foreach ($importedEmailsId as $importedEmailId) {
-                    $this->bean = $this->setAfterImport($importedEmailId, $_REQUEST);
+                    if ($importedEmailId === false) continue;
+                    $this->setAfterImport($importedEmailId, $_REQUEST);
                 }
             } else {
                 foreach ($_REQUEST['uid'] as $uid) {
                     $importedEmailId = $inboundEmail->returnImportedEmail($_REQUEST['msgno'], $uid);
-                    $this->bean = $this->setAfterImport($importedEmailId, $_REQUEST);
+                    if ($importedEmailId === false) continue;
+                    $this->setAfterImport($importedEmailId, $_REQUEST);
                 }
             }
         } else {
@@ -895,7 +896,10 @@ class EmailsController extends SugarController
      */
     protected function setAfterImport($importedEmailId, $request)
     {
-        $emails = BeanFactory::getBean("Emails", $importedEmailId);
+        $email = BeanFactory::getBean("Emails", $importedEmailId);
+        
+        if (empty($email->fetched_row))
+            throw new SugarException('No email was found to setAfterImport');
 
         foreach ($request as $requestKey => $requestValue) {
             if (strpos($requestKey, 'SET_AFTER_IMPORT_') !== false) {
@@ -904,13 +908,13 @@ class EmailsController extends SugarController
                     continue;
                 }
 
-                $emails->{$field} = $requestValue;
+                $email->{$field} = $requestValue;
             }
         }
 
-        $emails->save();
+        $email->save();
 
-        return $emails;
+        return $email;
     }
 
     /**

@@ -118,7 +118,7 @@ if (isset($_REQUEST['mark_read']) && $_REQUEST['mark_read'] == 1) {
 }
 
 // handle stored_options serialization
-if (isset($_REQUEST['only_since']) && $_REQUEST['only_since'] == 1) {
+if (isset($_REQUEST['only_since']) && $_REQUEST['only_since'] == 'on') {
     $onlySince = true;
 } else {
     $onlySince = false;

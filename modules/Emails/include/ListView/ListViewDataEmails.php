@@ -505,9 +505,10 @@ class ListViewDataEmails extends ListViewData
      * @param User $currentUser
      * @param string $folder
      * @param Folder $folderObj
+     * @param array $emails
      * @return bool|string
      */
-    protected function getEmailRecordFieldValue($field, $emailHeader, $inboundEmail, $currentUser, $folder, $folderObj)
+    protected function getEmailRecordFieldValue($field, $emailHeader, $inboundEmail, $currentUser, $folder, $folderObj, $emails)
     {
         switch ($field) {
             case 'from_addr_name':
@@ -526,18 +527,6 @@ class ListViewDataEmails extends ListViewData
                 $ret = html_entity_decode($inboundEmail->handleMimeHeaderDecode($emailHeader['subject']));
                 break;
             case 'date_entered':
-                $db = DBManagerFactory::getInstance();
-
-                $ret = '';
-                $uid = $emailHeader['uid'];
-
-                $emailBean = BeanFactory::getBean('Emails');
-
-                $emails = $emailBean->get_full_list(
-                    '',
-                    'emails.uid LIKE ' . $db->quoted($uid) . ' AND emails.mailbox_id = ' . $db->quoted($inboundEmail->id)
-                );
-
                 if (!empty($emails) && !empty($emails[0]->date_entered)) {
                     $date = preg_replace('/(\ \([A-Z]+\))/', '', $emails[0]->date_entered);
 
@@ -583,31 +572,7 @@ class ListViewDataEmails extends ListViewData
 
                 break;
             case 'is_imported':
-                $db = DBManagerFactory::getInstance();
-
-                $uid = $emailHeader['uid'];
-                $importedEmailBeans = BeanFactory::getBean('Emails');
-                $is_imported = $importedEmailBeans->get_full_list(
-                    '',
-                    'emails.uid LIKE ' . $db->quoted($uid) . ' AND emails.mailbox_id = ' . $db->quoted($inboundEmail->id)
-                );
-
-                if (null === $is_imported) {
-                    $is_imported = [];
-                }
-
-                if (is_array($is_imported) || $is_imported instanceof Countable) {
-                    $count = count($is_imported);
-                } else {
-                    LoggerManager::getLogger()->warn('ListViewDataEmails::getEmailRecordFieldValue: email list should be a Countable');
-                    $count = count((array)$is_imported);
-                }
-
-                if ($count > 0) {
-                    $ret = true;
-                } else {
-                    $ret = false;
-                }
+                $ret = (count($emails) > 0);
                 break;
             case 'folder':
                 $ret = $folder;
@@ -655,9 +620,24 @@ class ListViewDataEmails extends ListViewData
         if ($folderObj->getType() === 'draft' && $emailHeader['draft'] === 0) {
             return false;
         }
+        
+        $emailBean = BeanFactory::getBean('Emails');
+
+        $emails = $emailBean->get_full_list(
+            '',
+            'emails.uid LIKE ' . $this->db->quoted($uid) . ' AND emails.mailbox_id = ' . $this->db->quoted($inboundEmail->id)
+        );
+        
+        if ($emails == null) {
+            $emails = [];
+        }         
+        
+        if (!($emails instanceof Countable)){
+            LoggerManager::getLogger()->warn('ListViewDataEmails::getEmailRecord: email list should be a Countable');
+        }
 
         foreach ($seed->column_fields as $c => $field) {
-            $emailRecord[strtoupper($field)] = $this->getEmailRecordFieldValue($field, $emailHeader, $inboundEmail, $currentUser, $folder, $folderObj);
+            $emailRecord[strtoupper($field)] = $this->getEmailRecordFieldValue($field, $emailHeader, $inboundEmail, $currentUser, $folder, $folderObj, $emails);
         }
 
         return $emailRecord;
