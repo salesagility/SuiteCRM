@@ -113,8 +113,9 @@ class AdministrationViewThemesettings extends SugarView
         $this->ss->assign('mod', $mod_strings);
         $this->ss->assign('APP', $app_strings);
         $this->ss->assign('currentTheme', SugarThemeRegistry::current());
-        
+        echo '<div class="theme-settings">';
         echo $this->getModuleTitle(false);
         echo $this->ss->fetch('modules/Administration/templates/themeSettings.tpl');
+        echo '</div>';
     }
 }

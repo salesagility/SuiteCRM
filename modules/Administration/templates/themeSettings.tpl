@@ -39,13 +39,12 @@
  */
 
 *}
-
 <form name="themeSettings" method="POST">
 	<input type="hidden" name="module" value="Administration">
 	<input type="hidden" name="action" value="ThemeSettings">
 	<input type="hidden" name="disabled_themes" value="">
 	
-	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer">
+	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer action-button">
 		<tr>
 			<td>
 			<input title="{$APP.LBL_SAVE_BUTTON_LABEL}" accessKey="{$APP.LBL_SAVE_BUTTON_TITLE}" class="button primary" type="submit" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">
@@ -54,8 +53,8 @@
 		</tr>
 	</table>
 
-	<div class='listViewBody' style='margin-bottom:5px'>
-		<table id="themeSettings" class="list view" style='margin-bottom:0px;' border="0" cellspacing="0" cellpadding="0">
+	<div class='listViewBody'>
+		<table id="themeSettings" class="list view" border="0" cellspacing="0" cellpadding="0">
 			<thead>
 				<tr>
 					<th data-toggle="true">{$MOD.LBL_UW_TYPE_THEME}</th>
@@ -71,7 +70,8 @@
 					<td><b>
 					{if $themedef.configurable}<a href="index.php?module=Administration&action=ThemeConfigSettings&theme={$theme}">{$themedef.name}</a>
 					{else} {$themedef.name}
-					{/if}</b></td>
+					{/if}</b>
+					</td>
                     <td><img id="themePreview" style="height: 250px;" src="index.php?entryPoint=getImage&themeName={$theme}&imageName=themePreview.png" border="1"></td>
 					<td><input class="disableTheme" name="disabled_themes[{$colCounter}]" value="{$theme}" type="hidden" {if $themedef.enabled && $theme == $default_theme}disabled="disabled"{/if}><input class="disableTheme" type="checkbox" name="disabled_themes[{$colCounter}]" value="" {if $themedef.enabled} {if $theme == $default_theme}disabled="disabled"{/if}  CHECKED{/if}/></td>
 					<td><input class="defaultTheme" type="radio" name="default_theme" value="{$theme}" {if $theme == $default_theme}CHECKED{elseif !$themedef.enabled}disabled="disabled"{/if} /></td>
@@ -82,7 +82,7 @@
 		</table>
 	</div>
 	
-	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer">
+	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer hide-btn">
 		<tr>
 			<td>
 				<input title="{$APP.LBL_SAVE_BUTTON_LABEL}" class="button primary" type="submit" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">
