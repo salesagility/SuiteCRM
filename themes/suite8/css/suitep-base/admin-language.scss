@@ -1,0 +1,35 @@
+.language {
+    position: relative;
+    .hide-btn {
+        display: none;
+    }
+    h2 {
+        font-size: 1.4em;
+        margin: 0;
+    }
+    .moduleTitle {
+        border-bottom: 1px solid lightgrey;
+        margin-bottom: 0.5em;
+        .module-title-text {
+            color: $shell-grey;
+        }
+    }
+    .action-button {
+        position: absolute;
+        top: 0em;
+        right:0;
+        .button {
+            background-color: $nepal-grey;
+            border-radius: 0.2em;
+            font-weight: bold;
+            height: 2.2em;
+            line-height: 1em;
+            letter-spacing: 0.05em;
+            padding: 0.3em 1em;
+            text-transform: capitalize;
+            &:hover {
+                background: $pale-blue;
+            }
+        }
+    }
+}

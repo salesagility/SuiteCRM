@@ -42,7 +42,7 @@
 <link rel="stylesheet" type="text/css" href="{sugar_getjspath file='modules/Connectors/tpls/tabs.css'}"/>
 {sugar_getscript file="cache/include/javascript/sugar_grp_yui_widgets.js"}
 <style>.yui-dt-scrollable .yui-dt-bd {ldelim}overflow-x: hidden;{rdelim}</style>
-
+<div class="language">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr><td colspan='100'><h2>{$title}</h2></td></tr>
 <tr><td colspan='100'>
@@ -57,7 +57,7 @@
 	<input type="hidden" name="return_module" value="{$RETURN_MODULE}">
 	<input type="hidden" name="return_action" value="{$RETURN_ACTION}">
 
-	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer">
+	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer action-button">
 		<tr>
 			<td>
 				<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button primary" onclick="SUGAR.saveConfigureLangs();this.form.action.value='SaveLanguages'; " type="submit" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}" >
@@ -81,7 +81,7 @@
 		</table>
 	</div>
 
-	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer">
+	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer hide-btn">
 		<tr>
 			<td>
 				<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" class="button primary" onclick="SUGAR.saveConfigureLangs();this.form.action.value='SaveLanguages'; " type="submit" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}" >
@@ -90,6 +90,7 @@
 		</tr>
 	</table>
 </form>
+</div>
 
 
 <script type="text/javascript">
