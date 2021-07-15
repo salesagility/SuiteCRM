@@ -3845,6 +3845,9 @@ $app_strings['LBL_SHOW_MORE'] = 'Show more';
 $app_strings['LBL_SHOW_LESS'] = 'Show less';
 $app_strings['LBL_LOAD_MORE'] = 'Load more';
 $app_strings['LBL_EMPTY'] = '-- Empty -- ';
+$app_strings['LBL_OPERATOR'] = 'Operator';
+$app_strings['LBL_START'] = 'Start';
+$app_strings['LBL_END'] = 'End';
 
 
 $app_strings['LBL_ACTION_SUCCESS'] = 'Action successful';
