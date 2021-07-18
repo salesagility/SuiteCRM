@@ -1,0 +1,35 @@
+.activity-stream {
+    position: relative;
+    .moduleTitle {
+        border-bottom: 1px solid lightgrey;
+        margin-bottom: 1em;
+    }
+    .actionsContainer {
+        position: absolute;
+        top: 0;
+    }
+    .action-button {
+        display: flex;
+        justify-content: flex-end;
+        .button {
+            background-color: $nepal-grey;
+            border-radius: 0.2em;
+            font-weight: bold;
+            height: 2.2em;
+            line-height: 1em;
+            letter-spacing: 0.05em;
+            padding: 0.3em 1em;
+            text-transform: capitalize;
+            &:hover {
+                background: $pale-blue;
+            }
+        }
+    }
+    table.view {
+        tr td {  
+            padding-left: 1em;
+            padding-top: 0.5em;
+            vertical-align: middle;
+        }
+    }
+}

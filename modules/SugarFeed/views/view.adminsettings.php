@@ -176,7 +176,7 @@ class ViewAdminsettings extends SugarView
         }
         $sugar_smarty->assign('module_list', $module_list);
         $sugar_smarty->assign('user_feed_enabled', $userFeedEnabled);
-
+        echo '<div class="activity-stream">';
         echo getClassicModuleTitle(
             "Administration",
             array(
@@ -184,7 +184,8 @@ class ViewAdminsettings extends SugarView
                 $mod_strings['LBL_MODULE_NAME'],
             ),
             false
-        );
+        );       
         $sugar_smarty->display('modules/SugarFeed/tpls/AdminSettings.tpl');
+        echo '</div>';
     }
 }

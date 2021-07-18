@@ -49,7 +49,7 @@
 
 <table width="100%" cellpadding="0" cellspacing="0" border="0" class="actionsContainer">
 <tr>
-<td width="100%" colspan="2">
+<td width="100%" colspan="2" class="action-button">
 <input type="button" id="activityStream_admin_save" onclick="document.AdminSettings.process.value='true'; if(check_form('AdminSettings')) {ldelim} document.AdminSettings.submit(); {rdelim}" class="button primary" title="{$app.LBL_SAVE_BUTTON_TITLE}" accessKey="{$app.LBL_SAVE_BUTTON_KEY}" value="{$app.LBL_SAVE_BUTTON_LABEL}">
 <input type="button" id="activityStream_admin_cancel" onclick="document.AdminSettings.process.value='false'; document.AdminSettings.submit();" class="button" title="{$app.LBL_CANCEL_BUTTON_TITLE}" accessKey="{$app.LBL_CANCEL_BUTTON_KEY}" value="{$app.LBL_CANCEL_BUTTON_LABEL}">
 <input type="button" id="activityStream_admin_delete" onclick="document.AdminSettings.process.value='deleteRecords'; if(confirm('{$mod.LBL_CONFIRM_DELETE_RECORDS}')) document.AdminSettings.submit();" class="button" title="{$mod.LBL_FLUSH_RECORDS}" value="{$mod.LBL_FLUSH_RECORDS}">
