@@ -5723,7 +5723,7 @@ class SugarBean
                     } else {
                         $return_array[$cache[$field]] = $this->$field;
                     }
-                } elseif ( (!empty($value['type']) && ($value['type'] == 'url' ) ) && preg_match ('|{(.*)}|U' , $value['default'])) {
+                } elseif ( (!empty($value['type']) && ($value['type'] == 'url' ) ) && ! empty($value['default']) && preg_match ('|{(.*)}|U' , $value['default'])) {
                     $return_array[$cache[$field]] = $value['default'];
                 } else {
                     $return_array[$cache[$field]] = $this->$field;
