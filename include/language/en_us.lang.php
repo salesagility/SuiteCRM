@@ -3740,6 +3740,10 @@ $app_strings['LBL_GOOGLE_SYNC_ERR'] = 'SuiteCRM Google Sync - ERROR';
 $app_strings['LBL_THERE_WAS_AN_ERR'] = 'There was an error: ';
 $app_strings['LBL_CLICK_HERE'] = 'Click here';
 $app_strings['LBL_TO_CONTINUE'] = ' to continue.';
+$app_strings['LBL_OPT_OUT'] = 'Opt out';
+$app_strings['LBL_INVALID_EMAIL'] = 'Invalid';
+$app_strings['LBL_PRIMARY'] = 'Primary';
+$app_strings['LBL_EMAIL_ADDRESS'] = 'Email address';
 
 $app_strings['IMAP_HANDLER_ERROR'] = 'ERROR: {error}; key was: "{key}".';
 $app_strings['IMAP_HANDLER_SUCCESS'] = 'OK: test settings changed to "{key}"';
@@ -3848,6 +3852,7 @@ $app_strings['LBL_EMPTY'] = '-- Empty -- ';
 $app_strings['LBL_OPERATOR'] = 'Operator';
 $app_strings['LBL_START'] = 'Start';
 $app_strings['LBL_END'] = 'End';
+$app_strings['LBL_LINE_ITEMS_FIELD_CONFIG'] = 'Bad config';
 
 
 $app_strings['LBL_ACTION_SUCCESS'] = 'Action successful';
