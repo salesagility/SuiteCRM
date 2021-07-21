@@ -26,7 +26,8 @@
  */
 
 require_once __DIR__  .'/../../../ApiBeanMapper/FieldMappers/FieldMapperInterface.php';
-require_once __DIR__  .'/../../../ModuleNameMapper.php';
+require_once __DIR__ . '/../../../ModuleNameMapper.php';
+require_once __DIR__ . '/../../../FilterMapper/FilterMapper.php';
 
 class FilterContentMapper implements FieldMapperInterface
 {
@@ -38,11 +39,17 @@ class FilterContentMapper implements FieldMapperInterface
     protected $moduleNameMapper;
 
     /**
+     * @var FilterMapper
+     */
+    protected $filterMapper;
+
+    /**
      * RouteConverter constructor.
      */
     public function __construct()
     {
         $this->moduleNameMapper = new ModuleNameMapper();
+        $this->filterMapper = new FilterMapper();
     }
 
     /**
@@ -78,6 +85,7 @@ class FilterContentMapper implements FieldMapperInterface
 
         $contents = $this->parseContent($bean->name, $bean->contents);
         $container[$name] = $contents;
+
         $container['orderBy'] = $contents['orderBy'] ?? '';
         $container['sortOrder'] = $contents['sortOrder'] ?? '';
     }
@@ -111,18 +119,8 @@ class FilterContentMapper implements FieldMapperInterface
             return;
         }
 
-        foreach ($contents['filters'] as $filter) {
-            $key = $filter['field'];
-            $legacyContents[$key . '_advanced'] = '';
-
-            if (!empty($filter['values']) && is_array($filter['values']) && count($filter['values']) === 1) {
-                $legacyContents[$key . '_advanced'] = array_pop($filter['values']);
-            }
-
-            if (!empty($filter['values']) && is_array($filter['values'])) {
-                $legacyContents[$key . '_advanced'] = $filter['values'];
-            }
-        }
+        $mappedFilters = $this->filterMapper->toLegacy($contents, 'advanced');
+        $legacyContents = array_merge($legacyContents, $mappedFilters);
 
         $legacyContents['orderBy'] = strtoupper($contents['orderBy'] ?? '');
         $legacyContents['sortOrder'] = strtoupper($contents['sortOrder'] ?? '');
@@ -169,25 +167,8 @@ class FilterContentMapper implements FieldMapperInterface
             $contents['advanced']
         );
 
-
-        foreach ($contents as $key => $item) {
-            if (empty($contents[$key])) {
-                continue;
-            }
-
-            $newkey = str_replace('_advanced', '', $key);
-            $values = $item;
-
-            if (is_string($item)) {
-                $values = [$item];
-            }
-
-            $newContents['filters'][$newkey] = [
-                'field' => $newkey,
-                'operator' => '=',
-                'values' => $values
-            ];
-        }
+        $filters = $this->filterMapper->toApi($contents);
+        $newContents['filters'] = $filters;
 
         return $newContents;
     }
