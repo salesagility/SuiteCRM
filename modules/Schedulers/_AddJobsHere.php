@@ -169,9 +169,9 @@ function pollMonitoredInboxes()
                             $uid = $ieX->getImap()->getUid($msgNo);
                         } // else
                         if ($isGroupFolderExists) {
-                            if ($ieX->returnImportedEmail($msgNo, $uid)) {
+                            if ($email = $ieX->importSingleEmail($msgNo, $uid)) {
                                 // add to folder
-                                $sugarFolder->addBean($ieX);
+                                $sugarFolder->addBean($email);
                                 if ($ieX->isPop3Protocol()) {
                                     $messagesToDelete[] = $msgNo;
                                 } else {
@@ -213,7 +213,7 @@ function pollMonitoredInboxes()
                             } // if
                         } else {
                             if ($ieX->isAutoImport()) {
-                                $ieX->returnImportedEmail($msgNo, $uid);
+                                $ieX->importSingleEmail($msgNo, $uid);
                             } else {
                                 /*If the group folder doesn't exist then download only those messages
                                  which has caseid in message*/
@@ -618,12 +618,8 @@ function pollMonitoredInboxesAOP()
                             $uid = $aopInboundEmailX->getImap()->getUid($msgNo);
                         } // else
                         if ($isGroupFolderExists) {
-                            $emailId = $aopInboundEmailX->returnImportedEmail($msgNo, $uid, false, true, $isGroupFolderExists);
-
-                            if (!empty($emailId)) {
-                                // add to folder
-
-                                $sugarFolder->addBean($aopInboundEmailX);
+                            if ($email = $aopInboundEmailX->importSingleEmail($msgNo, $uid, false, true, $isGroupFolderExists)) {         
+                                $sugarFolder->addBean($email);
                                 if ($aopInboundEmailX->isPop3Protocol()) {
                                     $messagesToDelete[] = $msgNo;
                                 } else {
@@ -632,22 +628,12 @@ function pollMonitoredInboxesAOP()
                                 if ($aopInboundEmailX->isMailBoxTypeCreateCase()) {
                                     $userId = $assignManager->getNextAssignedUser();
                                     $GLOBALS['log']->debug('userId [ ' . $userId . ' ]');
-                                    $validatior = new SuiteValidator();
-                                    if ((!isset($aopInboundEmailX->email) || !$aopInboundEmailX->email ||
-                                        !isset($aopInboundEmailX->email->id) || !$aopInboundEmailX->email->id) &&
-                                        $validatior->isValidId($emailId)
-                                    ) {
-                                        $aopInboundEmailX->email = BeanFactory::newBean('Emails');
-                                        if (!$aopInboundEmailX->email->retrieve($emailId)) {
-                                            throw new Exception('Email retrieving error to handle case create, email id was: ' . $emailId);
-                                        }
-                                    }
-                                    $aopInboundEmailX->handleCreateCase($aopInboundEmailX->email, $userId);
+                                    $aopInboundEmailX->handleCreateCase($email, $userId);
                                 } // if
                             } // if
                         } else {
                             if ($aopInboundEmailX->isAutoImport()) {
-                                $aopInboundEmailX->returnImportedEmail($msgNo, $uid);
+                                $aopInboundEmailX->importSingleEmail($msgNo, $uid);
                             } else {
                                 /*If the group folder doesn't exist then download only those messages
                                  which has caseid in message*/
