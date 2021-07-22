@@ -61,13 +61,18 @@ function change_state(radiobutton)
 {/literal}
 -->
 </script>
-<form name="ConfigureSettings" id="EditView" method="POST" >
+<form name="ConfigureSettings" id="EditView" method="POST">
 	<input type="hidden" name="module" value="EmailMan">
 	<input type="hidden" name="campaignConfig" value="true">
 	<input type="hidden" name="action">
 	<input type="hidden" name="return_module" value="{$RETURN_MODULE}">
 	<input type="hidden" name="return_action" value="{$RETURN_ACTION}">
 	<input type="hidden" name="source_form" value="config" />
+
+<div class="action-button">
+    <input title="{$APP.LBL_SAVE_BUTTON_TITLE}" class="button" onclick="this.form.action.value='Save';return verify_data(this);" type="submit" name="button" value=" {$APP.LBL_SAVE_BUTTON_LABEL} ">
+    <input title="{$APP.LBL_CANCEL_BUTTON_TITLE}" class="button" onclick="this.form.action.value='{$RETURN_ACTION}'; this.form.module.value='{$RETURN_MODULE}';" type="submit" name="button" value=" {$APP.LBL_CANCEL_BUTTON_LABEL} ">
+</div>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
 	<tr>
@@ -129,11 +134,6 @@ function change_state(radiobutton)
 		</td>
 	</tr>
 </table>
-
-<div style="padding-top:2px;">
-    <input title="{$APP.LBL_SAVE_BUTTON_TITLE}" class="button" onclick="this.form.action.value='Save';return verify_data(this);" type="submit" name="button" value=" {$APP.LBL_SAVE_BUTTON_LABEL} ">
-    <input title="{$APP.LBL_CANCEL_BUTTON_TITLE}" class="button" onclick="this.form.action.value='{$RETURN_ACTION}'; this.form.module.value='{$RETURN_MODULE}';" type="submit" name="button" value=" {$APP.LBL_CANCEL_BUTTON_LABEL} ">
-</div>
 
 </form>
 {$JAVASCRIPT}

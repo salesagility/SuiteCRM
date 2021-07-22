@@ -83,7 +83,7 @@ class ViewCampaignconfig extends SugarView
         global $app_list_strings;
         global $app_strings;
         global $current_user;
-        
+        echo '<div class="campaign-email">';
         echo $this->getModuleTitle(false);
         global $currentModule, $sugar_config;
         
@@ -129,5 +129,6 @@ class ViewCampaignconfig extends SugarView
         
         $this->ss->assign("JAVASCRIPT", get_validate_record_js());
         $this->ss->display("modules/EmailMan/tpls/campaignconfig.tpl");
+        echo '</div>';
     }
 }
