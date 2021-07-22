@@ -5220,8 +5220,8 @@ class InboundEmail extends SugarBean
         return true;
     }
 
-    /**
-     * Imports A Single Email
+  /**
+     * Imports New Single Email
      * @param $msgNo
      * @param $uid
      * @param bool $forDisplay
@@ -5229,7 +5229,32 @@ class InboundEmail extends SugarBean
      * @param bool $isGroupFolderExists
      * @return boolean
      */
-    public function returnImportedEmail(
+    public function importSingleEmail(
+        $msgNo,
+        $uid,
+        $forDisplay = false,
+        $clean_email = true,
+        $isGroupFolderExists = false
+    ) {
+        $importRes = $this->returnImportedEmail2($msgNo, $uid, $forDisplay, $clean_email, $isGroupFolderExists);
+
+        if (!$importRes) return false;
+
+        if ($importRes['new'] === true) return $importRes['bean'];
+
+        return false;
+    }
+
+    /**
+     * Imports A Single Email (or fetches stored)
+     * @param $msgNo
+     * @param $uid
+     * @param bool $forDisplay
+     * @param bool $clean_email
+     * @param bool $isGroupFolderExists
+     * @return boolean|array
+     */
+    public function returnImportedEmail2(
         $msgNo,
         $uid,
         $forDisplay = false,
@@ -5469,6 +5494,317 @@ class InboundEmail extends SugarBean
                 $GLOBALS['log']->info('InboundEmail found a duplicate email: ' . $message_id);
             }
 
+            if (!empty($this->compoundMessageId)) {
+                // return email
+                $result = $this->db->query(
+                    'SELECT id from emails WHERE message_id ="' . $this->compoundMessageId . '"' .
+                    'AND mailbox_id = "' . $this->id . '"'
+                );
+                $row = $this->db->fetchRow($result);
+                if (!empty($row['id'])) {
+                    $email = BeanFactory::getBean('Emails', $row['id']);
+                    return ['new'=>false,'id'=>$row['id'],'bean'=>$email];
+                }
+            }
+
+            return false;
+        }
+        ////	END DUPLICATE CHECK
+        ///////////////////////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////////////////////////////////
+        ////	DEAL WITH THE MAILBOX
+        if (!$forDisplay) {
+            if (!$isGroupFolderExists) {
+                $r = $this->getImap()->setFlagFull($msgNo, '\\SEEN');
+            } else {
+                $r = $this->getImap()->clearFlagFull($msgNo, '\\SEEN');
+            }
+
+            // if delete_seen, mark msg as deleted
+            if ($this->delete_seen == 1 && !$forDisplay) {
+                $GLOBALS['log']->info("INBOUNDEMAIL: delete_seen == 1 - deleting email");
+                $this->getImap()->setFlagFull($msgNo, '\\DELETED');
+            }
+        }
+        // for display - don't touch server files?
+        //imap_setflag_full($this->conn, $msgNo, '\\UNSEEN');
+
+        $GLOBALS['log']->debug('********************************* InboundEmail finished import of 1 email: ' . $email->name);
+        ////	END DEAL WITH THE MAILBOX
+        ///////////////////////////////////////////////////////////////////////
+
+
+        if (isset($email->id) and !empty($email->id)) {
+            return ['new'=>true,'id'=>$row['id'],'bean'=>$email];
+        }
+
+        return false;
+    }
+
+    /**
+     * Imports A Single Email
+     * @param $msgNo
+     * @param $uid
+     * @param bool $forDisplay
+     * @param bool $clean_email
+     * @param bool $isGroupFolderExists
+     * @return boolean
+     */
+    public function returnImportedEmail(
+        $msgNo,
+        $uid,
+        $forDisplay = false,
+        $clean_email = true,
+        $isGroupFolderExists = false
+    ) {
+        LoggerManager::getLogger()->deprecated("returnImportedEmail is deprecated, use returnImportedEmail2 instead");
+        
+        $GLOBALS['log']->debug("InboundEmail processing 1 email {$msgNo}-----------------------------------------------------------------------------------------");
+        global $timedate;
+        global $current_user;
+
+        // Bug # 45477
+        // So, on older versions of PHP (PHP VERSION < 5.3),
+        // calling imap_headerinfo and imap_fetchheader can cause a buffer overflow for exteremly large headers,
+        // This leads to the remaining messages not being read because Sugar crashes everytime it tries to read the headers.
+        // The workaround is to mark a message as read before making trying to read the header of the msg in question
+        // This forces this message not be read again, and we can continue processing remaining msgs.
+
+        // UNCOMMENT THIS IF YOU HAVE THIS PROBLEM!  See notes on Bug # 45477
+        // $this->markEmails($uid, "read");
+
+        if (empty($msgNo) and !empty($uid)) {
+            $msgNo = $this->getImap()->getMessageNo((int)$uid);
+        }
+
+        $fullHeader = $this->getImap()->fetchHeader($msgNo);
+        $header = $this->getImap()->rfc822ParseHeaders($fullHeader);
+        $message_id = isset($header->message_id) ? $header->message_id : '';
+
+        // reset inline images cache
+        $this->inlineImages = array();
+
+        ///////////////////////////////////////////////////////////////////////
+        ////	DUPLICATE CHECK
+        $dupeCheckResult = $this->importDupeCheck($message_id, $header, $fullHeader);
+        if ($forDisplay || $dupeCheckResult) {
+            $GLOBALS['log']->debug('*********** NO duplicate found, continuing with processing.');
+
+            $structure = $this->getImap()->fetchStructure($msgNo); // map of email
+
+            ///////////////////////////////////////////////////////////////////
+            ////	CREATE SEED EMAIL OBJECT
+            $email = BeanFactory::newBean('Emails');
+            $email->isDuplicate = $dupeCheckResult ? false : true;
+            $email->mailbox_id = $this->id;
+            $email->uid = $uid;
+            $email->msgNo = $msgNo;
+            $email->id = create_guid();
+            $email->new_with_id = true; //forcing a GUID here to prevent double saves.
+            ////	END CREATE SEED EMAIL
+            ///////////////////////////////////////////////////////////////////
+
+            ///////////////////////////////////////////////////////////////////
+            ////	PREP SYSTEM USER
+            if (empty($current_user)) {
+                // I-E runs as admin, get admin prefs
+
+                $current_user = BeanFactory::newBean('Users');
+                $current_user->getSystemUser();
+            }
+            $current_user->getUserDateTimePreferences();
+            ////	END USER PREP
+            ///////////////////////////////////////////////////////////////////
+            if (!empty($header->date)) {
+                $unixHeaderDate = $timedate->fromString($header->date);
+            }
+            ///////////////////////////////////////////////////////////////////
+            ////	HANDLE EMAIL ATTACHEMENTS OR HTML TEXT
+            ////	Inline images require that I-E handle attachments before body text
+            // parts defines attachments - be mindful of .html being interpreted as an attachment
+            if ($structure->type == 1 && !empty($structure->parts)) {
+                $GLOBALS['log']->debug('InboundEmail found multipart email - saving attachments if found.');
+                $this->saveAttachments($msgNo, $structure->parts, $email->id, 0, $forDisplay);
+            } elseif ($structure->type == 0) {
+                $UUEncodedEmail = $this->isUuencode($email->description) ? true : false;
+                /*
+                 * UUEncoded attachments - legacy, but still have to deal with it
+                 * format:
+                 * begin 777 filename.txt
+                 * UUENCODE
+                 *
+                 * end
+                 */
+                // set body to the filtered one
+                if ($UUEncodedEmail) {
+                    $email->description = $this->handleUUEncodedEmailBody($email->description, $email->id);
+                    $email->retrieve($email->id);
+                    $email->save();
+                }
+            } else {
+                if ($this->port != 110) {
+                    $GLOBALS['log']->debug(
+                        'InboundEmail found a multi-part email (id:' . $msgNo . ') with no child parts to parse.'
+                    );
+                }
+            }
+            ////	END HANDLE EMAIL ATTACHEMENTS OR HTML TEXT
+            ///////////////////////////////////////////////////////////////////
+
+            ///////////////////////////////////////////////////////////////////
+            ////	ASSIGN APPROPRIATE ATTRIBUTES TO NEW EMAIL OBJECT
+            // handle UTF-8/charset encoding in the ***headers***
+
+            $email->name = $this->handleMimeHeaderDecode($header->subject);
+            $email->type = 'inbound';
+            if (!empty($unixHeaderDate)) {
+                $email->date_sent_received = $timedate->asUser($unixHeaderDate);
+                list($email->date_start, $email->time_start) = $timedate->split_date_time($email->date_sent_received);
+            } else {
+                $email->date_start = $email->time_start = $email->date_sent_received = "";
+            }
+            $email->status = 'unread'; // this is used in Contacts' Emails SubPanel
+            if (!empty($header->toaddress)) {
+                $email->to_name = $this->handleMimeHeaderDecode($header->toaddress);
+                $email->to_addrs_names = $email->to_name;
+            }
+            if (!empty($header->to)) {
+                $email->to_addrs = $this->convertImapToSugarEmailAddress($header->to);
+            }
+            $email->from_name = $this->handleMimeHeaderDecode($header->fromaddress);
+            $email->from_addr_name = $email->from_name;
+            $email->from_addr = $this->convertImapToSugarEmailAddress($header->from);
+            isValidEmailAddress($email->from_addr);
+            if (!empty($header->cc)) {
+                $email->cc_addrs = $this->convertImapToSugarEmailAddress($header->cc);
+            }
+            if (!empty($header->ccaddress)) {
+                $email->cc_addrs_names = $this->handleMimeHeaderDecode($header->ccaddress);
+            } // if
+            $email->reply_to_name = $this->handleMimeHeaderDecode($header->reply_toaddress);
+            $email->reply_to_email = $this->convertImapToSugarEmailAddress($header->reply_to);
+            if (!empty($email->reply_to_email)) {
+                $email->reply_to_addr = $email->reply_to_name;
+            }
+            $email->intent = $this->mailbox_type;
+
+            $email->message_id = $this->compoundMessageId; // filled by importDupeCheck();
+
+            $oldPrefix = $this->imagePrefix;
+            if (!$forDisplay) {
+                // Store CIDs in imported messages, convert on display
+                $this->imagePrefix = 'cid:';
+            }
+
+            $emailBody = $this->imap->fetchBody($uid, '', FT_UID);
+            $contentType = $this->mailParser->parse($emailBody)->getHeaderValue('Content-Type');
+
+            if (!empty($contentType) && strtolower($contentType) === 'text/plain') {
+                $email->description = $this->getMessageTextWithUid(
+                    $uid,
+                    $contentType,
+                    $structure = null,
+                    $fullHeader = null,
+                    true
+                );
+            }
+
+            $email->description_html = $this->getMessageTextWithUid(
+                $uid,
+                $structure->subtype,
+                $structure,
+                $fullHeader,
+                $clean_email
+            );
+
+            $this->imagePrefix = $oldPrefix;
+
+
+            // empty() check for body content
+            if (empty($email->description)) {
+                $GLOBALS['log']->debug('InboundEmail Message (id:' . $email->message_id . ') has no body');
+            }
+
+            // assign_to group
+            if (!empty($_REQUEST['user_id'])) {
+                $email->assigned_user_id = $_REQUEST['user_id'];
+            }
+
+            //Assign Parent Values if set
+            if (!empty($_REQUEST['parent_id']) && !empty($_REQUEST['parent_type'])) {
+                $email->parent_id = $_REQUEST['parent_id'];
+                $email->parent_type = $_REQUEST['parent_type'];
+
+                $mod = strtolower($email->parent_type);
+                //Custom modules rel name
+                $rel = array_key_exists($mod, $email->field_defs) ? $mod : $mod . '_activities_emails';
+
+                if (!$email->load_relationship($rel)) {
+                    return false;
+                }
+                $email->$rel->add($email->parent_id);
+            }
+
+            // override $forDisplay w/user pref
+            if ($forDisplay && $this->isAutoImport()) {
+                $forDisplay = false; // triggers save of imported email
+            }
+
+            if (!$forDisplay) {
+                $email->save();
+
+                $email->new_with_id = false; // to allow future saves by UPDATE, instead of INSERT
+                ////	ASSIGN APPROPRIATE ATTRIBUTES TO NEW EMAIL OBJECT
+                ///////////////////////////////////////////////////////////////////
+
+                ///////////////////////////////////////////////////////////////////
+                ////	LINK APPROPRIATE BEANS TO NEWLY SAVED EMAIL
+                //$contactAddress = $this->handleLinking($email);
+                ////	END LINK APPROPRIATE BEANS TO NEWLY SAVED EMAIL
+                ///////////////////////////////////////////////////////////////////
+
+                ///////////////////////////////////////////////////////////////////
+                ////	MAILBOX TYPE HANDLING
+                $this->handleMailboxType($email, $header);
+                ////	END MAILBOX TYPE HANDLING
+                ///////////////////////////////////////////////////////////////////
+
+                ///////////////////////////////////////////////////////////////////
+                ////	SEND AUTORESPONSE
+                if (!empty($email->reply_to_email)) {
+                    $contactAddress = $email->reply_to_email;
+                    isValidEmailAddress($contactAddress);
+                } else {
+                    $contactAddress = $email->from_addr;
+                    isValidEmailAddress($contactAddress);
+                }
+                if (!$this->isMailBoxTypeCreateCase()) {
+                    $this->handleAutoresponse($email, $contactAddress);
+                }
+                ////	END SEND AUTORESPONSE
+                ///////////////////////////////////////////////////////////////////
+                ////	END IMPORT ONE EMAIL
+                ///////////////////////////////////////////////////////////////////
+            }
+        } else {
+            // only log if not POP3; pop3 iterates through ALL mail
+            if ($this->protocol != 'pop3') {
+                $GLOBALS['log']->info('InboundEmail found a duplicate email: ' . $message_id);
+            }
+            
+            if (!empty($this->compoundMessageId)) {
+                // return email
+                $result = $this->db->query(
+                    'SELECT id from emails WHERE message_id ="' . $this->compoundMessageId . '"' .
+                    'AND mailbox_id = "' . $this->id . '"'
+                );
+                $row = $this->db->fetchRow($result);
+                if (!empty($row['id'])) {
+                    return $row['id'];
+                }
+            }
+
             return false;
         }
         ////	END DUPLICATE CHECK
@@ -5682,7 +6018,7 @@ class InboundEmail extends SugarBean
         );
 
         foreach ($emailSortedHeaders as $uid) {
-            $response[] = $this->returnImportedEmail(null, $uid);
+            $response[$uid] = $this->returnImportedEmail2(null, $uid);
         }
 
         return $response;
