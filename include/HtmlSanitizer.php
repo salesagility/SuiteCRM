@@ -42,6 +42,7 @@ class HtmlSanitizer
         $config->set('Core.HiddenElements', $hidden_tags);
         $config->set('Cache.SerializerPath', sugar_cached("htmlclean"));
         $config->set('URI.Base', isset($sugar_config['site_url']) ? $sugar_config['site_url'] : null);
+        $config->set('URI.AllowedSchemes', array('http' => true, 'https' => true, 'mailto' => true, 'data' => true, 'tel' => true));
         $config->set('CSS.Proprietary', true);
         $config->set('HTML.TidyLevel', 'light');
         $config->set('HTML.ForbiddenElements', array('body' => true, 'html' => true));
