@@ -41,7 +41,7 @@
 *}
 <link rel="stylesheet" type="text/css" href="{sugar_getjspath file='modules/Connectors/tpls/tabs.css'}"/>
 <script type="text/javascript" src="cache/include/javascript/sugar_grp_yui_widgets.js"></script>
-
+<div class="display-modules-config">
 <form name="ConfigureTabs" method="POST"  method="POST" action="index.php">
 <input type="hidden" name="module" value="Administration">
 <input type="hidden" name="action" value="SaveTabs">
@@ -52,10 +52,14 @@
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr><td colspan='100'><h2>{$title}</h2></td></tr>
-<tr><td colspan='100'>{$MOD.LBL_CONFIG_TABS_DESC}</td></tr>
-<tr><td><br></td></tr>
+<tr>
+	<td colspan='100'>{$MOD.LBL_CONFIG_TABS_DESC}</td>
+</tr>
+<tr>
+	<td><br></td>
+</tr>
 <tr><td colspan='100'>
-	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer">
+	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer action-button">
 		<tr>
 			<td>
 				<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button primary" onclick="SUGAR.saveConfigureTabs();this.form.action.value='SaveTabs'; " type="submit" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}" > 
@@ -64,16 +68,16 @@
 		</tr>
 	</table>
 	
-	<div class='add_table' style='margin-bottom:5px'>
+	<div class='add_table'>
 		<table id="ConfigureTabs" class="themeSettings edit view" style='margin-bottom:0px;' border="0" cellspacing="0" cellpadding="0">
-			<tr>
+			<tr class="config-text">
 				<td colspan="2">
 				    <input type='checkbox' name='user_edit_tabs' value=1 class='checkbox' {if !empty($user_can_edit)}CHECKED{/if}>&nbsp;
 				    <b onclick='document.EditView.user_edit_tabs.checked= !document.EditView.user_edit_tabs.checked' style='cursor:default'>{$MOD.LBL_ALLOW_USER_TABS}</b>
 				    &nbsp;{sugar_help text=$MOD.LBL_CONFIG_TABS_ALLOW_USERS_HIDE_TABS_HELP}
 				</td>
 			</tr>
-			<tr>
+			<tr class="enabled-tab">
 				<td width='1%'>
 					<div id="enabled_div" class="enabled_tab_workarea">
 					</div>
@@ -88,7 +92,7 @@
 	
 	<div class='add_subpanels' style='margin-bottom:5px'>
 		<table id="ConfigureSubPanels" class="themeSettings edit view" style='margin-bottom:0px;' border="0" cellspacing="0" cellpadding="0">
-			<tr>
+			<tr class="enabled-tab">
 				<td width='1%'>
 					<div id="enabled_subpanels_div"></div>	
 				</td>
@@ -99,7 +103,7 @@
 		</table>
 	</div>
 	
-	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer">
+	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer hide-btn">
 		<tr>
 			<td>
 				<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" class="button primary" onclick="SUGAR.saveConfigureTabs();this.form.action.value='SaveTabs'; " type="submit" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}" >
@@ -110,6 +114,7 @@
 </td></tr>
 </table>	
 </form>
+</div>
 
 <script type="text/javascript">
 	var enabled_modules = {$enabled_tabs};

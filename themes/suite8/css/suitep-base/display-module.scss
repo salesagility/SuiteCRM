@@ -1,0 +1,72 @@
+.display-modules-config {
+    position: relative;
+    .hide-btn {
+        display: none;
+    }
+    h2 {
+        font-size: 1.4em;
+        margin: 0;
+    }
+    .moduleTitle {
+        border-bottom: 1px solid $mid-light-grey;
+        margin-bottom: 0.5em;
+        .module-title-text {
+            color: $shell-grey;
+        }
+    }
+    .action-button {
+        position: absolute;
+        top: 0em;
+        right:0;
+        .button {
+            background-color: $nepal-grey;
+            border-radius: 0.2em;
+            font-weight: bold;
+            height: 2.2em;
+            line-height: 1em;
+            letter-spacing: 0.05em;
+            padding: 0.3em 1em;
+            text-transform: capitalize;
+            &:hover {
+                background: $pale-blue;
+            }
+        }
+    }
+    .yui-dt-bd::-webkit-scrollbar-track {
+        background: $dashboard-scrollbar-bg; 
+    }      
+    .yui-dt-bd::-webkit-scrollbar-thumb {
+        background-color: $dashboard-scroll;   
+        border-radius: 20px; 
+    } 
+    .add_table {
+        margin-bottom: 1em;
+        table tr.config-text {  
+            td {
+                padding: 1em;
+            }        
+        }
+        table tr.enabled-tab {
+            td {
+                padding-left: 1em;
+                padding-bottom: 0.5em;
+                visibility: visible;
+            }
+        }
+    }    
+    .add_subpanels {
+        table tr.enabled-tab {
+            td {
+                padding-left: 1em;
+                padding-top:0.5em;
+                padding-bottom:0.5em;
+                visibility: visible;
+            }
+        }
+    }
+    .yui-dt th .yui-dt-liner {
+        background: none;
+        font-weight: bold;
+        color: $shell-grey;
+    }    
+}
