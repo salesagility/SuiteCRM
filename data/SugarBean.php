@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once 'modules/DynamicFields/DynamicField.php';
 require_once "data/Relationships/RelationshipFactory.php";
+require_once 'include/portability/SaveHandlers/BeanSaveHandlersManager.php';
 
 
 /**
@@ -2455,6 +2456,8 @@ class SugarBean
             $this->custom_fields->save($isUpdate);
         }
 
+        BeanSaveHandlersManager::getInstance()->run($this, BeanSaveHandlersManager::TYPE_BEFORE);
+
         $this->_sendNotifications($check_notify);
 
         if ($isUpdate) {
@@ -2466,6 +2469,8 @@ class SugarBean
         if (empty($GLOBALS['resavingRelatedBeans'])) {
             SugarRelationship::resaveRelatedBeans();
         }
+
+        BeanSaveHandlersManager::getInstance()->run($this, BeanSaveHandlersManager::TYPE_AFTER);
 
         /* BEGIN - SECURITY GROUPS - inheritance */
         require_once('modules/SecurityGroups/SecurityGroup.php');
