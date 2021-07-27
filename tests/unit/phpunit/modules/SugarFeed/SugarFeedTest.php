@@ -141,9 +141,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
 
     public function fetchReplies()
     {
-        $sugarFeed = BeanFactory::newBean('SugarFeed');
-
-        $actual = $sugarFeed->fetchReplies(array('ID' => '1'));
+        $actual = BeanFactory::newBean('SugarFeed')->fetchReplies(array('ID' => '1'));
         self::assertGreaterThan(0, strlen($actual));
     }
 
@@ -180,9 +178,7 @@ class SugarFeedTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_list_view_data()
     {
-        $sugarFeed = BeanFactory::newBean('SugarFeed');
-
-        $result = $sugarFeed->get_list_view_data();
+        $result = BeanFactory::newBean('SugarFeed')->get_list_view_data();
         self::assertTrue(is_array($result));
     }
 

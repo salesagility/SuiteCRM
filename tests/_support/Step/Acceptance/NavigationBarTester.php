@@ -39,8 +39,7 @@ class NavigationBarTester extends Tester
     public function clickHome()
     {
         $I = $this;
-        $design = new Design($I);
-        $breakpoint = $design->getBreakpointString();
+        $breakpoint = (new Design($I))->getBreakpointString();
         switch ($breakpoint) {
             // The home button is only available on the large desktop
             // We need to select the home module from the all menu for tablet and mobile.
@@ -70,8 +69,7 @@ class NavigationBarTester extends Tester
     public function clickUserMenuItem($link)
     {
         $I = $this;
-        $design = new Design($I);
-        $breakpoint = $design->getBreakpointString();
+        $breakpoint = (new Design($I))->getBreakpointString();
         switch ($breakpoint) {
             case DesignBreakPoint::lg:
                 $I->moveMouseOver('.desktop-bar #toolbar .globalLinks-desktop');
@@ -108,8 +106,7 @@ class NavigationBarTester extends Tester
     public function clickAllMenuItem($link)
     {
         $I = $this;
-        $design = new Design($I);
-        $breakpoint = $design->getBreakpointString();
+        $breakpoint = (new Design($I))->getBreakpointString();
         switch ($breakpoint) {
             case DesignBreakPoint::lg:
                 $allMenuButton = '#toolbar.desktop-toolbar  > ul.nav.navbar-nav > li.topnav.all';
@@ -162,8 +159,7 @@ class NavigationBarTester extends Tester
     public function clickCurrentMenuItem($link)
     {
         $I = $this;
-        $design = new Design($I);
-        $breakpoint = $design->getBreakpointString();
+        $breakpoint = (new Design($I))->getBreakpointString();
         switch ($breakpoint) {
             case DesignBreakPoint::lg:
                 $I->moveMouseOver('//*[@id="toolbar"]/ul/li[2]/span[2]/a');

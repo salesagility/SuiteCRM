@@ -407,19 +407,15 @@ class SugarApplicationTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetLoginVars()
     {
-        $SugarApplication = new SugarApplication();
-
         //execute the method and test that it returns a array.
-        $vars = $SugarApplication->getLoginVars();
+        $vars = (new SugarApplication())->getLoginVars();
         self::assertTrue(is_array($vars));
     }
 
     public function testgetLoginRedirect()
     {
-        $SugarApplication = new SugarApplication();
-
         //execute the method and test that it returns a plus length string
-        $redirect = $SugarApplication->getLoginRedirect();
+        $redirect = (new SugarApplication())->getLoginRedirect();
         self::assertGreaterThan(0, strlen($redirect));
     }
 }

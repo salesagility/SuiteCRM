@@ -46,8 +46,7 @@ abstract class SearchTestAbstract extends SuitePHPUnitFrameworkTestCase
      */
     public function invokeMethod(&$object, $methodName, array $parameters = array())
     {
-        $reflection = new ReflectionClass(get_class($object));
-        $method = $reflection->getMethod($methodName);
+        $method = (new ReflectionClass(get_class($object)))->getMethod($methodName);
         $method->setAccessible(true);
 
         return $method->invokeArgs($object, $parameters);
@@ -63,8 +62,7 @@ abstract class SearchTestAbstract extends SuitePHPUnitFrameworkTestCase
      */
     public function setValue(&$object, $property, $value)
     {
-        $reflection = new ReflectionClass(get_class($object));
-        $property = $reflection->getProperty($property);
+        $property = (new ReflectionClass(get_class($object)))->getProperty($property);
         $property->setAccessible(true);
         $property->setValue($object, $value);
     }

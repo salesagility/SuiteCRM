@@ -14,8 +14,7 @@ class PopupPickerTest extends SuitePHPUnitFrameworkTestCase
         $focus->save();
 
         ob_start();
-        $popupPicker = new Popup_Picker();
-        $result = $popupPicker->process_page();
+        $result = (new Popup_Picker())->process_page();
         $output = ob_get_contents();
         ob_end_clean();
         self::assertTrue(is_null($result));

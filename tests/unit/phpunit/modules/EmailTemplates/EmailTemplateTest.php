@@ -27,8 +27,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         foreach ($related as $bean) {
             $bean->name = 'foobar';
 
-            $parser = new EmailTemplateParser($emailTemplate, $campaign, $bean, "", "");
-            $result = $parser->parseVariables();
+            $result = (new EmailTemplateParser($emailTemplate, $campaign, $bean, "", ""))->parseVariables();
             self::assertEquals('<h1>Hello foobar</h1>', from_html($result['body_html']));
             self::assertEquals('Hello foobar', $result['body']);
             self::assertEquals('Hello foobar', $result['subject']);
@@ -46,8 +45,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         $bean->last_name = 'bar';
         $bean->fill_in_additional_detail_fields();
 
-        $parser = new EmailTemplateParser($emailTemplate, $campaign, $bean, "", "");
-        $result = $parser->parseVariables();
+        $result = (new EmailTemplateParser($emailTemplate, $campaign, $bean, "", ""))->parseVariables();
         self::assertEquals('Hello foo bar', $result['body']);
     }
 

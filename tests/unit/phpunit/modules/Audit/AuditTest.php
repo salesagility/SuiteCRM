@@ -126,10 +126,8 @@ class AuditTest extends SuitePHPUnitFrameworkTestCase
         global $focus;
         $focus = BeanFactory::newBean('Accounts'); //use audit enabbled module object
 
-        $audit = BeanFactory::newBean('Audit');
-
         //execute the method and verify that it returns an array
-        $result = $audit->get_audit_list();
+        $result = BeanFactory::newBean('Audit')->get_audit_list();
         self::assertTrue(is_array($result));
     }
 

@@ -24,8 +24,7 @@ class CodeCoverageCommandsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testIsEnvironmentTravisCI()
     {
-        $reflection = new ReflectionClass(CodeCoverageCommands::class);
-        $method = $reflection->getMethod('isEnvironmentTravisCI');
+        $method = (new ReflectionClass(CodeCoverageCommands::class))->getMethod('isEnvironmentTravisCI');
         $method->setAccessible(true);
 
         $actual = $method->invoke(
@@ -38,8 +37,7 @@ class CodeCoverageCommandsTest extends SuitePHPUnitFrameworkTestCase
 
     public function testGetCommitRangeForTravisCi()
     {
-        $reflection = new ReflectionClass(CodeCoverageCommands::class);
-        $method = $reflection->getMethod('getCommitRangeForTravisCi');
+        $method = (new ReflectionClass(CodeCoverageCommands::class))->getMethod('getCommitRangeForTravisCi');
         $method->setAccessible(true);
 
         $actual = $method->invoke(
@@ -54,8 +52,7 @@ class CodeCoverageCommandsTest extends SuitePHPUnitFrameworkTestCase
     {
         $commandExpected = './vendor/bin/phpunit --configuration ./tests/phpunit.xml.dist --coverage-clover ./tests/_output/coverage.xml ./tests/unit/phpunit';
         // Run tests
-        $reflection = new ReflectionClass(CodeCoverageCommands::class);
-        $method = $reflection->getMethod('getCodeCoverageCommand');
+        $method = (new ReflectionClass(CodeCoverageCommands::class))->getMethod('getCodeCoverageCommand');
         $method->setAccessible(true);
 
         $actual = $method->invoke(

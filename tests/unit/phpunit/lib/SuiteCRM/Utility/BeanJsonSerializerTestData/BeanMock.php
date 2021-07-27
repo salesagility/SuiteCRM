@@ -50,9 +50,7 @@ class BeanMock extends \SugarBean
     /** @noinspection PhpMissingParentConstructorInspection */
     public function __construct($file)
     {
-        $array = json_decode(file_get_contents($file), true);
-
-        foreach ($array as $key => $item) {
+        foreach (json_decode(file_get_contents($file), true) as $key => $item) {
             $this->$key = $item;
         }
     }

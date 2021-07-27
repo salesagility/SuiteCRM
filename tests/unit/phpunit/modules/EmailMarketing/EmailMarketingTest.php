@@ -21,9 +21,7 @@ class EmailMarketingTest extends SuitePHPUnitFrameworkTestCase
 
     public function testretrieve()
     {
-        $emailMarketing = BeanFactory::newBean('EmailMarketing');
-
-        $result = $emailMarketing->retrieve();
+        $result = BeanFactory::newBean('EmailMarketing')->retrieve();
         self::assertInstanceOf('EmailMarketing', $result);
     }
 

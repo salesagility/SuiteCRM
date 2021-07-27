@@ -224,9 +224,7 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_contact_id_by_email()
     {
-        $contact = BeanFactory::newBean('Contacts');
-
-        $result = $contact->get_contact_id_by_email("");
+        $result = BeanFactory::newBean('Contacts')->get_contact_id_by_email("");
         self::assertEquals(null, $result);
 
 

@@ -182,9 +182,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetDefaultStatus()
     {
-        $task = BeanFactory::newBean('Tasks');
-
-        $result = $task->getDefaultStatus();
+        $result = BeanFactory::newBean('Tasks')->getDefaultStatus();
         self::assertEquals('Not Started', $result);
     }
 }

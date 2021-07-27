@@ -196,8 +196,6 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
     {
         ////error_reporting(E_ALL);
 
-        $SugarView = new SugarView();
-
         //execute the method and check if it works and throws an exception if no module is provided
         //it creates memory Fatal errors which causes PHPunit to crash so we will skip this scenario
         /*
@@ -212,7 +210,7 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
     	} */
 
         //check with valid value and check if it returns an array.
-        $menu = $SugarView->getMenu('Users');
+        $menu = (new SugarView())->getMenu('Users');
         self::assertTrue(is_array($menu));
     }
 
@@ -251,28 +249,22 @@ class SugarViewTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetBrowserTitle()
     {
-        $SugarView = new SugarView();
-
         //execute the method. it should return a title string.
-        $browserTitle = $SugarView->getBrowserTitle();
+        $browserTitle = (new SugarView())->getBrowserTitle();
         self::assertGreaterThan(0, strlen($browserTitle));
     }
 
     public function testgetBreadCrumbSymbol()
     {
-        $SugarView = new SugarView();
-
         //execute the method. it should return a string.
-        $breadCrumbSymbol = $SugarView->getBreadCrumbSymbol();
+        $breadCrumbSymbol = (new SugarView())->getBreadCrumbSymbol();
         self::assertGreaterThan(0, strlen($breadCrumbSymbol));
     }
 
     public function testcheckPostMaxSizeError()
     {
-        $SugarView = new SugarView();
-
         //execute the method. it should return False because Request parameters are not available.
-        $postMaxSizeError = $SugarView->checkPostMaxSizeError();
+        $postMaxSizeError = (new SugarView())->checkPostMaxSizeError();
         self::assertFalse($postMaxSizeError);
     }
 }

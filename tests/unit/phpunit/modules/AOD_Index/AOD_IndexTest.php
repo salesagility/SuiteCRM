@@ -23,10 +23,8 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
 
     public function testisEnabled()
     {
-        $aod_index = BeanFactory::newBean('AOD_Index');
-
         // execute the method and verify that it returns true
-        $result = $aod_index->isEnabled();
+        $result = BeanFactory::newBean('AOD_Index')->isEnabled();
         self::assertTrue($result);
     }
 
@@ -72,8 +70,7 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
     {
         $user = new User(1);
 
-        $aod_index = BeanFactory::newBean('AOD_Index');
-        $result = $aod_index->getDocumentForBean($user);
+        $result = BeanFactory::newBean('AOD_Index')->getDocumentForBean($user);
 
         //execute the method and verify that it returns an array
         self::assertTrue(is_array($result));
@@ -194,10 +191,8 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
             'Tasks' => 'Task'
         );
 
-        $aod_index = BeanFactory::newBean('AOD_Index');
-
         //execute the method and verify that it retunrs expected results
-        $actual = $aod_index->getIndexableModules();
+        $actual = BeanFactory::newBean('AOD_Index')->getIndexableModules();
         self::assertSame($expected, $actual);
     }
 }
