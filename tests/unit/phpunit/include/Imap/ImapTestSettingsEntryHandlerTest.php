@@ -87,8 +87,7 @@ class ImapTestSettingsEntryHandlerTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testHandleEntryPointRequestWrongKey()
     {
-        $handler = new ImapTestSettingsEntryHandler();
-        $results = $handler->handleEntryPointRequest(['imap_test' => 'foo'], ['imap_test_settings' => 'bar']);
+        $results = (new ImapTestSettingsEntryHandler())->handleEntryPointRequest(['imap_test' => 'foo'], ['imap_test_settings' => 'bar']);
         self::assertEquals('ERROR: Key not found.; key was: "bar".', $results);
     }
 
@@ -98,8 +97,7 @@ class ImapTestSettingsEntryHandlerTest extends SuitePHPUnitFrameworkTestCase
     public function testHandleEntryPointRequest()
     {
         $settingsFile = __DIR__ . '/../../../../../include/Imap' . ImapHandlerFactory::SETTINGS_KEY_FILE;
-        $handler = new ImapTestSettingsEntryHandler();
-        $results = $handler->handleEntryPointRequest(['imap_test' => 'foo'], ['imap_test_settings' => 'testCaseExample']);
+        $results = (new ImapTestSettingsEntryHandler())->handleEntryPointRequest(['imap_test' => 'foo'], ['imap_test_settings' => 'testCaseExample']);
         self::assertEquals('OK: test settings changed to "testCaseExample"', $results);
         self::assertTrue(unlink($settingsFile));
     }

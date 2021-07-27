@@ -61,9 +61,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
     {
         self::markTestIncomplete('environment dependency');
 
-        $user = BeanFactory::newBean('Users');
-
-        $result = $user->getSystemUser();
+        $result = BeanFactory::newBean('Users')->getSystemUser();
 
         self::assertInstanceOf('User', $result);
         self::assertEquals(1, $result->id);
@@ -510,9 +508,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
     public function getEmailInfo($id)
     {
-        $user = BeanFactory::newBean('Users');
-
-        $actual = $user->getEmailInfo($id);
+        $actual = BeanFactory::newBean('Users')->getEmailInfo($id);
 
         self::assertEquals('firstn lastn', $actual['name']);
         self::assertEquals(1, preg_match('/^one\d{0,}\@email\.com$/', $actual['email']));
@@ -520,9 +516,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
     public function testencrypt_password()
     {
-        $user = BeanFactory::newBean('Users');
-
-        $result = $user->encrypt_password("test");
+        $result = BeanFactory::newBean('Users')->encrypt_password("test");
         self::assertTrue(isset($result));
         self::assertGreaterThan(0, strlen($result));
     }
@@ -704,9 +698,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_meetings()
     {
-        $user = BeanFactory::newBean('Users');
-
-        $result = $user->get_meetings();
+        $result = BeanFactory::newBean('Users')->get_meetings();
         self::assertTrue(is_array($result));
     }
 
@@ -750,9 +742,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
     public function testsetDefaultsInConfig()
     {
         self::markTestIncomplete('Incorrect state hash (in PHPUnitTest): Hash doesn\'t match at key "filesys::/var/www/html/SuiteCRM/config.php".');
-        $user = BeanFactory::newBean('Users');
-
-        $result = $user->setDefaultsInConfig();
+        $result = BeanFactory::newBean('Users')->setDefaultsInConfig();
 
         self::assertTrue(is_array($result));
         self::assertEquals('sugar', $result['email_default_client']);
@@ -840,9 +830,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetLocaleFormatDesc()
     {
-        $user = BeanFactory::newBean('Users');
-
-        $result = $user->getLocaleFormatDesc();
+        $result = BeanFactory::newBean('Users')->getLocaleFormatDesc();
         self::assertTrue(isset($result));
         self::assertGreaterThan(0, strlen($result));
     }
@@ -935,9 +923,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
     public function testshowLastNameFirst()
     {
-        $user = BeanFactory::newBean('Users');
-
-        $result = $user->showLastNameFirst();
+        $result = BeanFactory::newBean('Users')->showLastNameFirst();
         self::assertEquals(false, $result);
     }
 
@@ -965,9 +951,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_first_day_of_week()
     {
-        $user = BeanFactory::newBean('Users');
-
-        $result = $user->get_first_day_of_week();
+        $result = BeanFactory::newBean('Users')->get_first_day_of_week();
         self::assertTrue(is_numeric($result));
     }
 
@@ -987,9 +971,7 @@ class UserTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsendEmailForPassword()
     {
-        $user = BeanFactory::newBean('Users');
-
-        $result = $user->sendEmailForPassword("1");
+        $result = BeanFactory::newBean('Users')->sendEmailForPassword("1");
 
         //expected result is a array with template not found message.
         self::assertTrue(is_array($result));

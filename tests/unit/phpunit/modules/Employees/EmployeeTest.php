@@ -176,8 +176,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 
     public function testhasCustomFields()
     {
-        $employee = BeanFactory::newBean('Employees');
-        $result = $employee->hasCustomFields();
+        $result = BeanFactory::newBean('Employees')->hasCustomFields();
         self::assertEquals(false, $result);
     }
 

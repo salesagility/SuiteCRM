@@ -71,10 +71,8 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
 
     public function testget_contacts()
     {
-        $Account = new Account('');
-
         //execute the method and verify that it returns an array
-        $contacts = $Account->get_contacts();
+        $contacts = (new Account(''))->get_contacts();
         self::assertTrue(is_array($contacts));
     }
 
@@ -146,10 +144,8 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
             'SHIPPING_ADDRESS_STREET' => null,
         );
 
-        $Account = BeanFactory::newBean('Accounts');
-
         //execute the method and verify that it retunrs expected results
-        $actual = $Account->get_list_view_data();
+        $actual = BeanFactory::newBean('Accounts')->get_list_view_data();
 
         foreach ($expected as $key => $value) {
             self::assertSame($expected[$key], $actual[$key]);
@@ -192,10 +188,8 @@ class AccountTest extends SuitePHPUnitFrameworkTestCase
 
     public function testset_notification_body()
     {
-        $Account = BeanFactory::newBean('Accounts');
-
         //execute the method and test if populates provided sugar_smarty
-        $result = $Account->set_notification_body(new Sugar_Smarty(), BeanFactory::newBean('Accounts'));
+        $result = BeanFactory::newBean('Accounts')->set_notification_body(new Sugar_Smarty(), BeanFactory::newBean('Accounts'));
         self::assertInstanceOf('Sugar_Smarty', $result);
         self::assertNotEquals(new Sugar_Smarty(), $result);
     }

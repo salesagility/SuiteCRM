@@ -35,8 +35,7 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
     public function testsetBean()
     {
         //execute the method and test if it returns correct class instances
-        $LogicHook = new LogicHook();
-        $result = $LogicHook->setBean(BeanFactory::newBean('Users'));
+        $result = (new LogicHook())->setBean(BeanFactory::newBean('Users'));
         self::assertInstanceOf('LogicHook', $result);
         self::assertInstanceOf('User', $result->bean);
     }
@@ -44,16 +43,14 @@ class LogicHookTest extends SuitePHPUnitFrameworkTestCase
     public function testgetHooksMap()
     {
         //execute the method and test if it returns true
-        $LogicHook = new LogicHook();
-        $hook_map = $LogicHook->getHooksMap();
+        $hook_map = (new LogicHook())->getHooksMap();
         self::assertTrue(is_array($hook_map));
     }
 
     public function testgetHooksList()
     {
         //execute the method and test if it returns true
-        $LogicHook = new LogicHook();
-        $hookscan = $LogicHook->getHooksList();
+        $hookscan = (new LogicHook())->getHooksList();
         self::assertTrue(is_array($hookscan));
     }
 

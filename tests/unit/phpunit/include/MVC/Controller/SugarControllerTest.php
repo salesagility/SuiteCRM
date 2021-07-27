@@ -110,8 +110,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
 
         $testUserId = 1;
         $query = "SELECT date_modified FROM users WHERE id = '$testUserId' LIMIT 1";
-        $resource = DBManagerFactory::getInstance()->query($query);
-        $row = $resource->fetch_assoc();
+        $row = DBManagerFactory::getInstance()->query($query)->fetch_assoc();
         $testUserDateModified = $row['date_modified'];
 
 
@@ -149,8 +148,7 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
 
         $testUserId = 1;
         $query = "SELECT date_modified FROM users WHERE id = '$testUserId' LIMIT 1";
-        $resource = DBManagerFactory::getInstance()->query($query);
-        $row = $resource->fetch_assoc();
+        $row = DBManagerFactory::getInstance()->query($query)->fetch_assoc();
         $testUserDateModified = $row['date_modified'];
 
         $SugarController = new SugarController();
