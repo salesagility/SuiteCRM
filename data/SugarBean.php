@@ -415,6 +415,10 @@ class SugarBean
      */
     public $old_modified_by_name;
 
+    /**
+     * @var SugarBean[][] $line_item_entries
+     */
+    public $line_item_entries = [];
 
     /**
      * SugarBean constructor.

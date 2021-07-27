@@ -26,6 +26,7 @@
  */
 
 require_once __DIR__ . '/BeanSaveHandlerInterface.php';
+require_once __DIR__ . '/../LineItems/BeanLineItemSaveHandler.php';
 
 class BeanSaveHandlers
 {
@@ -54,6 +55,7 @@ class BeanSaveHandlers
      */
     private function __construct()
     {
+        $this->add(self::TYPE_BEFORE, new BeanLineItemSaveHandler());
     }
 
     /**
