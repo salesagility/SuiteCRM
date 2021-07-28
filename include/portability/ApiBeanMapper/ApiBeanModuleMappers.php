@@ -25,8 +25,9 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-require_once __DIR__. '/TypeMappers/TypeMapperInterface.php';
-require_once __DIR__. '/FieldMappers/FieldMapperInterface.php';
+require_once __DIR__ . '/TypeMappers/TypeMapperInterface.php';
+require_once __DIR__ . '/FieldMappers/FieldMapperInterface.php';
+require_once __DIR__ . '/LinkMappers/LinkMapperInterface.php';
 
 class ApiBeanModuleMappers
 {
@@ -41,6 +42,11 @@ class ApiBeanModuleMappers
      * @var TypeMapperInterface[]
      */
     protected $typeMappers = [];
+
+    /**
+     * @var LinkMapperInterface[][]
+     */
+    protected $linkMappers = [];
 
     /**
      * @return string
@@ -106,4 +112,44 @@ class ApiBeanModuleMappers
         return isset($this->typeMappers[$type]);
     }
 
+    /**
+     * @return LinkMapperInterface[][]
+     */
+    public function getLinkMappers(): array
+    {
+        return $this->linkMappers;
+    }
+
+    /**
+     * @param string $relateModule
+     * @param string $field
+     * @return LinkMapperInterface|null
+     */
+    public function getLinkMapper(string $relateModule, string $field): ?LinkMapperInterface
+    {
+        $moduleLinkMappers = $this->linkMappers[$relateModule] ?? [];
+
+        return $moduleLinkMappers[$field] ?? $moduleLinkMappers['all'] ?? null;
+    }
+
+    /**
+     * @param LinkMapperInterface[][] $linkMappers
+     * @return ApiBeanModuleMappers
+     */
+    public function setLinkMappers(array $linkMappers): ApiBeanModuleMappers
+    {
+        $this->linkMappers = $linkMappers;
+
+        return $this;
+    }
+
+    /**
+     * @param string $relateModule
+     * @param string $field
+     * @return bool
+     */
+    public function hasLinkMapper(string $relateModule, string $field): bool
+    {
+        return $this->getLinkMapper($relateModule, $field) !== null;
+    }
 }

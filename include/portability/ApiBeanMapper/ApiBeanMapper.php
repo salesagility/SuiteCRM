@@ -26,6 +26,8 @@
  */
 
 require_once __DIR__ . '/FieldMappers/AssignedUserMapper.php';
+require_once __DIR__ . '/LinkMappers/LinkMapperInterface.php';
+require_once __DIR__ . '/LinkMappers/EmailAddressLinkMapper.php';
 require_once __DIR__ . '/TypeMappers/FullNameMapper.php';
 require_once __DIR__ . '/TypeMappers/DateMapper.php';
 require_once __DIR__ . '/TypeMappers/DateTimeMapper.php';
@@ -50,6 +52,11 @@ class ApiBeanMapper
     protected $typeMappers = [];
 
     /**
+     * @var LinkMapperInterface[][]
+     */
+    protected $linkMappers = [];
+
+    /**
      * @var ApiBeanModuleMappers[]
      */
     protected $moduleMappers = [];
@@ -65,6 +72,8 @@ class ApiBeanMapper
         $this->typeMappers['boolean'] = $this->typeMappers[BooleanMapper::getType()];
         $this->moduleMappers[SavedSearchMappers::getModule()] = new SavedSearchMappers();
         $this->typeMappers[DateTimeComboMapper::getType()] = new DateTimeMapper();
+        $this->linkMappers[EmailAddressLinkMapper::getRelateModule()] = [];
+        $this->linkMappers[EmailAddressLinkMapper::getRelateModule()]['all'] = new EmailAddressLinkMapper();
         $this->moduleMappers[CaseUpdatesMappers::getModule()] = new CaseUpdatesMappers();
     }
 
@@ -89,6 +98,12 @@ class ApiBeanMapper
             }
 
             if ($this->isLinkField($definition)) {
+                if (!$this->hasLinkMapper($bean->module_name, $definition)) {
+                    continue;
+                }
+
+                $this->mapLinkFieldToApi($bean, $arr, $definition);
+
                 continue;
             }
 
@@ -118,6 +133,14 @@ class ApiBeanMapper
             }
 
             $this->toBeanMap($bean, $values, $properties, $field);
+
+            if ($this->isLinkField($properties)) {
+                if (!$this->hasLinkMapper($bean->module_name, $properties)) {
+                    continue;
+                }
+
+                $this->mapLinkFieldToBean($bean, $values, $properties);
+            }
 
             $bean->$field = $values[$field];
         }
@@ -164,6 +187,7 @@ class ApiBeanMapper
     {
         return isset($definition['type']) && $definition['type'] === 'link';
     }
+
 
     /**
      * @param $fieldDefinition
@@ -316,6 +340,46 @@ class ApiBeanMapper
     }
 
     /**
+     * @param SugarBean $bean
+     * @param array $container
+     * @param array $definition
+     */
+    protected function mapLinkFieldToApi(SugarBean $bean, array &$container, array $definition): void
+    {
+        $module = $bean->module_name ?? '';
+        $relateModule = $definition['module'] ?? '';
+        $name = $definition['name'] ?? '';
+
+        $linkMapper = $this->getLinkMapper($module, $relateModule, $name);
+
+        if ($linkMapper === null) {
+            return;
+        }
+
+        $linkMapper->toApi($bean, $container, $name);
+    }
+
+    /**
+     * @param SugarBean $bean
+     * @param array $container
+     * @param array $definition
+     */
+    protected function mapLinkFieldToBean(SugarBean $bean, array &$container, array $definition): void
+    {
+        $module = $bean->module_name ?? '';
+        $relateModule = $definition['module'] ?? '';
+        $name = $definition['name'] ?? '';
+
+        $linkMapper = $this->getLinkMapper($module, $relateModule, $name);
+
+        if ($linkMapper === null) {
+            return;
+        }
+
+        $linkMapper->toBean($bean, $container, $name);
+    }
+
+    /**
      * @param string $module
      * @param string $field
      * @return FieldMapperInterface
@@ -329,6 +393,45 @@ class ApiBeanMapper
         }
 
         return $this->fieldMappers[$field] ?? null;
+    }
+
+    /**
+     * @param string $module
+     * @param string $relateModule
+     * @param string $field
+     * @return LinkMapperInterface
+     */
+    protected function getLinkMapper(string $module, string $relateModule, string $field): ?LinkMapperInterface
+    {
+        if ($module === '' || $relateModule === '' || $field === '') {
+            return null;
+        }
+
+        $moduleMappers = $this->moduleMappers[$module] ?? null;
+
+        if ($moduleMappers !== null && $moduleMappers->hasLinkMapper($relateModule, $field)) {
+            return $moduleMappers->getLinkMapper($relateModule, $field);
+        }
+
+        $moduleLinkMappers = $this->linkMappers[$relateModule] ?? [];
+
+        return $moduleLinkMappers[$field] ?? $moduleLinkMappers['all'] ?? null;
+    }
+
+    /**
+     * @param $definition
+     * @return bool
+     */
+    protected function hasLinkMapper($module, $definition): bool
+    {
+        $relateModule = $definition['module'] ?? '';
+        $name = $definition['name'] ?? '';
+
+        if ($relateModule === '' || $name === '') {
+            return false;
+        }
+
+        return $this->getLinkMapper($module, $relateModule, $name) !== null;
     }
 
     /**
