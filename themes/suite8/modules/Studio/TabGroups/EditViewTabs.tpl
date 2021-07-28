@@ -37,12 +37,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-
-
-
 *}
-
 
 <script type="text/javascript" src="{sugar_getjspath file='modules/Studio/JSTransaction.js'}" ></script>
 <script>
@@ -53,23 +48,22 @@
 <script type="text/javascript" src="{sugar_getjspath file='modules/Studio/studiodd.js'}" ></script>
 <script type="text/javascript" src="{sugar_getjspath file='modules/Studio/studio.js'}" ></script>
 {literal}
-<style type='text/css'>
-
-</style>
 {/literal}
+<div class='configure-module-menu'>
 <h2 >{$title}</h2>
-<p>{$MOD.LBL_GROUP_TAB_WELCOME}</p>
+<p style='margin-bottom:1em;'>{$MOD.LBL_GROUP_TAB_WELCOME}</p>
 
-<table cellspacing=2>
-<button class='button' style='cursor:default' onmousedown='this.className="buttonOn";return false;'
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<button id='save-button' class='button' style='cursor:default' onmousedown='this.className="buttonOn";return false;'
             onmouseup='this.className="button"' onmouseout='this.className="button"'
             onclick='studiotabs.generateForm("edittabs");document.edittabs.submit()'>
-            {$MOD.LBL_BTN_SAVEPUBLISH}</button>
+            {$MOD.LBL_BTN_SAVEPUBLISH}
+</button>
 </table>
-<p />
+
 <form name='edittabs' id='edittabs' method='POST' action='index.php'>
 <input type="hidden" name="slot_count" id="slot_count" value="" />
-<table  cellpadding="0" cellspacing="0" border="0" width="100%">
+<table  cellpadding="0" cellspacing="0" border="0" width="100%" style='margin-bottom:1em;'>
 <tr>
 	<td width="100%" class='dataLabel' colspan=2>
 	{$MOD.LBL_TABGROUP_LANGUAGE}&nbsp;
@@ -89,8 +83,7 @@
   </table></li>
 
 </ul>
-						</td></tr></table>
-
+</td></tr></table>
 
 <div class='noBullet' style="padding-left: 20px;"><h2>{$MOD.LBL_MODULES}</h2>
 <ul class='listContainer'>
@@ -98,7 +91,7 @@
 {foreach from=$availableModuleList key='key' item='value'}
 
 
-<li  id='modSlot{$modCounter}'><span class='slotB'>{$value.label}</span></li>
+<li id='modSlot{$modCounter}'><span class='slotB'>{$value.label}</span></li>
 <script>
 tabLabelToValue['{$value.label}'] = '{$value.value}';
 subtabModules['modSlot{$modCounter}'] = '{$value.label}'</script>
@@ -141,20 +134,19 @@ subtabModules['modSlot{$modCounter}'] = '{$value.label}'</script>
 {/foreach}
 
 </tr>
-<tr><td><input type='button' class='button' onclick='addTabGroup()' value='{$MOD.LBL_ADD_GROUP}'></td></tr>
+<tr>
+<td class="add-filter-btn">
+	<input type='button' class='button' onclick='addTabGroup()' value='{$MOD.LBL_ADD_GROUP}'>
+</td>
+</tr>
 </table>
 
 </td>
 </table>
 
-
-
 <span class='error'>{$error}</span>
 
-
-
 {literal}
-
 
 		<script>
 		function tabLanguageChange(sel){
@@ -295,5 +287,6 @@ subtabModules['modSlot{$modCounter}'] = '{$value.label}'</script>
 	<input type='hidden' name='action' value='SaveTabs'>
 	<input type='hidden' name='module' value='Studio'>
 </form>
+</div>
 
 
