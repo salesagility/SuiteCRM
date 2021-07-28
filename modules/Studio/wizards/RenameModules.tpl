@@ -62,7 +62,7 @@
     }
 </style>
 {/literal}
-
+<div class="rename-modules">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
@@ -70,10 +70,9 @@
 <table cellspacing="2">
     <tr>
         <td colspan="3">{$MOD.LBL_RENAME_MOD_SAVE_HELP}</td>
-    </tr>
-    <tr><td>&nbsp;</td></tr>
+    </tr>    
     <tr>
-        <td colspan="3">
+        <td colspan="3" class='action-button'>
             <input type="button" class="button primary" value="{$MOD.LBL_BTN_SAVE}" id="renameSaveBttn" onclick='validateForm();'name="{$MOD.LBL_BTN_SAVE}" />
             <input type="button" class="button" value="{$MOD.LBL_BTN_CANCEL}"  id="renameCancelBttn" name="{$MOD.LBL_BTN_CANCEL}" onclick="document.editdropdown.action.value='index'; document.editdropdown.module.value='Administration';document.editdropdown.submit()" />
         </td>
@@ -84,7 +83,7 @@
 <tr>
     <td>
         <span class='error'>{$error}</span>
-        <table>
+        <table class='dropdown-field'>
             <tr>
                 <td colspan='2'>
                     <form method='post' action='index.php' name='dropdownsform'>
@@ -112,24 +111,24 @@
 <input type='hidden' name='dropdown_lang' value='{$dropdown_lang}'>
 <input type='hidden' name='dropdown_name' value='moduleList'>
 
-<table name='tabDropdown' id='tabDropdown'>
+<table name='tabDropdown' id='tabDropdown' class='dropdown-field'>
 
 {counter start=0 name="rowCounter" print=false assign="rowCounter"}
 {foreach from=$dropdown item="value" key="key"}
 <tr>
     <td>
-        <span id='slot{$rowCounter}b' >
-            <span onclick='prepChangeDropDownValue({$rowCounter}, document.getElementById("slot{$rowCounter}_value"));'>{$editImage}</span>
+        <div id='slot{$rowCounter}b'>
+            <span class='edit-pencil' onclick='prepChangeDropDownValue({$rowCounter}, document.getElementById("slot{$rowCounter}_value"));'>{$editImage}</span>
             &nbsp;
             <span id ='slot{$rowCounter}_value' onclick='prepChangeDropDownValue({$rowCounter}, this);'>{$value.lang}</span>
             <span id='slot{$rowCounter}_textspan' style='display:none;'>{$value.user_lang}
                 <table style="margin-left:15px;">
                     <tr>
-                        <td align="right">{$MOD.LBL_SINGULAR}</td>
+                        <td align="right" class='edit-field-label'>{$MOD.LBL_SINGULAR}</td>
                         <td align="left"><input id='slot{$rowCounter}_stext' value="{$value.singular}" onchange='setSingularDropDownValue({$rowCounter});' type='text'></td>
                     </tr>
                     <tr>
-                        <td align="right">{$MOD.LBL_PLURAL}</td>
+                        <td align="left" class='edit-field-label'>{$MOD.LBL_PLURAL}</td>
                         <td align="left"><input id='slot{$rowCounter}_text' value="{$value.lang}" type='text'  onchange='setDropDownValue({$rowCounter}, this.value, true)' ></td>
                     </tr>
                 </table>
@@ -140,7 +139,7 @@
                 <input name='value_{$rowCounter}' id='value_{$rowCounter}' value='{$value.lang}' type = 'hidden'>
                 <input name='svalue_{$rowCounter}' id='svalue_{$rowCounter}' value='{$value.singular}' type = 'hidden'>
             </span>
-        </span>
+        </div>
     </td>
 </tr>
 {counter name="rowCounter"}
@@ -277,3 +276,4 @@
 </form>
 </td></tr>
 </table>
+</div>

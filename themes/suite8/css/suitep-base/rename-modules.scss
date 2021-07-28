@@ -1,0 +1,52 @@
+.rename-modules {
+    position: relative;
+    .moduleTitle {
+        border-bottom: 1px solid $mid-light-grey;
+        margin-bottom: 0.5em;        
+    }
+    .action-button {
+        position: absolute;
+        top: 0em;
+        right:0;
+        .button {
+            background-color: $nepal-grey;
+            border-radius: 0.2em;
+            font-weight: bold;
+            height: 2.2em;
+            line-height: 1em;
+            letter-spacing: 0.05em;
+            padding: 0.3em 1em;
+            text-transform: capitalize;
+            &:hover {
+                background: $pale-blue;
+            }
+        }
+    }
+    .dropdown-field {
+        margin: 0em 0 0em 1em;
+    }
+    .pencil-edit-field {
+        margin: 1em 0 1em 1em;
+    }
+    select {
+        background: url($select-edit-background-url) no-repeat right;
+        background-size: 25px 11px;
+        border-color: $bright-grey;
+        margin-top: 1em;
+    }
+    input[type=text],input[type=password],input[type=email],input[type=number]{
+        background-color: $transparent-color;
+        border: 1px solid $form-border-color;       
+    }
+    .edit-pencil {
+        cursor: pointer;
+        svg {
+            position: relative;
+            top: 5px;
+        }
+    }
+    .edit-field-label {
+        padding-right: 0.5em;
+        vertical-align: middle;
+    }
+}
