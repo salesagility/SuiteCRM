@@ -39,6 +39,7 @@
  */
 
 *}
+<div class="history-subpanel-config">
 <form name="AdminSettings" method="POST">
     <input type="hidden" name="action" value="historyContactsEmailsSave">
     <input type="hidden" name="module" value="Configurator">
@@ -55,18 +56,21 @@
     <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
         <tr>
             <td scope="row" align="right" valign="top" nowrap>{$MOD.LBL_ENABLE_HISTORY_CONTACTS_EMAILS}:</td>
-            <td colspan="4" width="95%">
+            <td colspan="4" width="95%" style='vertical-align:middle;'>
                 <table id="sugarfeed_modulelist" cellspacing=3 border=0>
                     {foreach name=feedModuleList from=$modules item=entry}
                         {if ($smarty.foreach.feedModuleList.index % 2)==0}<tr>{/if}
-                        <td scope="row" align="right">{$entry.label}:</td>
-                        <td>
+                        <tr>
+                            <td scope="row" align="right">{$entry.label}:</td>
+                            <td>
                             <input type="hidden" name="modules[{$entry.module}]" value="0">
                             <input type="checkbox" id="modules[{$entry.module}]" name="modules[{$entry.module}]" value="1" {if $entry.enabled==1}CHECKED{/if}>
                         </td>
+                        </tr>     
                         {if ($i % 2)==1}</tr>{/if}
                     {/foreach}
                 </table>
             </td></tr>
     </table>
 </form>
+</div>

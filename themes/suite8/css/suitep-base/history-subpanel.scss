@@ -1,0 +1,12 @@
+.history-subpanel-config {
+    .view {
+        tr td[scope=row] {
+            padding-left: 1em;
+        }       
+        #sugarfeed_modulelist {
+            tr td {
+                vertical-align: middle;
+            }
+        }
+    }
+}

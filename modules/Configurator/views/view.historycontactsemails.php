@@ -112,7 +112,7 @@ class ConfiguratorViewHistoryContactsEmails extends SugarView
                 $modules[$moduleName]['enabled'] = !$flag;
             }
         }
-
+        ksort($modules);
         $this->ss->assign('modules', $modules);
         $this->ss->display('modules/Configurator/tpls/historyContactsEmails.tpl');
     }
