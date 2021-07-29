@@ -1305,6 +1305,38 @@ function return_application_language($language)
 }
 
 /**
+ * load install languages
+ * @param string $language
+ * @return array
+ */
+function load_install_language(string $language): array
+{
+    global $current_language;
+    $default_lang = 'en_us';
+
+    $current_language = $language ?? $default_lang;
+    $mod_strings = [];
+
+    if (file_exists(__DIR__ . "/../install/language/{$current_language}.lang.php")) {
+        include(__DIR__ . "/../install/language/{$current_language}.lang.php");
+    } else {
+        include(__DIR__ . "/../install/language/{$default_lang}.lang.php");
+    }
+
+    if ($current_language !== 'en_us') {
+        $my_mod_strings = $mod_strings;
+        include(__DIR__ . '/../install/language/en_us.lang.php');
+        $mod_strings = sugarLangArrayMerge($mod_strings, $my_mod_strings);
+    }
+
+    if(empty($mod_strings) || !is_array($mod_strings)){
+        return [];
+    }
+
+    return $mod_strings;
+}
+
+/**
  * This function retrieves a module's language file and returns the array of strings included.
  *
  * @param string $language specific language to load
