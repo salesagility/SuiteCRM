@@ -43,6 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 $mod_strings = array(
+    'LBL_BASIC' => 'BASIC',
     'LBL_BASIC_SEARCH' => 'Quick Filter',
     'LBL_ADVANCED_SEARCH' => 'Advanced Filter',
     'LBL_BASIC_TYPE' => 'Basic Type',
@@ -322,6 +323,7 @@ $mod_strings = array(
     'LBL_STEP2' => 'Step 2 of 2 - Configuration',
     'LBL_STEP' => 'Step',
     'LBL_TITLE_WELCOME' => 'Welcome to the SuiteCRM ',
+    'LBL_WELCOME' => 'Welcome to SuiteCRM',
     //welcome page variables
     'LBL_TITLE_ARE_YOU_READY' => 'Are you ready to install?',
     'REQUIRED_SYS_COMP' => 'Required System Components',

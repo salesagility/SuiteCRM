@@ -3860,6 +3860,9 @@ $app_strings['LBL_LINE_ITEMS_FIELD_CONFIG'] = 'Bad config';
 
 $app_strings['LBL_ACTION_SUCCESS'] = 'Action successful';
 
+$app_strings['LBL_YES'] = 'Yes';
+$app_strings['LBL_NO'] = 'No';
+
 $app_list_strings['sort_order'] = [];
 $app_list_strings['sort_order']['asc'] = 'Ascending';
 $app_list_strings['sort_order']['desc'] = 'Descending';
