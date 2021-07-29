@@ -1,11 +1,10 @@
 <?php
-/** @noinspection PhpUnhandledExceptionInspection */
 /**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,14 +37,23 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+/** @noinspection PhpUnhandledExceptionInspection */
+
+use Elasticsearch\Client;
+use Mockery\MockInterface;
+use SuiteCRM\Search\ElasticSearch\ElasticSearchEngine;
 use SuiteCRM\Search\SearchQuery;
+use SuiteCRM\Tests\Unit\lib\SuiteCRM\Search\SearchTestAbstract;
 
 /** @noinspection PhpIncludeInspection */
 require_once 'lib/Search/ElasticSearch/ElasticSearchEngine.php';
 
-class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
+/**
+ * Class ElasticSearchEngineTest
+ */
+class ElasticSearchEngineTest extends SearchTestAbstract
 {
-    public function testValidateQuery()
+    public function testValidateQuery(): void
     {
         $engine = new ElasticSearchEngine();
         $str = " test AND test2 OR t-test3 ";
@@ -57,7 +65,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
         self::assertEquals($exp, $query->getSearchString());
     }
 
-    public function testCreateSearchParams1()
+    public function testCreateSearchParams1(): void
     {
         global $sugar_config;
 
@@ -88,10 +96,10 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 
         $params = $this->invokeMethod($engine, 'createSearchParams', [$query]);
 
-        $this->assertEquals($expectedParams, $params);
+        self::assertEquals($expectedParams, $params);
     }
 
-    public function testCreateSearchParams2()
+    public function testCreateSearchParams2(): void
     {
         global $sugar_config;
 
@@ -121,10 +129,10 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 
         $params = $this->invokeMethod($engine, 'createSearchParams', [$query]);
 
-        $this->assertEquals($expectedParams, $params);
+        self::assertEquals($expectedParams, $params);
     }
 
-    public function testRunElasticSearch()
+    public function testRunElasticSearch(): void
     {
         $query = SearchQuery::fromString("a");
 
@@ -133,8 +141,8 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
         $client = $this->getMockedClient($mockedResults);
 
         $engine = new ElasticSearchEngine($client);
-
-        $results = $params = $this->invokeMethod($engine, 'runElasticSearch', [$query]);
+        $searchQuery = $this->getSearchQuery($engine, $query);
+        $results = $this->invokeMethod($engine, 'runElasticSearch', [$searchQuery]);
 
         self::assertEquals($mockedResults, $results);
     }
@@ -142,11 +150,11 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
     /**
      * @return array
      */
-    private function getMockedHits()
+    private function getMockedHits(): array
     {
         global $sugar_config;
 
-        $mockedResults = [
+        return [
             'took' => 5,
             'timed_out' => false,
             '_shards' =>
@@ -186,18 +194,16 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
                         ]
                 ],
         ];
-        return $mockedResults;
     }
 
     /**
      * @param $mockedResults
-     * @return \Mockery\MockInterface
+     * @return MockInterface
      */
-    private function getMockedClient($mockedResults)
+    private function getMockedClient($mockedResults): MockInterface
     {
-        $client = Mockery::mock('Elasticsearch\Client');
+        $client = Mockery::mock(Client::class);
 
-        /** @noinspection PhpMethodParametersCountMismatchInspection */
         $client
             ->shouldReceive('search')
             ->once()
@@ -206,7 +212,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
         return $client;
     }
 
-    public function testParseHits()
+    public function testParseHits(): void
     {
         $engine = new ElasticSearchEngine();
 
@@ -214,7 +220,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 
         $expectedResults = $this->getExpectedResultsForMockedHits();
 
-        $results = $params = $this->invokeMethod($engine, 'parseHits', [$mockedHits]);
+        $results = $this->invokeMethod($engine, 'parseHits', [$mockedHits]);
 
         self::assertEquals($expectedResults, $results);
     }
@@ -222,9 +228,9 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
     /**
      * @return array
      */
-    private function getExpectedResultsForMockedHits()
+    private function getExpectedResultsForMockedHits(): array
     {
-        $expectedResults = [
+        return [
             'Accounts' => [
                 'id1',
                 'id2'
@@ -233,11 +239,9 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
                 'id3',
             ]
         ];
-
-        return $expectedResults;
     }
 
-    public function testParseEmptyHits()
+    public function testParseEmptyHits(): void
     {
         $engine = new ElasticSearchEngine();
 
@@ -245,12 +249,12 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 
         $expectedResults = [];
 
-        $results = $params = $this->invokeMethod($engine, 'parseHits', [$mockedHits]);
+        $results = $this->invokeMethod($engine, 'parseHits', [$mockedHits]);
 
         self::assertEquals($expectedResults, $results);
     }
 
-    private function getMockedHitsEmpty()
+    private function getMockedHitsEmpty(): array
     {
         return [
             'took' => 1,
@@ -270,7 +274,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
         ];
     }
 
-    public function testSearch()
+    public function testSearch(): void
     {
         $mockedClient = $this->getMockedClient($this->getMockedHits());
         $engine = new ElasticSearchEngine($mockedClient);
@@ -281,11 +285,11 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 
         self::assertEquals($expectedResults, $results->getHits());
         self::assertEquals(258, $results->getTotal());
-        self::assertTrue(is_float($results->getSearchTime()));
+        self::assertIsFloat($results->getSearchTime());
         self::assertGreaterThan(0, $results->getSearchTime());
     }
 
-    public function testGetIndex()
+    public function testGetIndex(): void
     {
         global $sugar_config;
 
@@ -298,5 +302,18 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
         $actual = $engine->getIndex();
 
         self::assertEquals($expected, $actual);
+    }
+
+    /**
+     * @param ElasticSearchEngine $engine
+     * @param SearchQuery $query
+     * @return array
+     * @throws ReflectionException
+     */
+    private function getSearchQuery(ElasticSearchEngine $engine, SearchQuery $query): array
+    {
+        $this->invokeMethod($engine, 'validateQuery', [&$query]);
+
+        return $this->invokeMethod($engine, 'createSearchParams', [&$query]);
     }
 }

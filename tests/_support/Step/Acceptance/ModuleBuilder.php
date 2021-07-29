@@ -11,7 +11,7 @@ class ModuleBuilder extends Administration
      * @param string $moduleType
      * @see SugarObjectType
      */
-    public function createModule($packageName, $moduleName, $moduleType)
+    public function createModule($packageName, $moduleName, $moduleType): void
     {
         $I = $this;
 
@@ -86,7 +86,7 @@ class ModuleBuilder extends Administration
     /**
      * @param string $packageName
      */
-    public function selectPackage($packageName)
+    public function selectPackage($packageName): void
     {
         $I = $this;
 
@@ -103,7 +103,7 @@ class ModuleBuilder extends Administration
      * @param string $packageName
      * @param string $moduleName
      */
-    public function selectModule($packageName, $moduleName)
+    public function selectModule($packageName, $moduleName): void
     {
         $I = $this;
 
@@ -118,7 +118,7 @@ class ModuleBuilder extends Administration
         $I->waitForElementVisible(['name' => 'savebtn']);
     }
 
-    public function closePopupSuccess()
+    public function closePopupSuccess(): void
     {
         $I = $this;
         $I->wait(1);
@@ -132,7 +132,7 @@ class ModuleBuilder extends Administration
      * @param boolean $packageExists
      *
      */
-    public function deployPackage($packageName, $packageExists = false)
+    public function deployPackage($packageName, $packageExists = false): void
     {
         $I = $this;
 

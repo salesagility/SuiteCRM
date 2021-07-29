@@ -38,7 +38,4 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once('modules/Home/UnifiedSearchAdvanced.php');
-global $mod_strings, $modListHeader, $app_strings, $beanList, $beanFiles;
-$usa = new UnifiedSearchAdvanced();
-$usa->search();
+require_once __DIR__ . '/Search.php';

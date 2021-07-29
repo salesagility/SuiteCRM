@@ -77,7 +77,7 @@ class SearchConfigurator
      *
      * @return SearchConfigurator
      */
-    public static function make()
+    public static function make(): SearchConfigurator
     {
         return new self();
     }
@@ -91,14 +91,10 @@ class SearchConfigurator
      *
      * @return SearchConfigurator
      */
-    public function setEngine($engine)
+    public function setEngine(string $engine): SearchConfigurator
     {
         if (empty($engine)) {
             throw new InvalidArgumentException('$engine cannot be empty');
-        }
-
-        if (!is_string($engine)) {
-            throw new InvalidArgumentException('$engine must be a string');
         }
 
         $searchController = 'UnifiedSearch';
@@ -123,7 +119,7 @@ class SearchConfigurator
      *
      * @return SearchConfigurator
      */
-    public function save()
+    public function save(): SearchConfigurator
     {
         $this->configurator->saveConfig();
 

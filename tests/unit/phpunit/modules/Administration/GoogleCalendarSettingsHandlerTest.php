@@ -48,7 +48,7 @@ include_once __DIR__ . '/../../../../../include/utils/BaseHandler.php';
 include_once __DIR__ . '/../../../../../modules/Administration/GoogleCalendarSettingsHandler.php';
 include_once __DIR__ . '/GoogleCalendarSettingsHandlerMock.php';
 include_once __DIR__ . '/../../../../../include/utils/layout_utils.php';
-        
+
 class GoogleCalendarSettingsHandlerTest extends SuitePHPUnitFrameworkTestCase
 {
     protected function setUp(): void
@@ -57,12 +57,12 @@ class GoogleCalendarSettingsHandlerTest extends SuitePHPUnitFrameworkTestCase
         $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'Administration');
     }
 
-    public function testFirst()
+    public function testFirst(): void
     {
-        $this->assertEquals(true, true);
+        self::assertEquals(true, true);
     }
 
-    public function testDoAction()
+    public function testDoAction(): void
     {
         global $current_user;
         global $mod_strings;
@@ -82,11 +82,11 @@ class GoogleCalendarSettingsHandlerTest extends SuitePHPUnitFrameworkTestCase
             new javascript()
         );
 
-        $this->assertTrue($gcsHandler->getExitOk());
-        $this->assertEquals('index.php?module=Administration&action=index', $gcsHandler->getRedirectUrl());
+        self::assertTrue($gcsHandler->getExitOk());
+        self::assertEquals('index.php?module=Administration&action=index', $gcsHandler->getRedirectUrl());
     }
 
-    public function testNoDoAction()
+    public function testNoDoAction(): void
     {
         global $current_user;
         global $mod_strings;
@@ -106,11 +106,11 @@ class GoogleCalendarSettingsHandlerTest extends SuitePHPUnitFrameworkTestCase
             new javascript()
         );
 
-        $this->assertFalse($gcsHandler->getExitOk());
-        $this->assertEquals('', $gcsHandler->getRedirectUrl());
+        self::assertFalse($gcsHandler->getExitOk());
+        self::assertEquals('', $gcsHandler->getRedirectUrl());
     }
 
-    public function testHandleDisplay()
+    public function testHandleDisplay(): void
     {
         global $current_user;
         global $mod_strings;
@@ -134,10 +134,10 @@ class GoogleCalendarSettingsHandlerTest extends SuitePHPUnitFrameworkTestCase
 
         $ret = $gcsHandler->handleDisplay();
 
-        $this->assertTrue($gcsHandler->getJavascriptCalled());
-        $this->assertFalse($cfg->config['google_auth_json']);
+        self::assertTrue($gcsHandler->getJavascriptCalled());
+        self::assertFalse($cfg->config['google_auth_json']);
 
-        $this->assertEquals(array(
+        self::assertEquals(array(
             'status' => 'UNCONFIGURED',
             'color' => 'black'
             ), $s->get_template_vars('GOOGLE_JSON_CONF'));

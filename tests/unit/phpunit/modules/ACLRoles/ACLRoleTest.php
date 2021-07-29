@@ -13,23 +13,22 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         $current_user = BeanFactory::newBean('Users');
     }
 
-    public function testACLRole()
+    public function testACLRole(): void
     {
         // Execute the constructor and check for the Object type and type attribute
         $aclRole = BeanFactory::newBean('ACLRoles');
-        $this->assertInstanceOf('ACLRole', $aclRole);
-        $this->assertInstanceOf('SugarBean', $aclRole);
+        self::assertInstanceOf('ACLRole', $aclRole);
+        self::assertInstanceOf('SugarBean', $aclRole);
 
-        $this->assertAttributeEquals('ACLRoles', 'module_dir', $aclRole);
-        $this->assertAttributeEquals('ACLRole', 'object_name', $aclRole);
-        $this->assertAttributeEquals('acl_roles', 'table_name', $aclRole);
-        $this->assertAttributeEquals(true, 'new_schema', $aclRole);
-        $this->assertAttributeEquals(true, 'disable_row_level_security', $aclRole);
-        $this->assertAttributeEquals(true, 'disable_custom_fields', $aclRole);
-        $this->assertAttributeEquals(array('user_id' => 'users'), 'relationship_fields', $aclRole);
+        self::assertEquals('ACLRoles', $aclRole->module_dir);
+        self::assertEquals('ACLRole', $aclRole->object_name);
+        self::assertEquals('acl_roles', $aclRole->table_name);
+        self::assertEquals(true, $aclRole->new_schema);
+        self::assertEquals(true, $aclRole->disable_row_level_security);
+        self::assertEquals(true, $aclRole->disable_custom_fields);
     }
 
-    public function testget_summary_text()
+    public function testget_summary_text(): void
     {
         $aclRole = BeanFactory::newBean('ACLRoles');
 
@@ -37,10 +36,10 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         //it works only if name attribute is preset, throws exception otherwise
         $aclRole->name = 'test role';
         $name = $aclRole->get_summary_text();
-        $this->assertEquals('test role', $name);
+        self::assertEquals('test role', $name);
     }
 
-    public function testsetAction()
+    public function testsetAction(): void
     {
         $aclRole = BeanFactory::newBean('ACLRoles');
 
@@ -49,10 +48,10 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         $aclRole->setAction('1', '1', '90');
         $final_count = count($aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id'));
 
-        $this->assertGreaterThanOrEqual($initial_count, $final_count, "values were: [$initial_count], [$final_count]");
+        self::assertGreaterThanOrEqual($initial_count, $final_count, "values were: [$initial_count], [$final_count]");
     }
 
-    public function testmark_relationships_deleted()
+    public function testmark_relationships_deleted(): void
     {
         $aclRole = BeanFactory::newBean('ACLRoles');
 
@@ -61,55 +60,55 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         $aclRole->mark_relationships_deleted('1');
         $final_count = count($aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id'));
 
-        $this->assertLessThanOrEqual($initial_count, $final_count, "values were: [$initial_count], [$final_count]");
+        self::assertLessThanOrEqual($initial_count, $final_count, "values were: [$initial_count], [$final_count]");
     }
 
-    public function testgetUserRoles()
+    public function testgetUserRoles(): void
     {
         $aclRole = BeanFactory::newBean('ACLRoles');
 
         //test with default/true getAsNameArray param value
         $result = $aclRole->getUserRoles('1');
-        $this->assertTrue(is_array($result));
+        self::assertIsArray($result);
 
         //test with flase getAsNameArray param value
         $result = $aclRole->getUserRoles('1', false);
-        $this->assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
-    public function testgetUserRoleNames()
+    public function testgetUserRoleNames(): void
     {
         $aclRole = BeanFactory::newBean('ACLRoles');
 
         //test with empty value
         $result = $aclRole->getUserRoleNames('');
-        $this->assertTrue(is_array($result));
+        self::assertIsArray($result);
 
         //test with non empty but non existing role id value
         $result = $aclRole->getUserRoleNames('1');
-        $this->assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
-    public function testgetAllRoles()
+    public function testgetAllRoles(): void
     {
         $aclRole = BeanFactory::newBean('ACLRoles');
 
         //test with returnAsArray default/flase
         $result = $aclRole->getAllRoles();
-        $this->assertTrue(is_array($result));
+        self::assertIsArray($result);
 
         //test with returnAsArray true
         $result = $aclRole->getAllRoles(true);
-        $this->assertTrue(is_array($result));
+        self::assertIsArray($result);
     }
 
-    public function testgetRoleActions()
+    public function testgetRoleActions(): void
     {
         $aclRole = BeanFactory::newBean('ACLRoles');
 
         //test with empty value
         $result = $aclRole->getRoleActions('');
-        $this->assertInternalType('array', $result);
+        self::assertIsArray($result);
         $exp = [
           'Accounts',
           'Alerts',
@@ -166,22 +165,22 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
           'Users',
           'AOW_WorkFlow',
         ];
-        $this->assertEquals($exp, array_keys($result));
+        self::assertEquals($exp, array_keys($result));
 
         //test with non empty but non existing role id value, initially no roles exist.
         $result = $aclRole->getRoleActions('1');
-        $this->assertInternalType('array', $result);
-        $this->assertEquals($exp, array_keys($result));
+        self::assertIsArray($result);
+        self::assertEquals($exp, array_keys($result));
     }
 
-    public function testtoArray()
+    public function testtoArray(): void
     {
         $aclRole = BeanFactory::newBean('ACLRoles');
 
         //wihout any fields set
         $expected = array('id' => '', 'name' => '',  'description' => '');
         $actual = $aclRole->toArray();
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
 
         //with fileds pre populated
         $aclRole->id = '1';
@@ -190,10 +189,10 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
 
         $expected = array('id' => '1', 'name' => 'test',  'description' => 'some description text');
         $actual = $aclRole->toArray();
-        $this->assertSame($expected, $actual);
+        self::assertSame($expected, $actual);
     }
 
-    public function testfromArray()
+    public function testfromArray(): void
     {
         $aclRole = BeanFactory::newBean('ACLRoles');
 
@@ -201,8 +200,8 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         $aclRole->fromArray($arr);
 
         //verify that it sets the object attributes correctly
-        $this->assertSame($aclRole->id, '1');
-        $this->assertSame($aclRole->name, 'test');
-        $this->assertSame($aclRole->description, 'some description text');
+        self::assertSame($aclRole->id, '1');
+        self::assertSame($aclRole->name, 'test');
+        self::assertSame($aclRole->description, 'some description text');
     }
 }

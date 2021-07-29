@@ -55,6 +55,10 @@ class GoogleCalendarSettingsHandlerMock extends GoogleCalendarSettingsHandler
         parent::__construct($tplPath, $current_user, $request, $mod_strings, $config, $sugar_smarty, $js);
     }
 
+    /**
+     * @param string $exitstring
+     * @noinspection ReturnTypeCanBeDeclaredInspection
+     */
     protected function protectedDie($exitstring)
     {
         $this->exitstring = $exitstring;
@@ -65,32 +69,42 @@ class GoogleCalendarSettingsHandlerMock extends GoogleCalendarSettingsHandler
         return $this->diedOk;
     }
 
+    /**
+     * @noinspection ReturnTypeCanBeDeclaredInspection
+     */
     protected function protectedExit()
     {
         $this->exitOk = true;
     }
 
-    public function getExitOk()
+    public function getExitOk(): bool
     {
         return $this->exitOk;
     }
 
+    /**
+     * @param string $url
+     * @noinspection ReturnTypeCanBeDeclaredInspection
+     */
     protected function redirect($url)
     {
         $this->url = $url;
     }
 
-    public function getRedirectUrl()
+    public function getRedirectUrl(): string
     {
         return $this->url;
     }
 
+    /**
+     * @noinspection ReturnTypeCanBeDeclaredInspection
+     */
     protected function getJavascript()
     {
         $this->javascriptCalled = true;
     }
 
-    public function getJavascriptCalled()
+    public function getJavascriptCalled(): bool
     {
         return $this->javascriptCalled;
     }

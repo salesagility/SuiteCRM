@@ -1,5 +1,4 @@
 <?php
-/** @noinspection PhpMethodParametersCountMismatchInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
 
 /**
@@ -7,7 +6,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,31 +40,30 @@
  */
 
 use Mockery as m;
+use Mockery\Exception\InvalidCountException;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer as i;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
-use SuiteCRM\Search\SearchTestAbstract;
-use SuiteCRM\Utility\BeanJsonSerializerTestData\BeanMock;
+use SuiteCRM\Tests\Unit\lib\SuiteCRM\Search\SearchTestAbstract;
+use SuiteCRM\Tests\Unit\lib\SuiteCRM\Utility\BeanJsonSerializerTestData\BeanMock;
 
 include_once __DIR__ . '/../../Utility/BeanJsonSerializerTestData/BeanMock.php';
 include_once __DIR__ . '/../SearchTestAbstract.php';
 
 class ElasticSearchIndexerTest extends SearchTestAbstract
 {
-    public function testGetModulesToIndex()
+    public function testGetModulesToIndex(): void
     {
-        $indexer = new ElasticSearchIndexer(null);
+        $modules = (new ElasticSearchIndexer(null))->getModulesToIndex();
 
-        $modules = $indexer->getModulesToIndex();
-
-        self::assertTrue(is_array($modules), "Result is not an array.");
+        self::assertIsArray($modules, "Result is not an array.");
 
         self::assertTrue(count($modules) > 0, "The array is empty.");
 
-        self::assertTrue(in_array('Contacts', $modules), "Contacts was not found in the list of modules to index");
+        self::assertContains('Contacts', $modules, "Contacts was not found in the list of modules to index");
     }
 
-    public function testIndexBeans()
+    public function testIndexBeans(): void
     {
         $client = m::mock('\Elasticsearch\Client');
 
@@ -107,7 +105,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
         self::assertEquals(9, $i->getIndexedFieldsCount(), "Wrong number of fields indexed");
     }
 
-    public function testGettersAndSetters()
+    public function testGettersAndSetters(): void
     {
         $batchSize = 20;
         $index = 'test1';
@@ -128,7 +126,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
         self::assertEquals($index, $i->getIndex());
     }
 
-    public function testIndexBean()
+    public function testIndexBean(): void
     {
         $bean = $this->getTestBean();
         $client = m::mock('\Elasticsearch\Client');
@@ -139,20 +137,24 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
 
         $indexer = new ElasticSearchIndexer($client);
 
-        $indexer->indexBean($bean);
+        try {
+            $indexer->indexBean($bean);
+            self::assertTrue(true);
+        } catch (Exception $e) {
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+        }
     }
 
     /**
      * @return SugarBean
      */
-    private function getTestBean()
+    private function getTestBean(): \SugarBean
     {
         /** @var SugarBean $bean */
-        $bean = new BeanMock(__DIR__ . '/../../Utility/BeanJsonSerializerTestData/ContactBean.json');
-        return $bean;
+        return new BeanMock(__DIR__ . '/../../Utility/BeanJsonSerializerTestData/ContactBean.json');
     }
 
-    public function testMakeIndexParamsFromBean()
+    public function testMakeIndexParamsFromBean(): void
     {
         $bean = $this->getTestBean();
         $expected = $this->getExpectedHeader();
@@ -160,7 +162,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
 
         $indexer = new ElasticSearchIndexer(null);
 
-        $actual = self::invokeMethod($indexer, 'makeIndexParamsFromBean', [$bean]);
+        $actual = $this->invokeMethod($indexer, 'makeIndexParamsFromBean', [$bean]);
 
         self::assertEquals($expected, $actual);
     }
@@ -168,24 +170,23 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
     /**
      * @return array
      */
-    private function getExpectedHeader()
+    private function getExpectedHeader(): array
     {
         global $sugar_config;
 
-        $expected = [
+        return [
             'index' => $sugar_config['unique_key'],
             'type' => 'Contacts',
             'id' => '00000000-0000-0000-0000-000000000000',
         ];
-        return $expected;
     }
 
     /**
      * @return array
      */
-    private function getExpectedBody()
+    private function getExpectedBody(): array
     {
-        $expected = [
+        return [
             'meta' =>
                 [
                     'created' =>
@@ -244,20 +245,19 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
                     0 => 'kid79@example.co.jp',
                 ],
         ];
-        return $expected;
     }
 
-    public function testMakeIndexParamsBodyFromBean1()
+    public function testMakeIndexParamsBodyFromBean1(): void
     {
         $bean = $this->getTestBean();
         $indexer = new ElasticSearchIndexer(null);
         $expected = $this->getExpectedBody();
 
-        $actual = self::invokeMethod($indexer, 'makeIndexParamsBodyFromBean', [$bean]);
+        $actual = $this->invokeMethod($indexer, 'makeIndexParamsBodyFromBean', [$bean]);
         self::assertEquals($expected, $actual);
     }
 
-    public function testMakeIndexParamsBodyFromBean2()
+    public function testMakeIndexParamsBodyFromBean2(): void
     {
         $bean = $this->getTestBean();
         $indexer = new ElasticSearchIndexer(null);
@@ -305,12 +305,12 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
             'lead_source' => 'Web Site',
         ];
 
-        $actual = self::invokeMethod($indexer, 'makeIndexParamsBodyFromBean', [$bean]);
+        $actual = $this->invokeMethod($indexer, 'makeIndexParamsBodyFromBean', [$bean]);
 
         self::assertEquals($expected, $actual);
     }
 
-    public function testRemoveBeans()
+    public function testRemoveBeans(): void
     {
         global $sugar_config;
 
@@ -346,10 +346,15 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
 
         $indexer = new ElasticSearchIndexer($mock);
 
-        $indexer->removeBeans($beans, true);
+        try {
+            $indexer->removeBeans($beans, true);
+            self::assertTrue(true);
+        } catch (Exception $e) {
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+        }
     }
 
-    public function testRemoveBean()
+    public function testRemoveBean(): void
     {
         global $sugar_config;
 
@@ -369,27 +374,31 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
 
         $indexer = new ElasticSearchIndexer($mock);
 
-        $indexer->removeBean($bean);
+        try {
+            $indexer->removeBean($bean);
+            self::assertTrue(true);
+        } catch (Exception $e) {
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+        }
     }
 
-    public function testMakeParamsHeaderFromBean()
+    public function testMakeParamsHeaderFromBean(): void
     {
-        /** @var SugarBean $bean */
         $bean = $this->getTestBean();
         $expected = $this->getExpectedHeader();
 
         $indexer = new ElasticSearchIndexer(null);
 
-        $actual = self::invokeMethod($indexer, 'makeParamsHeaderFromBean', [$bean]);
+        $actual = $this->invokeMethod($indexer, 'makeParamsHeaderFromBean', [$bean]);
 
         self::assertEquals($expected, $actual);
     }
 
-    public function testRemoveIndex()
+    public function testRemoveIndex(): void
     {
         global $sugar_config;
 
-        list($mockClient, $mockIndices) = $this->getMockIndices();
+        [$mockClient, $mockIndices] = $this->getMockIndices();
 
         $mockIndices
             ->shouldReceive('delete')
@@ -398,13 +407,18 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
 
         $indexer = new ElasticSearchIndexer($mockClient);
 
-        $indexer->removeIndex();
+        try {
+            $indexer->removeIndex();
+            self::assertTrue(true);
+        } catch (Exception $e) {
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+        }
     }
 
     /**
      * @return array(\Elasticsearch\Client, \Elasticsearch\Namespaces\IndicesNamespace)
      */
-    public function getMockIndices()
+    public function getMockIndices(): array
     {
         $mockClient = m::mock('Elasticsearch\Client');
         $mockIndices = m::mock('Elasticsearch\Namespaces\IndicesNamespace');
@@ -417,10 +431,10 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
         return [$mockClient, $mockIndices];
     }
 
-    public function testRemoveIndex2()
+    public function testRemoveIndex2(): void
     {
         $index = uniqid();
-        list($mockClient, $mockIndices) = $this->getMockIndices();
+        [$mockClient, $mockIndices] = $this->getMockIndices();
 
         $mockIndices
             ->shouldReceive('delete')
@@ -428,12 +442,18 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
             ->with(['index' => $index, 'client' => ['ignore' => [404]]]);
 
         $indexer = new ElasticSearchIndexer($mockClient);
-        $indexer->removeIndex($index);
+
+        try {
+            $indexer->removeIndex($index);
+            self::assertTrue(true);
+        } catch (Exception $e) {
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+        }
     }
 
-    public function testDeleteAllIndexes()
+    public function testDeleteAllIndexes(): void
     {
-        list($mockClient, $mockIndices) = $this->getMockIndices();
+        [$mockClient, $mockIndices] = $this->getMockIndices();
 
         $mockIndices
             ->shouldReceive('delete')
@@ -441,12 +461,18 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
             ->with(['index' => '_all']);
 
         $indexer = new ElasticSearchIndexer($mockClient);
-        $indexer->removeAllIndices();
+
+        try {
+            $indexer->removeAllIndices();
+            self::assertTrue(true);
+        } catch (Exception $e) {
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+        }
     }
 
-    public function testDeleteAllIndexes2()
+    public function testDeleteAllIndexes2(): void
     {
-        list($mockClient, $mockIndices) = $this->getMockIndices();
+        [$mockClient, $mockIndices] = $this->getMockIndices();
 
         $mockIndices
             ->shouldReceive('delete')
@@ -455,9 +481,13 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
             ->andThrow('\Elasticsearch\Common\Exceptions\Missing404Exception');
 
         $indexer = new ElasticSearchIndexer($mockClient);
-        $indexer->removeAllIndices();
 
-        // no exception should appear here, as the 404 has to be caught.
+        try {
+            $indexer->removeAllIndices();
+            self::assertTrue(true);
+        } catch (Exception $e) {
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+        }
     }
 
     protected function tearDown(): void
@@ -466,7 +496,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
         parent::tearDown();
     }
 
-    public function testPing()
+    public function testPing(): void
     {
         $mockClient = m::mock('\Elasticsearch\Client');
 
@@ -476,12 +506,11 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
             ->once()
             ->andReturnFalse();
 
-        $indexer = new ElasticSearchIndexer($mockClient);
-        $actual = $indexer->ping();
+        $actual = (new ElasticSearchIndexer($mockClient))->ping();
         self::assertFalse($actual);
     }
 
-    public function testPing2()
+    public function testPing2(): void
     {
         $mockClient = m::mock('\Elasticsearch\Client');
 
@@ -491,13 +520,12 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
             ->once()
             ->andReturnTrue();
 
-        $indexer = new ElasticSearchIndexer($mockClient);
-        $actual = $indexer->ping();
+        $actual = (new ElasticSearchIndexer($mockClient))->ping();
         self::assertNotFalse($actual);
-        self::assertTrue(is_numeric($actual));
+        self::assertIsNumeric($actual);
     }
 
-    public function testPutMappings()
+    public function testPutMappings(): void
     {
         $meta = ['foo' => 'bar'];
         $module = 'Accounts';
@@ -509,7 +537,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
             'body' => ['_meta' => $meta]
         ];
 
-        list($client, $indices) = $this->getMockIndices();
+        [$client, $indices] = $this->getMockIndices();
 
         $indices
             ->shouldReceive('putMapping')
@@ -517,12 +545,17 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
             ->once();
 
         $i = new i($client);
-        $i->setIndex($index);
 
-        $i->putMeta($module, $meta);
+        try {
+            $i->setIndex($index);
+            $i->putMeta($module, $meta);
+            self::assertTrue(true);
+        } catch (Exception $e) {
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+        }
     }
 
-    public function testGetMeta()
+    public function testGetMeta(): void
     {
         $meta = ['foo' => 'bar'];
         $module = 'Accounts';
@@ -531,7 +564,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
         $params = ['index' => $index, 'filter_path' => "$index.mappings.$module._meta"];
         $response = [$index => ['mappings' => [$module => ['_meta' => $meta]]]];
 
-        list($client, $indices) = $this->getMockIndices();
+        [$client, $indices] = $this->getMockIndices();
 
         $indices
             ->shouldReceive('getMapping')
@@ -548,12 +581,12 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
         self::assertEquals($meta, $actual);
     }
 
-    public function testCreateIndex()
+    public function testCreateIndex(): void
     {
         $index = 'test';
         $params = ['index' => $index];
 
-        list($client, $indices) = $this->getMockIndices();
+        [$client, $indices] = $this->getMockIndices();
 
         $indices
             ->shouldReceive('create')
@@ -562,16 +595,21 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
 
         $i = new i($client);
 
-        $i->createIndex($index);
+        try {
+            $i->createIndex($index);
+            self::assertTrue(true);
+        } catch (Exception $e) {
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+        }
     }
 
-    public function testCreateIndexWithBody()
+    public function testCreateIndexWithBody(): void
     {
         $index = 'test';
         $body = ["mappings" => ['my_type' => ['_source' => ['enabled' => true]]]];
         $params = ['index' => $index, 'body' => $body];
 
-        list($client, $indices) = $this->getMockIndices();
+        [$client, $indices] = $this->getMockIndices();
 
         $indices
             ->shouldReceive('create')
@@ -580,6 +618,11 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
 
         $i = new i($client);
 
-        $i->createIndex($index, $body);
+        try {
+            $i->createIndex($index, $body);
+            self::assertTrue(true);
+        } catch (Exception $e) {
+            self::fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+        }
     }
 }

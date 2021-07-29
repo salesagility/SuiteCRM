@@ -3882,3 +3882,6 @@ $app_strings['LBL_ADD_CONTACTS_TO_TARGET_LIST_SUCCESS'] = 'Contacts added to tar
 $app_strings['LBL_ADD_CONTACTS_TO_TARGET_LIST_FAILED'] = 'There was an error adding contacts to target list.';
 $app_strings['LBL_CHANGED_TO_TEXT'] = 'changed to';
 $app_strings['LBL_RECORD_CHANGED'] = 'Record Updated';
+$app_strings['LBL_CREATE'] = "Create";
+$app_strings['LBL_USE_ADVANCED_SEARCH'] = 'Use Advanced Search';
+$app_strings['LBL_USE_BASIC_SEARCH'] = 'Use Basic Search';

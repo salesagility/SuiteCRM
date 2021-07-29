@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2019 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,19 +37,20 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+use SuiteCRM\Search\ElasticSearch\ElasticSearchEngine;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
 use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Search\SearchWrapper;
-
+use SuiteCRM\Tests\Unit\lib\SuiteCRM\Search\SearchTestAbstract;
 
 /** @noinspection PhpIncludeInspection */
 require_once 'lib/Search/ElasticSearch/ElasticSearchEngine.php';
 
-class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
+class ElasticSearchIntegrationTest extends SearchTestAbstract
 {
-    const LOCK_FILE = 'cache/ElasticSearchIndex.lock';
+    public const LOCK_FILE = 'cache/ElasticSearchIndex.lock';
     /** @var ElasticSearchIndexer */
     private $indexer;
     /** @var ElasticSearchEngine */
@@ -78,20 +79,20 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         parent::tearDown();
     }
 
-    private function restore()
+    private function restore(): void
     {
         $this->indexer->removeIndex('test');
     }
 
-    public function testPing()
+    public function testPing(): void
     {
         $result = $this->indexer->ping();
 
         self::assertNotFalse($result);
-        self::assertTrue(is_numeric($result));
+        self::assertIsNumeric($result);
     }
 
-    public function testWithoutSearchdefs()
+    public function testWithoutSearchdefs(): void
     {
         $this->indexer->setDocumentifier(new JsonSerializerDocumentifier());
         $this->indexRunner();
@@ -100,7 +101,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
     /**
      * Starts indexing using the indexer stored as a field.
      */
-    private function indexRunner()
+    private function indexRunner(): void
     {
         /** @var Contact $bean */
         $bean = BeanFactory::newBean('Contacts');
@@ -211,19 +212,19 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
      * The indexing on Elasticsearch is scheduled each second.
      * No results will be available before that time.
      **/
-    private function waitForIndexing()
+    private function waitForIndexing(): void
     {
         sleep(1);
     }
 
-    public function testWithSearchdefs()
+    public function testWithSearchdefs(): void
     {
         $this->indexer->setDocumentifier(new SearchDefsDocumentifier());
 
         $this->indexRunner();
     }
 
-    public function testDifferentialIndexing()
+    public function testDifferentialIndexing(): void
     {
         global $timedate;
         $timedate->allow_cache = false;
@@ -323,7 +324,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         self::assertEmpty($results->getHits(), 'There should be no search results, as the record was deleted');
     }
 
-    private function populateContactsTable()
+    private function populateContactsTable(): void
     {
         /** @var Contact $bean */
         $bean = BeanFactory::newBean('Contacts');
@@ -336,7 +337,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $bean->save();
     }
 
-    public function testMeta()
+    public function testMeta(): void
     {
         $module = "TestModule";
         $meta1 = ['foo' => 'baz'];

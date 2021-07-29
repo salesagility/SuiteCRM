@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -60,7 +60,7 @@ class SearchFormView extends View
     }
 
     /** @inheritdoc */
-    public function display()
+    public function display(): void
     {
         $sizes = $this->makeSizesFromConfig();
         $engines = [];
@@ -80,25 +80,25 @@ class SearchFormView extends View
      *
      * @return array
      */
-    protected function makeSizesFromConfig()
+    protected function makeSizesFromConfig(): ?array
     {
         global $sugar_config;
-        
+
         if (!isset($sugar_config['search']['pagination']['min'])) {
             LoggerManager::getLogger()->warn('Configuration does not contains value for search pagination min');
         }
-        
+
         if (!isset($sugar_config['search']['pagination']['step'])) {
             LoggerManager::getLogger()->warn('Configuration does not contains value for search pagination step');
         }
-        
+
         if (!isset($sugar_config['search']['pagination']['max'])) {
             LoggerManager::getLogger()->warn('Configuration does not contains value for search pagination max');
         }
-        
-        $min = isset($sugar_config['search']['pagination']['min']) ? $sugar_config['search']['pagination']['min'] : null;
-        $step = isset($sugar_config['search']['pagination']['step']) ? $sugar_config['search']['pagination']['step'] : null;
-        $max = isset($sugar_config['search']['pagination']['max']) ? $sugar_config['search']['pagination']['max'] : null;
+
+        $min = $sugar_config['search']['pagination']['min'] ?? null;
+        $step = $sugar_config['search']['pagination']['step'] ?? null;
+        $max = $sugar_config['search']['pagination']['max'] ?? null;
 
         try {
             return $this->makeSizes($min, $step, $max);
@@ -110,30 +110,29 @@ class SearchFormView extends View
     /**
      * Makes an array with the page size from the given parameters.
      *
-     * @param int $min
-     * @param int $step
-     * @param int $max
-     *
-     * @throws InvalidArgumentException in case of failure
+     * @param int|null $min
+     * @param int|null $step
+     * @param int|null $max
      *
      * @return array
+     * @throws InvalidArgumentException in case of failure
      */
-    protected function makeSizes($min, $step, $max)
+    protected function makeSizes(?int $min, ?int $step, ?int $max): array
     {
-        $min = intval($min);
-        $step = intval($step);
-        $max = intval($max);
+        $min = (int)$min;
+        $step = (int)$step;
+        $max = (int)$max;
 
-        if (!is_integer($min) || !is_integer($step) || !is_integer($max)) {
+        if (!is_int($min) || !is_int($step) || !is_int($max)) {
             throw new InvalidArgumentException('Arguments must be integers');
+        }
+
+        if ($max === 0 || $step === 0 || $min === 0) {
+            throw new InvalidArgumentException('Arguments cannot be zero');
         }
 
         if ($min > $max) {
             throw new InvalidArgumentException('$min must be smaller than $max');
-        }
-
-        if ($max == 0 || $min == 0 || $min == 0) {
-            throw new InvalidArgumentException('Arguments cannot be zero');
         }
 
         $sizes = [];
