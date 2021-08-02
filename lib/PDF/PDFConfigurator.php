@@ -37,7 +37,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Search;
+namespace SuiteCRM\PDF;
 
 use Configurator;
 use InvalidArgumentException;
@@ -49,19 +49,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once __DIR__ . '/../../modules/Configurator/Configurator.php';
 
 /**
- * Class SearchConfigurator handles the configuration calls for the Search Framework.
- *
- * All the methods are fluent and save() must be called at the end to make the changes permanent.
+ * Class PDFConfigurator
+ * @package SuiteCRM\PDF
  */
-class SearchConfigurator
+class PDFConfigurator
 {
     /** @var Configurator */
     private $configurator;
 
     /**
-     * SearchConfigurator constructor.
-     *
-     * @param null|Configurator $configurator
+     * PDFConfigurator constructor.
+     * @param Configurator|null $configurator
      */
     public function __construct(Configurator $configurator = null)
     {
@@ -75,47 +73,24 @@ class SearchConfigurator
     /**
      * Factory method for nice fluent syntax.
      *
-     * @return SearchConfigurator
+     * @return PDFConfigurator
      */
-    public static function make(): SearchConfigurator
+    public static function make(): PDFConfigurator
     {
         return new self();
     }
 
     /**
-     * Configure the Search Framework configuration only based on the search engine.
-     *
-     * This supports the fake engine names used to refer to the legacy search.
-     *
      * @param string $engine
-     *
-     * @return SearchConfigurator
+     * @return $this
      */
-    public function setEngine(string $engine): SearchConfigurator
+    public function setEngine(string $engine): PDFConfigurator
     {
         if (empty($engine)) {
-            throw new InvalidArgumentException('Search Engine cannot be empty');
+            throw new InvalidArgumentException('PDF Engine cannot be empty');
         }
 
-        $searchController = 'UnifiedSearch';
-        $enableAod = false;
-
-        switch ($engine) {
-            case 'BasicSearchEngine':
-                // Only basic search
-                break;
-            case 'BasicAndAodEngine':
-                // Basic search and AOD
-                $enableAod = true;
-                break;
-            default:
-                // SearchWrapper with a specific engine
-                $searchController = 'Search';
-        }
-
-        $this->configurator->config['search']['controller'] = $searchController;
-        $this->configurator->config['search']['defaultEngine'] = $engine;
-        $this->configurator->config['aod']['enable_aod'] = $enableAod;
+        $this->configurator->config['pdf']['defaultEngine'] = $engine;
 
         return $this;
     }
@@ -123,9 +98,9 @@ class SearchConfigurator
     /**
      * Saves the current configuration.
      *
-     * @return SearchConfigurator
+     * @return PDFConfigurator
      */
-    public function save(): SearchConfigurator
+    public function save(): PDFConfigurator
     {
         $this->configurator->saveConfig();
 
