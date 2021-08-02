@@ -109,6 +109,14 @@ $admin_option_defs['Administration']['oauth2_clients'] = array(
     'password'
 );
 
+$admin_option_defs['Administration']['pdf'] = array(
+    'PDF',
+    'LBL_PDF_HEADER',
+    'LBL_CHANGE_PDF_SETTINGS',
+    './index.php?module=Administration&action=PDFSettings',
+    'system-settings'
+);
+
 $admin_group_header[]= array('LBL_ADMINISTRATION_HOME_TITLE','',false,$admin_option_defs, 'LBL_ADMINISTRATION_HOME_DESC');
 
 
@@ -224,7 +232,6 @@ $admin_option_defs['Administration']['aos'] = array(
     './index.php?module=Administration&action=AOSAdmin',
     'aos-settings'
 );
-
 $admin_option_defs['Administration']['aop'] = array(
     'AOP',
     'LBL_AOP_SETTINGS',

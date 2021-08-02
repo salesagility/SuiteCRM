@@ -969,6 +969,18 @@ $mod_strings = array(
     'LBL_ELASTIC_SEARCH_ENGINE' => 'Elasticsearch Engine',
     'LBL_SIMPLE_SQL_SEARCH_ENGINE' => 'Simple SQL Search Engine',
 
+    // SearchWrapper Settings
+    'LBL_PDF_HEADER' => 'PDF Settings',
+    'LBL_CHANGE_PDF_SETTINGS' => 'Change PDF Settings',
+    'LBL_PDF_HEADER_DESC' => 'Manage your PDF preferences',
+    'LBL_PDF_OPTIONS' => 'PDF Engine',
+    'LBL_PDF_OPTIONS_HELP' => 'Select the PDF engine that users will be able to use.',
+    'LBL_PDF_INTERFACE' => 'PDF Interface',
+
+    // PDF Engines Translations
+    'LBL_PDF_WRAPPER_ENGINES' => 'PDF Engines',
+    'LBL_MPDF_ENGINE' => 'MPDF Engine',
+
     // Ajax Submit
     'LBL_AJAX_SUBMIT_FAIL' => 'An error has occurred while saving the settings.',
 );

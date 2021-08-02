@@ -172,4 +172,12 @@ class PDFWrapper
 
         return $sugar_config['pdf'][$key] ?? null;
     }
+
+    /**
+     * @return string|null
+     */
+    public static function getController(): ?string
+    {
+        return self::getPDFConfig('controller');
+    }
 }
