@@ -37,92 +37,18 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Search;
-
-use Configurator;
-use InvalidArgumentException;
+use SuiteCRM\Modules\Administration\PDF\Controller;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__ . '/../../modules/Configurator/Configurator.php';
+global $current_user;
 
-/**
- * Class SearchConfigurator handles the configuration calls for the Search Framework.
- *
- * All the methods are fluent and save() must be called at the end to make the changes permanent.
- */
-class SearchConfigurator
-{
-    /** @var Configurator */
-    private $configurator;
-
-    /**
-     * SearchConfigurator constructor.
-     *
-     * @param null|Configurator $configurator
-     */
-    public function __construct(Configurator $configurator = null)
-    {
-        if ($configurator === null) {
-            $configurator = new Configurator();
-        }
-
-        $this->configurator = $configurator;
-    }
-
-    /**
-     * Factory method for nice fluent syntax.
-     *
-     * @return SearchConfigurator
-     */
-    public static function make(): SearchConfigurator
-    {
-        return new self();
-    }
-
-    /**
-     * Configure the Search Framework configuration only based on the search engine.
-     *
-     * This supports the fake engine names used to refer to the legacy search.
-     *
-     * @param string $engine
-     *
-     * @return SearchConfigurator
-     */
-    public function setEngine(string $engine): SearchConfigurator
-    {
-        if (empty($engine)) {
-            throw new InvalidArgumentException('Search Engine cannot be empty');
-        }
-
-        $searchController = 'UnifiedSearch';
-
-        switch ($engine) {
-            case 'BasicSearchEngine':
-                // Only basic search
-                break;
-            default:
-                // SearchWrapper with a specific engine
-                $searchController = 'Search';
-        }
-
-        $this->configurator->config['search']['controller'] = $searchController;
-        $this->configurator->config['search']['defaultEngine'] = $engine;
-
-        return $this;
-    }
-
-    /**
-     * Saves the current configuration.
-     *
-     * @return SearchConfigurator
-     */
-    public function save(): SearchConfigurator
-    {
-        $this->configurator->saveConfig();
-
-        return $this;
-    }
+if (!is_admin($current_user)) {
+    sugar_die("Unauthorized access to administration.");
 }
+
+$controller = new Controller();
+
+$controller->handle();
