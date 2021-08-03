@@ -313,13 +313,48 @@ class MysqliManager extends MysqlManager
                 $dbport = substr($configOptions['db_host_name'], $pos + 1);
             }
 
-            $this->database = @mysqli_connect(
-                $dbhost,
-                $configOptions['db_user_name'],
-                $configOptions['db_password'],
-                isset($configOptions['db_name']) ? $configOptions['db_name'] : '',
-                $dbport
-            );
+			
+            if (!empty($configOptions['db_ssl'])) {
+                try {
+                    $this->database = @mysqli_init();
+                    mysqli_ssl_set(
+                        $this->database,
+                        isset($configOptions['db_ssl_key']) ? $configOptions['db_ssl_key'] : '',
+                        isset($configOptions['db_ssl_certificate']) ? $configOptions['db_ssl_certificate'] : '',
+                        isset($configOptions['db_ssl_ca_certificate']) ? $configOptions['db_ssl_ca_certificate'] : '',
+                        isset($configOptions['db_ssl_ca_path']) ? $configOptions['db_ssl_ca_path'] : null,
+                        isset($configOptions['db_ssl_cipher_algos']) ? $configOptions['db_ssl_cipher_algos'] : null
+                    );
+                } catch (Exception $ex) {
+                    $GLOBALS['log']->error("error on ssl connection init. " . $ex->getCode() . ": " . $ex->getMessage());
+                }
+                
+                if (isset($configOptions['db_ssl_connect_options'])) {
+                    $ssl_connect_options_callback = function($ret, $option) {return $ret | $option;};
+                    $ssl_connect_options = array_reduce($configOptions['db_ssl_connect_options'], $ssl_connect_options_callback, 0);
+                } else {
+                    $ssl_connect_options = null;
+                }
+                
+                $this->database = @mysqli_real_connect(
+                    $dbhost,
+                    $configOptions['db_user_name'],
+                    $configOptions['db_password'],
+                    isset($configOptions['db_name']) ? $configOptions['db_name'] : '',
+                    $dbport,
+                    null,
+                    $ssl_connect_options,
+                );
+            } else {
+				$this->database = @mysqli_connect(
+					$dbhost,
+					$configOptions['db_user_name'],
+					$configOptions['db_password'],
+					isset($configOptions['db_name']) ? $configOptions['db_name'] : '',
+					$dbport
+				);
+            }
+			
             if (empty($this->database)) {
                 $GLOBALS['log']->fatal("Could not connect to DB server " . $dbhost . " as " . $configOptions['db_user_name'] . ". port " . $dbport . ": " . mysqli_connect_error());
                 if ($dieOnError) {
