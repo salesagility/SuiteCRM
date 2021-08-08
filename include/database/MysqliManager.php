@@ -346,13 +346,13 @@ class MysqliManager extends MysqlManager
                     $ssl_connect_options,
                 );
             } else {
-				$this->database = @mysqli_connect(
-					$dbhost,
-					$configOptions['db_user_name'],
-					$configOptions['db_password'],
-					isset($configOptions['db_name']) ? $configOptions['db_name'] : '',
-					$dbport
-				);
+                $this->database = @mysqli_connect(
+                    $dbhost,
+                    $configOptions['db_user_name'],
+                    $configOptions['db_password'],
+                    isset($configOptions['db_name']) ? $configOptions['db_name'] : '',
+                    $dbport
+                );
             }
 			
             if (empty($this->database)) {
