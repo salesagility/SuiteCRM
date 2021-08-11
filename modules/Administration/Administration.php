@@ -109,6 +109,10 @@ class Administration extends SugarBean
 
     public function retrieveSettings($category = false, $clean = false)
     {
+        if(empty($this->db->database)){
+            return;
+        }
+
         $categoryQuoted = $this->db->quote($category);
 
         // declare a cache for all settings

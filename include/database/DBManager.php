@@ -1876,7 +1876,7 @@ abstract class DBManager
      * Takes a prepared stmt index and the data to replace and creates the query and runs it.
      *
      * @deprecated This is no longer used and will be removed in a future release. See createPreparedQuery() for an alternative.
-     * 
+     *
      * @param  int $stmt The index of the prepared statement from preparedTokens
      * @param  array $data The array of data to replace the tokens with.
      * @return resource result set or false on error

@@ -77,6 +77,10 @@ class ACLAction extends SugarBean
         global $ACLActions;
         $db = DBManagerFactory::getInstance();
 
+        if(empty($db->database)){
+            return;
+        }
+
         if (isset($ACLActions[$type])) {
             foreach ($ACLActions[$type]['actions'] as $action_name => $action_def) {
                 $action = BeanFactory::newBean('ACLActions');
