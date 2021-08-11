@@ -1043,7 +1043,7 @@ EOQ;
 
  # CSS
  ExpiresByType text/css "access plus 1 year"
- 
+
  # Data
  ExpiresByType application/atom+xml "access plus 1 hour"
  ExpiresByType application/rdf+xml "access plus 1 hour"
