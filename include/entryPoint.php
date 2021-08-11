@@ -54,9 +54,14 @@ if (!defined('PHP_VERSION_ID')) {
     define('PHP_VERSION_ID', ($version_array[0] * 10000 + $version_array[1] * 100 + $version_array[2]));
 }
 
+require_once 'include/SugarObjects/SugarConfig.php';
+
+
 if (empty($GLOBALS['installing']) && !file_exists('config.php')) {
     header('Location: install.php');
-    throw new Exception('SuiteCRM is not installed. Entry point needs an installed SuiteCRM, please install first.');
+    if (isset($GLOBALS['log'])) {
+        $GLOBALS['log']->fatal('SuiteCRM is not installed. Entry point needs an installed SuiteCRM, please install first.');
+    }
 }
 
 $BASE_DIR = realpath(dirname(__DIR__));
@@ -70,6 +75,20 @@ if (file_exists($autoloader)) {
 // config|_override.php
 if (is_file('config.php')) {
     require_once 'config.php'; // provides $sugar_config
+} else {
+    // load minimal sugar config required to provide basic data to Suite8 application
+    $sugar_config = array(
+        'cache_dir' => 'cache/',
+        'default_currency_iso4217' => 'USD',
+        'default_currency_symbol' => '$',
+        'default_language' => 'en_us',
+        'default_theme' => 'suite8',
+        'languages' =>
+            array(
+                'en_us' => 'English (US)'
+            ),
+        'translation_string_prefix' => false,
+    );
 }
 
 // load up the config_override.php file.  This is used to provide default user settings
@@ -78,12 +97,10 @@ if (is_file('config_override.php')) {
 }
 if (empty($GLOBALS['installing']) && empty($sugar_config['dbconfig']['db_name'])) {
     header('Location: install.php');
-    exit();
 }
 
 // make sure SugarConfig object is available
 $GLOBALS['sugar_config'] = !empty($sugar_config) ? $sugar_config : [];
-require_once 'include/SugarObjects/SugarConfig.php';
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	DATA SECURITY MEASURES
@@ -119,7 +136,6 @@ require 'modules/DynamicFields/templates/Fields/TemplateText.php';
 
 require_once 'include/utils/file_utils.php';
 require_once 'include/SugarEmailAddress/SugarEmailAddress.php';
-require_once 'include/SugarLogger/LoggerManager.php';
 require_once 'modules/Trackers/BreadCrumbStack.php';
 require_once 'modules/Trackers/Tracker.php';
 require_once 'modules/Trackers/TrackerManager.php';
@@ -146,11 +162,12 @@ if (!defined('SUGAR_PATH')) {
     define('SUGAR_PATH', realpath(dirname(__FILE__).'/..'));
 }
 require_once 'include/SugarObjects/SugarRegistry.php';
+require_once 'include/SugarLogger/LoggerManager.php';
+$GLOBALS['log'] = LoggerManager::getLogger();
 
-if (empty($GLOBALS['installing'])) {
+if (empty($GLOBALS['installing']) && !empty($sugar_config['dbconfig']['db_name'])) {
     ///////////////////////////////////////////////////////////////////////////////
     ////	SETTING DEFAULT VAR VALUES
-    $GLOBALS['log'] = LoggerManager::getLogger();
     $error_notice = '';
     $use_current_user_login = false;
 

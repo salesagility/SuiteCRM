@@ -134,6 +134,12 @@ class DBManagerFactory
     public static function getInstance($instanceName = '')
     {
         global $sugar_config;
+
+        if(empty($sugar_config['dbconfig']['db_name']))
+        {
+            return null;
+        }
+
         static $count = 0, $old_count = 0;
 
         //fall back to the default instance name
