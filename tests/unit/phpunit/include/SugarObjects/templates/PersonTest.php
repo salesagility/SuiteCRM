@@ -52,6 +52,7 @@ class PersonTest extends SuitePHPUnitFrameworkTestCase
     {
         $person = BeanFactory::newBean('Contacts');
         $person->last_name = 'Smith';
+        $person->createdAuditRecords = false;
 
         // Test when  basis is not a string
         try {

@@ -115,6 +115,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $bean->first_name = $firstName;
         $bean->last_name = $lastName;
         $bean->primary_address_city = $city;
+        $bean->createdAuditRecords = false;
 
         // Save the bean to the database and retrieve the new id
         $bean->save();
