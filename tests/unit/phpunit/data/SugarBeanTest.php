@@ -2448,6 +2448,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'testBean_1+!';
         $bean->modified_by_name = 'testing';
+        $bean->createdAuditRecords = false;
         $bean->field_defs = array_merge($bean->field_defs, $bean->field_defs = array(
             'email_addresses' => array(
                 'type' => 'link',
