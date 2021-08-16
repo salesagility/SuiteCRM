@@ -38,14 +38,7 @@
             background: url($select-edit-background-url) no-repeat right;
             background-size: 25px 11px;
             border-color: $bright-grey;
-        }
-        .listContainer::-webkit-scrollbar-track {
-            background: $dashboard-scrollbar-bg;
-        }
-        .listContainer::-webkit-scrollbar-thumb {
-            background-color: $dashboard-scroll;   
-            border-radius: 20px; 
-        }  
+        }         
         .add-filter-btn {
             margin-left: 1em;
             .button {

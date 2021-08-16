@@ -275,15 +275,6 @@ ul.subpanelTablist li {
   max-height: 375px;
 }
 
-.sugarFeedDashlet::-webkit-scrollbar-track {
-  background: $dashboard-scrollbar-bg; /* color of the tracking area */
-}
-
-.sugarFeedDashlet::-webkit-scrollbar-thumb {
-  background-color: $dashboard-scroll;    /* color of the scroll thumb */
-  border-radius: 20px;       /* roundness of the scroll thumb */
-}
-
 .sugarFeedDashlet td.list th {
   display: none;
 }
@@ -894,14 +885,7 @@ table #dashletPanel {
   .dashletPanel {
     .bd {
       overflow-x: auto;
-    }
-    .bd::-webkit-scrollbar-track {
-      background: $dashboard-scrollbar-bg; 
-    }      
-    .bd::-webkit-scrollbar-thumb {
-      background-color: $dashboard-scroll;   
-      border-radius: 20px; 
-    }
+    }    
   }
 }
 

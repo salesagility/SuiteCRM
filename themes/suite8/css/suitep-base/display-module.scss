@@ -31,14 +31,7 @@
                 background: $pale-blue;
             }
         }
-    }
-    .yui-dt-bd::-webkit-scrollbar-track {
-        background: $dashboard-scrollbar-bg; 
-    }      
-    .yui-dt-bd::-webkit-scrollbar-thumb {
-        background-color: $dashboard-scroll;   
-        border-radius: 20px; 
-    } 
+    }    
     .add_table {
         margin-bottom: 1em;
         table tr.config-text {  

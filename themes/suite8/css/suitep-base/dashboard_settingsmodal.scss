@@ -39,14 +39,7 @@ body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shado
                     background: $modal-btn-hover;
                 }
             }            
-        }
-        select::-webkit-scrollbar-track {
-            background: $dashboard-scrollbar-bg; 
-        }      
-        select::-webkit-scrollbar-thumb {
-            background-color: $dashboard-scroll;   
-            border-radius: 20px; 
-        }
+        }        
     }
 }
 

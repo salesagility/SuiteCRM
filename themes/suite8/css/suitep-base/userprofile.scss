@@ -252,14 +252,7 @@ form.userprofile {
     }    
     .email-address-reply-to-flag {
         margin-top: 8px !important;
-    }
-    select#display_tabs::-webkit-scrollbar-track {
-        background: $dashboard-scrollbar-bg;
-    }
-    select#display_tabs::-webkit-scrollbar-thumb {
-        background-color: $dashboard-scroll; 
-        border-radius: 20px;
-    }
+    }    
     .subpanel-table {
         margin-top: 2.5em;
         margin-bottom: 2em;

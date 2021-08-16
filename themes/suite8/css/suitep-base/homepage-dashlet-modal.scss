@@ -31,13 +31,7 @@
         padding: 0.3em 1em;
         text-transform: capitalize;
         vertical-align: unset !important;
-    } 
-    ::-webkit-scrollbar-track {
-        background: $dashboard-scrollbar-bg; 
-    }
-    ::-webkit-scrollbar-thumb {
-        background: $dashboard-scrollbar-bg; 
-    }  
+    }      
     select {
         background: url($select-edit-background-url) no-repeat right;
         background-size: 25px 11px;

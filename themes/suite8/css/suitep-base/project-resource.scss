@@ -13,14 +13,7 @@ table#header_table_chart {
         background: url($select-edit-background-url) no-repeat right;
         background-size: 25px 11px;
         border-color: $bright-grey;
-    }
-    select::-webkit-scrollbar-track {
-        background: $dashboard-scrollbar-bg;
-    }
-    select::-webkit-scrollbar-thumb {
-        background-color: $dashboard-scroll; 
-        border-radius: 20px;
-    }
+    }    
     .utilsLink {        
         background-color: $nepal-grey;
         text-transform: capitalize;
@@ -35,14 +28,6 @@ table#header_table_chart {
         text-decoration: none;
     }
 }
-
-#gantt_chart::-webkit-scrollbar-track {
-    background: $dashboard-scrollbar-bg;
-}
-#gantt_chart::-webkit-scrollbar-thumb {
-    background-color: $dashboard-scroll; 
-    border-radius: 20px;
-} 
 
 hr.spacer {
     margin-top: 0;

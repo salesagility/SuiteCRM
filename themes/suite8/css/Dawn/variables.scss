@@ -1201,8 +1201,6 @@ $table-row-bg: $main-alternate-bg;
 // Dashlets
 $dashboard-titlt-bg: $midnight-blue;
 $dashboard-toolbar-bg: $medium-grey;
-$dashboard-scrollbar-bg: $very-light-grey;
-$dashboard-scroll: $mid-light-grey;
 $dashboard-active-tab-bg: $midnight-blue;
 
 $dashlet-title-bg: $color-13;
@@ -1377,3 +1375,7 @@ $module-title-color: $shell-grey;
 $module-title-text-color: $midnight-blue;
 
 $border-focus-color:$focus-blue;
+
+/* Scrollbar */
+
+$scroll-bar-thumb: $mid-light-grey;

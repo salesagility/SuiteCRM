@@ -1,0 +1,89 @@
+/**** Scrollbars ****/
+
+div::-webkit-scrollbar { /* 1 */
+    width: 12px;
+    height: 12px;
+}
+  
+  select::-webkit-scrollbar { /* 1 */
+    width: 12px;
+    height: 12px;
+  }
+  
+  input::-webkit-scrollbar { /* 1 */
+    width: 12px;
+    height: 12px;
+  }
+  
+  textarea::-webkit-scrollbar { /* 1 */
+    width: 12px;
+    height: 12px;
+  }
+  
+  ul::-webkit-scrollbar { /* 1 */
+    width: 12px;
+    height: 12px;
+  }
+  
+  
+  div::-webkit-scrollbar-track { /* 3 */
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+  
+  select::-webkit-scrollbar-track { /* 3 */
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+  
+  input::-webkit-scrollbar-track { /* 3 */
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+  
+  textarea::-webkit-scrollbar-track { /* 3 */
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+  
+  ul::-webkit-scrollbar-track { /* 3 */
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+  
+  
+  div::-webkit-scrollbar-thumb { /* 5 */
+    background: $scroll-bar-thumb;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  select::-webkit-scrollbar-thumb { /* 5 */
+    background: $scroll-bar-thumb;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  input::-webkit-scrollbar-thumb { /* 5 */
+    background: $scroll-bar-thumb;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  textarea::-webkit-scrollbar-thumb { /* 5 */
+    background: $scroll-bar-thumb;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  ul::-webkit-scrollbar-thumb { /* 5 */
+    background: $scroll-bar-thumb;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .sidebar::-webkit-scrollbar-thumb { /* 5 */
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5);
+  }  

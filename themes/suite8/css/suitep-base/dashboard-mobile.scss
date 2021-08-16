@@ -7,13 +7,6 @@
     }
     .dashboardTabList {
       display: none;
-    }
-    .dashletPanel::-webkit-scrollbar-track {
-        background: $dashboard-scrollbar-bg; 
-    }      
-    .dashletPanel::-webkit-scrollbar-thumb {
-        background-color: $dashboard-scroll; 
-        border-radius: 20px;  
-    }
+    }    
   }
   

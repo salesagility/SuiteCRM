@@ -49,25 +49,5 @@ body.popupBody {
         &:hover {
             background: $pale-blue;
         }
-    }  
-    select::-webkit-scrollbar-track {
-        background: $dashboard-scrollbar-bg; 
-    }      
-    select::-webkit-scrollbar-thumb {
-        background-color: $dashboard-scroll;   
-        border-radius: 20px; 
-    }      
-    .mozaik-thumbs::-webkit-scrollbar-track {
-        background: $dashboard-scrollbar-bg; 
-    }      
-    .mozaik-thumbs::-webkit-scrollbar-thumb {
-        background-color: $dashboard-scroll;   
-        border-radius: 20px; 
-    }
-    .mozaik-list::-webkit-scrollbar-track {
-        background: $dashboard-scrollbar-bg; 
-    }
-    .mozaik-list::-webkit-scrollbar-thumb {
-        background: $dashboard-scrollbar-bg; 
-    }     
+    }          
 }
