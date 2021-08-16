@@ -1195,7 +1195,7 @@ class Email extends Basic
                         strlen($file)
                     ); // strip GUID	for PHPMailer class to name outbound file
 
-                    $mail->AddAttachment($fileLocation, $filename, 'base64', $this->email2GetMime($fileLocation));
+                    $mail->AddAttachment(stream_resolve_include_path($fileLocation), $filename, 'base64', $this->email2GetMime($fileLocation));
                     //$mail->AddAttachment($fileLocation, $filename, 'base64');
 
                     // only save attachments if we're archiving or drafting
@@ -1236,7 +1236,7 @@ class Email extends Basic
                     $fileLocation = "upload/{$docGUID}";
                     $mime_type = $docRev->file_mime_type;
                     $mail->AddAttachment(
-                        $fileLocation,
+                        stream_resolve_include_path($fileLocation),
                         $locale->translateCharsetMIME(trim($filename), 'UTF-8', $OBCharset),
                         'base64',
                         $mime_type
@@ -1277,7 +1277,7 @@ class Email extends Basic
                         $fileLocation = "upload/{$noteGUID}";
                         $mime_type = $note->file_mime_type;
                         if (!$note->embed_flag) {
-                            $mail->AddAttachment($fileLocation, $filename, 'base64', $mime_type);
+                            $mail->AddAttachment(stream_resolve_include_path($fileLocation), $filename, 'base64', $mime_type);
                             // only save attachments if we're archiving or drafting
                             if ((($this->type == 'draft') && !empty($this->id)) || (isset($request['saveToSugar']) && $request['saveToSugar'] == 1)) {
                                 if ($note->parent_id != $this->id) {
@@ -1297,7 +1297,7 @@ class Email extends Basic
                         ); // strip GUID	for PHPMailer class to name outbound file
 
                         $mail->AddAttachment(
-                            $fileLocation,
+                            stream_resolve_include_path($fileLocation),
                             $locale->translateCharsetMIME(trim($filename), 'UTF-8', $OBCharset),
                             'base64',
                             $this->email2GetMime($fileLocation)
@@ -3068,7 +3068,7 @@ class Email extends Basic
                     }
                 }
                 $mail->AddAttachment(
-                    $file_location,
+                    stream_resolve_include_path($file_location),
                     $locale->translateCharsetMIME(trim($filename), 'UTF-8', $OBCharset),
                     'base64',
                     $mime_type

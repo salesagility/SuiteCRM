@@ -728,7 +728,7 @@ class Meeting extends SugarBean
             LoggerManager::getLogger()->warn('file_put_contents(' . $path . '): failed to open stream: Is a directory ');
         } else {
             if (file_put_contents($path, $content)) {
-                $notify_mail->AddAttachment($path, 'meeting.ics', 'base64', 'text/calendar');
+                $notify_mail->AddAttachment(stream_resolve_include_path($path), 'meeting.ics', 'base64', 'text/calendar');
             }
         }
         return $notify_mail;

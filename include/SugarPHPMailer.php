@@ -352,7 +352,7 @@ eoq;
             $filename =
                 substr($filename, 36, strlen($filename)); // strip GUID	for PHPMailer class to name outbound file
             if (!$note->embed_flag) {
-                $this->addAttachment($file_location, $filename, 'base64', $mime_type);
+                $this->addAttachment(stream_resolve_include_path($file_location), $filename, 'base64', $mime_type);
             } // else
         }
     }
