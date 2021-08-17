@@ -181,6 +181,10 @@ class AccountFormBase
         }
 
         $rowColor = 'oddListRowS1';
+
+        require_once 'include/portability/RouteConverter.php';
+        $routeConverter = new RouteConverter();
+
         foreach ($rows as $row) {
             $form .= "<tr class='$rowColor'>";
             if ($action != 'ShowDuplicates') {
@@ -191,7 +195,11 @@ class AccountFormBase
                     if (isset($_POST['popup']) && $_POST['popup']==true) {
                         $form .= "<td scope='row'><a  href='javascript:void(0)' onclick=\"window.opener.location='index.php?module=Accounts&action=DetailView&record=${row['id']}'\">$value</a></td>\n";
                     } else {
-                        $form .= "<td><a target='_blank' href='index.php?module=Accounts&action=DetailView&record=${row['id']}'>$value</a></td>\n";
+                        $link = 'index.php?module=Accounts&action=DetailView&record='.$row['id'];
+                        if ($routeConverter->isLegacyRoute($link)) {
+                            $link = $routeConverter->generateUiLink($link);
+                        }
+                        $form .= "<td><a target='_blank' href='{$link}'>$value</a></td>\n";
                     }
                 }
             }

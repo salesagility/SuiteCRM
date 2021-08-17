@@ -115,7 +115,7 @@ class ViewConvertLead extends SugarView
         $qsd->setFormName("ConvertLead");
 
         $this->contact = BeanFactory::newBean('Contacts');
-        
+
         /*
          * Setup filter for Account/Contact popup picker
          */
@@ -130,10 +130,10 @@ class ViewConvertLead extends SugarView
         }
         // Lead Last Name is always available
         $filter .= '&last_name_advanced=' . urlencode($this->focus->last_name);
-        
+
         $smarty->assign('initialFilter', $filter);
         $smarty->assign('displayParams', array('initial_filter' => '{$initialFilter}'));
-        
+
         $relatedFields = $this->contact->get_related_fields();
         $selectFields = array();
         foreach ($this->defs as $moduleName => $mDefs) {
@@ -148,7 +148,7 @@ class ViewConvertLead extends SugarView
                 }
             }
         }
-        
+
         $smarty->assign('selectFields', $selectFields);
 
         $smarty->assign("contact_def", $this->contact->field_defs);
@@ -166,7 +166,7 @@ class ViewConvertLead extends SugarView
 
         global $sugar_config, $app_list_strings, $app_strings;
         $smarty->assign('lead_conv_activity_opt', $sugar_config['lead_conv_activity_opt']);
-        
+
         //Switch up list depending on copy or move
         if ($sugar_config['lead_conv_activity_opt'] == 'move') {
             $smarty->assign('convertModuleListOptions', get_select_options_with_id(array('None'=>$app_strings['LBL_NONE'], 'Contacts' => $app_list_strings["moduleListSingular"]['Contacts']), ''));
@@ -175,8 +175,8 @@ class ViewConvertLead extends SugarView
                 $smarty->assign('convertModuleListOptions', get_select_options_with_id(array('Contacts' => $app_list_strings["moduleListSingular"]['Contacts']), ''));
             }
         }
-        
-        
+
+
 
         foreach ($this->defs as $module => $vdef) {
             if (!isset($beanList[$module])) {
@@ -371,10 +371,10 @@ class ViewConvertLead extends SugarView
         $beans = array();
         $selectedBeans = array();
         $selects = array();
-        
+
         // Make sure the contact object is availible for relationships.
         $beans['Contacts'] = BeanFactory::newBean('Contacts');
-        
+
         // Contacts
         if (!empty($_REQUEST['selectedContact'])) {
             $beans['Contacts']->retrieve($_REQUEST['selectedContact']);
@@ -463,13 +463,13 @@ class ViewConvertLead extends SugarView
         if (!empty($selectedBeans['Accounts'])) {
             $lead->account_id = $selectedBeans['Accounts']->id;
         }
-        
+
         // link account to contact, if we picked an existing contact and created a new account
         if (!empty($beans['Accounts']->id) && !empty($beans['Contacts']->account_id)
                 && $beans['Accounts']->id != $beans['Contacts']->account_id) {
             $beans['Contacts']->account_id = $beans['Accounts']->id;
         }
-        
+
         // Saving beans with priorities.
         // Contacts and Accounts should be saved before lead activities to create correct relations
         $saveBeanPriority = array('Contacts', 'Accounts');
@@ -580,12 +580,23 @@ class ViewConvertLead extends SugarView
         $beans
         ) {
         global $beanList;
+
+        require_once 'include/portability/RouteConverter.php';
+        $routeConverter = new RouteConverter();
+
         echo "<div><ul>";
         foreach ($beans as $bean) {
             $beanName = $bean->object_name;
+
+            $link = 'index.php?module='.$bean->module_dir.'&action=DetailView&record='.$bean->id;
+            if ($routeConverter->isLegacyRoute($link)) {
+                $link = $routeConverter->generateUiLink($link);
+            }
+
             if ($beanName == 'Contact' && !$this->new_contact) {
+
                 echo "<li>" . translate("LBL_EXISTING_CONTACT") . " -
-                    <a href='index.php?module={$bean->module_dir}&action=DetailView&record={$bean->id}'>
+                    <a href={$link}>
                        {$bean->get_summary_text()}
                     </a></li>";
             } else {
@@ -598,8 +609,9 @@ class ViewConvertLead extends SugarView
                 if (empty($module_name)) {
                     $module_name = translate($beanName);
                 }
+
                 echo "<li>" . translate("LBL_CREATED_NEW") . ' ' . $module_name . " -
-                    <a href='index.php?module={$bean->module_dir}&action=DetailView&record={$bean->id}'>
+                    <a href={$link}>
                        {$bean->get_summary_text()}
                     </a></li>";
             }
@@ -990,6 +1002,10 @@ class ViewConvertLead extends SugarView
         $lead
         ) {
         if ($lead->status == "Converted") {
+
+            require_once 'include/portability/RouteConverter.php';
+            $routeConverter = new RouteConverter();
+
             echo("<span class='error'>" . translate('LBL_CONVERTLEAD_WARNING'));
             $dupes = array();
             $q = "SELECT id, first_name, last_name FROM contacts WHERE first_name LIKE '{$lead->first_name}' AND last_name LIKE '{$lead->last_name}' AND deleted = 0";
@@ -999,9 +1015,15 @@ class ViewConvertLead extends SugarView
                 $contact->retrieve($row['id']);
                 $dupes[$row['id']] = $contact->name;
             }
+
             if (!empty($dupes)) {
                 foreach ($dupes as $id => $name) {
-                    echo(translate('LBL_CONVERTLEAD_WARNING_INTO_RECORD') . "<a href='index.php?module=Contacts&action=DetailView&record=$id'>$name</a>");
+
+                    $link = 'index.php?module=Contacts&action=DetailView&record=$id';
+                    if ($routeConverter->isLegacyRoute($link)) {
+                        $link = $routeConverter->generateUiLink($link);
+                    }
+                    echo(translate('LBL_CONVERTLEAD_WARNING_INTO_RECORD') . "<a href={$link}>$name</a>");
                     break;
                 }
             }
