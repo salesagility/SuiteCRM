@@ -850,11 +850,13 @@
 
 					<table border="0" cellpadding="0" cellspacing="0" class="dateTime">
 						<tr valign="middle">
-							<td nowrap class="datafield" style="width:150px;">
+							<td nowrap class="datafield inline-datecalendar" style="width:170px;">
 								<input type="hidden" id="userTimeFormat" value="{$TIME_FORMAT}">
 								<input autocomplete="off" type="text" id="{$fields.date_start.name}_date" value="{$MRKT_DATE_START}" xxx="{$fields[$fields.date_start.name].value}" size="11" maxlength="10" title='' tabindex="0" onblur="combo_{$fields.date_start.name}.update(); parseDate(this, '{$CALENDAR_DATEFORMAT}');" onchange="combo_{$fields.date_start.name}.update();parseDate(this, '{$CALENDAR_DATEFORMAT}'); "    >
 								{capture assign="other_attributes"}alt="{$APP.LBL_ENTER_DATE}" style="position:relative; top:6px" border="0" id="{$fields.date_start.name}_trigger"{/capture}
-								<button type="button" id="{$fields.date_start.name}_trigger" class="btn btn-danger" onclick="return false;" title="{$APP.LBL_ENTER_DATE}"><span class="suitepicon suitepicon-module-calendar" alt="{$APP.LBL_ENTER_DATE}"></span></button>
+								<button type="button" id="{$fields.date_start.name}_trigger" class="btn" onclick="return false;" title="{$APP.LBL_ENTER_DATE}">
+									<span alt="{$APP.LBL_ENTER_DATE}">{sugar_getimage name="calendar"}</span>
+								</button>
 							</td>
 							<td nowrap colspan="5" style="width:200px;">
 								{literal}

@@ -4345,6 +4345,20 @@ td.inlineEditActive {
   .dateTime {
     display: flex;
   }
+  .dateTimeSection {
+    margin-left: 5em;
+  }
+}
+
+.inline-datecalendar {
+  .btn {
+    background: $white;
+    border: none;
+    box-shadow: none;
+    opacity: 0.2;
+    position: relative;
+    bottom: 0.2em;
+  }
 }
 
 #editAccountDialogue_c {

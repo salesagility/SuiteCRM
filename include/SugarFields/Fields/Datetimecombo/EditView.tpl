@@ -46,9 +46,9 @@
 {{assign var=flag_field value=$vardef.name|cat:_flag}}
 <table border="0" cellpadding="0" cellspacing="0" class="dateTime">
 <tr valign="middle">
-<td nowrap class="dateTimeComboColumn">
+<td nowrap class="dateTimeComboColumn datecalendar">
 <input autocomplete="off" type="text" id="{{$idname}}_date" class="datetimecombo_date" value="{$fields[{{sugarvar key='name' stringFormat=true}}].value}" size="11" maxlength="10" title='{{$vardef.help}}' tabindex="{{$tabindex}}" onblur="combo_{{$idname}}.update();" onchange="combo_{{$idname}}.update(); {{if isset($displayParams.updateCallback)}}{{$displayParams.updateCallback}}{{/if}}"   {{if !empty($displayParams.accesskey)}} accesskey='{{$displayParams.accesskey}}' {{/if}} >
-	<button type="button" id="{{$idname}}_trigger" class="btn btn-danger calendarstart" onclick="return false;">		
+	<button type="button" id="{{$idname}}_trigger" class="btn calendarstart" onclick="return false;">		
 		<span alt="{$APP.LBL_ENTER_DATE}">{sugar_getimage name="calendar"} </span>
 	</button>
 {{if empty($displayParams.splitDateTime)}}
