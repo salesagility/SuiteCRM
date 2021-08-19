@@ -123,4 +123,5 @@ if (!isset($_POST['dashName'])) {
     $sugar_smarty->assign('app', $GLOBALS['app_strings']);
     $sugar_smarty->assign('lblAddDashlets', $home_mod_strings['LBL_ADD_DASHLETS']);
     $sugar_smarty->assign('numCols', $dashboardPage['numColumns']);
+    header("Location: index.php?action=index&module=Home");
 }
