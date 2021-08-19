@@ -58,6 +58,7 @@ if ((!is_admin($GLOBALS['current_user']) && (!is_admin_for_module($GLOBALS['curr
 }
 
 $focus = BeanFactory::newBean('Releases');
+echo '<div class="admin-release">';
 echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_TITLE']), true);
 $is_edit = false;
 if (!empty($_REQUEST['record'])) {
@@ -157,10 +158,10 @@ if ($is_edit) {
 
     $xtpl->parse("main");
     $xtpl->out("main");
-    
     $javascript = new javascript();
     $javascript->setFormName('EditView');
     $javascript->setSugarBean($focus);
-    $javascript->addAllFields('');
-    echo $javascript->getScript();
+    $javascript->addAllFields('');    
+    echo $javascript->getScript();    
 }
+echo '</div>';

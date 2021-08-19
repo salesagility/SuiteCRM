@@ -50,7 +50,7 @@
         {else}
                 {if $other_text && $is_min_max == false}
                     <td width="20"><img height="1" width="20" src="{$blankImageURL}" alt=""></td>
-                    <td valign="middle" nowrap width="100%">{$other_text}</td>
+                    <td valign="middle" nowrap width="100%" class="action-button">{$other_text}</td>
                 {else}
                     <td width="100%"><img height="1" width="1" src="{$blankImageURL}" alt=""></td>
                 {/if}
