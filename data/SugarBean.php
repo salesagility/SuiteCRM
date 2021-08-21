@@ -4355,7 +4355,7 @@ class SugarBean
      *
      * Internal function, do not override.
      */
-    public function create_list_count_query($query)
+    public function create_list_count_query($query, $alias = 'c')
     {
         // remove the 'order by' clause which is expected to be at the end of the query
         $pattern = '/\sORDER BY.*/is';
@@ -4373,7 +4373,7 @@ class SugarBean
 
         // change the select expression to 'count(*)'
         $pattern = '/SELECT(.*?)(\s){1}FROM(\s){1}/is';
-        $replacement = 'SELECT count(' . $star . ') c FROM ';
+        $replacement = 'SELECT count(' . $star . ') '. $alias .' FROM ';
 
         //if the passed query has union clause then replace all instances of the pattern.
         //this is very rare. I have seen this happening only from projects module.
@@ -4393,7 +4393,7 @@ class SugarBean
                         $star = 'DISTINCT ' . $this->table_name . '.id';
                     }
                 } // if
-                $replacement = 'SELECT count(' . $star . ') c FROM ';
+                $replacement = 'SELECT count(' . $star . ') '. $alias .' FROM ';
                 $union_qs[$key] = preg_replace($pattern, $replacement, $union_query, 1);
             }
             $modified_select_query = implode(" UNION ALL ", $union_qs);
