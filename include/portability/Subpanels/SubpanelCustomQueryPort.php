@@ -38,26 +38,62 @@ class SubpanelCustomQueryPort
         /* @noinspection PhpIncludeInspection */
         require_once 'include/SubPanel/SubPanelDefinitions.php';
 
+        $queries = [];
+
         $spd = new SubPanelDefinitions($bean);
         $subpanel_def = $spd->load_subpanel($subpanel);
 
-        $subpanel_list = [];
         if (method_exists($subpanel_def, 'isCollection')) {
-            if ($subpanel_def->isCollection()) {
-                if ($subpanel_def->load_sub_subpanels() === false) {
-                    $subpanel_list = [];
+
+            if (method_exists($subpanel_def, 'isDatasourceFunction')
+                && $subpanel_def->isDatasourceFunction()) {
+
+                $shortcut_function_name = $subpanel_def->get_data_source_name();
+                $parameters = $subpanel_def->get_function_parameters();
+                if (!empty($parameters)) {
+                    //if the import file function is set, then import the file to call the custom function from
+                    if (is_array($parameters) && isset($parameters['import_function_file'])) {
+                        //this call may happen multiple times, so only require if function does not exist
+                        if (!function_exists($shortcut_function_name)) {
+                            require_once($parameters['import_function_file']);
+                        }
+                        //call function from required file
+                        $func_query = $shortcut_function_name($parameters);
+                    } else {
+                        //call function from parent bean
+                        $func_query = $bean->$shortcut_function_name($parameters);
+                    }
                 } else {
-                    $subpanel_list = $subpanel_def->sub_subpanels;
+                    $func_query = $bean->$shortcut_function_name();
                 }
+
+                $countAlias = 'value';
+                $countQuery = $bean->create_list_count_query($func_query, $countAlias);
+
+                $queries['isDatasourceFunction'] = [
+                    'query' => $func_query,
+                    'countQuery' => $countQuery
+                ];
+
             } else {
-                $subpanel_list[] = $subpanel_def;
+                $subpanel_list = [];
+                if ($subpanel_def->isCollection()) {
+                    if ($subpanel_def->load_sub_subpanels() === false) {
+                        $subpanel_list = [];
+                    } else {
+                        $subpanel_list = $subpanel_def->sub_subpanels;
+                    }
+                } else {
+                    $subpanel_list[] = $subpanel_def;
+                }
+
+                $queries = SugarBean::getUnionRelatedListQueries($subpanel_list, $subpanel_def, $bean, '');
             }
         } else {
             $GLOBALS['log']->fatal('Subpanel definition should be an aSubPanel');
         }
 
-
-        return SugarBean::getUnionRelatedListQueries($subpanel_list, $subpanel_def, $bean, '');
+        return $queries;
     }
 
     /**
