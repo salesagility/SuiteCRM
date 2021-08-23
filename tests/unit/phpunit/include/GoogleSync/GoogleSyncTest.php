@@ -260,7 +260,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
-        $result = $object->callMethod('getSuiteCRMCalendar', [new Google_Service_Calendar_CalendarList()]);
+        $result = $object->callMethod('getSuiteCRMCalendar', [new Google\Service\Calendar\CalendarList()]);
         $this->assertEquals(null, $result);
     }
 
@@ -429,26 +429,26 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
         // BEGIN: Create Google Event Object
-        $Google_Event = new Google_Service_Calendar_Event();
+        $Google_Event = new Google\Service\Calendar\Event();
 
         $Google_Event->setSummary('Unit Test Event');
         $Google_Event->setDescription('Unit Test Event');
         $Google_Event->setLocation('123 Seseme Street');
 
         // Set start date/time
-        $startDateTime = new Google_Service_Calendar_EventDateTime;
+        $startDateTime = new Google\Service\Calendar\EventDateTime;
         $startDateTime->setDateTime(date(DATE_ATOM, strtotime('2018-01-01 01:00:00 UTC')));
         $startDateTime->setTimeZone('Etc/UTC');
         $Google_Event->setStart($startDateTime);
 
         // Set end date/time
-        $endDateTime = new Google_Service_Calendar_EventDateTime;
+        $endDateTime = new Google\Service\Calendar\EventDateTime;
         $endDateTime->setDateTime(date(DATE_ATOM, strtotime('2018-01-01 02:00:00 UTC')));
         $endDateTime->setTimeZone('Etc/UTC');
         $Google_Event->setEnd($endDateTime);
 
         // Set extended properties
-        $extendedProperties = new Google_Service_Calendar_EventExtendedProperties;
+        $extendedProperties = new Google\Service\Calendar\EventExtendedProperties;
         $private = array();
         $private['suitecrm_id'] = 'INVALID';
         $private['suitecrm_type'] = 'INVALID';
@@ -457,10 +457,10 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $Google_Event->setExtendedProperties($extendedProperties);
 
         // Set popup reminder
-        $reminders_remote = new Google_Service_Calendar_EventReminders;
+        $reminders_remote = new Google\Service\Calendar\EventReminders;
         $reminders_remote->setUseDefault(false);
         $reminders_array = array();
-        $reminder_remote = new Google_Service_Calendar_EventReminder;
+        $reminder_remote = new Google\Service\Calendar\EventReminder;
         $reminder_remote->setMethod('popup');
         $reminder_remote->setMinutes('15');
         $reminders_array[] = $reminder_remote;
@@ -497,7 +497,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
    
         try {
-            $object->callMethod('pullEvent', [new Google_Service_Calendar_Event(), null]);
+            $object->callMethod('pullEvent', [new Google\Service\Calendar\Event(), null]);
             $this->assertTrue(false, 'It should throws an exception.');
         } catch (GoogleSyncException $e) {
             $this->assertEquals(GoogleSyncException::NO_REMOVE_EVENT_START_IS_NOT_SET, $e->getCode());
@@ -529,7 +529,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
         try {
-            $object->callMethod('delEvent', [new Google_Service_Calendar_Event(), null]);
+            $object->callMethod('delEvent', [new Google\Service\Calendar\Event(), null]);
             $this->assertTrue(false);
         } catch (GoogleSyncException $e) {
             $this->assertEquals(GoogleSyncException::NO_GSERVICE_SET, $e->getCode());
@@ -537,7 +537,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         
 
         // --- separated test
-        $Google_Event = new Google_Service_Calendar_Event();
+        $Google_Event = new Google\Service\Calendar\Event();
         $Google_Event->setSummary('Unit Test Event');
         $Google_Event->setDescription('Unit Test Event');
         
@@ -545,7 +545,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $object->setProperty('gService', true);
         
         try {
-            $object->callMethod('delEvent', [new Google_Service_Calendar_Event(), null]);
+            $object->callMethod('delEvent', [new Google\Service\Calendar\Event(), null]);
             
             $this->assertTrue(false, 'It should throw an exception.');
         } catch (GoogleSyncException $e) {
@@ -597,26 +597,26 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         date_default_timezone_set('Etc/UTC');
 
         // BEGIN: Create Google Event Object
-        $Google_Event = new Google_Service_Calendar_Event();
+        $Google_Event = new Google\Service\Calendar\Event();
 
         $Google_Event->setSummary('Unit Test Event');
         $Google_Event->setDescription('Unit Test Event');
         $Google_Event->setLocation('123 Seseme Street');
 
         // Set start date/time
-        $startDateTime = new Google_Service_Calendar_EventDateTime;
+        $startDateTime = new Google\Service\Calendar\EventDateTime;
         $startDateTime->setDateTime(date(DATE_ATOM, strtotime('2018-01-01 01:00:00 UTC')));
         $startDateTime->setTimeZone('Etc/UTC');
         $Google_Event->setStart($startDateTime);
 
         // Set end date/time
-        $endDateTime = new Google_Service_Calendar_EventDateTime;
+        $endDateTime = new Google\Service\Calendar\EventDateTime;
         $endDateTime->setDateTime(date(DATE_ATOM, strtotime('2018-01-01 02:00:00 UTC')));
         $endDateTime->setTimeZone('Etc/UTC');
         $Google_Event->setEnd($endDateTime);
 
         // Set extended properties
-        $extendedProperties = new Google_Service_Calendar_EventExtendedProperties;
+        $extendedProperties = new Google\Service\Calendar\EventExtendedProperties;
         $private = array();
         $private['suitecrm_id'] = 'RECORD_ID';
         $private['suitecrm_type'] = 'Meeting';
@@ -624,10 +624,10 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $Google_Event->setExtendedProperties($extendedProperties);
 
         // Set popup reminder
-        $reminders_remote = new Google_Service_Calendar_EventReminders;
+        $reminders_remote = new Google\Service\Calendar\EventReminders;
         $reminders_remote->setUseDefault(false);
         $reminders_array = array();
-        $reminder_remote = new Google_Service_Calendar_EventReminder;
+        $reminder_remote = new Google\Service\Calendar\EventReminder;
         $reminder_remote->setMethod('popup');
         $reminder_remote->setMinutes('15');
         $reminders_array[] = $reminder_remote;
@@ -690,7 +690,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
 
         $return = $object->callMethod('createGoogleCalendarEvent', [$CRM_Meeting]);
 
-        $this->assertEquals('Google_Service_Calendar_Event', get_class($return));
+        $this->assertEquals('Google\Service\Calendar\Event', get_class($return));
         $this->assertEquals('Unit Test Event', $return->getSummary());
         $this->assertEquals('Unit Test Event', $return->getDescription());
         $this->assertEquals('123 Sesame Street', $return->getLocation());
@@ -762,7 +762,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $CRM_Meeting->description = 'Unit Test Event';
 
         // Create Google Event Object
-        $Google_Event = new Google_Service_Calendar_Event();
+        $Google_Event = new Google\Service\Calendar\Event();
 
         $Google_Event->setSummary('Unit Test Event');
         $Google_Event->setDescription('Unit Test Event');
@@ -802,7 +802,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
             $object->callMethod('doAction', ['pull']);
             $this->assertTrue(false, 'It should throws an exception.');
         } catch (InvalidArgumentException $e) {
-            $this->assertTrue(true, 'It should be an InvalidArgumentException as a first parameter of GoogleSyncBase::pullEvent() should be an instance of Google_Service_Calendar_Event but this test implacate that it is null.');
+            $this->assertTrue(true, 'It should be an InvalidArgumentException as a first parameter of GoogleSyncBase::pullEvent() should be an instance of Google\Service\Calendar\Event but this test implacate that it is null.');
         }
 
         $CRM_Meeting = BeanFactory::getBean('Meetings');
@@ -815,7 +815,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
             $object->callMethod('doAction', ['push_delete', $CRM_Meeting, null]);
             $this->assertTrue(false, 'It should throws an exception.');
         } catch (InvalidArgumentException $e) {
-            $this->assertTrue(true, 'It should be an InvalidArgumentException as a first parameter of GoogleSyncBase::delEvent() should be an instance of Google_Service_Calendar_Event but this test implacate that it is null.');
+            $this->assertTrue(true, 'It should be an InvalidArgumentException as a first parameter of GoogleSyncBase::delEvent() should be an instance of Google\Service\Calendar\Event but this test implacate that it is null.');
         }
 
         
@@ -874,13 +874,13 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $CRM_Meeting->description = 'Unit Test Event';
 
         // Create Google Event Object
-        $Google_Event = new Google_Service_Calendar_Event();
+        $Google_Event = new Google\Service\Calendar\Event();
 
         $Google_Event->setSummary('Unit Test Event');
         $Google_Event->setDescription('Unit Test Event');
 
         // The event needs a start time method to pass
-        $startDateTime = new Google_Service_Calendar_EventDateTime;
+        $startDateTime = new Google\Service\Calendar\EventDateTime;
         $startDateTime->setDateTime(date(DATE_ATOM, strtotime('2018-01-01 13:00:00 UTC')));
         $Google_Event->setStart($startDateTime);
 
@@ -1075,14 +1075,14 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $CRM_Meeting->description = 'Unit Test Event';
 
         // Create Google Event Object
-        $Google_Event = new Google_Service_Calendar_Event();
+        $Google_Event = new Google\Service\Calendar\Event();
 
         $Google_Event->setSummary('Unit Test Event');
         $Google_Event->setDescription('Unit Test Event');
         $Google_Event->updated = '2018-01-01 12:00:00 UTC';
 
         // The event needs a start time method to pass
-        $startDateTime = new Google_Service_Calendar_EventDateTime;
+        $startDateTime = new Google\Service\Calendar\EventDateTime;
         $startDateTime->setDateTime(date(DATE_ATOM, strtotime('2018-01-01 12:00:00 UTC')));
         $Google_Event->setStart($startDateTime);
 
