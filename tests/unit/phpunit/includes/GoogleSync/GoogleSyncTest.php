@@ -246,7 +246,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testSetUsersGoogleCalendar(): void
+    public function testSetUsersGoogleCalendar()
     {
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
         self::assertEquals(false, $object->callMethod('setUsersGoogleCalendar'));
@@ -256,10 +256,12 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      *
      *
      */
-    public function testGetSuiteCRMCalendar(): void
+    public function testGetSuiteCRMCalendar()
     {
-        $result = (new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}')))->callMethod('getSuiteCRMCalendar', [new Google_Service_Calendar_CalendarList()]);
-        self::assertEquals(null, $result);
+        $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
+
+        $result = $object->callMethod('getSuiteCRMCalendar', [new Google\Service\Calendar\CalendarList()]);
+        $this->assertEquals(null, $result);
     }
 
     /**
@@ -495,8 +497,8 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
         try {
-            $object->callMethod('pullEvent', [new Google_Service_Calendar_Event(), null]);
-            self::assertTrue(false, 'It should throws an exception.');
+            $object->callMethod('pullEvent', [new Google\Service\Calendar\Event(), null]);
+            $this->assertTrue(false, 'It should throws an exception.');
         } catch (GoogleSyncException $e) {
             self::assertEquals(GoogleSyncException::NO_REMOVE_EVENT_START_IS_NOT_SET, $e->getCode());
         }
@@ -527,8 +529,8 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
         try {
-            $object->callMethod('delEvent', [new Google_Service_Calendar_Event(), null]);
-            self::assertTrue(false);
+            $object->callMethod('delEvent', [new Google\Service\Calendar\Event(), null]);
+            $this->assertTrue(false);
         } catch (GoogleSyncException $e) {
             self::assertEquals(GoogleSyncException::NO_GSERVICE_SET, $e->getCode());
         }
@@ -543,9 +545,9 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $object->setProperty('gService', true);
 
         try {
-            $object->callMethod('delEvent', [new Google_Service_Calendar_Event(), null]);
+            $object->callMethod('delEvent', [new Google\Service\Calendar\Event(), null]);
 
-            self::assertTrue(false, 'It should throw an exception.');
+            $this->assertTrue(false, 'It should throw an exception.');
         } catch (GoogleSyncException $e) {
             self::assertEquals(GoogleSyncException::MEETING_ID_IS_EMPTY, $e->getCode());
         }
@@ -674,10 +676,10 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
 
         $return = $object->callMethod('createGoogleCalendarEvent', [$CRM_Meeting]);
 
-        self::assertInstanceOf(\Google_Service_Calendar_Event::class, $return);
-        self::assertEquals('Unit Test Event', $return->getSummary());
-        self::assertEquals('Unit Test Event', $return->getDescription());
-        self::assertEquals('123 Sesame Street', $return->getLocation());
+        $this->assertEquals('Google\Service\Calendar\Event', get_class($return));
+        $this->assertEquals('Unit Test Event', $return->getSummary());
+        $this->assertEquals('Unit Test Event', $return->getDescription());
+        $this->assertEquals('123 Sesame Street', $return->getLocation());
 
         $start = $return->getStart();
         $end = $return->getEnd();
@@ -785,7 +787,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
             $object->callMethod('doAction', ['pull']);
             self::assertTrue(false, 'It should throws an exception.');
         } catch (InvalidArgumentException $e) {
-            self::assertTrue(true, 'It should be an InvalidArgumentException as a first parameter of GoogleSyncBase::pullEvent() should be an instance of Google_Service_Calendar_Event but this test implacate that it is null.');
+            self::assertTrue(true, 'It should be an InvalidArgumentException as a first parameter of GoogleSyncBase::pullEvent() should be an instance of Google\Service\Calendar\Event but this test implacate that it is null.');
         }
 
         $CRM_Meeting = BeanFactory::getBean('Meetings');
@@ -798,7 +800,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
             $object->callMethod('doAction', ['push_delete', $CRM_Meeting, null]);
             self::assertTrue(false, 'It should throws an exception.');
         } catch (InvalidArgumentException $e) {
-            self::assertTrue(true, 'It should be an InvalidArgumentException as a first parameter of GoogleSyncBase::delEvent() should be an instance of Google_Service_Calendar_Event but this test implacate that it is null.');
+            self::assertTrue(true, 'It should be an InvalidArgumentException as a first parameter of GoogleSyncBase::delEvent() should be an instance of Google\Service\Calendar\Event but this test implacate that it is null.');
         }
 
 
