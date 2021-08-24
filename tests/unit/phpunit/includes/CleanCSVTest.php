@@ -38,11 +38,14 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+namespace SuiteCRM\Tests\Unit\includes;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 use SuiteCRM\CleanCSV;
+use SuiteCRM\Exception\Exception;
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 /**
@@ -57,26 +60,26 @@ class CleanCSVTest extends SuitePHPUnitFrameworkTestCase
     protected $cleanCSV;
 
     /**
-     * @throws \SuiteCRM\Exception\Exception
+     * @throws Exception
      */
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->cleanCSV = new CleanCSV();
     }
 
-    public function testGetEscapeChar()
+    public function testGetEscapeChar(): void
     {
         $this->assertEquals("'", $this->cleanCSV->getEscapeChar());
     }
 
-    public function testGetStartingChars()
+    public function testGetStartingChars(): void
     {
         $this->assertEquals(['=', '-', '+', '@'], $this->cleanCSV->getStartingChars());
     }
 
-    public function testEscapeField()
+    public function testEscapeField(): void
     {
         $field = '==HYPERLINK';
         $expected = "'==HYPERLINK";
