@@ -1,0 +1,28 @@
+#EditPassword, #EditCredentials{
+    position: relative;
+    .action-buttons {
+        position: absolute;
+        right: 0;
+        top: -3em;
+        .button {
+            background-color: $nepal-grey;
+            border-radius: 0.2em;
+            font-weight: bold;
+            height: 2.2em;
+            line-height: 1em;
+            letter-spacing: 0.05em;
+            padding: 0.3em 1em;
+            text-transform: capitalize;
+                &:hover {
+                    background: $pale-blue;
+                }
+        }
+    }
+    input[type=text],input[type=password],input[type=email],input[type=number]{
+        background-color: $transparent-color;
+        border: 1px solid $form-border-color;
+    }
+    .paginationWrapper {
+        margin-top: 0.8em;
+    }
+}
