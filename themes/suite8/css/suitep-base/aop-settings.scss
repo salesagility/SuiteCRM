@@ -97,3 +97,17 @@
             }
         }        
 }
+
+#EditView .product-edit-view-header {
+    .btn-products {
+        position: absolute;
+        right: 0;
+        bottom: 1em;
+        input[type="submit"] {
+            margin: 0.1em;
+        }
+        input[type="button"] {
+            margin: 0.1em;
+        }
+    }
+}
