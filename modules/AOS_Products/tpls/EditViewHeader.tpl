@@ -40,9 +40,9 @@
 
 *}
 <form action="index.php" method="POST" name="{$form_name}" id="{$form_id}" {$enctype}>
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="product-edit-view-header">
 <tr>
-<td>
+<td class="btn-products">
 <input type="hidden" name="module" value="{$module}">
 {if isset($smarty.request.isDuplicate) && $smarty.request.isDuplicate eq "true"}
 <input type="hidden" name="record" value="">
