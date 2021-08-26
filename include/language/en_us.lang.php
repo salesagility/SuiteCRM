@@ -3777,6 +3777,7 @@ $app_strings['LBL_TOTAL'] = 'Total';
 $app_strings['LBL_ACTIONS'] = 'Actions';
 $app_strings['LBL_SELECT_SUBPANEL_BANNER'] = 'Select which subpanels to view';
 $app_strings['LBL_SELECT_ITEM'] = 'Select an item';
+$app_strings['LBL_WIDGET_NOT_FOUND'] = 'Widget not found';
 $app_strings['LBL_BAD_CONFIG'] = 'Incorrect configuration';
 $app_strings['LBL_CONFIG_BAD_CONTEXT'] = 'Incorrect configuration: context not properly configured';
 $app_strings['LBL_CONFIG_NO_CONFIG'] = 'Incorrect configuration: missing config';
