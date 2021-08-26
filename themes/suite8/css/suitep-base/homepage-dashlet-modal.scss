@@ -99,4 +99,6 @@
     }
 }
 
-
+.modal-add-dashlet, .modal-edit-dashboard {
+    z-index: 9999999999;
+}

@@ -30,7 +30,7 @@
 }
 
 .dashletcontainer.col-33 {
-  width: 33.333%;
+  width: 100%;
 }
 
 .dashletcontainer {
@@ -589,18 +589,6 @@ table #dashletPanel {
   }
 }
 
-@media (max-width: 750px) {
-  .dashletcontainer {
-    float: left;
-  }
-  .dashletPanel {
-    overflow: auto;
-  }
-  .dashboardTabList {
-    display: none;
-  }
-}
-
 .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel {
   top: initial;
   left: 0;
@@ -839,7 +827,13 @@ table #dashletPanel {
     }
     li.active {
       a {
-        background: $dashboard-active-tab-bg;        
+        @media (max-width: 1200px) { 
+          background: $dashboard-dropdown-btn; 
+        }
+        background: $dashboard-active-tab-bg;   
+        &:hover {
+          background: $action-btn-hover-bg-color;
+        }     
       }
     }
   }

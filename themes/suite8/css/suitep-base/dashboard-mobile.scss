@@ -7,6 +7,42 @@
     }
     .dashboardTabList {
       display: none;
-    }    
+    }  
+    .modal-add-dashlet div.modal-content {
+      margin-top: 5em;
+    }  
+    .modal-add-dashboard div.modal-content {
+      margin-top: 10em;
+    }
+    .modal-edit-dashboard div.modal-content {
+      margin-top: 6em;
+    }
+    #dashletCategories {
+      height: auto;
+      #toolsCategory {
+        margin-top: 2em;
+      }
+    }
+    #webDashletsList {
+      input {
+        width: auto !important;
+      }
+      input[type=button] {
+        margin-top: 0.3em;
+      }
+    }
+    td[scope=row] {
+      vertical-align: baseline;
+    }
   }
+
+  // Tablet - iPad, iPad Pro, iPad Pro 10.5 inch
+
+  @media (min-width:768px) and (max-width:1024px) {
+    #webDashletsList {
+      input {
+        width: auto !important;
+      }
+    }
+  }  
   
