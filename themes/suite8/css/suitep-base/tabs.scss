@@ -175,6 +175,12 @@
 
   #first-tab-menu-xs.dropdown-menu {
     background-color: $active-tab-bg;
+    @media (min-width: 1200px) { 
+      display: none;
+    }
+    @media (min-width: 768px){
+      display: none;
+    }
   }
 
   #first-tab-menu-xs.dropdown-menu > li {
@@ -182,7 +188,10 @@
   }
 
   #first-tab-menu-xs.dropdown-menu > li > a {
-    background-color: $active-tab-bg;
+    background: $dashboard-toolbar-bg !important;
+    &:hover {
+      background: #4b7291 !important;
+    }
   }
 
   /*Override bootstrap (needs to be stacked)*/

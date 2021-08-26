@@ -10,13 +10,14 @@
                 margin-bottom: 0;
                 a.first-tab-xs {                
                     background: $dashboard-titlt-bg !important;                
-                    padding: 11px;
+                    padding: 11px;                    
                 }
             }
             li.active {
                 a {
                   background: $dashboard-toolbar-bg; 
-                  padding: 11px;      
+                  padding-top: 0.8em;
+                  padding-bottom: 0.8em;
                 }
               }
             span.suitepicon-action-caret {
@@ -24,4 +25,26 @@
             }            
         }
     }       
+    #first-tab-menu-xs.dropdown-menu {
+        li {
+            a {
+                padding-top: 0.8em;
+                padding-bottom: 0.8em;
+            }
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    #dashboard {
+        ul.nav-dashboard {            
+            li.active {
+                a {
+                  background: #534d64;
+                  padding-top: 0.8em;
+                  padding-bottom: 0.8em;
+                }
+              }                       
+        }
+    }
 }
