@@ -79,7 +79,6 @@ class ElasticSearchEngine extends SearchEngine
      */
     public function search(SearchQuery $query)
     {
-        $this->validateQuery($query);
         $params = $this->createSearchParams($query);
         $start = microtime(true);
         $hits = $this->runElasticSearch($params);
