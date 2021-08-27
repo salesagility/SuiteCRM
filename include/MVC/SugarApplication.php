@@ -865,9 +865,6 @@ class SugarApplication
                 $vars[$var] = $_REQUEST['login_' . $var];
             }
         }
-        if (isset($_REQUEST['mobile'])) {
-            $vars['mobile'] = $_REQUEST['mobile'];
-        }
 
         if (isset($_REQUEST['mobile'])) {
             $vars['mobile'] = $_REQUEST['mobile'];

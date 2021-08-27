@@ -1030,20 +1030,6 @@ function clean($string, $maxLength)
 }
 
 /**
- * @param $string
- * @return string
- */
-function cleanCSV($string)
-{
-    $check = '/^[=@]/';
-    if (!is_numeric($string)) {
-        $check = '/^[=@+-]/';
-    }
-
-    return preg_replace($check, "", $string);
-}
-
-/**
  * Copy the specified request variable to the member variable of the specified object.
  * Do no copy if the member variable is already set.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.

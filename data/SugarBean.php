@@ -533,7 +533,7 @@ class SugarBean
     public function populateDefaultValues($force = false)
     {
         if (!is_array($this->field_defs)) {
-            $GLOBALS['log']->fatal('SugarBean::populateDefaultValues $field_defs should be an array');
+            $GLOBALS['log']->warn($this->module_name.'::populateDefaultValues $field_defs should be an array');
             return;
         }
         foreach ($this->field_defs as $field => $value) {
@@ -3260,7 +3260,7 @@ class SugarBean
     {
         global $current_user;
 
-        if (($this->object_name == 'Meeting' || $this->object_name == 'Call') || $notify_user->receive_notifications) {
+        if ((($this->object_name == 'Meeting' || $this->object_name == 'Call') || $notify_user->receive_notifications) && !$this->sentAssignmentNotifications) {
             $sendToEmail = $notify_user->emailAddress->getPrimaryAddress($notify_user);
             $sendEmail = true;
             if (empty($sendToEmail)) {
@@ -3325,6 +3325,7 @@ class SugarBean
                     $GLOBALS['log']->fatal("Notifications: error sending e-mail (method: {$notify_mail->Mailer}), " .
                         "(error: {$notify_mail->ErrorInfo})");
                 } else {
+                    $this->sentAssignmentNotifications = true;
                     $GLOBALS['log']->info("Notifications: e-mail successfully sent");
                 }
             }
@@ -4591,7 +4592,7 @@ class SugarBean
             $query .= " AND $this->table_name.deleted=0";
         }
         $GLOBALS['log']->debug("Retrieve $this->object_name : " . $query);
-        $result = $this->db->limitQuery($query, 0, 1, true, "Retrieving record by id $this->table_name:$id found ");
+        $result = $this->db->limitQuery($query, 0, 1, false, "Retrieving record by id $this->table_name:$id found ");
         if (empty($result)) {
             return null;
         }
@@ -6297,7 +6298,7 @@ class SugarBean
      */
     public function auditBean($isUpdate)
     {
-        if ($this->is_AuditEnabled() && $isUpdate) {
+        if ($this->is_AuditEnabled() && $isUpdate && !$this->createdAuditRecords) {
             $auditDataChanges = $this->db->getAuditDataChanges($this);
 
             if (!empty($auditDataChanges)) {
@@ -6320,5 +6321,6 @@ class SugarBean
             $this->db->save_audit_records($this, $change);
             $this->fetched_row[$change['field_name']] = $change['after'];
         }
+        $this->createdAuditRecords = true;
     }
 }

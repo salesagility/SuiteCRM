@@ -107,7 +107,7 @@ $mod_strings = array(
     'LBL_CREATED_USER' => 'Created User',
     'LBL_MODIFIED_USER' => 'Modified User',
     'LBL_PROJECT_SUBPANEL_TITLE' => 'Projects',
-    'LBL_CASE_INFORMATION' => 'OVERVIEW',
+    'LBL_CASE_INFORMATION' => 'OVERVIEW', //No need to be translated in all caps. Translation used just in menu action items when using the SuiteP template
 
     // SNIP
     'LBL_UPDATE_TEXT' => 'Updates - Text', //Field for Case updates with text only
