@@ -241,7 +241,7 @@ $(document).ready(function() {ldelim}
     };
 
     var selectTabOnErrorInputHandle = function(inputHandle) {
-        var tab = $(inputHandle).closest('.tab-pane-NOBOOTSTRAPTOGGLER').attr('id').match(/^detailpanel_(.*)$/)[1];
+        var tab = $(inputHandle).closest('.tab-pane-NOBOOTSTRAPTOGGLER').attr('id').match(/^tab-content-(.*)$/)[1];
         selectTabOnError(tab);
     };
 
