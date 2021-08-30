@@ -679,8 +679,8 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
         $newTB = new TabController();
 
         //make sure new modules list has a key we can reference directly
-        $newModuleList = $newTB->get_key_array($newModuleList);
-        $oldModuleList = $newTB->get_key_array($oldModuleList);
+        $newModuleList = TabController::get_key_array($newModuleList);
+        $oldModuleList = TabController::get_key_array($oldModuleList);
 
         //iterate through list and remove commonalities to get new modules
         foreach ($newModuleList as $remove_mod) {

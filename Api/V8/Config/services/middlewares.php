@@ -15,11 +15,15 @@ use League\OAuth2\Server\Grant\PasswordGrant;
 use League\OAuth2\Server\Grant\RefreshTokenGrant;
 use League\OAuth2\Server\ResourceServer;
 use Api\Core\Loader\CustomLoader;
+use Api\V8\Helper\OsHelper;
+use League\OAuth2\Server\CryptKey;
 
 return CustomLoader::mergeCustomArray([
     AuthorizationServer::class => function (Container $container) {
         // base dir must exist in entryPoint.php
         $baseDir = $GLOBALS['BASE_DIR'];
+
+        $shouldCheckPermissions = OsHelper::getOS() !== OsHelper::OS_WINDOWS;
 
         $server = new AuthorizationServer(
             new ClientRepository(
@@ -31,8 +35,16 @@ return CustomLoader::mergeCustomArray([
                 $container->get(BeanManager::class)
             ),
             new ScopeRepository(),
-            sprintf('file://%s/%s', $baseDir, ApiConfig::OAUTH2_PRIVATE_KEY),
-            sprintf('file://%s/%s', $baseDir, ApiConfig::OAUTH2_PUBLIC_KEY)
+            new CryptKey(
+                sprintf('file://%s/%s', $baseDir, ApiConfig::OAUTH2_PRIVATE_KEY),
+                null,
+                $shouldCheckPermissions
+            ),
+            new CryptKey(
+                sprintf('file://%s/%s', $baseDir, ApiConfig::OAUTH2_PRIVATE_KEY),
+                null,
+                $shouldCheckPermissions
+            )
         );
 
         $oauth2EncKey = isset($GLOBALS['sugar_config']['oauth2_encryption_key'])

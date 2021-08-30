@@ -126,6 +126,10 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         if (isset($vardef['name']) && ($vardef['name'] == 'date_modified')) {
             $vardef['name'] = 'aow_temp_date';
         }
+        
+        if (isset($vardef['help'])) {
+            $vardef['help'] = htmlspecialchars($vardef['help'],ENT_QUOTES);
+        }
 
         // load SugarFieldHandler to render the field tpl file
         static $sfh;
@@ -362,6 +366,10 @@ function saveField($field, $id, $module, $value)
         }
 
         if (($bean->ACLAccess("edit") || is_admin($current_user)) && $enabled) {
+            $bean->in_workflow=true;
+            if ($field == 'email1') {
+                $bean->email1_set_in_workflow=true;
+            }
             if (!$bean->save($check_notify)) {
                 $GLOBALS['log']->fatal("Saving probably failed or bean->save() method did not return with a positive result.");
             }

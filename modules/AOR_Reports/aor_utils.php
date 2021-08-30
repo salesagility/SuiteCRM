@@ -232,7 +232,7 @@ function getPeriodDate($date_time_period_list_selected)
     $datetime_period = new DateTime();
 
     // Setup when year quarters start & end
-    if ($sugar_config['aor']['quarters_begin']) {
+    if (isset($sugar_config['aor']['quarters_begin'])) {
         $q = calculateQuarters($sugar_config['aor']['quarters_begin']);
     } else {
         $q = calculateQuarters();

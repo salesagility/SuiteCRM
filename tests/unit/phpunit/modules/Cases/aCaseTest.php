@@ -261,6 +261,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
         $aCase = BeanFactory::newBean('Cases');
         $aCase->name = 'test';
         $aCase->priority = 'P1';
+        $aCase->sentAssignmentNotifications = false;
 
         $aCase->save();
 

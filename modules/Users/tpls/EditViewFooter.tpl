@@ -112,7 +112,7 @@
                                     </td>
                                     <td>
                                         <input name='old_password' id='old_password' type='password' tabindex='2'
-                                               onkeyup="password_confirmation();">
+                                               onkeyup="password_confirmation();" autocomplete="new-password">
                                     </td>
                                     <td width='40%'>
                                     </td>
