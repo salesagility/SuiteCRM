@@ -79,5 +79,7 @@ class GoogleSyncException extends Exception
     const MEETING_ID_IS_EMPTY = 127;
     const RECORD_VALIDATION_FAILURE = 128;
     const SQL_FAILURE = 129;
-    const ACCSESS_TOKEN_PARAMETER_MISSING = 130;
+    const ACCESS_TOKEN_PARAMETER_MISSING = 130;
+    const GCAL_SUITECRM_MULTIOWNER = 131;
+    const JSON_KEY_MISSING_USER = 132;
 }

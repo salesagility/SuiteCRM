@@ -3714,3 +3714,8 @@ $app_strings['LBL_SEARCH_PREV'] = 'Previous';
 $app_strings['LBL_SEARCH_NEXT'] = 'Next';
 $app_strings['LBL_SEARCH_PAGE'] = 'Page ';
 $app_strings['LBL_SEARCH_OF'] = ' of ';
+
+$app_strings['LBL_GOOGLESYNC_FAILURE_ALERT_SUBJECT'] = 'Google Sync Failure';
+$app_strings['LBL_GOOGLESYNC_GENERIC_ERROR'] = 'Please contact the Admin about this!';
+$app_strings['LBL_GOOGLESYNC_TOO_MANY_OWNERS_ERROR'] = 'Your SuiteCRM Google calendar has more than one owner!';
+$app_strings['LBL_GOOGLESYNC_JSON_ACCESS_TOKEN_ERROR'] = 'Google API Token missing or corrupt. You may need to reauthorize.';

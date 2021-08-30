@@ -156,7 +156,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
             $object->callMethod('getGoogleClient', [null]);
             $this->assertTrue(false, 'It should throws an exception.');
         } catch (GoogleSyncException $e) {
-            $this->assertEquals(GoogleSyncException::ACCSESS_TOKEN_PARAMETER_MISSING, $e->getCode(), 'It should throws an exception with code 0.');
+            $this->assertEquals(GoogleSyncException::ACCESS_TOKEN_PARAMETER_MISSING, $e->getCode(), 'It should throws an exception with code 0.');
             $this->assertEquals('Access Token Parameter Missing', $e->getMessage(), 'It should throws an exception with a proper message.');
         }
     }
