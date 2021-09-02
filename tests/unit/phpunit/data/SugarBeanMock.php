@@ -23,7 +23,8 @@ class SugarBeanMock extends SugarBean
         if (empty($this->module_name)) {
             $this->module_name = $this->module_dir;
         }
-        if ((!$this->disable_vardefs && empty($loaded_definitions[$this->object_name])) || !empty($GLOBALS['reload_vardefs'])) {
+        if (!$this->disable_vardefs
+            && (empty($loaded_definitions[$this->object_name]) || !empty($GLOBALS['reload_vardefs']))) {
             VardefManager::loadVardef($this->module_dir, $this->object_name);
 
             // build $this->column_fields from the field_defs if they exist
