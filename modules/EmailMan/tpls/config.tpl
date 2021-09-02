@@ -96,8 +96,7 @@ function change_state(radiobutton) {
 					<table width="100%" border="1" cellspacing="0" cellpadding="0" class="edit view">
 						<tr>
 							<td align="left" scope="row" colspan="4">
-								{$MOD.LBL_OUTGOING_SECTION_HELP}
-								<br />&nbsp;
+								{$MOD.LBL_OUTGOING_SECTION_HELP}								
 							</td>
 						</tr>
 						<tr class="{$OUTBOUND_TYPE_CLASS}">
@@ -122,33 +121,33 @@ function change_state(radiobutton) {
 						<tr>
 							<td colspan="4">
 								<div id="smtpButtonGroup" class="yui-buttongroup">
-				<span id="gmail" class="yui-button yui-radio-button{if $mail_smtptype == 'gmail'} yui-button-checked{/if}">
-					<span class="first-child">
-						<button type="button" name="mail_smtptype" value="gmail" class="btn btn-danger">
-							&nbsp;&nbsp;&nbsp;&nbsp;{$APP.LBL_SMTPTYPE_GMAIL}&nbsp;&nbsp;&nbsp;&nbsp;
-						</button>
-					</span>
-				</span>
-									<span id="yahoomail" class="yui-button yui-radio-button{if $mail_smtptype == 'yahoomail'} yui-button-checked{/if}">
+							<span id="gmail" class="yui-button yui-radio-button{if $mail_smtptype == 'gmail'} yui-button-checked{/if}">
+								<span class="first-child">
+									<button type="button" name="mail_smtptype" value="gmail" class="btn btn-danger">
+										&nbsp;&nbsp;&nbsp;&nbsp;{$APP.LBL_SMTPTYPE_GMAIL}&nbsp;&nbsp;&nbsp;&nbsp;
+									</button>
+								</span>
+							</span>
+				<span id="yahoomail" class="yui-button yui-radio-button{if $mail_smtptype == 'yahoomail'} yui-button-checked{/if}">
 					<span class="first-child">
 						<button type="button" name="mail_smtptype" value="yahoomail" class="btn btn-danger">
 							&nbsp;&nbsp;&nbsp;&nbsp;{$APP.LBL_SMTPTYPE_YAHOO}&nbsp;&nbsp;&nbsp;&nbsp;
 						</button>
 					</span>
 				</span>
-									<span id="exchange" class="yui-button yui-radio-button{if $mail_smtptype == 'exchange'} yui-button-checked{/if}">
+				<span id="exchange" class="yui-button yui-radio-button{if $mail_smtptype == 'exchange'} yui-button-checked{/if}">
 					<span class="first-child">
 						<button type="button" name="mail_smtptype" value="exchange" class="btn btn-danger">
 							&nbsp;&nbsp;&nbsp;&nbsp;{$APP.LBL_SMTPTYPE_EXCHANGE}&nbsp;&nbsp;&nbsp;&nbsp;
 						</button>
 					</span>
 				</span>
-									<span id="other" class="yui-button yui-radio-button{if $mail_smtptype == 'other' || empty($mail_smtptype)} yui-button-checked{/if}">
+				<span id="other" class="yui-button yui-radio-button{if $mail_smtptype == 'other' || empty($mail_smtptype)} yui-button-checked{/if}">
 					<span class="first-child">
 						<button type="button" name="mail_smtptype" value="other" class="btn btn-danger">
 							&nbsp;&nbsp;&nbsp;&nbsp;{$APP.LBL_SMTPTYPE_OTHER}&nbsp;&nbsp;&nbsp;&nbsp;
 						</button>
-					</span>
+				</span>
 				</span>
 								</div>
 							</td>
@@ -190,7 +189,7 @@ function change_state(radiobutton) {
 											<td width="30%">&nbsp;</td>
 										</tr>
 										<tr id="mail_allow_user">
-											<td width="20%" scope="row">
+											<td width="25%" scope="row">
 												{$MOD.LBL_ALLOW_DEFAULT_SELECTION}&nbsp;
 												<img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_ALLOW_DEFAULT_SELECTION_HELP}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&themeName={$THEME}&imageName=helpInline.gif">
 											</td>
@@ -201,20 +200,20 @@ function change_state(radiobutton) {
 										</tr>
 									</table>
                                                                                         
-                                                                        <table width="100%" cellpadding="0" cellspacing="0">
-                                                                            <tr>
-                                                                                <td width="20%" scope="row">
-                                                                                    {$MOD.LBL_ALLOW_SEND_AS_USER}&nbsp;
-                                                                                    <img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_ALLOW_SEND_AS_USER_DESC}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&themeName={$THEME}&imageName=helpInline.gif">
-                                                                                </td>
-                                                                                <td width="30%">
-                                                                                    <input type='hidden' id="mail_allowusersend_hidden_input" name='mail_allowusersend' value='0'>
-                                                                                    <input id='mail_allowusersend' name='mail_allowusersend' type="checkbox" class="checkbox" value="1" tabindex='1' {$mail_allow_user_send}>
-                                                                                </td>
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                            </tr>
-                                                                        </table>
+									<table width="100%" cellpadding="0" cellspacing="0">
+										<tr>
+											<td width="25%" scope="row">
+												{$MOD.LBL_ALLOW_SEND_AS_USER}&nbsp;
+												<img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_ALLOW_SEND_AS_USER_DESC}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&themeName={$THEME}&imageName=helpInline.gif">
+											</td>
+											<td width="30%">
+												<input type='hidden' id="mail_allowusersend_hidden_input" name='mail_allowusersend' value='0'>
+												<input id='mail_allowusersend' name='mail_allowusersend' type="checkbox" class="checkbox" value="1" tabindex='1' {$mail_allow_user_send}>
+											</td>
+											<td></td>
+											<td></td>
+										</tr>
+									</table>
 								</div>
 							</td>
 						</tr>
@@ -252,7 +251,7 @@ function change_state(radiobutton) {
 							<td></td>
 						</tr>
 						<tr>
-							<td width="20%" scope="row" valign='top'>
+							<td width="25%" scope="row" valign='top'>
 								{$MOD.LBL_EMAIL_WARNING_NOTIFICATIONS}:&nbsp;
 							</td>
 							<td width="30%"  valign='top'>
@@ -267,11 +266,11 @@ function change_state(radiobutton) {
 								<input type='checkbox' class='checkbox' name='email_default_delete_attachments' value="1" {$DEFAULT_EMAIL_DELETE_ATTACHMENTS}>
 							</td>
 
-							<td scope="row" width="20%">
+							<td scope="row" width="30%">
 								{$MOD.LBL_NOTIFY_SEND_FROM_ASSIGNING_USER}:
 								<img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_FROM_ADDRESS_HELP}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&themeName={$THEME}&imageName=helpInline.gif">
 							</td>
-							<td width="30%"  valign='top'><input type='hidden' name='notify_send_from_assigning_user' value='0'><input name='notify_send_from_assigning_user' value="2" tabindex='1' class="checkbox" type="checkbox" {$notify_send_from_assigning_user}></td>
+							<td width="20%"  valign='top'><input type='hidden' name='notify_send_from_assigning_user' value='0'><input name='notify_send_from_assigning_user' value="2" tabindex='1' class="checkbox" type="checkbox" {$notify_send_from_assigning_user}></td>
 
 						</tr>
 						<tr>
@@ -281,7 +280,6 @@ function change_state(radiobutton) {
 							<td width="30%"  valign='top'>
 								<select name="email_enable_confirm_opt_in">{$EMAIL_ENABLE_CONFIRM_OPT_IN}</select>
 							</td>
-
 						</tr>
                         <tr>
                             <td width="20%" scope="row" valign='top'>
@@ -290,7 +288,6 @@ function change_state(radiobutton) {
                             <td width="30%"  valign='top'>
                                 <input type='checkbox' name='email_enable_auto_send_opt_in' value="1" {$EMAIL_ENABLE_AUTO_SEND_OPT_IN}>
                             </td>
-
                         </tr>
                         <tr>
 							<td width="20%" scope="row" valign='top'>
@@ -299,7 +296,6 @@ function change_state(radiobutton) {
 							<td width="30%"  valign='top'>
 								<select name="email_template_id_opt_in">{$EMAIL_OPT_IN_TEMPLATES}</select>
 							</td>
-
 						</tr>
 					</table>
 				</div>

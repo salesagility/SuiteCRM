@@ -36,4 +36,16 @@
         background: $nepal-grey;
         border: none;
     }
+    #EditView_tabs .edit [type="checkbox"] {
+        margin-top: 1px;
+        margin-bottom: 0;
+    }
+    #EditView {
+        .edit {
+            tr td {
+                vertical-align: middle;
+                padding-left: 0.4em;
+            }
+        }
+    }
 }
