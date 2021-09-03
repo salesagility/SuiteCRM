@@ -30,6 +30,9 @@
 
 #aow_conditionLines {
   display: block;
+  .suitepicon-action-minus {
+    font-size: 15px;
+  }
 }
 
 #aow_conditionLines > thead {
@@ -74,7 +77,6 @@
 
 #aow_conditionLines > tbody > tr {
   display: block;
-  background-color: $main-bg;
   border-bottom: 1px $main-alternate-bg solid;
 }
 
@@ -92,7 +94,6 @@
 }
 
 #aow_conditionLines tbody td {
-  background-color: $detail-view-field-bg;
   margin-top: 2px;
   margin-bottom: 2px;
   min-height: 32px;
@@ -115,7 +116,7 @@
 
 #aow_conditionLines td:first-of-type button {
   margin-top: 6px;
-  line-height: 30px;
+  line-height: 30px;  
 }
 
 #aow_conditionLines input {
@@ -127,7 +128,7 @@
 }
 
 #aow_conditionLines input[type=checkbox] {
-  margin-top: 24px;
+  margin-top: 14px;
 }
 
 #aow_conditionLines textarea {
@@ -143,7 +144,6 @@
 /** fix datetimes **/
 #aow_conditionLines > tbody > tr > td > table.dateTime {
   display: inline-block;
-  background-color: $detail-view-field-bg;
 
   .dateTimeComboColumn {
     display: inline-block;
@@ -211,11 +211,12 @@
 #aow_conditionLines [type="button"] {
   background-color: $white;
   padding: 7px;
-  margin-right: 4px;
+  margin-right: 10px;
   border: 1px solid $dark-grey-line;
   border-radius: $border-radius-base;
   color: #000;
   height: 29px;
+  width: 2.4em;
 }
 
 #actionLines [type="button"] {
@@ -250,6 +251,9 @@
 #actionLines .action-table {
   display: block;
   width: 100%;
+  fieldset {
+    margin-top: 10px;
+  }
 }
 
 #actionLines .action-table tbody {
@@ -342,10 +346,6 @@
   vertical-align: top;
 }
 
-[data-workflow-action-line] td:first-of-type {
-  width: 48px;
-}
-
 [data-workflow-action-line] td:nth-of-type(3) select {
   width: auto;
 }
@@ -402,6 +402,13 @@
 
 #relate_label {
   line-height: $input-line-height;
+  margin-right: 2em;
+}
+
+.relate_label {
+  input[type=checkbox] {
+    margin-left: 0.6em;
+  }
 }
 
 #deleteGroup img {
@@ -492,7 +499,7 @@
 }
 
 [data-workflow-action] .lines tbody > tr > td input[type=checkbox] {
-  margin-top: 24px;
+  margin-top: 13px;
 }
 
 [data-workflow-action] .lines tbody > tr > td textarea {
@@ -530,6 +537,39 @@ table.lines {
   }
 }
 
+#actionLines {
+  .relationship {
+    tbody {
+      tr {
+        td {
+          min-height: auto;
+        }
+      }
+    }
+    select {
+      width: 100%;
+    }
+  }
+  .lines {
+    tbody tr td {
+      min-height: auto;
+      width: auto;
+      input[type=checkbox] {
+        margin-top: 15.4px;
+      }
+      input[type="text"] {
+        width: auto;
+      }
+    }
+    select {
+      width: 100%;
+    }
+    .calendarstart {
+      top: -0.4em;
+    }
+  }
+}
+
 table.relationship {
   button {
     background: transparent !important;
@@ -537,7 +577,7 @@ table.relationship {
     height: 28px!important;
     color: $black;
     padding: 7px!important;
-  }
+  }  
 }
 
 table.email-line {
@@ -572,5 +612,12 @@ table.email-line {
     opacity: 0.2;
     position: relative;
     top: 0.3em;
+  }
+}
+
+.view-module-AOW_WorkFlow {
+  .action-buttons {
+    margin-top: -1.5em;
+    top: -2em;
   }
 }
