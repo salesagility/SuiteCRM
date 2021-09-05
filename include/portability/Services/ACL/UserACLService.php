@@ -33,15 +33,14 @@
  */
 class UserACLService
 {
-
     /**
      * Check User ACL against the following parameters
      * @param string $routeModule
      * @param string $routeURL
-     * @param string $routeAction
+     * @param bool $isActionAvailable
      * @return array with feedback
      */
-    public function run(string $routeModule, string $routeURL, string $routeAction): array
+    public function run(string $routeModule, string $routeURL, bool $isActionAvailable): array
     {
         if (empty($routeModule)) {
             return [
@@ -50,14 +49,14 @@ class UserACLService
             ];
         }
 
-        if (!$routeURL && !$this->handleAclRoles($routeModule, $routeAction)) {
+        if (!$routeURL && !$isActionAvailable) {
             return [
                 'status' => false,
                 'message' => 'ERR_UNAUTHORIZED_PAGE_ACCESS_TO_HOME_PAGE'
             ];
         }
 
-        if (!$this->handleAclRoles($routeModule, $routeAction)) {
+        if (!$isActionAvailable) {
             return [
                 'status' => false,
                 'message' => 'ERR_UNAUTHORIZED_PAGE_ACCESS'
@@ -68,18 +67,5 @@ class UserACLService
             'status' => true,
             'message' => ''
         ];
-    }
-
-    /**
-     * Handle User Acl roles
-     * @param string $beanName
-     * @param string $routeAction
-     * @return bool
-     */
-    protected function handleAclRoles(string $beanName, string $routeAction): bool
-    {
-        $routeAction = $routeAction ?: 'view';
-
-        return ACLController::checkAccess($beanName, $routeAction, true, 'module', true);
     }
 }
