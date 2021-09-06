@@ -525,7 +525,7 @@
                     <td colspan="4">
                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tr>
-                                <td class="subtheme_layout" scope="row" align="left" style="width:100%;padding-bottom: 2em;">{$TAB_CHOOSER}</td>
+                                <td class="subtheme_layout" scope="row" align="left" style="width:100%;padding-bottom: 2em;padding-left:0;">{$TAB_CHOOSER}</td>
                                 <td width="90%" valign="top"><BR>&nbsp;</td>
                             </tr>
                         </table>
