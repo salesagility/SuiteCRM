@@ -29,13 +29,14 @@
             padding-left: 0.4em;
             font-size: 1.1em;
             font-weight: 700;
+            color: $admin-mid-color;
         }
         tr td {
             padding: 0;
             white-space: normal;  
-            text-transform: uppercase;
-            font-weight: 700;      
-            vertical-align: middle;    
+            text-transform: capitalize;     
+            vertical-align: middle;  
+            color: $admin-label-color;  
         }
         tr td:nth-child(1){
             width: 25%;
@@ -64,8 +65,7 @@
         tr td {
             padding: 0;
             white-space: normal;  
-            text-transform: uppercase;
-            font-weight: 700;          
+            text-transform: capitalize;        
         }
         tr td:nth-child(1){
             padding-left: 0.8em;
@@ -74,6 +74,9 @@
             text-transform: uppercase;
             padding-top: 0.5em;
             padding-left: 0.4em;
+            font-size: 1.1em;
+            font-weight: 700;
+            color: $admin-mid-color;
         }
         input[type=text],input[type=password],input[type=email] {
             background-color:$transparent-color;

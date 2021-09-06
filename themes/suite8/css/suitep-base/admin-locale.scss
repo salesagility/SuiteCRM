@@ -44,10 +44,10 @@
             &:first-child{
                 padding-left: 1.8em;
             }
-            text-transform: uppercase;
-            font-weight: 600;            
+            text-transform: capitalize;           
             vertical-align: initial;
             width: 25%;
+            color: $admin-label-color;
         }
         h4 {
             margin-top: 1em;

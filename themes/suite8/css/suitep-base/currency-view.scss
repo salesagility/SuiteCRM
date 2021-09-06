@@ -18,8 +18,8 @@
             border-color: $bright-grey;
         }
         table tr td {
-            text-transform: uppercase;
-            font-weight: 600;
+            text-transform: capitalize;
+            color: $admin-label-color;
         }
     }
     .formHeader {   
