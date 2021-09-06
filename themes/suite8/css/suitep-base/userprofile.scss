@@ -165,8 +165,7 @@ form.userprofile {
         text-transform: capitalize;
     }
     #settings {
-        table tr td {
-            padding: 0;
+        table tr td {            
             white-space: nowrap;            
         }
         table tr td:nth-child(1){
@@ -187,8 +186,7 @@ form.userprofile {
         }
     }
     #locale {
-        table tr td {
-            padding: 0;
+        table tr td {            
             white-space: nowrap;
         }
         table tr td:nth-child(1){
@@ -200,8 +198,7 @@ form.userprofile {
         }
     }
     #calendar_options {
-        table tr td {
-            padding: 0;
+        table tr td {            
             white-space: nowrap;
         } 
         table tr td:nth-child(1){
@@ -209,8 +206,7 @@ form.userprofile {
         }
     }
     #subthemes {
-        table tr td {
-            padding: 0;
+        table tr td {           
             white-space: nowrap;
         }  
     }
@@ -248,7 +244,8 @@ form.userprofile {
     }
     .user-tab-content .edit tr td {
         padding-left: 0.6em;
-        text-transform: uppercase;
+        text-transform: capitalize;
+        font-weight: normal !important;
     }    
     .email-address-reply-to-flag {
         margin-top: 8px !important;
@@ -286,5 +283,10 @@ form.userprofile {
     }
     input#sigDigitsExample {
         background: lightgrey;
+    }    
+    .user-tab-content {
+        slot {
+            font-weight: inherit;
+        }
     }
 }
