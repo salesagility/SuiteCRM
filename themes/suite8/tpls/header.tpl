@@ -60,5 +60,5 @@
 {if $AUTHENTICATED}
 <div id="bootstrap-container">
     <div id="content" class="content">
-        <div id="pagecontent" class="pagecontent">
+        <div id="pagecontent" class="pagecontent view-module-{$smarty.request.module|default:'default'} view-action-{$smarty.request.action|default:'default'}">
 {/if}
