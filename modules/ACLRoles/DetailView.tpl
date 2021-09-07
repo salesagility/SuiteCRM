@@ -78,7 +78,7 @@ EOD
 		</p>
 </div>
 <p>
-	<TABLE width='100%' class='detail view' border='0' cellpadding=0 cellspacing = 1  >
+	<TABLE width='100%' class='detail view role-detail' border='0' cellpadding=0 cellspacing = 1  >
 		<TR>
 			<td valign='top' width='15%' align='right'><b>{$MOD.LBL_NAME}:</b></td><td width='85%' colspan='3'>{$ROLE.name}</td>
 			</tr>

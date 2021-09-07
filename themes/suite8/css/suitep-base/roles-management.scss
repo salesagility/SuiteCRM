@@ -1,16 +1,31 @@
 .role-manager {
+    .moduleTitle {
+        h2 {
+            margin: 0;
+        }
+    }
+    table.role-detail {
+        position: relative;
+        top: 2em;
+    }
     .action-button {
         display: flex;
         justify-content: flex-end;
-        margin-bottom: 0.5em;
-        margin-top: 0.8em;
+        margin-top: 2em;
+        margin-bottom: 1em;
         .button {
             background-color:$nepal-grey ;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 700;
             height: 2.2em;
-            line-height: 16px;
-            padding: 0.3em 0.1em;
+            line-height: 1em;
+            padding: 0.3em 0.2em;
+            text-transform: capitalize;
+            margin-right: 0.1em;
+            border-radius: 0.25em;
+            &:hover {
+                background: $pale-blue;
+            }
         }     
     }
     .hidebtn {
@@ -18,20 +33,28 @@
     }
     
     .heading-text {
-        position: absolute;
-        top: 8.6%;
+        position: relative;
+        top: 3.5em;
+        float: left;
     }
     .action_buttons {
         position: absolute;
-        top: 3.5em;  
+        margin-top: -2em; 
         bottom: auto;
         .btn {
             background-color: $nepal-grey;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 700;
             height: 2.2em;
-            line-height: 16px;
-            padding: 0.3em 1.2em;
+            line-height: 1em;
+            padding: 0.3em 1em;
+            text-transform: capitalize;
+            margin: .2em;
+            border-radius: 0.25em;
+            &:hover {
+                background: $pale-blue;
+                border: none;
+            }
         }      
     }
 }
