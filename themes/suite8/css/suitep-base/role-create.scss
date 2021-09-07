@@ -12,13 +12,15 @@
                 .button {
                     background-color: $nepal-grey;
                     border-radius: 0.2em;
-                    font-weight: bold;
+                    font-size: 13px;
+                    font-weight: 700;
                     height: 2.2em;
                     line-height: 1em;
                     letter-spacing: 0.05em;
                     padding: 0.3em 1em;
                     text-transform: capitalize;
                     margin-right: 0.5em;
+                    border-radius: 0.25em;
                     &:hover {
                         background: $pale-blue;
                     }
