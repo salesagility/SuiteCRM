@@ -80,7 +80,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
 
         $token->access_token = $accessTokenEntity->getIdentifier();
 
-        $token->access_token_expires = $accessTokenEntity->getExpiryDateTime()->format('Y-m-d H:i:s');
+        $token->access_token_expires = $accessTokenEntity->getExpiryDateTime()->setTimezone(new DateTimeZone('UTC'))->format('Y-m-d H:i:s');
 
         $token->client = $clientId;
 
