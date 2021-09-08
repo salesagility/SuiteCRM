@@ -47,7 +47,7 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
         }
 
         $token->refresh_token = $refreshTokenEntity->getIdentifier();
-        $token->refresh_token_expires = $refreshTokenEntity->getExpiryDateTime()->setTimezone('UTC'))->format('Y-m-d H:i:s');
+        $token->refresh_token_expires = $refreshTokenEntity->getExpiryDateTime()->setTimezone(new DateTimeZone('UTC'))->format('Y-m-d H:i:s');
         $token->save();
     }
 
