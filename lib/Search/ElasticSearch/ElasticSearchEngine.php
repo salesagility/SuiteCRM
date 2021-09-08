@@ -66,7 +66,12 @@ class ElasticSearchEngine extends SearchEngine
      */
     public function __construct(Client $client = null)
     {
-        $this->client = empty($client) ? ElasticSearchClientBuilder::getClient() : $client;
+        global $sugar_config;
+        $this->client = $client === null ? ElasticSearchClientBuilder::getClient() : $client;
+
+        if (!empty($sugar_config['search']['ElasticSearch']['index'])) {
+            $this->index = $sugar_config['search']['ElasticSearch']['index'];
+        }
     }
 
     /**
@@ -81,6 +86,7 @@ class ElasticSearchEngine extends SearchEngine
         $results = $this->parseHits($hits);
         $end = microtime(true);
         $searchTime = ($end - $start);
+
         return new SearchResults($results, true, $searchTime, $hits['hits']['total']);
     }
 
@@ -118,7 +124,31 @@ class ElasticSearchEngine extends SearchEngine
      */
     private function createSearchParams($query)
     {
-        $params = [
+        $searchStr = $query->getSearchString();
+
+        // Wildcard character required for Elasticsearch
+        $wildcardBe = "*";
+
+        // Override frontend wildcard character
+        if (isset($GLOBALS['sugar_config']['search_wildcard_char'])) {
+            $wildcardFe = $GLOBALS['sugar_config']['search_wildcard_char'];
+            if ($wildcardFe !== $wildcardBe && strlen($wildcardFe) === 1) {
+                $searchStr = str_replace($wildcardFe, $wildcardBe, $searchStr);
+            }
+        }
+
+        // Add wildcard at the beginning of the search string
+        if (isset($GLOBALS['sugar_config']['search_wildcard_infront']) &&
+            $GLOBALS['sugar_config']['search_wildcard_infront'] === true && $searchStr[0] !== $wildcardBe) {
+            $searchStr = $wildcardBe . $searchStr;
+        }
+
+        // Add wildcard at the end of search string
+        if ((!substr_compare($searchStr, $wildcardBe, -strlen($wildcardBe))) === 0) {
+            $searchStr .= $wildcardBe;
+        }
+
+        return [
             'index' => $this->index,
             'body' => [
                 'stored_fields' => [],
@@ -126,7 +156,7 @@ class ElasticSearchEngine extends SearchEngine
                 'size' => $query->getSize(),
                 'query' => [
                     'query_string' => [
-                        'query' => $query->getSearchString(),
+                        'query' => $searchStr,
                         'fields' => ['name.*^5', '_all'],
                         'analyzer' => 'standard',
                         'default_operator' => 'OR',
@@ -135,8 +165,6 @@ class ElasticSearchEngine extends SearchEngine
                 ],
             ],
         ];
-
-        return $params;
     }
 
     /**

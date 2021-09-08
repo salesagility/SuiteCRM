@@ -67,6 +67,11 @@ class Folder
     public $id;
 
     /**
+     * @var string
+     */
+    public $mailbox;
+    
+    /**
      * private, use Folder::getType() instead
      * @var string folder type
      */
@@ -84,8 +89,6 @@ class Folder
 
     /**
      * @param int|string $folderId - (should be string, int type is legacy)
-     * @param bool $encode (legacy, unused)
-     * @param bool $deleted (legacy, unused)
      * @return null|string (folder ID)
      * @throws SuiteException
      */
@@ -98,16 +101,13 @@ class Folder
 
             // get the root of the tree
             // is the id of the root node is the same as the inbound email id
-
             if (empty($row['parent_folder'])) {
-
                 // root node (inbound)
-
                 $this->id = $row['id'];
+                $this->type = $row['folder_type'];
+                $this->mailbox = 'INBOX'; // Top level IMAP folder
             } else {
-
                 // child node
-
                 $this->id = $row['parent_folder'];
                 $this->type = $row['folder_type'];
                 $this->mailbox = $row['name'];
@@ -150,5 +150,13 @@ class Folder
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMailbox()
+    {
+        return $this->mailbox;
     }
 }

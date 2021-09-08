@@ -162,24 +162,16 @@ function create_field_label($module, $language, $key, $value, $overwrite=false)
             } else {
                 $old_contents = '';
             }
-            $handle = sugar_fopen($filename, 'wb');
 
-
-            if ($handle) {
-                $contents =create_field_lang_pak_contents(
-                    $old_contents,
-                    $key,
-                    $value,
-                    $language,
-                    $module
-                );
-
-                if (fwrite($handle, $contents)) {
-                    $return_value = true;
-                    $GLOBALS['log']->info("Successful write to: $filename");
-                }
-
-                fclose($handle);
+            if (sugar_file_put_contents($filename, create_field_lang_pak_contents(
+                $old_contents,
+                $key,
+                $value,
+                $language,
+                $module
+            )) !== false) {
+                $return_value = true;
+                $GLOBALS['log']->info("Successful write to: $filename");
             } else {
                 $GLOBALS['log']->info("Unable to write edited language pak to file: $filename");
             }
@@ -232,20 +224,15 @@ function save_custom_app_list_strings_contents(&$contents, $language, $custom_di
 
     if ($dir_exists) {
         $filename = "$dirname/$language.lang.php";
-        $handle = @sugar_fopen($filename, 'wt');
 
-        if ($handle) {
-            if (fwrite($handle, $contents)) {
+        if (sugar_file_put_contents($filename, $contents) !== false) {
                 $return_value = true;
-                $GLOBALS['log']->info("Successful write to: $filename");
-            }
-
-            fclose($handle);
+                LoggerManager::getLogger()->info("Successful write to: $filename");
         } else {
-            $GLOBALS['log']->info("Unable to write edited language pak to file: $filename");
+            LoggerManager::getLogger()->info("Unable to write edited language pack to file: $filename");
         }
     } else {
-        $GLOBALS['log']->info("Unable to create dir: $dirname");
+        LoggerManager::getLogger()->info("Unable to create dir: $dirname");
     }
     if ($return_value) {
         $cache_key = 'app_list_strings.'.$language;
@@ -273,20 +260,15 @@ function save_custom_app_list_strings(&$app_list_strings, $language)
 
     if ($dir_exists) {
         $filename = "$dirname/$language.lang.php";
-        $handle = @sugar_fopen($filename, 'wt');
 
-        if ($handle) {
-            $contents =create_dropdown_lang_pak_contents(
-                $app_list_strings,
-                $language
-            );
+        $contents =create_dropdown_lang_pak_contents(
+            $app_list_strings,
+            $language
+        );
 
-            if (fwrite($handle, $contents)) {
-                $return_value = true;
-                $GLOBALS['log']->info("Successful write to: $filename");
-            }
-
-            fclose($handle);
+        if (sugar_file_put_contents($filename, $contents) !== false) {
+            $return_value = true;
+            $GLOBALS['log']->info("Successful write to: $filename");
         } else {
             $GLOBALS['log']->info("Unable to write edited language pak to file: $filename");
         }

@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once 'include/SugarCache/SugarCache.php';
+
 /**
  * Unzip file to specified directory
  *
@@ -83,8 +85,12 @@ function unzip_file($zip_archive, $archive_file, $zip_dir)
 
     if ($archive_file !== null) {
         $res = $zip->extractTo(UploadFile::realpath($zip_dir), $archive_file);
+        if ((new SplFileInfo($archive_file))->getExtension() == 'php') {
+            SugarCache::cleanFile(UploadFile::realpath($zip_dir).'/'.$archive_file);
+        }
     } else {
         $res = $zip->extractTo(UploadFile::realpath($zip_dir));
+        SugarCache::cleanDir(UploadFile::realpath($zip_dir));
     }
 
     if ($res !== true) {

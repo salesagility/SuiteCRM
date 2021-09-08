@@ -115,6 +115,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $bean->first_name = $firstName;
         $bean->last_name = $lastName;
         $bean->primary_address_city = $city;
+        $bean->createdAuditRecords = false;
 
         // Save the bean to the database and retrieve the new id
         $bean->save();
@@ -167,6 +168,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $bean = BeanFactory::getBean('Contacts', $id);
 
         $bean->first_name = $full_name_update;
+        $bean->createdAuditRecords = false;
 
         // injecting this indexer so that it'll have the same parameters
         /** @noinspection PhpUndefinedFieldInspection */
@@ -259,6 +261,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
         $bean->first_name = $firstName;
         $bean->last_name = $lastName;
+        $bean->createdAuditRecords = false;
 
         $bean->save();
 
@@ -295,6 +298,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $firstName2 = 'NotTheSame';
         $bean2->first_name = $firstName2;
         $bean2->last_name = $lastName;
+        $bean2->createdAuditRecords = false;
 
         $bean2->save();
         $id2 = $bean2->id;

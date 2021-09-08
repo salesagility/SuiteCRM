@@ -82,9 +82,14 @@ class ElasticSearchIndexer extends AbstractIndexer
      */
     public function __construct(Client $client = null)
     {
+        global $sugar_config;
         parent::__construct();
 
-        $this->client = !empty($client) ? $client : ElasticSearchClientBuilder::getClient();
+        $this->client = $client !== null ? $client : ElasticSearchClientBuilder::getClient();
+
+        if (!empty($sugar_config['search']['ElasticSearch']['index'])) {
+            $this->index = $sugar_config['search']['ElasticSearch']['index'];
+        }
     }
 
     /**
@@ -198,15 +203,15 @@ class ElasticSearchIndexer extends AbstractIndexer
     {
         $isDifferential = $this->differentialIndexing();
         $dataPuller = new ElasticSearchModuleDataPuller($module, $isDifferential, $this->logger);
-        
+
         $this->buildWhereClause($dataPuller, $isDifferential, $module);
 
         $this->logger->debug(sprintf('Indexing module %s...', $module));
 
         try {
             $beanTime = Carbon::now()->toDateTimeString();
-            
-            while ($beans = $dataPuller->pullNextBatch()) {                
+
+            while ($beans = $dataPuller->pullNextBatch()) {
                 $this->indexBeans($module, $beans);
             }
             $this->logger->debug(sprintf('Finished %s. Processed %d Records', $module, $dataPuller->recordsPulled));
@@ -223,7 +228,7 @@ class ElasticSearchIndexer extends AbstractIndexer
             }
             return;
         }
-        
+
         $this->putMeta($module, ['last_index' => $beanTime]);
         $this->indexedModulesCount++;
     }
@@ -248,7 +253,7 @@ class ElasticSearchIndexer extends AbstractIndexer
             }
         }
     }
-    
+
     /** @inheritdoc */
     public function indexBeans($module, array $beans)
     {
@@ -572,7 +577,7 @@ class ElasticSearchIndexer extends AbstractIndexer
 
         return $meta['last_index'];
     }
-    
+
     /**
      *
      * @param bool $differential
