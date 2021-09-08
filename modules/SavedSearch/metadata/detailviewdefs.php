@@ -49,6 +49,34 @@ $viewdefs ['SavedSearch'] = [
                 ],
             ],
         ],
+        'recordActions' => [
+            'actions' => [
+                'delete' => [
+                    'key' => 'delete',
+                    'labelKey' => 'LBL_DELETE',
+                    'asyncProcess' => false,
+                    'params' => [
+                        'expanded' => true,
+                        'displayConfirmation' => true,
+                        'confirmationLabel' => 'NTC_DELETE_CONFIRMATION'
+                    ],
+                    'modes' => ['detail', 'edit'],
+                    'acl' => [],
+                ],
+
+                'save' => [
+                    'key' => 'save',
+                    'labelKey' => 'LBL_SAVE_BUTTON_LABEL',
+                    'asyncProcess' => false,
+                    'params' => [
+                        'expanded' => true,
+                    ],
+                    'modes' => ['edit'],
+                    'acl' => [],
+                ]
+
+            ]
+        ],
         'panels' => [
             'lbl_default' => [
                 [
