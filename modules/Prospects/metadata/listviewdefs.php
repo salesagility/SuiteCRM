@@ -41,7 +41,28 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
+$viewdefs['Prospects'] = [
+    'ListView' =>  [
+        'bulkActions' => [
+            'actions' => [
+                'records-to-target-list' => [
+                    'key' => 'records-to-target-list',
+                    'labelKey' => 'LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL',
+                    'modes' => ['list'],
+                    'acl' => ['edit'],
+                    'aclModule' => 'prospect-lists',
+                    'params' => [
+                        'selectModal' => [
+                            'module' => 'ProspectLists'
+                        ],
+                        'allowAll' => false,
+                        'max' => 200
+                    ]
+                ]
+            ]
+        ]
+    ]
+];
 
 
 $listViewDefs['Prospects'] = array(

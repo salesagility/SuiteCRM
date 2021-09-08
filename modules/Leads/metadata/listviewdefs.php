@@ -41,6 +41,64 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+$viewdefs['Leads'] = [
+    'ListView' =>  [
+        'sidebarWidgets' => [
+            'leads-by-status' => [
+                'type' => 'chart',
+                'labelKey' => 'LBL_QUICK_CHARTS',
+                'options' => [
+                    'toggle' => true,
+                    'headerTitle' => false,
+                    'charts' => [
+                        [
+                            'chartKey' => 'leads-by-status-count',
+                            'chartType' => 'pie-grid',
+                            'statisticsType' => 'leads-by-status-count',
+                            'labelKey' => 'LEADS_BY_STATUS',
+                            'chartOptions' => [
+                                'label' => 'LBL_TOTAL',
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ],
+        'bulkActions' => [
+            'actions' => [
+                'records-to-target-list' => [
+                    'key' => 'records-to-target-list',
+                    'labelKey' => 'LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL',
+                    'modes' => ['list'],
+                    'acl' => ['edit'],
+                    'aclModule' => 'prospect-lists',
+                    'params' => [
+                        'selectModal' => [
+                            'module' => 'ProspectLists'
+                        ],
+                        'allowAll' => false,
+                        'max' => 200
+                    ]
+                ],
+
+                'print-as-pdf' => [
+                    'key' => 'print-as-pdf',
+                    'labelKey' => 'LBL_PRINT_AS_PDF',
+                    'modes' => ['list'],
+                    'acl' => ['view'],
+                    'aclModule' => 'AOS_PDF_Templates',
+                    'params' => [
+                        'selectModal' => [
+                            'module' => 'AOS_PDF_Templates'
+                        ],
+                        'allowAll' => false,
+                        'max' => 50
+                    ]
+                ]
+            ]
+        ]
+    ]
+];
 
 
 
