@@ -151,6 +151,52 @@ class ListViewFacade
     }
 
     /**
+     * Retrieves list view metadata
+     *
+     * @param string $module
+     * @return array
+     */
+    public static function getMetadata($module): array
+    {
+        $metadataFile = null;
+        $foundViewDefs = false;
+        if (file_exists('custom/modules/' . $module . '/metadata/listviewdefs.php')) {
+            $metadataFile = 'custom/modules/' . $module . '/metadata/listviewdefs.php';
+            $foundViewDefs = true;
+        } elseif (file_exists('custom/modules/' . $module . '/metadata/metafiles.php')) {
+            require_once('custom/modules/' . $module . '/metadata/metafiles.php');
+            if (!empty($metafiles[$module]['listviewdefs'])) {
+                $metadataFile = $metafiles[$module]['listviewdefs'];
+                $foundViewDefs = true;
+            }
+        } elseif (file_exists('modules/' . $module . '/metadata/metafiles.php')) {
+            require_once('modules/' . $module . '/metadata/metafiles.php');
+            if (!empty($metafiles[$module]['listviewdefs'])) {
+                $metadataFile = $metafiles[$module]['listviewdefs'];
+                $foundViewDefs = true;
+            }
+        }
+
+        if (!$foundViewDefs && file_exists('modules/' . $module . '/metadata/listviewdefs.php')) {
+            $metadataFile = 'modules/' . $module . '/metadata/listviewdefs.php';
+        }
+
+        $listViewDefs = null;
+        if ($metadataFile) {
+            if (!file_exists($metadataFile)) {
+                throw new RuntimeException("Metadata file '$metadataFile' not found for module '$module'.");
+            }
+            require $metadataFile;
+        }
+
+        $metadata = $viewdefs[$module] ?? [];
+        $metadata['ListView'] = $viewdefs[$module]['ListView'] ?? [];
+        $metadata['ListView']['templateMeta'] = $listViewDefs ?? [];
+
+        return $metadata['ListView'];
+    }
+
+    /**
      * Retrieves display columns on list view of specified module
      *
      * @param string $module
