@@ -102,7 +102,7 @@
       margin-left: 3em;
       margin-top: 0.3em;
     }  
-    #SAVE_HEADER,#CANCEL_HEADER,#SAVE_FOOTER,#CANCEL_FOOTER {
+    #SAVE_HEADER,#CANCEL_HEADER {
       margin: 0.2em;
       font-weight: bold;
       height: 2.2em;
@@ -111,10 +111,16 @@
       background-color: #93a4b3;
       text-transform: capitalize;
     }
+    #SAVE_FOOTER,#CANCEL_FOOTER {
+      display: none;
+    }
     td.buttons {
-      position: absolute;
-      right: 0;
-      top: 5em;
+      display: flex;
+      justify-content: flex-end;
+      margin-top: -3em;
+    }
+    .panel-convert-lead {
+      margin-top: 0.5em;
     }
   
     #createContacts {
@@ -151,4 +157,22 @@
       padding: 10px;
     }
   }  
+
+  .view-action-ConvertLead {
+    p.error {
+      margin-bottom: 0.5em !important;
+    }
+    span.error {
+      display: block;
+      margin-bottom: 0.9em;
+      margin-top: 0.9em;
+    }
+    .moduleTitle {
+      h2.module-title-text {
+        span.pointer {
+          display: inline-block;
+        }
+      }
+    }
+  }
   
