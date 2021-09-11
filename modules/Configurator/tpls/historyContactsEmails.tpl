@@ -39,6 +39,7 @@
  */
 
 *}
+{$title}
 <div class="history-subpanel-config">
 <form name="AdminSettings" method="POST">
     <input type="hidden" name="action" value="historyContactsEmailsSave">
@@ -46,7 +47,7 @@
 
     <table width="100%" cellpadding="0" cellspacing="0" border="0" class="actionsContainer">
         <tr>
-            <td width="100%" colspan="2">
+            <td width="100%" colspan="2" class="action-buttons">
                 <input type="submit" id="configuratorHistoryContactsEmails_admin_save"  class="button primary" title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" value="{$APP.LBL_SAVE_BUTTON_LABEL}">
                 <input type="button" id="configuratorHistoryContactsEmails_admin_cancel" onclick="location.href='index.php?module=Administration&amp;action=index';" class="button" title="{$APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" value="{$APP.LBL_CANCEL_BUTTON_LABEL}">
             </td>
