@@ -10,3 +10,33 @@
         }
     }
 }
+
+.view-action-historyContactsEmails {
+    .moduleTitle {
+        position: relative;
+        bottom: 0.7em;
+        h2 {
+            color: $shell-grey;
+        }
+    }
+    .action-buttons {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 0.8em;
+        margin-top: -3.7em;
+        position: absolute;        
+        .button {
+            background-color: $nepal-grey;
+            font-size: 13px;
+            font-weight: 700;
+            height: 2.2em;
+            line-height: 16px;
+            padding: .3em 1em;
+            text-transform: capitalize;
+            margin: .2em;
+            &:hover {
+                background: $pale-blue;
+            }
+        }
+    }    
+}

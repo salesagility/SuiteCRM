@@ -47,6 +47,19 @@ require_once('include/SubPanel/SubPanelDefinitions.php');
 
 class ConfiguratorViewHistoryContactsEmails extends SugarView
 {
+    /**
+     * @see SugarView::_getModuleTitleParams()
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
+
+        return array(
+           "<a href='index.php?module=Administration&action=index'>".$mod_strings['LBL_MODULE_NAME']."</a>",
+           $mod_strings['LBL_HISTORY_SUBPANEL']
+           );
+    }
+
     public function preDisplay()
     {
         if (!is_admin($GLOBALS['current_user'])) {
@@ -114,6 +127,7 @@ class ConfiguratorViewHistoryContactsEmails extends SugarView
         }
         ksort($modules);
         $this->ss->assign('modules', $modules);
+        $this->ss->assign('title', $this->getModuleTitle(false));
         $this->ss->display('modules/Configurator/tpls/historyContactsEmails.tpl');
     }
 }
