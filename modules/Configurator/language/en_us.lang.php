@@ -364,4 +364,5 @@ More help : www.tcpdf.org',
     'LBL_WELCOME' => 'Welcome' /*for 508 compliance fix*/,
     'LBL_LOGO' => 'Logo' /*for 508 compliance fix*/,
     'LBL_ENABLE_HISTORY_CONTACTS_EMAILS' => 'Show related contacts\' emails in History subpanel for modules',
+    'LBL_HISTORY_SUBPANEL' => 'History Subpanel',
 );
