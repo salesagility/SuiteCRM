@@ -320,7 +320,10 @@ ul.subpanelTablist li {
 .sugarFeedDashlet {
   blockquote {
     input[type=submit] {
-      background: #a99ac9;
+      background: $light-purple;
+      &:hover {
+        background: $thick-blue;
+      }
     }
     form {
       table tr td:nth-child(2) {
@@ -727,7 +730,7 @@ table #dashletPanel {
     border: 1px solid $base-border-light-color;
   }
   input[type=submit] {
-    background: #a99ac9;
+    background: $light-purple;
     &:hover {
       background: $thick-blue;
     }
