@@ -20,7 +20,7 @@ class EmailTemplateFieldsTest extends SuitePHPUnitFrameworkTestCase
         // execute the method and verify that it returns expected results
         $actual = generateFieldDefsJS2();
 
-        $this->assertGreaterThan(0, strlen($actual));
+        self::assertGreaterThan(0, strlen($actual));
     }
 
 }
