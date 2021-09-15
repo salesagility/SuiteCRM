@@ -142,9 +142,11 @@ EOF;
         );
 
         foreach ($replaces as $i => $j) {
-            $tmp = $ret['buttons'][$j];
-            $ret['buttons'][$j] = $ret['buttons'][$i];
-            $ret['buttons'][$i] = $tmp;
+            if ( isset($ret['buttons'][$i], $ret['buttons'][$j]) ) {
+                $tmp = $ret['buttons'][$j];
+                $ret['buttons'][$j] = $ret['buttons'][$i];
+                $ret['buttons'][$i] = $tmp;
+            }
         }
 
         return $ret;
