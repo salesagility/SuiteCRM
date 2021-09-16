@@ -85,6 +85,8 @@ class GoogleSyncBase
     /** @var object A Logger Instance */
     protected $logger;
 
+    /** @var string The name of the Google Calendar to use */
+    protected $suiteCalendarName = 'SuiteCRM';
     /**
      * Class Constructor
      *
@@ -97,6 +99,9 @@ class GoogleSyncBase
         $this->authJson = $this->getAuthJson($sugarConfig);
         $this->db = DBManagerFactory::getInstance();
         $this->logger->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . '__construct');
+        if(!empty($sugarConfig['google_calendar_sync_name'])){
+            $this->suiteCalendarName = $sugarConfig['google_calendar_sync_name'];
+        }
     }
 
     /**
@@ -145,7 +150,7 @@ class GoogleSyncBase
         if (!$isValidator->isValidId($id)) {
             throw new GoogleSyncException('Google Sync Base trying to set Client but given an invalid ID: ' . $id, GoogleSyncException::INVALID_CLIENT_ID);
         }
-        
+
         if (!$gClient_local = $this->getClient($id)) {
             return false;
         }
@@ -350,7 +355,7 @@ class GoogleSyncBase
             $helper = new GoogleSyncHelper;
             $helper->wipeLocalSyncData($this->workingUser->id);
             $calendar = new \Google\Service\Calendar\Calendar();
-            $calendar->setSummary('SuiteCRM');
+            $calendar->setSummary($this->suiteCalendarName);
             $calendar->setTimeZone($this->timezone);
 
             $createdCalendar = $this->gService->calendars->insert($calendar);
@@ -374,7 +379,7 @@ class GoogleSyncBase
     protected function getSuiteCRMCalendar(Google\Service\Calendar\CalendarList $calendarList)
     {
         foreach ($calendarList->getItems() as $calendarListEntry) {
-            if ($calendarListEntry->getSummary() == 'SuiteCRM') {
+            if ($calendarListEntry->getSummary() == $this->suiteCalendarName) {
                 return $calendarListEntry->getId();
                 break;
             }
@@ -416,7 +421,7 @@ class GoogleSyncBase
         } else {
             $this->logger->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Found ' . count($results) . ' Google Events');
         }
-        
+
         return $results;
     }
 
@@ -493,7 +498,7 @@ class GoogleSyncBase
         $eventIdQuoted = $this->db->quoted($event_id);
         $query = "SELECT id FROM meetings WHERE gsync_id = {$eventIdQuoted}";
         $result = $this->db->query($query);
-        
+
         if (!$result) {
             throw new GoogleSyncException('Meeting not found with specified gsync_id: ' . $eventIdQuoted, GoogleSyncException::MEETING_NOT_FOUND);
         }
@@ -558,7 +563,7 @@ class GoogleSyncBase
         if (!$this->gService->events instanceof Google\Service\Calendar\Resource\Events) {
             throw new GoogleSyncException('GooleSyncBase is trying to push event but Google\Service\Calendar\Resource\Events is not set.', GoogleSyncException::NO_GRESOURCE_SET);
         }
-        
+
         if (!isset($event_remote) || empty($event_remote)) {
             $event = $this->createGoogleCalendarEvent($event_local);
             $return = $this->gService->events->insert($this->calendarId, $event);
@@ -627,7 +632,7 @@ class GoogleSyncBase
         if (!$event_remote instanceof Google\Service\Calendar\Event) {
             throw new InvalidArgumentException('Argument 1 passed to GoogleSyncBase::pullEvent() must be an instance of Google\Service\Calendar\Event, ' . getType($event_local) . ' given.');
         }
-        
+
         if (!isset($event_local) || empty($event_local)) {
             $event = $this->createSuitecrmMeetingEvent($event_remote);
         } elseif (isset($event_local)) {
@@ -667,7 +672,7 @@ class GoogleSyncBase
         if (!$meeting instanceof Meeting) {
             throw new InvalidArgumentException('Argument 1 passed to GoogleSyncBase::delMeeting() must be an instance of Meeting, ' . getType($meeting) . ' given.');
         }
-        
+
         $meeting->deleted = '1';
         $meeting->gsync_id = '';
         return $this->setLastSync($meeting);
@@ -690,7 +695,7 @@ class GoogleSyncBase
         if (!$event instanceof Google\Service\Calendar\Event) {
             throw new InvalidArgumentException('Argument 1 passed to GoogleSyncBase::delEvent() must be an instance of Google\Service\Calendar\Event, ' . gettype($event) . ' given');
         }
-        
+
         // Make sure the calendar service is set up
         if (!$this->isServiceExists()) {
             throw new GoogleSyncException('The Google Service is not set up. See setGService Method.', GoogleSyncException::NO_GSERVICE_SET);
