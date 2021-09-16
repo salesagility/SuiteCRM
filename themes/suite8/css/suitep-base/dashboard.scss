@@ -774,6 +774,24 @@ table #dashletPanel {
   }
 }
 
+@media (min-width:750px) and (max-width:755px) {
+  p.error {
+    margin-top: 5em!important;
+  }  
+}
+
+@media (max-width:1024px) {
+  ul.nav-dashboard {
+    li.active {
+      a.first-tab-xs {
+        .suitepicon {
+          font-size: 8px;          
+        }
+      }
+    }
+  } 
+}
+
 @media (max-width: 1024px) {
   .dashletcontainer.col-50 {
     width: 100%;
@@ -812,7 +830,6 @@ table #dashletPanel {
     li {
       display: inline-block;
       margin-right: 5px;
-      margin-bottom: 5px;
       a {
         border-radius: 4px;
         background: $dashboard-toolbar-bg;
@@ -881,6 +898,4 @@ table #dashletPanel {
       overflow-x: auto;
     }    
   }
-}
-
-  
+}  
