@@ -416,6 +416,11 @@ class SugarBean
     public $old_modified_by_name;
 
     /**
+     * @var bool $createdAuditRecords
+     */
+    public $createdAuditRecords;
+
+    /**
      * @var SugarBean[][] $line_item_entries
      */
     public $line_item_entries = [];
