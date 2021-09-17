@@ -414,6 +414,10 @@ class SugarBean
      */
     public $old_modified_by_name;
 
+    /**
+     * @var bool $createdAuditRecords
+     */
+    public $createdAuditRecords;
 
     /**
      * SugarBean constructor.
