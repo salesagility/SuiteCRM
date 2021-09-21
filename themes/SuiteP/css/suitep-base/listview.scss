@@ -941,7 +941,7 @@ a.listViewTdToolsS1 {
 
 #selectLinkTop > .sugar_action_button > .subnav a {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $text-label-color;
   line-height: 24px;
   width: 100%;
 
@@ -1019,7 +1019,7 @@ a.listViewTdToolsS1 {
 
 #selectLinkBottom > .sugar_action_button > .subnav a {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $text-label-color;
   line-height: 24px;
   width: 100%;
 
@@ -1119,7 +1119,7 @@ a.listViewTdToolsS1 {
 
 #actionLinkTop .sugar_action_button .subnav.ddopen a {
   display: block;
-  color: $default-btn-color;
+  color: $text-label-color;
   float: none;
 }
 
@@ -1147,7 +1147,7 @@ a.listViewTdToolsS1 {
 
 #actionLinkBottom .sugar_action_button .subnav.ddopen a {
   display: block;
-  color: $default-btn-color;
+  color: $text-label-color;
   float: none;
 }
 
@@ -1704,6 +1704,12 @@ div.modal-footer > button.btn.button.purple.btn-default {
 
 div.modal-footer > button.btn.button.purple.btn-default:hover {
   background-color: #9589B3;
+}
+
+div.modal-footer {
+  .btn-primary {
+    color: $text-label-color;
+  }
 }
 
 ul.clickMenu.selectmenu.SugarActionMenu.columnsFilterLink.listViewLinkButton {

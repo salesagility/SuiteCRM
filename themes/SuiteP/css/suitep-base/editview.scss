@@ -1315,7 +1315,7 @@ input.sqsEnabled {
   position: static;
   font-weight: bold;
   color: $default-btn-color;
-  padding: 0 8px 0 0;
+  padding: 0 8px 0 8px;
   margin: 0 0 0 0;
 }
 
@@ -5754,4 +5754,13 @@ table.subpanel-table .pagination li.sugar_action_button > form > a {
   line-height: initial;
   height: initial;
   min-height: auto;
+}
+
+body.popupBody {
+	input {
+      border-radius: 4px;
+    }
+  .button {        
+      border-radius: 4px;
+    } 
 }
