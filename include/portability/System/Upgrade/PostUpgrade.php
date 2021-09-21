@@ -78,7 +78,6 @@ class PostUpgrade
         require __DIR__ . '/../../../../config.php';
 
         try {
-
             ob_start();
 
             $_SESSION['schema_change'] = 'sugar'; // we force-run all SQL
@@ -151,7 +150,6 @@ class PostUpgrade
 
             $phpErrors = ob_get_clean();
             $this->log("Potential PHP generated error messages: {$phpErrors}");
-
         } catch (Throwable $t) {
             $response = [
                 'success' => false,
