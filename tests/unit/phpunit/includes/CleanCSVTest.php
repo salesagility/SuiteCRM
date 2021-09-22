@@ -59,24 +59,24 @@ class CleanCSVTest extends SuitePHPUnitFrameworkTestCase
     /**
      * @throws \SuiteCRM\Exception\Exception
      */
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->cleanCSV = new CleanCSV();
     }
 
-    public function testGetEscapeChar()
+    public function testGetEscapeChar(): void
     {
         $this->assertEquals("'", $this->cleanCSV->getEscapeChar());
     }
 
-    public function testGetStartingChars()
+    public function testGetStartingChars(): void
     {
         $this->assertEquals(['=', '-', '+', '@'], $this->cleanCSV->getStartingChars());
     }
 
-    public function testEscapeField()
+    public function testEscapeField(): void
     {
         $field = '==HYPERLINK';
         $expected = "'==HYPERLINK";
