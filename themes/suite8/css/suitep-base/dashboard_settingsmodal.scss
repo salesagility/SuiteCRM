@@ -4,6 +4,9 @@ body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shado
 
 #dlg_c {
     .bd {
+        nobr {
+            font-weight: 600;
+        }
         padding: 1em;
         h2 {
             margin-top:0;
@@ -15,8 +18,9 @@ body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shado
         tr td[scope=row] {
             width: 20%;
             line-height: 30px;
-            text-transform: uppercase;
-            font-weight: 600;
+            text-transform: capitalize;
+            margin-left: 0.5em;
+            color: $dashlet-setting-modal-label;
         }
         input[type=text] {
             background-color:$transparent-color;
@@ -35,8 +39,11 @@ body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shado
                 line-height: 1.1em;
                 background-color: rgb(147, 164, 179);
                 text-transform: capitalize; 
+                border-radius: 0.2em;
+                padding: 0.3em 1em;
+                letter-spacing: 0.05em;
                 &:hover {
-                    background: $modal-btn-hover;
+                    background: $btn-hover-bg-color;
                 }
             }            
         }        
