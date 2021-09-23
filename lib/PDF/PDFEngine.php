@@ -50,6 +50,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 abstract class PDFEngine
 {
     /**
+     * @var string
+     */
+    private static $configMapperFile;
+
+    /**
      * @param string $html
      * @return void
      */
@@ -75,9 +80,10 @@ abstract class PDFEngine
     /**
      * @param string $name
      * @param string $destination
+     * @param string $fullName
      * @return string|void
      */
-    abstract public function outputPDF(string $name, string $destination): ?string;
+    abstract public function outputPDF(string $name, string $destination, string $fullName = ''): ?string;
 
     /**
      * @param array $options

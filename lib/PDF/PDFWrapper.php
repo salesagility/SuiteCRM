@@ -41,6 +41,7 @@ namespace SuiteCRM\PDF;
 
 use SuiteCRM\PDF\Exceptions\PDFEngineNotFoundException;
 use SuiteCRM\PDF\MPDF\MPDFEngine;
+use SuiteCRM\PDF\TCPDF\TCPDFEngine;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -60,6 +61,11 @@ class PDFWrapper
             'name' => 'MPDFEngine',
             'FQN' => MPDFEngine::class,
             'filepath' => 'lib/PDF/MPDF/MPDFEngine.php'
+        ],
+        'TCPDFEngine' => [
+            'name' => 'TCPDFEngine',
+            'FQN' => TCPDFEngine::class,
+            'filepath' => 'lib/PDF/TCPDF/TCPDFEngine.php'
         ],
     ];
 
