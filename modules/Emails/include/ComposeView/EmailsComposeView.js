@@ -100,30 +100,30 @@
         fields[$(this).attr('data-open-popup-email-address-field')] = 'qtip_bar_email_address';
       }
 
-        $.fn.EmailsComposeView.setEmailAddressFieldFromPopup = function(resultData) {
-            var contact_name = resultData.name_to_value_array.qtip_bar_name;
-            var contact_email_address = resultData.name_to_value_array.qtip_bar_email_address;
+      $.fn.EmailsComposeView.setEmailAddressFieldFromPopup = function(resultData) {
+        var contact_name = resultData.name_to_value_array.qtip_bar_name;
+        var contact_email_address = resultData.name_to_value_array.qtip_bar_email_address;
 
-            if (trim(contact_email_address) !== '') {
-                var formatted_email_address = '';
-                if (trim(contact_name) !== '') {
-                    // use name <email address> format
-                    formatted_email_address = contact_name + ' <' + contact_email_address + '>';
-                } else {
-                    // use email address
-                    formatted_email_address = contact_email_address;
-                }
+        if (trim(contact_email_address) !== '') {
+          var formatted_email_address = '';
+          if (trim(contact_name) !== '') {
+            // use name <email address> format
+            formatted_email_address = contact_name + ' <' + contact_email_address + '>';
+          } else {
+            // use email address
+            formatted_email_address = contact_email_address;
+          }
 
-                if (trim($(self.active_elementQTipBar).val()) === '') {
-                    $(self.active_elementQTipBar).val(formatted_email_address);
-                } else {
-                    $(self.active_elementQTipBar).val(
-                        $(self.active_elementQTipBar).val() + ', ' +
-                        formatted_email_address
-                    );
-                }
-            }
-        };
+          if (trim($(self.active_elementQTipBar).val()) === '') {
+            $(self.active_elementQTipBar).val(formatted_email_address);
+          } else {
+            $(self.active_elementQTipBar).val(
+              $(self.active_elementQTipBar).val() + ', ' +
+              formatted_email_address
+            );
+          }
+        }
+      };
 
       var popupWindow = open_popup(
         $(this).attr('data-open-popup-module'),

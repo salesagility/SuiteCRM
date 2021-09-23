@@ -37,7 +37,7 @@
     "consolidation/robo": "^3.0",
     "elasticsearch/elasticsearch": "^7.13",
     "ezyang/htmlpurifier": "^4.10",
-    "google/apiclient": "^2.0",
+    "google/apiclient": "^2.7",
     "google/recaptcha": "^1.1",
     "gymadarasz/ace": "^1.2",
     "gymadarasz/imagesloaded": "^4.1",
@@ -126,6 +126,9 @@
     ]
   },
   "extra": {
+    "google/apiclient-services": [
+      "Calendar"
+    ],
     "merge-plugin": {
       "include": [
         "composer.ext.json",
@@ -137,10 +140,7 @@
       "merge-dev": true,
       "merge-extra": false,
       "merge-extra-deep": false,
-      "merge-scripts": false,
-      "google/apiclient-services": [
-        "Calendar"
-      ]
+      "merge-scripts": false
     }
   }
 }
