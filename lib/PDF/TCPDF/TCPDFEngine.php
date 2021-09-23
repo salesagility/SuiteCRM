@@ -37,27 +37,30 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\PDF\MPDF;
+namespace SuiteCRM\PDF\TCPDF;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use mPDF;
 use SuiteCRM\PDF\PDFEngine;
-
-require_once __DIR__ . '/../../../modules/AOS_PDF_Templates/PDF_Lib/mpdf.php';
+use TCPDF;
 
 /**
- * Class MPDFEngine
- * @package SuiteCRM\PDF\MPDF
+ * Class TFPDFEngine
+ * @package SuiteCRM\PDF\TCPDF
  */
-class MPDFEngine extends PDFEngine
+class TCPDFEngine extends PDFEngine
 {
     /**
-     * @var mPDF
+     * @var TCPDF
      */
     public $pdf;
+
+    /**
+     * @var array
+     */
+    public $pdfOptions;
 
     /**
      * @var string
@@ -65,44 +68,34 @@ class MPDFEngine extends PDFEngine
     private static $configMapperFile = __DIR__ . '/../../../lib/PDF/MPDF/configMapping.php';
 
     /**
-     * MPDFEngine constructor.
-     * @param mPDF|null $pdf
+     * TFPDFEngine constructor.
+     * @param TCPDF|null $pdf
      */
-    public function __construct(mPDF $pdf = null)
+    public function __construct(TCPDF $pdf = null)
     {
-        @$this->pdf = $pdf ?? new mPDF();
+        $this->pdf = $pdf ?? new TCPDF();
     }
 
     /**
      * @param string $html
-     * @param int $section 0=default; 1=headerCSS; 2=HTML body; 3=HTML parses; 4=HTML headers;
-     * @param bool $init Leaves buffers, etc, in current state so that it can continue a block.
-     * @param bool $close Clears and sets buffers to top level block.
      * @return void
      */
-    public function writeHTML(string $html, int $section = 0, bool $init = true, bool $close = true): void
+    public function writeHTML(string $html): void
     {
-        @$this->pdf->WriteHTML($html, $section, $init, $close);
-
-        if ($section === 1) {
-            @$this->pdf->SetDefaultBodyCSS('background-color', '#FFFFFF');
-            unset($this->pdf->cssmgr->CSS['INPUT']['FONT-SIZE']);
-        }
+        $this->pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
     }
 
     /**
      * @param string $name
      * @param string $destination
      * @param string $fullName
-     * @return void|string
+     * @return string|null
      */
     public function outputPDF(string $name, string $destination, string $fullName = ''): ?string
     {
-        @$output = $this->pdf->Output($name, $destination);
+        $this->pdf->Output(__DIR__ . '/../../../' . $name, $destination);
 
-        if (is_string($output)) {
-            return $output;
-        }
+        return null;
     }
 
     /**
@@ -111,7 +104,7 @@ class MPDFEngine extends PDFEngine
      */
     public function writeHeader(string $html): void
     {
-        @$this->pdf->setHeader($html);
+        $this->pdf->setHeaderData($html);
     }
 
     /**
@@ -120,12 +113,12 @@ class MPDFEngine extends PDFEngine
      */
     public function writeFooter(string $html): void
     {
-        @$this->pdf->setFooter($html);
+        $this->pdf->setFooterData($html);
     }
 
     public function writeBlankPage(): void
     {
-        @$this->pdf->AddPage();
+        $this->pdf->AddPage();
     }
 
     /**
@@ -136,21 +129,21 @@ class MPDFEngine extends PDFEngine
     {
         /** @noinspection PhpIncludeInspection */
         $configOptions = include self::$configMapperFile;
+        $this->pdfOptions = $configOptions;
 
-        @$this->pdf = new mPDF(
-            $configOptions['mode'],
-            $configOptions['page_size'],
-            $configOptions['default_font_size'],
-            $configOptions['default_font'],
-            $configOptions['mgl'],
-            $configOptions['mgr'],
-            $configOptions['mgt'],
-            $configOptions['mgb'],
-            $configOptions['mgh'],
-            $configOptions['mgf'],
+        $this->pdf = new TCPDF(
             $configOptions['orientation'],
+            $configOptions['unit'],
+            $configOptions['page_size'],
+            true,
+            'UTF-8',
+            false
         );
 
-        @$this->pdf->SetAutoFont();
+        $this->pdf->setHeaderMargin($configOptions['mgh']);
+        $this->pdf->setFooterMargin($configOptions['mgf']);
+        $this->pdf->SetAutoPageBreak(true, $configOptions['mgb']);
+
+        $this->writeBlankPage();
     }
 }
