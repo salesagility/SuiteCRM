@@ -190,10 +190,9 @@ foreach ($recordIds as $recordId) {
         $pdfHistory->writeHeader($header);
         $pdfHistory->writeFooter($footer);
         $pdfHistory->writeHTML($printable);
-        $pdfHistory->outputPDF($sugar_config['upload_dir'] . 'nfile.pdf', 'F');
+        $pdfHistory->outputPDF($sugar_config['upload_dir'] . 'nfile.pdf', 'F', $note->name);
 
         $pdf->writeHeader($header);
-        $pdf->writeBlankPage();
         $pdf->writeFooter($footer);
         $pdf->writeHTML($printable);
 
