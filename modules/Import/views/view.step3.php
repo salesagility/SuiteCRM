@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -40,6 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
 
@@ -114,13 +115,18 @@ class ImportViewStep3 extends ImportView
         }
 
         $delimiter = $this->getRequestDelimiter();
-        
+
         $this->ss->assign("CUSTOM_DELIMITER", $delimiter);
         $this->ss->assign("CUSTOM_ENCLOSURE", (!empty($_REQUEST['custom_enclosure']) ? $_REQUEST['custom_enclosure'] : ""));
 
         //populate import locale  values from import mapping if available, these values will be used througout the rest of the code path
 
         $uploadFileName = $_REQUEST['file_name'];
+
+        if (isset($uploadFileName) && strpos($uploadFileName, '..') !== false) {
+            LoggerManager::getLogger()->security('Directory navigation attack denied');
+            return;
+        }
 
         if (strpos($uploadFileName, 'phar://') !== false) {
             return;

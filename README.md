@@ -2,45 +2,50 @@
   <img width="180px" height="41px" src="https://suitecrm.com/wp-content/uploads/2017/12/logo.png" align="right" />
 </a>
 
-# SuiteCRM 7.11.19
+# SuiteCRM 7.11.22
 
-[![LICENSE](https://img.shields.io/github/license/suitecrm/suitecrm.svg)](https://github.com/salesagility/suitecrm/blob/hotfix/LICENSE.txt)
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/salesagility/SuiteCRM-Core/issues)
+[![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=hotfix)](https://travis-ci.org/salesagility/SuiteCRM)
+[![codecov](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix/graph/badge.svg)](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/suitecrm/Lobby)
+[![LICENSE](https://img.shields.io/github/license/suitecrm/suitecrm.svg)](https://github.com/salesagility/suitecrm/blob/hotfix/LICENSE.txt)
+[![GitHub contributors](https://img.shields.io/github/contributors/salesagility/suitecrm)](https://github.com/salesagility/SuiteCRM/graphs/contributors)
 [![Twitter](https://img.shields.io/twitter/follow/suitecrm.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=suitecrm)
 
 [Website](https://suitecrm.com) | 
+[Demo](https://suitecrm.com/demo/) |
 [Maintainers](https://salesagility.com) |
+[Contributors](https://github.com/salesagility/SuiteCRM/graphs/contributors) |
 [Community & Forum](https://suitecrm.com/suitecrm/forum) |
-[Code of Conduct](https://docs.suitecrm.com/community/code-of-conduct/)
+[Partners](https://suitecrm.com/about/about-us/partners/) |
+[Extensions Directory](https://store.suitecrm.com/) |
+[Translations](https://crowdin.com/project/suitecrmtranslations) | [Code of Conduct](https://docs.suitecrm.com/community/code-of-conduct/)
 
 [SuiteCRM](https://suitecrm.com) is the award-winning open-source, enterprise-ready Customer Relationship Management (CRM) software application.
 
 Our vision is to be the most adopted open source enterprise CRM in the world, giving users full control of their data and freedom to own and customise their business solution.
 
-Find out more about SuiteCRM 8 and checkout the online demo [here](https://suitecrm.com/suitecrm8/)
+Try out a free fully working [SuiteCRM demo available here](https://suitecrm.com/demo/)
 
-### Getting Started ###
+### Contribute [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/salesagility/SuiteCRM/issues)
 
-Visit the [Administration Guide](https://docs.suitecrm.com/8.x/admin/) for details on getting started, system compatibility and installing SuiteCRM 8
+There are lots of ways to [contribute](https://docs.suitecrm.com/community/) to SuiteCRM
 
-See the [Release Notes](https://docs.suitecrm.com/8.x/admin/releases/) for more detail and known issues in the beta build
+* [Submit bug](https://docs.suitecrm.com/community/raising-issues/) reports and help us [verify fixes](https://docs.suitecrm.com/community/contributing-code/test-pull-requests/) as they are pushed up
+* Review and collaborate [source code](https://github.com/salesagility/SuiteCRM/pulls) changes
+* Join and engage with other SuiteCRM users and developers on the [forums](https://suitecrm.com/suitecrm/forum)
+* [Contribute bug fixes](https://docs.suitecrm.com/community/contributing-code/bugs/)
+* Help [translate](https://docs.suitecrm.com/community/contributing-to-docs/contributing-to-translation/) language packs
+* [Write and improve](https://docs.suitecrm.com/community/contributing-to-docs/) SuiteCRM documentation
+* Signing CLA - Only needs to be done once for all PRs and contributions.
 
 
-### Roadmap ###
+### Code Contributors
 
-View the [Roadmap](https://suitecrm.com/suitecrm-roadmap/) for details on what is coming in SuiteCRM 8.
+This project exists thanks to all the people who [contribute](https://github.com/salesagility/SuiteCRM/graphs/contributors) and more.
+<a href="https://github.com/salesagility/SuiteCRM/graphs/contributors"><img src="https://opencollective.com/SuiteCRM/contributors.svg?avatarHeight=36&width=890&button=false" /></a>
 
-
-### Contribute ###
-
-We would love to have you feedback and input to help make SuiteCRM 8 Great for everyone
-
-SuiteCRM 8 is still in active development and all current releases are not yet production ready, so be sure to check the [Release Notes and list of Known Issues](https://docs.suitecrm.com/8.x/admin/releases/) before getting involved
-
-If you have found an issue you think we should know about, or have a suggestion/feedback, please [Submit An Issue](https://github.com/salesagility/SuiteCRM-Core/issues).
-
-If you want to get involved or submit a Fix, fork the repo and when ready please [Submit An PR](https://github.com/salesagility/SuiteCRM-Core/pulls) - More detail for developers will be coming soon so stay tuned
+You wanna buy the **core team** a coffee :coffee: or beer :beer:?
+Then consider a small [donation](https://opencollective.com/SuiteCRM/contribute) to help fuel our activities :heart:
 
 ### Security ###
 
@@ -52,6 +57,9 @@ Your email will be acknowledged within 24 hours during the business week (Mon - 
 detailed response to your email within 72 hours during the business week (Mon - Fri) indicating the next steps in
 handling your report.
 
+### Roadmap ### 
+
+View the [Roadmap](https://suitecrm.com/roadmap/) and [LTS](https://suitecrm.com/lts/) for details on our planned features and future direction.
 
 ### Support ###
 
