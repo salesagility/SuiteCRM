@@ -91,6 +91,7 @@ $mod_strings = array(
     'ERR_DB_EXISTS_PROCEED' => 'The provided Database Name already exists. You can<br>1. hit the back button and choose a new database name <br>2. click next and continue but all existing tables on this database will be dropped. <strong>This means your tables and data will be blown away.</strong>',
     'ERR_DB_HOSTNAME' => 'Host name cannot be blank.',
     'ERR_DB_INVALID' => 'Invalid database type selected.',
+    'ERR_DB_LOGIN_FAILURE_SHORT' => 'Database Connection Error: The provided database hostname, username, and/or password is invalid.',
     'ERR_DB_LOGIN_FAILURE' => 'The provided database host, username, and/or password is invalid, and a connection to the database could not be established. Please enter a valid host, username and password',
     'ERR_DB_LOGIN_FAILURE_MYSQL' => 'The provided database host, username, and/or password is invalid, and a connection to the database could not be established. Please enter a valid host, username and password',
     'ERR_DB_LOGIN_FAILURE_MSSQL' => 'The provided database host, username, and/or password is invalid, and a connection to the database could not be established. Please enter a valid host, username and password',
@@ -243,6 +244,7 @@ $mod_strings = array(
     'LBL_LICENSE_PRINTABLE' => ' Printable View ',
     'LBL_PRINT_SUMM' => 'Print Summary',
     'LBL_LICENSE_TITLE_2' => 'SuiteCRM License',
+    'LBL_LICENSE' => 'LICENSE',
 
     'LBL_LOCALE_NAME_FIRST' => 'David',
     'LBL_LOCALE_NAME_LAST' => 'Livingstone',
@@ -578,5 +580,29 @@ $contact_user_link_guid',
     'LBL_DBCONFIG_MSG2_LABEL' => 'Host Name',
     'LBL_DBCONFIG_MSG2' => 'Name of web server or machine (host) on which the database is located (such as www.mydomain.com). If installing locally, it\'s better to use \'localhost\' than \'127.0.0.1\', for performance reasons.',
     'LBL_DBCONFIG_B_MSG1_LABEL' => '', // this label dynamically needed in install/installConfig.php:293
-    'LBL_DBCONFIG_B_MSG1' => 'The username and password of a database administrator who can create database tables and users and who can write to the database is necessary in order to set up the SuiteCRM database.'
+    'LBL_DBCONFIG_B_MSG1' => 'The username and password of a database administrator who can create database tables and users and who can write to the database is necessary in order to set up the SuiteCRM database.',
+    'LBL_SYS_CHECK_WARNING' => 'Ignore System Check Warnings',
+    'SUITE8_LICENSE_CONTENT' => 'SuiteCRM is a customer relationship management program developed by SalesAgility Ltd.
+Copyright (C) 2021 SalesAgility Ltd.
+
+This program is free software; you can redistribute it and/or modify it under
+the terms of the GNU Affero General Public License version 3 as published by the
+Free Software Foundation with the addition of the following permission added
+to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+IN WHICH THE COPYRIGHT IS OWNED BY SALESAGILITY, SALESAGILITY DISCLAIMS THE
+WARRANTY OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see http://www.gnu.org/licenses/.
+
+In accordance with Section 7(b) of the GNU Affero General Public License
+version 3, these Appropriate Legal Notices must retain the display of the
+"Supercharged by SuiteCRM" logo. If the display of the logos is not reasonably
+feasible for technical reasons, the Appropriate Legal Notices must display
+the words "Supercharged by SuiteCRM".'
 );
