@@ -1,0 +1,21 @@
+.view-module-jjwg_Maps {
+    .action-buttons {
+        margin-top: -1.5em;
+        top: -2em;
+        height: min-content;
+    }
+    #save_and_continue {
+        background-color: $nepal-grey;
+            border-radius: 0.2em;
+            font-weight: bold;
+            height: 2.2em;
+            line-height: 1em;
+            letter-spacing: 0.05em;
+            padding: 0.3em 1em;
+            text-transform: capitalize;
+            margin: 0.2em;
+            &:hover {
+                background: $pale-blue;
+            }
+    }
+}
