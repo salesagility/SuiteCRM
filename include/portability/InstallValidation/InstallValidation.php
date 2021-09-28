@@ -91,7 +91,7 @@ class InstallValidation
     public function getData() : array
     {
         $result = $this->data;
-        if (!empty($this->ignoreWarnings) && $this->ignoreWarnings === "true") {
+        if (!empty($this->ignoreWarnings) && $this->ignoreWarnings) {
             $type = 'warning';
             $result = array_filter($this->data, static function ($item) use ($type) {
                 return $item['type'] !== $type;
@@ -153,7 +153,7 @@ class InstallValidation
      */
     public function validate(array $context): self
     {
-        $this->ignoreWarnings = $context['inputs']['sys_check_option'];
+        $this->ignoreWarnings = $this->isTrue($context['inputs']['sys_check_option'] ?? false);
 
         $this->name('phpVersion')->type('info')->phpVersion();
         $this->name('PCREVersion')->type('info')->PCREVersion();
@@ -178,5 +178,14 @@ class InstallValidation
         $this->name('memory_limit')->type('warning')->memoryLimit();
 
         return $this;
+    }
+
+    /**
+     * @param $value
+     * @return bool
+     */
+    protected function isTrue($value): bool
+    {
+        return $value === 'true' || $value === '1' || $value === true || $value === 1;
     }
 }
