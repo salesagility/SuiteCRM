@@ -114,6 +114,9 @@ function make_sugar_config(&$sugar_config)
         'calculate_response_time' => empty($calculate_response_time) ? true : $calculate_response_time,
         'create_default_user' => empty($create_default_user) ? false : $create_default_user,
         'chartEngine' => 'Jit',
+        'pdf' => [
+            'defaultEngine' => 'TCPDFEngine'
+        ],
         'date_formats' => empty($dateFormats) ? array(
             'Y-m-d' => '2010-12-23',
             'd-m-Y' => '23-12-2010',
