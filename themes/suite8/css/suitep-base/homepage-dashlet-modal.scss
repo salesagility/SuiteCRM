@@ -48,6 +48,9 @@
             vertical-align: baseline;
         }
     }
+    label {
+        margin-right: 1em;
+    }
     .modal-footer {
         .btn {
             background-color: $nepal-grey;
@@ -60,6 +63,9 @@
             text-transform: capitalize;
             border: none;
             margin: 0 0.2em;
+            &:hover {
+                background: $pale-blue;
+            }
         }
     }
 }
