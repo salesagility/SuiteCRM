@@ -104,6 +104,13 @@ class PDFWrapper
     public static function getEngines(): array
     {
         $default = array_keys(self::$engines);
+
+        // Custom check for MPDF class
+        $MPDF = __DIR__ . '/../../../modules/AOS_PDF_Templates/PDF_Lib/mpdf.php';
+        if (!file_exists($MPDF) && ($key = array_search('MPDFEngine', $default, true)) !== false) {
+            unset($default[$key]);
+        }
+
         $custom = [];
         foreach (glob(self::$customEnginePath . '*.php', GLOB_NOSORT) as $file) {
             $file = pathinfo($file);
