@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2021 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,92 +37,77 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Search;
-
-use Configurator;
-use InvalidArgumentException;
+namespace SuiteCRM\Modules\Administration\PDF\MVC;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__ . '/../../modules/Configurator/Configurator.php';
+use LoggerManager;
+use SuiteCRM\PDF\PDFWrapper;
+use SuiteCRM\Search\UI\MVC\View as BaseView;
+use SuiteCRM\Utility\StringUtils;
 
 /**
- * Class SearchConfigurator handles the configuration calls for the Search Framework.
- *
- * All the methods are fluent and save() must be called at the end to make the changes permanent.
+ * Class View holds utilities for rendering a template file.
  */
-class SearchConfigurator
+abstract class View extends BaseView
 {
-    /** @var Configurator */
-    private $configurator;
-
     /**
-     * SearchConfigurator constructor.
+     * Configures translations and global variables.
      *
-     * @param null|Configurator $configurator
+     * Extend to assign more variable.
      */
-    public function __construct(Configurator $configurator = null)
+    public function preDisplay(): void
     {
-        if ($configurator === null) {
-            $configurator = new Configurator();
+        global $mod_strings, $app_list_strings, $app_strings, $sugar_config;
+
+        $errors = [];
+        $this->smarty->assign('MOD', $mod_strings);
+        $this->smarty->assign('APP', $app_strings);
+        $this->smarty->assign('APP_LIST', $app_list_strings);
+        $this->smarty->assign('LANGUAGES', get_languages());
+        $this->smarty->assign('JAVASCRIPT', get_set_focus_js());
+        $this->smarty->assign('error', $errors);
+        $this->smarty->assign('BUTTONS', $this->getButtons());
+
+        if (empty($sugar_config['pdf'])) {
+            LoggerManager::getLogger()->warn('Configuration does not contains default PDF settings.');
         }
 
-        $this->configurator = $configurator;
+        $pdfSettings = $sugar_config['pdf'] ?? null;
+        $this->smarty->assign('config', $pdfSettings);
     }
 
     /**
-     * Factory method for nice fluent syntax.
+     * Returns the cancel and save button.
      *
-     * @return SearchConfigurator
+     * @return string
      */
-    public static function make(): SearchConfigurator
+    protected function getButtons(): string
     {
-        return new self();
+        global $mod_strings;
+        global $app_strings;
+
+        $this->smarty->assign('MOD', $mod_strings);
+        $this->smarty->assign('APP', $app_strings);
+
+        return $this->smarty->fetch('modules/Administration/PDF/buttons.tpl');
     }
 
     /**
-     * Configure the Search Framework configuration only based on the search engine.
+     * Returns an associative array with their class name and translated label
      *
-     * This supports the fake engine names used to refer to the legacy search.
-     *
-     * @param string $engine
-     *
-     * @return SearchConfigurator
+     * @return array
      */
-    public function setEngine(string $engine): SearchConfigurator
+    protected function getEngines(): array
     {
-        if (empty($engine)) {
-            throw new InvalidArgumentException('Search Engine cannot be empty');
+        $engines = [];
+
+        foreach (PDFWrapper::getEngines() as $engine) {
+            $engines[$engine] = StringUtils::camelToTranslation($engine);
         }
 
-        $searchController = 'UnifiedSearch';
-
-        switch ($engine) {
-            case 'BasicSearchEngine':
-                // Only basic search
-                break;
-            default:
-                // SearchWrapper with a specific engine
-                $searchController = 'Search';
-        }
-
-        $this->configurator->config['search']['controller'] = $searchController;
-        $this->configurator->config['search']['defaultEngine'] = $engine;
-
-        return $this;
-    }
-
-    /**
-     * Saves the current configuration.
-     *
-     * @return SearchConfigurator
-     */
-    public function save(): SearchConfigurator
-    {
-        $this->configurator->saveConfig();
-
-        return $this;
+        return $engines;
     }
 }

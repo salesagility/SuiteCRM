@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2021 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,92 +37,45 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Search;
+namespace SuiteCRM\Modules\Administration\PDF;
 
-use Configurator;
-use InvalidArgumentException;
+use Exception;
+use SuiteCRM\Modules\Administration\PDF\MVC\Controller as AbstractController;
+use SuiteCRM\PDF\PDFConfigurator;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__ . '/../../modules/Configurator/Configurator.php';
-
 /**
- * Class SearchConfigurator handles the configuration calls for the Search Framework.
- *
- * All the methods are fluent and save() must be called at the end to make the changes permanent.
+ * Class Controller
+ * @package SuiteCRM\Modules\Administration\PDF
  */
-class SearchConfigurator
+class Controller extends AbstractController
 {
-    /** @var Configurator */
-    private $configurator;
-
-    /**
-     * SearchConfigurator constructor.
-     *
-     * @param null|Configurator $configurator
-     */
-    public function __construct(Configurator $configurator = null)
+    public function __construct()
     {
-        if ($configurator === null) {
-            $configurator = new Configurator();
-        }
-
-        $this->configurator = $configurator;
+        parent::__construct(new PDFView());
     }
 
     /**
-     * Factory method for nice fluent syntax.
+     * Saves the configuration from a POST request.
      *
-     * @return SearchConfigurator
+     * If called from ajax it will return a json.
+     * @throws Exception
      */
-    public static function make(): SearchConfigurator
+    public function doSave(): void
     {
-        return new self();
-    }
+        $PDFEngine = filter_input(INPUT_POST, 'pdf-engine', FILTER_SANITIZE_STRING);
 
-    /**
-     * Configure the Search Framework configuration only based on the search engine.
-     *
-     * This supports the fake engine names used to refer to the legacy search.
-     *
-     * @param string $engine
-     *
-     * @return SearchConfigurator
-     */
-    public function setEngine(string $engine): SearchConfigurator
-    {
-        if (empty($engine)) {
-            throw new InvalidArgumentException('Search Engine cannot be empty');
+        PDFConfigurator::make()
+            ->setEngine($PDFEngine)
+            ->save();
+
+        if ($this->isAjax()) {
+            $this->yieldJson(['status' => 'success']);
         }
 
-        $searchController = 'UnifiedSearch';
-
-        switch ($engine) {
-            case 'BasicSearchEngine':
-                // Only basic search
-                break;
-            default:
-                // SearchWrapper with a specific engine
-                $searchController = 'Search';
-        }
-
-        $this->configurator->config['search']['controller'] = $searchController;
-        $this->configurator->config['search']['defaultEngine'] = $engine;
-
-        return $this;
-    }
-
-    /**
-     * Saves the current configuration.
-     *
-     * @return SearchConfigurator
-     */
-    public function save(): SearchConfigurator
-    {
-        $this->configurator->saveConfig();
-
-        return $this;
+        $this->redirect('index.php?module=Administration&action=index');
     }
 }

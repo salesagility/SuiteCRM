@@ -37,92 +37,53 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Search;
-
-use Configurator;
-use InvalidArgumentException;
+namespace SuiteCRM\Modules\Administration\PDF;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__ . '/../../modules/Configurator/Configurator.php';
+use SuiteCRM\Modules\Administration\PDF\MVC\View as AbstractView;
+use SuiteCRM\PDF\PDFWrapper;
 
 /**
- * Class SearchConfigurator handles the configuration calls for the Search Framework.
- *
- * All the methods are fluent and save() must be called at the end to make the changes permanent.
+ * Class View renders the PDF settings.
  */
-class SearchConfigurator
+class PDFView extends AbstractView
 {
-    /** @var Configurator */
-    private $configurator;
-
-    /**
-     * SearchConfigurator constructor.
-     *
-     * @param null|Configurator $configurator
-     */
-    public function __construct(Configurator $configurator = null)
+    public function __construct()
     {
-        if ($configurator === null) {
-            $configurator = new Configurator();
-        }
+        parent::__construct(__DIR__ . '/view.tpl');
+    }
 
-        $this->configurator = $configurator;
+    public function preDisplay(): void
+    {
+        parent::preDisplay();
+
+        $this->smarty->assign('selectedController', PDFWrapper::getController());
+        $this->smarty->assign('selectedEngine', PDFWrapper::getDefaultEngine());
+        $engines = $this->getEngines();
+
+        $this->smarty->assign('engines', [
+            translate('LBL_PDF_WRAPPER_ENGINES') => $engines
+        ]);
     }
 
     /**
-     * Factory method for nice fluent syntax.
-     *
-     * @return SearchConfigurator
+     * @see SugarView::display()
      */
-    public static function make(): SearchConfigurator
+    public function display(): void
     {
-        return new self();
-    }
+        global $mod_strings, $app_strings;
 
-    /**
-     * Configure the Search Framework configuration only based on the search engine.
-     *
-     * This supports the fake engine names used to refer to the legacy search.
-     *
-     * @param string $engine
-     *
-     * @return SearchConfigurator
-     */
-    public function setEngine(string $engine): SearchConfigurator
-    {
-        if (empty($engine)) {
-            throw new InvalidArgumentException('Search Engine cannot be empty');
+        $this->smarty->assign('APP', $app_strings);
+        $this->smarty->assign('MOD', $mod_strings);
+
+        $template = $this->templateFile;
+        if (file_exists('custom/' . $this->templateFile)) {
+            $template = 'custom/' . $this->templateFile;
         }
 
-        $searchController = 'UnifiedSearch';
-
-        switch ($engine) {
-            case 'BasicSearchEngine':
-                // Only basic search
-                break;
-            default:
-                // SearchWrapper with a specific engine
-                $searchController = 'Search';
-        }
-
-        $this->configurator->config['search']['controller'] = $searchController;
-        $this->configurator->config['search']['defaultEngine'] = $engine;
-
-        return $this;
-    }
-
-    /**
-     * Saves the current configuration.
-     *
-     * @return SearchConfigurator
-     */
-    public function save(): SearchConfigurator
-    {
-        $this->configurator->saveConfig();
-
-        return $this;
+        $this->smarty->display($template);
     }
 }

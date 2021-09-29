@@ -1,11 +1,9 @@
-<?php
-/**
- *
+{*
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,22 +34,17 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
-
-/**
- * Entry Point for saving Google API tokens during account authorization.
- *
- * @license https://raw.githubusercontent.com/salesagility/SuiteCRM/master/LICENSE.txt
- * GNU Affero General Public License version 3
- * @author Benjamin Long <ben@offsite.guru>
- */
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-include_once __DIR__ . '/GoogleApiKeySaverEntryPoint.php';
-
-global $current_user, $sugar_config;
-$client = new \Google\Client();
-new GoogleApiKeySaverEntryPoint($current_user, $sugar_config, $client, $_REQUEST);
+ *}
+<input title="{$APP.LBL_SAVE_BUTTON_TITLE}"
+       accessKey="{$APP.LBL_SAVE_BUTTON_KEY}"
+       class="button primary"
+       type="submit"
+       name="save"
+       onclick="return check_form('ConfigureSettings');"
+       value="{$APP.LBL_SAVE_BUTTON_LABEL}">&nbsp;
+<input title="{$APP.LBL_CANCEL_BUTTON_TITLE}"
+       onclick="document.location.href='index.php?module=Administration&action=index'"
+       class="button"
+       type="button"
+       name="cancel"
+       value="{$APP.LBL_CANCEL_BUTTON_LABEL}">

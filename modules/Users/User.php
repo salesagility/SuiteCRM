@@ -666,6 +666,10 @@ class User extends Person implements EmailInterface
             $this->portal_only = 0;
         }
 
+        // If the current user is not an admin, do not allow them to set the admin flag to true.
+        if (!is_admin($current_user)) {
+            $this->is_admin = 0;
+        }
 
         // set some default preferences when creating a new user
         $setNewUserPreferences = empty($this->id) || !empty($this->new_with_id);

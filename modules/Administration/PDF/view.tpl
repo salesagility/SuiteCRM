@@ -1,11 +1,9 @@
-<?php
-/**
- *
+{*
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,22 +34,51 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
+ *}
+<h1>{sugar_translate label="LBL_PDF_HEADER"}</h1>
 
-/**
- * Entry Point for saving Google API tokens during account authorization.
- *
- * @license https://raw.githubusercontent.com/salesagility/SuiteCRM/master/LICENSE.txt
- * GNU Affero General Public License version 3
- * @author Benjamin Long <ben@offsite.guru>
- */
+<form id="SearchSettings"
+      name="ConfigureSettings"
+      class="detail-view"
+      enctype='multipart/form-data'
+      method="POST"
+      action="index.php?module=Administration&action=PDFSettings&do=Save">
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+    <input type="hidden" name="module" value="Administration">
 
-include_once __DIR__ . '/GoogleApiKeySaverEntryPoint.php';
+    <div class="row">
+        <div class="panel panel-primary">
+            <div class="panel-heading">{$MOD.LBL_PDF_INTERFACE}</div>
+            <div class="panel-body tab-content text-center">
+                <div class="col-md-6">
+                    <div class="form-check">
+                        <div class="td-container">
+                            <div>
+                                <label for="pdf-engine">{sugar_translate label="LBL_PDF_OPTIONS"}</label>
+                            </div>
+                            <div>
+                                <small class="form-text text-muted">{sugar_translate label="LBL_PDF_OPTIONS_HELP"}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    {html_options
+                    options=$engines
+                    selected=$selectedEngine
+                    id="pdf-engine"
+                    name="pdf-engine"
+                    class="form-control"
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 
-global $current_user, $sugar_config;
-$client = new \Google\Client();
-new GoogleApiKeySaverEntryPoint($current_user, $sugar_config, $client, $_REQUEST);
+    {$JAVASCRIPT}
+
+    <div class="settings-buttons">
+        {$BUTTONS}
+    </div>
+</form>
+

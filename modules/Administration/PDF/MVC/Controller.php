@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -38,20 +37,17 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/**
- * Entry Point for saving Google API tokens during account authorization.
- *
- * @license https://raw.githubusercontent.com/salesagility/SuiteCRM/master/LICENSE.txt
- * GNU Affero General Public License version 3
- * @author Benjamin Long <ben@offsite.guru>
- */
+namespace SuiteCRM\Modules\Administration\PDF\MVC;
+
+use SuiteCRM\Search\UI\MVC\Controller as BaseController;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-include_once __DIR__ . '/GoogleApiKeySaverEntryPoint.php';
-
-global $current_user, $sugar_config;
-$client = new \Google\Client();
-new GoogleApiKeySaverEntryPoint($current_user, $sugar_config, $client, $_REQUEST);
+/**
+ * Abstract controller for the Search settings.
+ */
+abstract class Controller extends BaseController
+{
+}
