@@ -28,6 +28,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
     /**
      * @param AccessTokenEntity $accessTokenEntity
      * @param BeanManager $beanManager
+     *
      */
     public function __construct(AccessTokenEntity $accessTokenEntity, BeanManager $beanManager)
     {
