@@ -546,9 +546,20 @@ a.listViewTdToolsS1 {
   width:20px;
 }
 
-.table-responsive.list > tbody > tr > td a:hover {
-  color: $list-view-link-hover-color;
-  border-bottom-color: $list-view-link-hover-color;
+#subpanel_users {
+  .table-responsive.list {
+    tbody {
+      tr {
+        td.footable-last-visible {
+          a {
+            &:hover {
+              background: $pale-blue!important;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 // Fix the pencil border
