@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+  <title>Paginate Next Icon</title>
+  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="icon_next">
+      <rect id="Rectangle-2" stroke="#F5F5F5" x="0.5" y="0.5" width="22" height="23" rx="2"></rect>
+      <path d="M14.003,11.932 L14.003,12.632 L8.452,15.53 L8.452,14.298 C8.452,14.2046662 8.4753331,14.1183337 8.522,14.039 C8.5686669,13.9596663 8.64566613,13.8943336 8.753,13.843 L11.294,12.534 C11.5133344,12.4266661 11.7536654,12.342667 12.015,12.282 C11.7536654,12.221333 11.5133344,12.1373339 11.294,12.03 L8.753,10.728 C8.64566613,10.6719997 8.5686669,10.6055004 8.522,10.5285 C8.4753331,10.4514996 8.452,10.3663338 8.452,10.273 L8.452,9.041 L14.003,11.932 Z"
+            id="&gt;" fill="#FFFFFF"></path>
+    </g>
+  </g>
+</svg>
