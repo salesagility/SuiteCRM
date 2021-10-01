@@ -27,9 +27,18 @@
             }
         }    
     }
+    .pageNumbers {
+        position: relative;
+        bottom: 0.5em;
+        margin-left: 0.5em;
+    }
     
     table.list {
         margin-bottom: 1em;
+        svg {
+            width: 1.7em;
+            height: 1.7em;
+        }
         .pagination {
             td {
                 table {
@@ -44,7 +53,10 @@
                         }
                         button {
                             background: $transparent-color;
-                            line-height: 0;
+                            line-height: 3.7em;
+                            padding: 0;
+                            border-radius: .45em;
+                            width: auto;
                         }
                     }
                 }
@@ -75,7 +87,6 @@
         }
         tr td {
             text-transform: capitalize;
-            font-weight: 600;
             padding: 0.5em;
         }
     }
