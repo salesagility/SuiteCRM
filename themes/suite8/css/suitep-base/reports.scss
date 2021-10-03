@@ -1,0 +1,44 @@
+.view-module-AOR_Reports {
+    .action_buttons{
+        margin-top: -1em;
+        top: -2.5em;
+    }
+    .panel {
+        margin-top: 0;
+    }
+    #SAVE_FOOTER,#CANCEL_FOOTER {
+        display: none;
+    }
+    select {
+        background: url($select-edit-background-url) no-repeat right;
+        background-size: 25px 11px;
+        border-color: $bright-grey;
+    }
+    input[type=text],input[type=password],input[type=email],input[type=number]{
+        background-color: $transparent-color;
+        border: 1px solid $form-border-color;       
+    }
+    textarea {
+        background-color: $transparent-color;
+        border: 1px solid $form-border-color; 
+    }
+    .drop-area {
+        height: 570px;
+        overflow: auto;
+    }
+    #aor_conditionLines, #fieldLines {
+        .button {
+            background: $transparent-color;
+            border: 1px solid lightgrey;
+            color: $black;
+            font-size: 3em !important;
+            line-height: 7px !important;
+        }
+    }   
+    #addChartButton {
+        background: $nepal-grey;
+        &:hover {
+            background: $pale-blue;
+        }
+    }
+}
