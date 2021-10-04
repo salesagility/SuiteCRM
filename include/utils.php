@@ -516,9 +516,7 @@ function get_sugar_config_defaults(): array
     if (!is_object($locale)) {
         $locale = new Localization();
     }
-
-    $sugar_config_defaults['default_currencies'] = $locale->getDefaultCurrencies();
-
+    
     $sugar_config_defaults = sugarArrayMerge($locale->getLocaleConfigDefaults(), $sugar_config_defaults);
 
     return $sugar_config_defaults;
