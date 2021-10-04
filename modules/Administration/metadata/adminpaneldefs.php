@@ -370,6 +370,13 @@ $admin_option_defs['any']['dropdowneditor'] = [
     './index.php?module=ModuleBuilder&action=index&type=dropdowns',
     'dropdown-editor'
 ];
+$admin_option_defs['any']['workflow_management'] = [
+    'Workflow',
+    'LBL_WORKFLOW_MANAGER',
+    'LBL_WORKFLOW_MANAGER_DESC',
+    './index.php?module=AOW_WorkFlow',
+    'workflow'
+];
 
 $admin_group_header[] = ['LBL_STUDIO_TITLE', '', false, $admin_option_defs, 'LBL_TOOLS_DESC'];
 
