@@ -1897,11 +1897,11 @@ if (!isset($_SESSION['setup_db_manager'])) {
 $db = getInstallDbInstance();
 
 if(!isset($_SESSION['setup_db_collation']) || $_SESSION['setup_db_collation'] ==''){
-    $_SESSION['setup_db_collation'] = 'utf8_general_ci';
+    $_SESSION['setup_db_collation'] = 'utf8mb4_general_ci';
 }
 
 if(!isset($_SESSION['setup_db_charset']) || $_SESSION['setup_db_charset'] ==''){
-    $_SESSION['setup_db_charset'] = 'utf8';
+    $_SESSION['setup_db_charset'] = 'utf8mb4';
 }
 
 
