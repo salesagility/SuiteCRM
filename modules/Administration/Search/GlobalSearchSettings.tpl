@@ -38,8 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-<h1>{$MOD.LBL_SEARCH_MODULES}</h1>
-
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 <tr>
     <td>
@@ -93,7 +91,7 @@
 		new YAHOO.util.LocalDataSource(enabled_modules, {
 			responseSchema: {fields : [{key : "module"}, {key : "label"}]}
 		}),
-		{height: "300px"}
+		{height: "450px"}
 	);
 	SUGAR.globalSearchDisabledTable = new YAHOO.SUGAR.DragDropTable(
 		"disabled_div",
@@ -102,7 +100,7 @@
 		new YAHOO.util.LocalDataSource(disabled_modules, {
 			responseSchema: {fields : [{key : "module"}, {key : "label"}]}
 		}),
-		{height: "300px"}
+		{height: "450px"}
 	);
 
 	SUGAR.globalSearchEnabledTable.disableEmptyRows = true;
@@ -123,7 +121,7 @@
 				modules += "," + data.module;
 		}
 		return modules;
-	}
+	};
 
 	SUGAR.saveGlobalSearchSettings = function()
 	{
