@@ -985,6 +985,8 @@ $mod_strings = array(
     'LBL_AJAX_SUBMIT_FAIL' => 'An error has occurred while saving the settings.',
 
     'LBL_ADMIN_TOOLS_TITLE' => 'Admin Tools',
-    'LBL_ADMIN_TOOLS_HEADER_DESC' => 'Repair, upgrade and run diagnosis on your SuiteCRM instance'
+    'LBL_ADMIN_TOOLS_HEADER_DESC' => 'Repair, upgrade and run diagnosis on your SuiteCRM instance',
+    'LBL_WORKFLOW_MANAGER' => 'Workflow Manager',
+    'LBL_WORKFLOW_MANAGER_DESC' => 'Manage, Add, delete or change Workflow processes',
     
 );
