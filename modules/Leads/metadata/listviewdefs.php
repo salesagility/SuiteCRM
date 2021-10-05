@@ -61,6 +61,9 @@ $viewdefs['Leads'] = [
                             ]
                         ]
                     ]
+                ],
+                'acls' => [
+                    'Leads' => ['view', 'list']
                 ]
             ]
         ],

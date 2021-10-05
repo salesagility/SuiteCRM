@@ -114,6 +114,10 @@ array(
                   ],
 
               ],
+          ],
+          'acls' => [
+              'Accounts' => ['view', 'list'],
+              'Opportunities' => ['view', 'list']
           ]
       ],
       'sidebarWidgets' => [
@@ -131,9 +135,18 @@ array(
                           'chartOptions' => []
                       ]
                   ]
+              ],
+              'acls' => [
+                  'Accounts' => ['view', 'list'],
+                  'Opportunities' => ['view', 'list']
               ]
           ],
-          ['type' => 'history-timeline'],
+          [
+              'type' => 'history-timeline',
+              'acls' => [
+                  'Accounts' => ['view', 'list']
+              ]
+          ],
       ],
       'recordActions' => [
           'actions' => [

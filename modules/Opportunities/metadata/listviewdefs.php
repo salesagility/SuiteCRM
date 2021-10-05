@@ -60,6 +60,9 @@ $viewdefs['Opportunities'] = [
                             ]
                         ]
                     ]
+                ],
+                'acls' => [
+                    'Opportunity' => ['view', 'list']
                 ]
             ]
         ]
@@ -87,7 +90,6 @@ $listViewDefs['Opportunities'] = array(
                                'metaData' => array('return_module' => 'Contacts',
                                                    'return_action' => 'ListView',
                                                    'module' => 'Accounts',
-                                                   'return_action' => 'ListView',
                                                    'parent_id' => '{$ACCOUNT_ID}',
                                                    'parent_name' => '{$ACCOUNT_NAME}',
                                                    'account_id' => '{$ACCOUNT_ID}',
