@@ -61,6 +61,9 @@ $viewdefs['Accounts'] = [
                             ]
                         ]
                     ]
+                ],
+                'acls' => [
+                    'Accounts' => ['view', 'list']
                 ]
             ],
         ],

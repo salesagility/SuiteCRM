@@ -93,6 +93,9 @@ array(
                       'endLabelKey' => 'LBL_STAT_DAYS'
                   ],
               ],
+          ],
+          'acls' => [
+              'Opportunity' => ['view', 'list']
           ]
       ],
       'sidebarWidgets' => [
@@ -139,9 +142,17 @@ array(
                           ],
                       ]
                   ]
+              ],
+              'acls' => [
+                  'Accounts' => ['view', 'list']
               ]
           ],
-          ['type' => 'history-timeline'],
+          [
+              'type' => 'history-timeline',
+              'acls' => [
+                  'Opportunity' => ['view', 'list']
+              ]
+          ],
       ],
     'panels' =>
     array(

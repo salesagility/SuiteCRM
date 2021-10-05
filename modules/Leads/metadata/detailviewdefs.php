@@ -152,7 +152,8 @@ $viewdefs ['Leads'] =
                     ]
                 ],
                 'sidebarWidgets' => [
-                    ['type' => 'history-timeline',
+                    [
+                        'type' => 'history-timeline',
                         'acls' => [
                             'Leads' => ['view', 'list']
                         ]
@@ -169,135 +170,135 @@ $viewdefs ['Leads'] =
                             'acl' => ['edit'],
                         ],
 
-                'print-as-pdf' => [
-                    'key' => 'print-as-pdf',
-                    'labelKey' => 'LBL_PRINT_AS_PDF',
-                    'asyncProcess' => true,
-                    'modes' => ['detail'],
-                    'acl' => ['view'],
-                    'aclModule' => 'AOS_PDF_Templates',
-                    'params' => [
-                        'selectModal' => [
-                            'module' => 'AOS_PDF_Templates'
+                        'print-as-pdf' => [
+                            'key' => 'print-as-pdf',
+                            'labelKey' => 'LBL_PRINT_AS_PDF',
+                            'asyncProcess' => true,
+                            'modes' => ['detail'],
+                            'acl' => ['view'],
+                            'aclModule' => 'AOS_PDF_Templates',
+                            'params' => [
+                                'selectModal' => [
+                                    'module' => 'AOS_PDF_Templates'
+                                ]
+                            ]
                         ]
                     ]
-                ]
-          ]
-      ],
-    'panels' =>
-    array(
-      'LBL_CONTACT_INFORMATION' =>
-      array(
-        0 =>
-        array(
-          0 =>
-          array(
-            'name' => 'full_name',
-            'label' => 'LBL_NAME',
-          ),
-          1 => 'phone_work',
-        ),
-        1 =>
-        array(
-          0 => 'title',
-          1 => 'phone_mobile',
-        ),
-        2 =>
-        array(
-          0 => 'department',
-          1 => 'phone_fax',
-        ),
-        3 =>
-        array(
-          0 =>
-          array(
-            'name' => 'account_name',
-          ),
-          1 => 'website',
-        ),
-        4 =>
-        array(
-          0 =>
-          array(
-            'name' => 'primary_address_street',
-            'label' => 'LBL_PRIMARY_ADDRESS',
-            'type' => 'address',
-            'displayParams' =>
-            array(
-              'key' => 'primary',
+                ],
+                'panels' =>
+                    array(
+                        'LBL_CONTACT_INFORMATION' =>
+                            array(
+                                0 =>
+                                    array(
+                                        0 =>
+                                            array(
+                                                'name' => 'full_name',
+                                                'label' => 'LBL_NAME',
+                                            ),
+                                        1 => 'phone_work',
+                                    ),
+                                1 =>
+                                    array(
+                                        0 => 'title',
+                                        1 => 'phone_mobile',
+                                    ),
+                                2 =>
+                                    array(
+                                        0 => 'department',
+                                        1 => 'phone_fax',
+                                    ),
+                                3 =>
+                                    array(
+                                        0 =>
+                                            array(
+                                                'name' => 'account_name',
+                                            ),
+                                        1 => 'website',
+                                    ),
+                                4 =>
+                                    array(
+                                        0 =>
+                                            array(
+                                                'name' => 'primary_address_street',
+                                                'label' => 'LBL_PRIMARY_ADDRESS',
+                                                'type' => 'address',
+                                                'displayParams' =>
+                                                    array(
+                                                        'key' => 'primary',
+                                                    ),
+                                            ),
+                                        1 =>
+                                            array(
+                                                'name' => 'alt_address_street',
+                                                'label' => 'LBL_ALTERNATE_ADDRESS',
+                                                'type' => 'address',
+                                                'displayParams' =>
+                                                    array(
+                                                        'key' => 'alt',
+                                                    ),
+                                            ),
+                                    ),
+                                5 =>
+                                    array(
+                                        0 => 'email1',
+                                    ),
+                                6 =>
+                                    array(
+                                        0 => 'description',
+                                    ),
+                                7 =>
+                                    array(
+                                        0 =>
+                                            array(
+                                                'name' => 'assigned_user_name',
+                                                'label' => 'LBL_ASSIGNED_TO',
+                                            ),
+                                    ),
+                            ),
+                        'LBL_PANEL_ADVANCED' =>
+                            array(
+                                0 =>
+                                    array(
+                                        0 => 'status',
+                                        1 => 'lead_source',
+                                    ),
+                                1 =>
+                                    array(
+                                        0 => 'status_description',
+                                        1 => 'lead_source_description',
+                                    ),
+                                2 =>
+                                    array(
+                                        0 => 'opportunity_amount',
+                                        1 => 'refered_by',
+                                    ),
+                                3 =>
+                                    array(
+                                        0 =>
+                                            array(
+                                                'name' => 'campaign_name',
+                                                'label' => 'LBL_CAMPAIGN',
+                                            ),
+                                    ),
+                            ),
+                        'LBL_PANEL_ASSIGNMENT' =>
+                            array(
+                                0 =>
+                                    array(
+                                        0 =>
+                                            array(
+                                                'name' => 'date_modified',
+                                                'label' => 'LBL_DATE_MODIFIED',
+                                                'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+                                            ),
+                                        1 =>
+                                            array(
+                                                'name' => 'date_entered',
+                                                'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+                                            ),
+                                    ),
+                            ),
+                    ),
             ),
-          ),
-          1 =>
-          array(
-            'name' => 'alt_address_street',
-            'label' => 'LBL_ALTERNATE_ADDRESS',
-            'type' => 'address',
-            'displayParams' =>
-            array(
-              'key' => 'alt',
-            ),
-          ),
-        ),
-        5 =>
-        array(
-          0 => 'email1',
-        ),
-        6 =>
-        array(
-          0 => 'description',
-        ),
-        7 =>
-        array(
-          0 =>
-          array(
-            'name' => 'assigned_user_name',
-            'label' => 'LBL_ASSIGNED_TO',
-          ),
-        ),
-      ),
-      'LBL_PANEL_ADVANCED' =>
-      array(
-        0 =>
-        array(
-          0 => 'status',
-          1 => 'lead_source',
-        ),
-        1 =>
-        array(
-          0 => 'status_description',
-          1 => 'lead_source_description',
-        ),
-        2 =>
-        array(
-          0 => 'opportunity_amount',
-          1 => 'refered_by',
-        ),
-        3 =>
-        array(
-          0 =>
-          array(
-            'name' => 'campaign_name',
-            'label' => 'LBL_CAMPAIGN',
-          ),
-        ),
-      ),
-      'LBL_PANEL_ASSIGNMENT' =>
-      array(
-        0 =>
-        array(
-          0 =>
-          array(
-            'name' => 'date_modified',
-            'label' => 'LBL_DATE_MODIFIED',
-            'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
-          ),
-          1 =>
-          array(
-            'name' => 'date_entered',
-            'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-          ),
-        ),
-      ),
-    ),
-  ),
-);
+    );
