@@ -62,11 +62,23 @@ class SearchFormView extends View
     /** @inheritdoc */
     public function display(): void
     {
+        global $sugar_config;
+
         $sizes = $this->makeSizesFromConfig();
         $engines = [];
 
         foreach (SearchWrapper::getEngines() as $engine) {
             $engines[$engine] = StringUtils::camelToTranslation($engine);
+        }
+
+        if ($sugar_config['search']['ElasticSearch']['enabled'] === false) {
+            unset($engines['ElasticSearchEngine']);
+        }
+
+        $currentEngine = SearchWrapper::getDefaultEngine();
+
+        if ($currentEngine === 'BasicSearchEngine' || $currentEngine === 'ElasticSearchEngine') {
+            $engines = [];
         }
 
         $this->smarty->assign('sizeOptions', $sizes);
