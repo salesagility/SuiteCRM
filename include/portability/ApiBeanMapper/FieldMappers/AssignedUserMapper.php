@@ -56,7 +56,7 @@ class AssignedUserMapper implements FieldMapperInterface
             return;
         }
 
-        $container[$name] = get_assigned_user_name($bean->assigned_user_id);
+        $container[$name] = get_user_name($bean->assigned_user_id);
     }
 
     /**
