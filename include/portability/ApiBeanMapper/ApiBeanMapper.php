@@ -29,6 +29,7 @@ require_once __DIR__ . '/FieldMappers/AssignedUserMapper.php';
 require_once __DIR__ . '/LinkMappers/LinkMapperInterface.php';
 require_once __DIR__ . '/LinkMappers/EmailAddressLinkMapper.php';
 require_once __DIR__ . '/TypeMappers/FullNameMapper.php';
+require_once __DIR__ . '/TypeMappers/ParentMapper.php';
 require_once __DIR__ . '/TypeMappers/DateMapper.php';
 require_once __DIR__ . '/TypeMappers/DateTimeMapper.php';
 require_once __DIR__ . '/TypeMappers/DateTimeComboMapper.php';
@@ -65,6 +66,7 @@ class ApiBeanMapper
     {
         $this->fieldMappers[AssignedUserMapper::getField()] = new AssignedUserMapper();
         $this->typeMappers[FullNameMapper::getType()] = new FullNameMapper();
+        $this->typeMappers[ParentMapper::getType()] = new ParentMapper();
         $this->typeMappers[DateMapper::getType()] = new DateMapper();
         $this->typeMappers[DateTimeMapper::getType()] = new DateTimeMapper();
         $this->typeMappers[MultiEnumMapper::getType()] = new MultiEnumMapper();
