@@ -115,6 +115,6 @@
 </div>
 
 <div style="clear: both;"></div>
-<div style="display: block; float: none;">
+<div style="display: block; float: none;" class="reports-editview-footer-actions">
     {{include file="include/EditView/footer.tpl"}}
 </div>
