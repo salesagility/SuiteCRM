@@ -454,6 +454,7 @@ class SubPanelTiles
             [
                 'buttons' => $buttons,
                 'class' => 'clickMenu fancymenu',
+                'flat' => $thisPanel->get_inst_prop_value('flat')
             ],
             $this->xTemplate
         );
