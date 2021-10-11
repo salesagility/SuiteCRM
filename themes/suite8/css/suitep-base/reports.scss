@@ -41,4 +41,14 @@
             background: $pale-blue;
         }
     }
+    .reports-editview-footer-actions {
+        .action_buttons {
+            #btn_view_change_log {
+                display: none;
+            }
+        }
+    }
+    .aor-tab-content #fieldLines tbody tr:nth-of-type(2n) td {
+        background: $very-light-grey;        
+    }
 }
