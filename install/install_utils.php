@@ -978,10 +978,7 @@ function handleHtaccess()
     }
     $htaccess_file = '.htaccess';
     $contents = '';
-    $basePath = parse_url($sugar_config['site_url'], PHP_URL_PATH);
-    if (empty($basePath)) {
-        $basePath = '/';
-    }
+    $basePath = '/legacy';
     $cacheDir = $sugar_config['cache_dir'];
 
     $restrict_str = <<<EOQ
@@ -1112,7 +1109,7 @@ EOQ;
 
     // add custom content from current '.htaccess' before "# BEGIN SUITECRM RESTRICTIONS"
     $haveBegin = false;
-    if (file_exists($htaccess_file)) {
+    if (is_file($htaccess_file)) {
         $fp = fopen($htaccess_file, 'rb');
         while ($line = fgets($fp)) {
             if (preg_match("/\s*#\s*BEGIN\s*SUITECRM\s*RESTRICTIONS/i",
@@ -1127,7 +1124,7 @@ EOQ;
     // add default content
     $contents .= $restrict_str . $cache_headers;
     // add custom content from current '.htaccess' after "# END SUITECRM RESTRICTIONS"
-    if ($haveBegin && file_exists($htaccess_file)) {
+    if ($haveBegin && is_file($htaccess_file)) {
         $skip = true;
         $fp = fopen($htaccess_file, 'rb');
         while ($line = fgets($fp)) {
@@ -1296,7 +1293,7 @@ function create_default_users()
     global $sugar_config;
 
     require_once('install/UserDemoData.php');
-    
+
     //Create default admin user
     $user = BeanFactory::newBean('Users');
     $user->id = 1;
