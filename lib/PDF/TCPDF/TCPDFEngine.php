@@ -68,12 +68,19 @@ class TCPDFEngine extends PDFEngine
     private static $configMapperFile = __DIR__ . '/../../../lib/PDF/MPDF/configMapping.php';
 
     /**
+     * @var int
+     */
+    private $maxExecutionTime;
+
+    /**
      * TFPDFEngine constructor.
      * @param TCPDF|null $pdf
      */
     public function __construct(TCPDF $pdf = null)
     {
         $this->pdf = $pdf ?? new TCPDF();
+        $this->maxExecutionTime = ini_get('max_execution_time');
+        set_time_limit(0);
     }
 
     /**
@@ -94,6 +101,8 @@ class TCPDFEngine extends PDFEngine
     public function outputPDF(string $name, string $destination, string $fullName = ''): ?string
     {
         $this->pdf->Output(__DIR__ . '/../../../' . $name, $destination);
+
+        set_time_limit($this->maxExecutionTime);
 
         return null;
     }
