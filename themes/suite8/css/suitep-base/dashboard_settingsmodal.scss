@@ -4,6 +4,16 @@ body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shado
 
 #dlg_c {
     .bd {
+        #chooser_display_tabs_text {
+            nobr {
+                margin-left: 1.2em;
+            }
+        }
+        #chooser_hide_tabs {
+            nobr {
+                margin-left: 2em;
+            }
+        }
         nobr {
             font-weight: 600;
         }
@@ -47,6 +57,19 @@ body.yui-skin-sam.masked .yui-panel-container.yui-dialog.yui-simple-dialog.shado
                 }
             }            
         }        
+    }
+    #edit_tabs {
+        table {
+            tr {
+                td {
+                    a#chooser_hide_tabs_down_arrow {
+                        img {
+                            margin-left: -1.3px;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
