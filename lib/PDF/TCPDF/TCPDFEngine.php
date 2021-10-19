@@ -93,7 +93,11 @@ class TCPDFEngine extends PDFEngine
      */
     public function outputPDF(string $name, string $destination, string $fullName = ''): ?string
     {
-        $this->pdf->Output(__DIR__ . '/../../../' . $name, $destination);
+        if ($destination === 'D') {
+            $this->pdf->Output($name, $destination);
+        } else {
+            $this->pdf->Output(__DIR__ . '/../../../' . $name, $destination);
+        }
 
         return null;
     }
