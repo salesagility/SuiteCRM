@@ -73,6 +73,12 @@ abstract class PDFEngine
     abstract public function writeHeader(string $html): void;
 
     /**
+     * @param string $css
+     * @return void
+     */
+    abstract public function addCSS(string $css): void;
+    
+    /**
      * @return void
      */
     abstract public function writeBlankPage(): void;

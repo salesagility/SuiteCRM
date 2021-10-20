@@ -44,7 +44,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 use SuiteCRM\PDF\PDFEngine;
-use TCPDF;
 
 /**
  * Class TFPDFEngine
@@ -53,7 +52,7 @@ use TCPDF;
 class TCPDFEngine extends PDFEngine
 {
     /**
-     * @var TCPDF
+     * @var SuiteTCPDF
      */
     public $pdf;
 
@@ -65,15 +64,28 @@ class TCPDFEngine extends PDFEngine
     /**
      * @var string
      */
+    protected $defaultCSS = '';
+    
+    /**
+     * @var string
+     */
+    protected $css = '';
+
+    /**
+     * @var string
+     */
     private static $configMapperFile = __DIR__ . '/../../../lib/PDF/TCPDF/configMapping.php';
 
     /**
      * TFPDFEngine constructor.
-     * @param TCPDF|null $pdf
+     * @param SuiteTCPDF|null $pdf
      */
-    public function __construct(TCPDF $pdf = null)
+    public function __construct(SuiteTCPDF $pdf = null)
     {
-        $this->pdf = $pdf ?? new TCPDF();
+        $this->pdf = $pdf ?? new SuiteTCPDF();
+        
+        $stylesheet = file_get_contents(__DIR__ . '/../../../lib/PDF/TCPDF/default.css');
+        $this->defaultCSS = $stylesheet;
     }
 
     /**
@@ -82,7 +94,11 @@ class TCPDFEngine extends PDFEngine
      */
     public function writeHTML(string $html): void
     {
-        $this->pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+        if ($this->pdf->getNumPages() < 1) {
+            $this->writeBlankPage();
+        }
+
+        $this->pdf->writeHTML($html . $this->getCSS());
     }
 
     /**
@@ -108,7 +124,8 @@ class TCPDFEngine extends PDFEngine
      */
     public function writeHeader(string $html): void
     {
-        $this->pdf->setHeaderData($html);
+        $this->pdf->setPrintHeader(true);
+        $this->pdf->setHtmlHeader($html);
     }
 
     /**
@@ -117,7 +134,25 @@ class TCPDFEngine extends PDFEngine
      */
     public function writeFooter(string $html): void
     {
-        $this->pdf->setFooterData($html);
+        $this->pdf->setPrintFooter(true);
+        $this->pdf->setHtmlFooter($html);
+    }
+
+    /**
+     * @param string $css
+     * @return void
+     */
+    public function addCSS(string $css): void
+    {
+        $this->css = $css;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCSS(): string 
+    {
+        return '<style>' . $this->css . $this->defaultCSS . '</style>';
     }
 
     public function writeBlankPage(): void
@@ -135,7 +170,7 @@ class TCPDFEngine extends PDFEngine
         $configOptions = include self::$configMapperFile;
         $this->pdfOptions = $configOptions;
 
-        $this->pdf = new TCPDF(
+        $this->pdf = new SuiteTCPDF(
             $configOptions['orientation'],
             $configOptions['unit'],
             $configOptions['page_size'],
@@ -144,11 +179,22 @@ class TCPDFEngine extends PDFEngine
             false
         );
 
-        $this->pdf->setHeaderMargin($configOptions['mgh']);
-        $this->pdf->setFooterMargin($configOptions['mgf']);
-        $this->pdf->SetAutoPageBreak(true, $configOptions['mgb']);
-        $this->pdf->setImageScale($configOptions['image_scale']);
+        $this->pdf->SetMargins(
+            $configOptions['margin_left'],
+            $configOptions['margin_top'],
+            $configOptions['margin_right']
+        );
 
-        $this->writeBlankPage();
+        $tagvs = ['div' => [['h' => 0, 'n' => 0], ['h' => 0, 'n' => 0]]];
+        $this->pdf->setHtmlVSpace($tagvs);
+
+        $this->pdf->setPrintHeader(false);
+        $this->pdf->setPrintFooter(false);
+
+        $this->pdf->setHeaderMargin($configOptions['margin_header']);
+        $this->pdf->setFooterMargin($configOptions['margin_footer']);
+        $this->pdf->SetAutoPageBreak(true, $configOptions['margin_bottom']);
+        $this->pdf->setImageScale($configOptions['image_scale']);
+        $this->pdf->SetFont($configOptions['default_font'], '', $configOptions['default_font_size']);
     }
 }
