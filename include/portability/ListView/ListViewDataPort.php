@@ -110,8 +110,14 @@ class ListViewDataPort extends ListViewData
 
         [$params, $order, $orderBy] = $this->buildOrderBy($filter_fields, $params, $current_user);
 
-        [$ret_array, $main_query] = $this->buildFindQuery($seed, $where, $filter_fields, $params, $singleSelect,
-            $orderBy);
+        [$ret_array, $main_query] = $this->buildFindQuery(
+            $seed,
+            $where,
+            $filter_fields,
+            $params,
+            $singleSelect,
+            $orderBy
+        );
 
         [$result, $offset] = $this->runQuery($offset, $limit, $main_query);
 
@@ -187,8 +193,14 @@ class ListViewDataPort extends ListViewData
 
         [$params, $order, $orderBy] = $this->buildOrderBy($filter_fields, $params, $current_user);
 
-        [$ret_array] = $this->buildFindQuery($seed, $where, $filter_fields, $params, $singleSelect,
-            $orderBy);
+        [$ret_array] = $this->buildFindQuery(
+            $seed,
+            $where,
+            $filter_fields,
+            $params,
+            $singleSelect,
+            $orderBy
+        );
 
         return $ret_array;
     }
@@ -205,7 +217,6 @@ class ListViewDataPort extends ListViewData
         $offset = -1,
         $limit = -1
     ): array {
-
         $this->seed = $bean;
 
         $mainQuery = $this->joinQueryParts([], $queryParts);
@@ -253,8 +264,10 @@ class ListViewDataPort extends ListViewData
     {
         // if $params tell us to override all ordering
         if (!empty($params['overrideOrder']) && !empty($params['orderBy'])) {
-            $order = $this->getOrderBy(strtolower($params['orderBy']),
-                (empty($params['sortOrder']) ? '' : $params['sortOrder'])); // retreive from $_REQUEST
+            $order = $this->getOrderBy(
+                strtolower($params['orderBy']),
+                (empty($params['sortOrder']) ? '' : $params['sortOrder'])
+            ); // retreive from $_REQUEST
         } else {
             $order = $this->getOrderBy(); // retreive from $_REQUEST
         }
@@ -273,8 +286,10 @@ class ListViewDataPort extends ListViewData
             $orderby = substr($order['orderBy'], strpos($order['orderBy'], '.') + 1);
         }
 
-        if ($orderby !== 'date_entered' && empty($params['custom_order']) && !array_key_exists($orderby,
-                $filter_fields)) {
+        if ($orderby !== 'date_entered' && empty($params['custom_order']) && !array_key_exists(
+                $orderby,
+                $filter_fields
+            )) {
             $order['orderBy'] = '';
             $order['sortOrder'] = '';
         }
@@ -322,7 +337,6 @@ class ListViewDataPort extends ListViewData
         $singleSelect,
         $orderBy
     ): array {
-
         $ret_array = $seed->create_new_list_query(
             $orderBy,
             $where,
@@ -541,9 +555,24 @@ class ListViewDataPort extends ListViewData
      */
     protected function addACLInfo(SugarBean $temp, array &$pageData, int $dataIndex): void
     {
-        $detailViewAccess = $temp->ACLAccess('DetailView');
-        $editViewAccess = $temp->ACLAccess('EditView');
-        $pageData['rowAccess'][$dataIndex] = array('view' => $detailViewAccess, 'edit' => $editViewAccess);
+        $acls = [];
+        $rowAccess = [];
+
+        $actions = ['list', 'edit', 'view', 'delete', 'export', 'import'];
+
+        foreach ($actions as $action) {
+            $hasAccess = $temp->ACLAccess($action) ?? false;
+
+            $rowAccess[$action] = $hasAccess;
+
+            if ($hasAccess === true) {
+                $acls[] = $action;
+            }
+
+        }
+
+        $pageData['rowAccess'][$dataIndex] = $rowAccess;
+        $pageData['acls'][$temp->id] = $acls;
     }
 
     /**
@@ -587,8 +616,14 @@ class ListViewDataPort extends ListViewData
         $pageData['ordering'] = $order;
         $pageData['ordering']['sortOrder'] = $this->getReverseSortOrder($pageData['ordering']['sortOrder']);
         //get url parameters as an array
-        $pageData['queries'] = $this->generateQueries($pageData['ordering']['sortOrder'], $offset, $prevOffset,
-            $nextOffset, $endOffset, $totalCounted);
+        $pageData['queries'] = $this->generateQueries(
+            $pageData['ordering']['sortOrder'],
+            $offset,
+            $prevOffset,
+            $nextOffset,
+            $endOffset,
+            $totalCounted
+        );
 
         //join url parameters from array to a string
         $pageData['offsets'] = array(
