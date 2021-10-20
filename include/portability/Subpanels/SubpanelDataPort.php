@@ -85,13 +85,6 @@ class SubpanelDataPort
             return ['data' => [], 'offsets' => [], 'ordering' => []];
         }
 
-        $beanList = $response['list'] ?? [];
-        $mappedBeans = [];
-
-        foreach ($beanList as $beanData) {
-            $mappedBeans[] = $this->apiBeanMapper->toApi($beanData);
-        }
-
         $row_count = $response['row_count'];
         $next_offset = $response['next_offset'];
         $previous_offset = $response['previous_offset'];
@@ -108,8 +101,8 @@ class SubpanelDataPort
 
         $last_offset = $number_pages * $limit;
 
-        return [
-            'data' => $mappedBeans,
+        $lisData = [
+            'data' => [],
             "offsets" => [
                 "current" => $offset,
                 "next" => $next_offset,
@@ -121,8 +114,22 @@ class SubpanelDataPort
             "ordering" => [
                 "orderBy" => $orderBy,
                 "sortOrder" => $sortOrder
-            ]
+            ],
+            'pageData' => []
         ];
+
+        $beanList = $response['list'] ?? [];
+        $mappedBeans = [];
+
+        foreach ($beanList as $key => $beanData) {
+            $this->addACLInfo($beanData, $lisData['pageData']);
+            $mappedBeans[] = $this->apiBeanMapper->toApi($beanData);
+        }
+
+        $lisData['data'] = $mappedBeans;
+
+
+        return $lisData;
     }
 
     /**
@@ -166,6 +173,7 @@ class SubpanelDataPort
                 $aSubPanelObject,
                 $selectColumns
             );
+
             return $response;
         } catch (Exception $ex) {
             LoggerManager::getLogger()->fatal('[' . __METHOD__ . "] . {$ex->getMessage()}");
@@ -174,4 +182,25 @@ class SubpanelDataPort
         }
     }
 
+    /**
+     * @param SugarBean $temp
+     * @param array $pageData
+     */
+    protected function addACLInfo(SugarBean $temp, array &$pageData): void
+    {
+        $acls = [];
+
+        $actions = ['list', 'edit', 'view', 'delete', 'export', 'import'];
+
+        foreach ($actions as $action) {
+            $hasAccess = $temp->ACLAccess($action);
+
+            if ($hasAccess === true) {
+                $acls[] = $action;
+            }
+
+        }
+
+        $pageData['acls'][$temp->id] = $acls;
+    }
 }
