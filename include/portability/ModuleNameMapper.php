@@ -85,6 +85,17 @@ class ModuleNameMapper
     }
 
     /**
+     * Get visible modules
+     * @return array
+     */
+    public function getVisibleModules(): array
+    {
+        global $moduleList;
+
+        return $moduleList;
+    }
+
+    /**
      * Map legacy module name to frontend name
      * @param string $module
      * @return string
@@ -154,5 +165,4 @@ class ModuleNameMapper
 
         return $this->map[$module][$type];
     }
-
 }
