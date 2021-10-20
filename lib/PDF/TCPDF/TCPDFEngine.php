@@ -82,6 +82,8 @@ class TCPDFEngine extends PDFEngine
      */
     public function writeHTML(string $html): void
     {
+        $this->writeBlankPage();
+
         $this->pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
     }
 
@@ -104,7 +106,7 @@ class TCPDFEngine extends PDFEngine
      */
     public function writeHeader(string $html): void
     {
-        $this->pdf->setHeaderData($html);
+        $this->pdf->setPrintHeader(true);
     }
 
     /**
@@ -113,7 +115,7 @@ class TCPDFEngine extends PDFEngine
      */
     public function writeFooter(string $html): void
     {
-        $this->pdf->setFooterData($html);
+        $this->pdf->setPrintFooter(true);
     }
 
     public function writeBlankPage(): void
@@ -143,7 +145,5 @@ class TCPDFEngine extends PDFEngine
         $this->pdf->setHeaderMargin($configOptions['mgh']);
         $this->pdf->setFooterMargin($configOptions['mgf']);
         $this->pdf->SetAutoPageBreak(true, $configOptions['mgb']);
-
-        $this->writeBlankPage();
     }
 }

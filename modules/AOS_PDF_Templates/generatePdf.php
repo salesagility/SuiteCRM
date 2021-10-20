@@ -156,6 +156,7 @@ if ($task === 'pdf' || $task === 'emailpdf') {
             'orientation' => $template->orientation
         ]);
 
+        $printable = $header . $printable . $footer;
         $pdf->writeHeader($header);
         $pdf->writeFooter($footer);
         $pdf->writeHTML($printable);
