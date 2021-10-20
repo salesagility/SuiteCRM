@@ -111,7 +111,7 @@ class MPDFEngine extends PDFEngine
      */
     public function writeHeader(string $html): void
     {
-        @$this->pdf->setHeader($html);
+        @$this->pdf->SetHTMLHeader($html);
     }
 
     /**
@@ -120,9 +120,18 @@ class MPDFEngine extends PDFEngine
      */
     public function writeFooter(string $html): void
     {
-        @$this->pdf->setFooter($html);
+        @$this->pdf->SetHTMLFooter($html);
     }
 
+    /**
+     * @param string $css
+     * @return void
+     */
+    public function addCSS(string $css): void
+    {
+        $this->writeHTML($css, 1);
+    }
+    
     public function writeBlankPage(): void
     {
         @$this->pdf->AddPage();
@@ -142,12 +151,12 @@ class MPDFEngine extends PDFEngine
             $configOptions['page_size'],
             $configOptions['default_font_size'],
             $configOptions['default_font'],
-            $configOptions['mgl'],
-            $configOptions['mgr'],
-            $configOptions['mgt'],
-            $configOptions['mgb'],
-            $configOptions['mgh'],
-            $configOptions['mgf'],
+            $configOptions['margin_left'],
+            $configOptions['margin_right'],
+            $configOptions['margin_top'],
+            $configOptions['margin_bottom'],
+            $configOptions['margin_header'],
+            $configOptions['margin_footer'],
             $configOptions['orientation'],
         );
 
