@@ -954,10 +954,16 @@ a.listViewTdToolsS1 {
 
 .list .SugarActionMenu .sugar_action_button > .subnav li:last-of-type a:last-of-type {
   border-bottom: none;
+  padding: 0;
 }
 
 .list .SugarActionMenu .sugar_action_button .subnav {
   padding: 4px 10px;
+  line-height: 15px;
+  min-width: 2em;
+  &:hover {
+    background: $astral-blue;
+  }
 }
 
 #detail_header_action_menu > .sugar_action_button > .subnav li {
@@ -3014,6 +3020,7 @@ table.subpanel-table li.sugar_action_button {
   background-color: $list-view-action-button-bg;
   border: 1px solid transparent;
   border-radius: $border-radius-base;
+  position: relative;
 }
 
 .listViewLinkButton li.sugar_action_button {
