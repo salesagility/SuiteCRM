@@ -11,4 +11,5 @@ return $configOptions = [
     'mgb' => $options['mgb'] ?? 16,
     'mgh' => $options['mgh'] ?? 9,
     'mgf' => $options['mgf'] ?? 9,
+    'image_scale' => $options['image_scale'] ?? 1.33,
 ];

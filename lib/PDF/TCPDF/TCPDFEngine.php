@@ -65,7 +65,7 @@ class TCPDFEngine extends PDFEngine
     /**
      * @var string
      */
-    private static $configMapperFile = __DIR__ . '/../../../lib/PDF/MPDF/configMapping.php';
+    private static $configMapperFile = __DIR__ . '/../../../lib/PDF/TCPDF/configMapping.php';
 
     /**
      * TFPDFEngine constructor.
@@ -147,6 +147,7 @@ class TCPDFEngine extends PDFEngine
         $this->pdf->setHeaderMargin($configOptions['mgh']);
         $this->pdf->setFooterMargin($configOptions['mgf']);
         $this->pdf->SetAutoPageBreak(true, $configOptions['mgb']);
+        $this->pdf->setImageScale($configOptions['image_scale']);
 
         $this->writeBlankPage();
     }
