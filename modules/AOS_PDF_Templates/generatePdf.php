@@ -147,12 +147,12 @@ if ($task === 'pdf' || $task === 'emailpdf') {
             'mode' => 'en',
             'page_size' => $template->page_size,
             'font' => 'DejaVuSansCondensed',
-            'mgl' => $template->margin_left,
-            'mgr' => $template->margin_right,
-            'mgt' => $template->margin_top,
-            'mgb' => $template->margin_bottom,
-            'mgh' => $template->margin_header,
-            'mgf' => $template->margin_footer,
+            'margin_left' => $template->margin_left,
+            'margin_right' => $template->margin_right,
+            'margin_top' => $template->margin_top,
+            'margin_bottom' => $template->margin_bottom,
+            'margin_header' => $template->margin_header,
+            'margin_footer' => $template->margin_footer,
             'orientation' => $template->orientation
         ]);
 
