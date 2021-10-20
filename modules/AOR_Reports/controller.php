@@ -196,16 +196,18 @@ class AOR_ReportsController extends SugarController
             sugar_die('');
         }
 
-        $d_image = explode('?', SugarThemeRegistry::current()->getImageURL('company_logo.png'), 2);
+        $companyLogo = explode('?', SugarThemeRegistry::current()->getImageURL('company_logo.png'), 2);
+        $reportName = strtoupper($this->bean->name);
         $graphs = $_POST["graphsForPDF"];
-        $graphHtml = "<div class='reportGraphs' style='width:100%; text-align:center;'>";
-
+        $graphHtml = '';
         $chartsPerRow = $this->bean->graphs_per_row;
 
         if (is_countable($graphs)) {
             $countOfCharts = count($graphs);
         }
         if (!empty($countOfCharts) && $countOfCharts > 0) {
+            $graphHtml = "<div class='reportGraphs' style='width:100%; text-align:center;'>";
+            
             $width = (100 / $chartsPerRow);
 
             $modulusRemainder = $countOfCharts % $chartsPerRow;
@@ -217,52 +219,51 @@ class AOR_ReportsController extends SugarController
 
             foreach ($graphs as $x => $xValue) {
                 if (is_null($itemsWithModulus) || $x < $itemsWithModulus) {
-                    $graphHtml .= "<img src='.$xValue.' style='width:$width%;' />";
+                    $graphHtml .= "<img src='data:image/png;base64, @$xValue' style='width:$width%;' />";
                 } else {
-                    $graphHtml .= "<img src='.$xValue.' style='width:$modulusWidth%;' />";
+                    $graphHtml .= "<img src='data:image/png;base64, @$xValue' style='width:$modulusWidth%;' />";
                 }
             }
 
             $graphHtml .= "</div>";
         }
 
-        $head = '<table style="width: 100%; font-family: Arial; text-align: center;" border="0" cellpadding="2" cellspacing="2">
+        $stylesheet = file_get_contents(get_custom_file_if_exists('modules/AOR_Reports/pdf/pdf.css'));
+        $footer = '{PAGENO}';
+        $head = '<table style="width: 100%; text-align: center;" border="0" cellpadding="2" cellspacing="2">
                 <tbody style="text-align: left;">
                 <tr style="text-align: left;">
                 <td style="text-align: left;">
-                <p><img src="' . $d_image[0] . '" style="float: left;"/>&nbsp;</p>
+                <p><img src="' . $companyLogo[0] . '" style="float: left;"/>&nbsp;</p>
                 </td>
-                <tr style="text-align: left;">
-                <td style="text-align: left;"></td>
-                </tr>
-                 <tr style="text-align: left;">
-                <td style="text-align: left;">
-                </td>
-                <tr style="text-align: left;">
-                <td style="text-align: left;"></td>
                 </tr>
                 <tr style="text-align: left;">
                 <td style="text-align: left;">
-                <b>' . strtoupper($this->bean->name) . '</b>
+                <h2>' . $reportName . '</h2>
                 </td>
                 </tr>
                 </tbody>
-                </table><br />' . $graphHtml;
+                </table>';
+        
+        
+        if (!empty($graphHtml)) {
+            $head .= '<br />' . $graphHtml;
+        }
 
         $this->bean->user_parameters = requestToUserParameters($this->bean);
-        $printable = $this->bean->build_group_report(-1, false);
-        $stylesheet = file_get_contents(SugarThemeRegistry::current()->getCSSURL('style.css', false));
-
+        $report = $this->bean->build_group_report(-1, false);
+        
+        ob_clean();
         try {
             $pdf = PDFWrapper::getPDFEngine();
             $pdf->configurePDF([
                 'mode' => 'en',
                 'font' => 'DejaVuSansCondensed',
             ]);
-            $pdf->writeFooter('{PAGENO}');
-            $pdf->writeHTML($stylesheet, 1);
+            $pdf->addCSS($stylesheet);
+            $pdf->writeFooter($footer);
             $pdf->writeHTML($head, 2);
-            $pdf->writeHTML($printable, 3);
+            $pdf->writeHTML($report, 3);
             $pdf->outputPDF($this->bean->name . '.pdf', 'D');
         } catch (PDFException $e) {
             LoggerManager::getLogger()->warn('PDFException: ' . $e->getMessage());
