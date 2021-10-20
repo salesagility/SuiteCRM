@@ -651,18 +651,9 @@ class AOR_Report extends Basic
                 $total_rows = $assoc['c'];
             }
         }
-
-        // Fix #5427
-        $report_style = '';
-        $thead_style = '';
-        if ((isset($_REQUEST['action']) ? $_REQUEST['action'] : null) == 'DownloadPDF') {
-            $report_style = 'margin-top: 0px;';
-            $thead_style = 'background: #919798; color: #fff';
-        }
-        $html = '<div class="list-view-rounded-corners" style="' . $report_style . '">';
-        //End
-
-        $html.='<table id="report_table_'.$tableIdentifier.$group_value.'" cellpadding="0" cellspacing="0" width="100%" border="0" class="list view table-responsive aor_reports">';
+        
+        $html = '<div class="list-view-rounded-corners">';
+        $html.='<table id="report_table_'.$tableIdentifier.$group_value.'" width="100%" border="0" class="list view table-responsive aor_reports">';
 
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND deleted = 0 ORDER BY field_order ASC";
         $result = $this->db->query($sql);
@@ -706,7 +697,7 @@ class AOR_Report extends Basic
 
             if ($fields[$label]['display']) {
                 // Fix #5427
-                $html .= "<th scope='col' style='{$thead_style}'>";
+                $html .= "<th scope='col'>";
                 // End
                 $html .= "<div>";
                 $html .= $field->label;
@@ -820,7 +811,7 @@ class AOR_Report extends Basic
                         } else {
                             $params = [];
                         }
-                        $html .= getModuleField(
+                        $html .= trim(getModuleField(
                             $att['module'],
                             $att['field'],
                             $att['field'],
@@ -829,7 +820,7 @@ class AOR_Report extends Basic
                             '',
                             $currency_id,
                             $params
-                        );
+                        ));
                     }
 
                     if ($att['total']) {
@@ -855,7 +846,8 @@ class AOR_Report extends Basic
 
         $currentTheme = SugarThemeRegistry::current();
 
-        $html .= "    <script type=\"text/javascript\">
+        if (empty($_REQUEST['action']) || $_REQUEST['action'] !== 'DownloadPDF') {
+            $html .= "    <script type=\"text/javascript\">
                             groupedReportToggler = {
 
                                 toggleList: function(elem) {
@@ -874,6 +866,7 @@ class AOR_Report extends Basic
 
                             };
                         </script>";
+        }
 
         return $html;
     }
