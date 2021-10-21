@@ -56,7 +56,7 @@ class SearchFormView extends View
 {
     public function __construct()
     {
-        parent::__construct(__DIR__ . '/templates/search.form.tpl');
+        parent::__construct(__DIR__ .'/'. get_custom_file_if_exists('templates/search.form.tpl'));
     }
 
     /** @inheritdoc */
