@@ -299,6 +299,13 @@ function export($type, $records = null, $members = false, $sample=false)
                         require_once('modules/Currencies/Currency.php');
                         $value = currency_format_number($value);
                         break;
+                    // Fix Issue 9326 - Adding Decimal and Float case to retrieve user-defined decimal separator
+                    case 'decimal':
+                    case 'float':
+                        $user_dec_sep = (!empty($current_user->id) ? $current_user->getPreference('dec_sep') : null);
+                        $dec_sep = empty($user_dec_sep) ? $sugar_config['default_decimal_seperator'] : $user_dec_sep;
+                        $value = str_replace('.', $dec_sep, $value);
+                        break;
 
                     //if our value is a datetime field, then apply the users locale
                     case 'datetime':
