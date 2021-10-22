@@ -434,22 +434,28 @@
                         <nobr>{$MOD.LBL_YOUR_PUBLISH_URL|strip_semicolon}:</nobr>
                     </slot>
                 </td>
-                <td colspan=2><span class="calendar_publish_ok">{$CALENDAR_PUBLISH_URL}</span><span
-                            class="calendar_publish_none" style="display: none">{$MOD.LBL_NO_KEY}</span></td>
+                <td colspan=2 class='urltext' style='white-space:normal;'>
+                    <span class="calendar_publish_ok">{$CALENDAR_PUBLISH_URL}</span>
+                    <span class="calendar_publish_none" style="display: none">{$MOD.LBL_NO_KEY}</span>
+                </td>
             </tr>
             <tr>
                 <td width="17%" scope="row">
                     <slot>{$MOD.LBL_SEARCH_URL|strip_semicolon}:</slot>
                 </td>
-                <td colspan=2><span class="calendar_publish_ok">{$CALENDAR_SEARCH_URL}</span><span
-                            class="calendar_publish_none" style="display: none">{$MOD.LBL_NO_KEY}</span></td>
+                <td colspan=2 class='urltext' style='white-space:normal;'>
+                    <span class="calendar_publish_ok">{$CALENDAR_SEARCH_URL}</span>
+                    <span class="calendar_publish_none" style="display: none">{$MOD.LBL_NO_KEY}</span>
+                </td>
             </tr>
             <tr>
                 <td width="15%" scope="row">
                     <slot>{$MOD.LBL_ICAL_PUB_URL|strip_semicolon}: {sugar_help text=$MOD.LBL_ICAL_PUB_URL_HELP}</slot>
                 </td>
-                <td colspan=2><span class="calendar_publish_ok">{$CALENDAR_ICAL_URL}</span><span
-                            class="calendar_publish_none" style="display: none">{$MOD.LBL_NO_KEY}</span></td>
+                <td colspan=2 class='urltext' style='white-space:normal;'>
+                    <span class="calendar_publish_ok">{$CALENDAR_ICAL_URL}</span>
+                    <span class="calendar_publish_none" style="display: none">{$MOD.LBL_NO_KEY}</span>
+                </td>
             </tr>
             <tr>
                 <td width="17%" scope="row">
