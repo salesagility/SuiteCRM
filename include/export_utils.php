@@ -300,7 +300,9 @@ function export($type, $records = null, $members = false, $sample=false)
             $value = implode(",", $valueArray);
 
                         break;
-
+                            
+        // Fix Issue 9153 - Exporting DynamicDropdown fields return keys
+        case 'dynamicenum':
         case 'enum':
             if (isset($focus->field_name_map[$fields_array[$key]]['options']) &&
                 isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']]) &&
