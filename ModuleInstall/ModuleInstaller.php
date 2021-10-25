@@ -120,6 +120,7 @@ class ModuleInstaller
         $tasks = array(
             'pre_execute',
             'install_copy',
+            'install_copy_core_extensions',
             'install_extensions',
             'install_images',
             'install_dcactions',
@@ -189,14 +190,15 @@ class ModuleInstaller
                 echo '</div>';
             }
             $selectedActions = array(
-            'clearTpls',
-            'clearJsFiles',
-            'clearDashlets',
-            'clearVardefs',
-            'clearJsLangFiles',
-            'rebuildAuditTables',
-            'repairDatabase',
-        );
+                'clearTpls',
+                'clearJsFiles',
+                'clearDashlets',
+                'clearVardefs',
+                'clearJsLangFiles',
+                'rebuildAuditTables',
+                'repairDatabase',
+            );
+
             VardefManager::clearVardef();
             global $beanList, $beanFiles, $moduleList;
             if (file_exists('custom/application/Ext/Include/modules.ext.php')) {
@@ -300,6 +302,7 @@ class ModuleInstaller
             $this->modules = get_module_dir_list();
         }
     }
+
     public function uninstall_copy()
     {
         if (!empty($this->installdefs['copy'])) {
@@ -315,11 +318,60 @@ class ModuleInstaller
                 $this->copy_path($backup_path, $cp['to'], $backup_path, true);
                 /* END - RESTORE POINT - by MR. MILK August 31, 2005 02:22:18 PM */
             }
-            $backup_path = clean_path(remove_file_extension(urldecode(hashToFile($_REQUEST['install_file'])))."-restore");
+            $backup_path = clean_path(remove_file_extension(urldecode(hashToFile($_REQUEST['install_file']))) . "-restore");
             if (file_exists($backup_path)) {
                 rmdir_recursive($backup_path);
             }
         }
+    }
+
+    public function install_copy_core_extensions()
+    {
+        $coreExtensionPath = __DIR__ . '/../../../extensions/';
+        if (isset($this->installdefs['copy_core_extensions'])) {
+
+            $backup_path = clean_path(remove_file_extension(urldecode($_REQUEST['install_file'])) . "-restore");
+
+            foreach ($this->installdefs['copy_core_extensions'] as $cp) {
+                $GLOBALS['log']->debug("Copying core extensions..." . $cp['from'] . " to " . $cp['to']);
+                /* BEGIN - RESTORE POINT - by MR. MILK August 31, 2005 02:22:11 PM */
+                //$this->copy_path($cp['from'], $cp['to']);
+                $this->copy_path($cp['from'], $cp['to'], $backup_path, false, $coreExtensionPath);
+                /* END - RESTORE POINT - by MR. MILK August 31, 2005 02:22:18 PM */
+            }
+        }
+        $this->clear_core_cache();
+    }
+
+    public function uninstall_copy_core_extensions()
+    {
+        $coreExtensionPath = __DIR__ . '/../../../extensions/';
+        if (!empty($this->installdefs['copy_core_extensions'])) {
+            foreach ($this->installdefs['copy_core_extensions'] as $cp) {
+                $cp['to'] = clean_path(str_replace('<basepath>', $coreExtensionPath, $cp['to']));
+                $cp['from'] = clean_path(str_replace('<basepath>', $this->base_dir, $cp['from']));
+                $GLOBALS['log']->debug('Unlink ' . $cp['to']);
+                /* BEGIN - RESTORE POINT - by MR. MILK August 31, 2005 02:22:11 PM */
+                //rmdir_recursive($cp['to']);
+
+                $backup_path = clean_path(remove_file_extension(urldecode(hashToFile($_REQUEST['install_file']))) . "-restore/" . $cp['to']);
+                $this->uninstall_new_files($cp, $backup_path, $coreExtensionPath);
+                $this->copy_path($backup_path, $cp['to'], $backup_path, true, $coreExtensionPath);
+                /* END - RESTORE POINT - by MR. MILK August 31, 2005 02:22:18 PM */
+            }
+            $backup_path = clean_path(remove_file_extension(urldecode(hashToFile($_REQUEST['install_file']))) . "-restore");
+            if (file_exists($backup_path)) {
+                rmdir_recursive($backup_path);
+            }
+        }
+
+        $this->clear_core_cache();
+    }
+
+    public function clear_core_cache()
+    {
+        $coreCachePath = __DIR__ . '/../../../cache/';
+        rmdir_recursive($coreCachePath);
     }
 
 
@@ -328,7 +380,7 @@ class ModuleInstaller
      * it will be handled by copy_path with the uninstall parameter.
      *
      */
-    public function uninstall_new_files($cp, $backup_path)
+    public function uninstall_new_files($cp, $backup_path, $toBasePath = '')
     {
         $zip_files = $this->dir_get_files($cp['from'], $cp['from']);
         $backup_files = $this->dir_get_files($backup_path, $backup_path);
@@ -336,6 +388,11 @@ class ModuleInstaller
             //if it's not a backup then it is probably a new file but we'll check that it is not in the md5.files first
             if (!isset($backup_files[$k])) {
                 $to = $cp['to'] . $k;
+
+                if ($toBasePath !== '') {
+                    $to = $this->updateToPathWithBasePath($to, $toBasePath);
+                }
+
                 //if it's not a sugar file then we remove it otherwise we can't restor it
                 if (!$this->ms->sugarFileExists($to)) {
                     $GLOBALS['log']->debug('ModuleInstaller[uninstall_new_file] deleting file ' . $to);
@@ -347,11 +404,17 @@ class ModuleInstaller
                 }
             }
         }
+
+        $to = $cp['to'];
+        if ($toBasePath !== '') {
+            $to = $this->updateToPathWithBasePath($to, $toBasePath);
+        }
+
         //lets check if the directory is empty if it is we will delete it as well
-        $files_remaining = $this->dir_file_count($cp['to']);
-        if (file_exists($cp['to']) && $files_remaining == 0) {
-            $GLOBALS['log']->debug('ModuleInstaller[uninstall_new_file] deleting directory ' . $cp['to']);
-            rmdir_recursive($cp['to']);
+        $files_remaining = $this->dir_file_count($to);
+        if (file_exists($to) && $files_remaining == 0) {
+            $GLOBALS['log']->debug('ModuleInstaller[uninstall_new_file] deleting directory ' . $to);
+            rmdir_recursive($to);
         }
     }
 
@@ -1043,7 +1106,7 @@ class ModuleInstaller
         if (isset($this->installdefs['language'])) {
              $modules = [];
              $languages = [];
-            
+
             foreach ($this->installdefs['language'] as $item) {
                 $from = str_replace('<basepath>', $this->base_dir, $item['from']);
                 $GLOBALS['log']->debug("Enabling Language {$item['language']}... from $from for " .$item['to_module']);
@@ -1232,11 +1295,12 @@ class ModuleInstaller
     }
 
     /* BEGIN - RESTORE POINT - by MR. MILK August 31, 2005 02:22:18 PM */
-    public function copy_path($from, $to, $backup_path='', $uninstall=false)
+    public function copy_path($from, $to, $backup_path = '', $uninstall = false, $toBasePath = '')
     {
         //function copy_path($from, $to){
         /* END - RESTORE POINT - by MR. MILK August 31, 2005 02:22:18 PM */
-        $to = str_replace('<basepath>', $this->base_dir, $to);
+
+        $to = $this->replaceBasePath($to, $toBasePath);
 
         if (!$uninstall) {
             $from = str_replace('<basepath>', $this->base_dir, $from);
@@ -1645,6 +1709,7 @@ class ModuleInstaller
             'pre_uninstall',
             'uninstall_relationships',
             'uninstall_copy',
+            'uninstall_copy_core_extensions',
             'uninstall_dcactions',
             'uninstall_dashlets',
             'uninstall_connectors',
@@ -2553,6 +2618,38 @@ class ModuleInstaller
             }
         }
         sugar_die("Unknown method ModuleInstaller::$name called");
+    }
+
+    /**
+     * @param $to
+     * @param $toBasePath
+     * @return string|string[]
+     */
+    protected function updateToPathWithBasePath($to, $toBasePath)
+    {
+        if (strpos($to, '<basepath>') !== false) {
+            $to = str_replace('<basepath>', $toBasePath, $to);
+        } else {
+            $to = $toBasePath . $to;
+        }
+
+        return $to;
+    }
+
+    /**
+     * @param $to
+     * @param $toBasePath
+     * @return string|string[]
+     */
+    protected function replaceBasePath($to, $toBasePath)
+    {
+        if ($toBasePath !== '') {
+            $to = $this->updateToPathWithBasePath($to, $toBasePath);
+        } else {
+            $to = str_replace('<basepath>', $this->base_dir, $to);
+        }
+
+        return $to;
     }
 }
 
