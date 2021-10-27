@@ -49,7 +49,7 @@
 
     <table border="0" cellspacing="0" cellpadding="0" class="edit view">
         <tr>
-            <td>
+            <td colspan="2">
                 <h4>{$mod_strings.LBL_EMAIL_SETTINGS_INBOUND}</h4>
             </td>
             <td style="vertical-align:bottom;"><a href="javascript:void(0);" id="prefill_gmail_defaults_link"

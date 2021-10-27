@@ -535,6 +535,7 @@ div#content {
 
 .emailSettings tr td:first-child {
     padding-right: 10px;
+    padding-bottom: 10px;
 }
 
 .emailSettings tr td:nth-child(2) {

@@ -3406,17 +3406,17 @@
         var dlg = SE.settings.settingsDialog = new YAHOO.widget.Dialog("settingsDialog", {
           modal: true,
           visible: false,
-          fixedcenter: false,
+          fixedcenter: true,
           draggable: true,
-          constraintoviewport: false
+          constraintoviewport: true
         });
         dlg.showEvent.subscribe(function () {
           var el = this.element;
           var viewH = YAHOO.util.Dom.getViewportHeight();
-          if (this.header && el && viewH - 50 < el.clientHeight) {
+          if (this.header && el && viewH - 150 < el.clientHeight) {
             var body = this.header.nextElementSibling;
             body.style.overflow = "auto";
-            body.style.height = (viewH - 50) + "px";
+            body.style.height = (viewH - 150) + "px";
           }
         }, dlg);
         dlg.setHeader(app_strings.LBL_EMAIL_SETTINGS);
@@ -3452,11 +3452,10 @@
 
         tp.appendTo(dlg.body);
       }
-
+      SE.settings.settingsDialog.center();
       SE.settings.settingsDialog.show();
       SE.folders.lazyLoadSettings(user);
       SE.accounts.lazyLoad(user);
-      $(window).scrollLeft(0);
     },
 
 
@@ -3547,3 +3546,5 @@ function setSigEditButtonVisibility() {
     deleteButt.style.visibility = "hidden";
   }
 }
+
+

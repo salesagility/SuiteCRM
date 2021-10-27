@@ -1,0 +1,159 @@
+#settingsDialog_c {
+    position: absolute;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+    table.view td {
+        padding-bottom: 10px;
+    }
+    .yui-module {
+        @media (max-width:750px) {
+            width: 29em;
+        }
+        border: none;
+        .container-close {
+            color: $white;
+        }
+    }
+    input[type=text],input[type=password],input[type=email] {
+        background-color:$transparent-color;
+        border: 1px solid $form-border-color;
+    }
+    select {
+        background: url($select-edit-background-url) no-repeat right;
+        background-size: 25px 11px;
+        border-color: $bright-grey;
+    }
+    .button {
+        background-color: $nepal-grey;
+        border-radius: 0.2em;
+        font-weight: bold;
+        height: 2.2em;
+        line-height: 1em;
+        letter-spacing: 0.05em;
+        padding: 0.3em 1em;
+        text-transform: capitalize;
+        &:hover {
+            background: $pale-blue;
+        }
+    }
+    @media (max-width: 750px) {
+        table.view td {
+            display: flex;
+        }
+    }
+    .view tr {
+        vertical-align: initial;
+    }
+    .yui-dt-message {
+        background: $transparent-color;
+    }
+}
+
+#editAccountDialogue_c {
+    position: absolute;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+    input,input[type=text],input[type=password],input[type=email] {
+        background-color:$transparent-color;
+        border: 1px solid $form-border-color;
+    }
+    select {
+        background: url($select-edit-background-url) no-repeat right;
+        background-size: 25px 11px;
+        border-color: $bright-grey;
+    }
+    .edit h4 {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .button {
+        background-color: $nepal-grey;
+        border-radius: 0.2em;
+        font-weight: bold;
+        height: 2.2em;
+        line-height: 1em;
+        letter-spacing: 0.05em;
+        padding: 0.3em 1em;
+        text-transform: capitalize;
+        &:hover {
+            background: $pale-blue;
+        }
+    }
+    .container-close {
+        color: $white;
+    }
+    .edit tr td[scope=row] {
+        padding-left: 1em;
+    }
+    .edit tr td {
+        vertical-align: middle;
+    }
+    #editAccountDialogue {
+        overflow: hidden;
+    }
+    #prefill_gmail_defaults_link {
+        position: absolute;
+        top: 6em;
+        width: 100%;
+        left: 31em;
+    }
+}
+
+#outboundDialog_c {
+    .container-close {
+        color: $white;
+    }
+    input[type=text],input[type=password],input[type=email] {
+        background-color:$transparent-color;
+        border: 1px solid $form-border-color;
+        width: 93%;
+    }
+    select {
+        background: url($select-edit-background-url) no-repeat right;
+        background-size: 25px 11px;
+        border-color: $bright-grey;
+    }
+    .button {
+        background-color: $nepal-grey;
+        border-radius: 0.2em;
+        font-weight: bold;
+        height: 2.2em;
+        line-height: 1em;
+        letter-spacing: 0.05em;
+        padding: 0.3em 1em;
+        text-transform: capitalize;
+        margin-left: 1em;
+        margin-bottom: 1em;
+        &:hover {
+            background: $pale-blue;
+        }
+    } 
+    .edit tr td[scope=row] {
+        padding-left: 1em;
+    }
+    button {
+        background-color: $nepal-grey;
+        border-radius: 0.2em;
+        font-weight: bold;
+        height: 2.2em;
+        line-height: 1em;
+        letter-spacing: 0.05em;
+        padding: 0.3em 1em;
+        text-transform: capitalize;
+        border: none;
+        margin-bottom: 1em;
+        color: $white;
+        &:hover {
+            background: $pale-blue;
+        }
+    }
+    .first-child {
+        margin-left: 1em;
+    }
+    .view tr {
+        position: relative;
+        top: 6px;
+    }
+}
