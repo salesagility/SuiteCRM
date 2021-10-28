@@ -52,7 +52,7 @@ require_once __DIR__ . '/../../../modules/AOS_PDF_Templates/PDF_Lib/mpdf.php';
  * Class MPDFEngine
  * @package SuiteCRM\PDF\MPDF
  */
-class MPDFEngine extends PDFEngine
+class LegacyMPDFEngine extends PDFEngine
 {
     /**
      * @var mPDF
@@ -62,7 +62,7 @@ class MPDFEngine extends PDFEngine
     /**
      * @var string
      */
-    private static $configMapperFile = __DIR__ . '/../../../lib/PDF/MPDF/configMapping.php';
+    private static $configMapperFile = __DIR__ . '/../../../lib/PDF/LegacyMPDF/configMapping.php';
 
     /**
      * MPDFEngine constructor.
