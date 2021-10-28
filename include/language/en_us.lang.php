@@ -3718,3 +3718,7 @@ $app_strings['LBL_SEARCH_PAGE'] = 'Page ';
 $app_strings['LBL_SEARCH_OF'] = ' of ';
 $app_strings['LBL_USE_ADVANCED_SEARCH'] = 'Use Advanced Search';
 $app_strings['LBL_USE_BASIC_SEARCH'] = 'Use Basic Search';
+
+// PDF Engines
+$app_strings['LBL_LEGACY_MPDF_ENGINE'] = 'Legacy MPDF Engine';
+$app_strings['LBL_TCPDF_ENGINE'] = 'TCPDF Engine';
