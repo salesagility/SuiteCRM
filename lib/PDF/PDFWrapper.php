@@ -40,7 +40,7 @@
 namespace SuiteCRM\PDF;
 
 use SuiteCRM\PDF\Exceptions\PDFEngineNotFoundException;
-use SuiteCRM\PDF\MPDF\MPDFEngine;
+use SuiteCRM\PDF\MPDF\LegacyMPDFEngine;
 use SuiteCRM\PDF\TCPDF\TCPDFEngine;
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -57,15 +57,17 @@ class PDFWrapper
      * @var array stores an associative array matching the PDF engine class name with the file it is stored in.
      */
     private static $engines = [
-        'MPDFEngine' => [
-            'name' => 'MPDFEngine',
-            'FQN' => MPDFEngine::class,
-            'filepath' => 'lib/PDF/MPDF/MPDFEngine.php'
-        ],
         'TCPDFEngine' => [
             'name' => 'TCPDFEngine',
+            'lbl' => 'LBL_TCPDF_ENGINE',
             'FQN' => TCPDFEngine::class,
             'filepath' => 'lib/PDF/TCPDF/TCPDFEngine.php'
+        ],
+        'LegacyMPDFEngine' => [
+            'name' => 'LegacyMPDFEngine',
+            'lbl' => 'LBL_LEGACY_MPDF_ENGINE',
+            'FQN' => LegacyMPDFEngine::class,
+            'filepath' => 'lib/PDF/LegacyMPDF/LegacyMPDFEngine.php'
         ],
     ];
 

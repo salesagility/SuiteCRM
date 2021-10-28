@@ -67,7 +67,7 @@ class PDFWrapperTest extends SuitePHPUnitFrameworkTestCase
     public function testGetDefaultEngine(): void
     {
         $actual = PDFWrapper::getDefaultEngine();
-        $expected = 'MPDFEngine';
+        $expected = 'TCPDFEngine';
 
         self::assertEquals($expected, $actual);
     }
