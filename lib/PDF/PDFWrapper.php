@@ -71,9 +71,6 @@ class PDFWrapper
         ],
     ];
 
-    /** @var string Path to the folder where to load custom engines from */
-    private static $customEnginePath = __DIR__ . '/../../custom/Extension/PDFEngines/';
-
     /**
      * @param string $engineName
      * @param string $file
@@ -90,10 +87,20 @@ class PDFWrapper
 
     /**
      * @return PDFEngine
+     * @noinspection PhpIncludeInspection
      */
     public static function getPDFEngine(): PDFEngine
     {
+        $pdfs = [];
         $defaultEngine = self::getDefaultEngine();
+
+        if (file_exists('custom/application/Ext/PDF/pdfs.ext.php')) {
+            include('custom/application/Ext/PDF/pdfs.ext.php');
+        }
+
+        foreach ($pdfs as $pdf) {
+            self::$engines[$pdf['name']] = $pdf;
+        }
 
         return self::fetchEngine($defaultEngine);
     }
@@ -102,24 +109,18 @@ class PDFWrapper
      * Retrieves the available PDF engine class names.
      *
      * @return string[]
+     * @noinspection PhpIncludeInspection
      */
     public static function getEngines(): array
     {
+        $pdfs = [];
         $default = array_keys(self::$engines);
 
-        // Custom check for MPDF class
-        $MPDF = __DIR__ . '/../../modules/AOS_PDF_Templates/PDF_Lib/mpdf.php';
-        if (!file_exists($MPDF) && ($key = array_search('MPDFEngine', $default, true)) !== false) {
-            unset($default[$key]);
+        if (file_exists('custom/application/Ext/PDF/pdfs.ext.php')) {
+            include('custom/application/Ext/PDF/pdfs.ext.php');
         }
 
-        $custom = [];
-        foreach (glob(self::$customEnginePath . '*.php', GLOB_NOSORT) as $file) {
-            $file = pathinfo($file);
-            $custom[] = $file['filename'];
-        }
-
-        return array_merge($default, $custom);
+        return array_merge(array_keys($pdfs), $default);
     }
 
     /**
@@ -143,12 +144,7 @@ class PDFWrapper
             return $engineName;
         }
 
-        $customEnginePath = self::$customEnginePath . $engineName . '.php';
-
         if (isset(self::$engines[$engineName])) {
-            $engine = self::$engines[$engineName];
-        } elseif (isset($customEnginePath)) {
-            self::addEngine($engineName, $customEnginePath, $engineName);
             $engine = self::$engines[$engineName];
         } else {
             throw new PDFEngineNotFoundException(
@@ -165,7 +161,7 @@ class PDFWrapper
         }
 
         /** @noinspection PhpIncludeInspection */
-        require_once $filename;
+        require_once __DIR__ . '/../../' . $filename;
 
         if (!is_subclass_of($engine['FQN'], PDFEngine::class)) {
             throw new PDFEngineNotFoundException(
