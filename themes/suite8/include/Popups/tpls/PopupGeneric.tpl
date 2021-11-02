@@ -52,7 +52,6 @@
 {$LIST_HEADER}
 {if $should_process}
 	<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list view'>
-
 		<thead>
 		<tr height='20'>
 			{if $prerow}
@@ -65,20 +64,20 @@
 				{else}<th scope='col'  data-hide="phone,tablet">{/if}
 					<div style='white-space: normal; width:100%; text-align:{$params.align|default:'left'}'>
 	                {if $params.sortable|default:true}
-                                <a href="{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}" onclick='sListView.save_checks(0, "{$moduleString}");' class='listViewThLinkS1'>{sugar_translate label=$params.label module=$pageData.bean.moduleDir}&nbsp;&nbsp;
+                                <a href="{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}" onclick='sListView.save_checks(0, "{$moduleString}");' class='listViewThLinkS1 sortsvg'>{sugar_translate label=$params.label module=$pageData.bean.moduleDir}&nbsp;&nbsp;
 						{if $params.orderBy|default:$colHeader|lower == $pageData.ordering.orderBy}
 							{if $pageData.ordering.sortOrder == 'ASC'}
                                 {capture assign="arrowAlt"}{sugar_translate label='LBL_ALT_SORT_DESC'}{/capture}
-								<span class="suitepicon suitepicon-action-sorting-descending"></span>
+								{sugar_getimage name="sort_descend"}
 							{else}
                                 {capture assign="arrowAlt"}{sugar_translate label='LBL_ALT_SORT_ASC'}{/capture}
                                 {capture assign="imageName"}arrow_up.{$arrowExt}{/capture}
-								<span class="suitepicon suitepicon-action-sorting-ascending"></span>
+								{sugar_getimage name="sort_ascend"}
 							{/if}
 						{else}
                             {capture assign="arrowAlt"}{sugar_translate label='LBL_ALT_SORT'}{/capture}
                             {capture assign="imageName"}arrow.{$arrowExt}{/capture}
-							<span class="suitepicon suitepicon-action-sorting-none"></span>
+							{sugar_getimage name="sort"}
 						{/if}
 					{else}
 						{sugar_translate label=$params.label module=$pageData.bean.moduleDir}
@@ -100,42 +99,42 @@
 								{sugar_action_menu id=$link_select_id params=$selectLink}
 							</div>
 						</td>
-						<td  align='right' nowrap='nowrap'>
+						<td align='right' nowrap='nowrap'>
 							{if $pageData.urls.startPage}
 								<button type='button' id='popupViewStartButton' title='{$navStrings.start}' class='button' {if $prerow}onclick='return sListView.save_checks(0, "{$moduleString}");'{else} onClick='location.href="{$pageData.urls.startPage}"' {/if}>
-									<span class="suitepicon suitepicon-action-first"></span>
+									{sugar_getimage name="paginate_first"}
 								</button>
 							{else}
 								<button type='button' id='popupViewStartButton' title='{$navStrings.start}' class='button' disabled>
-									<span class="suitepicon suitepicon-action-first"></span>
+									{sugar_getimage name="paginate_first"}
 								</button>
 							{/if}
 							{if $pageData.urls.prevPage}
 								<button type='button' id='popupViewPrevButton' title='{$navStrings.previous}' class='button' {if $prerow}onclick='return sListView.save_checks({$pageData.offsets.prev}, "{$moduleString}")' {else} onClick='location.href="{$pageData.urls.prevPage}"'{/if}>
-									<span class="suitepicon suitepicon-action-left"></span>
+									{sugar_getimage name="paginate_previous"}
 								</button>
 							{else}
 								<button type='button' id='popupViewPrevButton' class='button' disabled title='{$navStrings.previous}'>
-									<span class="suitepicon suitepicon-action-left"></span>
+									{sugar_getimage name="paginate_previous"}
 								</button>
 							{/if}
 							<span class='pageNumbers'>({if $pageData.offsets.lastOffsetOnPage == 0}0{else}{$pageData.offsets.current+1}{/if} - {$pageData.offsets.lastOffsetOnPage} {$navStrings.of} {if $pageData.offsets.totalCounted}{$pageData.offsets.total}{else}{$pageData.offsets.total}{if $pageData.offsets.lastOffsetOnPage != $pageData.offsets.total}+{/if}{/if})</span>
 							{if $pageData.urls.nextPage}
 								<button type='button' id='popupViewNextButton' title='{$navStrings.next}' class='button' {if $prerow}onclick='return sListView.save_checks({$pageData.offsets.next}, "{$moduleString}")' {else} onClick='location.href="{$pageData.urls.nextPage}"'{/if}>
-									<span class="suitepicon suitepicon-action-right"></span>
+									{sugar_getimage name="paginate_next"}
 								</button>
 							{else}
 								<button type='button' id='popupViewNextButton' class='button' title='{$navStrings.next}' disabled>
-									<span class="suitepicon suitepicon-action-right"></span>
+									{sugar_getimage name="paginate_next"}
 								</button>
 							{/if}
 							{if $pageData.urls.endPage  && $pageData.offsets.total != $pageData.offsets.lastOffsetOnPage}
 								<button type='button' id='popupViewEndButton' title='{$navStrings.end}' class='button' {if $prerow}onclick='return sListView.save_checks("end", "{$moduleString}")' {else} onClick='location.href="{$pageData.urls.endPage}"'{/if}>
-									<span class="suitepicon suitepicon-action-last"></span>
+									{sugar_getimage name="paginate_last"}
 								</button>
 							{elseif !$pageData.offsets.totalCounted || $pageData.offsets.total == $pageData.offsets.lastOffsetOnPage}
 								<button type='button' id='popupViewEndButton' class='button' disabled title='{$navStrings.end}'>
-									<span class="suitepicon suitepicon-action-last"></span>
+									{sugar_getimage name="paginate_last"}
 								</button>
 							{/if}
 						</td>
@@ -213,39 +212,39 @@
 						<td  align='right' nowrap='nowrap'>
 							{if $pageData.urls.startPage}
 								<button type='button' title='{$navStrings.start}' class='button' {if $prerow}onclick='return sListView.save_checks(0, "{$moduleString}");'{else} onClick='location.href="{$pageData.urls.startPage}"' {/if}>
-									<span class="suitepicon suitepicon-action-first"></span>
+									{sugar_getimage name="paginate_first"}
 								</button>
 							{else}
 								<button type='button' title='{$navStrings.start}' class='button' disabled>
-									<span class="suitepicon suitepicon-action-first"></span>
+									{sugar_getimage name="paginate_first"}
 								</button>
 							{/if}
 							{if $pageData.urls.prevPage}
 								<button type='button' title='{$navStrings.previous}' class='button' {if $prerow}onclick='return sListView.save_checks({$pageData.offsets.prev}, "{$moduleString}")' {else} onClick='location.href="{$pageData.urls.prevPage}"'{/if}>
-									<span class="suitepicon suitepicon-action-left"></span>
+									{sugar_getimage name="paginate_previous"}
 								</button>
 							{else}
 								<button type='button' class='button' disabled title='{$navStrings.previous}'>
-									<span class="suitepicon suitepicon-action-left"></span>
+									{sugar_getimage name="paginate_previous"}
 								</button>
 							{/if}
 							<span class='pageNumbers'>({if $pageData.offsets.lastOffsetOnPage == 0}0{else}{$pageData.offsets.current+1}{/if} - {$pageData.offsets.lastOffsetOnPage} {$navStrings.of} {if $pageData.offsets.totalCounted}{$pageData.offsets.total}{else}{$pageData.offsets.total}{if $pageData.offsets.lastOffsetOnPage != $pageData.offsets.total}+{/if}{/if})</span>
 							{if $pageData.urls.nextPage}
 								<button type='button' title='{$navStrings.next}' class='button' {if $prerow}onclick='return sListView.save_checks({$pageData.offsets.next}, "{$moduleString}")' {else} onClick='location.href="{$pageData.urls.nextPage}"'{/if}>
-									<span class="suitepicon suitepicon-action-right"></span>
+									{sugar_getimage name="paginate_next"}
 								</button>
 							{else}
 								<button type='button' class='button' title='{$navStrings.next}' disabled>
-									<span class="suitepicon suitepicon-action-right"></span>
+									{sugar_getimage name="paginate_next"}
 								</button>
 							{/if}
 							{if $pageData.urls.endPage  && $pageData.offsets.total != $pageData.offsets.lastOffsetOnPage}
 								<button type='button' title='{$navStrings.end}' class='button' {if $prerow}onclick='return sListView.save_checks({$pageData.offsets.end}, "{$moduleString}")' {else} onClick='location.href="{$pageData.urls.endPage}"'{/if}>
-									<span class="suitepicon suitepicon-action-last"></span>
+									{sugar_getimage name="paginate_last"}
 								</button>
 							{elseif !$pageData.offsets.totalCounted || $pageData.offsets.total == $pageData.offsets.lastOffsetOnPage}
 								<button type='button' class='button' disabled title='{$navStrings.end}'>
-									<span class="suitepicon suitepicon-action-last"></span>
+									{sugar_getimage name="paginate_last"}
 								</button>
 							{/if}
 						</td>
