@@ -736,17 +736,17 @@ class AOR_Report extends Basic
             $html .= '<td nowrap="nowrap" align="right" class="paginationChangeButtons" width="1%">';
             if ($offset == 0) {
                 $html .= "<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='list-view-pagination-button' disabled='disabled'>
-                    <span class='suitepicon suitepicon-action-first'></span>
+                ".SugarThemeRegistry::current()->getImage('paginate_first')."
                 </button>
                 <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='list-view-pagination-button' title='Previous' disabled='disabled'>
-                    <span class='suitepicon suitepicon-action-left'></span>
+                ".SugarThemeRegistry::current()->getImage('paginate_previous')."
                 </button>";
             } else {
                 $html .= "<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='list-view-pagination-button' onclick='changeReportPage(\"" . $this->id . '",0,"' . $group_value . '","' . $tableIdentifier . "\")'>
-                    <span class='suitepicon suitepicon-action-first'></span>
+                ".SugarThemeRegistry::current()->getImage('paginate_first')."
                 </button>
                 <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='list-view-pagination-button' title='Previous' onclick='changeReportPage(\"" . $this->id . '",' . $previous_offset . ',"' . $group_value . '","' . $tableIdentifier . "\")'>
-                    <span class='suitepicon suitepicon-action-left'></span>
+                ".SugarThemeRegistry::current()->getImage('paginate_previous')."
                 </button>";
             }
             $html .= '</td><td style="vertical-align:middle" nowrap="nowrap" width="1%" class="paginationActionButtons">';
@@ -754,17 +754,17 @@ class AOR_Report extends Basic
             $html .= '</td><td nowrap="nowrap" align="right" class="paginationActionButtons" width="1%">';
             if ($next_offset < $total_rows) {
                 $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='list-view-pagination-button' onclick='changeReportPage(\"" . $this->id . '",' . $next_offset . ',"' . $group_value . '","' . $tableIdentifier . "\")'>
-                       <span class='suitepicon suitepicon-action-right'></span>
+                ".SugarThemeRegistry::current()->getImage('paginate_next')."
                     </button>
                      <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='list-view-pagination-button' onclick='changeReportPage(\"" . $this->id . '",' . $last_offset . ',"' . $group_value . '","' . $tableIdentifier . "\")'>
-                        <span class='suitepicon suitepicon-action-last'></span>
+                     ".SugarThemeRegistry::current()->getImage('paginate_last')."
                     </button>";
             } else {
                 $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='list-view-pagination-button'  disabled='disabled'>
-                        <span class='suitepicon suitepicon-action-right'></span>
+                ".SugarThemeRegistry::current()->getImage('paginate_next')."
                     </button>
                      <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='list-view-pagination-button'  disabled='disabled'>
-                       <span class='suitepicon suitepicon-action-last'></span>
+                     ".SugarThemeRegistry::current()->getImage('paginate_last')."
                     </button>";
             }
 

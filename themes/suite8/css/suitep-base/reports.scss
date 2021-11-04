@@ -13,6 +13,7 @@
         background: url($select-edit-background-url) no-repeat right;
         background-size: 25px 11px;
         border-color: $bright-grey;
+        height: 32px;
     }
     input[type=text],input[type=password],input[type=email],input[type=number]{
         background-color: $transparent-color;
@@ -50,5 +51,18 @@
     }
     .aor-tab-content #fieldLines tbody tr:nth-of-type(2n) td {
         background: $very-light-grey;        
+    }
+    .detail {
+        padding-bottom: 1em;
+        padding-left: 1em;
+        h4 {
+            padding-top: 1em;
+        }
+        table {
+            background: $transparent-color;
+        }
+        tr td {
+            vertical-align: middle;
+        }
     }
 }
