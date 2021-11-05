@@ -88,8 +88,13 @@ class BasicSearchEngine extends SearchEngine
 
         $end = microtime(true);
         $elapsed = $end - $start;
+        $totalHits = 0;
 
-        return new SearchResults($results['modules'], true, $elapsed, count($results['hits']));
+        foreach ($results['modules'] as $moduleHit) {
+            $totalHits += count($moduleHit);
+        }
+
+        return new SearchResults($results['modules'], true, $elapsed, $totalHits);
     }
 
     /**

@@ -44,8 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use SuiteCRM\PDF\MPDF\MPDFEngine;
 use SuiteCRM\PDF\PDFWrapper;
+use SuiteCRM\PDF\TCPDF\TCPDFEngine;
 use SuiteCRM\Test\SuitePHPUnitFrameworkTestCase;
 
 /**
@@ -58,7 +58,7 @@ class PDFWrapperTest extends SuitePHPUnitFrameworkTestCase
     {
         $actual = PDFWrapper::getEngines();
         $expected = [
-            0 => 'MPDFEngine'
+            0 => 'TCPDFEngine'
         ];
 
         self::assertEquals($expected, $actual);
@@ -79,12 +79,5 @@ class PDFWrapperTest extends SuitePHPUnitFrameworkTestCase
         $testEngine = $engines[1];
 
         self::assertEquals('TestPDFEngine', $testEngine);
-    }
-
-    public function testGetPDFEngine(): void
-    {
-        $actual = PDFWrapper::getPDFEngine();
-
-        self::assertInstanceOf(MPDFEngine::class, $actual);
     }
 }

@@ -538,7 +538,7 @@ $mod_strings = array(
     'LBL_UPTODATE' => 'You have the latest version available',
     'LBL_USER_NAME' => 'User Name:',
     'LBL_USERNAME' => 'User Name',
-    'LBL_USERS_TITLE' => 'Users',
+    'LBL_USERS_TITLE' => 'Users & Authentication',
     'LBL_HISTORY_CONTACTS_EMAILS' => 'History Subpanel',
     'LBL_HISTORY_CONTACTS_EMAILS_DESC' => 'Enable/Disable contacts\' emails in history',
 
@@ -827,9 +827,10 @@ $mod_strings = array(
     'LBL_SUGGESTION_POPUP_FROM' => 'Suggestion & Pop-up gradient (from):',
     'LBL_SUGGESTION_POPUP_TO' => 'Suggestion & Pop-up gradient (to):',
 
-    'LBL_SALESAGILITY_ADMIN' => 'Advanced OpenAdmin',
-    'LBL_AOP_ADMIN_MANAGE_AOP' => 'Advanced OpenPortal Settings',
-    'LBL_AOP_ENABLE_AOP' => 'Enable AOP',
+    'LBL_MODULE_ADMIN' => 'Module Settings',
+    'LBL_MODULE_ADMIN_HEADER_DESC' => 'Configure Module specifics and settings',
+    'LBL_AOP_ADMIN_MANAGE_AOP' => 'Case Module Settings',
+    'LBL_AOP_ENABLE_AOP' => 'Enable Case Automations',
     'LBL_AOP_ENABLE_PORTAL' => 'Enable External Portal',
     'LBL_AOP_JOOMLA_SETTINGS' => 'Portal Settings',
     'LBL_AOP_JOOMLA_URL' => 'Joomla URL',
@@ -847,12 +848,12 @@ $mod_strings = array(
     'LBL_AOP_JOOMLA_ACCOUNT_CREATION_EMAIL_TEMPLATE' => 'Joomla Support Portal Account Creation Template',
 
     'LBL_AOP_BUSINESS_HOURS_SETTINGS' => 'Business Hours',
-    'LBL_AOP_BUSINESS_HOURS_DESC' => "Restrict 'Only In The Scheduler' Workflows to launch only in certain days and times",
+    'LBL_AOP_BUSINESS_HOURS_DESC' => "Restrict Workflow & Case automations to certain days and times",
     'LBL_SUPPORT_FROM_ADDRESS' => 'Support Email From Address',
     'LBL_SUPPORT_FROM_NAME' => 'Support Email From Name',
     'LBL_CREATE_EMAIL_TEMPLATE' => 'Create',
     'LBL_EDIT_EMAIL_TEMPLATE' => 'Edit',
-    'LBL_AOP_SETTINGS' => 'AOP Settings',
+    'LBL_AOP_SETTINGS' => 'Case Module Settings',
 
     'LBL_AOP_CASE_STATUS_SETTINGS' => 'Case Status Changes',
     'LBL_AOP_IF_STATUS' => 'If status is',
@@ -862,7 +863,7 @@ $mod_strings = array(
 
     'LBL_AOS_ADMIN_CONTRACT_SETTINGS' => 'Contract Settings',
     'LBL_AOS_ADMIN_CONTRACT_RENEWAL_REMINDER' => 'Renewal Reminder period',
-    'LBL_AOS_ADMIN_MANAGE_AOS' => 'Advanced OpenSales Settings',
+    'LBL_AOS_ADMIN_MANAGE_AOS' => 'Sales Module Settings',
     'LBL_AOS_ADMIN_INVOICE_SETTINGS' => 'Invoice Settings',
     'LBL_AOS_ADMIN_INITIAL_INVOICE_NUMBER' => 'Initial Invoice Number',
     'LBL_AOS_ADMIN_QUOTE_SETTINGS' => 'Quote Settings',
@@ -870,11 +871,11 @@ $mod_strings = array(
     'LBL_AOS_ADMIN_LINE_ITEM_SETTINGS' => 'Line Item Settings',
     'LBL_AOS_ADMIN_ENABLE_LINE_ITEM_GROUPS' => 'Enable Line Items Groups',
     'LBL_AOS_ADMIN_ENABLE_LINE_ITEM_TOTAL_TAX' => 'Add TAX To Line Total',
-    'LBL_AOS_SETTINGS' => 'AOS Settings',
-    'LBL_AOS_PRODUCTS' => 'AOS Products',
+    'LBL_AOS_SETTINGS' => 'Sales Module Settings',
     'LBL_AOS_DAYS' => 'days',
-    'LBL_CHANGE_SETTINGS' => 'Change settings for Advanced OpenSales',
-    'LBL_CHANGE_SETTINGS_AOP' => 'Change settings for Advanced OpenPortal',
+    'LBL_CHANGE_SETTINGS' => 'Change settings for Quotes, Contracts and Invoices',
+    'LBL_CHANGE_SETTINGS_AOD' => 'Change settings for Advanced OpenDiscovery',
+    'LBL_CHANGE_SETTINGS_AOP' => 'Change settings for Cases and the Cases Portal',
 
     'LBL_MANAGE_SECURITYGROUPS_TITLE' => 'Security Suite Group Management',
     'LBL_MANAGE_SECURITYGROUPS' => 'Security Suite Group Editor',
@@ -964,6 +965,7 @@ $mod_strings = array(
     // Search Engines Translations
     'LBL_SEARCH_WRAPPER_ENGINES' => 'Search Engines',
     'LBL_BASIC_SEARCH_ENGINE' => 'Basic Search',
+    'LBL_BASIC_AND_AOD_ENGINE' => 'Basic + Advanced Search',
     'LBL_ELASTIC_SEARCH_ENGINE' => 'Elasticsearch Engine',
     'LBL_SIMPLE_SQL_SEARCH_ENGINE' => 'Simple SQL Search Engine',
 
@@ -981,4 +983,10 @@ $mod_strings = array(
 
     // Ajax Submit
     'LBL_AJAX_SUBMIT_FAIL' => 'An error has occurred while saving the settings.',
+
+    'LBL_ADMIN_TOOLS_TITLE' => 'Admin Tools',
+    'LBL_ADMIN_TOOLS_HEADER_DESC' => 'Repair, upgrade and run diagnosis on your SuiteCRM instance',
+    'LBL_WORKFLOW_MANAGER' => 'Workflow Manager',
+    'LBL_WORKFLOW_MANAGER_DESC' => 'Manage, Add, delete or change Workflow processes',
+
 );

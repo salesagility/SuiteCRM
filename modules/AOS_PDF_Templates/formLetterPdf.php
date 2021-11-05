@@ -64,7 +64,7 @@ if (isset($_REQUEST['current_post']) && $_REQUEST['current_post'] != '') {
     $result = DBManagerFactory::getInstance()->query($query, true);
     $uids = array();
     while ($val = DBManagerFactory::getInstance()->fetchByAssoc($result, false)) {
-        array_push($recordIds, $val['id']);
+        $recordIds[] = $val['id'];
     }
 } else {
     $recordIds = explode(',', $_REQUEST['uid']);
@@ -79,41 +79,32 @@ if (!$template) {
 
 $file_name = str_replace(" ", "_", $template->name) . ".pdf";
 
+$pdfConfig = [
+    'mode' => 'en',
+    'page_size' => $template->page_size,
+    'font' => 'DejaVuSansCondensed',
+    'margin_left' => $template->margin_left,
+    'margin_right' => $template->margin_right,
+    'margin_top' => $template->margin_top,
+    'margin_bottom' => $template->margin_bottom,
+    'margin_header' => $template->margin_header,
+    'margin_footer' => $template->margin_footer,
+    'orientation' => $template->orientation
+];
+
 try {
     $pdf = PDFWrapper::getPDFEngine();
-    $pdf->configurePDF([
-        'mode' => 'en',
-        'page_size' => $template->page_size,
-        'font' => 'DejaVuSansCondensed',
-        'mgl' => $template->margin_left,
-        'mgr' => $template->margin_right,
-        'mgt' => $template->margin_top,
-        'mgb' => $template->margin_bottom,
-        'mgh' => $template->margin_header,
-        'mgf' => $template->margin_footer,
-        'orientation' => $template->orientation
-    ]);
+    $pdf->configurePDF($pdfConfig);
 } catch (PDFException $e) {
     LoggerManager::getLogger()->warn('PDFException: ' . $e->getMessage());
 }
-
+$count = 0;
 foreach ($recordIds as $recordId) {
     $bean->retrieve($recordId);
 
     try {
         $pdfHistory = PDFWrapper::getPDFEngine();
-        $pdfHistory->configurePDF([
-            'mode' => 'en',
-            'page_size' => $template->page_size,
-            'font' => 'DejaVuSansCondensed',
-            'mgl' => $template->margin_left,
-            'mgr' => $template->margin_right,
-            'mgt' => $template->margin_top,
-            'mgb' => $template->margin_bottom,
-            'mgh' => $template->margin_header,
-            'mgf' => $template->margin_footer,
-            'orientation' => $template->orientation
-        ]);
+        $pdfHistory->configurePDF($pdfConfig);
     } catch (PDFException $e) {
         LoggerManager::getLogger()->warn('PDFException: ' . $e->getMessage());
     }
@@ -153,7 +144,7 @@ foreach ($recordIds as $recordId) {
 
     $text = preg_replace($search, $replace, $template->description);
     $text = preg_replace_callback(
-        '/\{DATE\s+(.*?)\}/',
+        '/{DATE\s+(.*?)}/',
         function ($matches) {
             return date($matches[1]);
         },
@@ -190,10 +181,12 @@ foreach ($recordIds as $recordId) {
         $pdfHistory->writeHeader($header);
         $pdfHistory->writeFooter($footer);
         $pdfHistory->writeHTML($printable);
-        $pdfHistory->outputPDF($sugar_config['upload_dir'] . 'nfile.pdf', 'F');
+        $pdfHistory->outputPDF($sugar_config['upload_dir'] . 'nfile.pdf', 'F', $note->name);
 
+        if ($count > 0) {
+            $pdf->writeBlankPage();
+        }
         $pdf->writeHeader($header);
-        $pdf->writeBlankPage();
         $pdf->writeFooter($footer);
         $pdf->writeHTML($printable);
 
@@ -201,6 +194,7 @@ foreach ($recordIds as $recordId) {
     } catch (PDFException $e) {
         LoggerManager::getLogger()->warn('PDFException: ' . $e->getMessage());
     }
+    ++$count;
 }
 
 $pdf->outputPDF($file_name, 'D');

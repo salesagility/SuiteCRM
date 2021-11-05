@@ -60,6 +60,11 @@ class MPDFEngine extends PDFEngine
     public $pdf;
 
     /**
+     * @var string
+     */
+    private static $configMapperFile = __DIR__ . '/../../../lib/PDF/MPDF/configMapping.php';
+
+    /**
      * MPDFEngine constructor.
      * @param mPDF|null $pdf
      */
@@ -88,9 +93,10 @@ class MPDFEngine extends PDFEngine
     /**
      * @param string $name
      * @param string $destination
+     * @param string $fullName
      * @return void|string
      */
-    public function outputPDF(string $name, string $destination): ?string
+    public function outputPDF(string $name, string $destination, string $fullName = ''): ?string
     {
         @$output = $this->pdf->Output($name, $destination);
 
@@ -105,7 +111,7 @@ class MPDFEngine extends PDFEngine
      */
     public function writeHeader(string $html): void
     {
-        @$this->pdf->setHeader($html);
+        @$this->pdf->SetHTMLHeader($html);
     }
 
     /**
@@ -114,9 +120,18 @@ class MPDFEngine extends PDFEngine
      */
     public function writeFooter(string $html): void
     {
-        @$this->pdf->setFooter($html);
+        @$this->pdf->SetHTMLFooter($html);
     }
 
+    /**
+     * @param string $css
+     * @return void
+     */
+    public function addCSS(string $css): void
+    {
+        $this->writeHTML($css, 1);
+    }
+    
     public function writeBlankPage(): void
     {
         @$this->pdf->AddPage();
@@ -128,31 +143,20 @@ class MPDFEngine extends PDFEngine
      */
     public function configurePDF(array $options): void
     {
-        $configOptions = [
-            'mode' => $options['mode'] ?? '',
-            'page_size' => $options['page_size'] ?? 'A4',
-            'default_font_size' => $options['fontSize'] ?? 0,
-            'default_font' => $options['font'] ?? '',
-            'mgl' => $options['mgl'] ?? 15,
-            'mgr' => $options['mgr'] ?? 15,
-            'mgt' => $options['mgt'] ?? 16,
-            'mgb' => $options['mgb'] ?? 16,
-            'mgh' => $options['mgh'] ?? 9,
-            'mgf' => $options['mgf'] ?? 9,
-            'orientation' => $options['orientation'] ?? 'P'
-        ];
+        /** @noinspection PhpIncludeInspection */
+        $configOptions = include self::$configMapperFile;
 
         @$this->pdf = new mPDF(
             $configOptions['mode'],
             $configOptions['page_size'],
             $configOptions['default_font_size'],
             $configOptions['default_font'],
-            $configOptions['mgl'],
-            $configOptions['mgr'],
-            $configOptions['mgt'],
-            $configOptions['mgb'],
-            $configOptions['mgh'],
-            $configOptions['mgf'],
+            $configOptions['margin_left'],
+            $configOptions['margin_right'],
+            $configOptions['margin_top'],
+            $configOptions['margin_bottom'],
+            $configOptions['margin_header'],
+            $configOptions['margin_footer'],
             $configOptions['orientation'],
         );
 

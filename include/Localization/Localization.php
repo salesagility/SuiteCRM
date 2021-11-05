@@ -110,7 +110,6 @@ class Localization
     public function getLocaleConfigDefaults()
     {
         $coreDefaults = array(
-            'currency'                                 => '',
             'datef'                                    => 'm/d/Y',
             'timef'                                    => 'H:i',
             'default_currency_significant_digits'      => 2,

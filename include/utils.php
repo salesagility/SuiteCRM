@@ -114,6 +114,9 @@ function make_sugar_config(&$sugar_config)
         'calculate_response_time' => empty($calculate_response_time) ? true : $calculate_response_time,
         'create_default_user' => empty($create_default_user) ? false : $create_default_user,
         'chartEngine' => 'Jit',
+        'pdf' => [
+            'defaultEngine' => 'TCPDFEngine'
+        ],
         'date_formats' => empty($dateFormats) ? array(
             'Y-m-d' => '2010-12-23',
             'd-m-Y' => '23-12-2010',
@@ -280,6 +283,26 @@ function get_sugar_config_defaults(): array
     $sugar_config_defaults = [
         'disableAjaxUI' => true,
         'admin_export_only' => false,
+        'anti_malware_scanners' => [
+            'SuiteCRM\Utility\AntiMalware\Providers\ClamTCP' => [
+                'name' => 'ClamAntiVirus TCP',
+                'support_page' => 'https://www.clamav.net/',
+                'enabled' => false,
+                'path' => null,
+                'options' => [
+                    'ip' => '127.0.0.1',
+                    'port' => 3310,
+                    'type' => 'local'
+                ],
+            ],
+            'SuiteCRM\Utility\AntiMalware\Providers\Sophos' => [
+                'name' => 'Sophos Anti Virus (Linux)',
+                'support_page' => 'https://www.sophos.com/en-us/products/free-tools/sophos-antivirus-for-linux.aspx',
+                'enabled' => false,
+                'path' => '/opt/sophos-av/bin/savscan',
+                'options' => '-ss'
+            ]
+        ],
         'export_delimiter' => ',',
         'export_excel_compatible' => false,
         'cache_dir' => 'cache/',
@@ -513,9 +536,7 @@ function get_sugar_config_defaults(): array
     if (!is_object($locale)) {
         $locale = new Localization();
     }
-
-    $sugar_config_defaults['default_currencies'] = $locale->getDefaultCurrencies();
-
+    
     $sugar_config_defaults = sugarArrayMerge($locale->getLocaleConfigDefaults(), $sugar_config_defaults);
 
     return $sugar_config_defaults;
