@@ -129,6 +129,17 @@ if (isset($_REQUEST['save_type']) || isset($_REQUEST['duplicateSave']) && $_REQU
     }
 }
 
+if (!empty($_REQUEST['return_module']) && !empty($_REQUEST['return_action'])) {
+    $_REQUEST['return_url'] = "index.php?module=" . $_REQUEST['return_module'] . "&action=record";
+
+    $returnId = !empty($_REQUEST['return_id']) ? $_REQUEST['return_id'] : $return_id;
+    if (!empty($returnId)) {
+        $_REQUEST['return_url'] .= "&record=" . $returnId;
+    }
+
+    handleRedirect($return_id, $_REQUEST['return_module']);
+}
+
 if ($sugarbean->is_template) {
     header("Location: index.php?action=ProjectTemplatesDetailView&module=Project&record=$return_id&return_module=Project&return_action=ProjectTemplatesEditView");
 } else {
