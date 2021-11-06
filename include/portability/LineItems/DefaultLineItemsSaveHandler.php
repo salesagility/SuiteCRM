@@ -72,7 +72,7 @@ class DefaultLineItemsSaveHandler implements LineItemsSaveHandlerInterface
         $relationship = $lineItemDefinition['relationship'] ?? '';
         $joinFieldsDefinitions = $this->getJoinFieldDefinitions($bean, $relationship);
 
-        if ($relationship === '' || !$bean->load_relationship($relationship)) {
+        if ($lineItemDefinition['type'] !== 'link'  || !$bean->load_relationship($field)) {
             return;
         }
 
@@ -82,11 +82,11 @@ class DefaultLineItemsSaveHandler implements LineItemsSaveHandlerInterface
             }
 
             if ($entry->deleted) {
-                $this->remove($bean, $entry, $relationship, $removalType);
+                $this->remove($bean, $entry, $field, $removalType);
                 continue;
             }
 
-            $this->add($bean, $entry, $relationship, $joinFieldsDefinitions);
+            $this->add($bean, $entry, $field, $joinFieldsDefinitions);
         }
     }
 
@@ -94,10 +94,10 @@ class DefaultLineItemsSaveHandler implements LineItemsSaveHandlerInterface
      * Remove Line Item
      * @param SugarBean $bean
      * @param SugarBean $entry
-     * @param string $relationship
+     * @param string $linkField
      * @param string $removalType
      */
-    protected function remove(SugarBean $bean, SugarBean $entry, string $relationship, string $removalType): void
+    protected function remove(SugarBean $bean, SugarBean $entry, string $linkField, string $removalType): void
     {
         if ($removalType === 'delete') {
             $entry->mark_deleted($entry->id);
@@ -106,7 +106,7 @@ class DefaultLineItemsSaveHandler implements LineItemsSaveHandlerInterface
         }
 
         /** @var Link2 $link */
-        $link = $bean->$relationship;
+        $link = $bean->$linkField;
 
         $link->remove([$entry]);
     }
@@ -115,14 +115,14 @@ class DefaultLineItemsSaveHandler implements LineItemsSaveHandlerInterface
      * Add line item
      * @param SugarBean $bean
      * @param SugarBean $entry
-     * @param string $relationship
+     * @param string $linkField
      * @param array $joinFieldsDefinitions
      */
-    protected function add(SugarBean $bean, SugarBean $entry, string $relationship, array $joinFieldsDefinitions): void
+    protected function add(SugarBean $bean, SugarBean $entry, string $linkField, array $joinFieldsDefinitions): void
     {
         $joinFields = $this->getJoinFields($bean, $joinFieldsDefinitions);
         /** @var Link2 $link */
-        $link = $bean->$relationship;
+        $link = $bean->$linkField;
 
         $link->add([$entry], $joinFields);
     }

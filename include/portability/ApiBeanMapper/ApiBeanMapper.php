@@ -28,6 +28,7 @@
 require_once __DIR__ . '/FieldMappers/AssignedUserMapper.php';
 require_once __DIR__ . '/LinkMappers/LinkMapperInterface.php';
 require_once __DIR__ . '/LinkMappers/EmailAddressLinkMapper.php';
+require_once __DIR__ . '/LinkMappers/DefaultLinkMapper.php';
 require_once __DIR__ . '/TypeMappers/FullNameMapper.php';
 require_once __DIR__ . '/TypeMappers/ParentMapper.php';
 require_once __DIR__ . '/TypeMappers/DateMapper.php';
@@ -77,6 +78,8 @@ class ApiBeanMapper
         $this->linkMappers[EmailAddressLinkMapper::getRelateModule()] = [];
         $this->linkMappers[EmailAddressLinkMapper::getRelateModule()]['all'] = new EmailAddressLinkMapper();
         $this->moduleMappers[CaseUpdatesMappers::getModule()] = new CaseUpdatesMappers();
+        $this->linkMappers[DefaultLinkMapper::getRelateModule()] = [];
+        $this->linkMappers[DefaultLinkMapper::getRelateModule()]['all'] = new DefaultLinkMapper();
     }
 
     /**
@@ -85,6 +88,8 @@ class ApiBeanMapper
      */
     public function toApi(SugarBean $bean): array
     {
+        $bean->field_defs = $this->mapLinkedModule($bean);
+
         $arr = [];
 
         $arr['module_name'] = $bean->module_name ?? '';
@@ -128,6 +133,8 @@ class ApiBeanMapper
     public function toBean(SugarBean $bean, array $values): void
     {
         require_once __DIR__ . '/../../../include/SugarFields/SugarFieldHandler.php';
+
+        $bean->field_defs = $this->mapLinkedModule($bean);
 
         foreach ($bean->field_defs as $field => $properties) {
             if (!isset($values[$field])) {
@@ -312,11 +319,12 @@ class ApiBeanMapper
      */
     protected function setValue(
         SugarBean $bean,
-        $field,
-        array &$arr,
-        array $definition,
-        string $alternativeName = ''
-    ): void {
+                  $field,
+        array     &$arr,
+        array     $definition,
+        string    $alternativeName = ''
+    ): void
+    {
         $name = $field;
 
         if (!empty($alternativeName)) {
@@ -353,7 +361,6 @@ class ApiBeanMapper
         $name = $definition['name'] ?? '';
 
         $linkMapper = $this->getLinkMapper($module, $relateModule, $name);
-
         if ($linkMapper === null) {
             return;
         }
@@ -415,7 +422,7 @@ class ApiBeanMapper
             return $moduleMappers->getLinkMapper($relateModule, $field);
         }
 
-        $moduleLinkMappers = $this->linkMappers[$relateModule] ?? [];
+        $moduleLinkMappers = $this->linkMappers[$relateModule] ?? $this->linkMappers['default'] ?? [];
 
         return $moduleLinkMappers[$field] ?? $moduleLinkMappers['all'] ?? null;
     }
@@ -475,8 +482,6 @@ class ApiBeanMapper
                 $rName = $bean->field_defs[$field]['rname'] ?? '';
                 $value = $values[$field][$rName] ?? '';
                 $values[$field] = $value;
-
-
             }
         }
 
@@ -498,4 +503,105 @@ class ApiBeanMapper
             $typeMapper->toBean($bean, $values, $field, $field);
         }
     }
+
+    /**
+     * @param SugarBean $bean
+     * @return array
+     */
+    public function mapLinkedModule(SugarBean $bean): array
+    {
+        $beanModule = $bean->module_name;
+        if (empty($beanModule)) {
+            return [];
+        }
+
+        $field_defs = $bean->field_defs;
+        if (empty($field_defs)) {
+            return [];
+        }
+
+        $beanObject = BeanFactory::newBean($beanModule);
+        if ($beanObject === null) {
+            return [];
+        }
+
+        $beanObject->load_relationships();
+        if (empty($beanObject)) {
+            return [];
+        }
+
+        foreach ($field_defs as $fieldName => $fieldDefinition) {
+
+            //skip, if module property already exists in fieldDefinition
+            $module = $fieldDefinition['module'] ?? '';
+            if (!empty($module)) {
+                continue;
+            }
+
+            $type = $fieldDefinition['type'] ?? '';
+            if ($type !== 'link') {
+                continue;
+            }
+
+            $relationship = $fieldDefinition['relationship'] ?? '';
+            if (empty($relationship)) {
+                continue;
+            }
+
+            $name = $fieldDefinition['name'] ?? '';
+            if (empty($name)) {
+                continue;
+            }
+
+            if (!property_exists($beanObject, $name)) {
+                continue;
+            }
+
+            if (!property_exists($beanObject->$name, 'relationship')) {
+                continue;
+            }
+
+            if (!property_exists($beanObject->$name->relationship, 'def')) {
+                continue;
+            }
+
+            $relationshipMetadata = $beanObject->$name->relationship->def;
+            if (empty($relationshipMetadata)) {
+                continue;
+            }
+
+            $this->injectRelatedModule($fieldDefinition, $relationshipMetadata, $beanModule);
+
+            $field_defs[$fieldName] = $fieldDefinition;
+        }
+
+        return $field_defs;
+    }
+
+    /**
+     * @param array $fieldDefinition
+     * @param array $relationshipMetadata
+     * @param string $beanModule
+     * @return void
+     * @desc this function retrieves the related module for the link type field.
+     * this information is required to link the relationship between the two modules
+     */
+    public function injectRelatedModule(array &$fieldDefinition, array $relationshipMetadata, string $beanModule): void
+    {
+        if (empty($relationshipMetadata)) {
+            return;
+        }
+
+        $lhsModule = $relationshipMetadata['lhs_module'] ?? '';
+        $rhsModule = $relationshipMetadata['rhs_module'] ?? '';
+
+        if ($lhsModule === $beanModule) {
+            $fieldDefinition['module'] = $rhsModule;
+        }
+
+        if ($rhsModule === $beanModule) {
+            $fieldDefinition['module'] = $lhsModule;
+        }
+    }
+
 }

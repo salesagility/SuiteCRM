@@ -123,9 +123,16 @@ abstract class LineItemMapper implements LinkMapperInterface
             return;
         }
 
+        if(!empty($bean->field_defs[$name]) && $bean->field_defs[$name]['type'] === 'link') {
+            $bean->field_defs[$name]['line-item'] = true;
+        }
+
         $definition = $this->getDefinition($bean, $name);
+
         $module = $definition['module'] ?? '';
         $isLineItem = $this->isLineItem($bean, $name);
+
+        unset($bean->field_defs[$name]['line-item']);
 
         if (!$isLineItem || $module === '') {
             return;

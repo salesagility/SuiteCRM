@@ -99,7 +99,7 @@ class LineItemsSaveHandlers
 
         $handlers = $this->registry[$module] ?? $this->registry['default'] ?? [];
 
-        $moduleHandlers = $handlers[$relateModule] ?? null;
+        $moduleHandlers = $handlers[$relateModule] ?? $handlers['default'] ?? null;
 
         if (empty($moduleHandlers)) {
             return null;
