@@ -62,7 +62,7 @@ $viewdefs['Opportunities'] = [
                     ]
                 ],
                 'acls' => [
-                    'Opportunity' => ['view', 'list']
+                    'Opportunities' => ['view', 'list']
                 ]
             ]
         ]

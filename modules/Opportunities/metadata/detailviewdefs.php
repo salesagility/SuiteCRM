@@ -95,7 +95,7 @@ array(
               ],
           ],
           'acls' => [
-              'Opportunity' => ['view', 'list']
+              'Opportunities' => ['view', 'list']
           ]
       ],
       'sidebarWidgets' => [
@@ -150,7 +150,7 @@ array(
           [
               'type' => 'history-timeline',
               'acls' => [
-                  'Opportunity' => ['view', 'list']
+                  'Opportunities' => ['view', 'list']
               ]
           ],
       ],
