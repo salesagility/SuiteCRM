@@ -43,9 +43,9 @@
  */
 -->
 <!-- BEGIN: main -->
-<div class="dashletPanelMenu" style="width: 500px; margin: 20px auto;">
+<div class="dashletPanelMenu">
 <div class="hd"><div class="tl"></div><div class="hd-center"></div><div class="tr"></div></div>
-<div class="bd" style="padding-top: 0px; padding-bottom: 0;">
+<div class="bd">
 <div class="ml"></div>
 <div class="bd-center">
 <form name="EditView" method="POST" action="index.php?module=Users&action=SaveTimezone&SaveTimezone=True">
@@ -54,12 +54,12 @@
 	<input type="hidden" name="action" value="SaveTimezone">
 	<input type="hidden" name="SaveTimezone" value="true">
 
-<table class="subMenuTD" style="padding: 8px; border: 2px solid #999; background-color: #fff;" cellpadding="0" cellspacing="2" border="0" align="center" width="440">
+<table class="subMenuTD" cellpadding="0" cellspacing="2" border="0" align="center" width="440">
 	<tr>
 		<td colspan="2" width="100%"></td>
 	</tr>
 	<tr>
-		<td colspan="2" width="100%" style="font-size: 12px; padding-bottom: 5px;">
+		<td class="timezone-content" colspan="2" width="100%">
 			<table width="100%" border="0">
 			<tr>
 				<td colspan="2"><span>{$MOD.LBL_PICK_TZ_DESCRIPTION}</span></td>

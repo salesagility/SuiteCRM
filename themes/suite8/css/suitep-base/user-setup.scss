@@ -1,0 +1,39 @@
+.view-module-Home {
+    .dashletPanelMenu {
+        margin: 13em auto;
+        table.subMenuTD {
+            border: 1px solid lightgrey;
+            background: #fff;
+            td.timezone-content {
+                padding: 1em;
+                font-size: 12px;                
+            }
+            @media (max-width: 750px) {
+                max-width: 24em;
+            }
+        }
+        .button {
+            background-color: $nepal-grey;
+            border-radius: 0.2em;
+            font-weight: bold;
+            height: 2.2em;
+            line-height: 1em;
+            letter-spacing: 0.05em;
+            padding: 0.3em 1em;
+            text-transform: capitalize;
+            margin-left: 1em;
+            &:hover {
+                background: $pale-blue;
+            }
+            @media (max-width: 750px) {
+                margin-left: 0;
+                margin-top: 1em;
+            }
+        }
+    }
+    select {
+        background: url($select-edit-background-url) no-repeat right;
+        background-size: 25px 11px;
+        border-color: $bright-grey;
+    }
+}
