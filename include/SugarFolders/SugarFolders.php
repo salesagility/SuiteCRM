@@ -695,6 +695,29 @@ class SugarFolder
             return false;
         }
 
+        /*
+        Fix issue #9192 - Duplicating rows for folders_rel
+        First check if a row with the same data already exists
+        If so, return false
+        */
+
+        $q = "SELECT id FROM folders_rel WHERE".
+            " folder_id = ".$this->db->quoted($this->id).
+            " AND polymorphic_module = ".$this->db->quoted($bean->module_dir).
+            " AND polymorphic_id = ".$this->db->quoted($bean->id).
+            " AND deleted = 0";
+
+        $result = $this->db->fetchByAssoc($this->db->query($q));
+        if ($result === false){
+            $GLOBALS['log']->debug("Error in query to check for existing email folders");
+            return false;
+        }
+
+        if($result) {
+            $GLOBALS['log']->debug("*** FOLDERS: addBean() is trying to create an already existing relationship");
+            return false;
+        }
+        
         $guid = create_guid();
 
         $query = "INSERT INTO folders_rel " .
