@@ -173,30 +173,21 @@ div#searchResults {
   border-collapse: collapse;
 }
 
-#create_invitee_as_lead {
-  font-size: $page-font-size;
-  background-color: $danger-btn-bg;
-  color: $default-btn-color;
-  padding: 0 10px;
-  margin: 4px;
-  border: 1px solid transparent;
-  border-radius: $border-radius-base;
-  line-height: $button-line-height;
-  height: $button-line-height;
-  text-transform: uppercase;
-}
-
-#create_invitee_as_contact {
-  font-size: $page-font-size;
-  background-color: $danger-btn-bg;
-  color: $default-btn-color;
-  padding: 0 10px;
-  margin: 4px;
-  border: 1px solid transparent;
-  border-radius: $border-radius-base;
-  line-height: $button-line-height;
-  height: $button-line-height;
-  text-transform: uppercase;
+#create_invitee_as_lead, #create_invitee_as_contact {
+  margin: 0.2em;
+  font-weight: bold;
+  height: 2.2em;
+  line-height: 1.1em;
+  background-color: rgb(147, 164, 179);
+  text-transform: capitalize; 
+  border-radius: 0.2em;
+  padding: 0.3em 1em;
+  letter-spacing: 0.05em;
+  border: none;
+  color: $white;
+  &:hover {
+      background: $btn-hover-bg-color;
+  }
 }
 
 #create-invitee-edit td {
@@ -205,16 +196,20 @@ div#searchResults {
 }
 
 #create-invitee-edit button {
-  font-size: $page-font-size;
-  background-color: $danger-btn-bg;
-  color: $default-btn-color;
-  padding: 0 10px;
-  margin: 4px;
-  border: 1px solid transparent;
-  border-radius: $border-radius-base;
-  line-height: $button-line-height;
-  height: $button-line-height;
-  text-transform: uppercase;
+  margin: 0.2em;
+  font-weight: bold;
+  height: 2.2em;
+  line-height: 1.1em;
+  background-color: rgb(147, 164, 179);
+  text-transform: capitalize; 
+  border-radius: 0.2em;
+  padding: 0.3em 1em;
+  letter-spacing: 0.05em;
+  border: none;
+  color: $white;
+  &:hover {
+      background: $btn-hover-bg-color;
+  }
 }
 
 /** add invitees search **/
@@ -235,7 +230,7 @@ div#searchResults {
   background-color: $panel-bg;
   color: $main-font-color;
   padding: 20px 20px 10px 20px;
-  margin-top: 5px;
+  margin-top: 1em;
   border: 1px solid $panel-border-bg;
   border-radius: $border-radius-base;
   text-align: left;
