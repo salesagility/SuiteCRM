@@ -241,7 +241,8 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
 
         $meeting->date_start = '2016-02-11 17:30:00';
         $meeting->date_end = '2016-02-11 17:30:00';
-        $meeting->sentAssignmentNotifications = false;
+        $meeting->sentAssignmentNotifications = [];
+        $meeting->sentAssignmentNotifications[] = $notify_user->id;
 
         $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();
