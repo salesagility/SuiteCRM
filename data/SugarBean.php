@@ -420,6 +420,12 @@ class SugarBean
     public $createdAuditRecords;
 
     /**
+     * Keeps track of emails sent to notify_user ids to avoid duplicate emails
+     * @var array $sentAssignmentNotifications
+     */
+    public $sentAssignmentNotifications = array();
+
+    /**
      * SugarBean constructor.
      * Performs following tasks:
      *
@@ -3187,7 +3193,7 @@ class SugarBean
     {
         global $current_user;
 
-        if ((($this->object_name == 'Meeting' || $this->object_name == 'Call') || $notify_user->receive_notifications) && !$this->sentAssignmentNotifications) {
+        if ((($this->object_name == 'Meeting' || $this->object_name == 'Call') || $notify_user->receive_notifications) && !in_array($notify_user->id, $this->sentAssignmentNotifications, true)) {
             $sendToEmail = $notify_user->emailAddress->getPrimaryAddress($notify_user);
             $sendEmail = true;
             if (empty($sendToEmail)) {
@@ -3252,7 +3258,7 @@ class SugarBean
                     $GLOBALS['log']->fatal("Notifications: error sending e-mail (method: {$notify_mail->Mailer}), " .
                         "(error: {$notify_mail->ErrorInfo})");
                 } else {
-                    $this->sentAssignmentNotifications = true;
+                    $this->sentAssignmentNotifications[] = $notify_user->id;
                     $GLOBALS['log']->info("Notifications: e-mail successfully sent");
                 }
             }
