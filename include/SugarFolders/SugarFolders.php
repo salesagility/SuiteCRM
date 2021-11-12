@@ -771,7 +771,7 @@ class SugarFolder
         $secureReturn = [];
 
         foreach ($return as $item) {
-            if ($item->isgroup === 1 || $item['created_by'] === $user->id || is_admin($user)) {
+            if ($item['is_group'] == 1 || $item['created_by'] === $user->id || is_admin($user)) {
                 $secureReturn[] = $item;
             }
         }
@@ -1405,6 +1405,8 @@ class SugarFolder
      */
     public function retrieve($id)
     {
+        if (empty($id)) return false;
+        
         $query = "SELECT * FROM folders WHERE id = " . $this->db->quoted($id) . " AND deleted = 0";
         $r = $this->db->query($query);
         $a = $this->db->fetchByAssoc($r);
@@ -1417,7 +1419,7 @@ class SugarFolder
                 $this->$k = $v;
             }
 
-            $new_with_id  = false;
+            $this->new_with_id  = false;
             return true;
         }
 
