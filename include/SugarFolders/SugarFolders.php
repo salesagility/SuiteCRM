@@ -96,6 +96,12 @@ class SugarFolder
 
 
     // Public attributes
+
+    /**
+     * Unique object identifier
+     *
+     * @var string
+     */
     public $id;
     public $name;
     public $parent_folder;
@@ -108,11 +114,31 @@ class SugarFolder
     public $modified_by;
     public $date_created;
     public $date_modified;
+
+    /**
+     * true if this bean has been deleted, false otherwise.
+     *
+     * @var BOOL
+     */
     public $deleted;
     public $folder_type;
 
+    /**
+     * A pointer to the database object
+     *
+     * @var DBManager
+     */
     public $db;
-    public $new_with_id = true;
+
+    /**
+     * When creating a folder, you can specify a value in the id column as
+     * long as that value is unique.  During save, if the system finds an
+     * id, it assumes it is an update.  Setting new_with_id to true will
+     * make sure the system performs an insert instead of an update.
+     *
+     * @var bool -- default false
+     */
+    public $new_with_id = false;
 
     // Core queries
     public $core;
@@ -1253,10 +1279,14 @@ class SugarFolder
     {
         $this->dynamic_query = $this->db->quote($this->dynamic_query);
 
-        if ((!empty($this->id) && $this->new_with_id == false) || (empty($this->id) && $this->new_with_id == true)) {
-            if (empty($this->id) && $this->new_with_id == true) {
-                $guid = create_guid();
-                $this->id = $guid;
+        $isUpdate = true;
+        if (empty($this->id) || $this->new_with_id) {
+            $isUpdate = false;
+        }
+
+        if (!$isUpdate) {
+            if (!$this->new_with_id) {
+                $this->id = create_guid();
             }
 
             $query = "INSERT INTO folders (id, name, folder_type, parent_folder, has_child, is_group, " .
@@ -1277,10 +1307,6 @@ class SugarFolder
                 // create default subscription
                 $this->addSubscriptionsToGroupFolder();
             }
-
-            // if parent_id is set, update parent's has_child flag
-            $query3 = "UPDATE folders SET has_child = 1 WHERE id = " . $this->db->quoted($this->parent_folder);
-            $r3 = $this->db->query($query3);
         } else {
             $query = "UPDATE folders SET " .
                 "name = " . $this->db->quoted($this->name) . ", " .
@@ -1289,6 +1315,12 @@ class SugarFolder
                 "assign_to_id = " . $this->db->quoted($this->assign_to_id) . ", " .
                 "modified_by = " . $this->db->quoted($this->currentUser->id) . " " .
                 "WHERE id = " . $this->db->quoted($this->id);
+        }
+
+        // If parent_id is set, update parent's has_child flag
+        if (!empty($this->parent_folder)) {
+            $query3 = "UPDATE folders SET has_child = 1 WHERE id = " . $this->db->quoted($this->parent_folder);
+            $this->db->query($query3);
         }
 
         return $this->db->query($query, true);
@@ -1417,7 +1449,7 @@ class SugarFolder
                 $this->$k = $v;
             }
 
-            $new_with_id  = false;
+            $this->new_with_id  = false;
             return true;
         }
 

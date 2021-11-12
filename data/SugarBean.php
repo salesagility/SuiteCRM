@@ -2319,13 +2319,11 @@ class SugarBean
         global $current_user, $action;
 
         $isUpdate = true;
-        if (empty($this->id)) {
+        
+        if (empty($this->id) || $this->new_with_id) {
             $isUpdate = false;
         }
-
-        if ($this->new_with_id) {
-            $isUpdate = false;
-        }
+        
         if (empty($this->date_modified) || $this->update_date_modified) {
             $this->date_modified = $GLOBALS['timedate']->nowDb();
         }
