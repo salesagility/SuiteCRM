@@ -411,7 +411,7 @@ class actionSendEmail extends actionBase
             if ($bean_arr['type'] == 'relate') {
                 if (isset($bean_arr['module']) &&  $bean_arr['module'] != '' && isset($bean_arr['id_name']) &&  $bean_arr['id_name'] != '' && $bean_arr['module'] != 'EmailAddress') {
                     $idName = $bean_arr['id_name'];
-                    if (isset($bean->field_defs[$idName]) && $bean->field_defs[$idName]['source'] != 'non-db') {
+                    if (isset($bean->field_defs[$idName]) && isset($bean->field_defs[$idName]['source']) && $bean->field_defs[$idName]['source'] != 'non-db') {
                         if (!isset($object_arr[$bean_arr['module']])) {
                             $object_arr[$bean_arr['module']] = $bean->$idName;
                         }
