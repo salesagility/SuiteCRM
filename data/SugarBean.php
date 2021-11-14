@@ -2412,7 +2412,7 @@ class SugarBean
             $this->track_view($current_user->id, $this->module_dir, 'save');
         }
 
-        $this->call_custom_logic('after_save', '');
+        $this->call_custom_logic('after_save');
 
         $this->auditBean($isUpdate);
 
@@ -3072,7 +3072,7 @@ class SugarBean
      * @param string $event
      * @param array $arguments
      */
-    public function call_custom_logic($event, $arguments = null)
+    public function call_custom_logic($event, $arguments = array())
     {
         if (!isset($this->processed) || !$this->processed) {
             //add some logic to ensure we do not get into an infinite loop
