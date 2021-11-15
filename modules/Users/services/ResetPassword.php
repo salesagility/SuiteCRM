@@ -214,9 +214,10 @@ class ResetPassword
     {
         global $timedate;
         $guid = create_guid();
+        $userId = $usr->id ?? '';
         $url = $GLOBALS['sugar_config']['site_url'] . "/index.php?entryPoint=Changenewpassword&guid=$guid";
         $time_now = TimeDate::getInstance()->nowDb();
-        $q = "INSERT INTO users_password_link (id, username, date_generated) VALUES('" . $guid . "','" . $username . "','" . $time_now . "') ";
+        $q = "INSERT INTO users_password_link (id, username, date_generated, user_id) VALUES('" . $guid . "','" . $username . "','" . $time_now . "','" . $userId . "') ";
         $usr->db->query($q);
 
         return $url;
