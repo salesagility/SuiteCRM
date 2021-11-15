@@ -45,11 +45,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require __DIR__ . '/../../config.php';
 
 global $current_language;
+global $mod_strings;
 
 if (file_exists(__DIR__ . '/../language/' . $current_language . '.lang.php')) {
-    require_once __DIR__ . '/../language/' . $current_language . '.lang.php';
+    require __DIR__ . '/../language/' . $current_language . '.lang.php';
 } else {
-    require_once __DIR__ . '/../language/en_us.lang.php';
+    require __DIR__ . '/../language/en_us.lang.php';
 }
 
 global $sugar_config;
