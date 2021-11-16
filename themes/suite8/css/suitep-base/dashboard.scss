@@ -867,6 +867,9 @@ table #dashletPanel {
       }
     }
   }
+  .list tr th {
+    color: $midnight-blue;
+  }
 }
 
 #dashboard #tab-actions ul.dropdown-menu li {
@@ -899,6 +902,11 @@ table #dashletPanel {
   .dashletPanel {
     .bd {
       overflow-x: auto;
-    }    
+    }   
+    .header-title {
+      color: $white;
+      white-space: nowrap;
+      width: 100%;
+    } 
   }
 }  
