@@ -960,6 +960,10 @@ abstract class DBManager
                 $value['type'] = 'index';
             }
 
+            if (isset($value['fields'])) {
+                $value['fields'] = $this->removeIndexLimit($value['fields']);
+            }
+
             if (!isset($compareIndices[$name])) {
                 //First check if an index exists that doesn't match our name, if so, try to rename it
                 $found = false;
@@ -4113,5 +4117,14 @@ abstract class DBManager
     public function removeLineBreaks($sql)
     {
         return trim(str_replace(array("\r", "\n"), " ", $sql));
+    }
+
+    /**
+     * @param $fields
+     * @return string|string[]|null
+     */
+    protected function removeIndexLimit($fields)
+    {
+        return $fields;
     }
 }
