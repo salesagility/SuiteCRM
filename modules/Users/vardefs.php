@@ -763,8 +763,8 @@ $dictionary['User'] = array(
                 'user_name',
                 'is_group',
                 'status',
-                'last_name',
-                'first_name',
+                'last_name (30)',
+                'first_name (30)',
                 'id'
             )
         ),
