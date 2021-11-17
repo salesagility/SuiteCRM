@@ -62,12 +62,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
         "vardefs" =>         array("section" => "vardefs",	      "extdir" => "Vardefs",    	"file" => 'vardefs.ext.php'),
         "jsgroupings" =>     array("section" => "jsgroups",	      "extdir" => "JSGroupings",    "file" => 'jsgroups.ext.php'),
         "aow" =>     		 array("section" => "aow_actions",	  "extdir" => "Actions",		"file" => 'actions.ext.php', "module" => "AOW_Actions"),
-        "pdf" => [
-            "section" => "pdfs",
-            "extdir" => "PDF",
-            "file" => 'pdfs.ext.php',
-            "module" => "application"
-        ],
+        "pdf" =>     		 array("section" => "pdfs",	          "extdir" => "PDF",		    "file" => 'pdfs.ext.php', "module" => "application"),
 );
 if (file_exists("custom/application/Ext/Extensions/extensions.ext.php")) {
     include("custom/application/Ext/Extensions/extensions.ext.php");

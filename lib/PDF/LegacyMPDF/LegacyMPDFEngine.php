@@ -37,7 +37,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\PDF\MPDF;
+namespace SuiteCRM\PDF\LegacyMPDF;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -49,8 +49,8 @@ use SuiteCRM\PDF\PDFEngine;
 require_once __DIR__ . '/../../../modules/AOS_PDF_Templates/PDF_Lib/mpdf.php';
 
 /**
- * Class MPDFEngine
- * @package SuiteCRM\PDF\MPDF
+ * Class LegacyMPDFEngine
+ * @package SuiteCRM\PDF\LegacyMPDF
  */
 class LegacyMPDFEngine extends PDFEngine
 {
