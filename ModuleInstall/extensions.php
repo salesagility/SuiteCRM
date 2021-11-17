@@ -67,12 +67,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
         "filteroperatormap" =>   array("section" => "filter_operator_map","extdir" => "FilterOperatorMap",	"file" => 'filter_operator_map.ext.php'),
         "filtermappers" =>   array("section" => "filter_mappers","extdir" => "FilterMappers",	"file" => 'filter_mappers.ext.php'),
         "classicviewroutingexclusions" =>   array("section" => "classicview_routing_exclusions","extdir" => "ClassicViewRoutingExclusions",	"file" => 'classicview_routing_exclusions.ext.php'),
-        "pdf" => [
-            "section" => "pdfs",
-            "extdir" => "PDF",
-            "file" => 'pdfs.ext.php',
-            "module" => "application"
-        ],
+        "pdf" =>     		 array("section" => "pdfs",	          "extdir" => "PDF",		    "file" => 'pdfs.ext.php', "module" => "application"),
 );
 if (file_exists("custom/application/Ext/Extensions/extensions.ext.php")) {
     include("custom/application/Ext/Extensions/extensions.ext.php");
