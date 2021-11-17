@@ -102,7 +102,7 @@ form
 <td>
 <table cellpadding="0"  cellspacing="0" border="0" align="center">
 <tr>
-<td style="padding-bottom: 10px;" >
+<td style="padding-bottom: 10px;text-align:center;" >
 <img src="{$sugar_md}" alt="SuiteCRM" /></td>
 </tr>
 <tr>
@@ -110,10 +110,10 @@ form
 
 		<table cellpadding="0" cellspacing="2" border="0" align="center" width="100%" class="edit view">
 		<tr>
-			<td colspan="2" width="100%" style="font-size: 12px; padding-bottom: 5px; font-weight: normal;">{$INSTRUCTION}</td>
+			<td colspan="2" width="100%" style="padding-bottom: 5px; font-size: 14px;text-align: center;">{$INSTRUCTION}</td>
 		</tr>
 		<tr>
-			<td colspan="2" width="100%" style="font-size: 12px; padding-bottom: 5px; font-weight: normal; color: red;">{$ERRORS}</td>
+			<td colspan="2" width="100%" style="padding-bottom: 5px; font-weight: normal; color: red;">{$ERRORS}</td>
 		</tr>
 			<input type="hidden" name="entryPoint" value="{$ENTRY_POINT}" />
 			<input type='hidden' name='action' value="{$ACTION}" />
@@ -132,10 +132,14 @@ form
 			<input type="hidden" name="record" value="{$ID}" />
 			<input type="hidden" name="user_name" value="{$USER_NAME}" />
 			<input type='hidden' name='saveConfig' value='0' />
+		{if !empty($EXPIRATION_TYPE)}
 		<tr>
-			<td  colspan='2'><span id='post_error' class="error">{$EXPIRATION_TYPE}&nbsp;</span></td>
+			<td colspan='2' style='text-align: center; padding-bottom: 0.5em;'>
+				<span id='post_error' class="error">{$EXPIRATION_TYPE}&nbsp;</span>
+			</td>
 		</tr>
-		
+		{/if}
+
 		<tr>
 		{if $OLD_PASSWORD_FIELD == '' &&  $USERNAME_FIELD == '' }
 		<td  width="30%"></td><td></td>
@@ -158,8 +162,8 @@ form
 		</tr>
 		<tr>
 			<td>&nbsp;</td>
-			<td>
-			{$SUBMIT_BUTTON}
+			<td style="padding-top: 1em;" class='login-btn'>
+				{$SUBMIT_BUTTON}
 			</td>		
 		</tr>
 		</table>
