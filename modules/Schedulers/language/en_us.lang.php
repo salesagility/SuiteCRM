@@ -52,7 +52,6 @@ $mod_strings = array(
     'LBL_OOTB_PRUNE' => 'Prune Database on 1st of Month',
     'LBL_OOTB_TRACKER' => 'Prune Tracker Tables',
     'LBL_OOTB_SUITEFEEDS' => 'Prune SuiteCRM Feed Tables',
-    'LBL_OOTB_OPTIMISE_INDEX' => 'Optimise AOD Index',
     'LBL_OOTB_SEND_EMAIL_REMINDERS' => 'Run Email Reminder Notifications',
     'LBL_OOTB_CLEANUP_QUEUE' => 'Clean Jobs Queue',
     'LBL_OOTB_REMOVE_DOCUMENTS_FROM_FS' => 'Removal of documents from filesystem',
@@ -151,8 +150,6 @@ $mod_strings = array(
     'LBL_CLEANJOBQUEUE' => 'Cleanup Job Queue',
     'LBL_REMOVEDOCUMENTSFROMFS' => 'Removal of documents from filesystem',
 
-    'LBL_AODOPTIMISEINDEX' => 'Optimise Advanced OpenDiscovery Index',
-    'LBL_AODINDEXUNINDEXED' => 'Index unindexed documents',
     'LBL_POLLMONITOREDINBOXESAOP' => 'AOP Poll Monitored Inboxes',
     'LBL_AORRUNSCHEDULEDREPORTS' => 'Run scheduled reports',
     'LBL_PROCESSAOW_WORKFLOW' => 'Process AOW Workflow',

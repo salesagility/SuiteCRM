@@ -59,7 +59,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * Class BasicAndAodEngine
+ * Class BasicSearchEngine
  */
 class BasicSearchEngine extends SearchEngine
 {

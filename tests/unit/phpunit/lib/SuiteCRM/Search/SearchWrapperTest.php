@@ -101,12 +101,11 @@ class SearchWrapperTest extends SearchTestAbstract
         $expected = [
             0 => 'ElasticSearchEngine',
             1 => 'BasicSearchEngine',
-            2 => 'LuceneSearchEngine',
-            3 => 'VeryFakeEngine',
-            4 => 'MockSearch',
+            2 => 'VeryFakeEngine',
+            3 => 'MockSearch',
+            4 => 'BadMockSearch',
             5 => 'BadMockSearch',
-            6 => 'BadMockSearch',
-            7 => 'MockSearch',
+            6 => 'MockSearch',
         ];
         $actual = SearchWrapper::getEngines();
 

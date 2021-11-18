@@ -65,13 +65,11 @@ class View extends AbstractView
         $this->smarty->assign('selectedEngine', SearchWrapper::getDefaultEngine());
 
         $legacyEngines = [
-            'BasicSearchEngine' => translate('LBL_BASIC_SEARCH_ENGINE'),
-            'BasicAndAodEngine' => translate('LBL_BASIC_AND_AOD_ENGINE'),
+            'BasicSearchEngine' => translate('LBL_BASIC_SEARCH_ENGINE')
         ];
 
         $engines = $this->getEngines();
         $engines = array_merge($legacyEngines, $engines);
-        unset($engines['LuceneSearchEngine']);
 
         $this->smarty->assign('engines', [
             translate('LBL_SEARCH_WRAPPER_ENGINES') => $engines

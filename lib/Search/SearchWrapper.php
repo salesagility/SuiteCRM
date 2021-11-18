@@ -43,7 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use SuiteCRM\Search\AOD\LuceneSearchEngine;
 use SuiteCRM\Search\BasicSearch\BasicSearchEngine;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchEngine;
 use SuiteCRM\Search\Exceptions\SearchEngineNotFoundException;
@@ -68,11 +67,6 @@ class SearchWrapper
             'name' => 'BasicSearchEngine',
             'FQN' => BasicSearchEngine::class,
             'filepath' => 'lib/Search/BasicSearch/BasicSearchEngine.php'
-        ],
-        'LuceneSearchEngine' => [
-            'name' => 'LuceneSearchEngine',
-            'FQN' => LuceneSearchEngine::class,
-            'filepath' => 'lib/Search/AOD/LuceneSearchEngine.php'
         ],
     ];
 

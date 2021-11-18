@@ -231,14 +231,7 @@ class SearchQuery implements JsonSerializable
             $defaultEngine = $sugar_config['search']['defaultEngine'];
 
             if ($defaultEngine === 'BasicAndAodEngine') {
-                $luceneSearch = !empty($sugar_config['aod']['enable_aod']);
-
-                if (array_key_exists('showGSDiv', $_REQUEST) || !empty($_REQUEST['search_fallback'])) {
-                    // Search from vanilla sugar search or request for the same
-                    $luceneSearch = false;
-                }
-
-                return $luceneSearch ? 'LuceneSearchEngine' : 'BasicSearchEngine';
+                return 'BasicSearchEngine';
             }
 
             return (string)$sugar_config['search']['defaultEngine'];

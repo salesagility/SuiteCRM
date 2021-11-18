@@ -904,30 +904,6 @@ class Scheduler extends SugarBean
         $sched7->catch_up           = '0';
         $sched7->save();
 
-        $sched8 = BeanFactory::newBean('Schedulers');
-        $sched8->name               = $mod_strings['LBL_OOTB_LUCENE_INDEX'];
-        $sched8->job                = 'function::aodIndexUnindexed';
-        $sched8->date_time_start    = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
-        $sched8->date_time_end      = null;
-        $sched8->job_interval       = "0::0::*::*::*";
-        $sched8->status             = 'Active';
-        $sched8->created_by         = '1';
-        $sched8->modified_user_id   = '1';
-        $sched8->catch_up           = '0';
-        $sched8->save();
-
-        $sched9 = BeanFactory::newBean('Schedulers');
-        $sched9->name               = $mod_strings['LBL_OOTB_OPTIMISE_INDEX'];
-        $sched9->job                = 'function::aodOptimiseIndex';
-        $sched9->date_time_start    = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
-        $sched9->date_time_end      = null;
-        $sched9->job_interval       = "0::*/3::*::*::*";
-        $sched9->status             = 'Active';
-        $sched9->created_by         = '1';
-        $sched9->modified_user_id   = '1';
-        $sched9->catch_up           = '0';
-        $sched9->save();
-
         $sched12 = BeanFactory::newBean('Schedulers');
         $sched12->name               = $mod_strings['LBL_OOTB_SEND_EMAIL_REMINDERS'];
         $sched12->job                = 'function::sendEmailReminders';

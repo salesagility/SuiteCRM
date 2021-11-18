@@ -874,7 +874,6 @@ $mod_strings = array(
     'LBL_AOS_SETTINGS' => 'Sales Module Settings',
     'LBL_AOS_DAYS' => 'days',
     'LBL_CHANGE_SETTINGS' => 'Change settings for Quotes, Contracts and Invoices',
-    'LBL_CHANGE_SETTINGS_AOD' => 'Change settings for Advanced OpenDiscovery',
     'LBL_CHANGE_SETTINGS_AOP' => 'Change settings for Cases and the Cases Portal',
 
     'LBL_MANAGE_SECURITYGROUPS_TITLE' => 'Security Suite Group Management',
@@ -965,7 +964,6 @@ $mod_strings = array(
     // Search Engines Translations
     'LBL_SEARCH_WRAPPER_ENGINES' => 'Search Engines',
     'LBL_BASIC_SEARCH_ENGINE' => 'Basic Search',
-    'LBL_BASIC_AND_AOD_ENGINE' => 'Basic + Advanced Search',
     'LBL_ELASTIC_SEARCH_ENGINE' => 'Elasticsearch Engine',
     'LBL_SIMPLE_SQL_SEARCH_ENGINE' => 'Simple SQL Search Engine',
 
