@@ -387,6 +387,10 @@ class FP_eventsController extends SugarController
         $invite_count = 0; //used to count the number of emails sent
         $error_count = 0; //used to count the number of failed email attempts
 
+        $acceptLabel = $mod_strings['LBL_ACCEPT_LINK'];
+        $declineLabel = $mod_strings['LBL_DECLINE_LINK'];
+        $event_mod_strings = $mod_strings;
+
 
         //loop through related contacts
         foreach ($event->fp_events_contacts->getBeans() as $contact) {
@@ -398,8 +402,8 @@ class FP_eventsController extends SugarController
             if ($status == null || $status == '' || $status == 'Not Invited') {
                 $invite_count ++;
                 //set email links
-                $event->link = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$contact->id."&type=c&response=accept'>{$mod_strings['LBL_ACCEPT_LINK']}</a>";
-                $event->link_declined = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$contact->id."&type=c&response=decline'>{$mod_strings['LBL_DECLINE_LINK']}</a>";
+                $event->link = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$contact->id."&type=c&response=accept'>{$acceptLabel}</a>";
+                $event->link_declined = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$contact->id."&type=c&response=decline'>{$declineLabel}</a>";
 
                 //Get the TO name and e-mail address for the message
                 $rcpt_name = $contact->first_name . ' ' . $contact->last_name;
@@ -411,7 +415,7 @@ class FP_eventsController extends SugarController
 
                 //check email template is set, if not return error
                 if ($emailTemp->id == '') {
-                    SugarApplication::appendErrorMessage($mod_strings['LBL_ERROR_MSG_5']);
+                    SugarApplication::appendErrorMessage($event_mod_strings['LBL_ERROR_MSG_5']);
                     SugarApplication::redirect("index.php?module=FP_events&return_module=FP_events&action=DetailView&record=".$event->id);
                     die();
                 }
@@ -462,8 +466,8 @@ class FP_eventsController extends SugarController
                 $invite_count ++;
 
                 //set email links
-                $event->link = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$target->id."&type=t&response=accept'>{$mod_strings['LBL_ACCEPT_LINK']}</a>";
-                $event->link_declined = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$target->id."&type=t&response=decline'>{$mod_strings['LBL_DECLINE_LINK']}</a>";
+                $event->link = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$target->id."&type=t&response=accept'>{$acceptLabel}</a>";
+                $event->link_declined = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$target->id."&type=t&response=decline'>{$declineLabel}</a>";
 
                 //Get the TO name and e-mail address for the message
                 $rcpt_name = $target->first_name . ' ' . $target->last_name;
@@ -518,8 +522,8 @@ class FP_eventsController extends SugarController
             if ($status == null || $status == '' || $status == 'Not Invited') {
                 $invite_count ++;
                 //set email links
-                $event->link = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$lead->id."&type=l&response=accept'>{$mod_strings['LBL_ACCEPT_LINK']}</a>";
-                $event->link_declined = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$lead->id."&type=l&response=decline'>{$mod_strings['LBL_DECLINE_LINK']}</a>";
+                $event->link = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$lead->id."&type=l&response=accept'>{$acceptLabel}</a>";
+                $event->link_declined = "<a href='".$sugar_config['site_url']."/index.php?entryPoint=responseEntryPoint&event=".$event->id."&delegate=".$lead->id."&type=l&response=decline'>{$declineLabel}</a>";
 
                 //Get the TO name and e-mail address for the message
                 $rcpt_name = $lead->first_name . ' ' . $lead->last_name;
@@ -565,26 +569,26 @@ class FP_eventsController extends SugarController
         }
         //Redirect with error message if all linked contacts have already been invited
         if ($invite_count == 0) {
-            SugarApplication::appendErrorMessage($mod_strings['LBL_ERROR_MSG_1']);
+            SugarApplication::appendErrorMessage($event_mod_strings['LBL_ERROR_MSG_1']);
             SugarApplication::redirect("index.php?module=FP_events&return_module=FP_events&action=DetailView&record=".$event->id);
         }
         //Redirect if all emails fail to send
         if ($error_count == $delegate_count) {
             $_SESSION['user_error_message'] = array();//clear the error message array
-            SugarApplication::appendErrorMessage($mod_strings['LBL_ERROR_MSG_2'].$delegate_count);
+            SugarApplication::appendErrorMessage($event_mod_strings['LBL_ERROR_MSG_2'].$delegate_count);
             SugarApplication::redirect("index.php?module=FP_events&return_module=FP_events&action=DetailView&record=".$event->id);
         } elseif ($error_count > 0 && $error_count <= 10) {//redirect with failed email count.
             $_SESSION['user_error_message'] = array();
-            SugarApplication::appendErrorMessage($error_count.$mod_strings['LBL_ERROR_MSG_4']);
+            SugarApplication::appendErrorMessage($error_count.$event_mod_strings['LBL_ERROR_MSG_4']);
             SugarApplication::redirect("index.php?module=FP_events&return_module=FP_events&action=DetailView&record=".$event->id);
         }
         // Redirect with error count if failed email attempts are greater than 10
         elseif ($error_count > 10) {
             $_SESSION['user_error_message'] = array();
-            SugarApplication::appendErrorMessage($mod_strings['LBL_ERROR_MSG_3']);
+            SugarApplication::appendErrorMessage($event_mod_strings['LBL_ERROR_MSG_3']);
             SugarApplication::redirect("index.php?module=FP_events&return_module=FP_events&action=DetailView&record=".$event->id);
         } else {
-            SugarApplication::appendErrorMessage($mod_strings['LBL_SUCCESS_MSG']);
+            SugarApplication::appendErrorMessage($event_mod_strings['LBL_SUCCESS_MSG']);
             SugarApplication::redirect("index.php?module=FP_events&return_module=FP_events&action=DetailView&record=".$event->id);
         }
     }
