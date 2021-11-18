@@ -2016,6 +2016,16 @@ EOQ;
     }
 
     /**
+     * Is user enabled
+     *
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return ($this->status !== 'Inactive') && ($this->employee_status === 'Active');
+    }
+
+    /**
      * Is this user a system wide admin
      *
      * @return bool
