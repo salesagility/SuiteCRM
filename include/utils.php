@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2020 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -1005,20 +1005,6 @@ function clean($string, $maxLength)
     $string = substr($string, 0, $maxLength);
 
     return escapeshellcmd($string);
-}
-
-/**
- * @param $string
- * @return string
- */
-function cleanCSV($string)
-{
-    $check = '/^[=@]/';
-    if (!is_numeric($string)) {
-        $check = '/^[=@+-]/';
-    }
-
-    return preg_replace($check, "", $string);
 }
 
 /**
@@ -2537,10 +2523,24 @@ function securexss($uncleanString)
         return $new;
     }
 
+    static $xss_cleanup = [
+        '&quot;' => '&#38;',
+        '"' => '&quot;',
+        "'" => '&#039;',
+        '<' => '&lt;',
+        '>' => '&gt;',
+        '`' => '&#96;'
+    ];
+
+    $uncleanString = preg_replace(array('/javascript:/i', '/\0/', '/javascript:/i'),
+        array('java script:', '', 'java script:'), $uncleanString);
+
+    $partialString = str_replace(array_keys($xss_cleanup), $xss_cleanup, $uncleanString);
+
     $antiXss = new AntiXSS();
     $antiXss->removeEvilAttributes(['style']);
 
-    return $antiXss->xss_clean($uncleanString);
+    return $antiXss->xss_clean($partialString);
 }
 
 function securexsskey($value, $die = true)

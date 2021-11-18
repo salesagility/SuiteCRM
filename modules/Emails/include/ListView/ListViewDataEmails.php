@@ -238,7 +238,9 @@ class ListViewDataEmails extends ListViewData
     {
         switch ($folder->getType()) {
             case "inbound":
-                $inboundEmail->mailbox = $inboundEmail->get_stored_options('mailbox');
+                // Use the mailbox associated with $folder rather than the option string
+                // Used in the IMAP connection string later
+                $inboundEmail->mailbox = $folder->getMailbox();
                 break;
 
             case "draft":
@@ -254,7 +256,7 @@ class ListViewDataEmails extends ListViewData
                 break;
 
             default:
-                $inboundEmail->mailbox = empty($folder->id) ? '' : $folder->mailbox;
+                $inboundEmail->mailbox = empty($folder->id) ? '' : $folder->getMailbox();
                 break;
         }
     }

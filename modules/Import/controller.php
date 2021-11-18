@@ -1,15 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,6 +37,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
 
@@ -94,7 +94,7 @@ class ImportController extends SugarController
             $GLOBALS['FOCUS'] = $this->bean;
         }
     }
-    
+
     public function action_index()
     {
         $this->action_Step1();
@@ -128,24 +128,33 @@ class ImportController extends SugarController
                 }
             }
         }
-        
+
         echo json_encode($results);
         sugar_cleanup(true);
     }
+
     public function action_RefreshMapping()
     {
         global $mod_strings;
-        require_once('modules/Import/sources/ImportFile.php');
-        require_once('modules/Import/views/view.confirm.php');
+        require_once __DIR__ . '/../../modules/Import/sources/ImportFile.php';
+        require_once __DIR__ . '/../../modules/Import/views/view.confirm.php';
         $v = new ImportViewConfirm();
         $fileName = $_REQUEST['importFile'];
+
+        if (isset($fileName) && strpos($fileName, '..') !== false) {
+            LoggerManager::getLogger()->security('Directory navigation attack denied');
+            return;
+        }
+
         $delim = $_REQUEST['delim'];
-        if ($delim == '\t') {
+
+        if ($delim === '\t') {
             $delim = "\t";
         }
+
         $enclosure = $_REQUEST['qualif'];
         $enclosure = html_entity_decode($enclosure, ENT_QUOTES);
-        $hasHeader = isset($_REQUEST['header']) && !empty($_REQUEST['header']) ? true : false;
+        $hasHeader = !empty($_REQUEST['header']);
 
         $importFile = new ImportFile($fileName, $delim, $enclosure, false);
         $importFile->setHeaderRow($hasHeader);
@@ -175,10 +184,10 @@ class ImportController extends SugarController
         $if->setHeaderRow($has_header);
         $lv = new ImportListView($if, array('offset'=> $offset), $tableID);
         $lv->display(false);
-        
+
         sugar_cleanup(true);
     }
-    
+
     public function action_Step1()
     {
         $fromAdminView = isset($_REQUEST['from_admin_wizard']) ? $_REQUEST['from_admin_wizard'] : false;
@@ -189,7 +198,7 @@ class ImportController extends SugarController
             $this->view = 'step2';
         }
     }
-    
+
     public function action_Step2()
     {
         $this->view = 'step2';
@@ -214,17 +223,17 @@ class ImportController extends SugarController
     {
         $this->view = 'step4';
     }
-    
+
     public function action_Last()
     {
         $this->view = 'last';
     }
-    
+
     public function action_Undo()
     {
         $this->view = 'undo';
     }
-    
+
     public function action_Error()
     {
         $this->view = 'error';
@@ -244,7 +253,7 @@ class ImportController extends SugarController
     {
         $this->view = 'extimport';
     }
-    
+
     public function action_GetControl()
     {
         echo getControl($_REQUEST['import_module'], $_REQUEST['field_name']);

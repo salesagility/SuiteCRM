@@ -1004,11 +1004,7 @@ class Email extends Basic
 
             if (isset($request['parent_type']) && !empty($request['parent_type']) &&
                 isset($request['parent_id']) && !empty($request['parent_id']) &&
-                ($request['parent_type'] == 'Accounts' ||
-                $request['parent_type'] == 'Contacts' ||
-                $request['parent_type'] == 'Leads' ||
-                $request['parent_type'] == 'Users' ||
-                $request['parent_type'] == 'Prospects')) {
+                in_array($request['parent_type'], ['Accounts', 'Cases', 'Contacts', 'Leads', 'Users', 'Prospects'])) {
                 if (isset($beanList[$request['parent_type']]) && !empty($beanList[$request['parent_type']])) {
                     $className = $beanList[$request['parent_type']];
                     if (isset($beanFiles[$className]) && !empty($beanFiles[$className])) {
@@ -1199,7 +1195,7 @@ class Email extends Basic
                         strlen($file)
                     ); // strip GUID	for PHPMailer class to name outbound file
 
-                    $mail->AddAttachment($fileLocation, $filename, 'base64', $this->email2GetMime($fileLocation));
+                    $mail->AddAttachment(stream_resolve_include_path($fileLocation), $filename, 'base64', $this->email2GetMime($fileLocation));
                     //$mail->AddAttachment($fileLocation, $filename, 'base64');
 
                     // only save attachments if we're archiving or drafting
@@ -1237,10 +1233,10 @@ class Email extends Basic
 
                     $filename = $docRev->filename;
                     $docGUID = preg_replace('/[^a-z0-9\-]/', "", $docRev->id);
-                    $fileLocation = "upload://{$docGUID}";
+                    $fileLocation = "upload/{$docGUID}";
                     $mime_type = $docRev->file_mime_type;
                     $mail->AddAttachment(
-                        $fileLocation,
+                        stream_resolve_include_path($fileLocation),
                         $locale->translateCharsetMIME(trim($filename), 'UTF-8', $OBCharset),
                         'base64',
                         $mime_type
@@ -1256,7 +1252,7 @@ class Email extends Basic
                         $note->name = $filename;
                         $note->filename = $filename;
                         $note->file_mime_type = $mime_type;
-                        $dest = "upload://{$note->id}";
+                        $dest = "upload/{$note->id}";
                         if (!copy($fileLocation, $dest)) {
                             $GLOBALS['log']->debug("EMAIL 2.0: could not copy SugarDocument revision file $fileLocation => $dest");
                         }
@@ -1278,10 +1274,10 @@ class Email extends Basic
                     if (!empty($note->id)) {
                         $filename = $note->filename;
                         $noteGUID = preg_replace('/[^a-z0-9\-]/', "", $note->id);
-                        $fileLocation = "upload://{$noteGUID}";
+                        $fileLocation = "upload/{$noteGUID}";
                         $mime_type = $note->file_mime_type;
                         if (!$note->embed_flag) {
-                            $mail->AddAttachment($fileLocation, $filename, 'base64', $mime_type);
+                            $mail->AddAttachment(stream_resolve_include_path($fileLocation), $filename, 'base64', $mime_type);
                             // only save attachments if we're archiving or drafting
                             if ((($this->type == 'draft') && !empty($this->id)) || (isset($request['saveToSugar']) && $request['saveToSugar'] == 1)) {
                                 if ($note->parent_id != $this->id) {
@@ -1301,7 +1297,7 @@ class Email extends Basic
                         ); // strip GUID	for PHPMailer class to name outbound file
 
                         $mail->AddAttachment(
-                            $fileLocation,
+                            stream_resolve_include_path($fileLocation),
                             $locale->translateCharsetMIME(trim($filename), 'UTF-8', $OBCharset),
                             'base64',
                             $this->email2GetMime($fileLocation)
@@ -1612,7 +1608,7 @@ class Email extends Basic
 
 
             $validator = new EmailFromValidator();
-            if (!$validator->isValid($this)) {
+            if (!defined('SUGARCRM_IS_INSTALLING') && !$validator->isValid($this)) {
                 $errors = $validator->getErrorsAsText();
                 $details = "Details:\n{$errors['messages']}\ncodes:{$errors['codes']}";
                 LoggerManager::getLogger()->error("Saving Email with invalid From name and/or Address. $details");
@@ -3044,7 +3040,7 @@ class Email extends Basic
                         $filename = $note->file->original_file_name;
                         $mime_type = $note->file->mime_type;
                     } else { // attachment coming from template/forward
-                        $file_location = "upload://{$note->id}";
+                        $file_location = "upload/{$note->id}";
                         // cn: bug 9723 - documents from EmailTemplates sent with Doc Name, not file name.
                         $filename = !empty($note->filename) ? $note->filename : $note->name;
                         $mime_type = $note->file_mime_type;
@@ -3053,7 +3049,7 @@ class Email extends Basic
                     $filePathName = $note->id;
                     // cn: bug 9723 - Emails with documents send GUID instead of Doc name
                     $filename = $note->getDocumentRevisionNameForDisplay();
-                    $file_location = "upload://$note->id";
+                    $file_location = "upload/$note->id";
                     $mime_type = $note->file_mime_type;
                 }
 
@@ -3072,7 +3068,7 @@ class Email extends Basic
                     }
                 }
                 $mail->AddAttachment(
-                    $file_location,
+                    stream_resolve_include_path($file_location),
                     $locale->translateCharsetMIME(trim($filename), 'UTF-8', $OBCharset),
                     'base64',
                     $mime_type

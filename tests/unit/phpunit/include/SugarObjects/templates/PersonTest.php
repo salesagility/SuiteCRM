@@ -52,6 +52,7 @@ class PersonTest extends SuitePHPUnitFrameworkTestCase
     {
         $person = BeanFactory::newBean('Contacts');
         $person->last_name = 'Smith';
+        $person->createdAuditRecords = false;
 
         // test valid basis
         $this->assertEquals(1, $person->setLawfulBasis('', ''));

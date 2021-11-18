@@ -1288,17 +1288,15 @@ function create_table_if_not_exist(&$focus)
 }
 
 
-
 function create_default_users()
 {
-    $db = DBManagerFactory::getInstance();
     global $setup_site_admin_password;
     global $setup_site_admin_user_name;
     global $create_default_user;
     global $sugar_config;
 
     require_once('install/UserDemoData.php');
-
+    
     //Create default admin user
     $user = BeanFactory::newBean('Users');
     $user->id = 1;
@@ -1310,11 +1308,9 @@ function create_default_users()
     $user->is_admin = true;
     $user->employee_status = 'Active';
     $user->user_hash = User::getPasswordHash($setup_site_admin_password);
-    $user->save();
-    //Bug#53793: Keep default current user in the global variable in order to store 'created_by' info as default user
-    //           while installation is proceed.
-    $GLOBALS['current_user'] = $user;
 
+    $GLOBALS['current_user'] = $user;
+    $GLOBALS['current_user']->save();
 
     if ($create_default_user) {
         $default_user = BeanFactory::newBean('Users');
