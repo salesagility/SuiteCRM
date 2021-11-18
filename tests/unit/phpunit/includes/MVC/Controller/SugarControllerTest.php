@@ -216,18 +216,6 @@ class SugarControllerTest extends SuitePHPUnitFrameworkTestCase
         DBManagerFactory::getInstance()->query($query);
     }
 
-    public function testaction_spot(): void
-    {
-        $SugarController = new SugarController();
-
-        // check with default value of attribute
-        self::assertEquals('classic', $SugarController->view);
-
-        // check for attribute value change on method execution.
-        $SugarController->action_spot();
-        self::assertEquals('spot', $SugarController->view);
-    }
-
     public function testgetActionFilename(): void
     {
         // check with an invalid value

@@ -68,7 +68,6 @@ class security_utilsTest extends SuitePHPUnitFrameworkTestCase
             'AOS_Quotes' => 'AOS_Quotes',
             'Documents' => 'Documents',
             'Emails' => 'Emails',
-            'Spots' => 'Spots',
             'Campaigns' => 'Campaigns',
             'Calls' => 'Calls',
             'Meetings' => 'Meetings',

@@ -306,7 +306,6 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
             'ACLRoles',
             'jjwg_Maps',
             'AOS_Product_Categories',
-            'Spots' => 'Spots',
             'SurveyQuestionOptions' => 'SurveyQuestionOptions',
             'SurveyQuestionResponses' => 'SurveyQuestionResponses',
             'SurveyQuestions' => 'SurveyQuestions',

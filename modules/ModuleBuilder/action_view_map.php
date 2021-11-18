@@ -71,7 +71,6 @@
     $action_view_map['dcajax'] = 'dcajax';
     $action_view_map['quick'] = 'quick';
     $action_view_map['quickcreate'] = 'quickcreate';
-    $action_view_map['spot'] = 'spot';
     $action_view_map['inlinefield'] = 'inlinefield';
     $action_view_map['inlinefieldsave'] = 'inlinefieldsave';
     $action_view_map['pluginlist'] = 'plugins';

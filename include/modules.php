@@ -86,8 +86,6 @@ $moduleList[] = 'Bugs';
 $moduleList[] = 'ResourceCalendar';
 $moduleList[] = 'AOBH_BusinessHours';
 
-$moduleList[] = 'Spots';
-
 // this list defines all of the module names and bean names in the app
 // to create a new module's bean class, add the bean definition here
 $beanList = [];
@@ -153,7 +151,6 @@ $beanList['EmailText'] = 'EmailText';
 $beanList['Relationships'] = 'Relationship';
 $beanList['Employees'] = 'Employee';
 
-$beanList['Spots'] = 'Spots';
 $beanList['AOBH_BusinessHours'] = 'AOBH_BusinessHours';
 
 // this list defines all of the files that contain the SugarBean class definitions from $beanList
@@ -222,7 +219,6 @@ $beanFiles['EmailText'] = 'modules/EmailText/EmailText.php';
 
 $beanFiles['Configurator'] = 'modules/Configurator/Configurator.php';
 
-$beanFiles['Spots'] = 'modules/Spots/Spots.php';
 $beanFiles['AOBH_BusinessHours'] = 'modules/AOBH_BusinessHours/AOBH_BusinessHours.php';
 
 

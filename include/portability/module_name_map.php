@@ -150,10 +150,6 @@ $module_name_map = [
         'frontend' => 'business-hours',
         'core' => 'BusinessHours'
     ],
-    'Spots' => [
-        'frontend' => 'spots',
-        'core' => 'Spots'
-    ],
     'SecurityGroups' => [
         'frontend' => 'security-groups',
         'core' => 'SecurityGroups'

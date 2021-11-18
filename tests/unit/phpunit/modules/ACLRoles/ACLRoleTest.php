@@ -152,7 +152,6 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
           'AOR_Reports',
           'AOR_Scheduled_Reports',
           'SecurityGroups',
-          'Spots',
           'SurveyQuestionOptions',
           'SurveyQuestionResponses',
           'SurveyQuestions',

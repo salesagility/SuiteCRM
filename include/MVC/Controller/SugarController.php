@@ -681,13 +681,6 @@ class SugarController
         $this->bean->save(!empty($this->bean->notify_on_save));
     }
 
-
-    public function action_spot()
-    {
-        $this->view = 'spot';
-    }
-
-
     /**
      * Specify what happens after the save has occurred.
      */

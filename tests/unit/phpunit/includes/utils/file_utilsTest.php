@@ -219,7 +219,6 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
             'Schedulers' => 'Schedulers',
             'SchedulersJobs' => 'SchedulersJobs',
             'SecurityGroups' => 'SecurityGroups',
-            'Spots' => 'Spots',
             'Studio' => 'Studio',
             'SugarFeed' => 'SugarFeed',
             'SurveyQuestionOptions' => 'SurveyQuestionOptions',
