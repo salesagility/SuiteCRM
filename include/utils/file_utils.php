@@ -479,3 +479,25 @@ function cleanDirName($name)
 {
     return str_replace(array("\\", "/", "."), "", $name);
 }
+
+/**
+ * Check if has valid file name
+ * @param string $fieldName
+ * @param string $value
+ * @return bool
+ */
+function hasValidFileName($fieldName, $value) {
+
+    if (empty($value)){
+        LoggerManager::getLogger()->error("Invalid filename for $fieldName : '$value'.");
+        return false;
+    }
+
+    $isValid = preg_match('/^[\w\-.]+(\.\w+)?$/', $value);
+    if ($isValid === false || $isValid < 1) {
+        LoggerManager::getLogger()->error("Invalid filename for $fieldName : '$value'.");
+        return false;
+    }
+
+    return true;
+}
