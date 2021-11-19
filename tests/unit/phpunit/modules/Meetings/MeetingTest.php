@@ -237,6 +237,8 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
 
     public function testsend_assignment_notifications(): void
     {
+        $notify_user = new User(1);
+        
         $meeting = BeanFactory::newBean('Meetings');
 
         $meeting->date_start = '2016-02-11 17:30:00';
@@ -246,9 +248,6 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
 
         $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();
-        $sendNotifications = false;
-
-        $notify_user = new User(1);
 
         // Execute the method and test that it works and doesn't throw an exception.
         try {

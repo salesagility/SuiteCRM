@@ -67,7 +67,19 @@ class ImportViewConfirm extends ImportView
     {
         global $mod_strings, $app_strings, $current_user;
         global $sugar_config, $locale;
-        
+
+        if (isset($_FILES['userfile']['name']) && !hasValidFileName('import_upload_file_name', $_FILES['userfile']['name'])) {
+            LoggerManager::getLogger()->fatal('Invalid import file name');
+            echo $app_strings['LBL_LOGGER_INVALID_FILENAME'];
+            return;
+        }
+
+        if (isset($_REQUEST['tmp_file']) && !hasValidFileName('import_upload_file_name', $_REQUEST['tmp_file'])) {
+            LoggerManager::getLogger()->fatal('Invalid import file name');
+            echo $app_strings['LBL_LOGGER_INVALID_FILENAME'];
+            return;
+        }
+
         $this->ss->assign("IMPORT_MODULE", $_REQUEST['import_module']);
         $this->ss->assign("TYPE", (!empty($_REQUEST['type']) ? $_REQUEST['type'] : "import"));
         $this->ss->assign("SOURCE_ID", $_REQUEST['source_id']);
