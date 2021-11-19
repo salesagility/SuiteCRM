@@ -3683,3 +3683,9 @@ $app_strings['IMAP_HANDLER_ERROR_NO_TEST_SET'] = 'Test settings does not exists.
 $app_strings['IMAP_HANDLER_ERROR_NO_KEY'] = 'Key not found.';
 $app_strings['IMAP_HANDLER_ERROR_KEY_SAVE'] = 'Key saving error.';
 $app_strings['IMAP_HANDLER_ERROR_UNKNOWN'] = 'Unknown error';
+
+
+$app_strings['ERR_INVALID_FILE_NAME'] = 'Invalid file name:';
+$app_strings['LBL_LOGGER_VALID_FILENAME_CHARACTERS'] = 'This can only be alphanumeric characters, plus \'.\' , \'-\' and \'_\'';
+$app_strings['LBL_LOGGER_INVALID_FILENAME'] = 'Invalid import file name';
+
