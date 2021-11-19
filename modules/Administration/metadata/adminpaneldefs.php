@@ -319,15 +319,6 @@ $admin_option_defs['Administration']['module_loader'] = [
     './index.php?module=Administration&action=UpgradeWizard&view=module',
     'module-loader'
 ];
-if (!defined('TEMPLATE_URL')) {
-    $admin_option_defs['Administration']['upgrade_wizard'] = [
-        'Upgrade',
-        'LBL_UPGRADE_WIZARD_TITLE',
-        'LBL_UPGRADE_WIZARD',
-        './index.php?module=UpgradeWizard&action=index',
-        'upgrade-wizard'
-    ];
-}
 
 $admin_group_header[] = ['LBL_ADMIN_TOOLS_TITLE', '', false, $admin_option_defs, 'LBL_ADMIN_TOOLS_HEADER_DESC'];
 
