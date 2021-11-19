@@ -92,20 +92,17 @@ class Configurator
     public function populateFromPost()
     {
         $sugarConfig = SugarConfig::getInstance();
+
+        $this->checkLoggerFileName();
+
         foreach ($_POST as $key => $value) {
-            if ($key == "logger_file_ext") {
+            if ($key === "logger_file_ext" || $key === 'logger_file_name') {
                 if ($value === '') {
                     $GLOBALS['log']->security("Log file extension can't be blank.");
                     continue;
                 }
-
-                $trim_value = preg_replace('/.*\.([^\.]+)$/', '\1', $value);
-                $badext = array_map('strtolower', $this->config['upload_badext']);
-                if (in_array(strtolower($trim_value), $badext)) {
-                    $GLOBALS['log']->security("Invalid log file extension: trying to use invalid file extension '$value'.");
-                    continue;
-                }
             }
+
             if (isset($this->config[$key]) || in_array($key, $this->allow_undefined)) {
                 if (strcmp((string)$value, 'true') == 0) {
                     $value = true;
@@ -121,6 +118,119 @@ class Configurator
                 }
             }
         }
+    }
+
+    public function checkLoggerFileName()
+    {
+
+        $logFileName =  '';
+        if (!empty($_POST['logger_file_name'])) {
+            $logFileName = $_POST['logger_file_name'];
+        }
+
+        $logFileExt = '';
+        if (!empty($_POST['logger_file_ext'])) {
+            $logFileExt = $_POST['logger_file_ext'];
+        }
+
+        $logFileExt = $this->prependDot($logFileExt);
+
+
+        $fullName = $logFileName . $logFileExt;
+        $_POST['logger_file_name'] = $logFileName;
+        $_POST['logger_file_ext'] = $logFileExt;
+        $valid = true;
+
+        if (!hasValidFileName('logger_file_name', $logFileName) ||
+            !$this->hasValidExtension('logger_file_name', $logFileName)
+        ) {
+            LoggerManager::getLogger()->security("Setting logger_file_name to ''.");
+            $_POST['logger_file_name'] = '';
+            $valid = false;
+        }
+
+        if (!$this->hasValidExtension('logger_file_ext', $logFileExt)) {
+            $_POST['logger_file_ext'] = '';
+            LoggerManager::getLogger()->security("Setting logger_file_ext to ''.");
+            $valid = false;
+        }
+
+        if (!$valid) {
+            return;
+        }
+
+        if (!hasValidFileName('logger_full_name', $fullName) ||
+            !$this->hasValidExtension('logger_full_name', $fullName)
+        ) {
+            LoggerManager::getLogger()->security("Setting logger_file_name and  logger_file_ext to ''.");
+            $_POST['logger_file_name'] = '';
+            $_POST['logger_file_ext'] = '';
+        }
+    }
+
+    /**
+     * Trim value
+     * @param string $value
+     * @return string
+     */
+    public function trimValue($value)
+    {
+        return preg_replace('/.*\.([^\.]+)$/', '\1', $value);
+    }
+
+    /**
+     * Prepend dot
+     * @param string $value
+     * @return string
+     */
+    public function prependDot($value)
+    {
+
+        if (empty($value)) {
+            return $value;
+        }
+
+        if ($value[0] === '.') {
+            return $value;
+        }
+
+        return '.' . $value;
+    }
+
+    /**
+     * Check if has valid extension
+     * @param string $fieldName
+     * @param string $value
+     * @return bool
+     */
+    public function hasValidExtension($fieldName, $value)
+    {
+
+        if ($value === '.' || empty($value)) {
+            LoggerManager::getLogger()->security("Invalid ext  $fieldName : '$value'.");
+
+            return false;
+        }
+
+        $badExt = array_map('strtolower', $this->config['upload_badext']);
+
+        $parts = explode('.', $value);
+
+        if (empty($parts)) {
+            LoggerManager::getLogger()->security("Invalid ext  $fieldName : '$value'.");
+
+            return false;
+        }
+
+        $ext = array_pop($parts);
+
+        if (in_array(strtolower($this->trimValue($ext)), $badExt, true)) {
+            LoggerManager::getLogger()->security("Invalid $fieldName: '$value'.");
+
+            return false;
+        }
+
+        return true;
     }
 
     public function handleOverride($fromParseLoggerSettings = false)
@@ -290,6 +400,7 @@ class Configurator
             $this->error = $error;
             return false;
         }
+
         return $path;
     }
 

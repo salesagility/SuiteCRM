@@ -90,7 +90,6 @@ class SearchResultsControllerTest extends SuitePHPUnitFrameworkTestCase
         $content = ob_get_contents();
         ob_end_clean();
         self::assertStringContainsString('Total result(s): 15', $content);
-        self::assertStringContainsString('Page 1 of 2', $content);
 
         // add 5 more..
         for ($i=15; $i<20; $i++) {
@@ -125,7 +124,6 @@ class SearchResultsControllerTest extends SuitePHPUnitFrameworkTestCase
         $content = ob_get_contents();
         ob_end_clean();
         self::assertStringContainsString('Total result(s): 20', $content);
-        self::assertStringContainsString('Page 2 of 2', $content);
     }
 
     public function testDisplayFoundOne(): void

@@ -40,7 +40,7 @@
 namespace SuiteCRM\PDF;
 
 use SuiteCRM\PDF\Exceptions\PDFEngineNotFoundException;
-use SuiteCRM\PDF\MPDF\LegacyMPDFEngine;
+use SuiteCRM\PDF\LegacyMPDF\LegacyMPDFEngine;
 use SuiteCRM\PDF\TCPDF\TCPDFEngine;
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -115,6 +115,12 @@ class PDFWrapper
     {
         $pdfs = [];
         $default = array_keys(self::$engines);
+
+        $MPDF = __DIR__ . '/../../modules/AOS_PDF_Templates/PDF_Lib/mpdf.php';
+        if (($key = array_search('LegacyMPDFEngine', $default, true)) !== false
+            && (!file_exists($MPDF) || version_compare(PHP_VERSION, '8.0.0') >= 0)) {
+            unset($default[$key]);
+        }
 
         if (file_exists('custom/application/Ext/PDF/pdfs.ext.php')) {
             include('custom/application/Ext/PDF/pdfs.ext.php');

@@ -353,7 +353,10 @@
 </tr>
 	<tr>
 		<td  scope="row" valign='middle'>{$MOD.LBL_LOGGER_FILENAME}</td>
-		<td   valign='middle' ><input type='text' name = 'logger_file_name'  value="{$config.logger.file.name}"></td>
+		<td   valign='middle' >
+			<input type='text' name = 'logger_file_name'  value="{$config.logger.file.name}">
+			<div><span class="small">{$APP.LBL_LOGGER_VALID_FILENAME_CHARACTERS}</span></div>
+		</td>
 		<td  scope="row">{$MOD.LBL_LOGGER_FILE_EXTENSION}</td>
 		<td><input name ="logger_file_ext" type="text" size="5" value="{$config.logger.file.ext}"></td>
 		<td scope="row">{$MOD.LBL_LOGGER_FILENAME_SUFFIX}</td>

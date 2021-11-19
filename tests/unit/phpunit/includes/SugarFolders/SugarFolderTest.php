@@ -292,9 +292,6 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertTrue($saved);
 
-        // reset saved
-        $saved = false;
-
         $parentFolderTwo = new SugarFolder($user);
 
         $fields = array(
@@ -338,9 +335,6 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertTrue($saved);
 
-        // reset saved
-        $saved = false;
-
         $parentFolderTwo = new SugarFolder($user);
 
         $fields = array(
@@ -351,10 +345,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         $saved = $parentFolderTwo->setFolder($fields);
 
         self::assertTrue($saved);
-
-        // reset saved
-        $saved = false;
-
+        
         $childFolder = new SugarFolder($user);
 
         $fields = array(

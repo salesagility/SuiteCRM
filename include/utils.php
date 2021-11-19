@@ -426,6 +426,9 @@ function get_sugar_config_defaults(): array
         'log_memory_usage' => false,
         'oauth2_encryption_key' => base64_encode(random_bytes(32)),
         'portal_view' => 'single_user',
+        'pdf' => [
+            'defaultEngine' => 'TCPDFEngine'
+        ],
         'resource_management' => [
             'special_query_limit' => 50000,
             'special_query_modules' => ['AOR_Reports', 'Export', 'Import', 'Administration', 'Sync'],
