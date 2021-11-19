@@ -364,7 +364,20 @@ form.userprofile {
     .urltext {
         width:27em;
         word-wrap:break-word;
-    } 
+        text-transform: none;
+        span {
+          text-transform: none;
+        }
+    }
+
+    form.userprofile .user-tab-content .edit tr td {
+
+      .urltext {
+        text-transform: none;
+      }
+
+    }
+
     .footer {
         display:none;
     }
