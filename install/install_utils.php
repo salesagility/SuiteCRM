@@ -978,7 +978,12 @@ function handleHtaccess()
     }
     $htaccess_file = '.htaccess';
     $contents = '';
-    $basePath = '/legacy';
+    $basePath = parse_url($sugar_config['site_url'], PHP_URL_PATH);
+    if (empty($basePath)) {
+        $basePath = '/legacy/';
+    } else {
+        $basePath .= 'legacy/';
+    }
     $cacheDir = $sugar_config['cache_dir'];
 
     $restrict_str = <<<EOQ
