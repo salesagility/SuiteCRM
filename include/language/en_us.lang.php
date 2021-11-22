@@ -1905,7 +1905,7 @@ $app_strings = array(
     'LBL_DASHLET_CONFIGURE_DISPLAY_ROWS' => 'Display Rows',
 
     // MySugar status strings
-    'LBL_MAX_DASHLETS_REACHED' => 'You have reached the maximum number of SuiteCRM Dashlets your adminstrator has set. Please remove a SuiteCRM Dashlet to add more.',
+    'LBL_MAX_DASHLETS_REACHED' => 'You have reached the maximum number of SuiteCRM Dashlets your administrator has set. Please remove a SuiteCRM Dashlet to add more.',
     'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet...',
     'LBL_ADDED_DASHLET' => 'SuiteCRM Dashlet Added',
     'LBL_REMOVE_DASHLET_CONFIRM' => 'Are you sure you want to remove this SuiteCRM Dashlet?',
@@ -3882,3 +3882,13 @@ $app_strings['LBL_USE_ADVANCED_SEARCH'] = 'Use Advanced Search';
 $app_strings['LBL_USE_BASIC_SEARCH'] = 'Use Basic Search';
 $app_strings['LBL_NO_MODULE_SELECTED'] = 'No module selected';
 $app_strings['LBL_CLOSE_MENU'] = 'Close Menu';
+
+// PDF Engines
+$app_strings['LBL_LEGACY_MPDF_ENGINE'] = 'Legacy MPDF Engine';
+$app_strings['LBL_TCPDF_ENGINE'] = 'TCPDF Engine';
+
+
+$app_strings['ERR_INVALID_FILE_NAME'] = 'Invalid file name:';
+$app_strings['LBL_LOGGER_VALID_FILENAME_CHARACTERS'] = 'This can only be alphanumeric characters, plus \'.\' , \'-\' and \'_\'';
+$app_strings['LBL_LOGGER_INVALID_FILENAME'] = 'Invalid import file name';
+

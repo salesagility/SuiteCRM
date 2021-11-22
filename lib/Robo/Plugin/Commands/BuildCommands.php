@@ -114,7 +114,7 @@ class BuildCommands extends Tasks
         $os = new OperatingSystem();
         $command =
             $os->toOsPath('./vendor/bin/pscss')
-            . ' -f compressed '
+            . ' -s compressed '
             . $os->toOsPath("{$location}{$colorScheme}/style.scss")
             . ' > '
             . $os->toOsPath("{$location}{$colorScheme}/style.css");

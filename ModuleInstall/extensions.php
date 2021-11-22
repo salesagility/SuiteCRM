@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,7 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
     $extensions = array(
         "actionviewmap" =>   array("section" => "action_view_map","extdir" => "ActionViewMap",  "file" => 'action_view_map.ext.php'),
@@ -68,6 +67,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
         "filteroperatormap" =>   array("section" => "filter_operator_map","extdir" => "FilterOperatorMap",	"file" => 'filter_operator_map.ext.php'),
         "filtermappers" =>   array("section" => "filter_mappers","extdir" => "FilterMappers",	"file" => 'filter_mappers.ext.php'),
         "classicviewroutingexclusions" =>   array("section" => "classicview_routing_exclusions","extdir" => "ClassicViewRoutingExclusions",	"file" => 'classicview_routing_exclusions.ext.php'),
+        "pdf" =>     		 array("section" => "pdfs",	          "extdir" => "PDF",		    "file" => 'pdfs.ext.php', "module" => "application"),
 );
 if (file_exists("custom/application/Ext/Extensions/extensions.ext.php")) {
     include("custom/application/Ext/Extensions/extensions.ext.php");

@@ -656,6 +656,10 @@ class DynamicField
             $fmd->save();
             $this->buildCache($this->module);
             $this->saveExtendedAttributes($field, array_keys($fmd->field_defs));
+            // Fix #9119 - The cache/themes folder needs to be rebuilt after changing custom field properties.
+            // https://github.com/salesagility/SuiteCRM/issues/9119
+            include_once('include/TemplateHandler/TemplateHandler.php');
+            TemplateHandler::clearCache($this->module);
         }
 
         return true;

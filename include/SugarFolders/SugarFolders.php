@@ -247,10 +247,7 @@ class SugarFolder
         $res = $this->db->query($query);
         $a = $this->db->fetchByAssoc($res);
 
-        if ($a['c'] > 0) {
-            return true;
-        }
-        return false;
+        return $a['c'] > 0;
     }
 
     /**
@@ -695,6 +692,25 @@ class SugarFolder
             return false;
         }
 
+        /*
+        Fix issue #9192 - Duplicating rows for folders_rel
+        First check if a row with the same data already exists
+        If so, return false
+        */
+
+        $q = "SELECT id FROM folders_rel WHERE".
+            " folder_id = ".$this->db->quoted($this->id).
+            " AND polymorphic_module = ".$this->db->quoted($bean->module_dir).
+            " AND polymorphic_id = ".$this->db->quoted($bean->id).
+            " AND deleted = 0";
+
+        $result = $this->db->fetchByAssoc($this->db->query($q));
+
+        if($result) {
+            $GLOBALS['log']->debug("*** FOLDERS: addBean() is trying to create an already existing relationship");
+            return false;
+        }
+        
         $guid = create_guid();
 
         $query = "INSERT INTO folders_rel " .
@@ -1279,8 +1295,10 @@ class SugarFolder
             }
 
             // if parent_id is set, update parent's has_child flag
-            $query3 = "UPDATE folders SET has_child = 1 WHERE id = " . $this->db->quoted($this->parent_folder);
-            $r3 = $this->db->query($query3);
+            if (!empty($this->parent_folder)) {
+                $query3 = "UPDATE folders SET has_child = 1 WHERE id = " . $this->db->quoted($this->parent_folder);
+                $r3 = $this->db->query($query3);
+            }
         } else {
             $query = "UPDATE folders SET " .
                 "name = " . $this->db->quoted($this->name) . ", " .
