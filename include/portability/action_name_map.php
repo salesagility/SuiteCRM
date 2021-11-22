@@ -41,6 +41,7 @@ $action_name_map = [
     'Step1' => 'step1',
     'Step2' => 'step2',
     'ComposeView' => 'compose',
+    'SetTimezone' => 'set-timezone',
     'WizardHome' => 'wizard-home',
     'WizardEmailSetup' => 'wizard-email-setup',
     'CampaignDiagnostic' => 'diagnostic',
