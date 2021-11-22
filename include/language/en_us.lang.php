@@ -3834,6 +3834,7 @@ $app_strings['LBL_PHOTO'] = 'Photo';
 $app_strings['LBL_CASE_UPDATES'] = 'Case Updates';
 $app_strings['LBL_CASE_UPDATE_SUBMITTED'] = 'Case Update Submitted';
 $app_strings['LBL_SUMMARY_DEFAULT'] = "{{fields.name.value}}";
+$app_strings['LBL_SUMMARY_PERSON'] = "{{fields.salutation.value}} {{fields.first_name.value}} {{fields.last_name.value}}";
 $app_strings['LBL_CREATE'] = 'Create';
 $app_strings['LBL_SAVED_FILTER_SAVED'] = 'Filter successfully saved';
 $app_strings['LBL_FILTER_ID_NOT_DEFINED'] = 'Filter id not defined';

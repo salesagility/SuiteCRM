@@ -171,6 +171,10 @@ $viewdefs ['Contacts'] =
                                     ),
                             ),
                     ),
+                'summaryTemplates' => [
+                    'edit' => 'LBL_SUMMARY_PERSON',
+                    'detail' => 'LBL_SUMMARY_PERSON',
+                ],
                 'topWidget' => [
                     'type' => 'statistics',
                     'options' => [
