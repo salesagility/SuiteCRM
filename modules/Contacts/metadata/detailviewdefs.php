@@ -218,16 +218,10 @@ $viewdefs ['Contacts'] =
                                     array(
                                         0 =>
                                             array(
-                                                'name' => 'first_name',
-                                                'comment' => 'First name of the contact',
-                                                'label' => 'LBL_FIRST_NAME',
+                                                'name' => 'full_name',
+                                                'label' => 'LBL_NAME',
                                             ),
-                                        1 =>
-                                            array(
-                                                'name' => 'last_name',
-                                                'comment' => 'Last name of the contact',
-                                                'label' => 'LBL_LAST_NAME',
-                                            ),
+                                        1 => '',
                                     ),
                                 1 =>
                                     array(
