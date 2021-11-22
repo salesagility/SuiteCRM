@@ -1,0 +1,28 @@
+.view-module-Schedulers {
+    #selectLinkBottom > .sugar_action_button > ul.subnav {
+        position: absolute;
+        top: -7em;
+    }
+    #actionLinkBottom > .sugar_action_button > .subnav {
+        position: absolute;
+        top: -5.8em;
+    }
+    .action-buttons {
+        margin-bottom: 3.5em;
+        #save_and_continue {
+            margin: 0.2em;
+            font-weight: bold;
+            height: 2.2em;
+            line-height: 1.1em;
+            padding: 0.3em 0.9em;
+            background-color: #93a4b3;
+            text-transform: capitalize;
+            &:hover {
+                background: $pale-blue;
+            }
+        }
+    }
+    #button_deselect_top, #button_deselect_bottom {
+        padding-left: 1.5em;
+    }
+}
