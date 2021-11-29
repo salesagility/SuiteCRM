@@ -144,6 +144,14 @@ $dictionary['AOW_WorkFlow'] = array(
                 'default' => '0',
                 'reportable' => false,
             ),
+        'dependent_actions' =>
+            array(
+                'name' => 'dependent_actions',
+                'vname' => 'LBL_DEPENDENT_ACTIONS',
+                'type' => 'bool',
+                'default' => '0',
+                'reportable' => false,
+            ),
         'condition_lines' =>
             array(
                 'required' => false,

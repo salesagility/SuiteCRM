@@ -930,6 +930,7 @@ class AOW_WorkFlow extends Basic
         $processed->load_relationship('aow_actions');
 
         $pass = true;
+        $stopOnActionFail = isset($this->dependent_actions) && $this->dependent_actions;
 
         $sql = "SELECT id FROM aow_actions WHERE aow_workflow_id = '".$this->id."' AND deleted = 0 ORDER BY action_order ASC";
         $result = $this->db->query($sql);
@@ -963,6 +964,9 @@ class AOW_WorkFlow extends Basic
                 if (!$flow_action->run_action($bean, unserialize(base64_decode($action->parameters)), $in_save)) {
                     $pass = false;
                     $processed->aow_actions->add($action->id, array('status' => 'Failed'));
+                    if ($stopOnActionFail) {
+                        break;
+                    }
                 } else {
                     $processed->aow_actions->add($action->id, array('status' => 'Complete'));
                 }
