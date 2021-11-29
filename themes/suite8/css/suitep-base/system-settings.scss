@@ -2,6 +2,10 @@
     .btn-hide {
         display: none;
     }
+    table.view {
+        border-radius: 10px;
+        margin-bottom: 1em;
+    }
     table.actionsContainer {
         .button {
             background-color: $nepal-grey;

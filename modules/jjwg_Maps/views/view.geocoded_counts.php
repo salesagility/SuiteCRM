@@ -29,7 +29,7 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView
 
         echo '<div class="list-view-rounded-corners">';
 
-        echo '<table cellspacing="0" cellpadding="0" border="0" class="list view" style="width: 50% !important;">';
+        echo '<table cellspacing="0" cellpadding="0" border="0" class="list" style="width: 50% !important;">';
         echo '<thead>';
         echo '<tr><th>'.$GLOBALS['mod_strings']['LBL_MODULE_HEADING'].'</th>';
         foreach ($this->bean->geocoded_headings as $heading) {

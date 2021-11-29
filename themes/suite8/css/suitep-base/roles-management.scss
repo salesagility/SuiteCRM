@@ -7,6 +7,8 @@
     table.role-detail {
         position: relative;
         top: 2em;
+        border-radius: 10px;
+        overflow: hidden;
     }
     .action-button {
         display: flex;
@@ -56,5 +58,9 @@
                 border: none;
             }
         }      
+    }
+    .view {
+        border-radius: 10px;
+        overflow: hidden;
     }
 }

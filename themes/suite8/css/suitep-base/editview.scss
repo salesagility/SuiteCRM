@@ -511,13 +511,6 @@ textarea {
   width: 100%;
 }
 
-table.view {
-  padding: 20px 16px 22px 30px;
-  margin-top: 3px;
-  margin-bottom: 3px;
-  width: 100%;
-}
-
 [field=number] {
   vertical-align: middle;
   line-height: $input-line-height;
@@ -2285,6 +2278,7 @@ table.view {
   background: $main-alternate-bg;
   padding: 0;
   margin: 0;
+  width: 100%;
 }
 
 .evenListRowS1 {

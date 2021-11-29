@@ -791,7 +791,7 @@ class Scheduler extends SugarBean
             }
             echo '<br>';
             echo '
-                <table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
+                <table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view box-panel">
                 <tr height="20">
                     <th><span>
                         ' . $mod_strings['LBL_CRON_INSTRUCTIONS_LINUX'] . '
