@@ -745,6 +745,15 @@ table #dashletPanel {
   width: 100%;
 }
 
+.post_txt_username {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 30em;
+  display: inline-block;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
 .dashletNonTable tr td:nth-child(3) {
   padding-left: 6px;
   padding-right: 6px;
