@@ -168,32 +168,11 @@ function export($type, $records = null, $members = false, $sample=false)
             ACLController::displayNoAccess();
             sugar_die('');
         }
-        if (ACLController::requireOwner($focus->module_dir, 'export')) {
-            if (!empty($where)) {
-                $where .= ' AND ';
-            }
-            $where .= $focus->getOwnerWhere($current_user->id);
+
+        $accessWhere = $focus->buildAccessWhere('export');
+        if (!empty($accessWhere)) {
+            $where .= empty($where) ? $accessWhere : ' AND ' . $accessWhere;
         }
-        /* BEGIN - SECURITY GROUPS */
-        if (ACLController::requireSecurityGroup($focus->module_dir, 'export')) {
-            require_once('modules/SecurityGroups/SecurityGroup.php');
-            global $current_user;
-            $owner_where = $focus->getOwnerWhere($current_user->id);
-            $group_where = SecurityGroup::getGroupWhere($focus->table_name, $focus->module_dir, $current_user->id);
-            if (!empty($owner_where)) {
-                if (empty($where)) {
-                    $where = " (".  $owner_where." or ".$group_where.")";
-                } else {
-                    $where .= " AND (".  $owner_where." or ".$group_where.")";
-                }
-            } else {
-                if (!empty($where)) {
-                    $where .= ' AND ';
-                }
-                $where .= $group_where;
-            }
-        }
-        /* END - SECURITY GROUPS */
     }
     // Export entire list was broken because the where clause already has "where" in it
     // and when the query is built, it has a "where" as well, so the query was ill-formed.

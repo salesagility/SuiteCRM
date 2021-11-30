@@ -65,6 +65,12 @@ class DetailView extends ListView
 
 
 
+    /**
+     * @param string $html_varName
+     * @param SugarBean $seed
+     * @param int $offset
+     * @return SugarBean
+     */
     public function processSugarBean($html_varName, $seed, $offset)
     {
         global $row_count, $sugar_config;
@@ -152,27 +158,11 @@ class DetailView extends ListView
         $db_offset=$offset-1;
 
         $this->populateQueryWhere($isFirstView, $html_varName);
-        if (ACLController::requireOwner($seed->module_dir, 'view')) {
-            global $current_user;
-            $seed->getOwnerWhere($current_user->id);
-            if (!empty($this->query_where)) {
-                $this->query_where .= ' AND ';
-            }
-            $this->query_where .= $seed->getOwnerWhere($current_user->id);
+
+        $accessWhere = $seed->buildAccessWhere('view');
+        if (!empty($accessWhere)) {
+            $this->query_where .= empty($this->query_where) ? $accessWhere : ' AND ' . $accessWhere;
         }
-        /* BEGIN - SECURITY GROUPS */
-        if (ACLController::requireSecurityGroup($seed->module_dir, 'view')) {
-            require_once('modules/SecurityGroups/SecurityGroup.php');
-            global $current_user;
-            $owner_where = $seed->getOwnerWhere($current_user->id);
-            $group_where = SecurityGroup::getGroupWhere($seed->table_name, $seed->module_dir, $current_user->id);
-            if (empty($this->query_where)) {
-                $this->query_where = " (".$owner_where." or ".$group_where.")";
-            } else {
-                $this->query_where .= " AND (".$owner_where." or ".$group_where.")";
-            }
-        }
-        /* END - SECURITY GROUPS */
 
         $order = $this->getLocalSessionVariable($seed->module_dir.'2_'.$html_varName, "ORDER_BY");
         $orderBy = '';

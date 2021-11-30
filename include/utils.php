@@ -3136,26 +3136,12 @@ function get_bean_select_array(
         }
 
         $query .= " {$focus->table_name}.deleted=0";
-
-        /* BEGIN - SECURITY GROUPS */
-        global $current_user, $sugar_config;
-        if ($focus->module_dir == 'Users' && !is_admin($current_user) && isset($sugar_config['securitysuite_filter_user_list']) && $sugar_config['securitysuite_filter_user_list'] == true
-        ) {
-            require_once 'modules/SecurityGroups/SecurityGroup.php';
-            $group_where = SecurityGroup::getGroupUsersWhere($current_user->id);
-            $query .= ' AND (' . $group_where . ') ';
-        } elseif ($focus->bean_implements('ACL') && ACLController::requireSecurityGroup($focus->module_dir, 'list')) {
-            require_once 'modules/SecurityGroups/SecurityGroup.php';
-            $owner_where = $focus->getOwnerWhere($current_user->id);
-            $group_where = SecurityGroup::getGroupWhere($focus->table_name, $focus->module_dir, $current_user->id);
-            if (!empty($owner_where)) {
-                $query .= ' AND (' . $owner_where . ' or ' . $group_where . ') ';
-            } else {
-                $query .= ' AND ' . $group_where;
-            }
+        
+        $accessWhere = $focus->buildAccessWhere('list');
+        if (!empty($accessWhere)) {
+            $query .= ' AND ' . $accessWhere;
         }
-        /* END - SECURITY GROUPS */
-
+        
         if ($order_by != '') {
             $query .= " order by {$focus->table_name}.{$order_by}";
         }
