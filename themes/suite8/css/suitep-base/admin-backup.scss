@@ -1,0 +1,39 @@
+.view-action-Backups {
+    line-height: 2em;
+    .moduleTitle {
+        border-bottom: 1px solid lightgrey;
+        margin-bottom: 1em;        
+    }
+    input[type=submit] {
+        background-color: $nepal-grey;
+        border-radius: 0.2em;
+        font-weight: bold;
+        height: 2.2em;
+        line-height: 1em;
+        letter-spacing: 0.05em;
+        padding: 0.3em 1em;
+        text-transform: capitalize;
+        margin-top: 2em;
+        &:hover {
+            background: $pale-blue;
+        }
+    }
+    input[type=input],input[type=password],input[type=email],input[type=number]{
+        background-color: $transparent-color;
+        border: 1px solid $form-border-color;
+        position: relative;
+        height: 2.1em;
+        width: 50%;
+        margin-left: 1em;
+        border-radius: 3px;
+    }
+    form {
+        background: $white;
+        padding: 1em;
+        margin-top: 1em;
+    }
+    i {
+        position: relative;
+        top: -10px;
+    }
+}
