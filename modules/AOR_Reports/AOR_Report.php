@@ -1427,29 +1427,10 @@ class AOR_Report extends Basic
     {
         $tempTableName = $module->table_name;
         $module->table_name = $alias;
-        $where = '';
-        if ($module->bean_implements('ACL') && ACLController::requireOwner($module->module_dir, 'list')) {
-            global $current_user;
-            $owner_where = $module->getOwnerWhere($current_user->id);
-            $where = ' AND ' . $owner_where;
+        $where = $module->buildAccessWhere('list');
+        if (!empty($where)) {
+            $where = ' AND ' . $where;
         }
-
-        if (file_exists('modules/SecurityGroups/SecurityGroup.php')) {
-            /* BEGIN - SECURITY GROUPS */
-            if ($module->bean_implements('ACL') && ACLController::requireSecurityGroup($module->module_dir, 'list')) {
-                require_once('modules/SecurityGroups/SecurityGroup.php');
-                global $current_user;
-                $owner_where = $module->getOwnerWhere($current_user->id);
-                $group_where = SecurityGroup::getGroupWhere($alias, $module->module_dir, $current_user->id);
-                if (!empty($owner_where)) {
-                    $where .= " AND (" . $owner_where . " or " . $group_where . ") ";
-                } else {
-                    $where .= ' AND ' . $group_where;
-                }
-            }
-            /* END - SECURITY GROUPS */
-        }
-
         $module->table_name = $tempTableName;
 
         return $where;

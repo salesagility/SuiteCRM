@@ -2542,26 +2542,27 @@ eoq;
             $clause = $current_user->db->quote($clause);
             $whereAdd .= "{$column} LIKE '{$clause}%'";
         }
+        
+        foreach ($peopleTables as $tableName) {
+            $module = ucfirst($tableName);
+            $personBean = BeanFactory::getBean($module);
 
-
-        foreach ($peopleTables as $table) {
-            $module = ucfirst($table);
-            $class = substr($module, 0, strlen($module) - 1);
-            require_once("modules/{$module}/{$class}.php");
-            $person = new $class();
-            if (!$person->ACLAccess('list')) {
+            if ($personBean !== false || !$personBean->ACLAccess('list')) {
                 continue;
             } // if
+            $table = $personBean->getTableName();
             $where = "({$table}.deleted = 0 AND eabr.primary_address = 1 AND {$table}.id <> '{$current_user->id}')";
 
-            if (ACLController::requireOwner($module, 'list')) {
-                $where = $where . " AND ({$table}.assigned_user_id = '{$current_user->id}')";
-            } // if
+            $accessWhere = $personBean->buildAccessWhere('list');
+            if (!empty($accessWhere)) {
+                $where .= ' AND '. $accessWhere;
+            }
+
             if (!empty($whereAdd)) {
                 $where .= " AND ({$whereAdd})";
             }
 
-            if ($person === 'accounts') {
+            if ($personBean instanceof Company) {
                 $t = "SELECT {$table}.id, '' first_name, {$table}.name, eabr.primary_address, ea.email_address, '{$module}' module ";
             } else {
                 $t = "SELECT {$table}.id, {$table}.first_name, {$table}.last_name, eabr.primary_address, ea.email_address, '{$module}' module ";
@@ -2570,19 +2571,7 @@ eoq;
             $t .= "JOIN email_addr_bean_rel eabr ON ({$table}.id = eabr.bean_id and eabr.deleted=0) ";
             $t .= "JOIN email_addresses ea ON (eabr.email_address_id = ea.id) ";
             $t .= " WHERE {$where}";
-
-            /* BEGIN - SECURITY GROUPS */
-            //this function may not even be used anymore. Seems like findEmailFromBeanIds is preferred now
-            if ($person->bean_implements('ACL') && ACLController::requireSecurityGroup($module, 'list')) {
-                require_once('modules/SecurityGroups/SecurityGroup.php');
-                global $current_user;
-                $owner_where = $person->getOwnerWhere($current_user->id);
-                $group_where = SecurityGroup::getGroupWhere($table, $module, $current_user->id);
-                $t .= " AND (" . $owner_where . " or " . $group_where . ") ";
-            }
-            /* END - SECURITY GROUPS */
-
-
+            
             if (!empty($q)) {
                 $q .= "\n UNION ALL \n";
             }
@@ -2674,42 +2663,45 @@ eoq;
             }
             $relatedIDs = implode(',', $beanIds);
         }
+        
+        $module = ucfirst($beanType);
+        $personBean = BeanFactory::getBean($module);
+        if ($personBean !== false  && $personBean->ACLAccess('list')) {
 
-        if ($beanType == 'accounts') {
-            if (isset($whereArr['first_name'])) {
-                $whereArr['name'] = $whereArr['first_name'];
+            if ($personBean instanceof Company) {
+                if (isset($whereArr['first_name'])) {
+                    $whereArr['name'] = $whereArr['first_name'];
+                }
+                unset($whereArr['last_name']);
+                unset($whereArr['first_name']);
             }
-            unset($whereArr['last_name']);
-            unset($whereArr['first_name']);
-        }
 
-        foreach ($whereArr as $column => $clause) {
-            if (!empty($whereAdd)) {
-                $whereAdd .= " OR ";
+            foreach ($whereArr as $column => $clause) {
+                if (!empty($whereAdd)) {
+                    $whereAdd .= " OR ";
+                }
+                $clause = $current_user->db->quote($clause);
+                $whereAdd .= "{$column} LIKE '{$clause}%'";
             }
-            $clause = $current_user->db->quote($clause);
-            $whereAdd .= "{$column} LIKE '{$clause}%'";
-        }
-        $table = $beanType;
-        $module = ucfirst($table);
-        $class = substr($module, 0, strlen($module) - 1);
-        require_once("modules/{$module}/{$class}.php");
-        $person = new $class();
-        if ($person->ACLAccess('list')) {
-            if ($relatedIDs != '') {
+            
+            
+            $table = $personBean->getTableName();
+            if ($relatedIDs !== '') {
                 $where = "({$table}.deleted = 0 AND eabr.primary_address = 1 AND {$table}.id in ($relatedIDs))";
             } else {
                 $where = "({$table}.deleted = 0 AND eabr.primary_address = 1)";
             }
 
-            if (ACLController::requireOwner($module, 'list')) {
-                $where = $where . " AND ({$table}.assigned_user_id = '{$current_user->id}')";
-            } // if
+            $accessWhere = $personBean->buildAccessWhere('list');
+            if (!empty($accessWhere)) {
+                $where .= ' AND '. $accessWhere;
+            }
+            
             if (!empty($whereAdd)) {
                 $where .= " AND ({$whereAdd})";
             }
 
-            if ($beanType === 'accounts') {
+            if ($personBean instanceof Company) {
                 $t = "SELECT {$table}.id, '' first_name, {$table}.name last_name, eabr.primary_address, ea.email_address, '{$module}' module ";
             } else {
                 $t = "SELECT {$table}.id, {$table}.first_name, {$table}.last_name, eabr.primary_address, ea.email_address, '{$module}' module ";
@@ -2719,16 +2711,6 @@ eoq;
             $t .= "JOIN email_addr_bean_rel eabr ON ({$table}.id = eabr.bean_id and eabr.deleted=0) ";
             $t .= "JOIN email_addresses ea ON (eabr.email_address_id = ea.id) ";
             $t .= " WHERE {$where}";
-            /* BEGIN - SECURITY GROUPS */
-            //this function may not even be used anymore. Seems like findEmailFromBeanIds is preferred now
-            if ($person->bean_implements('ACL') && ACLController::requireSecurityGroup($module, 'list')) {
-                require_once('modules/SecurityGroups/SecurityGroup.php');
-                global $current_user;
-                $owner_where = $person->getOwnerWhere($current_user->id);
-                $group_where = SecurityGroup::getGroupWhere($table, $module, $current_user->id);
-                $t .= " AND (" . $owner_where . " or " . $group_where . ") ";
-            }
-            /* END - SECURITY GROUPS */
         } // if
 
         return $t;
