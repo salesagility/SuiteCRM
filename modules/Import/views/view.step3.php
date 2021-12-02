@@ -553,8 +553,7 @@ class ImportViewStep3 extends ImportView
 
                 #importNotes ul{
                 	margin: 0px;
-                	margin-top: 10px;
-                	padding-left: 20px;
+                	margin-bottom: 10px;
                 }
 
             </style>

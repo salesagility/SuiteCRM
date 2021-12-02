@@ -1,0 +1,103 @@
+.view-module-Import {
+    input[type=submit],input[type=button] {
+        background-color: $nepal-grey;
+        border-radius: 0.2em;
+        font-weight: bold;
+        height: 2.2em;
+        line-height: 1em;
+        letter-spacing: 0.05em;
+        padding: 0.3em 1em;
+        text-transform: capitalize;
+        &:hover {
+            background: $pale-blue;
+        }
+    }
+    select {
+        background: url($select-edit-background-url) no-repeat right;
+        background-size: 25px 11px;
+        border-color: $bright-grey;
+        background-color: $white !important;
+    }
+    .import_instruction {
+        margin-bottom: 1em;
+    }
+    input,input[type=text],input[type=password],input[type=email],input[type=number]{
+        background-color: $transparent-color;
+        border: 1px solid $form-border-color;
+    }
+    input[type=radio] {
+        border: none;
+    }
+    textarea {
+        background-color: $transparent-color;
+        border: 1px solid $form-border-color;
+    }
+    .list #pagination td .paginationTable .paginationChangeButtons {
+        button {
+            background-color: $transparent-color; 
+            margin: 0;
+            padding: 0;
+        }        
+    }
+    .paginationTable button[disabled] {
+        background-color: $transparent-color;
+        margin: 0;
+        padding: 0;
+    }
+    h1,h2,h3 {
+        margin-top: 0;
+    } 
+    #toggleNotes {
+        margin-bottom: 1em;
+    }
+    .h3Row {
+        margin-top: 1em;
+    }
+    .hr {
+        background: lightgray;
+    }
+    #importOptions td {
+        padding: 1em;
+    }
+    table.view {
+        border-radius: 10px;
+        overflow: hidden;
+        tr th {
+            padding: 1em;
+        }  
+    }    
+    #dup_content {
+        .paginationChangeButtons {
+            padding: 6px 11px 7px 6px !important;
+        }
+        table.view {
+            border-radius: 0 !important;
+        }
+    }
+    #errors_content {
+        .paginationChangeButtons {
+            padding: 6px 11px 7px 6px !important;
+        }
+        table.view {
+            border-radius: 0 !important;
+        }
+    } 
+    div.confirmTable {
+        margin-top: 1em;
+    }  
+    label {
+        margin-top: 1em;
+    }
+    #enabled_div {
+        padding: 1em;
+    }
+    #disabled_div {
+        padding: 1em;
+    }
+    .yui-dt th .yui-dt-liner {
+        background: none;
+        font-weight: bold;
+        color: $shell-grey;
+        line-height: 0.6em;
+    } 
+}

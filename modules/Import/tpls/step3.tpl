@@ -39,15 +39,11 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
 *}
 
 {$CSS}
 
 {$INSTRUCTION}
-
 
 <form enctype="multipart/form-data" real_id="importstep3" id="importstep3" name="importstep3" method="POST" action="index.php">
 <input type="hidden" name="module" value="Import">
@@ -76,7 +72,6 @@
 <input type="hidden" name="importlocale_default_locale_name_format" value="{$smarty.request.importlocale_default_locale_name_format}">
 <input type="hidden" name="from_admin_wizard" value="{$smarty.request.from_admin_wizard}">
     
-<br>
 {if $NOTETEXT != ''}
     <p>
         <input title="{$MOD.LBL_SHOW_ADVANCED_OPTIONS}"  id="toggleNotes" class="button" type="button"
@@ -91,6 +86,7 @@
 
 <div class="hr"></div>
 
+<br>
 
 <table border="0" cellspacing="0" cellpadding="0" width="100%" id="importTable" class="detail view">
 {foreach from=$rows key=key item=item name=rows}

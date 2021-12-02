@@ -58,7 +58,6 @@
     padding-right:30px;
 }
 
-
 -->
 </style>
 {/literal}
@@ -91,12 +90,12 @@
 
    <div class="hr"></div>
     <div>
-    <table border="0" cellpadding="30" id="importTable" style="width:60% !important;">
+    <table border="0" cellpadding="30" id="importTable" style="width:100% !important;margin-top:1em;">
     <tr>
         <td  width="40%" colspan="2">
-           <table id="DupeCheck" class="themeSettings edit view noBorder" style='margin-bottom:0px;' border="0" cellspacing="10" cellpadding="0"  width = '100%'>
+           <table id="DupeCheck" class="themeSettings edit view noBorder" style='margin-bottom:11px;' border="0" cellspacing="10" cellpadding="0"  width = '100%'>
                 <tr>
-                    <td align="right">
+                    <td align="right" width="1%">
                         <div id="enabled_div" class="enabled_tab_workarea">
                         </div>
                     </td>
@@ -110,10 +109,14 @@
     </tr>
     </table>
      <div class="hr"></div>
-    <span><strong><label for="save_map_as">{$MOD.LBL_SAVE_MAPPING_AS}</label></strong> {sugar_help text=$MOD.LBL_SAVE_MAPPING_HELP}</span>
-            <span >
-                <input type="text" name="save_map_as" id="save_map_as" value="" style="width: 20em" maxlength="254">
-            </span>
+    <span>
+        <strong>
+            <label style="margin-top: 2em; "for="save_map_as">{$MOD.LBL_SAVE_MAPPING_AS}</label>
+        </strong> {sugar_help text=$MOD.LBL_SAVE_MAPPING_HELP}
+    </span>
+    <span >
+        <input type="text" name="save_map_as" id="save_map_as" value="" style="width: 20em" maxlength="254">
+    </span>
     </div>
 <br />
 

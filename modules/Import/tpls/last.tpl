@@ -45,14 +45,14 @@
 <style>
     #tabListContainer ul.subpanelTablist li a.current
     {
-        padding-left: 10px;
+        padding-left: 0px;
     }
-div.resultsTable {
-    overflow: auto;
-    width: 1056px;
-    padding-top: 20px;
-    position: relative;
-}
+    div.resultsTable {
+        overflow: auto;
+        width: 100%;
+        padding-top: 20px;
+        position: relative;
+    }
 </style>
 {/literal}
 

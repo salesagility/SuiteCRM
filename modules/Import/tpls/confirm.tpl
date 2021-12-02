@@ -39,9 +39,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
 *}
 
 {$INSTRUCTION}
@@ -70,8 +67,6 @@
 {include file='modules/Import/tpls/confirm_table.tpl'}
 </div>
 
-
-
     <table cellpadding="0" cellspacing="0" width="100%">
         <tr>
             <td align="left" colspan="4" style="background: transparent;">
@@ -84,8 +79,8 @@
         </tr>
         <tr>
             <td>
-            <div style="overflow: auto; width: 1056px;">
-                <table border=0 class="edit view noBorder" style="display: none;" id="importOptions">
+            <div style="overflow: auto; width: 100%;">
+                <table border=0 class="edit view noBorder" style="display: none;margin-bottom: 1em;" id="importOptions">
                     <tr>
                         <td scope="col">
                             <span><label for="importlocale_charset">{$MOD.LBL_CHARSET}</label></span>
