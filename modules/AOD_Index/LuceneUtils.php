@@ -25,7 +25,8 @@
 
 function getDocumentRevisionPath($revisionId)
 {
-    return "upload/$revisionId";
+    $uploadDir = get_upload_dir();
+    return $uploadDir . $revisionId;
 }
 
 /**

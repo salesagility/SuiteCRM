@@ -545,10 +545,10 @@ class ViewConvertLead extends SugarView
             if (!empty($lead->id) && !empty($lead->photo) &&
                 !empty($beans['Contacts']->id) && !empty($beans['Contacts']->photo)) {
                 $bCopied = false;
-                if (($lead->photo === $beans['Contacts']->photo) && is_readable('upload/' . $lead->id . '_photo')) {
+                if (($lead->photo === $beans['Contacts']->photo) && is_readable(get_upload_dir() . $lead->id . '_photo')) {
                     $bCopied = copy(
-                        'upload/' . $lead->id . '_photo',
-                        'upload/' . $beans['Contacts']->id . '_photo'
+                        get_upload_dir() . $lead->id . '_photo',
+                        get_upload_dir() . $beans['Contacts']->id . '_photo'
                     );
                 }
                 if ($bCopied) {
@@ -556,7 +556,7 @@ class ViewConvertLead extends SugarView
                     $beans['Contacts']->save();
                 } else {
                     LoggerManager::getLogger()->warning('Lead conversion: failed copying upload/' .
-                        $lead->id . '_photo to upload/' . $beans['Contacts']->id . '_photo');
+                        $lead->id . '_photo to ' . get_upload_dir() . $beans['Contacts']->id . '_photo');
                 }
             }
         }

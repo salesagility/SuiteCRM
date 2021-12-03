@@ -345,7 +345,8 @@ class ModuleService
 
             $fileName = $Revision->id;
             $fileContents = $attributes['filecontents'];
-            $targetPath = 'upload/' . $fileName;
+            $uploadDir = get_upload_dir();
+            $targetPath = stream_resolve_include_path($uploadDir . $fileName);
             $content = base64_decode($fileContents);
 
             $file = fopen($targetPath, 'wb');
@@ -393,7 +394,8 @@ class ModuleService
 
             $fileName = $bean->id;
             $fileContents = $attributes['filecontents'];
-            $targetPath = 'upload/' . $fileName;
+            $uploadDir = get_upload_dir();
+            $targetPath = stream_resolve_include_path($uploadDir . $fileName);
             $content = base64_decode($fileContents);
 
             $file = fopen($targetPath, 'wb');

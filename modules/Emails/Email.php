@@ -1195,8 +1195,8 @@ class Email extends Basic
                         strlen($file)
                     ); // strip GUID	for PHPMailer class to name outbound file
 
-                    $mail->AddAttachment(stream_resolve_include_path($fileLocation), $filename, 'base64', $this->email2GetMime($fileLocation));
-                    //$mail->AddAttachment($fileLocation, $filename, 'base64');
+                    $mail->addAttachment(stream_resolve_include_path($fileLocation), $filename, 'base64', $this->email2GetMime(stream_resolve_include_path($fileLocation)));
+                    //$mail->addAttachment($fileLocation, $filename, 'base64');
 
                     // only save attachments if we're archiving or drafting
                     if ((($this->type == 'draft') && !empty($this->id)) || (isset($request['saveToSugar']) && $request['saveToSugar'] == 1)) {
@@ -1233,9 +1233,10 @@ class Email extends Basic
 
                     $filename = $docRev->filename;
                     $docGUID = preg_replace('/[^a-z0-9\-]/', "", $docRev->id);
-                    $fileLocation = "upload/{$docGUID}";
+                    $uploadDir = get_upload_dir();
+                    $fileLocation = $uploadDir . $docGUID;
                     $mime_type = $docRev->file_mime_type;
-                    $mail->AddAttachment(
+                    $mail->addAttachment(
                         stream_resolve_include_path($fileLocation),
                         $locale->translateCharsetMIME(trim($filename), 'UTF-8', $OBCharset),
                         'base64',
@@ -1252,7 +1253,7 @@ class Email extends Basic
                         $note->name = $filename;
                         $note->filename = $filename;
                         $note->file_mime_type = $mime_type;
-                        $dest = "upload/{$note->id}";
+                        $dest = $uploadDir. $note->id;
                         if (!copy($fileLocation, $dest)) {
                             $GLOBALS['log']->debug("EMAIL 2.0: could not copy SugarDocument revision file $fileLocation => $dest");
                         }
@@ -1274,10 +1275,11 @@ class Email extends Basic
                     if (!empty($note->id)) {
                         $filename = $note->filename;
                         $noteGUID = preg_replace('/[^a-z0-9\-]/', "", $note->id);
-                        $fileLocation = "upload/{$noteGUID}";
+                        $uploadDir = get_upload_dir();
+                        $fileLocation = $uploadDir.$noteGUID;
                         $mime_type = $note->file_mime_type;
                         if (!$note->embed_flag) {
-                            $mail->AddAttachment(stream_resolve_include_path($fileLocation), $filename, 'base64', $mime_type);
+                            $mail->addAttachment(stream_resolve_include_path($fileLocation), $filename, 'base64', $mime_type);
                             // only save attachments if we're archiving or drafting
                             if ((($this->type == 'draft') && !empty($this->id)) || (isset($request['saveToSugar']) && $request['saveToSugar'] == 1)) {
                                 if ($note->parent_id != $this->id) {
@@ -3040,7 +3042,8 @@ class Email extends Basic
                         $filename = $note->file->original_file_name;
                         $mime_type = $note->file->mime_type;
                     } else { // attachment coming from template/forward
-                        $file_location = "upload/{$note->id}";
+                        $uploadDir = get_upload_dir();
+                        $file_location = $uploadDir . $note->id;
                         // cn: bug 9723 - documents from EmailTemplates sent with Doc Name, not file name.
                         $filename = !empty($note->filename) ? $note->filename : $note->name;
                         $mime_type = $note->file_mime_type;
@@ -3049,7 +3052,8 @@ class Email extends Basic
                     $filePathName = $note->id;
                     // cn: bug 9723 - Emails with documents send GUID instead of Doc name
                     $filename = $note->getDocumentRevisionNameForDisplay();
-                    $file_location = "upload/$note->id";
+                    $uploadDir = get_upload_dir();
+                    $file_location = $uploadDir . $note->id;
                     $mime_type = $note->file_mime_type;
                 }
 
