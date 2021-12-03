@@ -87,6 +87,13 @@ body.popupBody {
             display: inline-block;
         }
     } 
+    .h3Row {
+        margin-left: 1.3em;
+    }
+    .row {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
 }
 
 #addform {
@@ -99,8 +106,8 @@ body.popupBody {
 }
 
 #addformlink {
+    margin-left: 1em;
     .button {
         margin-top: 1em;
     }
 }
-
