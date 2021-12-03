@@ -49,6 +49,7 @@ require_once('include/export_utils.php');
 global $sugar_config;
 global $current_user;
 global $app_list_strings;
+global $db;
 
 $the_module = clean_string($_REQUEST['module']);
 
@@ -61,12 +62,26 @@ if ($sugar_config['disable_export'] 	|| (!empty($sugar_config['admin_export_only
 //check to see if this is a request for a sample or for a regular export
 if (!empty($_REQUEST['sample'])) {
     //call special method that will create dummy data for bean as well as insert standard help message.
-    $content = exportSample(clean_string($_REQUEST['module']));
+    $content = exportSample($the_module);
 } else {
     if (!empty($_REQUEST['uid'])) {
-        $content = export(clean_string($_REQUEST['module']), $_REQUEST['uid'], isset($_REQUEST['members']) ? $_REQUEST['members'] : false);
+        $ids = explode(',', $_REQUEST['uid']);
     } else {
-        $content = export(clean_string($_REQUEST['module']));
+        $bean = BeanFactory::getBean($the_module);
+        $table_name = $bean->table_name;
+        unset($bean);
+
+        $result = $db->query("SELECT id FROM $table_name;");
+        while ($row = $db->fetchByAssoc($result)) {
+            $ids[] = $row['id'];
+        }
+        unset($result);
+    }
+
+    $idChunks = array_chunk($ids, 1000, true);
+    $content = '';
+    foreach($idChunks as $chunk) {
+        $content .= export($the_module, implode(",", $chunk), isset($_REQUEST['members']) ? $_REQUEST['members'] : false);
     }
 }
 $filename = $_REQUEST['module'];
