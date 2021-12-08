@@ -231,9 +231,9 @@ class AOP_Case_Updates extends Basic
         }
         $beans = array('Contacts' => $contactId, 'Cases' => $this->getCase()->id, 'Users' => $user->id, 'AOP_Case_Updates' => $this->id);
         $ret = array();
-        $ret['subject'] = from_html(aop_parse_template($template->subject, $beans));
-        $body = aop_parse_template(str_replace('$sugarurl', $sugar_config['site_url'], $template->body_html), $beans);
-        $bodyAlt = aop_parse_template(str_replace('$sugarurl', $sugar_config['site_url'], $template->body), $beans);
+        $ret['subject'] = from_html(aop_parse_template($template->subject, $beans, $template));
+        $body = aop_parse_template(str_replace('$sugarurl', $sugar_config['site_url'], $template->body_html), $beans, $template);
+        $bodyAlt = aop_parse_template(str_replace('$sugarurl', $sugar_config['site_url'], $template->body), $beans, $template);
         if ($addDelimiter) {
             $body = $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'].$body;
             $bodyAlt = $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'].$bodyAlt;

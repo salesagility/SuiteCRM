@@ -68,7 +68,7 @@ class actionComputeField extends actionBase
      *
      * @return bool|void
      */
-    public function run_action(SugarBean $bean, $params = array(), $in_save = false)
+    public function run_action(SugarBean $bean, $params = array(), $in_save = false): bool
     {
         try {
             require_once('modules/AOW_Actions/FormulaCalculator.php');
@@ -90,9 +90,9 @@ class actionComputeField extends actionBase
             $formulas = $this->getArrayFromParams($params, 'formula');
             $formulaContents = $this->getArrayFromParams($params, 'formulaContent');
 
-            if (count($formulas) == 0) {
-                return;
-            }
+//            if (count($formulas) == 0) {
+//                return;
+//            }
 
             $calculator = new FormulaCalculator(
                 $resolvedParameters,

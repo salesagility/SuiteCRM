@@ -64,10 +64,10 @@ class updatePortal
             $replace = array($bean->joomla_account_access, $aop_config['joomla_url']);
 
             $object_arr['Contacts'] = $bean->id;
-            $body_html = aop_parse_template($template->body_html, $object_arr);
+            $body_html = aop_parse_template($template->body_html, $object_arr, $template);
             $body_html = str_replace($search, $replace, $body_html);
 
-            $body_plain = aop_parse_template($template->body, $object_arr);
+            $body_plain = aop_parse_template($template->body, $object_arr, $template);
             $body_plain = str_replace($search, $replace, $body_plain);
 
             $this->sendEmail($bean->email1, $template->subject, $body_html, $body_plain, $bean);

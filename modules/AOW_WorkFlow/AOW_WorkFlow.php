@@ -215,7 +215,7 @@ class AOW_WorkFlow extends Basic
     /**
      * Select and run all active flows for the specified bean
      */
-    public function run_bean_flows(SugarBean $bean)
+    public function run_bean_flows(SugarBean $bean, $template)
     {
         $query = "SELECT id FROM aow_workflow WHERE aow_workflow.flow_module = '" . $bean->module_dir . "' AND aow_workflow.status = 'Active' AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'On_Save' OR aow_workflow.run_when = 'Create') AND aow_workflow.deleted = 0 ";
 

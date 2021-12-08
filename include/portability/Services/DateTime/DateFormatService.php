@@ -81,6 +81,25 @@ class DateFormatService
 
     /**
      * @param $dateString
+     * @param $format
+     * @return string|null
+     */
+    public function toFormat($dateString, $format): ?string
+    {
+        $dateDBFormat = $this->toDateTime($dateString);
+        if ($dateDBFormat == null){
+            return $dateString;
+        }
+        $date = date_format($dateDBFormat, $format);
+        if ($date !== null) {
+            return $date;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param $dateString
      * @return string|null
      */
     public function toUserDate($dateString): ?string

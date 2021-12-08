@@ -107,7 +107,7 @@ EOS;
         return $html;
     }
 
-    public function run_action(SugarBean $bean, $params = array(), $in_save=false)
+    public function run_action(SugarBean $bean, $params = array(), $in_save=false): bool
     {
         if (isset($params['rel_type']) && $params['rel_type'] != '' && $bean->module_dir != $params['rel_type']) {
             $relatedFields = $bean->get_linked_fields();

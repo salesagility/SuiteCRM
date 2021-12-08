@@ -156,7 +156,11 @@ if ($focus->type === 'workflow') {
 } else {
     $xtpl->assign("TYPE", $app_list_strings['emailTemplates_type_list_no_workflow'][$focus->type]);
 }
-
+if (!empty($focus->template_date_format) && !empty($app_list_strings['template_date_format'][$focus->template_date_format])) {
+    $xtpl->assign("TEMPLATE_DATE_FORMAT", $app_list_strings['template_date_format'][$focus->template_date_format]);
+} else {
+    $xtpl->assign("TEMPLATE_DATE_FORMAT", '');
+}
 if ($focus->ACLAccess('EditView')) {
     $xtpl->parse("main.edit");
 }

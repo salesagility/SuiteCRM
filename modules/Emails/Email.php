@@ -1020,9 +1020,9 @@ class Email extends Basic
                 $object_arr= array('Contacts' => '123');
             }
             $object_arr['Users'] = $current_user->id;
-            $this->description_html = EmailTemplate::parse_template($this->description_html, $object_arr);
-            $this->name = EmailTemplate::parse_template($this->name, $object_arr);
-            $this->description = EmailTemplate::parse_template($this->description, $object_arr);
+            $this->description_html = EmailTemplate::parse_template($this->description_html, $object_arr, $template);
+            $this->name = EmailTemplate::parse_template($this->name, $object_arr, $template);
+            $this->description = EmailTemplate::parse_template($this->description, $object_arr, $template);
             $this->description = html_entity_decode($this->description, ENT_COMPAT, 'UTF-8');
             if ($this->type != 'draft' && $this->status != 'draft') {
                 $this->id = create_guid();
@@ -4744,7 +4744,7 @@ eoq;
      * @return boolean
      * @throws Exception
      */
-    private function sendOptInEmail(EmailAddress $emailAddress)
+    private function sendOptInEmail(EmailAddress $emailAddress, $template)
     {
         global $app_strings;
 

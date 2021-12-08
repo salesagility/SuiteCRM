@@ -159,7 +159,7 @@ class actionCreateRecord extends actionBase
      * @param bool $in_save
      * @return bool
      */
-    public function run_action(SugarBean $bean, $params = array(), $in_save = false)
+    public function run_action(SugarBean $bean, $params = array(), $in_save = false) : bool
     {
         global $beanList;
 

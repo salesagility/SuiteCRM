@@ -304,7 +304,7 @@ class actionSendEmail extends actionBase
      * @param bool $in_save
      * @return boolean
      */
-    public function run_action(SugarBean $bean, $params = array(), $in_save = false)
+    public function run_action(SugarBean $bean, $params = array(), $in_save = false): bool
     {
         include_once __DIR__ . '/../../EmailTemplates/EmailTemplate.php';
 
@@ -331,7 +331,7 @@ class actionSendEmail extends actionBase
                 $emailTemp = BeanFactory::newBean('EmailTemplates');
                 $emailTemp->retrieve($params['email_template']);
                 $template_override = isset($emails['template_override'][$email_to]) ? $emails['template_override'][$email_to] : array();
-                $this->parse_template($bean, $emailTemp, $template_override);
+                $this->parse_template($bean, $emailTemp, $template_override, $template);
                 if (!$this->sendEmail(array($email_to), $emailTemp->subject, $emailTemp->body_html, $emailTemp->body, $bean, $emails['cc'], $emails['bcc'], $attachments)) {
                     $ret = false;
                     $this->lastEmailsFailed++;
@@ -439,11 +439,11 @@ class actionSendEmail extends actionBase
         $template->subject = str_replace("\$contact_user", "\$user", $template->subject);
         $template->body_html = str_replace("\$contact_user", "\$user", $template->body_html);
         $template->body = str_replace("\$contact_user", "\$user", $template->body);
-        $template->subject = aowTemplateParser::parse_template($template->subject, $object_arr);
-        $template->body_html = aowTemplateParser::parse_template($template->body_html, $object_arr);
+        $template->subject = aowTemplateParser::parse_template($template->subject, $object_arr, $template);
+        $template->body_html = aowTemplateParser::parse_template($template->body_html, $object_arr, $template);
         $template->body_html = str_replace("\$url", $url, $template->body_html);
         $template->body_html = str_replace('$sugarurl', $sugar_config['site_url'], $template->body_html);
-        $template->body = aowTemplateParser::parse_template($template->body, $object_arr);
+        $template->body = aowTemplateParser::parse_template($template->body, $object_arr, $template);
         $template->body = str_replace("\$url", $url, $template->body);
         $template->body = str_replace('$sugarurl', $sugar_config['site_url'], $template->body);
     }

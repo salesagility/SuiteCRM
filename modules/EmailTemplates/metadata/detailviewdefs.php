@@ -52,6 +52,9 @@ $viewdefs['EmailTemplates']['DetailView'] = array(
  'panels' =>array(
   'default' =>
   array(
+      [
+          'template_date_format',
+      ],
     
     array(
       'name',

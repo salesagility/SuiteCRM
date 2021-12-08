@@ -73,6 +73,7 @@ $mod_strings = array(
     'LBL_SUITE_DOCUMENT' => 'Document',
     'LBL_TEXT_BODY' => 'Text Body',
     'LBL_USERS' => 'Users',
+    'LBL_TEMPLATE_DATE_FORMAT' => 'Template Date Format',
 
     'LNK_EMAIL_TEMPLATE_LIST' => 'View Email Templates',
     'LNK_IMPORT_NOTES' => 'Import Notes',

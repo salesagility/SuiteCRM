@@ -42,7 +42,7 @@ class actionBase
         return '';
     }
 
-    public function run_action(SugarBean $bean, $params = array(), $in_save=false)
+    public function run_action(SugarBean $bean, $params = array(), $in_save=false): bool
     {
         return true;
     }

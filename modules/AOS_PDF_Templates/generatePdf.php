@@ -130,11 +130,11 @@ $text = str_replace("\$tax_amount", "\$" . $variableName . "_tax_amount", $text)
 $text = str_replace("\$shipping_amount", "\$" . $variableName . "_shipping_amount", $text);
 $text = str_replace("\$total_amount", "\$" . $variableName . "_total_amount", $text);
 
-$text = populate_group_lines($text, $lineItemsGroups, $lineItems);
+$text = populate_group_lines($text, $lineItemsGroups, $lineItems, '', $template);
 
-$converted = templateParser::parse_template($text, $object_arr);
-$header = templateParser::parse_template($header, $object_arr);
-$footer = templateParser::parse_template($footer, $object_arr);
+$converted = templateParser::parse_template($text, $object_arr, $template);
+$header = templateParser::parse_template($header, $object_arr, $template);
+$footer = templateParser::parse_template($footer, $object_arr, $template);
 
 $printable = str_replace("\n", "<br />", $converted);
 
@@ -178,7 +178,7 @@ if ($task === 'pdf' || $task === 'emailpdf') {
 }
 
 
-function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 'table')
+function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 'table', $template)
 {
     $firstValue = '';
     $firstNum = 0;
@@ -239,11 +239,11 @@ function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 't
             $text = $tdTemp[0];
 
             foreach ($lineItemsGroups as $group_id => $lineItemsArray) {
-                $groupPartTemp = populate_product_lines($groupPart, $lineItemsArray);
-                $groupPartTemp = populate_service_lines($groupPartTemp, $lineItemsArray);
+                $groupPartTemp = populate_product_lines($groupPart, $lineItemsArray, $template);
+                $groupPartTemp = populate_service_lines($groupPartTemp, $lineItemsArray, $template);
 
                 $obb['AOS_Line_Item_Groups'] = $group_id;
-                $text .= templateParser::parse_template($groupPartTemp, $obb);
+                $text .= templateParser::parse_template($groupPartTemp, $obb, $template);
                 $text .= '<br />';
             }
             $tcount = strpos($parts[1], $endElement) + strlen($endElement);
@@ -258,15 +258,15 @@ function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 't
 
         $text .= $parts[1];
     } else {
-        $text = populate_product_lines($text, $lineItems);
-        $text = populate_service_lines($text, $lineItems);
+        $text = populate_product_lines($text, $lineItems, '', $template);
+        $text = populate_service_lines($text, $lineItems, '', $template);
     }
 
 
     return $text;
 }
 
-function populate_product_lines($text, $lineItems, $element = 'tr')
+function populate_product_lines($text, $lineItems, $element = 'tr', $template)
 {
     $firstValue = '';
     $firstNum = 0;
@@ -350,7 +350,7 @@ function populate_product_lines($text, $lineItems, $element = 'tr')
                 if ($productId != null && $productId != '0') {
                     $obb['AOS_Products_Quotes'] = $id;
                     $obb['AOS_Products'] = $productId;
-                    $text .= templateParser::parse_template($linePart, $obb);
+                    $text .= templateParser::parse_template($linePart, $obb, $template);
                 }
             }
         }
@@ -362,7 +362,7 @@ function populate_product_lines($text, $lineItems, $element = 'tr')
     return $text;
 }
 
-function populate_service_lines($text, $lineItems, $element = 'tr')
+function populate_service_lines($text, $lineItems, $element = 'tr', $template)
 {
     $firstValue = '';
     $firstNum = 0;
@@ -427,7 +427,7 @@ function populate_service_lines($text, $lineItems, $element = 'tr')
             foreach ($lineItems as $id => $productId) {
                 if ($productId == null || $productId == '0') {
                     $obb['AOS_Products_Quotes'] = $id;
-                    $text .= templateParser::parse_template($linePart, $obb);
+                    $text .= templateParser::parse_template($linePart, $obb, $template);
                 }
             }
         }

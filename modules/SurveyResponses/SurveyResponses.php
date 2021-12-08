@@ -187,15 +187,15 @@ class SurveyResponses extends Basic
             $beans['Cases'] = $case->id;
         }
         $ret = array();
-        $ret['subject'] = from_html(aop_parse_template($template->subject, $beans));
+        $ret['subject'] = from_html(aop_parse_template($template->subject, $beans, $template));
         $ret['body'] =
             from_html(
-                aop_parse_template(str_replace("\$sugarurl", $sugar_config['site_url'], $template->body_html), $beans)
+                aop_parse_template(str_replace("\$sugarurl", $sugar_config['site_url'], $template->body_html), $beans, $template)
             );
         $ret['body_alt'] =
             strip_tags(
                 from_html(
-                    aop_parse_template(str_replace("\$sugarurl", $sugar_config['site_url'], $template->body), $beans)
+                    aop_parse_template(str_replace("\$sugarurl", $sugar_config['site_url'], $template->body), $beans, $template)
                 )
             );
 
