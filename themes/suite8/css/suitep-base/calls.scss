@@ -1,0 +1,71 @@
+.view-module-Calls {
+    #EditView .buttons, .action_buttons {
+        bottom: 0.8em;
+    }
+    input[type=button] {
+        margin: 0.2em;
+        font-weight: bold;
+        height: 2.2em;
+        line-height: 1.1em;
+        background-color: rgb(147, 164, 179);
+        text-transform: capitalize; 
+        border-radius: 0.2em;
+        padding: 0.3em 1em;
+        letter-spacing: 0.05em;
+        &:hover {
+            background: $btn-hover-bg-color;
+        }
+    }
+    input[type="button"][disabled] {
+        opacity: 0.5;
+    }
+    #scheduler .schedulerDiv {        
+        padding-top: 0; 
+        margin-top: 1em;
+        h3 {
+            font-size: 16px;
+        }
+    }
+    .schedulerInvitees {
+        margin-top: 1em;
+        border-bottom: 1px solid $panel-border-bg;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        h3 {
+            margin-top: 0;
+            font-size: 16px;
+        }
+    }
+    input[type=text],input[type=password],input[type=email],input[type=number]{
+        background-color: $transparent-color;
+        border: 1px solid $form-border-color;        
+    }
+    #scheduler_search {
+        .button {
+            margin: 0.2em;
+            font-weight: bold;
+            height: 2.2em;
+            line-height: 1.1em;
+            background-color: rgb(147, 164, 179);
+            text-transform: capitalize; 
+            border-radius: 0.2em;
+            padding: 0.3em 1em;
+            letter-spacing: 0.05em;
+            &:hover {
+                background: $btn-hover-bg-color;
+            }
+        }
+    } 
+    #create-invitees {
+        padding-top:0;
+        margin-top: 1em;
+        padding-bottom: 20px;
+        h3 {
+            font-size: 16px;
+        }
+    }
+    #list_div_win {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+}

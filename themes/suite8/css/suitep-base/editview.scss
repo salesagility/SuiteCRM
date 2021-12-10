@@ -64,7 +64,7 @@ div#searchResults {
 #scheduler .schedulerDiv {
   background-color: $panel-bg;
   color: $main-font-color;
-  padding: 20px 20px 10px 20px;
+  padding: 20px 20px 20px 20px;
   border: 1px solid $panel-border-bg;
   border-radius: $border-radius-base;
   text-align: left;
@@ -229,8 +229,8 @@ div#searchResults {
 #list_div_win {
   background-color: $panel-bg;
   color: $main-font-color;
-  padding: 20px 20px 10px 20px;
-  margin-top: 1em;
+  padding: 20px;
+  margin-top: 0;
   border: 1px solid $panel-border-bg;
   border-radius: $border-radius-base;
   text-align: left;
