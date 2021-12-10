@@ -100,10 +100,10 @@ class SugarJobQueue
             $this->timeout = $GLOBALS['sugar_config']['jobs']['timeout'];
         }
         if (!empty($GLOBALS['sugar_config']['jobs']['failure_lifetime'])) {
-            $this->timeout = $GLOBALS['sugar_config']['jobs']['failure_lifetime'];
+            $this->failure_lifetime = $GLOBALS['sugar_config']['jobs']['failure_lifetime'];
         }
         if (!empty($GLOBALS['sugar_config']['jobs']['success_lifetime'])) {
-            $this->timeout = $GLOBALS['sugar_config']['jobs']['success_lifetime'];
+            $this->success_lifetime = $GLOBALS['sugar_config']['jobs']['success_lifetime'];
         }
     }
 
