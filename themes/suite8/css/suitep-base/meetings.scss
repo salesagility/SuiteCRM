@@ -4,6 +4,9 @@
     }
     .schedulerInvitees {
         margin-top: 1em;
+        border-bottom: 1px solid $panel-border-bg;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
         h3 {
             margin-top: 0;
             font-size: 16px;
@@ -41,4 +44,27 @@
             background: $btn-hover-bg-color;
         }
     }  
+    input[type=button] {
+        margin: 0.2em;
+        font-weight: bold;
+        height: 2.2em;
+        line-height: 1.1em;
+        background-color: rgb(147, 164, 179);
+        text-transform: capitalize; 
+        border-radius: 0.2em;
+        padding: 0.3em 1em;
+        letter-spacing: 0.05em;
+        &:hover {
+            background: $btn-hover-bg-color;
+        }
+    }
+    input[type="button"][disabled] {
+        background: #a59f9f;
+        opacity: 0.5;
+    }
+    #list_div_win {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        margin-top: 0;
+    }
 }
