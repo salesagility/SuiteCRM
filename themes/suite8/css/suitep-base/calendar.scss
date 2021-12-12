@@ -93,8 +93,6 @@ table#goto_date_trigger_div_t thead {
 .yui-calendar a.calnavleft
 {
   color: $default-btn-color;
-  background-color: $calendar-arrow-button-bg;
-  border: 1px solid $calendar-arrow-button-bg;
   padding: 0;
   border-radius: $border-radius-base;
   text-transform: uppercase;
@@ -110,13 +108,11 @@ table#goto_date_trigger_div_t thead {
 .yui-calendar a.calnavright {
   display: inline-block;
   font-weight: normal;
-  background-color: $calendar-arrow-button-bg;
   background-origin: padding-box;
   background-position: 0 0;
   color: $calendar-arrow-button-color;
   padding: 0;
   margin-top: 10px;
-  border: 1px solid $calendar-arrow-button-bg;
   border-radius: $border-radius-base;
   width: 32px;
   height: 32px;
@@ -131,12 +127,12 @@ table#goto_date_trigger_div_t thead {
 
 .yui-calendar .calnavleft {
   left: 0;
-  background-image: url("../../../../../themes/suite8/images/p_left.svg");
+  background-image: url("../../../../../themes/suite8/images/chevron-left.svg");
 }
 
 .yui-calendar .calnavright {
   right: 0;
-  background-image: url("../../../../../themes/suite8/images/p_right.svg");
+  background-image: url("../../../../../themes/suite8/images/chevron-right.svg");
 }
 
 .yui-module .hd {
@@ -213,9 +209,17 @@ table#goto_date_trigger_div_t thead {
 }
 
 a#callnav_today {
-  clear:both;
-  line-height: 40px;
+  clear: both;
+  line-height: 30px;
   display: block;
+  color: $white;
+  border: 1px solid lightgrey;
+  width: 8em;
+  text-align: center;
+  margin-bottom: 0.4em;
+  margin-top: 0.4em;
+  border-radius: 4px;
+  background: #93a4b3;
 }
 
 .monthHeader {
@@ -913,5 +917,104 @@ iframe.teamNoticeBox {
 
   .modal-calendar-settings  .modal-content  {
     width: 900px;
+  }
+}
+
+.yui-panel-container {
+  .container-close {
+    color: $white;
+    line-height: 1;
+  } 
+  .yui-calendar .calheader {
+    background: #f8f9fa;
+  } 
+  .yui-calcontainer {
+    padding:0;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    .yui-cal-nav {
+      top: 3.4em;
+      font-size: 100%;
+      border: 1px solid lightgrey;
+      select {
+        background: url($select-edit-background-url) no-repeat right;
+        background-size: 25px 11px;
+        border-color: $bright-grey;
+      } 
+    input[type=text] {
+      background-color:$transparent-color;
+      border: 1px solid $form-border-color;
+    }
+  }
+}
+  .bd {
+    .callnav_today {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+    }
+    .yui-calendar .calhead {
+      background: $white;
+    }
+    .yui-calendar td.calcell a {
+      font-size: 15px;
+    }
+    .yui-calendar .calweekdayrow th {
+      background: #f8f9fa;
+      color: #5bc0de;
+      font-style: italic;
+      border-bottom: 1px solid lightgrey;
+    }
+    .yui-calendar td.calcell {
+      border: none;
+    }
+    .yui-calendar td.calcell.oom {
+      background: none;
+      color: lightgray;
+      font-weight: bold;
+    }
+    .yui-calendar td.calcell.selected a {
+      background: #007bff;
+      color: $white;
+    }
+    .yui-calendar td.calcell.selected {
+      background: $white;
+    }
+    .yui-calendar a.calnav {
+      background: $white;
+      color: $black;
+      border: 1px solid lightgrey;
+    }
+  }
+  .yui-calendar a.calnavleft, .yui-calendar a.calnavright {
+    display: inline-block;
+    font-weight: bold;
+    background-position: 0 0;
+    padding: 0;
+    margin-top: 10px;
+    width: 25px;
+    height: 30px;
+    text-transform: uppercase;
+    color: $black;
+    background-repeat: no-repeat;
+    background-size: 100%;
+  }
+  .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn.yui-default button {
+    background-color: rgb(147, 164, 179);
+    text-shadow: none;
+  }
+  .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn button {
+    background-color: rgb(147, 164, 179);
+  }
+  .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn.yui-default {
+    background-color: rgb(147, 164, 179);
+    border: none;
+    margin-right: 0.6em;
+  }
+  .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn {
+    background-color: rgb(147, 164, 179);
+  }
+  .yui-calcontainer .yui-cal-nav-b {
+    text-align: left;
   }
 }

@@ -24,7 +24,7 @@
  * the words "Supercharged by SuiteCRM".
  */
 
-#condition_lines_span {
+ #condition_lines_span {
   display: block;
 }
 
@@ -100,7 +100,6 @@
 }
 
 #aow_conditionLines tbody td:first-of-type {
-  padding-left: 8px;
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
@@ -206,17 +205,6 @@
 [field="action_lines"] {
   display: block;
   width: 100%;
-}
-
-#aow_conditionLines [type="button"] {
-  background-color: $white;
-  padding: 7px;
-  margin-right: 10px;
-  border: 1px solid $dark-grey-line;
-  border-radius: $border-radius-base;
-  color: #000;
-  height: 29px;
-  width: 2.4em;
 }
 
 #actionLines [type="button"] {
@@ -619,5 +607,34 @@ table.email-line {
   .action-buttons {
     margin-top: -1.5em;
     top: -2em;
+  }
+  #plus-icon {
+    background: $white;
+    border: 1px solid $panel-border-bg;
+    border-radius: $border-radius-base;
+    padding: 0.5em 0.4em 0.2em 0.6em;
+    font-size: 16px;
+    line-height: 0;
+    font-weight: bold;
+  }
+  #aow_conditionLines [type="button"] {
+    background-color: $white;
+    padding: 7px;
+    margin-right: 10px;
+    border: 1px solid #93a4b3;
+    border-radius: 4px;
+    color: #000;
+    height: 29px;
+    width: 2.4em;
+  }
+  #aow_conditionLines input {
+    margin-top: 5px;
+    line-height: 17px;
+  }
+  #aow_conditionLines > tbody > tr > td > table.dateTime .dateTimeComboColumn .calendarstart {
+    top: -6px;
+  }
+  #aow_conditionLines > tbody > tr > td > table.dateTime .dateTimeSection {
+    margin-top: -8px;
   }
 }
