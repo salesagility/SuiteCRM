@@ -1,0 +1,11 @@
+.view-module-Notes {
+    select {
+        background: url($select-edit-background-url) no-repeat right;
+        background-size: 25px 11px;
+        border-color: $bright-grey;
+        margin-bottom: 0.5em;
+    }
+    .tabDetailViewDFLink {
+        line-height: 0;
+    }
+}
