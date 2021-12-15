@@ -1,0 +1,52 @@
+.view-action-config {
+    table.table {
+        border-radius: 10px;
+        tr td {
+            padding-left: 1.5em;
+            
+        }
+    }
+    hr {
+        border: 1px solid lightgray;
+        height: 0;
+    }
+    .action-buttons-config {
+        position: absolute;
+        right: 0;
+        margin-top: -4.3em;
+        .button {
+            background-color: $nepal-grey;
+            border-radius: 0.2em;
+            font-weight: bold;
+            height: 2.2em;
+            line-height: 1em;
+            letter-spacing: 0.05em;
+            padding: 0.3em 1em;
+            text-transform: capitalize;
+            margin: 0.2em;
+            &:hover {
+                background: $pale-blue;
+            }
+        }
+    }
+    .moduleTitle {
+        border-bottom: 1px solid lightgray;
+        margin-bottom: 1em;
+    }
+    input[type=text],input[type=password],input[type=email],input[type=number]{
+        background-color: $transparent-color;
+        border: 1px solid $form-border-color;
+    }
+    select {
+        background: url($select-edit-background-url) no-repeat right;
+        background-size: 25px 11px;
+        border-color: $bright-grey;
+    }
+    textarea {
+        background-color: $transparent-color;
+        border: 1px solid $form-border-color;
+    }
+    .action-button-footer {
+        display: none;
+    }
+}

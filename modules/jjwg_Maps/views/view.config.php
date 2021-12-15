@@ -45,9 +45,9 @@ class Jjwg_MapsViewConfig extends SugarView
 
         $unit_types = $GLOBALS['app_list_strings']['map_unit_type_list']; ?>
 
-        <p>&nbsp;</p>
-
-        <p style="margin: 15px 0px 15px 0px; font-size: 1.7em;"><strong><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_TITLE']; ?></strong></p>
+        <div class="moduleTitle">
+            <h2><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_TITLE']; ?></h2>
+        </div>
 
         <?php if (!empty($_REQUEST['config_save_notice'])) {
             ?>
@@ -59,13 +59,11 @@ class Jjwg_MapsViewConfig extends SugarView
 <input type="hidden" name="module" value="<?php echo $GLOBALS['currentModule']; ?>">
 <input type="hidden" name="action" value="config" />
 
-
-<input type="submit" class="button" tabindex="101" name="submit" value="  <?php echo $GLOBALS['app_strings']['LBL_SAVE_BUTTON_LABEL']; ?>  " align="bottom">
-&nbsp;
-<input type="button" class="button" tabindex="102" name="cancel" value="  <?php echo $GLOBALS['app_strings']['LBL_CANCEL_BUTTON_LABEL']; ?>  " align="bottom"
+<div class="action-buttons-config">
+    <input type="submit" class="button" tabindex="101" name="submit" value="  <?php echo $GLOBALS['app_strings']['LBL_SAVE_BUTTON_LABEL']; ?>  " align="bottom">
+    <input type="button" class="button" tabindex="102" name="cancel" value="  <?php echo $GLOBALS['app_strings']['LBL_CANCEL_BUTTON_LABEL']; ?>  " align="bottom"
         onclick="document.location.href='index.php?module=Administration&amp;action=index'" title="">
-
-<br /><br />
+</div>
 
 <table class="edit view table" cellpadding="0" cellspacing="12" border="0">
     <tr>
@@ -298,7 +296,7 @@ class Jjwg_MapsViewConfig extends SugarView
     <?php
         } ?>
     <tr>
-        <td colspan="2"><hr /></td>
+        <td colspan="3"><hr /></td>
     </tr>
 
 
@@ -471,7 +469,7 @@ class Jjwg_MapsViewConfig extends SugarView
     <tr>
         <td colspan="2"><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_GOOGLE_GEOCODING_LIMIT_DESC']; ?></td>
     </tr>
-    <tr class="row odd">
+    <tr class="odd">
         <td><strong><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_ALLOW_APPROXIMATE_LOCATION_TYPE_TITLE']; ?> </strong></td>
         <td>
             <?php $enabled = !empty($GLOBALS['jjwg_config']['allow_approximate_location_type']) ? '1' : '0'; ?>
@@ -718,12 +716,14 @@ class Jjwg_MapsViewConfig extends SugarView
     </tr>
 </table>
 
-<br />
 
+<div class="action-button-footer">
 <input type="submit" class="button" tabindex="211" name="submit" value="  <?php echo $GLOBALS['app_strings']['LBL_SAVE_BUTTON_LABEL']; ?>  " align="bottom">
 &nbsp;
 <input type="button" class="button" tabindex="212" name="cancel" value="  <?php echo $GLOBALS['app_strings']['LBL_CANCEL_BUTTON_LABEL']; ?>  " align="bottom"
         onclick="document.location.href='index.php?module=Administration&amp;action=index'" title="">
+
+</div>
 
 </form>
 
