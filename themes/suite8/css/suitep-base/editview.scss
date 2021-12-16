@@ -121,7 +121,6 @@ div#searchResults {
   border-left: 4px solid $scheduler-end-color ;
 }
 
-
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime.free {
   border-left: 4px solid $scheduler-end-color ;
 }
@@ -5188,9 +5187,54 @@ object {
 @media (min-width: 980px) {
   #dialog1_c {
     z-index: 5;
-    margin-top: 100px;
-    margin-left: 40%;
+    position: absolute;
+    top: 30%!important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+    padding: 0;
+    .container-close {
+      color: $white;
+    }
+    .yui-module {
+      border-radius: 4px;
+    }
+    .yui-panel .bd {
+      padding: 8px;
+    }
+    input[type=textbox] {
+      background-color:$transparent-color;
+      border: 1px solid $form-border-color;
+      line-height: 26px;
+      border-radius: 0.3em;
+    }
+    select {
+      background: url($select-edit-background-url) no-repeat right;
+      background-size: 25px 11px;
+      border-color: $bright-grey;
+  } 
+  button {
+    margin: 0.2em;
+    font-weight: bold;
+    height: 2.2em;
+    line-height: 1.1em;
+    background-color: rgb(147, 164, 179);
+    text-transform: capitalize; 
+    border-radius: 0.2em;
+    padding: 0.3em 1em;
+    letter-spacing: 0.05em;
+    border: none;
+    color: $white;
+    &:hover {
+        background: $btn-hover-bg-color;
+    }
+  }  
+  #date_start_trigger {
+    line-height: 2;
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+    cursor: pointer;
   }
+}
 
   #dlg {
     left: 40%;
@@ -5199,7 +5243,6 @@ object {
   #dlg_c {
     left: 50%;
   }
-
 }
 
 @media (max-width: 1023px) {
@@ -5210,7 +5253,6 @@ object {
 }
 
 @media (min-width: 1024px) {
-
   form[name="wizform"] div.wizard-unique-elem {
     width: 1000px;
   }
@@ -5220,7 +5262,6 @@ object {
   #cal-edit {
     margin: 0 0 0 200px;
   }
-
 }
 
 @media (max-width: 1360px) {
