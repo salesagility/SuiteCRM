@@ -1125,11 +1125,14 @@
 
           if ($(self).find('#is_only_plain_text').length === 1) {
             $(self).find('#is_only_plain_text').click(function () {
-              var tinemceToolbar = $(tinymce.EditorManager.activeEditor.getContainer()).find('.mce-toolbar');
+              let tinymceContainer = $(tinymce.EditorManager.activeEditor.getContainer());
+              let description = $(self).find('#description');
               if ($('#is_only_plain_text').prop('checked')) {
-                tinemceToolbar.hide();
+                tinymceContainer.hide();
+                description.show();
               } else {
-                tinemceToolbar.show();
+                description.hide();
+                tinymceContainer.show();
               }
             });
           }
@@ -1383,19 +1386,16 @@
 
   $.fn.EmailsComposeView.defaults = {
     "tinyMceOptions": {
-      skin_url: "themes/default/css",
-      skin: "",
-      plugins: "fullscreen textcolor",
       menubar: false,
-      toolbar: ['fontselect | fontsizeselect | bold italic underline forecolor backcolor | styleselect'],
+      toolbar: ['fontselect | fontsizeselect | bold italic underline | forecolor backcolor | styleselect | outdent indent'],
       formats: {
         bold: {inline: 'b'},
         italic: {inline: 'i'},
         underline: {inline: 'u'}
       },
-      convert_urls:true,
-      relative_urls:false,
-      remove_script_host:false,
+      convert_urls: true,
+      relative_urls: false,
+      remove_script_host: false,
     }
   };
 }(jQuery));

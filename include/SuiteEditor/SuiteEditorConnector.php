@@ -75,8 +75,11 @@ class SuiteEditorConnector
                         onClickTemplateBody();
                     });
                 },
+                height : '480',
                 plugins: ['code', 'table', 'link', 'image'],
-            }");
+                toolbar: ['fontselect | fontsizeselect | bold italic underline | forecolor backcolor | styleselect | outdent indent | link image'],
+            }"
+        );
     }
 
     /**
