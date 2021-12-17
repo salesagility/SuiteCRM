@@ -2,7 +2,7 @@
   <img width="180px" height="41px" src="https://suitecrm.com/wp-content/uploads/2017/12/logo.png" align="right" />
 </a>
 
-# SuiteCRM 7.10.34
+# SuiteCRM 7.10.35
 
 [![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=7.10.x)](https://travis-ci.org/salesagility/SuiteCRM)
 [![codecov](https://codecov.io/gh/salesagility/SuiteCRM/branch/7.10.x/graph/badge.svg)](https://codecov.io/gh/salesagility/SuiteCRM/branch/7.10.x)
