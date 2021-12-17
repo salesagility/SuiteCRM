@@ -129,6 +129,8 @@ $dictionary['Email'] = array(
             'vname' => 'description',
             'source' => 'non-db',
             'inline_edit' => false,
+            'rows' => 6,
+            'cols' => 80,
 
         ),
         'date_sent_received' => array(

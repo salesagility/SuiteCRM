@@ -201,10 +201,27 @@
 
 .compose-view {
   .panel {
+
+    .col-sm-6 [type].col-sm-8.edit-view-field input[type=text]#emails_email_templates_name {
+      width: 72.25%;
+    }
+
+    .col-sm-6 [type].col-sm-8.edit-view-field input[type=text]#parent_name {
+      width: 45%;
+    }
+    
     .col-sm-12 [type].col-sm-8.edit-view-field input[type=text] {
       width: 100%;
     }
 
+    .col-sm-12 .col-sm-8.edit-view-field textarea#description {
+      width: 100%;
+    }
+
+    .col-sm-8[type=parent] {
+      width: 100%;
+    }
+    
     .col-sm-8 {
       width: 83.33%;
     }
