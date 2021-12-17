@@ -60,7 +60,7 @@
     "symfony/yaml": "^5.2",
     "tecnickcom/tcpdf": "^6.4",
     "tedivm/jshrink": "^1.3",
-    "tinymce/tinymce": "^4.9.11",
+    "tinymce/tinymce": "^5.10",
     "tuupola/slim-jwt-auth": "^2.0",
     "vlucas/phpdotenv": "^3.5",
     "voku/anti-xss": "^4.0",
