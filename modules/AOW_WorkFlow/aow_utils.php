@@ -946,7 +946,8 @@ function fixUpFormatting($module, $field, $value)
     switch ($bean->field_defs[$field]['type']) {
         case 'datetime':
         case 'datetimecombo':
-            if (empty($value)) {
+            // If value is array, don't attempt to convert to DB format
+            if (empty($value) || is_array($value)) {
                 break;
             }
             if ($value == 'NULL') {
@@ -959,7 +960,8 @@ function fixUpFormatting($module, $field, $value)
             }
             break;
         case 'date':
-            if (empty($value)) {
+            // If value is array, don't attempt to convert to DB format
+            if (empty($value) || is_array($value)) {
                 break;
             }
             if ($value == 'NULL') {
