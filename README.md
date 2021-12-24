@@ -26,6 +26,8 @@ Our vision is to be the most adopted open source enterprise CRM in the world, gi
 
 Try out a free fully working [SuiteCRM demo available here](https://suitecrm.com/demo/)
 
+Or Run without installation [![TeamCode try-it-now](https://static01.teamcode.com/badge/demo.svg)](https://www.teamcode.com/tin/clone?applicationId=273461926832795648)
+
 ### Contribute [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/salesagility/SuiteCRM/issues)
 
 There are lots of ways to [contribute](https://docs.suitecrm.com/community/) to SuiteCRM
