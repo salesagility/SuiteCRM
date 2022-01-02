@@ -1,0 +1,102 @@
+.view-action-view_GanttChart {
+    #exportToPDFSpan {       
+        .ui-icon, .ui-widget-content .ui-icon {
+            background: url($ganttchart-close-background-url) no-repeat right;
+            background-size: 70%;
+            margin-top: -4px;
+            margin-left: -5px;
+        }
+        button {
+            color: transparent;
+            background: $white;
+            border: none;
+        }
+    }
+    .gantt-btn {
+        .ui-icon-plusthick {
+            display: inherit;
+            padding: 10px;
+            vertical-align: middle;
+        }
+        #add_button {
+            padding: 0.1em 0.5em 0.6em 0.4em;
+            background-color: rgb(147, 164, 179);
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            border: none;
+            color: $white;
+            &:before {
+                content: ' \002B';
+                color: $white;
+                font-size: 1.5em;
+            }
+            .ui-button-icon {
+                display: none;
+            }
+        }
+    }
+  }
+
+  .add-new-task {
+    p {
+        display: none;
+    }
+    .projects-gantt-chart-popup {
+      select {
+          background: url($select-edit-background-url) no-repeat right;
+          background-size: 25px 11px;
+          border-color: $bright-grey;
+          line-height: inherit;
+          width: 30%;
+      }
+      input[type=text],input[type=password],input[type=email],input[type=number]{
+          background-color: $transparent-color;
+          border: 1px solid $form-border-color;    
+          line-height: 16px;   
+      }
+      fieldset {
+          td {
+              width: 47%;
+          }
+          td:nth-child(2) {
+              position: relative;
+              top: -1.3em;
+          }
+      }       
+    }     
+}
+
+.ui-dialog {
+    padding: 0;
+}
+
+.ui-draggable .ui-dialog-titlebar {
+  text-align: center;
+  border-bottom: 1px solid #dee2e6;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.ui-dialog .ui-dialog-buttonpane button {
+  background-color: $nepal-grey;
+  border-radius: 0.2em;
+  font-weight: bold;
+  height: 2.2em;
+  line-height: 1em;
+  letter-spacing: 0.05em;
+  padding: 0.3em 1em;
+  text-transform: capitalize;
+  border: none;
+  color: $white;
+  font-size: 12px;
+  &:hover {
+      background: $pale-blue;
+  }
+}
+
+.ui-dialog .ui-dialog-titlebar-close {
+  color: $transparent-color;
+  background: $transparent-color;
+  border: none;
+}  

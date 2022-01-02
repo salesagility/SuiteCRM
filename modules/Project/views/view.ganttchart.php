@@ -74,15 +74,14 @@ class ProjectViewGanttChart extends ViewDetail
         parent::display(); ?>
         <!--Create task pop-up-->
         <div style="display: none;">
-            <div id="dialog"  title="<?php echo $mod_strings['LBL_ADD_NEW_TASK']; ?>">
+            <div id="dialog"  class="add-new-task" title="<?php echo $mod_strings['LBL_ADD_NEW_TASK']; ?>">
                 <p>
                     <?php echo $mod_strings['LBL_EDIT_TASK_PROPERTIES']; ?>
                 </p>
                 <form id="popup_form" class="projects-gantt-chart-popup">
                     <fieldset>
 						<table width="100%">
-							<tr><td>
-						
+							<tr><td>						
 							<input type="hidden" name="project_id" id="project_id" value="<?php echo $project->id; ?>">
 							<input type="hidden" name="consider_business_hours" id="consider_business_hours" value="<?php echo $project->override_business_hours; ?>">
 							<input type="hidden" name="task_id" style="display: none; visibility: collapse;" id="task_id" value="">
@@ -226,11 +225,11 @@ class ProjectViewGanttChart extends ViewDetail
 
 
 
-        <div id="wrapper" >
+        <div id="wrapper" class="gantt-btn">
 
 			<?php
                     if (ACLController::checkAccess('Project', 'edit', true)) {
-                        echo '<div style="clear:both;padding:10px;"><button id="add_button" class="gantt_button">' . $mod_strings['LBL_ADD_NEW_TASK'] . '</button></div>';
+                        echo '<div style="clear:both;padding:10px;padding-left: 0;"><button id="add_button" class="gantt_button">' . $mod_strings['LBL_ADD_NEW_TASK'] . '</button></div>';
                         echo '<input id="is_editable" name="is_editable" type="hidden" value="1" >';
                     } ?>
             <input id="project_id" type="hidden" name="project_id" value="<?php echo $_REQUEST["record"]; ?>" />
