@@ -1,0 +1,41 @@
+.view-module-FP_events {
+    .list .SugarActionMenu .sugar_action_button .subnav:hover {
+        background:rgb(147, 164, 179);
+    }
+    .clickMenu.SugarActionMenu>li>ul>li {
+        background:rgb(147, 164, 179);
+        float: right;
+    }
+    table.subpanel-table .pagination a {
+        background: transparent;
+        padding: 5px 21px!important;
+    }
+    .list .SugarActionMenu .sugar_action_button .subnav {
+        padding: 0;
+    }
+    
+    .list .SugarActionMenu .sugar_action_button>.subnav a {
+        &:hover {
+            background: rgb(75, 114, 145);
+        }
+    }
+    #selectLinkTop>.sugar_action_button>ul.subnav {
+        top: 24px;
+    }
+    .subpanel-table #selectLinkTop li.sugar_action_button {
+        top: 0;
+        bottom: 0;
+    }
+    .panel-default.sub-panel>.panel-heading>a {
+        position: fixed;
+        display: flex;
+    }
+    #selectLinkTop {
+        top: 1em;
+        display: table-cell;
+        position: absolute;
+    }
+    table.view {
+        position: relative;
+    }
+}
