@@ -345,6 +345,9 @@ function saveField($field, $id, $module, $value)
             require_once('modules/Leads/LeadFormBase.php');
             $bean->$field = $value;
             $bean->account_id = LeadFormBase::handleLeadAccountName($bean);
+        // Fix #9408 Allow deleting an email address from inline Edit
+        } else if($bean->field_defs[$field]['function']['name']=='getEmailAddressWidget'){
+            $bean->$field = empty($value) ? ' ' : $value;
         } else {
             $bean->$field = $value;
         }
