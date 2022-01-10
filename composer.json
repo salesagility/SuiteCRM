@@ -63,7 +63,7 @@
     "tinymce/tinymce": "^4.9.11",
     "tuupola/slim-jwt-auth": "^2.0",
     "vlucas/phpdotenv": "^3.5",
-    "voku/anti-xss": "^2.3",
+    "voku/anti-xss": "^4.0",
     "wikimedia/composer-merge-plugin": "^2.0",
     "zbateson/mail-mime-parser": "^1.1",
     "zf1/zend-gdata": "^1.12",
