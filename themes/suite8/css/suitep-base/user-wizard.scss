@@ -1,0 +1,155 @@
+.user-wizard {
+    .view {
+        background: $transparent-color;
+        padding: 2em 5em 2em 5em;
+        tr th {
+            padding: 0;
+            border-bottom: 1px solid $bright-grey;
+        }
+        tr td {
+            padding-top: 0.5em;
+            white-space: normal;
+            text-transform: capitalize;
+            vertical-align: middle;
+            color: $label-light-black;
+        }
+    }
+    hr {
+        border-bottom: 0.5px solid $bright-grey;
+        height: 0.1px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    textarea {
+        background-color: $white;
+        border: 1px solid $form-border-color;
+    }
+    select {
+        background: url($select-edit-background-url) $white no-repeat right;
+        background-size: 25px 11px;
+        border-color: $bright-grey;
+    }
+    input[type=text],input[type=password],input[type=email] {
+        background-color: $white;
+        border: 1px solid $form-border-color;
+    }
+    input:not([type]) {
+        background-color:$white;
+        border: 1px solid $form-border-color;
+    }
+    input[type=submit].button:hover {
+        background: $pale-blue;
+    }
+    a {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    .button {
+        padding: 0 10px;
+        margin: 4px;
+        margin: 0.2em;
+        font-weight: bold;
+        height: 2.2em;
+        line-height: 1.1em;
+        padding: 0.3em 0.9em;
+        background-color: $nepal-grey;
+        text-transform: capitalize;
+        &:hover {
+            background: $pale-blue;
+        }
+    }
+    h2 {
+        font-size: 1.8em;
+        color: $midnight-blue;        
+    }
+    .user-icon {
+        img {
+            width: 30px;
+            margin-top: 7px;
+        }
+    }
+    .welcome {
+        min-height: 100vh;
+        background-size: 100%;
+        background-repeat: no-repeat;
+        @media (min-width:768px) and (max-width:1024px) {
+            background-size: auto 100%;
+            background-repeat: no-repeat;
+            background-position: bottom top;
+        }
+        @media (max-width: 750px) {
+            background-size: cover; 
+        }
+        .row {
+            display: flex;
+            justify-content: center;
+        }
+        .panel {
+            padding: 2.5em 2.5em 1.5em 2.5em;
+            margin-top: 5em;
+            background: rgba(255,255,255,0.7);
+            display: flex;
+            flex-direction: column;
+            @media (max-width: 750px) {
+                background: transparent; 
+                box-shadow: none;
+            }
+        }
+        h1 {
+            margin-top: 0.2em; 
+            margin-bottom: 0;
+        }
+        .open-crm-txt {
+            color: $shell-grey;
+            font-size: 1.3em;
+            font-weight: 300;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            border-bottom: 1px solid #958383;
+        }
+        .wizard-lbl {
+            margin-top: 0.8em;
+            margin-bottom: 0.5em;
+            padding: 0.1em;
+        }
+        .wizard-btn {
+            align-self: center;
+            display: flex;
+            padding-top: 0.5em;
+        }
+        .button {
+            background: $modal-btn-hover;
+        }
+    }
+    .wizard-finish {        
+        .wizard-finish-lbl {
+            border-bottom: 1px solid $bright-grey;
+            margin-top: 1em;
+            padding-bottom: 0.5em;
+            color: $shell-grey;
+            font-size: 1.3em;
+            font-weight: 300;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            margin-top: 0.3em;
+            padding-bottom: 0.3em;
+        }
+        .view {
+            tr td {
+                padding-top: 0;
+            }
+            padding: 1.8em 0 0 5em;
+            margin: 0;
+        }        
+        tr th {
+            border-bottom: none;
+        }
+        h2 {
+            margin-bottom: 0;
+        }        
+    }
+    .img-desc {
+        line-height: 10px;
+    }    
+}

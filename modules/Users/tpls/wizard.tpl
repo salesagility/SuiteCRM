@@ -59,7 +59,7 @@
 <body class="yui-skin-sam">
 <div id="main">
 <div id="content">
-<table style="width:auto;height:600px;" align="center"><tr><td align="center">
+<table style="width:100%;height:450px;" align="center"><tr valign="top"><td align="center">
 
 <form id="UserWizard" name="UserWizard" enctype='multipart/form-data' method="POST" action="index.php" onkeypress="return disableReturnSubmission(event);">
 <input type='hidden' name='action' value='SaveUserWizard'/>
@@ -70,35 +70,24 @@
 <script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_emails.js'}"></script>
 <script type="text/javascript" src="{sugar_getjspath file='modules/Users/User.js'}"></script>
 
-<div class="dashletPanelMenu wizard">
+<div class="dashletPanelMenu wizard user-wizard">
 
-<div class="bd">
+<div id="bootstrap-container" class="bd">
 
-
-<div id="welcome" class="screen">
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-            <td>
-                <div class="edit view">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <th align="left" scope="row" colspan="4"><h2>{$MOD.LBL_WIZARD_WELCOME_TITLE}</h2></th>
-                        </tr>
-                        <tr>
-                            <td scope="row">
-                                <p> {$MOD.LBL_WIZARD_WELCOME_NOSMTP}</p>
-                                <div class="userWizWelcome"><img src='include/images/sugar_wizard_welcome.jpg' border='0' alt='{$MOD.LBL_WIZARD_WELCOME_TAB}' width='765px' height='325px'></div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </td>
-        </tr>
-    </table>
-    <div class="nav-buttons">
-        <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"
+<div id="welcome" class="screen welcome" style="background-image: url('include/images/initial_page_bg.svg');">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col panel">
+                <h1>{$MOD.LBL_WIZARD_WELCOME_TITLE}</h1>
+                <div class="open-crm-txt"> Open Source CRM For The World </div>
+                <div class="wizard-lbl">{$MOD.LBL_WIZARD_WELCOME_NOSMTP}</div>
+                <div class="wizard-btn">
+                    <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"
                class="button primary" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_NEXT_BUTTON}  "
                onclick="SugarWizard.changeScreen('personalinfo',false);" id="next_tab_personalinfo" />
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -109,54 +98,82 @@
                 <div class="edit view">
                     <table width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
-                            <th align="left" scope="row" colspan="4"><h2><span>{$MOD.LBL_WIZARD_PERSONALINFO}</span></h2></th>
+                            <th align="left" scope="row" colspan="4">
+                                <h2><span>{$MOD.LBL_WIZARD_PERSONALINFO}</span></h2>
+                            </th>
                         </tr>
                         <tr>
                             <td align="left" scope="row" colspan="4"><i>{$MOD.LBL_WIZARD_PERSONALINFO_DESC}</i></td>
                         </tr>
                         <tr>
-                            <td width="17%" scope="row" nowrap="nowrap"><span>{$MOD.LBL_FIRST_NAME}:</span></td>
-                            <td width="33%"><span><input id='first_name' name='first_name' tabindex='1' size='25' maxlength='25' type="text" value="{$FIRST_NAME}"></span></td>
-                            <td width="17%" scope="row" nowrap="nowrap"><span>{$MOD.LBL_LAST_NAME}: <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
-                            <td width="33%"><span><input id='last_name' name='last_name' tabindex='2' size='25' maxlength='25' type="text" value="{$LAST_NAME}"></span></td>
+                            <td width="10%" scope="row" nowrap="nowrap">
+                                <span>{$MOD.LBL_FIRST_NAME}:</span>
+                            </td>
+                            <td width="40%">
+                                <span><input id='first_name' name='first_name' tabindex='1' size='25' maxlength='25' type="text" value="{$FIRST_NAME}"></span>
+                            </td>
+                            <td width="10%" scope="row" nowrap="nowrap">
+                                <span>{$MOD.LBL_ADDRESS_STREET}:</span>
+                            </td>
+                            <td width="40%">
+                                <span><input name='address_street' tabindex='8' value="{$ADDRESS_STREET}"/></span>
+                            </td>
                         </tr>
                         <tr>
                             <td scope="row" width="17%">
+                                <span>{$MOD.LBL_LAST_NAME}: <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span>
+                            </td>
+                            <td width="33%">
+                                <span><input id='last_name' name='last_name' tabindex='2' size='25' maxlength='25' type="text" value="{$LAST_NAME}"></span>
+                            </td>
+                            <td scope="row" nowrap="nowrap">
+                                <span>{$MOD.LBL_CITY}:</span>
+                            </td>
+                            <td>
+                                <span><input name='address_city' tabindex='8' size='15' maxlength='100' value='{$ADDRESS_CITY}'></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="17%" scope="row" nowrap="nowrap">
                                 {$MOD.LBL_EMAIL}: {if $REQUIRED_EMAIL_ADDRESS}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>{/if}
                             </td>
-                            <td width="33%"><span><input name='email1' tabindex='3' size='30' maxlength='100' value='{$EMAIL1}' id='email1' /></span></td>
-                            <td scope="row" nowrap="nowrap"><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
+                            <td width="33%" >
+                                <span><input name='email1' tabindex='3' size='30' maxlength='100' value='{$EMAIL1}' id='email1' /></span>
+                            </td>
+                            <td scope="row" nowrap="nowrap">
+                                <span>{$MOD.LBL_POSTAL_CODE}:</span>
+                            </td>
+                            <td>
+                                <span><input name='address_postalcode' tabindex='9' size='10' maxlength='20' value='{$ADDRESS_POSTALCODE}'></span>
+                            </td>
                         </tr>
                         <tr>
-                            <td width="17%" scope="row" nowrap="nowrap"><span>{$MOD.LBL_OFFICE_PHONE}:</span></td>
-                            <td width="33%" ><span><input name='phone_work' type="text" tabindex='4' size='20' maxlength='25' value='{$PHONE_WORK}'></span></td>
-                            <td scope="row" nowrap="nowrap"><span>{$MOD.LBL_MESSENGER_TYPE}:</span></td>
-                            <td  ><span>{$MESSENGER_TYPE_OPTIONS}</span></td>
+                            <td scope="row">
+                                <span>{$MOD.LBL_OFFICE_PHONE}:</span>
+                            </td>
+                            <td>
+                                <span><input name='phone_work' type="text" tabindex='4' size='20' maxlength='25' value='{$PHONE_WORK}'></span>
+                            </td>
+                            <td scope="row" nowrap="nowrap">
+                                <span>{$MOD.LBL_STATE}:</span>
+                            </td>
+                            <td>
+                                <span><input name='address_state' tabindex='9' size='15' maxlength='100' value='{$ADDRESS_STATE}'></span>
+                            </td>
                         </tr>
                         <tr>
-                            <td scope="row"><span>{$MOD.LBL_MOBILE_PHONE}:</span></td>
-                            <td  ><span><input name='phone_mobile' type="text" tabindex='6' size='20' maxlength='25' value='{$PHONE_MOBILE}'></span></td>
-                            <td scope="row" nowrap="nowrap"><span>{$MOD.LBL_MESSENGER_ID}:</span></td>
-                            <td  ><span><input name='messenger_id' type="text" tabindex='6' size='30' maxlength='100' value='{$MESSENGER_ID}'></span></td>
-                        </tr>
-                        <tr>
-                            <td width="17%" scope="row" nowrap="nowrap"><span>{$MOD.LBL_PRIMARY_ADDRESS}:</span></td>
-                            <td width="33%" ><span><textarea name='address_street' rows="2" tabindex='8' cols="30">{$ADDRESS_STREET}</textarea></span></td>
-                            <td scope="row" nowrap="nowrap"><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
-                        </tr>
-                        <tr>
-                            <td width="17%" scope="row" nowrap="nowrap"><span>{$MOD.LBL_CITY}:</span></td>
-                            <td width="33%" ><span><input name='address_city' tabindex='8' size='15' maxlength='100' value='{$ADDRESS_CITY}'></span></td>
-                            <td scope="row" nowrap="nowrap"><span>{$MOD.LBL_STATE}:</span></td>
-                            <td><span><input name='address_state' tabindex='9' size='15' maxlength='100' value='{$ADDRESS_STATE}'></span></td>
-                        </tr>
-                        <tr>
-                            <td scope="row" nowrap="nowrap"><span>{$MOD.LBL_POSTAL_CODE}:</span></td>
-                            <td><span><input name='address_postalcode' tabindex='9' size='10' maxlength='20' value='{$ADDRESS_POSTALCODE}'></span></td>
-                            <td scope="row" nowrap="nowrap"><span>{$MOD.LBL_COUNTRY}:</span></td>
-                            <td><span><input name='address_country' tabindex='10' size='10' maxlength='20' value='{$ADDRESS_COUNTRY}'></span></td>
+                            <td width="17%" scope="row" nowrap="nowrap">
+                                <span>{$MOD.LBL_MOBILE_PHONE}:</span>
+                            </td>
+                            <td width="33%" >
+                                <span><input name='phone_mobile' type="text" tabindex='6' size='20' maxlength='25' value='{$PHONE_MOBILE}'></span>
+                            </td>
+                            <td scope="row" nowrap="nowrap">
+                                <span>{$MOD.LBL_COUNTRY}:</span>
+                            </td>
+                            <td>
+                                <span><input name='address_country' tabindex='10' size='10' maxlength='20' value='{$ADDRESS_COUNTRY}'></span>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -201,7 +218,6 @@
                             <td width="33%"><span><select tabindex='14' name='dateformat'>{$DATEOPTIONS}</select></span></td>
                             <td scope="row" nowrap="nowrap"><span>{$MOD.LBL_TIME_FORMAT}:</span>&nbsp;{sugar_help text=$MOD.LBL_TIME_FORMAT_TEXT }</td>
                             <td ><span><select tabindex='14' name='timeformat'>{$TIMEOPTIONS}</select></span></td>
-
                         </tr>
                         <tr>
                             <td colspan="4"><hr /></td>
@@ -263,39 +279,39 @@
         onclick="SugarWizard.changeScreen('finish',false);" id="next_tab_finish" />
     </div>
 </div>
-<div id="finish" class="screen">
+
+<div id="finish" class="screen wizard-finish">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
             <td>
                 <div class="edit view">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="user-icon">
                         <tr>
                             <th align="left" scope="row" colspan="4"><h2>{$MOD.LBL_WIZARD_FINISH_TITLE}</h2></th>
                         </tr>
                         <tr>
                             <td scope="row">
-                                <h3>{$MOD.LBL_WIZARD_FINISH1}</h3>
-
+                                <h3 class="wizard-finish-lbl">{$MOD.LBL_WIZARD_FINISH1}</h3>
                                 <table cellpadding=0 cellspacing=0><input id='whatnext' name='whatnext' type="hidden" value='finish' />
                                     {if $IS_ADMIN}
-                                        <tr><td><img src=include/images/start.png style="margin-right: 5px;"></td><td><a onclick='document.UserWizard.whatnext.value="finish";document.UserWizard.submit()' href="#" ><b> {$MOD.LBL_WIZARD_FINISH2}  </b></a><br> {$MOD.LBL_WIZARD_FINISH2DESC}</td></tr>
+                                        <tr><td><img src=include/images/icon_start_using.svg style="margin-right: 5px;"></td><td><a onclick='document.UserWizard.whatnext.value="finish";document.UserWizard.submit()' href="#" ><b> {$MOD.LBL_WIZARD_FINISH2}  </b></a> <div class="img-desc"> {$MOD.LBL_WIZARD_FINISH2DESC}</div></td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-                                        <tr><td><img src=include/images/import.png style="margin-right: 5px;"></td><td><a onclick='document.UserWizard.whatnext.value="import";document.UserWizard.submit()' href="#" ><b> {$MOD.LBL_WIZARD_FINISH3} </b></a><br> {$MOD.LBL_WIZARD_FINISH4}</td></tr>
+                                        <tr><td><img src=include/images/icon_import_data.svg style="margin-right: 5px;"></td><td><a onclick='document.UserWizard.whatnext.value="import";document.UserWizard.submit()' href="#" ><b> {$MOD.LBL_WIZARD_FINISH3} </b></a>  <div class="img-desc"> {$MOD.LBL_WIZARD_FINISH4} </div></td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-                                        <tr><td><img src=include/images/create_users.png style="margin-right: 5px;"></td><td><a onclick='document.UserWizard.whatnext.value="users";document.UserWizard.submit()' href="#"  ><b> {$MOD.LBL_WIZARD_FINISH5} </b></a><br>{$MOD.LBL_WIZARD_FINISH6}</td></tr>
+                                        <tr><td><img src=include/images/icon_create_users.svg style="margin-right: 5px;"></td><td><a onclick='document.UserWizard.whatnext.value="users";document.UserWizard.submit()' href="#"  ><b> {$MOD.LBL_WIZARD_FINISH5} </b></a> <div class="img-desc"> {$MOD.LBL_WIZARD_FINISH6} </div></td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-                                        <tr><td><img src=include/images/settings.png style="margin-right: 5px;"></td><td><a  onclick='document.UserWizard.whatnext.value="settings";document.UserWizard.submit()' href="#" ><b> {$MOD.LBL_WIZARD_FINISH7} </b></a><br>{$MOD.LBL_WIZARD_FINISH8}</td></tr>
+                                        <tr><td><img src=include/images/icon_view_and_manage.svg style="margin-right: 5px;"></td><td><a  onclick='document.UserWizard.whatnext.value="settings";document.UserWizard.submit()' href="#" ><b> {$MOD.LBL_WIZARD_FINISH7} </b></a> <div class="img-desc"> {$MOD.LBL_WIZARD_FINISH8} </div></td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-                                        <tr><td><img src=include/images/configure.png style="margin-right: 5px;"></td><td><a onclick='document.UserWizard.whatnext.value="studio";document.UserWizard.submit()' href="#"  ><b> {$MOD.LBL_WIZARD_FINISH9} </b></a><br>{$MOD.LBL_WIZARD_FINISH10}</td></tr>
+                                        <tr><td><img src=include/images/icon_configure.svg style="margin-right: 5px;"></td><td><a onclick='document.UserWizard.whatnext.value="studio";document.UserWizard.submit()' href="#"  ><b> {$MOD.LBL_WIZARD_FINISH9} </b></a> <div class="img-desc"> {$MOD.LBL_WIZARD_FINISH10} </div></td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-                                        <tr><td><img src=include/images/university.png style="margin-right: 5px;"></td><td><a href="https://community.suitecrm.com" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH12}</td></tr>
+                                        <tr><td><img src=include/images/icon_visit_site.svg style="margin-right: 5px;"></td><td><a href="https://community.suitecrm.com" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b> <div class="img-desc"> {$MOD.LBL_WIZARD_FINISH12} </div> </td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
                                     {else}
-                                        <tr><td><img src=include/images/university2.png style="margin-right: 5px;"></td><td><a href="https://community.suitecrm.com" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH12}</td></tr>
+                                        <tr><td><img src=include/images/icon_visit_site.svg style="margin-right: 5px;"></td><td><a href="https://suitecrm.com" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH11} </b></a></b> <div class="img-desc"> {$MOD.LBL_WIZARD_FINISH12}</div></td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-                                        <tr><td><img src=include/images/docs.png style="margin-right: 5px;"></td><td><a href="https://docs.suitecrm.com/user/" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH14} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH15}</td></tr>
+                                        <tr><td><img src=include/images/icon_documentation.svg style="margin-right: 5px;"></td><td><a href="https://docs.suitecrm.com/user/" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH14} </b></a></b> <div class="img-desc"> {$MOD.LBL_WIZARD_FINISH15}</div></td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-                                        <tr><td><img src=include/images/forums.png style="margin-right: 5px;"></td><td><a href="https://community.suitecrm.com/" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH18} </b></a></b><br>{$MOD.LBL_WIZARD_FINISH19}</td></tr>
+                                        <tr><td><img src=include/images/icon_forums.svg style="margin-right: 5px;"></td><td><a href="https://community.suitecrm.com/" target="_blank"><b> {$MOD.LBL_WIZARD_FINISH18} </b></a></b> <div class="img-desc">{$MOD.LBL_WIZARD_FINISH19}</div></td></tr>
                                         <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
                                     {/if}
                                 </table>
@@ -308,15 +324,12 @@
     </table>
     <div class="nav-buttons">
         <input title="{$MOD.LBL_WIZARD_BACK_BUTTON}"
-               class="button" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_BACK_BUTTON}  "
+               class="button" type="button" name="next_tab1" value="{$MOD.LBL_WIZARD_BACK_BUTTON}"
         onclick="SugarWizard.changeScreen('locale',true);" id="previous_tab_locale" />&nbsp;
         <input title="{$MOD.LBL_WIZARD_FINISH_BUTTON}" class="button primary"
-               type="submit" name="save" value="  {$MOD.LBL_WIZARD_FINISH_BUTTON}  " />&nbsp;
+               type="submit" name="save" value="{$MOD.LBL_WIZARD_FINISH_BUTTON}"/>&nbsp;
     </div>
 </div>
-
-
-
 
 </div>
 
