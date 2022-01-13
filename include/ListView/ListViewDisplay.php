@@ -363,6 +363,8 @@ class ListViewDisplay
                 } else {
                     $menuItems[] = $this->buildBulkActionButton($location);
                 }
+            } else {
+                $menuItems[] = $this->buildBulkActionButton($location);
             }
 
             // Compose email
