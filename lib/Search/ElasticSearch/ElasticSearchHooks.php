@@ -74,6 +74,7 @@ class ElasticSearchHooks
         $this->action = 'index';
 
         if (ElasticSearchIndexer::isEnabled() !== false) {
+            $bean->module_name = strtolower($bean->module_name);
             $this->reIndexSafe($bean);
         }
     }
@@ -90,6 +91,7 @@ class ElasticSearchHooks
         $this->action = 'remove';
 
         if (ElasticSearchIndexer::isEnabled() !== false) {
+            $bean->module_name = strtolower($bean->module_name);
             $this->reIndexSafe($bean);
         }
     }
