@@ -43,6 +43,7 @@ use SuiteCRM\CleanCSV;
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+require_once ('include/TimeDate.php');
 
 class AOR_Report extends Basic
 {
@@ -1647,7 +1648,7 @@ class AOR_Report extends Basic
                                         //$field =
                                         $value = 'CAST(GETDATE() AS DATE)';
                                     } else {
-                                        $field = 'DATE(' . $field . ')';
+                                        $field = "DATE(CONVERT_TZ(" . $field . ",'+00:00', '" . getReportTimeZoneOffset(). ":00'))";
                                         $value = 'Curdate()';
                                     }
                                 } else {
@@ -1899,10 +1900,16 @@ class AOR_Report extends Basic
                                     $query['where'][] = $field . " NOT BETWEEN " . $value . " AND " . "'" . $this->db->quote($date)  . "'";
                                     break;
                                 case ">":
+                                    $query['where'][] = $field . " > '$date'";
+                                    break;
                                 case "<":
+                                    $query['where'][] = $field . " <" . $value;
+                                    break;
                                 case ">=":
+                                    $query['where'][] = $field . " >=" . $value;
+                                    break;
                                 case "<=":
-                                    $query['where'][] = $field . ' ' . $aor_sql_operator_list[$condition->operator] . ' ' . $value;
+                                    $query['where'][] = $field . " <= '$date'";
                                     break;
                             }
                         } else {
