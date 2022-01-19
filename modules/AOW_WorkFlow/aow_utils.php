@@ -533,6 +533,11 @@ function getModuleField(
         if (isset($fieldlist[$name]['options']) && is_array($fieldlist[$name]['options']) && !isset($fieldlist[$name]['options'][''])) {
             $fieldlist[$name]['options'][''] = '';
         }
+	// Fix #9435 - In order to properly show the expected blank value, we hack the vardef definition overriding default value 
+        // with blank value when the stored workflow value (now in $value) is blank.
+        if ($fieldlist[$name]['type'] == 'enum' || $fieldlist[$name]['type'] == 'multienum' || $fieldlist[$name]['type'] == 'dynamicenum') {
+            $fieldlist[$name]['default'] = $value === "" ? $value : $fieldlist[$name]['default'];
+        }
     }
 
     // fill in function return values
