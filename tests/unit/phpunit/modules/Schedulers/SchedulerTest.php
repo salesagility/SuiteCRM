@@ -127,7 +127,7 @@ class SchedulerTest extends SuitePHPUnitFrameworkTestCase
         $scheduler->job_interval = '0::3::3::3::3';
         $scheduler->parseInterval();
         $scheduler->setIntervalHumanReadable();
-        $this->assertEquals('On thehour; 03:00; 3rd; March; '. date("l", mktime(0, 0, 0, 3, 3, date("Y"))), $scheduler->intervalHumanReadable);
+        $this->assertEquals('On thehour; 03:00; 3rd; March; Wednesday', $scheduler->intervalHumanReadable);
     }
 
     public function testsetStandardArraysAttributes()
