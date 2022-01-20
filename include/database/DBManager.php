@@ -2221,7 +2221,7 @@ abstract class DBManager
                         return 0;
                     }
 
-                    return (int)$val;
+                    return $val === '' ? 'NULL' : (int)$val; // Fix #9440 - Forcing default null value for numeric fields.
                 case 'bigint':
                     $val = (float)$val;
                     if (!empty($fieldDef['required']) && $val == false) {
@@ -2242,7 +2242,7 @@ abstract class DBManager
                         return 0;
                     }
 
-                    return (float)$val;
+                    return $val === '' ? 'NULL' : (float)$val; // Fix #9440 - Forcing default null value for numeric fields.
                 case 'time':
                 case 'date':
                     // empty date can't be '', so convert it to either NULL or empty date value
