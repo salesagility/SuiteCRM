@@ -104,6 +104,7 @@ class ElasticSearchHooks
     private function reIndexSafe(SugarBean $bean)
     {
         try {
+            $bean->module_name = strtolower($bean->module_name);
             $this->reIndex($bean);
         } catch (SearchException $exception) {
             $this->handleError($exception);
@@ -161,7 +162,7 @@ class ElasticSearchHooks
      */
     private function isBlacklisted()
     {
-        return !in_array($this->bean->module_name, $this->indexer->getModulesToIndex());
+        return !in_array($this->bean->module_name, array_map("strtolower", $this->indexer->getModulesToIndex()));
     }
 
     private function correctAction()
