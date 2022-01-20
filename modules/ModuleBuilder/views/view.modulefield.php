@@ -133,7 +133,7 @@ class ViewModulefield extends SugarView
             'DATE','VARCHAR','VARCHAR2','NVARCHAR2','CHAR','NCHAR','NUMBER','PLS_INTEGER','BINARY_INTEGER','LONG','TIMESTAMP',
             'INTERVAL','RAW','ROWID','UROWID','MLSLABEL','CLOB','NCLOB','BLOB','BFILE','XMLTYPE',
             //SugarCRM reserved
-            'ID', 'ID_C', 'PARENT_NAME', 'PARENT_ID',
+            'ID', 'ID_C', 'PARENT_NAME', 'PARENT_ID', 'ACTION',
             );
 
 
