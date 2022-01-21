@@ -91,6 +91,7 @@
             background: rgba(255,255,255,0.7);
             display: flex;
             flex-direction: column;
+            width: 50%;
             @media (max-width: 750px) {
                 background: transparent; 
                 box-shadow: none;
@@ -108,8 +109,12 @@
             text-transform: uppercase;
             border-bottom: 1px solid #958383;
         }
+        .wizard-mainlbl {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
         .wizard-lbl {
-            margin-top: 0.8em;
             margin-bottom: 0.5em;
             padding: 0.1em;
         }

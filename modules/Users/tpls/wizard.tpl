@@ -80,6 +80,7 @@
             <div class="col panel">
                 <h1>{$MOD.LBL_WIZARD_WELCOME_TITLE}</h1>
                 <div class="open-crm-txt"> Open Source CRM For The World </div>
+                <div class="wizard-mainlbl">Maintained by <img src=include/images/sa_logo.svg style="height:60px;"></div>
                 <div class="wizard-lbl">{$MOD.LBL_WIZARD_WELCOME_NOSMTP}</div>
                 <div class="wizard-btn">
                     <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"

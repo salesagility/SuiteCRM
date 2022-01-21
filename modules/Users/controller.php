@@ -187,8 +187,21 @@ class UsersController extends SugarController
                 $_POST['default_locale_name_format'], 0, 'global');
         }
 
+        $next = $_POST['whatnext'] ?? '';
+
+        $base = 'index.php?action=index&module=Home';
+        $nextActions = [
+            'users' => 'index.php?action=index&module=Users' ,
+            'finish' =>  'index.php?action=index&module=Home',
+            'settings' => 'index.php?action=index&module=Administration',
+            'studio' => 'index.php?action=index&module=ModuleBuilder?type=studio',
+            'import' => 'index.php?module=Import&action=step1&import_module=Administration',
+        ];
+
+        $returnUrl = $nextActions[$next] ?? $base;
+
         // redirect to home
-        SugarApplication::redirect('index.php?action=index&module=Home');
+        SugarApplication::redirect($returnUrl);
 
     }
 
