@@ -179,7 +179,7 @@ class LogicHook
      *
      * @param string $module_dir
      * @param string $event
-     * @param array $arguments
+     * @param object|array $arguments
      * @param SugarBean $bean
      */
     public function call_custom_logic($module_dir, $event, $arguments = null)
@@ -209,7 +209,7 @@ class LogicHook
      *
      * @param array $hook_array
      * @param string $event
-     * @param array $arguments
+     * @param object|array $arguments
      * @param SugarBean $bean
      */
     public function process_hooks($hook_array, $event, $arguments)

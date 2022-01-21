@@ -3147,10 +3147,10 @@ class SugarBean
      * function NAME(&$bean, $event, $arguments)
      *        $bean - $this bean passed in by reference.
      *        $event - The string for the current event (i.e. before_save)
-     *        $arguments - An array of arguments that are specific to the event.
+     *        $arguments - An object or array of arguments that are specific to the event.
      *
      * @param string $event
-     * @param array $arguments
+     * @param object|array $arguments
      */
     public function call_custom_logic($event, $arguments = null)
     {
@@ -3583,7 +3583,14 @@ class SugarBean
         }
         /* END - SECURITY GROUPS */
 
-        return implode(' AND ', $conditions);
+        $args = new stdClass();
+        $args->view = $view;
+        $args->user = $user;
+        $args->conditions = $conditions;
+
+        $this->call_custom_logic('before_acl_query', $args);
+
+        return implode(' AND ', $args->conditions);
     }
 
     /**
@@ -6136,7 +6143,28 @@ class SugarBean
             require_once("modules/SecurityGroups/SecurityGroup.php");
             $in_group = SecurityGroup::groupHasAccess($this->module_dir, $this->id, $view);
         }
-        return ACLController::checkAccess($this->module_dir, $view, $is_owner, $this->acltype, $in_group);
+
+        $args = new stdClass();
+        $args->view = $view;
+        $args->is_owner = $is_owner;
+        $args->in_group = $in_group;
+        $args->access = true;
+        $args->override_acl_check = false;
+
+        $this->call_custom_logic('before_acl_check', $args);
+
+        if ($args->override_acl_check) {
+            return $args->access;
+        }
+
+        return $args->access
+            && ACLController::checkAccess(
+                $this->module_dir, 
+                $args->view, 
+                $args->is_owner, 
+                $this->acltype, 
+                $args->in_group
+            );
     }
 
     /**
