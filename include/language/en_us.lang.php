@@ -1100,6 +1100,7 @@ $app_strings = array(
     'LBL_EMAIL_WARNING_MISSING_USER_CREDS' => 'Warning: Missing username and password for outgoing mail account.',
     'LBL_EMAIL_ACCOUNTS_SUBTITLE' => 'Set up Mail Accounts to view incoming emails from your email accounts.',
     'LBL_EMAIL_ACCOUNTS_OUTBOUND_SUBTITLE' => 'Provide SMTP mail server information to use for outgoing email in Mail Accounts.',
+    'LBL_EMAIL_OUTBOUND_PASSWORD_MISSING' => 'Outbound Email password could not be found for user ',
 
     'LBL_EMAIL_ADDRESS_BOOK_ADD' => 'Done',
     'LBL_EMAIL_ADDRESS_BOOK_CLEAR' => 'Clear',
