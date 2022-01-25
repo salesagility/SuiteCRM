@@ -146,6 +146,16 @@ class ImportController extends SugarController
             return;
         }
 
+        if (isset($fileName) && !hasValidFileName('import_refresh_mapping_file_name', str_replace('upload://', '', $fileName))) {
+            LoggerManager::getLogger()->fatal('Invalid importFile file name');
+            return;
+        }
+
+        if (strpos($fileName, 'phar://') !== false) {
+            LoggerManager::getLogger()->fatal('Invalid importFile file path');
+            return;
+        }
+
         $delim = $_REQUEST['delim'];
 
         if ($delim === '\t') {

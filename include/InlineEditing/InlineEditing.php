@@ -387,13 +387,27 @@ function saveField($field, $id, $module, $value)
 
 function getDisplayValue($bean, $field, $method = "save")
 {
+    global $log;
+
     if (file_exists("custom/modules/Accounts/metadata/listviewdefs.php")) {
         $metadata = require("custom/modules/Accounts/metadata/listviewdefs.php");
     } else {
         $metadata = require("modules/Accounts/metadata/listviewdefs.php");
     }
 
+    if (!$bean->ACLAccess('view')) {
+        $log->security("getDisplayValue - trying to access unauthorized view/module");
+        throw new BadMethodCallException('Unauthorized');
+    }
+
     $fieldlist[$field] = $bean->getFieldDefinition($field);
+    $isSensitive = !empty($fieldlist[$field]['sensitive']);
+    $notApiVisible = !empty($fieldlist[$field]['api-visible']);
+
+    if ($isSensitive || $notApiVisible){
+        $log->security("getDisplayValue - trying to access sensitive field");
+        throw new BadMethodCallException('Unauthorized');
+    }
 
     if (is_array($listViewDefs)) {
         $fieldlist[$field] = array_merge($fieldlist[$field], $listViewDefs);
