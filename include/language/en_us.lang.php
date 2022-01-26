@@ -934,6 +934,7 @@ $app_list_strings = array(
         'lead' => 'Leads Created',
         'contact' => 'Contacts Created',
         'blocked' => 'Suppressed by address or domain',
+        'Survey' => 'Survey answered',
     ),
 
     'campainglog_target_type_dom' => array(
