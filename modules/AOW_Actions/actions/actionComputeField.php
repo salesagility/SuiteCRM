@@ -108,7 +108,24 @@ class actionComputeField extends actionBase
                     $bean->{$relateFields[$formulas[$i]]['id_name']} =
                         $calculator->calculateFormula($formulaContents[$i]);
                 } else {
-                    $bean->{$formulas[$i]} = $calculator->calculateFormula($formulaContents[$i]);
+                    $fieldDef = $bean->getFieldDefinition($formulas[$i]);
+                    switch ($fieldDef['type']) {
+                        case 'double':
+                        case 'decimal':
+                        case 'currency':
+                        case 'float':
+                        case 'uint':
+                        case 'ulong':
+                        case 'long':
+                        case 'short':
+                        case 'tinyint':
+                        case 'int':
+                            $bean->{$formulas[$i]} = format_number($calculator->calculateFormula($formulaContents[$i]));
+                            break;
+                        default:
+                            $bean->{$formulas[$i]} = $calculator->calculateFormula($formulaContents[$i]);
+                            break;
+                    }
                 }
             }
 
