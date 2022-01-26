@@ -1,7 +1,5 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,39 +39,47 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-$subpanel_layout = array(
-    'top_buttons' => array(
-            /*array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Queues'),*/
-    ),
-    'where' => "",
+require_once __DIR__ .'/../../SugarQueue/SugarJobQueue.php';
+require_once __DIR__ .'/../../../modules/SchedulersJobs/SchedulersJob.php';
+require_once __DIR__ .'/NormalizeRecords.php';
 
-    'fill_in_additional_fields'=>true,
-    'list_fields' => array(
-        'name'			=> array(
-            'vname'		=> 'LBL_NAME',
-            'width'		=> '50%',
-            'sortable'	=> false,
-        ),
-        'status'		=> array(
-             'vname'	=> 'LBL_STATUS',
-             'width'	=> '10%',
-             'sortable'	=> true,
-        ),
-        'resolution'    => array(
-            'vname'	=> 'LBL_RESOLUTION',
-            'width'	=> '10%',
-            'sortable'	=> true,
-        ),
-        'execute_time'	=> array(
-             'vname'	=> 'LBL_EXECUTE_TIME',
-             'width'	=> '10%',
-             'sortable'	=> true,
-        ),
-        'date_modified'	=> array(
-             'vname'	=> 'LBL_DATE_MODIFIED',
-             'width'	=> '10%',
-             'sortable'	=> true,
-        ),
-        ),
-);
+
+class NormalizeRecordsSchedulerJob extends SchedulersJob
+{
+
+    public $name = 'Repair field encoding';
+    public $target = 'class::NormalizeRecords';
+
+    /**
+     * @param array $data
+     */
+    public static function scheduleJob(array $data): void
+    {
+        NormalizeRecords::getRepairStatus();
+
+        $job = new self();
+
+        $job->name = 'repair utf encoding';
+        $job->data = json_encode(array_merge(['partial' => true], $data), JSON_THROW_ON_ERROR);
+        $job->assigned_user_id = 1;
+
+        $queue = new SugarJobQueue();
+        /** @noinspection PhpParamsInspection */
+        $queue->submitJob($job);
+
+        NormalizeRecords::setRepairStatus(NormalizeRecords::REPAIR_STATUS_IN_PROGRESS);
+    }
+
+    /**
+     * Get Scheduler job bean
+     * @return SugarBean
+     */
+    public static function getJob(): SugarBean
+    {
+        return BeanFactory::getBean('SchedulersJobs', 'repair-utf-encoding');
+    }
+}

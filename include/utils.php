@@ -216,6 +216,13 @@ function make_sugar_config(&$sugar_config)
             'html',
             'htm',
         ) : $upload_badext,
+        'valid_image_ext' => [
+            'gif',
+            'png',
+            'jpg',
+            'jpeg',
+            'svg'
+        ],
         'upload_dir' => $upload_dir, // this must be set!!
         'upload_maxsize' => empty($upload_maxsize) ? 30000000 : $upload_maxsize,
         'allowed_preview' => [
@@ -470,6 +477,13 @@ function get_sugar_config_defaults(): array
             'html',
             'htm',
             'phtml',
+        ],
+        'valid_image_ext' => [
+            'gif',
+            'png',
+            'jpg',
+            'jpeg',
+            'svg'
         ],
         'upload_maxsize' => 30000000,
         'import_max_execution_time' => 3600,
@@ -5983,4 +5997,67 @@ function set_session_name(){
     if (session_status() === PHP_SESSION_NONE) {
         session_name($sessionName);
     }
+}
+
+/**
+ * Check if has valid image extension
+ * @param string $fieldName
+ * @param string $value
+ * @return bool
+ */
+function has_valid_image_extension($fieldName, $name)
+{
+    global $sugar_config;
+
+    $validExtensions = [
+        'gif',
+        'png',
+        'jpg',
+        'jpeg',
+        'svg'
+    ];
+
+    if (isset($sugar_config['valid_image_ext']) && is_array($sugar_config['valid_image_ext'])){
+        $validExtensions = $sugar_config['valid_image_ext'];
+    }
+
+    return has_valid_extension($fieldName, $name, $validExtensions);
+}
+
+/**
+ * Check if has valid extension
+ * @param string $fieldName
+ * @param string $name
+ * @param array $validExtensions
+ * @return bool
+ */
+function has_valid_extension($fieldName, $name, $validExtensions)
+{
+
+    if ($name === '.' || empty($name)) {
+        LoggerManager::getLogger()->security("Invalid ext  $fieldName : '$name'.");
+
+        return false;
+    }
+
+    $validExtensions = array_map('strtolower', $validExtensions);
+
+    $parts = explode('.', $name);
+
+    if (empty($parts)) {
+        LoggerManager::getLogger()->security("Invalid ext  $fieldName : '$name'.");
+
+        return false;
+    }
+
+    $ext = array_pop($parts);
+    $trimmedValue = preg_replace('/.*\.([^\.]+)$/', '\1', $ext);
+
+    if (!in_array(strtolower($trimmedValue), $validExtensions, true)) {
+        LoggerManager::getLogger()->security("Invalid $fieldName: '$name'.");
+
+        return false;
+    }
+
+    return true;
 }

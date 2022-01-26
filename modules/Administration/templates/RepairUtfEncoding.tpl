@@ -1,7 +1,4 @@
-<?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+{*
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,40 +37,46 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+*}
 
+<div class="view" style="min-height: calc(100vh - 200px)">
+    <h2 class="pt-0">{$MOD.LBL_REPAIR_UTF_ENCODING}</h2>
+    <div class="alert alert-warning sm" role="alert">
+        <h4 class="alert-heading">{$MOD.LBL_WARNING}</h4>
+        <p>{$MOD.LBL_REPAIR_UTF_ENCODING_DATA_WARNING}</p>
+        <p>{$MOD.LBL_REPAIR_UTF_ENCODING_BACKUP_WARNING}</p>
+        <p>{$MOD.LBL_REPAIR_UTF_ENCODING_SYNC_WARNING}</p>
+    </div>
 
-$subpanel_layout = array(
-    'top_buttons' => array(
-            /*array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Queues'),*/
-    ),
-    'where' => "",
+    {if $invalid_repair_from eq true}
+        <div class="alert alert-danger sm" role="alert">
+            <h4 class="alert-heading">{$MOD.LBL_ERROR}</h4>
+            <p>{$MOD.LBL_REPAIR_UTF_ENCODING_REPAIR_FROM_INVALID}</p>
+        </div>
+    {/if}
 
-    'fill_in_additional_fields'=>true,
-    'list_fields' => array(
-        'name'			=> array(
-            'vname'		=> 'LBL_NAME',
-            'width'		=> '50%',
-            'sortable'	=> false,
-        ),
-        'status'		=> array(
-             'vname'	=> 'LBL_STATUS',
-             'width'	=> '10%',
-             'sortable'	=> true,
-        ),
-        'resolution'    => array(
-            'vname'	=> 'LBL_RESOLUTION',
-            'width'	=> '10%',
-            'sortable'	=> true,
-        ),
-        'execute_time'	=> array(
-             'vname'	=> 'LBL_EXECUTE_TIME',
-             'width'	=> '10%',
-             'sortable'	=> true,
-        ),
-        'date_modified'	=> array(
-             'vname'	=> 'LBL_DATE_MODIFIED',
-             'width'	=> '10%',
-             'sortable'	=> true,
-        ),
-        ),
-);
+    <form name="RepairUtfEncoding" method="post" action="index.php">
+        <input type="hidden" name="module" value="Administration">
+        <input type="hidden" name="action" value="RepairUtfEncoding">
+        <input type="hidden" name="return_module" value="Administration">
+        <input type="hidden" name="return_action" value="RepairUtfEncoding">
+        <input type="hidden" name="perform_rebuild_utf_encoding" value="true">
+        <div class="other view container-fluid">
+            <div class="row">
+                <div class="col-sm-3" >{$MOD.LBL_SYNC_RUN}</div>
+                <div class="col-sm-9"><input type="checkbox" name="syncRun" value="true"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3" >{$MOD.LBL_KEEP_TRACKING_TABLES}</div>
+                <div  class="col-sm-9"><input type="checkbox" name="keepTrackingTables" value="true"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3" >{$MOD.LBL_REPAIR_FROM_DATE}</div>
+                <div  class="col-sm-3"><input type="date" name="repairFrom" class="form-control" value="2021-04-27"></div>
+            </div>
+            <div class="row">
+                <div  class="col-sm-3"><input type="submit" name="button" value="{$MOD.LBL_SUBMIT}"></div>
+            </div>
+        </div>
+    </form>
+</div>

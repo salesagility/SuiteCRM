@@ -345,6 +345,9 @@ function saveField($field, $id, $module, $value)
             require_once('modules/Leads/LeadFormBase.php');
             $bean->$field = $value;
             $bean->account_id = LeadFormBase::handleLeadAccountName($bean);
+        // Fix #9408 Allow deleting an email address from inline Edit
+        } else if($bean->field_defs[$field]['function']['name']=='getEmailAddressWidget'){
+            $bean->$field = empty($value) ? ' ' : $value;
         } else {
             $bean->$field = $value;
         }
@@ -384,13 +387,27 @@ function saveField($field, $id, $module, $value)
 
 function getDisplayValue($bean, $field, $method = "save")
 {
+    global $log;
+
     if (file_exists("custom/modules/Accounts/metadata/listviewdefs.php")) {
         $metadata = require("custom/modules/Accounts/metadata/listviewdefs.php");
     } else {
         $metadata = require("modules/Accounts/metadata/listviewdefs.php");
     }
 
+    if (!$bean->ACLAccess('view')) {
+        $log->security("getDisplayValue - trying to access unauthorized view/module");
+        throw new BadMethodCallException('Unauthorized');
+    }
+
     $fieldlist[$field] = $bean->getFieldDefinition($field);
+    $isSensitive = !empty($fieldlist[$field]['sensitive']);
+    $notApiVisible = !empty($fieldlist[$field]['api-visible']);
+
+    if ($isSensitive || $notApiVisible){
+        $log->security("getDisplayValue - trying to access sensitive field");
+        throw new BadMethodCallException('Unauthorized');
+    }
 
     if (is_array($listViewDefs)) {
         $fieldlist[$field] = array_merge($fieldlist[$field], $listViewDefs);

@@ -178,7 +178,7 @@ div#searchResults {
   height: 2.2em;
   line-height: 1.1em;
   background-color: rgb(147, 164, 179);
-  text-transform: capitalize; 
+  text-transform: capitalize;
   border-radius: 0.2em;
   padding: 0.3em 1em;
   letter-spacing: 0.05em;
@@ -200,7 +200,7 @@ div#searchResults {
   height: 2.2em;
   line-height: 1.1em;
   background-color: rgb(147, 164, 179);
-  text-transform: capitalize; 
+  text-transform: capitalize;
   border-radius: 0.2em;
   padding: 0.3em 1em;
   letter-spacing: 0.05em;
@@ -5211,14 +5211,14 @@ object {
       background: url($select-edit-background-url) no-repeat right;
       background-size: 25px 11px;
       border-color: $bright-grey;
-  } 
+  }
   button {
     margin: 0.2em;
     font-weight: bold;
     height: 2.2em;
     line-height: 1.1em;
     background-color: rgb(147, 164, 179);
-    text-transform: capitalize; 
+    text-transform: capitalize;
     border-radius: 0.2em;
     padding: 0.3em 1em;
     letter-spacing: 0.05em;
@@ -5227,7 +5227,7 @@ object {
     &:hover {
         background: $btn-hover-bg-color;
     }
-  }  
+  }
   #date_start_trigger {
     line-height: 2;
     margin-right: 0.5em;

@@ -60,6 +60,7 @@ class ProjectTask extends SugarBean
     public $parent_task_id;
     public $predecessors;
     public $priority;
+    public $importable = true;
 
     // related information
     public $assigned_user_name;

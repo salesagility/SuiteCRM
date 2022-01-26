@@ -45,6 +45,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once 'include/Services/NormalizeRecords/NormalizeRecords.php';
+
 /**
  * Set up an array of Jobs with the appropriate metadata
  * 'jobName' => array (
