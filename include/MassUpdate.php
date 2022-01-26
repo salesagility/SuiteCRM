@@ -1238,17 +1238,17 @@ EOQ;
      */
     public function addDate($displayname, $varname)
     {
-        global $timedate;
+        global $timedate, $app_strings, $app_list_strings, $theme, $current_user;
         //letrium ltd
         $displayname = addslashes($displayname);
         $userformat = '(' . $timedate->get_user_date_format() . ')';
         $cal_dateformat = $timedate->get_cal_date_format();
-        global $app_strings, $app_list_strings, $theme;
+	$cal_fdow = $current_user->get_first_day_of_week() ? $current_user->get_first_day_of_week() : '0';
 
         $javascriptend = <<<EOQ
 		 <script type="text/javascript">
 		Calendar.setup ({
-			inputField : "${varname}jscal_field", daFormat : "$cal_dateformat", ifFormat : "$cal_dateformat", showsTime : false, button : "${varname}jscal_trigger", singleClick : true, step : 1, weekNumbers:false
+			inputField : "${varname}jscal_field", daFormat : "$cal_dateformat", ifFormat : "$cal_dateformat", showsTime : false, button : "${varname}jscal_trigger", singleClick : true, step : 1, startWeekday: $cal_fdow, weekNumbers:false
 		});
 		</script>
 EOQ;
@@ -1296,10 +1296,10 @@ EOQ;
      */
     public function addDatetime($displayname, $varname)
     {
-        global $timedate;
+        global $timedate, $app_strings, $app_list_strings, $theme, $current_user;
         $userformat = $timedate->get_user_time_format();
         $cal_dateformat = $timedate->get_cal_date_format();
-        global $app_strings, $app_list_strings, $theme;
+	$cal_fdow = $current_user->get_first_day_of_week() ? $current_user->get_first_day_of_week() : '0';
 
         $javascriptend = <<<EOQ
 		 
@@ -1337,6 +1337,7 @@ EOQ;
 			button : "{$varname}_trigger",
 			singleClick : true,
 			step : 1,
+			startWeekday: $cal_fdow,
 			weekNumbers:false
 			});
 
