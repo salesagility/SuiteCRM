@@ -11,13 +11,13 @@
                 </td>
                 <td style="padding-right: 0px;" nowrap="" width="1%">
                     <div class="dashletToolSet">
-                        <a href="javascript:void(0)" title="{$DASHLET_BUTTON_ARIA_REFRESH}" aria-label="{$DASHLET_BUTTON_ARIA_REFRESH}" onclick="SUGAR.mySugar.retrieveCurrentPage(); return false;">                            
+                        <a href="javascript:void(0)" title="{$DASHLET_BUTTON_ARIA_REFRESH}" aria-label="{$DASHLET_BUTTON_ARIA_REFRESH}" onclick="SUGAR.mySugar.retrieveDashlet('{$DASHLET_ID}'); return false;">
                             <span class="refresh">{sugar_getimage name="refresh"}</span>
-                        </a>                        
-                        <a href="javascript:void(0)" title="{$DASHLET_BUTTON_ARIA_EDIT}" aria-label="{$DASHLET_BUTTON_ARIA_EDIT}" onclick="SUGAR.mySugar.configureDashlet('{$DASHLET_ID}'); return false;">                            
-                            <span class="settings">{sugar_getimage name="settings"}</span>                           
-                        </a>                        
-                        <a href="javascript:void(0)" title="{$DASHLET_BUTTON_ARIA_DELETE}" aria-label="{$DASHLET_BUTTON_ARIA_DELETE}" onclick="SUGAR.mySugar.deleteDashlet('{$DASHLET_ID}'); return false;">                            
+                        </a>
+                        <a href="javascript:void(0)" title="{$DASHLET_BUTTON_ARIA_EDIT}" aria-label="{$DASHLET_BUTTON_ARIA_EDIT}" onclick="SUGAR.mySugar.configureDashlet('{$DASHLET_ID}'); return false;">
+                            <span class="settings">{sugar_getimage name="settings"}</span>
+                        </a>
+                        <a href="javascript:void(0)" title="{$DASHLET_BUTTON_ARIA_DELETE}" aria-label="{$DASHLET_BUTTON_ARIA_DELETE}" onclick="SUGAR.mySugar.deleteDashlet('{$DASHLET_ID}'); return false;">
                             <span class="cross">{sugar_getimage name="cross"}</span>
                         </a>
                     </div>
