@@ -754,6 +754,11 @@ $dictionary['Email'] = array(
             'type' => 'index',
             'fields' => array('category_id')
         ),
+        array(
+            'name' => 'idx_email_uid',
+            'type' => 'index',
+            'fields' => array('uid')
+        ),
     ) // end indices
 );
 
