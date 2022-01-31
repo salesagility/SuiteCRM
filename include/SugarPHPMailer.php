@@ -319,26 +319,29 @@ eoq;
             $file_location = '';
             $filename = '';
 
+            $uploadDir = get_upload_dir();
+
             if ($note->object_name === 'Note') {
                 if (!empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) {
                     $file_location = $note->file->temp_file_location;
                     $filename = $note->file->original_file_name;
                     $mime_type = $note->file->mime_type;
                 } else {
-                    $file_location = "upload/{$note->id}";
+                    $file_location = $uploadDir . $note->id;
+
                     $filename = $note->id . $note->filename;
                     $mime_type = $note->file_mime_type;
                 }
             } elseif ($note->object_name === 'DocumentRevision') { // from Documents
                 $filename = $note->id . $note->filename;
-                $file_location = "upload/$filename";
+                $file_location =  $uploadDir . $filename;
                 $mime_type = $note->file_mime_type;
             }
 
             $filename =
                 substr($filename, 36, strlen($filename)); // strip GUID	for PHPMailer class to name outbound file
             if (!$note->embed_flag) {
-                $this->addAttachment($file_location, $filename, 'base64', $mime_type);
+                $this->addAttachment(stream_resolve_include_path($file_location), $filename, 'base64', $mime_type);
             } // else
         }
     }

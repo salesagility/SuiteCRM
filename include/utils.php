@@ -5871,3 +5871,22 @@ function getAppString($key)
 
     return $app_strings[$key];
 }
+
+function get_upload_dir() {
+
+    $config = SugarConfig::getInstance();
+
+    if (empty($config)) {
+        return 'upload/';
+    }
+
+    $uploadDir = $config->get('upload_dir', 'upload/');
+
+    if (empty($uploadDir)){
+        $uploadDir = 'upload/';
+    }
+
+    $uploadDir = rtrim($uploadDir,'/') . '/';
+
+    return $uploadDir;
+}

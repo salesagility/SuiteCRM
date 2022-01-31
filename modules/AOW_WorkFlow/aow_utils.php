@@ -465,7 +465,7 @@ function getModuleField(
             // Because TCPDF could not read image from download entryPoint, we need change entryPoint link to image path to resolved issue Image is not showing in PDF report
             if ($_REQUEST['module'] == 'AOR_Reports' && $_REQUEST['action'] == 'DownloadPDF') {
                 global $sugar_config;
-                $upload_dir = isset($sugar_config['upload_dir']) ? $sugar_config['upload_dir'] : 'upload/';
+                $upload_dir = get_upload_dir();
                 $contents = str_replace('index.php?entryPoint=download&id=', $upload_dir, $contents);
                 $contents = str_replace('&type={$module}', '', $contents);
             }

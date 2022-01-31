@@ -98,7 +98,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         $html .= '<img alt="test.png" src="https://foobar.com/index.php?entryPoint=download&type=Notes&id=' . $ids[1] . '&filename=test.png" width="118" height="105">';
 
         foreach ($ids as $id) {
-            file_put_contents('upload/' . $id, 'IAmAnImage:' . $id);
+            file_put_contents(get_upload_dir() . $id, 'IAmAnImage:' . $id);
         }
 
         $template = BeanFactory::newBean('EmailTemplates');
@@ -110,7 +110,7 @@ class EmailTemplateTest extends SuitePHPUnitFrameworkTestCase
         foreach ($ids as $id) {
             self::assertTrue(is_file('public/' . $id . '.png'));
             unlink('public/' . $id . '.png');
-            unlink('upload/' . $id);
+            unlink(get_upload_dir() . $id);
         }
 
         $expected = '<img src="https://foobar.com/public/' . $ids[0] . '.png" alt="" style="font-size:14px;" width="381" height="339" />';

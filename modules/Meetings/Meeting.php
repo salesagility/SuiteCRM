@@ -707,7 +707,7 @@ class Meeting extends SugarBean
 
         $notify_mail = parent::create_notification_email($notify_user);
 
-        $path = SugarConfig::getInstance()->get('upload_dir', 'upload/') . $this->id;
+        $path = get_upload_dir() . $this->id;
 
         require_once("modules/vCals/vCal.php");
         $content = vCal::get_ical_event($this, $GLOBALS['current_user']);
@@ -716,7 +716,7 @@ class Meeting extends SugarBean
             LoggerManager::getLogger()->warn('file_put_contents(' . $path . '): failed to open stream: Is a directory ');
         } else {
             if (file_put_contents($path, $content)) {
-                $notify_mail->AddAttachment($path, 'meeting.ics', 'base64', 'text/calendar');
+                $notify_mail->AddAttachment(stream_resolve_include_path($path), 'meeting.ics', 'base64', 'text/calendar');
             }
         }
         return $notify_mail;
@@ -730,7 +730,7 @@ class Meeting extends SugarBean
     {
         parent::send_assignment_notifications($notify_user, $admin);
 
-        $path = SugarConfig::getInstance()->get('upload_dir', 'upload/') . $this->id;
+        $path = get_upload_dir() . $this->id;
 
         if (is_dir($path)) {
             LoggerManager::getLogger()->warn('Meeting send_assignment_notifications: unlink(' . $path . '): Is a directory');
