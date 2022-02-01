@@ -80,10 +80,11 @@ class templateParser
                     $repl_arr[$key . "_" . $fieldName] = (string)$focus->$fieldName;
                 } elseif ($field_def['type'] == 'bool') {
                     if ($focus->$fieldName == "1") {
-                        $repl_arr[$key . "_" . $fieldName] = "true";
+                        $img_file = "themes/SuiteP/images/forms/checked.png";
                     } else {
-                        $repl_arr[$key . "_" . $fieldName] = "false";
+                        $img_file = "themes/SuiteP/images/forms/unchecked.png";
                     }
+                    $repl_arr[$key . "_" . $fieldName] = '<img style="vertical-align: middle;" src="'.get_custom_file_if_exists($img_file).'"/>';
                 } elseif ($field_def['type'] == 'image') {
                     $secureLink = $sugar_config['site_url'] . '/' . "public/". $focus->id .  '_' . $fieldName;
                     $file_location = $sugar_config['upload_dir'] . '/'  . $focus->id .  '_' . $fieldName;
