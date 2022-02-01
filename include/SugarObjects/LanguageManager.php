@@ -52,10 +52,11 @@ class LanguageManager
 
     /**
      * Called from VardefManager to allow for caching a lang file for a module
-     * @param module - the name of the module we are working with
-     * @param templates - an array of templates this module uses
+     * @param $module - the name of the module we are working with
+     * @param array $templates - an array of templates this module uses
+     * @param bool $refresh
      */
-    public static function createLanguageFile($module, $templates=array('default'), $refresh = false)
+    public static function createLanguageFile($module, $templates = array('default'), $refresh = false)
     {
         global $mod_strings, $current_language;
         if (inDeveloperMode() || !empty($_SESSION['developerMode'])) {
@@ -67,10 +68,14 @@ class LanguageManager
             $lang = $GLOBALS['sugar_config']['default_language'];
         }
         static $createdModules = array();
-        if (empty($createdModules[$module]) && ($refresh || !file_exists(sugar_cached('modules/').$module.'/language/'.$lang.'.lang.php'))) {
+        if (!isset($createdModules[$module])) {
+            $createdModules[$module] = array();
+        }
+        if (empty($createdModules[$module][$lang]) && ($refresh || !file_exists(sugar_cached('modules/') . $module . '/language/' . $lang . '.lang.php'))) {
             $loaded_mod_strings = array();
-            $loaded_mod_strings = LanguageManager::loadTemplateLanguage($module, $templates, $lang, $loaded_mod_strings);
-            $createdModules[$module] = true;
+            $loaded_mod_strings = LanguageManager::loadTemplateLanguage($module, $templates, $lang,
+                $loaded_mod_strings);
+            $createdModules[$module][$lang] = true;
             LanguageManager::refreshLanguage($module, $lang, $loaded_mod_strings);
         }
     }
