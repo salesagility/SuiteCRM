@@ -672,13 +672,15 @@ class User extends Person implements EmailInterface
 
         parent::save($check_notify);
 
-        // set some default preferences when creating a new user
-        if ($setNewUserPreferences) {
-            if (!$this->getPreference('calendar_publish_key')) {
-                $this->setPreference('calendar_publish_key', create_guid());
-            }
+
+        // User Profile specific save for Email addresses
+        if ($this->emailAddress->isUserProfileEditViewPageSaveAction($_REQUEST) &&
+            !$this->emailAddress->saveAtUserProfile($_REQUEST)) {
+            LoggerManager::getLogger()->error('Email address save error');
+            return false;
         }
 
+      
         $this->saveFormPreferences();
 
         $this->savePreferencesToDB();
