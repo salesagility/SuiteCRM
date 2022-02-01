@@ -90,7 +90,7 @@ $(function() {
 										</td>
 										<td width="45%">
 											<input type="hidden" name="display_timeslots" value="">
-											<input type="checkbox" id="display_timeslots" name="display_timeslots" {if $display_timeslots}checked{/if} value="1" tabindex="102" onchange="toggleDisplayTimeslots();">
+											<input type="checkbox" id="display_timeslots" name="display_timeslots" {if $display_timeslots}checked{/if} value="1" tabindex="100" onchange="toggleDisplayTimeslots();">
 										</td>
 									</tr>
 									<tr>
@@ -99,7 +99,15 @@ $(function() {
 										</td>
 										<td width="45%">
 											<input type="hidden" name="shared_calendar_separate" value="">
-											<input type="checkbox" id="shared_calendar_separate" name="shared_calendar_separate" {if $shared_calendar_separate}checked{/if} value="1" tabindex="102" >
+											<input type="checkbox" id="shared_calendar_separate" name="shared_calendar_separate" {if $shared_calendar_separate}checked{/if} value="1" tabindex="110" >
+										</td>
+									</tr>
+									<tr>
+										<td scope="row" valign="top">
+											{$MOD.LBL_SETTINGS_SHOW_WEEK_NUMBERS}
+										</td>
+										<td>
+											<input type="checkbox" id="show_week_numbers" name="show_week_numbers" {if $show_week_numbers}checked{/if} value="1" tabindex="120" >
 										</td>
 									</tr>
 									<tr class="time_range_options_row">
@@ -108,11 +116,11 @@ $(function() {
 										</td>
 										<td>
 											<div id="d_start_time_section">
-												<select size="1" id="day_start_hours" name="day_start_hours" tabindex="102">
+												<select size="1" id="day_start_hours" name="day_start_hours" tabindex="130">
 													{$TIME_START_HOUR_OPTIONS}
 												</select>&nbsp;:
 
-												<select size="1" id="day_start_minutes" name="day_start_minutes"  tabindex="102">
+												<select size="1" id="day_start_minutes" name="day_start_minutes"  tabindex="140">
 													{$TIME_START_MINUTES_OPTIONS}
 												</select>
 												&nbsp;
@@ -126,11 +134,11 @@ $(function() {
 										</td>
 										<td>
 											<div id="d_end_time_section">
-												<select size="1" id="day_end_hours" name="day_end_hours" tabindex="102">
+												<select size="1" id="day_end_hours" name="day_end_hours" tabindex="150">
 													{$TIME_END_HOUR_OPTIONS}
 												</select>&nbsp;:
 
-												<select size="1" id="day_end_minutes" name="day_end_minutes"  tabindex="102">
+												<select size="1" id="day_end_minutes" name="day_end_minutes"  tabindex="160">
 													{$TIME_END_MINUTES_OPTIONS}
 												</select>
 												&nbsp;
@@ -143,7 +151,7 @@ $(function() {
 											{$MOD.LBL_SETTINGS_CALLS_SHOW}
 										</td>
 										<td>
-											<select size="1" name="show_calls" tabindex="102">
+											<select size="1" name="show_calls" tabindex="170">
 												<option value='' {if !$show_calls}selected{/if}>{$MOD.LBL_NO}</option>
 												<option value='true' {if $show_calls}selected{/if}>{$MOD.LBL_YES}</option>
 											</select>
@@ -154,7 +162,7 @@ $(function() {
 											{$MOD.LBL_SETTINGS_TASKS_SHOW}
 										</td>
 										<td>
-											<select size="1" name="show_tasks" tabindex="102">
+											<select size="1" name="show_tasks" tabindex="180">
 												<option value='' {if !$show_tasks}selected{/if}>{$MOD.LBL_NO}</option>
 												<option value='true' {if $show_tasks}selected{/if}>{$MOD.LBL_YES}</option>
 											</select>
@@ -165,13 +173,24 @@ $(function() {
 											{$MOD.LBL_SETTINGS_COMPLETED_SHOW}
 										</td>
 										<td>
-											<select size="1" name="show_completed" tabindex="102">
+											<select size="1" name="show_completed" tabindex="190">
 												<option value='' {if !$show_completed}selected{/if}>{$MOD.LBL_NO}</option>
 												<option value='true' {if $show_completed}selected{/if}>{$MOD.LBL_YES}</option>
 											</select>
 										</td>
 									</tr>
-
+									<tr>
+										<td scope="row" valign="top">
+											{$MOD.LBL_SETTINGS_DISPLAY_EVENT_LIMIT}
+										</td>
+										<td>
+											<select size="1" id="event_limit" name="event_limit" tabindex="200">
+												{section name=var start=0 loop=8}
+													<option value="{$smarty.section.var.index}" {if $event_limit == $smarty.section.var.index}selected{/if}>{if $smarty.section.var.index === 0}{$MOD.LBL_SETTINGS_EVENT_LIMIT_OPTION_ALL}{else}{$smarty.section.var.index}{/if}</option>
+												{/section}
+											</select>
+										</td>
+									</tr>
 
 
 								</table>
