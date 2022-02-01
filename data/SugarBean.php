@@ -1393,18 +1393,18 @@ class SugarBean
                         foreach ($value['function_params'] as $param) {
                             if (empty($value['function_params_source'])
                                 || $value['function_params_source'] == 'parent') {
-                                if (empty($this->$param)) {
-                                    $can_execute = false;
-                                } elseif ($param == '$this') {
+                                if ($param == '$this') {
                                     $execute_params[] = $this;
+                                } elseif (isset($this->$param)) {
+                                    $can_execute = false;
                                 } else {
                                     $execute_params[] = $this->$param;
                                 }
                             } elseif ($value['function_params_source'] == 'this') {
-                                if (empty($current_bean->$param)) {
-                                    $can_execute = false;
-                                } elseif ($param == '$this') {
+                                if ($param == '$this') {
                                     $execute_params[] = $current_bean;
+                                } elseif (isset($current_bean->$param)) {
+                                    $can_execute = false;
                                 } else {
                                     $execute_params[] = $current_bean->$param;
                                 }
@@ -3733,7 +3733,7 @@ class SugarBean
             if ($data['type'] == 'parent') {
                 //See if we need to join anything by inspecting the where clause
                 $match = preg_match(
-                    '/(^|[\s(])parent_([a-zA-Z]+_?[a-zA-Z]+)_([a-zA-Z]+_?[a-zA-Z]+)\.name/',
+                    '/(^|[\s(])parent_(\w+)&&(\w+)\.name/',
                     $where,
                     $matches
                 );
@@ -3760,7 +3760,7 @@ class SugarBean
                         ON $localTable.{$data['id_name']} = $joinTableAlias.id";
                     //Replace any references to the relationship in the where clause with the new alias
                     $where = preg_replace(
-                        '/(^|[\s(])parent_' . $joinModule . '_' . $joinTable . '\.name/',
+                        '/(^|[\s(])parent_' . $joinModule . '&&' . $joinTable . '\.name/',
                         '${1}' . $nameField,
                         $where
                     );
@@ -4910,12 +4910,12 @@ class SugarBean
                     $table,
                     $GLOBALS['dictionary'][$object]['fields'][$field]['db_concat_fields']
                 );
-                $query .= ' ,' . $concat . ' as ' . $alias;
+                $query .= ' ,' . $concat . ' as ' . DBManagerFactory::getInstance()->quoteIdentifier($alias);
             } elseif (!empty($GLOBALS['dictionary'][$object]['fields'][$field]) &&
                 (empty($GLOBALS['dictionary'][$object]['fields'][$field]['source']) ||
                     $GLOBALS['dictionary'][$object]['fields'][$field]['source'] != "non-db")
             ) {
-                $query .= ' ,' . $table . '.' . $field . ' as ' . $alias;
+                $query .= ' ,' . $table . '.' . $field . ' as ' . DBManagerFactory::getInstance()->quoteIdentifier($alias);
             }
             if (!$return_array) {
                 $this->$alias = '';

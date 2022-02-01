@@ -32,7 +32,7 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $employee = BeanFactory::newBean('Employees');
 
         //test without setting name
-        $this->assertEquals(' ', $employee->get_summary_text());
+        $this->assertEquals('-', $employee->get_summary_text());
 
         //test with name set
         $employee->retrieve(1);
@@ -87,20 +87,20 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
 
         $expected = array(
             'SUGAR_LOGIN' => '1',
-            'FULL_NAME' => ' ',
-            'NAME' => ' ',
+            'FULL_NAME' => '-',
+            'NAME' => '-',
             'IS_ADMIN' => '0',
             'EXTERNAL_AUTH_ONLY' => '0',
             'RECEIVE_NOTIFICATIONS' => '1',
             'DELETED' => 0,
             'PORTAL_ONLY' => '0',
             'SHOW_ON_EMPLOYEES' => '1',
-            'ENCODED_NAME' => ' ',
+            'ENCODED_NAME' => '-',
             'EMAIL1' => '',
             'EMAIL1_LINK' => '            <a class="email-link" href="mailto:"
                     onclick="$(document).openComposeViewModal(this);"
                     data-module="Employees" data-record-id=""
-                    data-module-name=" " data-email-address=""
+                    data-module-name="-" data-email-address=""
                 ></a>',
             'MESSENGER_TYPE' => '',
             'REPORTS_TO_NAME' => null,

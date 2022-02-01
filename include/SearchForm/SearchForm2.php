@@ -1101,7 +1101,7 @@ class SearchForm
                                     if (!empty($beanFiles[$beanList[$rel_module]])) {
                                         require_once($beanFiles[$beanList[$rel_module]]);
                                         $rel_seed = new $beanList[$rel_module]();
-                                        $db_field = 'parent_' . $rel_module . '_' . $rel_seed->table_name . '.name';
+                                        $db_field = 'parent_' . $rel_module . '&&' . $rel_seed->table_name . '.name';
                                     }
                                 }
                             } // Relate fields in custom modules and custom relate fields

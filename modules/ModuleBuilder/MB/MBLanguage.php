@@ -231,6 +231,8 @@ class MBLanguage
             $appFile = $header. "\n";
             require_once('include/utils/array_utils.php');
             $this->getGlobalAppListStringsForMB($values);
+            ksort($values);
+            ksort($values["moduleList"]);
             foreach ($values as $key=>$array) {
                 if ($duplicate) {
                     //keep the original when duplicating
