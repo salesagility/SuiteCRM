@@ -3772,6 +3772,14 @@ abstract class DBManager
      */
     abstract public function quote($string);
 
+    /**
+     * Return the specified value if input field or expression is null, otherwise return the field or expression
+     * @param string $field
+     * @param string $valueIfNull
+     * @return string
+     */
+    abstract public function ifNull($field, $valueIfNull);
+
     abstract public function quoteIdentifier($string);
 
     /**
