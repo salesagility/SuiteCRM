@@ -52,7 +52,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 function displayAttachmentField($focus, $field, $value, $view)
 {
-    global $db;
+    $db = DBManagerFactory::getInstance();
     $result = '';
     $attachments = [];
 

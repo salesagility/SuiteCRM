@@ -62,7 +62,8 @@ global $app_list_strings;
 global $mod_strings;
 global $current_user;
 global  $beanList, $beanFiles;
-global $sugar_version, $sugar_config, $db;
+global $sugar_version, $sugar_config;
+$db = DBManagerFactory::getInstance();
 
 $xtpl = new XTemplate('modules/MailMerge/Step1.html');
 $xtpl->assign("MOD", $mod_strings);
