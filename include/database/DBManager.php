@@ -1057,6 +1057,10 @@ abstract class DBManager
             if ($key == 'len' && ($fielddef1[$key] >= $fielddef2[$key])) {
                 continue;
             }
+            // if type in db is real, and type in vardef is float, ignore it
+            if ($key == 'type' && ($fielddef1[$key] == 'real' && $fielddef2[$key] == 'float')) {
+                continue;
+            }
 
             return false;
         }
