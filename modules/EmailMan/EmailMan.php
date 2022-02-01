@@ -1027,6 +1027,7 @@ class EmailMan extends SugarBean
                 $this->has_optout_links = false;
                 $this->tracker_urls = array();
                 while (($row = $this->current_campaign->db->fetchByAssoc($result)) != null) {
+					$row['tracker_name'] = htmlspecialchars_decode($row['tracker_name'], ENT_QUOTES);
                     $this->tracker_urls['{' . $row['tracker_name'] . '}'] = $row;
                     //has the user defined opt-out links for the campaign.
                     if ($row['is_optout'] == 1) {
