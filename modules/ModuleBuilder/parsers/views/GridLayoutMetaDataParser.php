@@ -378,7 +378,8 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
 
         $result = false;
         reset($this->_viewdefs);
-        $firstPanelID = array_shift(array_keys($this->_viewdefs['panels']));
+        $panelIdList = array_keys($this->_viewdefs['panels']);
+        $firstPanelID = array_shift($panelIdList);
 
         foreach ($this->_viewdefs ['panels'] as $panelID => $panel) {
             $lastRowTouched = false;
