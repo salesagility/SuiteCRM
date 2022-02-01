@@ -68,6 +68,10 @@ function updateCRONFields(id){
     if(month !== '*'){
         canShowBasic = false;
     }
+    // On the first edit everything is unset, default to the basic view
+    if (schedule === '') {
+        canShowBasic = true;
+    }
     if(!canShowBasic){
         $('#'+id+'_raw').attr('checked',true);
         $('#'+id+'_raw').change();
