@@ -494,31 +494,30 @@ class iCal extends vCal
     }
 
     /**
-    * Generates the complete string for the calendar
-    *
-    * @param User $user_focus the user
-    * @param integer $num_months the number of months to search before and after today
-    * @return string the iCal calenar string
-    */
+     * Generates the complete string for the calendar
+     *
+     * @param User $user_focus the user
+     * @param integer $num_months the number of months to search before and after today
+     * @return string the iCal calendar string
+     */
     public function getVcalIcal(&$user_focus, $num_months)
     {
-        global $current_user, $timedate;
+        global $current_user, $timedate, $sugar_config;
         $current_user = $user_focus;
 
-        $cal_name = $user_focus->first_name. " ". $user_focus->last_name;
+        $cal_name = $user_focus->first_name . ' ' . $user_focus->last_name;
 
-        $ical_array = array();
-        $ical_array[] = array("BEGIN", "VCALENDAR");
-        $ical_array[] = array("VERSION", "2.0");
-        $ical_array[] = array("METHOD", "PUBLISH");
-        $ical_array[] = array("X-WR-CALNAME", "$cal_name (SugarCRM)");
-        $ical_array[] = array("PRODID", "-//SugarCRM//SugarCRM Calendar//EN");
-        $ical_array = array_merge($ical_array, vCal::create_ical_array_from_string($this->getTimezoneString()));
-        $ical_array[] = array("CALSCALE", "GREGORIAN");
+        $iCalArray = [];
+        $iCalArray[] = ['BEGIN', 'VCALENDAR'];
+        $iCalArray[] = ['VERSION', '2.0'];
+        $iCalArray[] = ['METHOD', 'PUBLISH'];
+        $iCalArray[] = ['X-WR-CALNAME', "$cal_name (SuiteCRM)"];
+        $iCalArray[] = ['PRODID', '-//SuiteCRM//SuiteCRM Calendar//EN'];
+        $iCalArray = array_merge($iCalArray, vCal::create_ical_array_from_string($this->getTimezoneString()));
+        $iCalArray[] = ['CALSCALE', 'GREGORIAN'];
 
         $now_date_time = $timedate->getNow(true);
 
-        global $sugar_config;
         $timeOffset = 2;
         if (isset($sugar_config['vcal_time']) && $sugar_config['vcal_time'] != 0 && $sugar_config['vcal_time'] < 13) {
             $timeOffset = $sugar_config['vcal_time'];
@@ -531,16 +530,16 @@ class iCal extends vCal
 
         $utc_now_time = $this->getUtcDateTime($now_date_time);
 
-        $str = vCal::create_ical_string_from_array($ical_array, true);
+        $str = vCal::create_ical_string_from_array($iCalArray, true);
 
         $str .= $this->createSugarIcal($user_focus, $start_date_time, $end_date_time, $utc_now_time);
 
-        $ical_array = array(
-            array("DTSTAMP", $utc_now_time)
-        );
-        $ical_array[] = array("END", "VCALENDAR");
+        $iCalArray = [
+            ['DTSTAMP', $utc_now_time]
+        ];
+        $iCalArray[] = ['END', 'VCALENDAR'];
 
-        $str .= vCal::create_ical_string_from_array($ical_array, true);
+        $str .= vCal::create_ical_string_from_array($iCalArray, true);
 
         return htmlspecialchars_decode(preg_replace("/&#([0-9]+)\\\\;/", '&#$1;', utf8_decode($str)));
     }
