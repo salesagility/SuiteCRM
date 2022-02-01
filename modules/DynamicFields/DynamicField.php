@@ -445,6 +445,11 @@ class DynamicField
                 if ($field['type'] == 'html' || $field['type'] == 'parent') {
                     continue;
                 }
+
+                if (!empty($this->bean->bean_fields_to_save) && !in_array($name, $this->bean->bean_fields_to_save, true)){
+                    continue;
+                }
+
                 if (isset($this->bean->$name)) {
                     $quote = "'";
 
