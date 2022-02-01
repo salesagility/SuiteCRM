@@ -83,9 +83,6 @@ class CaseUpdatesHook
      */
     public function saveUpdate($case)
     {
-        if (!isAOPEnabled()) {
-            return;
-        }
         global $current_user, $app_list_strings;
         if (empty($case->fetched_row) || !$case->id) {
             if (!$case->state) {
@@ -203,9 +200,6 @@ class CaseUpdatesHook
     public function assignAccount($case, $event, $arguments)
     {
         if ($arguments['module'] !== 'Cases' || $arguments['related_module'] !== 'Contacts') {
-            return;
-        }
-        if (!isAOPEnabled()) {
             return;
         }
         $contact = BeanFactory::getBean('Contacts', $arguments['related_id']);
