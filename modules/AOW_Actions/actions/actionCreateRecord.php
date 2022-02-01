@@ -238,6 +238,7 @@ class actionCreateRecord extends actionBase
                         if ($record_vardefs[$field]['type'] === 'date') {
                             $dformat = 'Y-m-d';
                         }
+                        require_once('modules/AOW_WorkFlow/aow_utils.php');
                         switch ($params['value'][$key][3]) {
                             case 'business_hours':
                                 require_once 'modules/AOBH_BusinessHours/AOBH_BusinessHours.php';
@@ -253,11 +254,16 @@ class actionCreateRecord extends actionBase
                                 }
                                 if ($dateToUse === 'now') {
                                     $value = $businessHours->addBusinessHours($amount);
-                                } elseif ($dateToUse === 'field') {
-                                    $dateToUse = $params['field'][$key];
-                                    $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($bean->$dateToUse));
                                 } else {
-                                    $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($bean->$dateToUse));
+                                    if($dateToUse === 'field') {
+                                        $dateToUse = $params['field'][$key];
+                                    }
+                                    $date = fixUpFormatting(
+                                        $bean->module_name,
+                                        $dateToUse,
+                                        $bean->$dateToUse
+                                    );
+                                    $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($date));
                                 }
                                 $value = $timedate->asDb($value);
                                 break;
@@ -266,12 +272,20 @@ class actionCreateRecord extends actionBase
                                     $date = gmdate($dformat);
                                 } elseif ($params['value'][$key][0] === 'field') {
                                     $dateToUse = $params['field'][$key];
-                                    $date = $record->$dateToUse;
+                                    $date = fixUpFormatting(
+                                        $record->module_name,
+                                        $dateToUse,
+                                        $record->$dateToUse
+                                    );
                                 } elseif ($params['value'][$key][0] === 'today') {
                                     $date = $params['value'][$key][0];
                                 } else {
                                     $dateToUse = $params['value'][$key][0];
-                                    $date = $bean->$dateToUse;
+                                    $date = fixUpFormatting(
+                                        $bean->module_name,
+                                        $dateToUse,
+                                        $bean->$dateToUse
+                                    );
                                 }
 
                                 if ($params['value'][$key][1] !== 'now') {
