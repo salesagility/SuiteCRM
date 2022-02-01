@@ -147,15 +147,17 @@ class LanguageManager
         }
         //if we have a module name specified then just remove that language file
         //otherwise go through each module and clean up the language
-        if (!empty($module_dir)) {
-            foreach ($languages as $clean_lang) {
-                LanguageManager::_clearCache($module_dir, $clean_lang);
-            }
-        } else {
-            $cache_dir = sugar_cached('modules/');
-            if (file_exists($cache_dir) && $dir = @opendir($cache_dir)) {
+        $cache_dir = sugar_cached('modules/');
+        if (file_exists($cache_dir)) {
+            if (!empty($module_dir)) {
+                if (is_dir($cache_dir . $module_dir)) {
+                    foreach ($languages as $clean_lang) {
+                        LanguageManager::_clearCache($module_dir, $clean_lang);
+                    }
+                }
+            } elseif ($dir = @opendir($cache_dir)) {
                 while (($entry = readdir($dir)) !== false) {
-                    if ($entry == "." || $entry == "..") {
+                    if ($entry == "." || $entry == ".." || ! is_dir($cache_dir . $entry)) {
                         continue;
                     }
                     foreach ($languages as $clean_lang) {
