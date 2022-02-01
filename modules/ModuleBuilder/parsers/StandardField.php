@@ -53,12 +53,27 @@ class StandardField extends DynamicField
     protected function loadCustomDef($field)
     {
         global $beanList;
+        /**
+         * Fix Case #13626
+         * Makes sure to use the override vardef file when loading custom defs
+         * Otherwise, will overwrite override file on save with new changes, removing previous ones
+         */
+        if (!empty($beanList[$this->module]) && is_file("custom/Extension/modules/{$this->module}/Ext/Vardefs/_override_sugarfield_$field.php")) {
+            $bean_name = get_valid_bean_name($this->module);
+            $dictionary = array($bean_name => array("fields" => array($field => array())));
+            include("$this->base_path/_override_sugarfield_$field.php");
+            if (!empty($dictionary[$bean_name]) && isset($dictionary[$bean_name]["fields"][$field])) {
+                $this->custom_def = $dictionary[$bean_name]["fields"][$field];
+            }
+        }
         if (!empty($beanList[$this->module]) && is_file("custom/Extension/modules/{$this->module}/Ext/Vardefs/sugarfield_$field.php")) {
             $bean_name = get_valid_bean_name($this->module);
             $dictionary = array($bean_name => array("fields" => array($field => array())));
             include("$this->base_path/sugarfield_$field.php");
             if (!empty($dictionary[$bean_name]) && isset($dictionary[$bean_name]["fields"][$field])) {
-                $this->custom_def = $dictionary[$bean_name]["fields"][$field];
+                foreach ($dictionary[$bean_name]["fields"][$field] as $def_name => $def) {
+                    $this->custom_def[$def_name] = $def;
+                }
             }
         }
     }
