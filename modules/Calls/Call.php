@@ -182,16 +182,20 @@ class Call extends SugarBean
     {
         global $timedate;
 
-        if (!empty($this->date_start)) {
-            if (!empty($this->duration_hours) && !empty($this->duration_minutes)) {
+        if (isset($this->date_start)) {
+            $td = $timedate->fromDb($this->date_start);
+            if (!$td) {
+                $this->date_start = $timedate->to_db($this->date_start);
                 $td = $timedate->fromDb($this->date_start);
-                if ($td) {
-                    $this->date_end = $td->modify(
-                        "+{$this->duration_hours} hours {$this->duration_minutes} mins"
-                    )->asDb();
+            }
+            if ($td) {
+                if (isset($this->duration_hours) && $this->duration_hours != '') {
+                    $td->modify("+{$this->duration_hours} hours");
                 }
-            } else {
-                $this->date_end = $this->date_start;
+                if (isset($this->duration_minutes) && $this->duration_minutes != '') {
+                    $td->modify("+{$this->duration_minutes} mins");
+                }
+                $this->date_end = $td->asDb();
             }
         }
 
