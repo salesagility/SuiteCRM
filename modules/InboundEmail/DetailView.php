@@ -131,7 +131,7 @@ $leaveMessagesOnMailServer = $app_strings['LBL_EMAIL_NO'];
 
 //$fromNameAddr = $fromName.' &lt;'.$from['email'].'&gt; <br><em>('.$mod_strings['LBL_SYSTEM_DEFAULT'].')</em>';
 //$replyNameAddr = $mod_strings['LBL_SAME_AS_ABOVE'];
-$onlySince = $mod_strings['LBL_ONLY_SINCE_NO'];
+$onlySince = $app_strings['LBL_EMAIL_NO'];
 
 if (!empty($focus->stored_options)) {
     // FROM NAME and Address
@@ -144,10 +144,10 @@ if (!empty($focus->stored_options)) {
     $reply_to_name = (isset($storedOptions['reply_to_name'])) ? $storedOptions['reply_to_name'] : "";
     $reply_to_addr = (isset($storedOptions['reply_to_addr'])) ? $storedOptions['reply_to_addr'] : "";
     // only-since option
-    if ($storedOptions['only_since']) {
-        $onlySince = $mod_strings['LBL_ONLY_SINCE_YES'];
+    if (isset($storedOptions['only_since']) && $storedOptions['only_since']) {
+        $onlySince = $app_strings['LBL_EMAIL_YES'];
     } else {
-        $onlySince = $mod_strings['LBL_ONLY_SINCE_NO'];
+        $onlySince = $app_strings['LBL_EMAIL_NO'];
     }
     // filter-domain
     if (isset($storedOptions['filter_domain']) && !empty($storedOptions['filter_domain'])) {
@@ -173,11 +173,7 @@ if (!empty($focus->stored_options)) {
     } else {
         $leaveMessagesOnMailServer = $app_strings['LBL_EMAIL_NO'];
     } // else
-    if (!isset($storedOptions['leaveMessagesOnMailServer']) || $storedOptions['leaveMessagesOnMailServer'] == 1) {
-        $leaveMessagesOnMailServer = $app_strings['LBL_EMAIL_YES'];
-    } else {
-        $leaveMessagesOnMailServer = $app_strings['LBL_EMAIL_NO'];
-    } // else
+    
     $distrib_method = (isset($storedOptions['distrib_method'])) ? $storedOptions['distrib_method'] : "";
     $create_case_email_template = (isset($storedOptions['create_case_email_template'])) ? $storedOptions['create_case_email_template'] : "";
     $email_num_autoreplies_24_hours = (isset($storedOptions['email_num_autoreplies_24_hours'])) ? $storedOptions['email_num_autoreplies_24_hours'] : $focus->defaultEmailNumAutoreplies24Hours;

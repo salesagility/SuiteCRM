@@ -553,18 +553,17 @@ class EmailsController extends SugarController
             $inboundEmail = BeanFactory::newBean('InboundEmail');
             $inboundEmail->retrieve($db->quote($_REQUEST['inbound_email_record']), true, true);
             $inboundEmail->connectMailserver();
-            $importedEmailId = $inboundEmail->returnImportedEmail($_REQUEST['msgno'], $_REQUEST['uid']);
+            $importedEmailId = $inboundEmail->returnImportedEmail2($_REQUEST['msgno'], $_REQUEST['uid']);
 
-            // Set the fields which have been posted in the request
-            $this->bean = $this->setAfterImport($importedEmailId, $_REQUEST);
-
-            if ($importedEmailId !== false) {
-                header('location:index.php?module=Emails&action=DetailView&record=' . $importedEmailId);
+            if ($importedEmail !== false) {
+                $this->setAfterImport($importedEmail['id'], $_REQUEST);
+                header('location:index.php?module=Emails&action=DetailView&record=' . $importedEmail['id']);
             }
-        } else {
-            // When something fail redirect user to index
-            header('location:index.php?module=Emails&action=index');
+
         }
+            
+        // When something fail redirect user to index
+        header('location:index.php?module=Emails&action=index');
     }
 
     /**
@@ -593,16 +592,20 @@ class EmailsController extends SugarController
             }
             $inboundEmail->connectMailserver();
 
+            $importedEmailsId = [];
+
             if (isset($_REQUEST['all']) && $_REQUEST['all'] === 'true') {
                 // import all in folder
-                $importedEmailsId = $inboundEmail->importAllFromFolder();
-                foreach ($importedEmailsId as $importedEmailId) {
-                    $this->bean = $this->setAfterImport($importedEmailId, $_REQUEST);
+                $importedEmails = $inboundEmail->importAllFromFolder();
+                foreach ($importedEmails as $importedEmail) {
+                    if ($importedEmail === false) continue;
+                    $this->setAfterImport($importedEmailId, $_REQUEST);
                 }
             } else {
                 foreach ($_REQUEST['uid'] as $uid) {
-                    $importedEmailId = $inboundEmail->returnImportedEmail($_REQUEST['msgno'], $uid);
-                    $this->bean = $this->setAfterImport($importedEmailId, $_REQUEST);
+                    $importedEmail = $inboundEmail->returnImportedEmail2($_REQUEST['msgno'], $uid);
+                    if ($importedEmail === false) continue;
+                    $this->setAfterImport($importedEmail['id'], $_REQUEST);
                 }
             }
         } else {
@@ -766,7 +769,7 @@ class EmailsController extends SugarController
         } else {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($request['inbound_email_record']));
             $inboundEmail->connectMailserver();
-            $importedEmailId = $inboundEmail->returnImportedEmail($request['msgno'], $request['uid']);
+            $importedEmailId = $inboundEmail->returnImportedEmail2($request['msgno'], $request['uid']);
             $this->bean->retrieve($importedEmailId);
         }
 
@@ -895,22 +898,25 @@ class EmailsController extends SugarController
      */
     protected function setAfterImport($importedEmailId, $request)
     {
-        $emails = BeanFactory::getBean("Emails", $importedEmailId);
+        if (!($importedEmail instanceof Email)) {
+            $email = BeanFactory::getBean("Emails", $email);
+        }
+
+        if (empty($email->fetched_row))
+            throw new SugarException('No email was found to setAfterImport');
 
         foreach ($request as $requestKey => $requestValue) {
             if (strpos($requestKey, 'SET_AFTER_IMPORT_') !== false) {
-                $field = str_replace('SET_AFTER_IMPORT_', '', $requestKey);
-                if (in_array($field, self::$doNotImportFields)) {
                     continue;
                 }
 
-                $emails->{$field} = $requestValue;
+                $email->{$field} = $requestValue;
             }
         }
 
-        $emails->save();
+        $email->save();
 
-        return $emails;
+        return $email;
     }
 
     /**
