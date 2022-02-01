@@ -266,8 +266,6 @@ $modInvisList = [
     'CampaignTrackers',
     'CampaignLog',
     'EmailMan',
-    'Prospects',
-    'ProspectLists',
     'Groups',
     'InboundEmail',
     'ACLActions',
