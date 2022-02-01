@@ -2090,6 +2090,11 @@ abstract class DBManager
                 if (!empty($val) && !empty($fieldDef['len']) && strlen($val) > $fieldDef['len']) {
                     $val = $this->truncate($val, $fieldDef['len']);
                 }
+
+                if (!empty($bean->bean_fields_to_save) && !in_array($fieldDef['name'], $bean->bean_fields_to_save, true)) {
+                    continue;
+                }
+
                 $columnName = $this->quoteIdentifier($fieldDef['name']);
                 if (!is_null($val) || !empty($fieldDef['required'])) {
                     $columns[] = "{$columnName}=".$this->massageValue($val, $fieldDef);

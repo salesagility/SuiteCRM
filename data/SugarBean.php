@@ -381,6 +381,11 @@ class SugarBean
     public $in_save;
 
     /**
+     * @var array $bean_fields_to_save
+     */
+    public $bean_fields_to_save;
+
+    /**
      * @var integer $logicHookDepth
      */
     public $logicHookDepth;
@@ -2504,6 +2509,70 @@ class SugarBean
         $this->new_with_id = false;
         $this->in_save = false;
         return $this->id;
+    }
+
+    /**
+     * Saves only the listed fields. Does not create record, existing records only.
+     * @param array $fieldToSave
+     * @return void
+     */
+    public function saveFields(array $fieldToSave): void
+    {
+        global $current_user, $action, $timedate;
+
+        if (empty($this->id) || $this->new_with_id || empty($fieldToSave)) {
+            return;
+        }
+
+        $this->in_save = true;
+
+        // cn: SECURITY - strip XSS potential vectors
+        $this->cleanBean();
+
+        // This is used so custom/3rd-party code can be upgraded with fewer issues,
+        // this will be removed in a future release
+        $this->fixUpFormatting();
+
+        $isUpdate = true;
+
+        $this->bean_fields_to_save = $fieldToSave;
+
+        if (empty($this->date_modified) || $this->update_date_modified) {
+            $this->date_modified = $timedate->nowDb();
+            $this->bean_fields_to_save[] = 'date_modified';
+        }
+
+        $this->_checkOptimisticLocking($action, $isUpdate);
+
+        if (!empty($this->modified_by_name)) {
+            $this->old_modified_by_name = $this->modified_by_name;
+        }
+
+        if ($this->update_modified_by) {
+            $this->modified_user_id = 1;
+            $this->bean_fields_to_save[] = 'modified_user_id';
+
+            if (!empty($current_user)) {
+                $this->modified_user_id = $current_user->id;
+
+                $this->modified_by_name = $current_user->user_name;
+                $this->bean_fields_to_save[] = 'modified_by_name';
+            }
+        }
+
+        if ($this->deleted != 1) {
+            $this->deleted = 0;
+        }
+
+        if (isset($this->custom_fields)) {
+            $this->custom_fields->bean = $this;
+            $this->custom_fields->save($isUpdate);
+        }
+
+        $this->db->update($this);
+
+        $this->bean_fields_to_save = null;
+        $this->in_save = false;
     }
 
     /**
