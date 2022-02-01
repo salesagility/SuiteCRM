@@ -407,7 +407,7 @@ class NormalizeRecords extends BatchJob
         foreach ($records as $row) {
 
             $normalized = $this->repairStringValues($row, $fieldList);
-            if (!$normalized) {
+            if (empty($normalized)) {
                 continue;
             }
 
@@ -417,7 +417,7 @@ class NormalizeRecords extends BatchJob
             $bean->update_modified_by = false;
             $bean->processed = true;
             $bean->notify_inworkflow = false;
-            $bean->save(false);
+            $bean->saveFields($normalized);
             $this->debugLog("$type - " . $bean->id . " normalized");
             ++$i;
             if ($i % 100 === 0) {
@@ -441,9 +441,9 @@ class NormalizeRecords extends BatchJob
      * @param array $fieldList
      * @return bool
      */
-    protected function repairStringValues(&$row, array $fieldList): bool
+    protected function repairStringValues(&$row, array $fieldList): array
     {
-        $normalized = false;
+        $normalized = [];
         foreach ($fieldList as $fieldName) {
             if (!empty($row[$fieldName])) {
 
@@ -455,7 +455,7 @@ class NormalizeRecords extends BatchJob
                 //debugLog("Pre : $row[$fieldName]");
                 $row[$fieldName] = Normalizer::normalize($row[$fieldName], Normalizer::FORM_C);
                 //debugLog("Post: $row[$fieldName]");
-                $normalized = true;
+                $normalized[] = $fieldName;
             }
         }
 
