@@ -1885,6 +1885,7 @@ function sugar_die($error_message, $exit_code = 1)
 {
     global $focus;
     sugar_cleanup();
+    http_response_code(500);
     echo $error_message;
     throw new \Exception($error_message, $exit_code);
 }
