@@ -58,6 +58,7 @@ if (ACLController::checkAccess('OAuth2Clients', 'edit', true)) {
         "Create"
     ];
 }
+
 if (ACLController::checkAccess('OAuth2Clients', 'edit', true)) {
     $module_menu[] = [
         "index.php?module=OAuth2Clients&action=EditViewAuthorizationCode&return_module=OAuth2Clients&return_action=DetailView",
@@ -78,6 +79,14 @@ if (ACLController::checkAccess('OAuth2Tokens', 'list', true)) {
     $module_menu[] = [
         "index.php?module=OAuth2Tokens&action=index&return_module=OAuth2Tokens&return_action=DetailView",
         $mod_strings['LNK_OAUTH2_TOKEN_LIST'],
+        "List"
+    ];
+}
+
+if (ACLController::checkAccess('OAuth2AuthCodes', 'list', true)) {
+    $module_menu[] = [
+        "index.php?module=OAuth2AuthCodes&action=index",
+        $mod_strings['LNK_OAUTH2_AUTHCODE_LIST'],
         "List"
     ];
 }

@@ -12,6 +12,10 @@ use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 use OAuth2Tokens;
 use User;
 
+/**
+ * Class AccessTokenRepository
+ * @package Api\V8\OAuth2\Repository
+ */
 class AccessTokenRepository implements AccessTokenRepositoryInterface
 {
     /**
@@ -59,10 +63,13 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
         $clientId = $accessTokenEntity->getClient()->getIdentifier();
         $userId = null;
 
-        /** @var User $user */
+        /** @var \OAuth2Client $client */
         $client = $this->beanManager->getBeanSafe('OAuth2Clients', $clientId);
 
         switch ($client->allowed_grant_type) {
+            case 'authorization_code':
+                $userId = $accessTokenEntity->getUserIdentifier();
+                break;
             case 'password':
                 $userId = $accessTokenEntity->getUserIdentifier();
                 break;

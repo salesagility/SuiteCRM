@@ -5,6 +5,10 @@ use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\OAuth2\Entity\ClientEntity;
 use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
 
+/**
+ * Class ClientRepository
+ * @package Api\V8\OAuth2\Repository
+ */
 class ClientRepository implements ClientRepositoryInterface
 {
     /**
@@ -40,7 +44,7 @@ class ClientRepository implements ClientRepositoryInterface
 
         $this->clientEntity->setIdentifier($clientIdentifier);
         $this->clientEntity->setName($client->name);
-        $this->clientEntity->setRedirectUri(isset($client->redirect_uri) ? $client->redirect_uri : '');
+        $this->clientEntity->setRedirectUri(isset($client->redirect_url) ? $client->redirect_url : '');
 
         return $this->clientEntity;
     }

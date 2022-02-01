@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2020 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -1025,6 +1025,7 @@ EOQ;
     RewriteRule ^api/(.*?)$ lib/API/public/index.php/$1 [L]
     # -----------------------------
 
+    RewriteRule ^Api/authorize$ index.php?module=OAuth2AuthCodes&action=authorize [R=302,QSA,NE]
     RewriteRule ^Api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
     RewriteRule ^Api/access_token$ Api/index.php [L]
     RewriteRule ^Api/V8/(.*?)$ Api/index.php [L]
@@ -1043,7 +1044,7 @@ EOQ;
 
  # CSS
  ExpiresByType text/css "access plus 1 year"
- 
+
  # Data
  ExpiresByType application/atom+xml "access plus 1 hour"
  ExpiresByType application/rdf+xml "access plus 1 hour"

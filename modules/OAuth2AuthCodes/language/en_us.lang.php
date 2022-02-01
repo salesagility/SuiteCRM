@@ -42,42 +42,32 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-global $mod_strings, $app_strings;
+$mod_strings = [
+    'LBL_MODULE_NAME' => 'OAuth2 Authorization Codes',
+    'LBL_MODULE_TITLE' => 'OAuth2 Authorization Codes',
+    'LBL_MODULE_ID'=> 'OAuth2 Authorization Codes',
+    'LBL_CLIENT' => 'Client',
+    'LBL_SCOPES' => 'Scopes',
+    'LBL_AUTO_AUTHORIZE' => 'Automatically approve future requests of this kind',
+    'LBL_USER' => 'Authorizing user',
+    'LBL_OAUTH_AUTHORIZE_AND_SAVE' => 'Authorize all (future) requests by this client',
+    'LBL_OAUTH_AUTHORIZE_ONCE' => 'Authorize request once',
+    'LBL_OAUTH_ABORT' => 'Decline Request',
+    'LBL_OAUTH_CLIENT' => 'Client:',
+    'LBL_OAUTH_REDIRECT' => 'Redirect URL:',
+    'LBL_OAUTH_INFO' => 'A client requested you to authenticate with SuiteCRM. In order to grant the client access to your SuiteCRM account, please authorize this request. In case you do not know or do not trust the client, you should not grant access.',
+    'LBL_OAUTH_BACK_TO_HOME' => '<< Click here to go back to the dashboard.',
+    'LBL_INVALID_REQUEST' => 'Invalid request',
+    'LBL_DELETE_BUTTON_LABEL' => 'Revoke and delete',
+    'LBL_DELETE_CONFIRMATION' => 'Are you sure you want to delete this record? The client will not be granted an authorization code any more.',
 
-if (ACLController::checkAccess('OAuth2Clients', 'edit', true)) {
-    $module_menu[] = [
-        "index.php?module=OAuth2Clients&action=EditViewPassword&return_module=OAuth2Clients&return_action=DetailView",
-        $mod_strings['LNK_NEW_OAUTH2_PASSWORD_CLIENT'],
-        "Create"
-    ];
-}
-if (ACLController::checkAccess('OAuth2Clients', 'edit', true)) {
-    $module_menu[] = [
-        "index.php?module=OAuth2Clients&action=EditViewCredentials&return_module=OAuth2Clients&return_action=DetailView",
-        $mod_strings['LNK_NEW_OAUTH2_CREDENTIALS_CLIENT'],
-        "Create"
-    ];
-}
-if (ACLController::checkAccess('OAuth2Clients', 'edit', true)) {
-    $module_menu[] = [
-        "index.php?module=OAuth2Clients&action=EditViewAuthorizationCode&return_module=OAuth2Clients&return_action=DetailView",
-        $mod_strings['LNK_NEW_OAUTH2_AUTHORIZATION_CLIENT'],
-        "Create"
-    ];
-}
+    'LNK_OAUTH2_TOKEN_LIST'=> 'List OAuth2 Tokens',
+    'LNK_OAUTH2_CLIENT_LIST' => 'List OAuth2 Clients',
+    'LNK_OAUTH2_AUTHCODE_LIST' => 'List OAuth2 Authorization Codes',
 
-if (ACLController::checkAccess('OAuth2Clients', 'list', true)) {
-    $module_menu[] = [
-        "index.php?module=OAuth2Clients&action=index&return_module=OAuth2Clients&return_action=DetailView",
-        $mod_strings['LNK_OAUTH2_CLIENT_LIST'],
-        "List"
-    ];
-}
-
-if (ACLController::checkAccess('OAuth2Tokens', 'list', true)) {
-    $module_menu[] = [
-        "index.php?module=OAuth2Tokens&action=index&return_module=OAuth2Tokens&return_action=DetailView",
-        $mod_strings['LNK_OAUTH2_TOKEN_LIST'],
-        "List"
-    ];
-}
+    'LNK_NEW_OAUTH2_CLIENT' => 'Create OAuth2 Client',
+    'LNK_NEW_OAUTH2_PASSWORD_CLIENT' => 'New Password Client',
+    'LNK_NEW_OAUTH2_CREDENTIALS_CLIENT' => 'New Client Credentials Client',
+    'LNK_NEW_OAUTH2_IMPLICIT_CLIENT' => 'New Implicit Client',
+    'LNK_NEW_OAUTH2_AUTHORIZATION_CLIENT' => 'New Authorization Client',
+];

@@ -6,6 +6,10 @@ use Api\V8\OAuth2\Entity\UserEntity;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Repositories\UserRepositoryInterface;
 
+/**
+ * Class UserRepository
+ * @package Api\V8\OAuth2\Repository
+ */
 class UserRepository implements UserRepositoryInterface
 {
     /**
