@@ -96,12 +96,46 @@ class SugarRestJSON extends SugarRest
             if (!is_array($data)) {
                 $data = array($data);
             }
+            $data = $this->correctParameterArray($this->implementation, $method, $data); // Conform to spec, accept any parameter order.
             $res = call_user_func_array(array( $this->implementation, $method), $data);
             $GLOBALS['log']->info('End: SugarRestJSON->serve');
             return $res;
         } // else
     } // fn
 
+    /**
+	* When data comes from clients other than PHP, ie Java, Python, or even from PHP SimpleJSON,
+	* it can be impossible for the client to arrange the array of arguments in any order,
+	* and by definition a JSON array is unsorted.
+    * Further, the REST spec requires the server to accept args/parameters in any order.
+	* This method takes the array of arguments in any order,
+    * and returns the arguments in the expected "correct" order,
+	* ie the same order as declared in the particular method,
+    * for spec-compatible processing of the data by the CRM's REST server.
+	*
+	* @param String $className Name of the class
+	* @param String $methodName Name of the method
+	* @param array $data arguments to pass [name => value]
+	* @return array arguments arranged for chosen method
+	*/
+	private function correctParameterArray($className, $methodName, array $data) {
+		$reflection = new ReflectionMethod($className, $methodName);
+		$params = $reflection->getParameters();
+		$result = array();
+		if (empty($params)) {
+			return $data;
+		}
+		foreach ($params as $param) {
+			$name = $param->getName();
+			if (!isset($data[$name])) {
+				$result[$name] = $param->getDefaultValue();
+			} else {
+				$result[$name] = $data[$name];
+			}
+		}
+		return $result;
+	}
+    
     /**
      * This function sends response to client containing error object
      *
