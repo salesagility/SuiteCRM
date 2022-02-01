@@ -166,7 +166,7 @@ $xtpl->out("main");
  */
 function validate_input($requestData)
 {
-    return htmlspecialchars(remove_xss($requestData), ENT_QUOTES | ENT_HTML5);
+    return htmlspecialchars(SugarCleaner::cleanHtml($requestData, false), ENT_QUOTES | ENT_HTML5);
 }
 
 /**

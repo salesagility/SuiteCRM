@@ -35,13 +35,13 @@ class SugarFieldCronSchedule extends SugarFieldBase
         $this->ss->assign('types', get_select_options_with_id($app_list_strings['aor_scheduled_report_schedule_types'], ''));
         $weekdays = $this->getWeekDays();
         $this->ss->assign('weekday_vals', json_encode($weekdays));
-        $this->ss->assign('weekdays', get_select_options($weekdays, ''));
+        $this->ss->assign('weekdays', get_select_options_with_id($weekdays, ''));
         $days = $this->getDays();
-        $this->ss->assign('days', get_select_options($days, ''));
+        $this->ss->assign('days', get_select_options_with_id($days, ''));
         $minutes = array_map([$this, 'padNumbers'], range(0, 59));
         $hours = array_map([$this, 'padNumbers'], range(0, 23));
-        $this->ss->assign('minutes', get_select_options($minutes, ''));
-        $this->ss->assign('hours', get_select_options($hours, ''));
+        $this->ss->assign('minutes', get_select_options_with_id($minutes, ''));
+        $this->ss->assign('hours', get_select_options_with_id($hours, ''));
     }
 
     private function padNumbers($x)
