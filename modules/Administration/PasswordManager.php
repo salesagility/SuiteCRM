@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,8 +39,9 @@
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
+
 if (!is_admin($current_user)) {
     sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
 }
@@ -79,8 +80,14 @@ $focus = BeanFactory::newBean('Administration');
 $configurator->parseLoggerSettings();
 $valid_public_key = true;
 if (!empty($_POST['saveConfig'])) {
-    if ($_POST['captcha_on'] == '1') {
-        $handle = @fopen("http://www.google.com/recaptcha/api/challenge?k=" . $_POST['captcha_public_key'] . "&cachestop=35235354",
+    if ($_POST['captcha_on'] === '1') {
+        if ((isset($_SERVER['HTTPS']) && 'on' === $_SERVER['HTTPS']) || (isset($_SERVER['SERVER_PORT']) && 443 === $_SERVER['SERVER_PORT'])) {
+            $protocol = 'https';
+        } else {
+            $protocol = 'http';
+        }
+        $captchaKey = urlencode($_POST['captcha_public_key']);
+        $handle = @fopen("$protocol://www.google.com/recaptcha/api/challenge?k=" . $captchaKey . '&cachestop=35235354',
             'rb');
         $buffer = '';
         if ($handle) {
