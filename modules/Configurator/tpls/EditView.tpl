@@ -317,10 +317,6 @@
 
 	</tr>
 	<tr>
-		<td  scope="row">{$MOD.UPLOAD_MAX_SIZE}: </td>
-		<td  >
-			<input type='text' size='8' name='upload_maxsize' value='{$config.upload_maxsize}'>
-		</td>
 		<td  scope="row">{$MOD.STACK_TRACE_ERRORS}: </td>
 		{if !empty($config.stack_trace_errors)}
 			{assign var='stack_trace_errors_checked' value='CHECKED'}

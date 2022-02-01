@@ -236,26 +236,23 @@ class UploadMultipleFiles
      */
     public function confirm_upload()
     {
-        global $sugar_config;
+        $maxFileSize = getMaxFileUploadSize();
 
         if (empty($this->field_name) || !isset($_FILES[$this->field_name]['name'][$this->index])) {
             return false;
         }
 
-        //check to see if there are any errors from upload
-        if ($_FILES[$this->field_name]['error'][$this->index] != UPLOAD_ERR_OK) {
-            if ($_FILES[$this->field_name]['error'][$this->index] != UPLOAD_ERR_NO_FILE) {
-                if ($_FILES[$this->field_name]['error'][$this->index] == UPLOAD_ERR_INI_SIZE) {
-                    //log the error, the string produced will read something like:
-                    //ERROR: There was an error during upload. Error code: 1 - UPLOAD_ERR_INI_SIZE
-                    // - The uploaded file exceeds the upload_max_filesize directive in php.ini. upload_maxsize is 16
+        // Check to see if there are any errors from upload
+        if ($_FILES[$this->field_name]['error'][$this->index] !== UPLOAD_ERR_OK) {
+            if ($_FILES[$this->field_name]['error'][$this->index] !== UPLOAD_ERR_NO_FILE) {
+                if ($_FILES[$this->field_name]['error'][$this->index] === UPLOAD_ERR_INI_SIZE) {
                     $errMess = string_format(
                         $GLOBALS['app_strings']['UPLOAD_ERROR_TEXT_SIZEINFO'],
-                        array(
+                        [
                             $_FILES['filename_file']['error'][$this->index],
                             self::$filesError[$_FILES['filename_file']['error'][$this->index]],
-                            $sugar_config['upload_maxsize']
-                        )
+                            $maxFileSize
+                        ]
                     );
                     $GLOBALS['log']->fatal($errMess);
                 } else {
@@ -278,8 +275,10 @@ class UploadMultipleFiles
 
         if (!is_uploaded_file($_FILES[$this->field_name]['tmp_name'][$this->index])) {
             return false;
-        } elseif ($_FILES[$this->field_name]['size'][$this->index] > $sugar_config['upload_maxsize']) {
-            $GLOBALS['log']->fatal("ERROR: uploaded file was too big: max filesize: {$sugar_config['upload_maxsize']}");
+        }
+
+        if ($_FILES[$this->field_name]['size'][$this->index] > $maxFileSize) {
+            LoggerManager::getLogger()->fatal("ERROR: uploaded file was too big: max filesize: {$maxFileSize}");
 
             return false;
         }

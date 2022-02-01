@@ -98,7 +98,6 @@ function make_sugar_config(&$sugar_config)
     global $unique_key;
     global $upload_badext;
     global $upload_dir;
-    global $upload_maxsize;
     global $import_max_execution_time;
     global $list_max_entries_per_subpanel;
     global $passwordsetting;
@@ -212,7 +211,7 @@ function make_sugar_config(&$sugar_config)
             'htm',
         ) : $upload_badext,
         'upload_dir' => $upload_dir, // this must be set!!
-        'upload_maxsize' => empty($upload_maxsize) ? 30000000 : $upload_maxsize,
+        'upload_maxsize' => getMaxFileUploadSize(),
         'allowed_preview' => [
             'pdf',
             'gif',
@@ -437,7 +436,7 @@ function get_sugar_config_defaults()
             'htm',
             'phtml',
         ),
-        'upload_maxsize' => 30000000,
+        'upload_maxsize' =>  getMaxFileUploadSize(),
         'import_max_execution_time' => 3600,
 //	'use_php_code_json' => returnPhpJsonStatus(),
         'verify_client_ip' => true,
@@ -5839,4 +5838,40 @@ function getAppString($key)
     }
 
     return $app_strings[$key];
+}
+
+/**
+ * @returns int File size in bytes
+ **/
+function getMaxFileUploadSize()
+{
+    return min(convertPHPIniFileSize(ini_get('post_max_size')), convertPHPIniFileSize(ini_get('upload_max_filesize')));
+}
+
+/**
+ * @param string $sSize
+ * @return integer The value in bytes
+ * @noinspection PhpMissingBreakStatementInspection
+ */
+function convertPHPIniFileSize($sSize)
+{
+    $sSuffix = strtoupper(substr($sSize, -1));
+    if (!in_array($sSuffix, ['P', 'T', 'G', 'M', 'K'])) {
+        return (int)$sSize;
+    }
+    $iValue = substr($sSize, 0, -1);
+    switch ($sSuffix) {
+        case 'P':
+            $iValue *= 1024;
+        case 'T':
+            $iValue *= 1024;
+        case 'G':
+            $iValue *= 1024;
+        case 'M':
+            $iValue *= 1024;
+        case 'K':
+            $iValue *= 1024;
+            break;
+    }
+    return (int)$iValue;
 }
