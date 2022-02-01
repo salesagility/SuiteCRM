@@ -3055,6 +3055,11 @@ class Email extends Basic
 
                 // strip out the "Email attachment label if exists
                 $filename = str_replace($mod_strings['LBL_EMAIL_ATTACHMENT'] . ': ', '', $filename);
+		// correct encoding to handle special characters in PDF File Name. 
+		setlocale(LC_ALL, "en_US.utf8"); 
+		$filename = iconv('UTF-8','ASCII//TRANSLIT',$filename); 
+		$filename = str_replace('_', '.', $filename);
+		
                 $file_ext = pathinfo($filename, PATHINFO_EXTENSION);
                 //is attachment in our list of bad files extensions?  If so, append .txt to file location
                 //check to see if this is a file with extension located in "badext"
