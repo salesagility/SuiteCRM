@@ -344,9 +344,7 @@
 													<table  cellspacing='0' cellpadding='1' id='ldap_display' style='display:{$ldap_display}' width='100%'>
 														<tr>
 															<td width='25%' scope="row" valign='top' nowrap>{$MOD.LBL_LDAP_SERVER_HOSTNAME} {sugar_help text=$MOD.LBL_LDAP_SERVER_HOSTNAME_DESC}</td>{$settings.proxy_host}
-															<td width='25%' align="left"  valign='top'><input name="ldap_hostname" size='25' type="text" value="{$settings.ldap_hostname}"></td>
-															<td width='25%' scope="row" valign='top' nowrap>{$MOD.LBL_LDAP_SERVER_PORT} {sugar_help text=$MOD.LBL_LDAP_SERVER_PORT_DESC}</td>{$settings.proxy_port}
-															<td width='25%' align="left"  valign='top' ><input name="ldap_port" size='6' type="text" value="{$settings.ldap_port}"></td>
+															<td colspan='3' width='75%' align="left" valign='top'><input name="ldap_hostname" size='80' type="text" value="{$settings.ldap_hostname}"></td>
 														</tr>
 														<tr>
 															<td scope="row" valign='middle' nowrap>{$MOD.LBL_LDAP_USER_DN} {sugar_help text=$MOD.LBL_LDAP_USER_DN_DESC}</td>
@@ -658,7 +656,7 @@ function refresh_email_template_list(template_id, template_name) {
 		newElement.value=template_id;
 		field.options.add(newElement);
 	} // else
-        
+
 }
 
 function testregex(customregex)
