@@ -476,6 +476,12 @@ class AOR_Report extends Basic
 
             if ($data['type'] == 'relate' && isset($data['id_name'])) {
                 $field->field = $data['id_name'];
+                $data_new = $field_module->field_defs[$field->field];
+                if (isset($data_new['source']) && $data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])) {
+                    $data_new['type'] = 'link';
+                    $data_new['relationship'] = $data['link'];
+                }
+                $data = $data_new;
             }
 
             if ($data['type'] == 'currency' && !stripos(
@@ -502,7 +508,12 @@ class AOR_Report extends Basic
                     $query_array
                 );
             } else {
-                $select_field = $this->db->quoteIdentifier($table_alias) . '.' . $field->field;
+      	       if ($data['type'] == 'link' && $data['source'] == 'non-db') {
+	                $select_field = $this->db->quoteIdentifier($field_module->table_name.':'.$data['relationship']) . '.id';
+        	   }
+        	   else {
+               		$select_field = $this->db->quoteIdentifier($table_alias) . '.' . $field->field;
+        	   }
             }
 
             if ($field->sort_by != '') {
@@ -901,23 +912,6 @@ class AOR_Report extends Basic
             $field = BeanFactory::newBean('AOR_Fields');
             $field->retrieve($row['id']);
 
-            if ($field->field_function != 'COUNT' || $field->format != '') {
-                // Fix grouping on assignment displays ID and not name #5427
-                $report_bean = BeanFactory::getBean($this->report_module);
-                $field_def = $report_bean->field_defs[$field->field];
-                if ($field_def['type'] == 'relate' && isset($field_def['id_name'])) {
-                    $related_bean = BeanFactory::getBean($field_def['module']);
-                    $related_bean->retrieve($group_value);
-                    $moduleFieldByGroupValues[] = ($related_bean instanceof Person) ? $related_bean->full_name : $related_bean->name;
-                } elseif ($field_def['type'] == 'enum') {
-                    $moduleFieldByGroupValues[] = $app_list_strings[$field_def['options']][$group_value];
-                } else {
-                     $moduleFieldByGroupValues[] = $group_value;
-                }
-                continue;
-                // End
-            }
-
             $path = unserialize(base64_decode($field->module_path));
 
             $field_bean = new $beanList[$this->report_module]();
@@ -932,6 +926,23 @@ class AOR_Report extends Basic
                     $field_module = getRelatedModule($field_module, $rel);
                     $field_alias = $field_alias . ':' . $rel;
                 }
+            }
+
+            if ($field->field_function != 'COUNT' || $field->format != '') {
+                // Fix grouping on assignment displays ID and not name #5427
+                $report_bean = BeanFactory::getBean($field_module);
+                $field_def = $report_bean->field_defs[$field->field];
+                if ($field_def['type'] == 'relate' && isset($field_def['id_name'])) {
+                    $related_bean = BeanFactory::getBean($field_def['module']);
+                    $related_bean->retrieve($group_value);
+                    $moduleFieldByGroupValues[] = ($related_bean instanceof Person) ? $related_bean->full_name : $related_bean->name;
+                } elseif ($field_def['type'] == 'enum') {
+                    $moduleFieldByGroupValues[] = $app_list_strings[$field_def['options']][$group_value];
+                } else {
+                     $moduleFieldByGroupValues[] = $group_value;
+                }
+                continue;
+                // End
             }
 
             $currency_id = isset($row[$field_alias . '_currency_id']) ? $row[$field_alias . '_currency_id'] : '';
