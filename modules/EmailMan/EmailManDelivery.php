@@ -66,6 +66,9 @@ if (!isset($GLOBALS['log'])) {
 $mail = new SugarPHPMailer();
 $admin = BeanFactory::newBean('Administration');
 $admin->retrieveSettings();
+if (!empty($admin->settings['mail_sendtype']) && $admin->settings['mail_sendtype'] == 'SMTP') {
+    $mail->SMTPKeepAlive=true;
+}
 if (isset($admin->settings['massemailer_campaign_emails_per_run'])) {
     $max_emails_per_run = $admin->settings['massemailer_campaign_emails_per_run'];
 }
