@@ -546,6 +546,8 @@ function generateSearchWhere($module, $query)
     }
     $searchForm->populateFromArray(json_decode(html_entity_decode($query), true));
     $where_clauses = $searchForm->generateSearchWhere(true, $module);
+
+    $where = "";
     if (count($where_clauses) > 0) {
         $where = '('. implode(' ) AND ( ', $where_clauses) . ')';
     }
