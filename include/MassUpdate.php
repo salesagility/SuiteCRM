@@ -111,7 +111,7 @@ class MassUpdate
         unset($_REQUEST['current_query_by_page']);
         unset($_REQUEST[session_name()]);
         unset($_REQUEST['PHPSESSID']);
-        $query = json_encode($_REQUEST);
+        $query = json_encode(array_diff_key($_REQUEST, $_COOKIE));
 
         if (!isset($_REQUEST['module'])) {
             LoggerManager::getLogger()->warn('Undefined index: module');
