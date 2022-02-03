@@ -544,7 +544,8 @@ function generateSearchWhere($module, $query)
         $searchForm = new SearchForm($seed, $module);
         $searchForm->setup($searchdefs, $searchFields, 'SearchFormGeneric.tpl');
     }
-    $searchForm->populateFromArray(json_decode(html_entity_decode($query), true));
+    $decodedQuery = json_decode(html_entity_decode($query), true);
+    $searchForm->populateFromArray($decodedQuery);
     $where_clauses = $searchForm->generateSearchWhere(true, $module);
     if (count($where_clauses) > 0) {
         $where = '('. implode(' ) AND ( ', $where_clauses) . ')';
