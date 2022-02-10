@@ -2,7 +2,7 @@
 Copyright (c) 2011, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
 http://developer.yahoo.com/yui/license.html
-version: 2.9.0
+version: 2.9.1
 */
 
 /**
@@ -241,13 +241,13 @@ YAHOO.util.UserAction = {
      * @param {int} detail (Optional) The number of times the mouse button has
      *      been used. The default value is 1.
      * @param {int} screenX (Optional) The x-coordinate on the screen at which
-     *      point the event occured. The default is 0.
+     *      point the event occurred. The default is 0.
      * @param {int} screenY (Optional) The y-coordinate on the screen at which
-     *      point the event occured. The default is 0.
+     *      point the event occurred. The default is 0.
      * @param {int} clientX (Optional) The x-coordinate on the client at which
-     *      point the event occured. The default is 0.
+     *      point the event occurred. The default is 0.
      * @param {int} clientY (Optional) The y-coordinate on the client at which
-     *      point the event occured. The default is 0.
+     *      point the event occurred. The default is 0.
      * @param {Boolean} ctrlKey (Optional) Indicates if one of the CTRL keys
      *      is pressed while the event is firing. The default is false.
      * @param {Boolean} altKey (Optional) Indicates if one of the ALT keys
@@ -621,4 +621,4 @@ YAHOO.util.UserAction = {
 
 
 };
-YAHOO.register("event-simulate", YAHOO.util.UserAction, {version: "2.9.0", build: "2800"});
+YAHOO.register("event-simulate", YAHOO.util.UserAction, {version: "2.9.1", build: "2800"});

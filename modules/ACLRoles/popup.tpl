@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,13 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
- ********************************************************************************/
+ */
 -->
 
 <script type="text/javascript" src="{sugar_getjspath file="include/javascript/popup_helper.js"}"></script>
@@ -55,16 +56,16 @@
 
 	<tr height="20">
 	<td scope="col" width="1%" >{$CHECKALL}&nbsp;</td>
-		<td scope="col" width="20%"  nowrap><slot>{$MOD.LBL_NAME}</slot></td>
-		<td scope="col" width="10%"  nowrap><slot>{$MOD.LBL_DESCRIPTION}</slot></td>
+		<td scope="col" width="20%"  nowrap><span>{$MOD.LBL_NAME}</span></td>
+		<td scope="col" width="10%"  nowrap><span>{$MOD.LBL_DESCRIPTION}</span></td>
 	  </tr>
 
 {foreach from=$ROLES item="ROLE"}
 
 <tr height="20" >
     			<td>{$PREROW}&nbsp;</td>
-    			<td valign=TOP  ><slot><a href="#" onclick="send_back('Users','{$ROLE.id}');">{$ROLE.name}</a></slot></td>
-    			<td valign=TOP  ><slot>{$ROLE.description}</slot></td>
+    			<td valign=TOP  ><span><a href="#" onclick="send_back('Users','{$ROLE.id}');">{$ROLE.name}</a></span></td>
+    			<td valign=TOP  ><span>{$ROLE.description}</span></td>
 
 </tr>
 {foreachelse}

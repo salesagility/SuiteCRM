@@ -1,0 +1,18 @@
+# Codeception Test Suite Configuration
+#
+# Suite for acceptance tests.
+# Perform tests in browser using the SuiteCRM WebDriver
+#
+# Use the enviornmental config files to configure the driver
+
+class_name: AcceptanceTester
+modules:
+    enabled:
+        - \Helper\Acceptance
+        - \Helper\WebDriverHelper
+        - Filesystem
+        - \SuiteCRM\Test\Driver\WebDriver
+    config:
+        \SuiteCRM\Test\Driver\WebDriver:
+            url: "https://demo.suiteondemand.com"
+            browser: chrome

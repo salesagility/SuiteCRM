@@ -1,6 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -11,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -28,17 +32,11 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
-function submitbutton()
-{var form=document.mosForm;var r=new RegExp("[^0-9A-Za-z]","i");if(form.email1.value!="")
-{var myString=form.email1.value;var pattern=/(\W)|(_)/g;var adate=new Date();var ms=adate.getMilliseconds();var sec=adate.getSeconds();var mins=adate.getMinutes();ms=ms.toString();sec=sec.toString();mins=mins.toString();newdate=ms+sec+mins;var newString=myString.replace(pattern,"");newString=newString+newdate;}
-if(form.name.value=="")
-{form.name.focus();alert("Please provide your name");return false;}
-else if(form.email1.value=="")
-{form.email1.focus();alert("Please provide your email address");return false;}
-else
-{form.submit();}
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */function submitbutton(){var form=document.mosForm;var r=new RegExp("[^0-9A-Za-z]","i");if(form.email1.value!=""){var myString=form.email1.value;var pattern=/(\W)|(_)/g;var adate=new Date();var ms=adate.getMilliseconds();var sec=adate.getSeconds();var mins=adate.getMinutes();ms=ms.toString();sec=sec.toString();mins=mins.toString();newdate=ms+sec+mins;var newString=myString.replace(pattern,"");newString=newString+newdate;}
+if(form.name.value==""){form.name.focus();alert("Please provide your name");return false;}
+else if(form.email1.value==""){form.email1.focus();alert("Please provide your email address");return false;}
+else{form.submit();}
 document.appform.submit();window.focus();}

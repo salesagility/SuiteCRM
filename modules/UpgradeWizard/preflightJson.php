@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,52 +37,48 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
 
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- * *******************************************************************************/
 
-if(ob_get_level() < 1)
-	ob_start();
+if (ob_get_level() < 1) {
+    ob_start();
+}
 ob_implicit_flush(1);
 
 // load the generated persistence file if found
 $persistence = array();
-if(file_exists($persist = sugar_cached('/modules/UpgradeWizard/_persistence.php'))) {
-	require_once $persist;
+if (file_exists($persist = sugar_cached('/modules/UpgradeWizard/_persistence.php'))) {
+    require_once $persist;
 }
 require_once('modules/UpgradeWizard/uw_utils.php');
-require_once('include/utils/zip_utils.php');
+require_once('include/utils/php_zip_utils.php');
 
-switch($_REQUEST['preflightStep']) {
-	case 'find_upgrade_files':
-		logThis('preflightJson finding upgrade files');
-		ob_end_flush();
-		$persistence['upgrade_files'] = preflightCheckJsonFindUpgradeFiles();
-	break;
+switch ($_REQUEST['preflightStep']) {
+    case 'find_upgrade_files':
+        logThis('preflightJson finding upgrade files');
+        ob_end_flush();
+        $persistence['upgrade_files'] = preflightCheckJsonFindUpgradeFiles();
+    break;
 
-	case 'diff_upgrade_files':
-		logThis('preflightJson diffing upgrade files');
-		ob_end_flush();
-		$persistence = preflightCheckJsonDiffFiles();
-	break;
+    case 'diff_upgrade_files':
+        logThis('preflightJson diffing upgrade files');
+        ob_end_flush();
+        $persistence = preflightCheckJsonDiffFiles();
+    break;
 
-	case 'get_diff_results':
-		logThis('preflightJson getting diff results for display');
-		ob_end_flush();
-		$persistence = preflightCheckJsonGetDiff();
-	break;
+    case 'get_diff_results':
+        logThis('preflightJson getting diff results for display');
+        ob_end_flush();
+        $persistence = preflightCheckJsonGetDiff();
+    break;
 
-	case 'get_diff_errors':
-		logThis('preflightJson getting diff errors (if any)');
-		preflightCheckJsonGetDiffErrors();
-	break;
+    case 'get_diff_errors':
+        logThis('preflightJson getting diff errors (if any)');
+        preflightCheckJsonGetDiffErrors();
+    break;
 }
 
 write_array_to_file('persistence', $persistence, $persist);

@@ -71,7 +71,9 @@ function smarty_function_sugar_include($params, &$smarty)
 	    $output_html = ob_get_contents();
 	    ob_end_clean();
 	    echo $output_html; 
-    } else if(is_array($params['include'])) {
+    } else if(isset($params['type']) && $params['type'] == 'smarty') {
+		return $smarty->fetch($params['file']);
+	} else if(is_array($params['include'])) {
 	   	  $code = '';
 	   	  foreach($params['include'] as $include) {
 	   	  	      if(isset($include['file'])) {

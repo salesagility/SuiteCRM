@@ -1,15 +1,11 @@
 <?php
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -20,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -38,11 +34,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+use SuiteCRM\Utility\SuiteValidator;
+
 require_once 'include/formbase.php';
+
+require_once 'modules/Campaigns/utils.php';
 
 $moduleDir = '';
 if (isset($_REQUEST['moduleDir']) && $_REQUEST['moduleDir'] != null) {
@@ -58,15 +61,19 @@ $mod_strings = return_module_language($sugar_config['default_language'], $module
 if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     //adding the client ip address
     $_POST['client_id_address'] = query_client_ip();
-    $campaign_id = $_POST['campaign_id'];
-    $campaign = new Campaign();
+    $campaign = BeanFactory::newBean('Campaigns');
+    $campaign_id = $campaign->db->quote($_POST['campaign_id']);
+    $isValidator = new SuiteValidator();
+    if (!$isValidator->isValidId($campaign_id)) {
+        throw new RuntimeException('Invalid ID requested in Person Capture');
+    }
     $camp_query = "select name,id from campaigns where id='$campaign_id'";
     $camp_query .= ' and deleted=0';
     $camp_result = $campaign->db->query($camp_query);
     $camp_data = $campaign->db->fetchByAssoc($camp_result);
     // Bug 41292 - have to select marketing_id for new lead
     $db = DBManagerFactory::getInstance();
-    $marketing = new EmailMarketing();
+    $marketing = BeanFactory::newBean('EmailMarketing');
     $marketing_query = $marketing->create_new_list_query(
         'date_start desc, date_modified desc',
         "campaign_id = '{$campaign_id}' and status = 'active' and date_start < ".$db->convert('', 'today'),
@@ -76,12 +83,12 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     $marketing_data = $db->fetchByAssoc($marketing_result);
     // .Bug 41292
     if (isset($_REQUEST['assigned_user_id']) && !empty($_REQUEST['assigned_user_id'])) {
-        $current_user = new User();
+        $current_user = BeanFactory::newBean('Users');
         $current_user->retrieve($_REQUEST['assigned_user_id']);
     }
 
     if (isset($camp_data) && $camp_data != null) {
-        //$personForm = new $formBase();
+        /** @var Person $person */
         $person = BeanFactory::getBean($moduleDir);
         $prefix = '';
         if (!empty($_POST['prefix'])) {
@@ -113,15 +120,33 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
         //As form base items are not necessarily in place for the custom classes that extend Person, cannot use
         //the hendleSave method of the formbase
+        
+        $optInEmailFields = array();
+        $optInPrefix = 'opt_in_';
+
         if (!empty($person)) {
+            $filteredFieldsFromPersonBean = filterFieldsFromBeans(array($person));
+            $possiblePersonCaptureFields = array('campaign_id', 'assigned_user_id');
+            foreach ($filteredFieldsFromPersonBean[0]->fields as $field) {
+                $possiblePersonCaptureFields[] = $field[1];
+            }
+
             foreach ($_POST as $k => $v) {
                 //Skip the admin items that are not part of the bean
-                if ($k === 'client_id_address' || $k === 'req_id'
-                    || $k === 'moduleDir' || $k === 'dup_checked') {
+                if ($k === 'client_id_address' || $k === 'req_id' || $k === 'moduleDir' || $k === 'dup_checked') {
                     continue;
+                } elseif (preg_match('/^' . $optInPrefix . '/', $k)) {
+                    $optInEmailFields[] = substr($k, strlen($optInPrefix));
                 } else {
                     if (array_key_exists($k, $person) || array_key_exists($k, $person->field_defs)) {
-                        $person->$k = $v;
+                        if (in_array($k, $possiblePersonCaptureFields)) {
+                            if (is_array($v)) {
+                                $v = encodeMultienumValue($v);
+                            }
+                            $person->$k = $v;
+                        } else {
+                            LoggerManager::getLogger()->warn('Trying to set a non-valid field via WebToPerson Form: ' . $k);
+                        }
                     }
                 }
             }
@@ -130,13 +155,13 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         if (!empty($person)) {
 
             //create campaign log
-            $camplog = new CampaignLog();
-            $camplog->campaign_id = $_POST['campaign_id'];
+            $camplog = BeanFactory::newBean('CampaignLog');
+            $camplog->campaign_id = $campaign_id;
             $camplog->related_id = $person->id;
             $camplog->related_type = $person->module_dir;
-            $camplog->activity_type = $person->object_name;
+            $camplog->activity_type = strtolower($person->object_name);
             $camplog->target_type = $person->module_dir;
-            $campaign_log->activity_date = $timedate->now();
+            $camplog->activity_date = $timedate->now();
             $camplog->target_id = $person->id;
             if (isset($marketing_data['id'])) {
                 $camplog->marketing_id = $marketing_data['id'];
@@ -184,6 +209,74 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 $sea->AddUpdateEmailAddress($person->email2, 0, 1);
             }
         }
+        
+        
+        if (!empty($optInEmailFields)) {
+            // Look for opted out
+            $optedOut = array();
+            foreach ($optInEmailFields as $i => $optInEmailField) {
+                if (stristr($optInEmailField, '_default') !== false) {
+                    $emailField = str_replace('_default', '', $optInEmailField);
+
+                    if (!in_array($emailField, $optInEmailFields)) {
+                        $optedOut[] = $emailField;
+                    }
+
+                    $optInEmailFields[$i] = $emailField;
+                }
+            }
+
+            $optInEmailFields = array_unique($optInEmailFields);
+
+            foreach ($optInEmailFields as $optInEmailField) {
+                if (isset($person->$optInEmailField) && !empty($person->$optInEmailField)) {
+                    $sea = BeanFactory::newBean('EmailAddresses');
+                    $emailId = $sea->AddUpdateEmailAddress($person->$optInEmailField);
+                    if ($sea->retrieve($emailId)) {
+                        if (in_array($optInEmailField, $optedOut)) {
+                            $sea->resetOptIn();
+                            continue;
+                        } else {
+                            $sea->optIn();
+                        }
+
+                        $configurator = new Configurator();
+                        if ($configurator->isConfirmOptInEnabled()) {
+                            $emailman = BeanFactory::newBean('EmailMan');
+
+                            if (!$emailman->sendOptInEmail($sea, $person->module_name, $person->id)) {
+                                $errors[] = 'Confirm Opt In email sending failed, please check email address is correct: ' . $sea->email_address;
+                            }
+                        }
+                        if ($configurator->isOptInEnabled()) {
+                            $date = TimeDate::getInstance()->nowDb();
+                            $date_test = $timedate->to_display_date($date, false);
+                            $person->lawful_basis = '^consent^';
+                            $person->date_reviewed = $date_test;
+                            $person->lawful_basis_source = 'website';
+                            $person->save();
+                        }
+
+                        $savedRequest = $_REQUEST;
+                        $_REQUEST['action'] = 'ConvertLead';
+                        $sea->saveEmail($person->id, $moduleDir);
+                        $_REQUEST = $savedRequest;
+                        $sea->save();
+                    } else {
+                        $msg = 'Error retrieving an email address.';
+                        LoggerManager::getLogger()->fatal($msg);
+                        throw new RuntimeException($msg);
+                    }
+                } else {
+                    $personClass = get_class($person);
+                    $msg = "Incorrect email field for Opt In at person. Person type: $personClass, field: $optInEmailField.";
+                    LoggerManager::getLogger()->fatal($msg);
+                    throw new RuntimeException($msg);
+                }
+            }
+        }
+
+
         if (isset($_POST['redirect_url']) && !empty($_POST['redirect_url'])) {
             // Get the redirect url, and make sure the query string is not too long
             $redirect_url = $_POST['redirect_url'];
@@ -216,7 +309,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 $query_string .= 'error=1';
             }
 
-            $redirect_url = $redirect_url.$query_string;
+            $redirect_url .= $query_string;
 
             // Check if the headers have been sent, or if the redirect url is greater than 2083 characters (IE max URL length)
             //   and use a javascript form submission if that is the case.
@@ -237,13 +330,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             } else {
                 $header_URL = "Location: {$redirect_url}";
 
-                if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
-                    $href = $matches[1];
-                    SugarApplication::redirect($href);
-                }
-                else {
-                    header($header_URL);
-                }
+                SugarApplication::headerRedirect($header_URL);
 
                 die();
             }
@@ -251,8 +338,13 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             if (isset($mod_strings['LBL_THANKS_FOR_SUBMITTING'])) {
                 echo $mod_strings['LBL_THANKS_FOR_SUBMITTING'];
             } else {
+                if (isset($errors) && $errors) {
+                    $log = LoggerManager::getLogger();
+                    $log->error('Success but some error occurred: ' . implode(', ', $errors));
+                }
+                
                 //If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one
-                echo 'Success';
+                echo $app_strings['LBL_THANKS_FOR_SUBMITTING'];
             }
             header($_SERVER['SERVER_PROTOCOL'].'201', true, 201);
         }
@@ -272,15 +364,7 @@ if (!empty($_POST['redirect'])) {
         echo '</body></html>';
     } else {
         $header_URL = "Location: {$_POST['redirect']}";
-
-        if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
-            $href = $matches[1];
-            SugarApplication::redirect($href);
-        }
-        else {
-            header($header_URL);
-        }
-
+        SugarApplication::headerRedirect($header_URL);
         die();
     }
 }

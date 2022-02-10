@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,13 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
- ********************************************************************************/
+ */
 -->
 <!-- BEGIN: main -->
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -64,18 +65,18 @@
 <td>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-	<td width="15%" scope="row"><slot>{MOD.LBL_EDIT_CAMPAIGN_NAME}</slot></td>
-	<td width="85%"  colspan=3><slot>{CAMPAIGN_NAME}</slot></td>
+	<td width="15%" scope="row"><span>{MOD.LBL_EDIT_CAMPAIGN_NAME}</span></td>
+	<td width="85%"  colspan=3><span>{CAMPAIGN_NAME}</span></td>
 	</tr>
 	<tr>
-	<td width="15%" scope="row"><slot>{MOD.LBL_EDIT_TRACKER_NAME}<span class="required">&nbsp;{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td width="35%" ><slot><input type="text" size="30" tabindex='1' name="tracker_name" id="tracker_name" value="{TRACKER_NAME}"></slot></td>
-	<td width="15%" scope="row"><slot>{MOD.LBL_EDIT_OPT_OUT}</slot></td>
-    <td width="35%" ><slot><input onclick="toggle_tracker_url(this);" name="is_optout" id="is_optout" tabindex='2' class="checkbox" type="checkbox" {IS_OPTOUT_CHECKED}/></slot></td>	
+	<td width="15%" scope="row"><span>{MOD.LBL_EDIT_TRACKER_NAME}<span class="required">&nbsp;{APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td width="35%" ><span><input type="text" size="30" tabindex='1' name="tracker_name" id="tracker_name" value="{TRACKER_NAME}"></span></td>
+	<td width="15%" scope="row"><span>{MOD.LBL_EDIT_OPT_OUT}</span></td>
+    <td width="35%" ><span><input onclick="toggle_tracker_url(this);" name="is_optout" id="is_optout" tabindex='2' class="checkbox" type="checkbox" {IS_OPTOUT_CHECKED}/></span></td>
 	</tr>
 	<tr>
-	<td width="15%" scope="row"><slot>{MOD.LBL_EDIT_TRACKER_URL}&nbsp;<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td width="85%"  colspan=3><slot><input type="text" size="100" maxlength='255' tabindex='3' {TRACKER_URL_DISABLED} name="tracker_url" id="tracker_url" value="{TRACKER_URL}"></slot></td>
+	<td width="15%" scope="row"><span>{MOD.LBL_EDIT_TRACKER_URL}&nbsp;<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td width="85%"  colspan=3><span><input type="text" size="100" maxlength='255' tabindex='3' {TRACKER_URL_DISABLED} name="tracker_url" id="tracker_url" value="{TRACKER_URL}"></span></td>
 	</tr>
 
 </td></tr></table>

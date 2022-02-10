@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,53 +34,53 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $dictionary['AOR_Report'] = array(
-	'table'=>'aor_reports',
-	'audited'=>true,
-	'duplicate_merge'=>true,
-	'fields'=>array (
-	  'report_module' => 
-	  array (
-		'required' => true,
-		'name' => 'report_module',
-		'vname' => 'LBL_REPORT_MODULE',
-		'type' => 'enum',
-		'massupdate' => 0,
-		'default' => '',
-		'no_default' => false,
-		'comments' => '',
-		'help' => '',
-		'importable' => 'true',
-		'duplicate_merge' => 'disabled',
-		'duplicate_merge_dom_value' => '0',
-		'audited' => true,
-		'reportable' => true,
-		'unified_search' => false,
-		'merge_filter' => 'disabled',
-		'len' => 100,
-		'size' => '20',
-		'options' => 'aor_moduleList',
-		'studio' => 'visible',
-		'dependency' => false,
-	  ),
+    'table'=>'aor_reports',
+    'audited'=>true,
+    'duplicate_merge'=>true,
+    'fields'=>array(
+      'report_module' =>
+      array(
+        'required' => true,
+        'name' => 'report_module',
+        'vname' => 'LBL_REPORT_MODULE',
+        'type' => 'enum',
+        'massupdate' => 0,
+        'default' => '',
+        'no_default' => false,
+        'comments' => '',
+        'help' => '',
+        'importable' => 'true',
+        'duplicate_merge' => 'disabled',
+        'duplicate_merge_dom_value' => '0',
+        'audited' => true,
+        'reportable' => true,
+        'unified_search' => false,
+        'merge_filter' => 'disabled',
+        'len' => 100,
+        'size' => '20',
+        'options' => 'aor_moduleList',
+        'studio' => 'visible',
+        'dependency' => false,
+      ),
 
-	'graphs_per_row' =>
-	array (
-		'required' => true,
-		'name' => 'graphs_per_row',
-		'vname' => 'LBL_GRAPHS_PER_ROW',
-		'type' => 'int',
-		'massupdate' => 0,
-		'default' => 2,
-		'no_default' => false,
-	),
+    'graphs_per_row' =>
+    array(
+        'required' => true,
+        'name' => 'graphs_per_row',
+        'vname' => 'LBL_GRAPHS_PER_ROW',
+        'type' => 'int',
+        'massupdate' => 0,
+        'default' => 2,
+        'no_default' => false,
+    ),
 
     'field_lines' =>
-    array (
+    array(
         'required' => false,
         'name' => 'field_lines',
         'vname' => 'LBL_FIELD_LINES',
@@ -92,14 +93,14 @@ $dictionary['AOR_Report'] = array(
         'audited' => false,
         'reportable' => false,
         'function' =>
-        array (
+        array(
             'name' => 'display_field_lines',
             'returns' => 'html',
             'include' => 'modules/AOR_Fields/fieldLines.php'
         ),
     ),
     'condition_lines' =>
-    array (
+    array(
         'required' => false,
         'name' => 'condition_lines',
         'vname' => 'LBL_CONDITION_LINES',
@@ -112,14 +113,14 @@ $dictionary['AOR_Report'] = array(
         'audited' => false,
         'reportable' => false,
         'function' =>
-        array (
+        array(
             'name' => 'display_condition_lines',
             'returns' => 'html',
             'include' => 'modules/AOR_Conditions/conditionLines.php'
         ),
     ),
   'aor_fields' =>
-  array (
+  array(
     'name' => 'aor_fields',
     'type' => 'link',
     'relationship' => 'aor_reports_aor_fields',
@@ -129,7 +130,7 @@ $dictionary['AOR_Report'] = array(
     'id_name' => 'aor_report_id',
   ),
   'aor_conditions' =>
-  array (
+  array(
      'name' => 'aor_conditions',
      'type' => 'link',
      'relationship' => 'aor_reports_aor_conditions',
@@ -138,7 +139,7 @@ $dictionary['AOR_Report'] = array(
      'source'=>'non-db',
   ),
   'aor_charts' =>
-      array (
+      array(
         'name' => 'aor_charts',
         'type' => 'link',
         'relationship' => 'aor_charts_aor_reports',
@@ -147,7 +148,7 @@ $dictionary['AOR_Report'] = array(
         'vname' => 'LBL_AOR_CHARTS',
       ),
   'aor_scheduled_reports' =>
-    array (
+    array(
         'name' => 'aor_scheduled_reports',
         'type' => 'link',
         'relationship' => 'aor_scheduled_reports_aor_reports',
@@ -157,7 +158,7 @@ $dictionary['AOR_Report'] = array(
     ),
 
 ),
-'relationships'=>array (
+'relationships'=>array(
     'aor_reports_aor_fields' =>
     array(
         'lhs_module'=> 'AOR_Reports',
@@ -178,7 +179,7 @@ $dictionary['AOR_Report'] = array(
         'rhs_key' => 'aor_report_id',
         'relationship_type'=>'one-to-many',
     ),
-    "aor_scheduled_reports_aor_reports" => array (
+    "aor_scheduled_reports_aor_reports" => array(
         'lhs_module'=> 'AOR_Reports',
         'lhs_table'=> 'aor_reports',
         'lhs_key' => 'id',
@@ -188,12 +189,11 @@ $dictionary['AOR_Report'] = array(
         'relationship_type'=>'one-to-many',
     ),
 ),
-	'optimistic_locking'=>true,
-	'unified_search'=>true,
+    'optimistic_locking'=>true,
+    'unified_search'=>true,
 );
 
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+if (!class_exists('VardefManager')) {
+    require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOR_Reports','AOR_Report', array('basic','assignable','security_groups'));
-
+VardefManager::createVardef('AOR_Reports', 'AOR_Report', array('basic','assignable','security_groups'));

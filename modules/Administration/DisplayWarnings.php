@@ -1,15 +1,11 @@
 <?php
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -20,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -38,16 +34,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-global $db, $current_user, $timedate;
-function displayAdminError($errorString)
-{
-    $output = '<p class="error">'.$errorString.'</p>';
-    echo $output;
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
+require_once 'include/utils.php';
+
+global $current_user, $timedate;
+$db = DBManagerFactory::getInstance();
+
 
 if (isset($_SESSION['rebuild_relationships'])) {
     displayAdminError(translate('MSG_REBUILD_RELATIONSHIPS', 'Administration'));
@@ -57,30 +54,21 @@ if (isset($_SESSION['rebuild_extensions'])) {
     displayAdminError(translate('MSG_REBUILD_EXTENSIONS', 'Administration'));
 }
 
-if ((strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false) && (php_sapi_name() == 'cgi-fcgi') && (ini_get('fastcgi.logging') != '0')) {
+if (!isset($_SERVER['SERVER_SOFTWARE'])) {
+    LoggerManager::getLogger()->warn('SERVER_SOFTVARE is undefined got Display Warnings');
+}
+
+if (isset($_SERVER['SERVER_SOFTWARE']) && (strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false) && (php_sapi_name() == 'cgi-fcgi') && (ini_get('fastcgi.logging') != '0')) {
     displayAdminError(translate('LBL_FASTCGI_LOGGING', 'Administration'));
 }
 if (is_admin($current_user)) {
     if (!empty($_SESSION['COULD_NOT_CONNECT'])) {
-        displayAdminError(translate('LBL_COULD_NOT_CONNECT', 'Administration').' '.$timedate->to_display_date_time($_SESSION['COULD_NOT_CONNECT']));
+        displayAdminError(translate('LBL_COULD_NOT_CONNECT', 'Administration') . ' ' . $timedate->to_display_date_time($_SESSION['COULD_NOT_CONNECT']));
     }
+
     //No SMTP server is set up Error.
-    $smtp_error = false;
-    $admin = new Administration();
-    $admin->retrieveSettings();
-
-    //If sendmail has been configured by setting the config variable ignore this warning
-    $sendMailEnabled = isset($sugar_config['allow_sendmail_outbound']) && $sugar_config['allow_sendmail_outbound'];
-
-    if (trim($admin->settings['mail_smtpserver']) == '' && !$sendMailEnabled) {
-        if ($admin->settings['notify_on']) {
-            $smtp_error = true;
-        }
-    }
-
-    if ($smtp_error) {
-        displayAdminError(translate('WARN_NO_SMTP_SERVER_AVAILABLE_ERROR', 'Administration'));
-    }
+    $admin = BeanFactory::newBean('Administration');
+    $smtp_error = $admin->checkSmtpError();
 
     if (!isset($sugar_config['installer_locked']) || $sugar_config['installer_locked'] == false) {
         displayAdminError(translate('WARN_INSTALLER_LOCKED', 'Administration'));
@@ -90,7 +78,7 @@ if (is_admin($current_user)) {
         if (isset($_SESSION['invalid_versions'])) {
             $invalid_versions = $_SESSION['invalid_versions'];
             foreach ($invalid_versions as $invalid) {
-                displayAdminError(translate('WARN_UPGRADE', 'Administration').$invalid['name'].translate('WARN_UPGRADE2', 'Administration'));
+                displayAdminError(translate('WARN_UPGRADE', 'Administration') . $invalid['name'] . translate('WARN_UPGRADE2', 'Administration'));
             }
         }
     }

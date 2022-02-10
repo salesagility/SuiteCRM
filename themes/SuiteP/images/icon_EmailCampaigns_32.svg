@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>admin_campaign_email_settings</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="admin_campaign_email_settings">
+            <circle id="Oval-7" stroke="#534D64" cx="14" cy="14" r="13"></circle>
+            <g id="Page-1" transform="translate(6.000000, 6.000000)" fill="#534D64">
+                <polygon id="Fill-1" points="9.13207547 0.0754716981 6.86792453 0.0754716981 6.86792453 3.47169811 5.73584906 3.47169811 5.73584906 5.73584906 6.86792453 5.73584906 6.86792453 15.9245283 9.13207547 15.9245283 9.13207547 5.73584906 10.2641509 5.73584906 10.2641509 3.47169811 9.13207547 3.47169811"></polygon>
+                <polygon id="Fill-2" points="3.47169811 0.0754716981 1.20754717 0.0754716981 1.20754717 11.3962264 0.0754716981 11.3962264 0.0754716981 13.6603774 1.20754717 13.6603774 1.20754717 15.9245283 3.47169811 15.9245283 3.47169811 13.6603774 4.60377358 13.6603774 4.60377358 11.3962264 3.47169811 11.3962264"></polygon>
+                <polygon id="Fill-3" points="14.7924528 8 14.7924528 0.0754716981 12.5283019 0.0754716981 12.5283019 8 11.3962264 8 11.3962264 10.2641509 12.5283019 10.2641509 12.5283019 15.9245283 14.7924528 15.9245283 14.7924528 10.2641509 15.9245283 10.2641509 15.9245283 8"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

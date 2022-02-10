@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,117 +33,120 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 button, .button {
-	overflow:visible;
+    overflow: visible;
 }
 
-.mbTable{
-	width:100%
+.mbTable {
+    width: 100%
 }
-.mbTd{
-	vertical-align:top
+
+.mbTd {
+    vertical-align: top
 }
-.mbLBL{
-	vertical-align:top;
-	text-align:right;
-	width:1%;
-	font-weight: bold;
-	white-space:nowrap;
+
+.mbLBL {
+    vertical-align: top;
+    text-align: left;
+    width: 1%;
+    font-weight: bold;
+    white-space: nowrap;
 }
-.mbLBLL{
-	vertical-align:top;
-	text-align:left;
-	width:1%;
-	font-weight: bold;
-	white-space:nowrap;
+
+.mbLBLL {
+    vertical-align: top;
+    text-align: left;
+    width: 1%;
+    font-weight: bold;
+    white-space: nowrap;
 }
-.crumbLink {
-	color: #444;
-}
-a.crumbLink {
-	text-decoration: none;
-}
+
 .wizardButton {
-border:0px;
+    border: 0;
 
 }
-.relTable{
-border:0px solid white;
-padding: 4px 8px 4px 8px;
+
+.relTable {
+    border: 0 solid white;
+    padding: 4px 8px 4px 8px;
 }
 
 .relform .edit tr td[scope="row"] {
-    text-align:right;	
+    text-align: right;
 }
 
-.wizardButton TD{
-border:1px solid white;
-padding: 0px 0px 0px 0px;
-background-color:white;
+.wizardButton TD {
+    padding: 0;
 }
-.wizardButton TD:hover    {
-border:1px solid darkgray;
-background-color:white;
-cursor:pointer
+
+.wizardButton TD:hover {
+    cursor: pointer
 }
-.wizardButtonDown TD   {
-border:1px solid black;
-background-color:lightgray;
-cursor:pointer
+
+.wizardButtonDown TD {
+    cursor: pointer
 }
-a.studiolink {font-weight: normal; text-decoration:none; text-align:center}
-div.bodywrapper{padding: 4px 4px 4px 4px}
+
+a.studiolink {
+    font-weight: normal;
+    text-decoration: none;
+    text-align: center
+}
+
+div.bodywrapper {
+    padding: 4px 4px 4px 4px
+}
 
 img.left_icon {
-    float:left;
-    margin:0px 2px;
+    float: left;
+    margin: 0 2px;
 }
 
 img.right_icon {
-    float:right;
-    margin:0px 2px;
+    float: right;
+    margin: 0 2px;
 }
 
-.oddListRowS1{
-	background-color:WhiteSmoke;
+.oddListRowS1 {
+    background-color: WhiteSmoke;
 }
 
 #mbfooter .yui-layout-hd, #mbfooter .yui-layout-hd td {
-    border-bottom-width: 1px;
-    background-image:url(../../../index.php?entryPoint=getImage&themeName=Sugar&imageName=tabRowBg.png);
-    background-position:0 -9px;
+    background: url(../../../index.php?entryPoint=getImage&themeName=Sugar&imageName=tabRowBg.png) 0 -9px;
     border-width: 1px;
     height: 30px;
-    font-size:8px;
-    font-weight:normal;
+    font-size: 8px;
+    font-weight: normal;
 }
 
 #mbfooter .yui-layout-hd td a.copyRightLink {
-    font-size:8px;
+    font-size: 8px;
 }
 
 #mbfooter div.yui-layout-hd h2 {
-    padding-top: 0;	
+    padding-top: 0;
 }
 
 #mbhelp {
     padding-left: 5px;
 }
 
-#yui-history-iframe { 
-    position:absolute; 
-    top:0; left:0; 
-    width:1px; height:1px; 
-    visibility:hidden; 
+#yui-history-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    visibility: hidden;
 }
 
 #mblayout .yui-content {
-	padding: 0;
-	background-image: none;
+    padding: 0;
+    background-image: none;
 }
 
 #mblayout .yui-navset {
@@ -153,6 +157,6 @@ img.right_icon {
     position: static;
 }
 
-input[disabled], select[disabled]{
+input[disabled], select[disabled] {
     background-color: #EEE;
 }

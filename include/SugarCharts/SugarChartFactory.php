@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2020 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /**
  * Chart factory
@@ -45,47 +49,48 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 class SugarChartFactory
 {
     /**
-	 * Returns a reference to the ChartEngine object for instance $chartEngine, or the default
+     * Returns a reference to the ChartEngine object for instance $chartEngine, or the default
      * instance if one is not specified
      *
      * @param string $chartEngine optional, name of the chart engine from $sugar_config['chartEngine']
      * @param string $module optional, name of module extension for chart engine (see JitReports or SugarFlashReports)
      * @return object ChartEngine instance
      */
-	public static function getInstance(
-        $chartEngine = '',
-        $module = ''
-        )
+    public static function getInstance($chartEngine = '', $module = '')
     {
         global $sugar_config;
-		$defaultEngine = "Jit";
+        $defaultEngine = "Jit";
         //fall back to the default Js Engine if config is not defined
-        if(empty($sugar_config['chartEngine'])){
-        	$sugar_config['chartEngine'] = $defaultEngine;
+        if (empty($sugar_config['chartEngine'])) {
+            $sugar_config['chartEngine'] = $defaultEngine;
         }
 
-        if(empty($chartEngine)){
-        	$chartEngine = $sugar_config['chartEngine'];
+        if (empty($chartEngine)) {
+            $chartEngine = $sugar_config['chartEngine'];
         }
 
         $file = "include/SugarCharts/".$chartEngine."/".$chartEngine.$module.".php";
+        $customFile = 'custom/' . $file;
 
-        if(file_exists('custom/' . $file))
-        {
-          require_once('custom/' . $file);
-        } else if(file_exists($file)) {
-          require_once($file);
+        if (file_exists($customFile)) {
+            require_once($customFile);
+        } elseif (file_exists($file)) {
+            require_once($file);
         } else {
-          $GLOBALS['log']->debug("using default engine include/SugarCharts/".$defaultEngine."/".$defaultEngine.$module.".php");
-          require_once("include/SugarCharts/".$defaultEngine."/".$defaultEngine.$module.".php");
-          $chartEngine = $defaultEngine;
+
+            LoggerManager::getLogger()->debug(
+                "Using default engine include/SugarCharts/" .
+                $defaultEngine . "/" .
+                $defaultEngine.$module.".php"
+            );
+
+            $defaultFile = "include/SugarCharts/".$defaultEngine."/".$defaultEngine.$module.".php";
+            require_once($defaultFile);
+
+            $chartEngine = $defaultEngine;
         }
 
         $className = $chartEngine.$module;
         return new $className();
-
     }
-
 }
-
-?>

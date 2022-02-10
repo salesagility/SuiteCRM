@@ -1,20 +1,47 @@
 <phpunit
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:noNamespaceSchemaLocation   = "http://schema.phpunit.de/3.7/phpunit.xsd"
-backupGlobals                   = "true"
-backupStaticAttributes          = "false"
-colors                          = "false"
-convertNoticesToExceptions      = "true"
-convertWarningsToExceptions     = "true"
-convertErrorsToExceptions       = "true"
-processIsolation                = "false"
-stopOnFailure                   = "false"
-syntaxCheck                     = "false"
-bootstrap                       = "bootstrap.php"
-        >
-<testsuites>
-    <testsuite name="AllTests">
-        <directory>tests/</directory>
-    </testsuite>
-</testsuites>
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+        backupGlobals="true"
+        backupStaticAttributes="false"
+        colors="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+        convertErrorsToExceptions="true"
+        processIsolation="false"
+        stopOnFailure="false"
+        stopOnError="false"
+        bootstrap="bootstrap.php">
+
+    <testsuites>
+        <testsuite name="AllTests">
+            <directory>tests/</directory>
+        </testsuite>
+    </testsuites>
+
+
+    <coverage cacheDirectory="./_output"
+              includeUncoveredFiles="true"
+              processUncoveredFiles="true"
+              pathCoverage="false"
+              ignoreDeprecatedCodeUnits="true"
+              disableCodeCoverageIgnore="false">
+
+        <include>
+            <directory suffix=".php">../</directory>
+        </include>
+
+        <exclude>
+            <directory>../.git</directory>
+            <directory>../.github</directory>
+            <directory>../XTemplate</directory>
+            <directory>../cache</directory>
+            <directory>../vendor</directory>
+            <directory>../tests</directory>
+        </exclude>
+    </coverage>
+
+    <php>
+        <ini name="display_errors" value="true"/>
+    </php>
+
 </phpunit>

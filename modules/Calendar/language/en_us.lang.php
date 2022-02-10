@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,30 +34,40 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array(
+
+    'LBL_SHAREDWEEK' => 'Shared Week',
+    'LBL_SHAREDMONTH' => 'Shared Month',
 
     'LBL_MODULE_NAME' => 'Calendar',
     'LBL_MODULE_TITLE' => 'Calendar',
     'LNK_NEW_CALL' => 'Schedule Call',
     'LNK_NEW_MEETING' => 'Schedule Meeting',
-    'LNK_NEW_APPOINTMENT' => 'Create Appointment',
     'LNK_NEW_TASK' => 'Create Task',
     'LNK_CALL_LIST' => 'Calls',
     'LNK_MEETING_LIST' => 'Meetings',
     'LNK_TASK_LIST' => 'Tasks',
+    'LNK_TASK' => 'Task',
+    'LNK_TASK_VIEW' => 'View Task',
+    'LNK_EVENT' => 'Event',
+    'LNK_EVENT_VIEW' => 'View Event',
     'LNK_VIEW_CALENDAR' => 'Today',
     'LNK_IMPORT_CALLS' => 'Import Calls',
     'LNK_IMPORT_MEETINGS' => 'Import Meetings',
     'LNK_IMPORT_TASKS' => 'Import Tasks',
     'LBL_MONTH' => 'Month',
-    'LBL_DAY' => 'Day',
+    'LBL_AGENDADAY' => 'Day',
     'LBL_YEAR' => 'Year',
-    'LBL_WEEK' => 'Week',
+
+    'LBL_AGENDAWEEK' => 'Week',
     'LBL_PREVIOUS_MONTH' => 'Previous Month',
     'LBL_PREVIOUS_DAY' => 'Previous Day',
     'LBL_PREVIOUS_YEAR' => 'Previous Year',
@@ -93,33 +103,24 @@ $mod_strings = array(
     'LBL_NO' => 'No',
     'LBL_SETTINGS' => 'Settings',
     'LBL_CREATE_NEW_RECORD' => 'Create Activity',
-    'LBL_LOADING' => 'Loading ......',
-    'LBL_SAVING' => 'Saving ......',
-    'LBL_SENDING_INVITES' => 'Saving & Sending Invites .....',
+    'LBL_LOADING' => 'Loading...',
+    'LBL_SAVING' => 'Saving...',
+    'LBL_SENDING_INVITES' => 'Saving & Sending Invites...',
     'LBL_CONFIRM_REMOVE' => 'Are you sure you want to remove the record?',
     'LBL_CONFIRM_REMOVE_ALL_RECURRING' => 'Are you sure you want to remove all recurring records?',
     'LBL_EDIT_RECORD' => 'Edit Activity',
     'LBL_ERROR_SAVING' => 'Error while saving',
     'LBL_ERROR_LOADING' => 'Error while loading',
-    'LBL_GOTO_DATE' => 'Goto Date',
+    'LBL_GOTO_DATE' => 'Go to Date',
     'NOTICE_DURATION_TIME' => 'Duration time must be greater than 0',
-    'LBL_STYLE_BASIC' => 'Basic',
-    'LBL_STYLE_ADVANCED' => 'Advanced',
-
-    'LBL_INFO_TITLE' => 'Additional Details',
-    'LBL_INFO_DESC' => 'Description',
-    'LBL_INFO_START_DT' => 'Start Date',
-    'LBL_INFO_DUE_DT' => 'Due Date',
-    'LBL_INFO_DURATION' => 'Duration',
-    'LBL_INFO_NAME' => 'Subject',
-    'LBL_INFO_RELATED_TO' => 'Related to',
+    'LBL_STYLE_BASIC' => 'BASIC', //No need to be translated in all caps. Translation used just in menu action items when using the SuiteP template
+    'LBL_STYLE_ADVANCED' => 'ADVANCED', //No need to be translated in all caps. Translation used just in menu action items when using the SuiteP template
 
     'LBL_NO_USER' => 'No match for field: Assigned to',
     'LBL_SUBJECT' => 'Subject',
     'LBL_DURATION' => 'Duration',
     'LBL_STATUS' => 'Status',
-    'LBL_DATE_TIME' => 'Date and Time',
-
+    'LBL_PRIORITY' => 'Priority',
 
     'LBL_SETTINGS_TITLE' => 'Settings',
     'LBL_SETTINGS_DISPLAY_TIMESLOTS' => 'Display time slots in Day and Week views:',
@@ -128,6 +129,7 @@ $mod_strings = array(
     'LBL_SETTINGS_CALLS_SHOW' => 'Show Calls:',
     'LBL_SETTINGS_TASKS_SHOW' => 'Show Tasks:',
     'LBL_SETTINGS_COMPLETED_SHOW' => 'Show Completed Meetings, Calls and Tasks:',
+    'LBL_SETTINGS_DISPLAY_SHARED_CALENDAR_SEPARATE' => 'Shared Calendar Separate:',
 
     'LBL_SAVE_BUTTON' => 'Save',
     'LBL_DELETE_BUTTON' => 'Delete',
@@ -158,67 +160,66 @@ $mod_strings = array(
     'ERR_YEAR_BETWEEN' => 'Sorry, calendar cannot handle the year you requested<br>Year must be between 1970 and 2037',
     'ERR_NEIGHBOR_DATE' => 'get_neighbor_date_str: not defined for this view',
     'LBL_NO_ITEMS_MOBILE' => 'Your calendar is clear for the week.',
-    'LBL_SECURITYGROUPS' => 'Filter user list by Security Group',
-
-    'LBL_ADD_ITEM' => 'Add Item',
-    'LBL_ADD_MEETING' => 'Add Meeting',
-    'LBL_ADD_TASK' => 'Add Task',
-    'LBL_ADD_CALL' => 'Add Call',
-
+    'LBL_GENERAL_SETTINGS' => 'General Settings',
+    'LBL_COLOR_SETTINGS' => 'Colour Settings',
+    'LBL_MODULE' => 'Module',
+    'LBL_BODY' => 'Body',
+    'LBL_BORDER' => 'Border',
+    'LBL_TEXT' => 'Text',
 );
+
 
 $mod_list_strings = array(
     'dom_cal_weekdays' =>
         array(
-            "Sun",
-            "Mon",
-            "Tue",
-            "Wed",
-            "Thu",
-            "Fri",
-            "Sat",
+            '0' => "Sun",
+            '1' => "Mon",
+            '2' => "Tue",
+            '3' => "Wed",
+            '4' => "Thu",
+            '5' => "Fri",
+            '6' => "Sat",
         ),
     'dom_cal_weekdays_long' =>
         array(
-            "Sunday",
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
+            '0' => "Sunday",
+            '1' => "Monday",
+            '2' => "Tuesday",
+            '3' => "Wednesday",
+            '4' => "Thursday",
+            '5' => "Friday",
+            '6' => "Saturday",
         ),
     'dom_cal_month' =>
         array(
-            "",
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
+            '0' => "",
+            '1' => "Jan",
+            '2' => "Feb",
+            '3' => "Mar",
+            '4' => "Apr",
+            '5' => "May",
+            '6' => "Jun",
+            '7' => "Jul",
+            '8' => "Aug",
+            '9' => "Sep",
+            '10' => "Oct",
+            '11' => "Nov",
+            '12' => "Dec",
         ),
     'dom_cal_month_long' =>
         array(
-            "",
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
+            '0' => "",
+            '1' => "January",
+            '2' => "February",
+            '3' => "March",
+            '4' => "April",
+            '5' => "May",
+            '6' => "June",
+            '7' => "July",
+            '8' => "August",
+            '9' => "September",
+            '10' => "October",
+            '11' => "November",
+            '12' => "December",
         ),
 );
-?>

@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,40 +34,56 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /**
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
 require_once('modules/OutboundEmailAccounts/OutboundEmailAccounts_sugar.php');
-class OutboundEmailAccounts extends OutboundEmailAccounts_sugar {
+class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
+{
 
-	function __construct(){
-		parent::__construct();
-	}
+    /**
+     * @var string
+     */
+    public $mail_smtppass;
 
-	public function save($check_notify = false) {
-		if(!$this->mail_smtppass && $this->id) {
-			$bean = new OutboundEmailAccounts();
-			$bean->retrieve($this->id);
-			$this->mail_smtppass = $bean->mail_smtppass;
-		}
-		$this->mail_smtppass = $this->mail_smtppass ? blowfishEncode(blowfishGetKey('OutBoundEmail'), $this->mail_smtppass) : null;
-		$results = parent::save($check_notify);
-		return $results;
-	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	public function retrieve($id = -1, $encode = true, $deleted = true) {
-		$results = parent::retrieve($id, $encode, $deleted);
-		$this->mail_smtppass = $this->mail_smtppass ? blowfishDecode(blowfishGetKey('OutBoundEmail'), $this->mail_smtppass) : null;
-		return $results;
-	}
+    public function save($check_notify = false)
+    {
+        if (!$this->mail_smtppass && $this->id) {
+            $bean = BeanFactory::newBean('OutboundEmailAccounts');
+            $bean->retrieve($this->id);
+            if (!$bean->mail_smtppass) {
+                $GLOBALS['log']->warn("Unable to send email via SMTP using an empty password.");
+                $GLOBALS['log']->info("Please ensure that the email settings are configured correctly");
+                $this->mail_smtppass = null;
+            } else {
+                $this->mail_smtppass = $bean->mail_smtppass;
+            }
+        }
+        $this->mail_smtppass = $this->mail_smtppass ? blowfishEncode(blowfishGetKey('OutBoundEmail'), $this->mail_smtppass) : null;
+        $results = parent::save($check_notify);
+        return $results;
+    }
 
-	public static function getPasswordChange() {
-		global $mod_strings;
-		$html = <<<HTML
+    public function retrieve($id = -1, $encode = true, $deleted = true)
+    {
+        $results = parent::retrieve($id, $encode, $deleted);
+        $this->mail_smtppass = $this->mail_smtppass ? blowfishDecode(blowfishGetKey('OutBoundEmail'), $this->mail_smtppass) : null;
+        return $results;
+    }
+
+    public static function getPasswordChange()
+    {
+        global $mod_strings;
+        $html = <<<HTML
 <script type="text/javascript">
 var passwordToggle = function(elem, sel) {
 	$(sel).show();
@@ -79,29 +96,32 @@ var passwordToggle = function(elem, sel) {
 <a href="javascript:;" onclick="passwordToggle(this, '#password_toggle');">{$mod_strings['LBL_CHANGE_PASSWORD']}</a>
 
 HTML;
-		return $html;
-	}
+        return $html;
+    }
 
-	public static function getEmailProviderChooser($focus, $name, $value, $view) {
-		global $app_strings, $mod_strings;
-		$ss = new Sugar_Smarty();
-		$ss->assign('APP', $app_strings);
-		$ss->assign('MOD', $mod_strings);
-		$ss->assign('mail_smtptype', $focus->mail_smtptype);
-		$html = $ss->fetch('modules/OutboundEmailAccounts/smtpPreselection.tpl');
-		return $html;
-	}
+    public static function getEmailProviderChooser($focus, $name, $value, $view)
+    {
+        global $app_strings, $mod_strings;
+        $ss = new Sugar_Smarty();
+        $ss->assign('APP', $app_strings);
+        $ss->assign('MOD', $mod_strings);
+        $ss->assign('mail_smtptype', $focus->mail_smtptype);
+        $html = $ss->fetch('modules/OutboundEmailAccounts/smtpPreselection.tpl');
+        return $html;
+    }
 
-	public static function getSendTestEmailBtn() {
-		global $app_strings, $current_user;
-		$APP = $app_strings;
-		$CURRENT_USER_EMAIL = $current_user->email1;
-		$admin = new Administration();
-		$admin->retrieveSettings();
-		$adminNotifyFromAddress = $admin->settings['notify_fromaddress'];
-		$adminNotifyFromName = $admin->settings['notify_fromname'];
-		$html = <<<HTML
-			<input type="button" class="button" value="{$APP['LBL_EMAIL_TEST_OUTBOUND_SETTINGS']}" onclick="testOutboundSettings();">
+    public static function getSendTestEmailBtn()
+    {
+        global $app_strings, $current_user;
+        $APP = $app_strings;
+        $CURRENT_USER_EMAIL = $current_user->email1;
+        $admin = BeanFactory::newBean('Administration');
+        $admin->retrieveSettings();
+        $adminNotifyFromAddress = $admin->settings['notify_fromaddress'];
+        isValidEmailAddress($adminNotifyFromAddress);
+        $adminNotifyFromName = $admin->settings['notify_fromname'];
+        $html = <<<HTML
+			<input id="sendTestOutboundEmailSettingsBtn" type="button" class="button" value="{$APP['LBL_EMAIL_TEST_OUTBOUND_SETTINGS']}" onclick="testOutboundSettings();">
 			<script type="text/javascript" src="cache/include/javascript/sugar_grp_yui_widgets.js"></script>
 			<script type="text/javascript">
 
@@ -130,8 +150,8 @@ HTML;
 						EmailMan.testOutboundDialog = new YAHOO.widget.Dialog("testOutboundDialog", {
 							modal:true,
 							visible:true,
-							fixedcenter:true,
-							constraintoviewport: true,
+							fixedcenter: false,
+							constraintoviewport: false,
 							width   : 600,
 							shadow  : false
 						});
@@ -142,9 +162,19 @@ HTML;
 					EmailMan.testOutboundDialog.render();
 					EmailMan.testOutboundDialog.show();
 				}
+                
+                                function showFullSmtpLogDialog(headerText, bodyHtml, dialogType) {
+
+                                     var config = { };
+                                     config.type = dialogType;
+                                     config.title = headerText;
+                                     config.msg = bodyHtml;
+                                     config.modal = false;
+                                     config.width = 600;
+                                     YAHOO.SUGAR.MessageBox.show(config);
+                                }
 				
-				function sendTestEmail()
-				{
+				function sendTestEmail() {
 					var toAddress = document.getElementById("outboundtest_to_address").value;
 					
 					if (trim(toAddress) == "") 
@@ -160,15 +190,31 @@ HTML;
 					//Hide the email address window and show a message notifying the user that the test email is being sent.
 					EmailMan.testOutboundDialog.hide();
 					overlay("{$APP['LBL_EMAIL_PERFORMING_TASK']}", "{$APP['LBL_EMAIL_ONE_MOMENT']}", 'alert');
-
+                    
 					var callbackOutboundTest = {
 						success	: function(o) {
 							hideOverlay();
 							var responseObject = YAHOO.lang.JSON.parse(o.responseText);
 							if (responseObject.status)
 								overlay("{$APP['LBL_EMAIL_TEST_OUTBOUND_SETTINGS']}", "{$APP['LBL_EMAIL_TEST_NOTIFICATION_SENT']}", 'alert');
-							else
-								overlay("Send Test Email", responseObject.errorMessage, 'alert');
+       							else {
+                                
+                                                           var dialogBody = 
+                                                            "<div style='padding: 10px'>" +
+                                                               "<div class='well'>" + responseObject.errorMessage + "</div>" +
+                                                               "<div >" +
+                                                                   "<button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#fullSmtpLog' aria-expanded='false' aria-controls='fullSmtpLog'>" + 
+                                                                       "{$APP['LBL_EMAIL_TEST_SEE_FULL_SMTP_LOG']}" +
+                                                                  "</button>" +
+                                                                   "<div class='collapse' id='fullSmtpLog'>" +
+                                                                       "<pre style='height: 300px; overflow: scroll;'>" +
+                                                                           responseObject.fullSmtpLog + 
+                                                                       "</pre>" +
+                                                                   "</div>" +
+                                                               "</div>" +
+                                                           "</div>";
+                                                           showFullSmtpLogDialog("{$APP['LBL_EMAIL_TEST_OUTBOUND_SETTINGS']}", dialogBody, 'alert');
+                                                        }
 						}
 					};
 
@@ -177,6 +223,8 @@ HTML;
 					var smtpssl  = document.getElementById('mail_smtpssl').value;
 					var mailsmtpauthreq = document.getElementById('mail_smtpauth_req');
 					var mail_sendtype = 'SMTP'; 
+                                                                var adminNotifyFromAddress = document.getElementById('smtp_from_addr').value ? document.getElementById('smtp_from_addr').value :'$adminNotifyFromName';
+                                                                var adminNotifyFromName = document.getElementById('smtp_from_name').value ? document.getElementById('smtp_from_name').value : '$adminNotifyFromAddress';
 					var postDataString =
 						'mail_type=system&' +
 						'mail_sendtype=' + mail_sendtype + '&' +
@@ -186,8 +234,8 @@ HTML;
 						"mail_smtpuser=" + trim(document.getElementById('mail_smtpuser').value) + "&" +
 						"mail_smtppass=" + trim(document.getElementById('mail_smtppass').value) + "&" +
 						"outboundtest_to_address=" + toAddress + '&' +
-						'outboundtest_from_address=' + '$adminNotifyFromAddress' + '&' +
-						'mail_from_name=' + '$adminNotifyFromName';
+						'outboundtest_from_address=' + adminNotifyFromAddress + '&' +
+						'mail_from_name=' + adminNotifyFromName;
 					//YAHOO.util.Connect.asyncRequest("POST", "index.php?action=EmailUIAjax&module=Emails&emailUIAction=testOutbound&to_pdf=true&sugar_body_only=true", callbackOutboundTest, postDataString);
 					YAHOO.util.Connect.asyncRequest("POST", "index.php?action=testOutboundEmail&module=EmailMan&to_pdf=true&sugar_body_only=true", callbackOutboundTest, postDataString);
 				}
@@ -219,8 +267,6 @@ HTML;
 				</div>
 			</div>
 HTML;
-		return $html;
-	}
-	
+        return $html;
+    }
 }
-?>

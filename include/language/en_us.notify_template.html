@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,341 +34,299 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-/*********************************************************************************
-
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 -->
-
 <!-- BEGIN: Quote_Subject -->
-SuiteCRM Quote - {QUOTE_SUBJECT}
+<p>SuiteCRM Quote - {QUOTE_SUBJECT}</p>
 <!-- END: Quote_Subject -->
 <!-- BEGIN: Quote -->
-{ASSIGNER} has assigned a Quote to {ASSIGNED_USER}.
-
-Subject: {QUOTE_SUBJECT}
-Status: {QUOTE_STATUS}
-Expected Close Date: {QUOTE_CLOSEDATE}
+<p><b>{ASSIGNER}</b> has assigned a Quote to <b>{ASSIGNED_USER}</b>.</p>
+<p>
+Subject: {QUOTE_SUBJECT}<br/>
+Status: {QUOTE_STATUS}<br/>
+Expected Close Date: {QUOTE_CLOSEDATE}<br/>
 Description: {QUOTE_DESCRIPTION}
-
-You may review this Quote at:
-<{URL}>
+</p>
+<p>You may <a href={URL}>review this Quote</a>.</p>
 <!-- END: Quote -->
 
-
 <!-- BEGIN: Account_Subject -->
-SuiteCRM Account - {ACCOUNT_NAME}
+<p>SuiteCRM Account - {ACCOUNT_NAME}</p>
 <!-- END: Account_Subject -->
 <!-- BEGIN: Account -->
-{ASSIGNER} has assigned an Account to {ASSIGNED_USER}.
-
-Name: {ACCOUNT_NAME}
-Type: {ACCOUNT_TYPE}
+<p><b>{ASSIGNER}</b> has assigned an Account to <b>{ASSIGNED_USER}</b>.</p>
+<p>
+Name: {ACCOUNT_NAME}<br/>
+Type: {ACCOUNT_TYPE}<br/>
 Description: {ACCOUNT_DESCRIPTION}
-
-You may review this Account at:
-<{URL}>
+</p>
+<p>You may <a href={URL}>review this Account</a>.</p>
 <!-- END: Account -->
 
-
 <!-- BEGIN: Case_Subject -->
-SuiteCRM Case - {CASE_SUBJECT}
+<p>SuiteCRM Case - {CASE_SUBJECT}</p>
 <!-- END: Case_Subject -->
 <!-- BEGIN: Case -->
-{ASSIGNER} has assigned a Case to {ASSIGNED_USER}.
-
-Subject: {CASE_SUBJECT}
-Priority: {CASE_PRIORITY}
-Status: {CASE_STATUS}
+<p><b>{ASSIGNER}</b> has assigned a Case to <b>{ASSIGNED_USER}</b>.</p>
+<p>
+Subject: {CASE_SUBJECT}<br/>
+Priority: {CASE_PRIORITY}<br/>
+Status: {CASE_STATUS}<br/>
 Description: {CASE_DESCRIPTION}
-
-You may review this Case at:
-<{URL}>
+</p>
+<p>You may <a href={URL}>review this Case</a>.</p>
 <!-- END: Case -->
 
-
 <!-- BEGIN: Task_Subject -->
-SuiteCRM Task - {TASK_SUBJECT}
+<p>SuiteCRM Task - {TASK_SUBJECT}</p>
 <!-- END: Task_Subject -->
 <!-- BEGIN: Task -->
-{ASSIGNER} has assigned a Task to {ASSIGNED_USER}.
-
-Subject: {TASK_SUBJECT}
-Priority: {TASK_PRIORITY}
-Due Date: {TASK_DUEDATE}
-Status: {TASK_STATUS}
+<p><b>{ASSIGNER}</b> has assigned a Task to <b>{ASSIGNED_USER}</b>.</p>
+<p>
+Subject: {TASK_SUBJECT}<br/>
+Priority: {TASK_PRIORITY}<br/>
+Due Date: {TASK_DUEDATE}<br/>
+Status: {TASK_STATUS}<br/>
 Description: {TASK_DESCRIPTION}
-
-You may review this Task at:
-<{URL}>
+</p>
+<p>You may <a href={URL}>review this Task</a>.</p>
 <!-- END: Task -->
 
-
 <!-- BEGIN: Meeting_Subject -->
-SuiteCRM Meeting - {MEETING_SUBJECT}
+<p>SuiteCRM Meeting - {MEETING_SUBJECT}</p>
 <!-- END: Meeting_Subject -->
 <!-- BEGIN: Meeting -->
-To: {MEETING_TO}
-
-{ASSIGNER} has invited you to a Meeting
-
-Subject: {MEETING_SUBJECT}
-Start Date: {MEETING_STARTDATE}
+<p>To: {MEETING_TO}</p>
+<p><b>{ASSIGNER}</b> has invited you to a Meeting</p>
+<p>
+Subject: {MEETING_SUBJECT}<br/>
+Location: {MEETING_LOCATION}<br/>
+Start Date: {MEETING_STARTDATE}<br/>
 End Date: {MEETING_ENDDATE}
+</p>
+<p>
 <!-- BEGIN: Meeting_External_API -->
 Meeting URL: {MEETING_URL}
+</p>
 <!-- END: Meeting_External_API -->
-Description: {MEETING_DESCRIPTION}
-
-Accept this meeting:
-<{ACCEPT_URL}&accept_status=accept>
-
-Tentatively Accept this meeting
-<{ACCEPT_URL}&accept_status=tentative>
-
-Decline this meeting
-<{ACCEPT_URL}&accept_status=decline>
-
+<p>Description: {MEETING_DESCRIPTION}<br/>
+</p>
+<p>---</p>
+<p><a href={ACCEPT_URL}&accept_status=accept>Accept this meeting</a>.</p>
+<p><a href={ACCEPT_URL}&accept_status=tentative>Tentatively Accept this meeting</a>.</p>
+<p><a href={ACCEPT_URL}&accept_status=decline>Decline this meeting</a>.</p>
 <!-- END: Meeting -->
 
 <!-- BEGIN: MeetingSpecial_Subject -->
-SuiteCRM Meeting - {MEETING_SUBJECT}
+<p>SuiteCRM Meeting - {MEETING_SUBJECT}</p>
 <!-- END: MeetingSpecial_Subject -->
 <!-- BEGIN: MeetingSpecial -->
-{ASSIGNER} has assigned a Meeting to {ASSIGNED_USER}.
-
-Subject: {MEETING_SUBJECT}
-Status: {MEETING_STATUS}
-Start Date: {MEETING_STARTDATE}
-End Date: {MEETING_ENDDATE}
+<p><b>{ASSIGNER}</b> has assigned a Meeting to <b>{ASSIGNED_USER}</b>.</p>
+<p>
+Subject: {MEETING_SUBJECT}<br/>
+Location: {MEETING_LOCATION}<br/>
+Status: {MEETING_STATUS}<br/>
+Start Date: {MEETING_STARTDATE}<br/>
+End Date: {MEETING_ENDDATE}<br/>
 Description: {MEETING_DESCRIPTION}
-
-You may review this Meeting at:
-<{URL}>
+</p>
+<p>You may <a href={URL}>review this Meeting</a>.</p>
 <!-- END: MeetingSpecial -->
 
+<!-- BEGIN: MeetingReminder_Subject -->
+<p>Meeting Reminder - {MEETING_SUBJECT}</p>
+<!-- END: MeetingSpecial_Subject -->
+<!-- BEGIN: MeetingReminder -->
+<p>
+Title: {MEETING_SUBJECT}<br/>
+When: {MEETING_STARTDATE}<br/>
+Location: {MEETING_LOCATION}<br/>
+Created By: {MEETING_CREATED_BY}
+</p>
+<!-- END: MeetingReminder -->
 
 <!-- BEGIN: Email_Subject -->
-SuiteCRM Email - {EMAIL_SUBJECT}
+<p>SuiteCRM Email - {EMAIL_SUBJECT}</p>
 <!-- END: Email_Subject -->
 <!-- BEGIN: Email -->
-{ASSIGNER} has assigned an Email to {ASSIGNED_USER}.
-
-Subject: {EMAIL_SUBJECT}
+<p><b>{ASSIGNER}</b> has assigned an Email to <b>{ASSIGNED_USER}</b>.</p>
+<p>
+Subject: {EMAIL_SUBJECT}<br/>
 Date Sent: {EMAIL_DATESENT}
-
-You may review this Email at:
-<{URL}>
+</p>
+<p>You may <a href={URL}>review this Email</a>.</p>
 <!-- END: Email -->
 
-
-
-
-
-
 <!-- BEGIN: Contact_Subject -->
-SuiteCRM Contact - {CONTACT_NAME}
+<p>SuiteCRM Contact - {CONTACT_NAME}</p>
 <!-- END: Contact_Subject -->
 <!-- BEGIN: Contact -->
-{ASSIGNER} has assigned a Contact to {ASSIGNED_USER}.
-
-Name: {CONTACT_NAME}
+<p><b>{ASSIGNER}</b> has assigned a Contact to <b>{ASSIGNED_USER}</b>.</p>
+<p>
+Name: {CONTACT_NAME}<br/>
 Description: {CONTACT_DESCRIPTION}
-
-You may review this Contact at:
-<{URL}>
+</p>
+<p>You may <a href={URL}>review this Contact</a>.</p>
 <!-- END: Contact -->
 
-
 <!-- BEGIN: Lead_Subject -->
-SuiteCRM Lead - {LEAD_NAME}
+<p>SuiteCRM Lead - {LEAD_NAME}</p>
 <!-- END: Lead_Subject -->
 <!-- BEGIN: Lead -->
-{ASSIGNER} has assigned a Lead to {ASSIGNED_USER}.
-
-Name: {LEAD_NAME}
-Lead Source: {LEAD_SOURCE}
-Status: {LEAD_STATUS}
+<p><b>{ASSIGNER}</b> has assigned a Lead to <b>{ASSIGNED_USER}</b>.</p>
+<p>
+Name: {LEAD_NAME}<br/>
+Lead Source: {LEAD_SOURCE}<br/>
+Status: {LEAD_STATUS}<br/>
 Description: {LEAD_DESCRIPTION}
-
-You may review this Lead at:
-<{URL}>
+</p>
+<p>You may <a href={URL}>review this Lead</a>.</p>
 <!-- END: Lead -->
 
-
 <!-- BEGIN: Opportunity_Subject -->
-SuiteCRM Opportunity - {OPPORTUNITY_NAME}
+<p>SuiteCRM Opportunity - {OPPORTUNITY_NAME}</p>
 <!-- END: Opportunity_Subject -->
 <!-- BEGIN: Opportunity -->
-{ASSIGNER} has assigned an Opportunity to {ASSIGNED_USER}.
-
-Name: {OPPORTUNITY_NAME}
-Amount: {OPPORTUNITY_AMOUNT}
-Expected Close Date: {OPPORTUNITY_CLOSEDATE}
-Sales Stage: {OPPORTUNITY_STAGE}
+<p><b>{ASSIGNER}</b> has assigned an Opportunity to <b>{ASSIGNED_USER}</b>.</p>
+<p>
+Name: {OPPORTUNITY_NAME}<br/>
+Amount: {OPPORTUNITY_AMOUNT}<br/>
+Expected Close Date: {OPPORTUNITY_CLOSEDATE}<br/>
+Sales Stage: {OPPORTUNITY_STAGE}<br/>
 Description: {OPPORTUNITY_DESCRIPTION}
-
-You may review this Opportunity at:
-<{URL}>
+</p>
+<p>You may <a href={URL}>review this Opportunity</a>.</p>
 <!-- END: Opportunity -->
 
-
 <!-- BEGIN: Bug_Subject -->
-SuiteCRM Bug - {BUG_SUBJECT}
+<p>SuiteCRM Bug - {BUG_SUBJECT}</p>
 <!-- END: Bug_Subject -->
 <!-- BEGIN: Bug -->
-{ASSIGNER} has assigned a Bug to {ASSIGNED_USER}.
-
-Bug Number: {BUG_BUG_NUMBER}
-Subject: {BUG_SUBJECT}
-Type: {BUG_TYPE}
-Priority: {BUG_PRIORITY}
-Status: {BUG_STATUS}
-Resolution: {BUG_RESOLUTION}
-Release: {BUG_RELEASE}
-Description: {BUG_DESCRIPTION}
+<p><b>{ASSIGNER}</b> has assigned a Bug to <b>{ASSIGNED_USER}</b>.</p>
+<p>
+Bug Number: {BUG_BUG_NUMBER}<br/>
+Subject: {BUG_SUBJECT}<br/>
+Type: {BUG_TYPE}<br/>
+Priority: {BUG_PRIORITY}<br/>
+Status: {BUG_STATUS}<br/>
+Resolution: {BUG_RESOLUTION}<br/>
+Release: {BUG_RELEASE}<br/>
+Description: {BUG_DESCRIPTION}<br/>
 Work Log: {BUG_WORK_LOG}
-
-You may review this Bug at:
-<{URL}>
+</p>
+<p>You may <a href={URL}>review this Bug</a>.</p>
 <!-- END: Bug -->
 
-
 <!-- BEGIN: Default_Subject -->
-SuiteCRM - Assigned {OBJECT}
+<p>SuiteCRM - Assigned {OBJECT}</p>
 <!-- END: Default_Subject -->
 <!-- BEGIN: Default -->
-{ASSIGNER} has assigned a(n) {OBJECT} to {ASSIGNED_USER}.
-
-You may review this {OBJECT} at:
-<{URL}>
+<p><b>{ASSIGNER}</b> has assigned a(n) {OBJECT} to <b>{ASSIGNED_USER}</b>.</p>
+<p>You may <a href={URL}>review this {OBJECT}</a>.</p>
 <!-- END: Default -->
 
 <!-- BEGIN: Call_Subject -->
-SuiteCRM Call - {CALL_SUBJECT}
+<p>SuiteCRM Call - {CALL_SUBJECT}</p>
 <!-- END: Call_Subject -->
 <!-- BEGIN: Call -->
-To: {CALL_TO}
- {ASSIGNER} has invited you to a Call
-Subject: {CALL_SUBJECT}
-Status: {CALL_STATUS}
-Start Date: {CALL_STARTDATE}
-Duration: {CALL_HOURS}h, {CALL_MINUTES}m
-Description: {CALL_DESCRIPTION}
-
-Accept this call:
-<{ACCEPT_URL}&accept_status=accept>
-
-Tentatively Accept this call
-<{ACCEPT_URL}&accept_status=tentative>
-
-Decline this call
-<{ACCEPT_URL}&accept_status=decline>
-
+<p>To: {CALL_TO}</p>
+<p><b>{ASSIGNER}</b> has invited you to a Call</p>
+<p>
+Subject: {CALL_SUBJECT}<br/>
+Status: {CALL_STATUS}<br/>
+Start Date: {CALL_STARTDATE}<br/>
+Duration: {CALL_HOURS}h, {CALL_MINUTES}m<br/>
+Description: {CALL_DESCRIPTION}<br/>
+</p>
+<p>---</p>
+<p><a href={ACCEPT_URL}&accept_status=accept>Accept this call</a>.</p>
+<p><a href={ACCEPT_URL}&accept_status=tentative>Tentatively Accept this call</a>.</p>
+<p><a href={ACCEPT_URL}&accept_status=decline>Decline this call</a>.</p>
 <!-- END: Call -->
 
 <!-- BEGIN: CallSpecial_Subject -->
-SuiteCRM Call - {CALL_SUBJECT}
+<p>SuiteCRM Call - {CALL_SUBJECT}</p>
 <!-- END: CallSpecial_Subject -->
 <!-- BEGIN: CallSpecial -->
-{ASSIGNER} has assigned a Call to {ASSIGNED_USER}.
-
-Subject: {CALL_SUBJECT}
-Status: {CALL_STATUS}
-Start Date: {CALL_STARTDATE}
-Duration: {CALL_HOURS}h, {CALL_MINUTES}m
+<p><b>{ASSIGNER}</b> has assigned a Call to <b>{ASSIGNED_USER}</b>.</p>
+<p>
+Subject: {CALL_SUBJECT}<br/>
+Status: {CALL_STATUS}<br/>
+Start Date: {CALL_STARTDATE}<br/>
+Duration: {CALL_HOURS}h, {CALL_MINUTES}m<br/>
 Description: {CALL_DESCRIPTION}
-
-You may review this Call at:
-<{URL}>
+</p>
+<p>You may <a href={URL}>review this Call</a>.</p>
 <!-- END: CallSpecial -->
 
+<!-- BEGIN: CallReminder_Subject -->
+<p>Call Reminder - {CALL_SUBJECT}</p>
+<!-- END: CallReminder_Subject -->
+<!-- BEGIN: CallReminder -->
+<p>
+Title: {CALL_SUBJECT}<br/>
+When: {CALL_STARTDATE}<br/>
+Created By: {CALL_CREATED_BY}
+</p>
+<!-- END: CallReminder -->
+
 <!-- BEGIN: Campaign_Subject -->
-SuiteCRM Campaign - {CAMPAIGN_NAME}
+<p>SuiteCRM Campaign - {CAMPAIGN_NAME}</p>
 <!-- END: Campaign_Subject -->
 <!-- BEGIN: Campaign -->
-{ASSIGNER} has assigned a Campaign to {ASSIGNED_USER}.
-
-Subject: {CAMPAIGN_NAME}
-Amount: {CAMPAIGN_AMOUNT}
-Close Date: {CAMPAIGN_CLOSEDATE}
-Status: {CAMPAIGN_STATUS}
+<p><b>{ASSIGNER}</b> has assigned a Campaign to <b>{ASSIGNED_USER}</b>.</p>
+<p>
+Subject: {CAMPAIGN_NAME}<br/>
+Amount: {CAMPAIGN_AMOUNT}<br/>
+Close Date: {CAMPAIGN_CLOSEDATE}<br/>
+Status: {CAMPAIGN_STATUS}<br/>
 Description: {CAMPAIGN_DESCRIPTION}
-
-You may review this Campaign at:
-<{URL}>
+</p>
+<p>You may <a href={URL}>review this Campaign</a>.</p>
 <!-- END: Campaign -->
 
 <!-- BEGIN: Quota_Subject -->
-SuiteCRM Quotas - Your Quota for {QUOTA_TIMEPERIOD}
+<p>SuiteCRM Quotas - Your Quota for {QUOTA_TIMEPERIOD}</p>
 <!-- END: Quota_Subject -->
 <!-- BEGIN: Quota -->
-{ASSIGNER} has assigned a Quota to {ASSIGNED_USER}.
-
-Amount: {QUOTA_AMOUNT}
-Timeperiod: {QUOTA_TIMEPERIOD}
-
-You may review this Quota assignment at:
-<{QUOTA_URL}>
+<p><b>{ASSIGNER}</b> has assigned a Quota to <b>{ASSIGNED_USER}</b>.</p>
+<p>
+    Amount: {QUOTA_AMOUNT}<br/>
+    Timeperiod: {QUOTA_TIMEPERIOD}
+</p>
+<p>You may <a href={QUOTA_URL}>review this Quota assignment</a>.</p>
 <!-- END: Quota -->
 
 <!-- BEGIN: KBDocument_Subject -->
-SuiteCRM Document - {KBDOCUMENT_NAME}
+<p>SuiteCRM Document - {KBDOCUMENT_NAME}</p>
 <!-- END: KBDocument_Subject -->
 <!-- BEGIN: KBDocument -->
-
 {NOTIFICATION_MESSAGE}
 
-Name: {KBDOCUMENT_NAME}
-Created Date: {KBDOCUMENT_DATE_CREATED}
-Created By: {KBDOCUMENT_CREATED_BY}
-Status: {KBDOCUMENT_STATUS}
+<p>
+Name: {KBDOCUMENT_NAME}<br/>
+Created Date: {KBDOCUMENT_DATE_CREATED}<br/>
+Created By: {KBDOCUMENT_CREATED_BY}<br/>
+Status: {KBDOCUMENT_STATUS}<br/>
 Description: {KBDOCUMENT_DESCRIPTION}
-
-You may review this Document at:
-<{URL}>
+</p>
+<p>You may <a href={URL}>review this Document</a>.</p>
 <!-- END: KBDocument -->
 
 <!-- BEGIN: Contract_Subject -->
-SuiteCRM Contract - {CONTRACT_NAME}
+<p>SuiteCRM Contract - {CONTRACT_NAME}</p>
 <!-- END: Contract_Subject -->
 <!-- BEGIN: Contract-->
-
-{ASSIGNER} has assigned a Contract to {ASSIGNED_USER}.
-
-You may review this Contract at:
-<{URL}>
+<p><b>{ASSIGNER}</b> has assigned a Contract to <b>{ASSIGNED_USER}</b>.</p>
+<p>You may <a href={URL}>review this Contract</a>.</p>
 <!-- END:Contract-->
 
 <!-- BEGIN: ContractSpecial_Subject -->
-SuiteCRM Contract - {CONTRACT_NAME}
+<p>SuiteCRM Contract - {CONTRACT_NAME}</p>
 <!-- END: ContractSpecial_Subject -->
 <!-- BEGIN: ContractSpecial -->
-
-Your Contract: {CONTRACT_NAME} will be out of date at {CONTRACT_END_DATE}.
-
-You may review this Contract at:
-<{URL}>
+<p>Your Contract: {CONTRACT_NAME} will be out of date at {CONTRACT_END_DATE}.</p>
+<p>You may <a href={URL}>review this Contract</a>.</p>
 <!-- END:ContractSpecial-->
-
-<!-- BEGIN: MeetingReminder_Subject -->
-Meeting Reminder - {MEETING_SUBJECT}
-<!-- END: MeetingSpecial_Subject -->
-<!-- BEGIN: MeetingReminder -->
-Title: {MEETING_SUBJECT}
-When: {MEETING_STARTDATE}
-Location: {MEETING_LOCATION}
-Created By: {MEETING_CREATED_BY}
-<!-- END: MeetingReminder -->
-
-<!-- BEGIN: CallReminder_Subject -->
-Call Reminder - {CALL_SUBJECT}
-<!-- END: CallReminder_Subject -->
-<!-- BEGIN: CallReminder -->
-Title: {CALL_SUBJECT}
-When: {CALL_STARTDATE}
-Created By: {CALL_CREATED_BY}
-<!-- END: CallReminder -->

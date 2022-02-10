@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,53 +37,52 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-$searchFields['Opportunities'] = 
-	array (
-		'name' => array( 'query_type'=>'default'),
-		'account_name'=> array('query_type'=>'default','db_field'=>array('accounts.name')),
-		'amount'=> array('query_type'=>'default'),
-		'next_step'=> array('query_type'=>'default'),
-		'probability'=> array('query_type'=>'default'),
-		'lead_source'=> array('query_type'=>'default', 'operator'=>'=', 'options' => 'lead_source_dom', 'template_var' => 'LEAD_SOURCE_OPTIONS'),
-		'opportunity_type'=> array('query_type'=>'default', 'operator'=>'=', 'options' => 'opportunity_type_dom', 'template_var' => 'TYPE_OPTIONS'),
-		'sales_stage'=> array('query_type'=>'default', 'operator'=>'=', 'options' => 'sales_stage_dom', 'template_var' => 'SALES_STAGE_OPTIONS', 'options_add_blank' => true),
-		'current_user_only'=> array('query_type'=>'default','db_field'=>array('assigned_user_id'),'my_items'=>true, 'vname' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
-		'assigned_user_id'=> array('query_type'=>'default'),
-		'open_only' => array(
-			'query_type'=>'default',
-			'db_field'=>array('sales_stage'),
-			'operator'=>'not in',
-			'closed_values' => array('Closed Won', 'Closed Lost'),
-			'type'=>'bool',
-		),
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+$searchFields['Opportunities'] =
+    array(
+        'name' => array( 'query_type'=>'default'),
+        'account_name'=> array('query_type'=>'default','db_field'=>array('accounts.name')),
+        'amount'=> array('query_type'=>'default'),
+        'next_step'=> array('query_type'=>'default'),
+        'probability'=> array('query_type'=>'default'),
+        'lead_source'=> array('query_type'=>'default', 'operator'=>'=', 'options' => 'lead_source_dom', 'template_var' => 'LEAD_SOURCE_OPTIONS'),
+        'opportunity_type'=> array('query_type'=>'default', 'operator'=>'=', 'options' => 'opportunity_type_dom', 'template_var' => 'TYPE_OPTIONS'),
+        'sales_stage'=> array('query_type'=>'default', 'operator'=>'=', 'options' => 'sales_stage_dom', 'template_var' => 'SALES_STAGE_OPTIONS', 'options_add_blank' => true),
+        'current_user_only'=> array('query_type'=>'default','db_field'=>array('assigned_user_id'),'my_items'=>true, 'vname' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
+        'assigned_user_id'=> array('query_type'=>'default'),
+        'open_only' => array(
+            'query_type'=>'default',
+            'db_field'=>array('sales_stage'),
+            'operator'=>'not in',
+            'closed_values' => array('Closed Won', 'Closed Lost'),
+            'type'=>'bool',
+        ),
         'favorites_only' => array(
             'query_type'=>'format',
             'operator' => 'subquery',
-			'checked_only' => true,
-			'subquery' => "SELECT favorites.parent_id FROM favorites
+            'checked_only' => true,
+            'subquery' => "SELECT favorites.parent_id FROM favorites
 			                    WHERE favorites.deleted = 0
 			                        and favorites.parent_type = 'Opportunities'
 			                        and favorites.assigned_user_id = '{1}'",
             'db_field'=>array('id')),
 
-		//Range Search Support 
-	   'range_date_entered' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
-	   'start_range_date_entered' => array ('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
-	   'end_range_date_entered' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
-	   'range_date_modified' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
-	   'start_range_date_modified' => array ('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
-       'end_range_date_modified' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),	
-	   
-       'range_date_closed' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
-	   'start_range_date_closed' => array ('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
-       'end_range_date_closed' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),	
+        //Range Search Support
+       'range_date_entered' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+       'start_range_date_entered' => array('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
+       'end_range_date_entered' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+       'range_date_modified' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+       'start_range_date_modified' => array('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
+       'end_range_date_modified' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+       
+       'range_date_closed' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+       'start_range_date_closed' => array('query_type' => 'default',  'enable_range_search' => true, 'is_date_field' => true),
+       'end_range_date_closed' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
 
-       'range_amount' => array ('query_type' => 'default', 'enable_range_search' => true),
-	   'start_range_amount' => array ('query_type' => 'default',  'enable_range_search' => true),
-       'end_range_amount' => array ('query_type' => 'default', 'enable_range_search' => true),
-		//Range Search Support 			
-	);
-?>
+       'range_amount' => array('query_type' => 'default', 'enable_range_search' => true),
+       'start_range_amount' => array('query_type' => 'default',  'enable_range_search' => true),
+       'end_range_amount' => array('query_type' => 'default', 'enable_range_search' => true),
+        //Range Search Support
+    );

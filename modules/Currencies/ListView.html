@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,13 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
 
- ********************************************************************************/
+ */
 -->
 
 <!-- BEGIN: main -->
@@ -48,23 +49,23 @@
 	
 	<tr height="20">
 	<td scope="col" width="1%" >{CHECKALL}</td>
-		<td scope="col" width="20%"  nowrap><slot>{MOD.LBL_LIST_NAME}</slot></td>
-		<td scope="col" width="10%"  nowrap><slot>{MOD.LBL_LIST_ISO4217}</slot></td>
-		<td scope="col" width="10%"  nowrap><slot>{MOD.LBL_LIST_SYMBOL}</slot></td>
-		<td scope="col" width="10%"  nowrap><slot>{MOD.LBL_LIST_RATE}</slot></td>
-		<td scope="col" width="10%"  nowrap><slot>{MOD.LBL_LIST_STATUS}</slot></td>
-		<td scope="col" width="8%" ><slot>&nbsp;</slot></td>
+		<td scope="col" width="20%"  nowrap><span>{MOD.LBL_LIST_NAME}</span></td>
+		<td scope="col" width="10%"  nowrap><span>{MOD.LBL_LIST_ISO4217}</span></td>
+		<td scope="col" width="10%"  nowrap><span>{MOD.LBL_LIST_SYMBOL}</span></td>
+		<td scope="col" width="10%"  nowrap><span>{MOD.LBL_LIST_RATE}</span></td>
+		<td scope="col" width="10%"  nowrap><span>{MOD.LBL_LIST_STATUS}</span></td>
+		<td scope="col" width="8%" ><span>&nbsp;</span></td>
 	  </tr>
 
 <!-- BEGIN: row -->
 <tr height="20"  class="{ROW_COLOR}S1">
     			<td >{PREROW}&nbsp;</td>
-				<td scope='row'  valign=TOP><slot>{CURRENCY.HIDE}<a href="{URL_PREFIX}index.php?action=index&module=Currencies&record={CURRENCY.ID}" >{CURRENCY.UNHIDE}{CURRENCY.NAME}{CURRENCY.HIDE}</a>{CURRENCY.UNHIDE}</slot></td>
-    			<td valign=TOP><slot>{CURRENCY.ISO4217}</slot></td>
-    			<td valign=TOP><slot>{CURRENCY.SYMBOL}</slot></td>
-    			<td valign=TOP><slot>{CURRENCY.CONVERSION_RATE}</slot></td>
-    			<td valign=TOP><slot>{CURRENCY.STATUS}</slot></td>
-    			<td nowrap align="center" valign=TOP><slot>{CURRENCY.HIDE}<a class="listViewTdToolsS1" onclick="return confirm('{MOD.NTC_DELETE_CONFIRMATION}')" href="{URL_PREFIX}index.php?action=Delete&module=Currencies&record={CURRENCY.ID}&return_module=Currencies&return_action=index&return_id=">{DELETE_INLINE_PNG}&nbsp;{APP.LNK_DELETE}</a>{CURRENCY.UNHIDE}</slot></td>
+				<td scope='row'  valign=TOP><span>{CURRENCY.HIDE}<a href="{URL_PREFIX}index.php?action=index&module=Currencies&record={CURRENCY.ID}" >{CURRENCY.UNHIDE}{CURRENCY.NAME}{CURRENCY.HIDE}</a>{CURRENCY.UNHIDE}</span></td>
+    			<td valign=TOP><span>{CURRENCY.ISO4217}</span></td>
+    			<td valign=TOP><span>{CURRENCY.SYMBOL}</span></td>
+    			<td valign=TOP><span>{CURRENCY.CONVERSION_RATE}</span></td>
+    			<td valign=TOP><span>{CURRENCY.STATUS}</span></td>
+    			<td nowrap align="center" valign=TOP><span>{CURRENCY.HIDE}<a class="listViewTdToolsS1" onclick="return confirm('{MOD.NTC_DELETE_CONFIRMATION}')" href="{URL_PREFIX}index.php?action=Delete&module=Currencies&record={CURRENCY.ID}&return_module=Currencies&return_action=index&return_id=">{DELETE_INLINE_PNG}&nbsp;{APP.LNK_DELETE}</a>{CURRENCY.UNHIDE}</span></td>
 
 </tr>
 

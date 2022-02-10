@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -69,13 +70,13 @@ function getJSLanguage()
 
         return;
     }
-    if (empty($_REQUEST['module']) || $_REQUEST['module'] === 'app_strings') {
+    if (empty($_REQUEST['modulename']) || $_REQUEST['modulename'] === 'app_strings') {
         $file = sugar_cached('jsLanguage/').$lang.'.js';
-        if (!sugar_is_file($file)) {
+        if (!is_file($file)) {
             jsLanguage::createAppStringsCache($lang);
         }
     } else {
-        $module = clean_path($_REQUEST['module']);
+        $module = clean_path($_REQUEST['modulename']);
         $fullModuleList = array_merge($GLOBALS['moduleList'], $GLOBALS['modInvisList']);
         if (!isset($app_list_strings['moduleList'][$module]) && !in_array($module, $fullModuleList)) {
             echo 'Invalid module specified';
@@ -83,7 +84,7 @@ function getJSLanguage()
             return;
         }
         $file = sugar_cached('jsLanguage/').$module.'/'.$lang.'.js';
-        if (!sugar_is_file($file)) {
+        if (!is_file($file)) {
             jsLanguage::createModuleStringsCache($module, $lang);
         }
     }

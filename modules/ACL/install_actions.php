@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,38 +34,32 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-
-
-global $current_user,$beanList, $beanFiles, $mod_strings;
+global $current_user, $beanList, $mod_strings;
 
 $installed_classes = array();
-$ACLbeanList=$beanList;
 
-
-
-if(is_admin($current_user)){
-    foreach($ACLbeanList as $module=>$class){
-
-        if(empty($installed_classes[$class]) && isset($beanFiles[$class]) && file_exists($beanFiles[$class])){
-            if($class == 'Tracker'){
-            } else {
-                require_once($beanFiles[$class]);
-                $mod = new $class();
-                $GLOBALS['log']->debug("DOING: $class");
-                if($mod->bean_implements('ACL') && empty($mod->acl_display_only)){
-                    // BUG 10339: do not display messages for upgrade wizard
-                    if(!isset($_REQUEST['upgradeWizard'])){
-                        echo translate('LBL_ADDING','ACL','') . $mod->module_dir . '<br>';
+if (is_admin($current_user)) {
+    foreach ($beanList as $module => $class) {
+        if (empty($installed_classes[$class]) && $class !== 'Tracker') {
+            $bean = BeanFactory::newBean($module);
+            if ($bean) {
+                $GLOBALS['log']->debug("ACL Processing: $class");
+                if (empty($bean->acl_display_only) && $bean->bean_implements('ACL')) {
+                    if (!defined('SUGARCRM_IS_INSTALLING') && !isset($_REQUEST['upgradeWizard'])) {
+                        echo translate('LBL_ADDING', 'ACL', '') . $bean->module_dir . '<br>';
                     }
-                    if(!empty($mod->acltype)){
-                        ACLAction::addActions($mod->getACLCategory(), $mod->acltype);
-                    }else{
-                        ACLAction::addActions($mod->getACLCategory());
+                    if (!empty($bean->acltype)) {
+                        ACLAction::addActions($bean->getACLCategory(), $bean->acltype);
+                    } else {
+                        ACLAction::addActions($bean->getACLCategory());
                     }
 
                     $installed_classes[$class] = true;
@@ -73,7 +67,4 @@ if(is_admin($current_user)){
             }
         }
     }
-
-
 }
-?>

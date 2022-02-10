@@ -1,0 +1,11 @@
+<?xml-stylesheet type="text/css" href="../css/style.css" ?>
+<?xml-stylesheet type="text/css" href="../css/colourSelector.php" ?>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="25px" height="25px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+<g id="Icon_5_">
+	<g>
+		<polygon fill="white" class="icon" points="405,136.798 375.202,107 256,226.202 136.798,107 107,136.798 226.202,256 107,375.202 136.798,405 256,285.798
+			375.202,405 405,375.202 285.798,256 		"/>
+	</g>
+</g>
+</svg>

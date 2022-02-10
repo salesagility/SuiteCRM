@@ -208,7 +208,7 @@
 					sel.setRng(oldRng);
 					sel.setContent('');
 
-					// For some odd reason we need to detach the the mceInsertContent call from the paste event
+					// For some odd reason we need to detach the mceInsertContent call from the paste event
 					// It's like IE has a reference to the parent element that you paste in and the selection gets messed up
 					// when it tries to restore the selection
 					setTimeout(function() {
@@ -719,7 +719,7 @@
 					if (type == 'ul')
 						html = p.innerHTML.replace(/__MCE_ITEM__/g, '').replace(/^[\u2022\u00b7\u00a7\u00d8o\u25CF]\s*(&nbsp;|\u00a0)+\s*/, '');
 					else
-						html = p.innerHTML.replace(/__MCE_ITEM__/g, '').replace(/^\s*\w+\.(&nbsp;|\u00a0)+\s*/, '');
+						html = p.innerHTML.replace(/__MCE_ITEM__/g, '').replace(/^\s*[\w|'<'|'>']+\.(&nbsp;|\u00a0)+\s*/, '');;
 
 					// Create li and add paragraph data into the new li
 					li = listElm.appendChild(dom.create('li', 0, html));

@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,12 +34,17 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $dictionary['EmailTemplate'] = array(
-    'table' => 'email_templates', 'comment' => 'Templates used in email processing',
+    'table' => 'email_templates',
+    'comment' => 'Templates used in email processing',
     'fields' => array(
         'id' => array(
             'name' => 'id',
@@ -54,14 +59,16 @@ $dictionary['EmailTemplate'] = array(
             'vname' => 'LBL_DATE_ENTERED',
             'type' => 'datetime',
             'required' => true,
-            'comment' => 'Date record created'
+            'comment' => 'Date record created',
+            'inline_edit' => false
         ),
         'date_modified' => array(
             'name' => 'date_modified',
             'vname' => 'LBL_DATE_MODIFIED',
             'type' => 'datetime',
             'required' => true,
-            'comment' => 'Date record last modified'
+            'comment' => 'Date record last modified',
+            'inline_edit' => false
         ),
         'modified_user_id' => array(
             'name' => 'modified_user_id',
@@ -114,13 +121,13 @@ $dictionary['EmailTemplate'] = array(
         'body' => array(
             'name' => 'body',
             'vname' => 'LBL_BODY',
-            'type' => 'text',
+            'type' => 'longtext',
             'comment' => 'Plain text body to be used in resulting email'
         ),
         'body_html' => array(
             'name' => 'body_html',
             'vname' => 'LBL_PLAIN_TEXT',
-            'type' => 'html',
+            'type' => 'longtext',
             'comment' => 'HTML formatted email body to be used in resulting email'
         ),
         'deleted' => array(
@@ -206,11 +213,18 @@ $dictionary['EmailTemplate'] = array(
     ),
     'relationships' => array(
         'emailtemplates_assigned_user' =>
-            array('lhs_module' => 'Users', 'lhs_table' => 'users', 'lhs_key' => 'id',
-                'rhs_module' => 'EmailTemplates', 'rhs_table' => 'email_templates', 'rhs_key' => 'assigned_user_id',
-                'relationship_type' => 'one-to-many')
+            array(
+                'lhs_module' => 'Users',
+                'lhs_table' => 'users',
+                'lhs_key' => 'id',
+                'rhs_module' => 'EmailTemplates',
+                'rhs_table' => 'email_templates',
+                'rhs_key' => 'assigned_user_id',
+                'relationship_type' => 'one-to-many'
+            )
     ),
 );
 
-VardefManager::createVardef('EmailTemplates', 'EmailTemplate', array('security_groups',
+VardefManager::createVardef('EmailTemplates', 'EmailTemplate', array(
+    'security_groups',
 ));

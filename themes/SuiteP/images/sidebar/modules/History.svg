@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+    <title>acc_history_small</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <polygon id="path-1" points="19.9758054 0.00439477792 19.9758054 17.5588903 0 17.5588903 0 0.00439477792 19.9758054 0.00439477792"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="acc_history_small">
+            <g id="Page-1" transform="translate(0.000000, 1.000000)">
+                <g id="Group-3" transform="translate(0.000000, 0.029321)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Clip-2"></g>
+                    <path d="M11.2363993,0.00439477792 C6.36727181,0.00439477792 2.4969698,3.95416773 2.4969698,8.78164928 L-1.00671147e-05,8.78164928 L3.12123154,12.5433298 L6.2424396,8.78164928 L3.74549329,8.78164928 C3.74549329,4.64378388 7.05394966,1.25828828 11.2363993,1.25828828 C15.418849,1.25828828 18.7273389,4.64378388 18.7273389,8.78164928 C18.7273389,12.919481 15.418849,16.305044 11.2363993,16.305044 L11.2363993,17.5589038 C16.1055268,17.5589038 19.9758289,13.6091308 19.9758289,8.78164928 C19.9758289,3.95416773 16.1055268,0.00439477792 11.2363993,0.00439477792" id="Fill-1" fill="#FFFFFF" mask="url(#mask-2)"></path>
+                </g>
+                <polygon id="Fill-4" fill="#FFFFFF" points="10.6121544 3.79538616 9.98789262 3.79538616 9.98789262 10.0648537 14.9818859 10.0648537 14.9818859 8.81096016 11.2364161 8.81096016 11.2364161 3.79538616"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

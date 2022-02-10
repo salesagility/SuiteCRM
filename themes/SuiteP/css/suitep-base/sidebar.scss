@@ -1,0 +1,566 @@
+/**** SIDEBAR ****/
+
+.sidebar {
+  display: block;
+  position: fixed;
+  top: $navbar-height;
+  bottom: 0;
+  left: 0;
+  background-color: $sidebar-bg;
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 1000;
+
+  .actionMenuSidebar {
+    margin-bottom: 10px;
+  }
+
+  .actionMenuSidebar_top {
+    display: none;
+  }
+
+  .actionMenuSidebar .recent_h3 {
+    display: none;
+  }
+
+  .actionMenuSidebar ul {
+    list-style-type: none;
+  }
+
+
+  .actionMenuSidebar li a .side-bar-action-icon .suitepicon {
+    display: inline-block;
+    font-size: $side-bar-action-icon-font-size;
+    line-height: $side-bar-action-height;
+    position: relative;
+  }
+
+  .actionMenuSidebar li a {
+    display: block;
+    font-size: 13px;
+    background-color: $sidebar-btn-bg;
+    color: $sidebar-btn-color;
+    margin: 0 0 1px 0;
+    clear: both;
+  }
+
+  .actionMenuSidebar ul li a:hover {
+    background-color: $sidebar-btn-bg-hover;
+    color: $sidebar-btn-color;
+  }
+
+  .actionMenuSidebar li a div {
+    display: block;
+    text-wrap: normal;
+  }
+
+  .actionMenuSidebar li a .actionmenulink {
+    padding: 10px 8px 10px 0;
+    line-height: 24px;
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .recentlyViewedSidebar {
+    margin-bottom: 12px;
+    float: left;
+    width: 100%;
+  }
+
+  .recently_viewed_link_container_sidebar {
+    font-size: 13px;
+  }
+
+  .side-bar-action-icon {
+    background-position: 0 8px;
+    background-repeat: no-repeat;
+    background-size: 32px;
+    margin-left: 12px;
+    float: left;
+    width: 40px; /* effects link text position */
+    height: 48px;
+    vertical-align: middle;
+  }
+
+  .favoritelinks {
+    width: 100%;
+  }
+
+  .recentlinks {
+    width: 100%;
+  }
+
+  .favoritelinks img {
+    margin-right: 7px;
+  }
+
+  .recentlinks img {
+    margin-right: 7px;
+  }
+
+}
+
+//
+a.buttontoggle, a.buttontoggle:link {
+  color: $side-bar-header-color;
+  text-decoration: none;
+}
+
+a.buttontoggle:hover {
+  color: $side-bar-header-color;
+  text-decoration: none;
+}
+
+.button-toggle-collapsed {
+  left: 0;
+}
+
+
+.button-toggle-collapsed {
+  position: fixed;
+  top: 72px;
+  background: $sidebar-bg;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  width: 30px;
+  height: 30px;
+  z-index: 1000;
+  cursor: pointer;
+
+}
+
+.button-toggle-expanded {
+  position: fixed;
+  top: 72px;
+  background: $sidebar-bg;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  width: 30px;
+  height: 30px;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+
+/* Breakpoints */
+@media (max-width: 1200px) {
+  .sidebar {
+    width: 0;
+    visibility: collapse;
+  }
+
+  .button-toggle-expanded {
+    width: 0;
+    visibility: collapse;
+  }
+
+  .button-toggle-collapsed {
+    width: 0;
+    visibility: collapse;
+  }
+
+  .bootstrap-container.col-md-offset-2 {
+    margin-left: 0;
+  }
+
+  .col-md-10 {
+    width: 100%;
+  }
+
+  footer.expandedSidebar {
+    width: 100%;
+  }
+  footer.collapsedSidebar {
+    width: 100%;
+  }
+
+  #userlinks_head {
+    display: none;
+  }
+
+}
+
+.button-toggle-collapsed {
+  left: 0;
+}
+
+
+
+.favoritesSidebar {
+  float: left;
+  width: 100%;
+}
+
+.favoritesSidebar .new {
+  width: 0;
+  height: 0;
+  visibility: collapse;
+}
+
+.favoritesSidebar .new * {
+  width: 0;
+  height: 0;
+  visibility: collapse;
+}
+
+.recentlyViewedSidebar li a {
+  color: $side-bar-header-color;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.favoritesSidebar li a {
+  color: $side-bar-header-color;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.recentlyViewedSidebar .recent-links-detail  {
+  display: inline-block;
+  width: 85%;
+}
+
+.favoritesSidebar .favorite-links-detail {
+  display: inline-block;
+  width: 85%;
+}
+
+.recentlyViewedSidebar .recent-links-edit{
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.favoritesSidebar .favorite-links-edit {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.recentlyViewedSidebar li:hover {
+  background-color: $side-bar-link-color-hover;
+}
+
+.favoritesSidebar li:hover {
+  background-color: $side-bar-link-color-hover;
+}
+
+.recentlyViewedSidebar .recent-links-detail .suitepicon {
+  display: inline-block;
+  font-size: $side-bar-links-icon-font-size;
+  line-height: $side-bar-links-height;
+  margin-right: 4px;
+  position: relative;
+}
+.recentlyViewedSidebar .recent_h3{
+  font-size: 16px;
+  font-weight: bold;
+  color: $side-bar-header-color;
+  margin: 0 0 5px 0;
+}
+
+.favoritesSidebar .recent_h3 {
+  font-size: 16px;
+  font-weight: bold;
+  color: $side-bar-header-color;
+  margin: 0 0 5px 0;
+}
+
+footer {
+  bottom: 0;
+  background-color: $footer-btn-bg;
+  margin: 0 0 0 0;
+  border-radius: $border-radius-base;
+  line-height: 38px;
+  width: 100%;
+  display: inline-block;
+}
+
+footer.expandedSidebar {
+  float: right;
+}
+
+footer.collapsedSidebar {
+  float: right;
+}
+
+.footer_left {
+  display: inline-block;
+}
+
+/*SIDEBAR BREAK POINTS*/
+
+@media (min-width: 1200px) {
+  .sidebar {
+    width: 20%;
+  }
+
+  .bootstrap-container.col-md-offset-2 {
+    margin-left: 20%;
+  }
+
+  .button-toggle-expanded {
+    left: 20%;
+  }
+
+
+  .col-md-10 {
+    width: 80%;
+  }
+
+  footer.expandedSidebar {
+    width: 80%;
+  }
+  footer.collapsedSidebar {
+    width: 100%;
+  }
+
+  .recentlyViewedSidebar .recent-links-detail {
+    padding: 5px 1% 5px 7%;
+  }
+
+  .favoritesSidebar .favorite-links-detail {
+    padding: 5px 1% 5px 7%;
+  }
+
+  .recentlyViewedSidebar .recent_h3 {
+    padding: 0 1% 0 7%;
+  }
+
+  .favoritesSidebar .recent_h3 {
+    padding: 0 1% 0 7%;
+  }
+}
+
+@media (min-width: 1230px) {
+  .sidebar {
+    width: 18%;
+  }
+
+  .bootstrap-container.col-md-offset-2 {
+    margin-left: 18%;
+  }
+
+  .button-toggle-expanded {
+    left: 18%;
+  }
+
+  .col-md-10 {
+    width: 82%;
+  }
+
+  footer.expandedSidebar {
+    width: 82%;
+  }
+}
+
+@media (min-width: 1300px) {
+  .sidebar {
+    width: 17%;
+  }
+
+  .bootstrap-container.col-md-offset-2 {
+    margin-left: 17%;
+  }
+
+  .button-toggle-expanded {
+    left: 17%;
+  }
+  
+
+  .col-md-10 {
+    width: 83%;
+  }
+
+  footer.expandedSidebar {
+    width: 83%;
+  }
+}
+
+@media (min-width: 1400px) {
+  .sidebar {
+    width: 15.8%;
+  }
+
+  .bootstrap-container.col-md-offset-2 {
+    margin-left: 15.8%;
+  }
+
+  .button-toggle-expanded {
+    left: 15.8%;
+  }
+
+  
+
+  .col-md-10 {
+    width: 84.2%;
+  }
+
+  footer.expandedSidebar {
+    width: 84.2%;
+  }
+}
+
+@media (min-width: 1500px) {
+  .sidebar {
+    width: 14.8%;
+  }
+
+  .bootstrap-container.col-md-offset-2 {
+    margin-left: 14.8%;
+  }
+
+  .button-toggle-expanded {
+    left: 14.8%;
+  }
+
+  
+
+  .col-md-10 {
+    width: 85.2%;
+  }
+
+  footer.expandedSidebar {
+    width: 85.2%;
+  }
+}
+
+@media (min-width: 1600px) {
+  #search {
+    visibility: collapse;
+  }
+  .sidebar {
+    width: 13.8%;
+  }
+
+  .bootstrap-container.col-md-offset-2 {
+    margin-left: 13.8%;
+  }
+
+  .button-toggle-expanded {
+    left: 13.8%;
+  }
+
+  
+
+  .col-md-10 {
+    width: 86.2%;
+  }
+
+  footer.expandedSidebar {
+    width: 86.2%;
+  }
+}
+
+@media (min-width: 1800px) {
+  .sidebar {
+    width: 12.8%;
+  }
+
+  .bootstrap-container.col-md-offset-2 {
+    margin-left: 12.8%;
+  }
+
+  .button-toggle-expanded {
+    left: 12.8%;
+  }
+
+  
+
+  .col-md-10 {
+    width: 87.2%;
+  }
+
+  footer.expandedSidebar {
+    width: 87.2%;
+  }
+}
+
+@media (min-width: 1900px) {
+  .sidebar {
+    width: 11.8%;
+  }
+
+  .bootstrap-container.col-md-offset-2 {
+    margin-left: 11.8%;
+  }
+
+  .button-toggle-expanded {
+    left: 11.8%;
+  }
+
+  
+
+  .col-md-10 {
+    width: 88.2%;
+  }
+
+  footer.expandedSidebar {
+    width: 88.2%;
+  }
+
+}
+
+@media (min-width: 2100px) {
+  .sidebar {
+    width: 10.8%;
+  }
+
+  .bootstrap-container.col-md-offset-2 {
+    margin-left: 10.8%;
+  }
+
+  .button-toggle-expanded {
+    left: 10.8%;
+  }
+
+  
+
+  .col-md-10 {
+    width: 89.2%;
+  }
+
+  footer.expandedSidebar {
+    width: 89.2%;
+  }
+
+}
+
+@media (min-width: 2300px) {
+  .sidebar {
+    width: 10%;
+  }
+
+  .bootstrap-container.col-md-offset-2 {
+    margin-left: 10%;
+  }
+
+  .button-toggle-expanded {
+    left: 10%;
+  }
+
+  
+
+  .col-md-10 {
+    width: 90%;
+  }
+
+  footer.expandedSidebar {
+    width: 90%;
+  }
+}
+
+@media print {
+  .navbar-inverse {
+    display: none;
+  }
+
+  .sidebar {
+    display: none;
+  }
+}
+
+.test {
+	
+	
+}

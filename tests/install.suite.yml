@@ -1,0 +1,14 @@
+actor: InstallTester
+modules:
+    enabled:
+        - \Helper\Acceptance
+        - \Helper\WebDriverHelper
+        - \Helper\Install
+        - \SuiteCRM\Test\Driver\WebDriver
+        - Filesystem
+    config:
+      \SuiteCRM\Test\Driver\WebDriver:
+        url: "https://demo.suiteondemand.com/"
+        browser: chrome
+        restart: true
+        wait: 1

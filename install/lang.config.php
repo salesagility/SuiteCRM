@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 // ADDITIONAL LANGUAGES
 $config['languages'] = array(
@@ -51,5 +51,3 @@ $config['languages'] = array(
   'zh_CN' => 'Chinese (China)',
   'zh_TW' => 'Chinese (Taiwan)',
 );
-
-?>

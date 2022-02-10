@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 *}
@@ -141,14 +142,14 @@ var formatSelect = function(el, rec, col, data)
     el.innerHTML = ret;
 }
 var getEditButton = function(el, rec, col, data){
-    var out = {/literal}"<img alt='{$mod_strings.LBL_EDIT_INLINE}' name='edit_inline' src='{sugar_getimagepath file='edit_inline.gif'}' />";{literal}
+    var out = {/literal}"<span class='suitepicon suitepicon-action-edit' alt='{$mod_strings.LBL_EDIT_INLINE}' name='edit_inline'></span>";{literal}
 	el.innerHTML = out;
 	YAHOO.util.Event.addListener(el, "click", function(){editLayout(grid.getRecord(el).getData());});
 }
 var getRemoveButton = function(el, rec, col, data){
 	if (rec.getData().module =="Contacts")
 	   return;
-    var out = {/literal}"<img alt='{$mod_strings.LBL_EDIT_INLINE}' name='delete_inline' src='{sugar_getimagepath file='delete_inline.gif'}' />";{literal}
+    var out = {/literal}"<span class='suitepicon suitepicon-action-clear' alt='{$mod_strings.LBL_EDIT_INLINE}' name='delete_inline' />";{literal}
     el.innerHTML = out;
     YAHOO.util.Event.addListener(el, "click", function(){removeLayout(grid.getRecord(el).getData());});
 }

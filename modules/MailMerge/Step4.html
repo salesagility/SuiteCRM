@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,13 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+/**
  * {APP.LBL_CURRENCY_SYM}Header: /cvsroot/sugarcrm/sugarcrm/modules/Contacts/EditView.html,v 1.22 2004/07/16 04:04:42 sugarclint Exp {APP.LBL_CURRENCY_SYM}
- ********************************************************************************/
+ */
 -->
 <!-- BEGIN: main -->
 <!-- BEGIN: error -->
@@ -66,23 +67,23 @@
 	<tr>
 	<th align="left" scope="row" colspan="2"><h4 class="">{STEP_NUM}&nbsp;{MOD.LBL_STEP_4}</h4></th>
 	</tr>
-	<tr><td><slot>&nbsp;</slot></td></tr>
+	<tr><td><span>&nbsp;</span></td></tr>
 	<tr>
-	<td scope="row"><slot>{MOD.LBL_SELECTED_MODULE}</slot></td>
+	<td scope="row"><span>{MOD.LBL_SELECTED_MODULE}</span></td>
 	<td></td>
 		<td >
-		<slot>{MAILMERGE_MODULE}</slot>
+		<span>{MAILMERGE_MODULE}</span>
 		</td>
 	</tr>
 	<tr>
-	<td scope="row"><slot>{MOD.LBL_SELECTED_TEMPLATE}</slot></td>
+	<td scope="row"><span>{MOD.LBL_SELECTED_TEMPLATE}</span></td>
 	<td></td>
 		<td >
-		<slot>{MAILMERGE_TEMPLATE}</slot>
+		<span>{MAILMERGE_TEMPLATE}</span>
 		</td>
 	</tr>
 	<tr>
-	<td scope="row"><slot>{MOD.LBL_SELECTED_ITEMS}</slot></td>
+	<td scope="row"><span>{MOD.LBL_SELECTED_ITEMS}</span></td>
 	<td></td>
 	<td >
 		<table border="0" cellspacing="0" cellpadding="0">
@@ -90,7 +91,7 @@
 				<td>
 					<table>
 						<tr>
-							<td><slot><select id="selected_objs" name="selected_objs[]" size="10">{MAILMERGE_SELECTED_OBJECTS}</select></slot></td>
+							<td><span><select id="selected_objs" name="selected_objs[]" size="10">{MAILMERGE_SELECTED_OBJECTS}</select></span></td>
 						</tr>
 					</table>
 				</td>

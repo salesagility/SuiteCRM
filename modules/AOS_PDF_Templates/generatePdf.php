@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,15 +34,17 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+use SuiteCRM\PDF\Exceptions\PDFException;
+use SuiteCRM\PDF\PDFWrapper;
 
 if (!isset($_REQUEST['uid']) || empty($_REQUEST['uid']) || !isset($_REQUEST['templateID']) || empty($_REQUEST['templateID'])) {
     die('Error retrieving record. This record may be deleted or you may not be authorized to view it.');
 }
-error_reporting(0);
-require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
+
 require_once('modules/AOS_PDF_Templates/templateParser.php');
 require_once('modules/AOS_PDF_Templates/sendEmail.php');
 require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates.php');
@@ -51,7 +53,7 @@ global $mod_strings, $sugar_config;
 
 $bean = BeanFactory::getBean($_REQUEST['module'], $_REQUEST['uid']);
 
-if(!$bean){
+if (!$bean) {
     sugar_die("Invalid Record");
 }
 
@@ -65,11 +67,10 @@ $res = $bean->db->query($sql);
 while ($row = $bean->db->fetchByAssoc($res)) {
     $lineItemsGroups[$row['group_id']][$row['id']] = $row['product_id'];
     $lineItems[$row['id']] = $row['product_id'];
-
 }
 
 
-$template = new AOS_PDF_Templates();
+$template = BeanFactory::newBean('AOS_PDF_Templates');
 $template->retrieve($_REQUEST['templateID']);
 
 $object_arr = array();
@@ -113,11 +114,13 @@ $header = preg_replace($search, $replace, $template->pdfheader);
 $footer = preg_replace($search, $replace, $template->pdffooter);
 $text = preg_replace($search, $replace, $template->description);
 $text = str_replace("<p><pagebreak /></p>", "<pagebreak />", $text);
-$text = preg_replace_callback('/\{DATE\s+(.*?)\}/',
+$text = preg_replace_callback(
+    '/\{DATE\s+(.*?)\}/',
     function ($matches) {
         return date($matches[1]);
     },
-    $text);
+    $text
+);
 $text = str_replace("\$aos_quotes", "\$" . $variableName, $text);
 $text = str_replace("\$aos_invoices", "\$" . $variableName, $text);
 $text = str_replace("\$total_amt", "\$" . $variableName . "_total_amt", $text);
@@ -135,27 +138,39 @@ $footer = templateParser::parse_template($footer, $object_arr);
 
 $printable = str_replace("\n", "<br />", $converted);
 
-if ($task == 'pdf' || $task == 'emailpdf') {
+if ($task === 'pdf' || $task === 'emailpdf') {
     $file_name = $mod_strings['LBL_PDF_NAME'] . "_" . str_replace(" ", "_", $bean->name) . ".pdf";
 
-    ob_clean();
     try {
-        $pdf = new mPDF('en', 'A4', '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
-        $pdf->SetAutoFont();
-        $pdf->SetHTMLHeader($header);
-        $pdf->SetHTMLFooter($footer);
-        $pdf->WriteHTML($printable);
-        if ($task == 'pdf') {
-            $pdf->Output($file_name, "D");
+        $pdf = PDFWrapper::getPDFEngine();
+        $pdf->configurePDF([
+            'mode' => 'en',
+            'page_size' => $template->page_size,
+            'font' => 'DejaVuSansCondensed',
+            'margin_left' => $template->margin_left,
+            'margin_right' => $template->margin_right,
+            'margin_top' => $template->margin_top,
+            'margin_bottom' => $template->margin_bottom,
+            'margin_header' => $template->margin_header,
+            'margin_footer' => $template->margin_footer,
+            'orientation' => $template->orientation
+        ]);
+
+        $pdf->writeHeader($header);
+        $pdf->writeFooter($footer);
+        $pdf->writeHTML($printable);
+
+        if ($task === 'pdf') {
+            $pdf->outputPDF($file_name, "D");
         } else {
             $fp = fopen($sugar_config['upload_dir'] . 'attachfile.pdf', 'wb');
             fclose($fp);
-            $pdf->Output($sugar_config['upload_dir'] . 'attachfile.pdf', 'F');
+            $pdf->outputPDF($sugar_config['upload_dir'] . 'attachfile.pdf', 'F');
             $sendEmail = new sendEmail();
             $sendEmail->send_email($bean, $bean->module_dir, '', $file_name, true);
         }
-    } catch (mPDF_exception $e) {
-        echo $e;
+    } catch (PDFException $e) {
+        LoggerManager::getLogger()->warn('PDFException: ' . $e->getMessage());
     }
 } elseif ($task == 'email') {
     $sendEmail = new sendEmail();
@@ -165,7 +180,6 @@ if ($task == 'pdf' || $task == 'emailpdf') {
 
 function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 'table')
 {
-
     $firstValue = '';
     $firstNum = 0;
 
@@ -176,10 +190,9 @@ function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 't
     $endElement = '</' . $element . '>';
 
 
-    $groups = new AOS_Line_Item_Groups();
+    $groups = BeanFactory::newBean('AOS_Line_Item_Groups');
     foreach ($groups->field_defs as $name => $arr) {
         if (!((isset($arr['dbType']) && strtolower($arr['dbType']) == 'id') || $arr['type'] == 'id' || $arr['type'] == 'link')) {
-
             $curNum = strpos($text, '$aos_line_item_groups_' . $name);
             if ($curNum) {
                 if ($curNum < $firstNum || $firstNum == 0) {
@@ -251,7 +264,6 @@ function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 't
 
 
     return $text;
-
 }
 
 function populate_product_lines($text, $lineItems, $element = 'tr')
@@ -266,31 +278,27 @@ function populate_product_lines($text, $lineItems, $element = 'tr')
     $endElement = '</' . $element . '>';
 
     //Find first and last valid line values
-    $product_quote = new AOS_Products_Quotes();
+    $product_quote = BeanFactory::newBean('AOS_Products_Quotes');
     foreach ($product_quote->field_defs as $name => $arr) {
         if (!((isset($arr['dbType']) && strtolower($arr['dbType']) == 'id') || $arr['type'] == 'id' || $arr['type'] == 'link')) {
-
             $curNum = strpos($text, '$aos_products_quotes_' . $name);
 
             if ($curNum) {
                 if ($curNum < $firstNum || $firstNum == 0) {
                     $firstValue = '$aos_products_quotes_' . $name;
                     $firstNum = $curNum;
-
                 }
                 if ($curNum > $lastNum) {
                     $lastValue = '$aos_products_quotes_' . $name;
                     $lastNum = $curNum;
-
                 }
             }
         }
     }
 
-    $product = new AOS_Products();
+    $product = BeanFactory::newBean('AOS_Products');
     foreach ($product->field_defs as $name => $arr) {
         if (!((isset($arr['dbType']) && strtolower($arr['dbType']) == 'id') || $arr['type'] == 'id' || $arr['type'] == 'link')) {
-
             $curNum = strpos($text, '$aos_products_' . $name);
             if ($curNum) {
                 if ($curNum < $firstNum || $firstNum == 0) {
@@ -347,7 +355,9 @@ function populate_product_lines($text, $lineItems, $element = 'tr')
             }
         }
 
-        $text .= $parts[1];
+        for ($i = 1; $i < count($parts); $i++) {
+            $text .= $parts[$i];
+        }
     }
     return $text;
 }
@@ -366,10 +376,9 @@ function populate_service_lines($text, $lineItems, $element = 'tr')
     $text = str_replace("\$aos_services_quotes_service", "\$aos_services_quotes_product", $text);
 
     //Find first and last valid line values
-    $product_quote = new AOS_Products_Quotes();
+    $product_quote = BeanFactory::newBean('AOS_Products_Quotes');
     foreach ($product_quote->field_defs as $name => $arr) {
         if (!((isset($arr['dbType']) && strtolower($arr['dbType']) == 'id') || $arr['type'] == 'id' || $arr['type'] == 'link')) {
-
             $curNum = strpos($text, '$aos_services_quotes_' . $name);
             if ($curNum) {
                 if ($curNum < $firstNum || $firstNum == 0) {
@@ -423,7 +432,9 @@ function populate_service_lines($text, $lineItems, $element = 'tr')
             }
         }
 
-        $text .= $parts[1];
+        for ($i = 1; $i < count($parts); $i++) {
+            $text .= $parts[$i];
+        }
     }
     return $text;
 }

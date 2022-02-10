@@ -1,98 +1,5 @@
 <style>
-    .progression-container {
-        margin: 0 0 8px 0;
-        padding:0;
-    }
 
-    ul.progression {
-        margin: 0;
-        padding:0;
-    }
-
-    .progression li {
-        background-color: #3C8DBC;
-        border-radius: 0px;
-        display: inline-block;
-        padding: 5px 20px 5px 20px;
-        margin-right: 16px;
-        width: auto;
-        margin-top: 4px;
-    }
-
-    .progression li:nth-child(1)::before {
-        border: none transparent;
-    }
-
-    .progression li::before, .progression li::after {
-        border: solid transparent;
-        content: " ";
-        height: 0;
-        width: 0;
-        position: absolute;
-        border-color: transparent;
-        border-left-color: #fff;
-        border-radius: 0px;
-    }
-
-
-
-    .progression li::before {
-        border-width: 16px;
-        margin-top: -7px;
-        margin-left: -20px;
-    }
-
-    .progression li::after {
-        border-left-color: #3C8DBC;
-        border-width: 13px;
-        margin-top: -5px;
-        margin-left: 20px;
-    }
-
-    .progression li.selected {
-        background-color: #204d74;
-        color: #fff;
-    }
-
-    .progression li.selected::after {
-        border-left-color: #204d74;
-    }
-
-
-    .progression li:hover {
-        background-color: #204d74;
-        color: #fff;
-        cursor: pointer;
-    }
-
-    .progression li:hover::after, .progression li.selected:hover::after {
-        border-left-color: #204d74;
-        color: #fff;
-    }
-
-
-    .progression li:last-child::after {
-        border-left-color: transparent;
-    }
-
-    .progression li div, .progression li div *{
-        color: white;
-        text-decoration: none;
-        padding-left: 8px;
-        display: inline;
-    }
-
-
-    .wizard-summary-right .test, .wizard-summary-right .schedule {
-        background-position: center center;
-        text-align: center;
-        vertical-align: bottom;
-        padding: 8px;
-    }
-
-    .wizard-step-info {
-        margin-bottom: 12px;
-    }
 
 </style>
 
@@ -357,11 +264,11 @@
         var toggleEmailTemplateSaveButton = function() {
             if( $('#template_id').val() == '') {
                 $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().addClass('hidden');
-                // hid the button-group-seperator as well
+                // hid the button-group-separator as well
                 $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().next().addClass('hidden');
             } else {
                 $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().removeClass('hidden');
-                // show the button-group-seperator as well
+                // show the button-group-separator as well
                 $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().next().removeClass('hidden');
             }
         };

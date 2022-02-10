@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="30"
+   height="30"
+   viewBox="0 0 30 30"
+   version="1.1"
+   id="svg2"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="icon_Charts_Horizontal_32.svg">
+  <metadata
+     id="metadata22">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1855"
+     inkscape:window-height="1056"
+     id="namedview20"
+     showgrid="false"
+     inkscape:zoom="11.8"
+     inkscape:cx="10"
+     inkscape:cy="10"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title4">opps_lead_source_outcome_dark</title>
+  <desc
+     id="desc6">Created with Sketch.</desc>
+  <defs
+     id="defs8" />
+  <g
+     id="Page-1"
+     style="fill:none;stroke:none"
+     transform="matrix(1.5498982,0,0,1.5498982,-0.6261005,-0.37186322)">
+    <g
+       id="opps_lead_source_outcome_dark"
+       style="fill:#778591">
+      <g
+         id="Page-1-Copy"
+         transform="translate(1,1)">
+        <polygon
+           id="Fill-1"
+           points="0.13857534,17.861425 0.13857534,0.13857534 0.90936986,0.13857534 0.90936986,17.09063 17.861425,17.09063 17.861425,17.861425 " />
+        <polygon
+           id="Fill-2"
+           points="2.4193973,11.072712 2.4193973,14.309014 15.518712,14.309014 15.518712,11.072712 " />
+        <polygon
+           id="Fill-4"
+           points="2.4193973,6.5266027 2.4193973,9.7629041 10.895425,9.7629041 10.895425,6.5266027 " />
+        <polygon
+           id="Fill-6"
+           points="2.4193973,1.9417808 2.4193973,5.1780822 6.272137,5.1780822 6.272137,1.9417808 " />
+        <polygon
+           id="Fill-8"
+           points="13.160959,15.934931 13.160959,17.476027 13.931507,17.476027 13.931507,15.934931 " />
+        <polygon
+           id="Fill-9"
+           points="8.8074247,15.934931 8.8074247,17.476027 9.5779726,17.476027 9.5779726,15.934931 " />
+        <polygon
+           id="Fill-10"
+           points="4.4923562,15.934931 4.4923562,17.476027 5.2629041,17.476027 5.2629041,15.934931 " />
+      </g>
+    </g>
+  </g>
+</svg>

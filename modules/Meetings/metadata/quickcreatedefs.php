@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,53 +34,53 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $viewdefs ['Meetings'] =
-array (
+array(
   'QuickCreate' =>
-  array (
+  array(
     'templateMeta' =>
-    array (
+    array(
         'includes' => array(
             array('file' => 'modules/Reminders/Reminders.js'),
         ),
       'maxColumns' => '2',
       'form' =>
-      array (
+      array(
         'hidden' =>
-        array (
+        array(
            '<input type="hidden" name="isSaveAndNew" value="false">',
            '<input type="hidden" name="is_ajax_call" value="1">',
         ),
         'buttons' =>
-        array (
+        array(
 
-          array (
+          array(
             'customCode' => '<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button" onclick="SUGAR.meetings.fill_invitees();this.form.action.value=\'Save\'; this.form.return_action.value=\'DetailView\'; {if isset($smarty.request.isDuplicate) && $smarty.request.isDuplicate eq "true"}this.form.return_id.value=\'\'; {/if}return check_form(\'EditView\');" type="submit" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">',
           ),
            'CANCEL',
 
-          array (
+          array(
             'customCode' => '<input title="{$MOD.LBL_SEND_BUTTON_TITLE}" class="button" onclick="this.form.send_invites.value=\'1\';SUGAR.meetings.fill_invitees();this.form.action.value=\'Save\';this.form.return_action.value=\'EditView\';this.form.return_module.value=\'{$smarty.request.return_module}\';return check_form(\'EditView\');" type="submit" name="button" value="{$MOD.LBL_SEND_BUTTON_LABEL}">',
           ),
 
-          array (
+          array(
             'customCode' => '{if $fields.status.value != "Held"}<input title="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_TITLE}" accessKey="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_KEY}" class="button" onclick="SUGAR.meetings.fill_invitees(); this.form.status.value=\'Held\'; this.form.action.value=\'Save\'; this.form.return_module.value=\'Meetings\'; this.form.isDuplicate.value=true; this.form.isSaveAndNew.value=true; this.form.return_action.value=\'EditView\'; this.form.return_id.value=\'{$fields.id.value}\'; return check_form(\'EditView\');" type="submit" name="button" value="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_LABEL}">{/if}',
           ),
         ),
       ),
       'widths' =>
-      array (
+      array(
 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
 
-        array (
+        array(
           'label' => '10',
           'field' => '30',
         ),
@@ -90,68 +91,68 @@ array (
       'useTabs' => false,
     ),
     'panels' =>
-    array (
+    array(
       'default' =>
-      array (
+      array(
 
-        array (
+        array(
 
-          array (
+          array(
             'name' => 'name',
             'displayParams' =>
-            array (
+            array(
               'required' => true,
             ),
           ),
 
-          array (
+          array(
             'name' => 'status',
             'fields' =>
-            array (
+            array(
 
-              array (
+              array(
                 'name' => 'status',
               ),
             ),
           ),
         ),
-        array (
+        array(
 
-          array (
+          array(
             'name' => 'date_start',
             'type' => 'datetimecombo',
             'displayParams' =>
-            array (
+            array(
               'required' => true,
               'updateCallback' => 'SugarWidgetScheduler.update_time();',
             ),
           ),
 
-          array (
+          array(
             'name' => 'parent_name',
             'label' => 'LBL_LIST_RELATED_TO',
           ),
         ),
         
-        array (
-          array (
+        array(
+          array(
             'name' => 'date_end',
             'type' => 'datetimecombo',
             'displayParams' =>
-            array (
+            array(
               'required' => true,
               'updateCallback' => 'SugarWidgetScheduler.update_time();',
             ),
           ),
-          array (
+          array(
             'name' => 'location',
             'comment' => 'Meeting location',
             'label' => 'LBL_LOCATION',
           ),
         ),
         
-        array(        
-          array (
+        array(
+          array(
             'name' => 'duration',
             'customCode' => '
                 @@FIELD@@
@@ -168,30 +169,30 @@ array (
                     {/literal}
                 </script>            
             ',
-          ),          
+          ),
 //          array (
 //            'name' => 'reminder_time',
 //            'customCode' => '{include file="modules/Meetings/tpls/reminders.tpl"}',
 //            'label' => 'LBL_REMINDER',
 //          ),
-              array (
+              array(
                   'name' => 'reminders',
                   'customCode' => '{include file="modules/Reminders/tpls/reminders.tpl"}',
                   'label' => 'LBL_REMINDERS',
               ),
        ),
 
-         array (
-         	 array (
+         array(
+              array(
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO_NAME',
           ),
 
         ),
 
-        array (
+        array(
 
-          array (
+          array(
             'name' => 'description',
             'comment' => 'Full text of the note',
             'label' => 'LBL_DESCRIPTION',
@@ -201,4 +202,3 @@ array (
     ),
   ),
 );
-?>

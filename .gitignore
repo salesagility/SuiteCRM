@@ -6,6 +6,7 @@ cache/*
 upload/*
 !upload/index.html
 # Ignore some files and directories from the custom directory.
+custom/
 custom/history/*
 custom/blowfish/*
 custom/modulebuilder/*
@@ -15,10 +16,13 @@ custom/modules/unified_search_modules_display.php
 # Ignore AOD indexes
 modules/AOD_Index/Index/*
 install/status.json
+# Ignore PDF Fonts
+modules/AOS_PDF_Templates/PDF_Lib/ttfontdata/
 # Configuration files should be ignored.
 /config.php
 /config_override.php
 /config_si.php
+tests/config.test.php
 # Connector configuration should also be ignored.
 custom/modules/Connectors/connectors/sources/ext/*/*/config.php
 # Logs files can safely be ignored.
@@ -59,11 +63,18 @@ nbproject/
 .*.sw[a-z]
 *.un~
 Session.vim
+tags
 # Windows
 Thumbs.db
 Desktop.ini
 .DS_Store
 .DS_Store?
+# Microsoft Visual Studio
+*.sln
+*.suo
+*.phpproj
+# Microsoft Visual Studio Code
+.vscode
 # Disytel
 lang_cmp.php
 .kdev4/
@@ -72,3 +83,46 @@ SuiteCRM.kdev4
 #Ignore composer vendor folder
 vendor/
 public/
+
+.php_cs.cache
+
+
+#Ignore bower_components
+bower_components/
+node_modules/
+
+
+#Ignore Sass Generated files in SuiteP
+themes/SuiteP/css/*.map
+themes/SuiteP/css/*/*.map
+themes/SuiteP/css/*/color-palette.css
+themes/SuiteP/css/*/variables.css
+tests/_output/*
+
+
+#Ignore browserstack
+BrowserStackLocal
+browserstack.err
+cache/
+custom/**/
+.sass-cache/
+
+# Ignore testing environment
+build/tmp/
+
+# IMAP testing
+fakeImapResource
+include/Imap/ImapTestSettings.txt
+
+# Ignore php-cs-fixer cache
+.php_cs.cache
+
+# Ignore custom codeception environments so they won't be committed.
+tests/_envs/custom.yml
+codeception.yml
+
+# Ignore dotenv files so they don't get commited to git.
+# Only .env.dist should be committed.
+.env
+.env.test
+.env.dev

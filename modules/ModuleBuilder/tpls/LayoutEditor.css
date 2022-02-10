@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,29 +33,40 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 #layoutEditor img {
 
 }
+
 #delete img {
-    height:32px;
-    width:32px;
+    height: 32px;
+    width: 32px;
 }
-#layoutEditor h4, #layoutEditor h3, #layoutEditor h2, #layoutEditor h1, .panel_name  {
-	padding-left: 0px;
-	margin: 3px;
+
+#layoutEditor h4, #layoutEditor h3, #layoutEditor h2, #layoutEditor h1, .panel_name {
+    padding-left: 0;
+    margin: 3px;
 }
 
 .panel_name {
-	font-weight: bold;
-	color: #565656;
-	float:left; 
-	margin:5px;
+    font-weight: bold;
+    color: #565656;
+    float: left;
+    margin: 5px;
 }
-#toolbox { background:#f7f7f7; float:left; width: 175px; padding:5px; margin:10px 10px;    border: 1px solid #cccccc;}
+
+#toolbox {
+    background: #f7f7f7;
+    float: left;
+    width: 175px;
+    padding: 5px;
+    margin: 10px 10px;
+    border: 1px solid #cccccc;
+}
+
 #panels {
     border: 1px solid #cccccc;
     float: right;
@@ -64,55 +76,87 @@
     width: 100%;
 
 }
-.le_panel { 
+
+.le_panel {
     background: #eee;
 }
-.le_row { 
-    background: #ddd; 
+
+.le_row {
+    background: #ddd;
 }
 
-#layoutEditor .le_panel { 
-	margin: 2px 2px 10px 2px;
-	padding: 5px 15px 15px 15px;
-}
-#layoutEditor .le_row { 
-	margin: 2px 3px; 
-	height: 24px; clear: both; 
-	padding: 5px 15px;
+#layoutEditor .le_panel {
+    margin: 2px 2px 10px 2px;
+    padding: 5px 15px 15px 15px;
 }
 
-body > .le_panel .le_edit, #toolbox .le_panel .le_edit {  
-	display:none; 
+#layoutEditor .le_row {
+    margin: 2px 3px;
+    height: 24px;
+    clear: both;
+    padding: 5px 15px;
 }
-#toolbox .le_panel, #toolbox .le_row, .le_field { width:150px; float: left; border: 1px solid grey; background: #eee; padding: 5px; margin: 2px 3px; overflow:hidden; }
+
+body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
+    display: none;
+}
+
+#toolbox .le_panel, #toolbox .le_row, .le_field {
+    width: 150px;
+    float: left;
+    border: 1px solid grey;
+    background: #eee;
+    padding: 5px;
+    margin: 2px 3px;
+    overflow: hidden;
+}
 
 #toolbox .le_panel img, #toolbox .le_row img, .le_field img {
     margin: 0;
 }
 
-#delete { width: 52px; padding-top:5px; padding-bottom:10px;}
+#delete {
+    width: 52px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
 
-#panels .le_row .le_field, #availablefields .le_field,  #layoutPreview .le_row .le_field {display:block;}
-.le_row .le_field {display:none;}
+#panels .le_row .le_field, #availablefields .le_field, #layoutPreview .le_row .le_field {
+    display: block;
+}
 
+.le_row .le_field {
+    display: none;
+}
 
-.field_tabindex,.field_label,.field_name, .panel_id {display:none;}
-#availablefields .le_field {clear:both;}
-#availablefields {margin-top:20px;}
+.field_tabindex, .field_label, .field_name, .panel_id {
+    display: none;
+}
 
-#layoutEditorButtons div {float:left;}
-.le_edit{
-	cursor:pointer;
-	float:right;
+#availablefields .le_field {
+    clear: both;
+}
+
+#availablefields {
+    margin-top: 20px;
+}
+
+#layoutEditorButtons div {
+    float: left;
+}
+
+.le_edit {
+    cursor: pointer;
+    float: right;
 }
 
 .deleteme {
-   
-    font-weight:normal;
-    color:#565656;
+
+    font-weight: normal;
+    color: #565656;
 
 }
 
-#delete{
-    text-align:center;
+#delete {
+    text-align: center;
 }

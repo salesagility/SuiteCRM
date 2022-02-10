@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,84 +34,84 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 $viewdefs['Prospects']['EditView'] = array(
-    'templateMeta' => array('maxColumns' => '2', 
+    'templateMeta' => array('maxColumns' => '2',
                             'widths' => array(
-                                            array('label' => '10', 'field' => '30'), 
+                                            array('label' => '10', 'field' => '30'),
                                             array('label' => '10', 'field' => '30')
                                             ),
      ),
- 'panels' =>array (
-  'lbl_prospect_information' => 
-  array (
+ 'panels' =>array(
+  'lbl_prospect_information' =>
+  array(
     
-    array (
-      array (
+    array(
+      array(
         'name' => 'first_name',
-        'customCode' => '{html_options name="salutation" id="salutation" options=$fields.salutation.options selected=$fields.salutation.value}' 
+        'customCode' => '{html_options name="salutation" id="salutation" options=$fields.salutation.options selected=$fields.salutation.value}'
       . '&nbsp;<input name="first_name"  id="first_name" size="25" maxlength="25" type="text" value="{$fields.first_name.value}">',
       ),
+      '',
     ),
     
-    array (
+    array(
       array('name'=>'last_name',
             'displayParams'=>array('required'=>true),
       ),
       'phone_work',
     ),
     
-    array (
+    array(
       'title',
       'phone_mobile',
     ),
     
-    array (
+    array(
       'department',
       'phone_fax',
     ),
     
-    array (
+    array(
       'account_name',
     ),
     
-    array (
-      array (
-	      'name' => 'primary_address_street',
-          'hideLabel' => true,      
-	      'type' => 'address',
-	      'displayParams'=>array('key'=>'primary', 'rows'=>2, 'cols'=>30, 'maxlength'=>150),
+    array(
+      array(
+          'name' => 'primary_address_street',
+          'hideLabel' => true,
+          'type' => 'address',
+          'displayParams'=>array('key'=>'primary', 'rows'=>2, 'cols'=>30, 'maxlength'=>150),
       ),
       
-      array (
-	      'name' => 'alt_address_street',
-	      'hideLabel'=>true,
-	      'type' => 'address',
-	      'displayParams'=>array('key'=>'alt', 'copy'=>'primary', 'rows'=>2, 'cols'=>30, 'maxlength'=>150),      
+      array(
+          'name' => 'alt_address_street',
+          'hideLabel'=>true,
+          'type' => 'address',
+          'displayParams'=>array('key'=>'alt', 'copy'=>'primary', 'rows'=>2, 'cols'=>30, 'maxlength'=>150),
       ),
     ),
     array('email1'),
-    array (
-      array('name'=>'description', 
+    array(
+      array('name'=>'description',
             'label'=>'LBL_DESCRIPTION'),
     ),
     ),
   'LBL_MORE_INFORMATION' => array(
-    array (
+    array(
       'do_not_call',
     ),
     ),
   'LBL_PANEL_ASSIGNMENT' => array(
-    array (
-	  'assigned_user_name',
-    ),    
+    array(
+      'assigned_user_name',
+    ),
 
   ),
 )
 
 
 );
-?>

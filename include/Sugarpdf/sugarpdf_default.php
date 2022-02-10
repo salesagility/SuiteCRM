@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +37,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /**
  * This array define the default value to use for the sugarpdf settings.
@@ -53,13 +56,13 @@ $sugarpdf_default = array(
     "K_PATH_IMAGES"=>"themes/default/images/",
     "K_BLANK_IMAGE"=>"themes/default/images/_blank.png",
     "PDF_PAGE_FORMAT"=>"LETTER",
-    "PDF_PAGE_FORMAT_LIST"=>implode(",",array("4A0", "2A0", "A0", "A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10",
+    "PDF_PAGE_FORMAT_LIST"=>implode(",", array("4A0", "2A0", "A0", "A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10",
                                         "B0", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10",
                                         "C0", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10",
                                         "RA0", "RA1", "RA2", "RA3", "RA4", "SRA0", "SRA1", "SRA2", "SRA3", "SRA4",
                                         "LETTER", "LEGAL", "EXECUTIVE", "FOLIO")),
     "PDF_PAGE_ORIENTATION"=>"P",
-    "PDF_PAGE_ORIENTATION_LIST"=>implode(",",array("P"=>"P", "L"=>"L")),
+    "PDF_PAGE_ORIENTATION_LIST"=>implode(",", array("P"=>"P", "L"=>"L")),
     "PDF_CREATOR"=>"SugarCRM",
     "PDF_AUTHOR"=>"SugarCRM",
     "PDF_HEADER_TITLE"=>"SugarCRM",
@@ -93,21 +96,18 @@ $sugarpdf_default = array(
     "PDF_COMPRESSION"=>"true",
     "PDF_JPEG_QUALITY"=>"75",
     "PDF_PDF_VERSION"=>"1.7",
-    "PDF_PROTECTION"=>implode(",",array("print","copy")),
+    "PDF_PROTECTION"=>implode(",", array("print","copy")),
     "PDF_USER_PASSWORD"=>"",
     "PDF_OWNER_PASSWORD"=>"",
     "PDF_ACL_ACCESS"=>"detail",
-    "PDF_ENCODING_TABLE_LIST"=>implode(",",array("cp1250","cp1251","cp1252","cp1253","cp1254","cp1255","cp1257",
+    "PDF_ENCODING_TABLE_LIST"=>implode(",", array("cp1250","cp1251","cp1252","cp1253","cp1254","cp1255","cp1257",
                                                 "cp1258","cp874","iso-8859-1","iso-8859-2","iso-8859-4","iso-8859-5",
                                                 "iso-8859-7","iso-8859-9","iso-8859-11","iso-8859-15","iso-8859-16",
                                                 "koi8-r","koi8-u")),
-    "PDF_ENCODING_TABLE_LABEL_LIST"=>implode(",",array("cp1250 (Central Europe)","cp1251 (Cyrillic)","cp1252 (Western Europe)",
+    "PDF_ENCODING_TABLE_LABEL_LIST"=>implode(",", array("cp1250 (Central Europe)","cp1251 (Cyrillic)","cp1252 (Western Europe)",
                                                 "cp1253 (Greek)","cp1254 (Turkish)","cp1255 (Hebrew)","cp1257 (Baltic)",
                                                 "cp1258 (Vietnamese)","cp874 (Thai)","iso-8859-1 (Western Europe)",
                                                 "iso-8859-2 (Central Europe)","iso-8859-4 (Baltic)","iso-8859-5 (Cyrillic)",
                                                 "iso-8859-7 (Greek)","iso-8859-9 (Turkish)","iso-8859-11 (Thai)","iso-8859-15 (Western Europe)",
                                                 "iso-8859-16 (Central Europe)","koi8-r (Russian)","koi8-u (Ukrainian)")),
 );
-
-
-?>

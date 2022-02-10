@@ -1,11 +1,12 @@
 {*
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +35,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 *}
@@ -99,8 +100,14 @@
 		<div class="clear"></div>
 
 		<div class="btns">
-			<input class="add-btn" type="button" value="{$MOD.LBL_REMINDERS_ADD_ALL_INVITEES}" onclick="Reminders.onAddAllClick(this);">
-			<input class="remove-reminder-btn remove-btn" type="button" value="{$MOD.LBL_REMINDERS_REMOVE_REMINDER}" onclick="Reminders.onRemoveClick(this);">
+			<button class="add-btn btn btn-info" type="button" onclick="Reminders.onAddAllClick(this); return false;">
+				<span class="suitepicon suitepicon-action-plus"></span>
+                {$MOD.LBL_REMINDERS_ADD_ALL_INVITEES}
+			</button>
+			<button class="remove-reminder-btn btn btn-danger" type="button" onclick="Reminders.onRemoveClick(this); return false;">
+				<span class="suitepicon suitepicon-action-minus"></span>
+                {$MOD.LBL_REMINDERS_REMOVE_REMINDER}
+			</button>
 		</div>
 
 		<div class="clear"></div>
@@ -194,8 +201,8 @@
                     <ul class="invitees_list disabled">
                     {foreach from=$reminder.invitees item=invitee}
                         <li class="invitees_item">
-                            <button class="invitee_btn" data-invitee-id="{$invitees.id}" data-id="{$invitee.module_id}" data-module="{$invitee.module}" disabled="disabled">
-                                <img src="index.php?entryPoint=getImage&amp;themeName=SuiteR+&amp;imageName=Users.gif&quot;">
+                            <button class="invitee_btn btn btn-danger" data-invitee-id="{$invitees.id}" data-id="{$invitee.module_id}" data-module="{$invitee.module}" disabled="disabled">
+								<span class="suitepicon suitepicon-module-users"></span>
                                 <span class="related-value"> {$invitee.value}</span>
                             </button>
                         </li>
@@ -212,7 +219,10 @@
 	{/if}
     </ul>
 	{if !$REMINDERS_DISABLED}
-	<input id="reminder_add_btn" class="add-btn" type="button" value="{$MOD.LBL_REMINDERS_ADD_REMINDER}" onclick="Reminders.onAddClick(this);">
+		<button id="reminder_add_btn" class="add-btn btn btn-info" type="button" onclick="Reminders.onAddClick(this);return false">
+			<span class="suitepicon suitepicon-action-plus"></span>
+            {$MOD.LBL_REMINDERS_ADD_REMINDER}
+		</button>
 	{/if}
 </div>
 

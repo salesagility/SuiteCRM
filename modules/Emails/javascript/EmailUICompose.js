@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
  (function() {
 	var sw = YAHOO.SUGAR,
@@ -892,7 +893,7 @@ SE.composeLayout = {
 
     	 	YAHOO.util.Event.onAvailable('htmleditordiv' + idx, function() {
     	 		SE.composeLayout._createComposeLayout(idx);
-    	 		SE.composeLayout[idx].set('height', 350);
+    	 		SE.composeLayout[idx].set('height', 550);
 	        	SE.composeLayout[idx].render();
            });
         });
@@ -960,7 +961,7 @@ SE.composeLayout = {
         	parent: SE.complexLayout,
         	border:true,
             hideOnLayout: true,
-            height: 400,
+            height: 600,
 			units: [{
 					position: "center",
 	                animate: false,
@@ -1072,7 +1073,7 @@ SE.composeLayout = {
 		if (!SE.composeLayout.isParentTypeValid(idx)) {
 			return;
 		} // if
-		open_popup(document.getElementById('data_parent_type' + idx).value,600,400,'&tree=ProductsProd',true,false,
+		open_popup(document.getElementById('data_parent_type' + idx).value,600,600,'&tree=ProductsProd',true,false,
 		{
 			call_back_function:"SE.composeLayout.popupAddEmail",
 			form_name:formName,
@@ -1670,7 +1671,7 @@ SE.composeLayout = {
                 // remove button
                 "<button class='button lastChild' type='button' name='documentRemove" + idx + index + "' id='documentRemove" + idx + index + "'" +
                     "onclick='SE.composeLayout.deleteDocumentField(\"documentCup" + idx + index + "\");' value='" + app_strings.LBL_EMAIL_REMOVE + "'>" +
-                 "<img src='index.php?entryPoint=getImage&themeName=" + SUGAR.themes.theme_name + "&imageName=id-ff-clear.png' ></button>" +
+                 "<span class=\"suitepicon suitepicon-action-clear\"></span></button>" +
                 "<br/>";
 
         basket.appendChild(documentCup);

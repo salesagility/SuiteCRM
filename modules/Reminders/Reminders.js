@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /**
  * Remainers handling
@@ -64,10 +65,10 @@ var Reminders = {
         if(!id) id = '';
         // TODO: add a template for this
         if(!Reminders.disabled) {
-            var inviteeView = '<!-- enabled --><li class="invitees_item"><button class="invitee_btn" data-invitee-id="' + id + '" data-id="' + moduleId + '" data-module="' + module + '" onclick="Reminders.onInviteeClick(this);"><img src=index.php?entryPoint=getImage&themeName=SuiteR&imageName=' + module + '.gif><span class="related-value">' + relatedValue + '</span></button></li>';
+            var inviteeView = '<!-- enabled --><li class="invitees_item"><button class="invitee_btn btn btn-danger" data-invitee-id="' + id + '" data-id="' + moduleId + '" data-module="' + module + '" onclick="Reminders.onInviteeClick(this);"><span class="suitepicon suitepicon-module-' + module.toLowerCase().replace('_', '-') + '"></span><span class="related-value">' + relatedValue + '</span></button></li>';
         }
         else {
-            var inviteeView = '<!-- disabled --><li class="invitees_item"><button class="invitee_btn" data-invitee-id="' + id + '" data-id="' + moduleId + '" data-module="' + module + '" disabled="disabled"><img src=index.php?entryPoint=getImage&themeName=SuiteR&imageName=' + module + '.gif><span class="related-value">' + relatedValue + '</span></button></li>';
+            var inviteeView = '<!-- disabled --><li class="invitees_item"><button class="invitee_btn btn btn-danger" data-invitee-id="' + id + '" data-id="' + moduleId + '" data-module="' + module + '" disabled="disabled"><span class="suitepicon suitepicon-module-' + module.toLowerCase().replace('_', '-') + '"></span></span></button></li>';
         }
         return inviteeView;
     },
@@ -194,6 +195,44 @@ var Reminders = {
         Reminders.createRemindersPostData();
     },
     onInviteeClick: function(e) {
+        var parentReminderItem = $(e).closest('.reminder_item');
+        var parentReminderId = parentReminderItem.attr('data-reminder-id');
+        var reminders = Reminders.getRemindersData();
+        var _e = e;
+        $.each(reminders, function(i, reminder) {
+            if(reminder.id == parentReminderId && reminder.invitees.length == 1) {
+                var confirmDeletePopup = new YAHOO.widget.SimpleDialog("Confirm ", {
+                    //width: "400px",
+                    draggable: false,
+                    constraintoviewport: true,
+                    modal: true,
+                    fixedcenter: true,
+                    text: SUGAR.language.get('app_strings', 'LBL_DELETE_REMINDER_CONFIRM'),
+                    bodyStyle: "padding:5px",
+                    buttons: [{
+                        text: SUGAR.language.get('app_strings', 'LBL_OK'),
+                        handler: function(){
+                            // YES
+                            confirmDeletePopup.hide();
+                            parentReminderItem.remove();
+                            Reminders.createRemindersPostData();
+                            return false;
+                        },
+                        isDefault:true
+                    }, {
+                        text: SUGAR.language.get('app_strings', 'LBL_CANCEL_BUTTON_LABEL'),
+                        handler: function() {
+                            // NO
+                            confirmDeletePopup.hide();
+                            Reminders.createRemindersPostData();
+                            return false;
+                        }
+                    }]
+                });
+                confirmDeletePopup.setHeader(SUGAR.language.get('app_strings', 'LBL_DELETE_REMINDER'));
+                confirmDeletePopup.render(document.body);
+            }
+        });
         $(e).closest('.invitees_item').remove();
         Reminders.createRemindersPostData();
     },
@@ -284,7 +323,7 @@ var Reminders = {
             if(Reminders.getRemindersData().length == 0 && (Reminders.getBool(Reminders.defaultValues.popup) || Reminders.getBool(Reminders.defaultValues.email))) {
                 Reminders.addDefaultReminderInterval = setInterval(function () {
                     // we have to wait for the scheduler table loaded
-                    if ($('#schedulerTable').length == 0 || $('#schedulerTable .schedulerAttendeeRow').length > 0) {
+                    if ($('#schedulerTable').length != 0 && $('#schedulerTable .schedulerAttendeeRow').length > 0) {
                         clearInterval(Reminders.addDefaultReminderInterval);
                         Reminders.addReminder(null, Reminders.defaultValues.popup, Reminders.defaultValues.email, Reminders.defaultValues.timer_popup, Reminders.defaultValues.timer_email);
                         Reminders.createRemindersPostData();

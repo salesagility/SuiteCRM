@@ -1,0 +1,767 @@
+/**** Dashboard ***/
+
+.modal-add-dashlet div.modal-content {
+  width: 80%;
+}
+
+.dashletcontainer.col-33 {
+  width: 33.333%;
+}
+
+.dashletcontainer {
+  min-height: 132px;
+}
+
+.drop-location {
+  min-height: 132px;
+}
+
+#pageContainer .dashletcontainer .hd {
+  background-color: $dashlet-title-bg;
+  padding: 0;
+  margin: 0;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.yui-module .hd{
+  background: $dashlet-title-bg;
+}
+
+.yui-panel .hd {
+  background: $dashlet-title-bg;
+}
+
+#pageContainer .dashletcontainer .pagination td {
+  background-color: $dashlet-toolbar-bg;
+}
+
+#pageContainer .dashletcontainer .pagination span {
+  display: inline-block;
+}
+
+#pageContainer .dashletcontainer .pagination td button {
+  background-color: $dashlet-pagination-bg;
+  padding: 2px;
+  border-radius: 3px;
+  width: auto;
+  height: auto;
+}
+#pageContainer .dashletcontainer .pagination td button:disabled {
+  background-color: $disabled-btn-bg;
+  color: $disabled-btn-color;
+}
+
+  // Fix the icons in the dashlet pagination.
+#pageContainer .dashletcontainer .aor_reports .pagination h3 {
+  margin: 0;
+}
+
+#pageContainer .dashletcontainer .aor_reports .pagination button {
+  height: 16px;
+  line-height: 16px;
+  padding: 0 2px;
+}
+
+.dashletcontainer button[disabled], .dashletcontainer input[type="submit"][disabled], .dashletcontainer input[type="reset"][disabled], .dashletcontainer input[type="button"][disabled] {
+  line-height: 100% ;
+}
+
+.dashletcontainer .button, .dashletcontainer input[type="submit"], .dashletcontainer input[type="button"] {
+  line-height: 100% ;
+}
+
+#pageContainer .dashletcontainer .footable-visible a {
+  padding-right: 20px;
+}
+
+#pageContainer .dashletcontainer .hd .icon {
+  fill: $dashlet-title-color;
+}
+
+.dashletPanel thead {
+  background-color: $dashlet-header-bg;
+}
+
+#moduleDashlets h3 {
+  display: none;
+  visibility: collapse;
+}
+
+#chartDashlets h3 {
+  display: none;
+  visibility: collapse;
+}
+
+#webDashlets h3 {
+  display: none;
+  visibility: collapse;
+}
+
+#toolsDashlets h3 {
+  display: none;
+  visibility: collapse;
+}
+
+#searchDashlets h3 {
+  display: none;
+  visibility: collapse;
+}
+
+ul.subpanelTablist li {
+  margin: 0 0 0 3px;
+  list-style: none;
+  padding:0;
+}
+
+#dashletCategories {
+  display: block;
+  font-size: 13px;
+  border-bottom-color: $active-tab-bg;
+  height: 28px;
+
+}
+
+
+#dashletCategories .suitepicon {
+  margin: 0 4px 0 4px;
+}
+
+#dashletCategories > li {
+  display: inline-block;
+  font-size: 13px;
+}
+
+
+#dashletCategories > li a {
+  font-weight: 400;
+  background-color: $default-tab-bg;
+  color: $add-dashlet-tab-color;
+  padding: 10px 20px 10px 10px;
+  border: 1px solid transparent;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  text-transform: uppercase;
+}
+
+#dashletCategories > li a:link {
+  font-weight: 400;
+  background-color: $default-tab-bg;
+  color: $add-dashlet-tab-color;
+  padding: 10px 20px 10px 10px;
+  border: 1px solid transparent;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  text-transform: uppercase;
+}
+
+#dashletCategories > li a:hover {
+  font-weight: 400;
+  background-color: $default-tab-bg;
+  color: $add-dashlet-tab-color;
+  padding: 10px 20px 10px 10px;
+  border: 1px solid transparent;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  text-transform: uppercase;
+}
+
+#dashletCategories > li a:visited {
+  font-weight: 400;
+  background-color: $default-tab-bg;
+  color: $add-dashlet-tab-color;
+  padding: 10px 20px 10px 10px;
+  border: 1px solid transparent;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  text-transform: uppercase;
+}
+
+#dashletCategories > li a:active {
+  font-weight: 400;
+  background-color: $default-tab-bg;
+  color: $add-dashlet-tab-color;
+  padding: 10px 20px 10px 10px;
+  border: 1px solid transparent;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  text-transform: uppercase;
+}
+
+#dashletCategories > li a:focus {
+  font-weight: 400;
+  background-color: $default-tab-bg;
+  color: $add-dashlet-tab-color;
+  padding: 10px 20px 10px 10px;
+  border: 1px solid transparent;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  text-transform: uppercase;
+}
+
+#dashletCategories > li.active a {
+  background-color: $active-tab-bg;
+  color: $add-dashlet-tab-color;
+}
+
+#dashletCategories > li.active a:link {
+  background-color: $active-tab-bg;
+  color: $add-dashlet-tab-color;
+}
+
+#dashletCategories > li.active a:hover {
+  background-color: $active-tab-bg;
+  color: $add-dashlet-tab-color;
+}
+
+#dashletCategories > li.active a:visited {
+  background-color: $active-tab-bg;
+  color: $add-dashlet-tab-color;
+}
+
+#dashletCategories > li.active a:active {
+  background-color: $active-tab-bg;
+  color: $add-dashlet-tab-color;
+}
+
+#dashletCategories > li.active a:focus {
+  background-color: $active-tab-bg;
+  color: $add-dashlet-tab-color;
+}
+
+
+#dashletCtrls {
+  float: right;
+}
+
+
+#moduleDashlets h3,
+#chartDashlets h3,
+#toolsDashlets h3 {
+  margin-top: 13px;
+}
+
+#dashletSearch table tr td input[type=button] {
+  vertical-align: top;
+}
+
+
+.sugarFeedDashlet {
+  overflow: auto;
+  max-height: 375px;
+}
+
+.sugarFeedDashlet td.list th {
+  display: none;
+}
+
+.sugarFeedDashlet td.list td[scope=col] {
+  display: none;
+}
+
+.sugarFeedDashlet tr {
+  height: auto;
+}
+
+.sugarFeedDashlet .byLineBox {
+  width:100%;
+  position:relative;
+  overflow: hidden;
+  font-size: 13px;
+}
+
+.sugarFeedDashlet blockquote {
+  width:100%;
+  position:relative;
+  overflow: hidden;
+  font-size: 13px;
+}
+
+.sugarFeedDashlet blockquote img
+{
+  width: 30px;
+  height: 30px;
+}
+
+.sugarFeedDashlet .byLineBox .byLineLeft {
+  float: left;
+}
+
+.sugarFeedDashlet .byLineBox .byLineRight {
+  display: inline;
+  font-size: 79%;
+  float: right;
+}
+
+
+.dashletPanel .hd .hd-center .dashletToolSet a {
+  font-size: $dashlet-header-toolset-icon-font-size;
+  color: $dashlet-btn-color;
+  padding: 0 2px;
+  line-height: $dashlet-header-toolset-icon-font-size;
+}
+
+.dashletPanel .hd .hd-center .dashletToolSet a:last-child {
+  padding-right: 0;
+}
+
+.dashletPanelMenu.wizard.import .bd .screen {
+  display: block;
+  background-color: #fff;
+  padding: 20px;
+  border: 0 none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: auto;
+  height: 487px;
+}
+
+div#chartDashlets {
+  overflow-y: auto;
+}
+
+
+.dashletPanel {
+  padding: 0;
+  margin: 15px 15px 15px 0;
+}
+
+.dashletTable {
+  table-layout: fixed;
+}
+
+.hd-center {
+  padding: 0;
+  margin: 0;
+}
+
+.bd {
+  padding: 0;
+  margin: 0;
+}
+
+
+#moduleDashletsList {
+  height: auto;
+}
+
+#dashletsList {
+  overflow: hidden;
+  max-height: 500px ;
+}
+
+#dashletsDialog_c {
+  margin-top: -50px;
+  margin-left: -125px;
+}
+
+td.dashlet-title {
+  line-height: $dashlet-title-height;
+  height: $dashlet-title-height + 4px;
+}
+
+td.dashlet-title > h3 > span {
+  margin-left: 8px;
+}
+
+.dashlet-title .suitepicon {
+  font-size: $dashlet-header-icon-font-size;
+}
+
+#moduleDashletsList > table > tbody > tr > td {
+  padding: 10px;
+}
+
+#basicChartDashletsList > table > tbody  > tr > td {
+  padding: 10px;
+}
+
+#toolsDashletsList > table > tbody  > tr > td {
+  padding: 10px;
+}
+
+#webDashletsList > table > tbody  > tr > td {
+  padding: 10px;
+}
+
+#moduleDashletsList a {
+  color: $link-color;
+  margin: 5px;
+}
+
+#basicChartDashletsList a {
+  color: $link-color;
+  margin: 5px;
+}
+
+#toolsDashletsList a {
+  color: $link-color;
+  margin: 5px;
+}
+
+#webDashletsList a {
+  color: $link-color;
+  margin: 5px;
+}
+
+#moduleDashletsList a span {
+  margin-left: 10px;
+}
+
+#basicChartDashletsList a span {
+  margin-left: 10px;
+}
+
+#toolsDashletsList a span {
+  margin-left: 10px;
+}
+
+#webDashletsList a span {
+  margin-left: 10px;
+}
+
+
+#moduleDashletsList {
+  padding: 10px;
+  max-height: 375px ;
+  /*background: #778591;*/
+  border: 1px solid transparent;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+#basicChartDashletsList {
+  padding: 10px;
+  max-height: 375px ;
+  /*background: #778591;*/
+  border: 1px solid transparent;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+#toolsDashletsList {
+  padding: 10px;
+  max-height: 375px ;
+  /*background: #778591;*/
+  border: 1px solid transparent;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+#webDashletsList {
+  padding: 10px;
+  max-height: 375px ;
+  /*background: #778591;*/
+  border: 1px solid transparent;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+
+#dashletsDialog_mask {
+  display: none ;
+  visibility: collapse ;
+}
+
+#dashletsDialog {
+  display: none ;
+  visibility: collapse ;
+}
+
+
+@media (max-width: 980px) {
+  .dashletNonTable {
+    display: none;
+  }
+
+  .dashletcontainer {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    float: left;
+    width: 100%;
+  }
+}
+
+.dashletPanel .list tr th a:link {
+  padding-right: 0;
+}
+
+
+.dashletPanel .list tr th {
+  padding-top: $dashlet-header-height/2;
+  padding-bottom: $dashlet-header-height/2;
+  padding-left: $dashlet-header-padding;
+  padding-right: $dashlet-header-padding;
+  
+  padding-top: $dashlet-header-padding;
+  padding-bottom: $dashlet-header-padding;
+}
+
+.bd .dashletPanel .list-view-data-icon {
+  color: $dashlet-action-color;
+  font-size: $dashlet-action-icon-font-size;
+  line-height: $dashlet-action-icon-font-size;
+  margin: 0 2px 0 2px;
+}
+
+.bd .dashletPanel .list-view-data-icon:hover{
+  text-decoration: none;
+}
+
+.dashletPanel .h3Row {
+  background-color: $dashlet-title-bg;
+  color: $default-btn-color;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.h3Row {
+  padding: 5px 10px 5px 10px;
+  margin: 5px 0 5px 0;
+}
+
+.dashletPanel .h3Row h3 {
+  font-size: 13px;
+  font-weight: bold;
+  color: $dashlet-title-color;
+  margin: 0 0 0 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.dashletPanel .h3Row h3 span {
+  font-weight: normal;
+}
+
+#dashletbuttons {
+  color: $dashlet-btn-color;
+  margin: 0 2px 0 2px;
+}
+
+#dashletbuttons:hover {
+  opacity: 0.8;
+}
+
+.dashletToolSet {
+  margin: 0 10px 0 0;
+}
+
+@media (max-width: 750px) {
+
+  .dashletcontainer {
+    float: left;
+  }
+
+  .dashletPanel {
+    overflow: auto;
+  }
+
+  .dashboardTabList {
+    display: none;
+  }
+}
+
+
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel {
+  top: initial;
+  left: 0;
+  right: auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+  margin: 0 auto;
+  border: none;
+  max-width: 900px;
+}
+
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .container-close {
+  top: 15px;
+  right: 30px;
+  color: #aaa;
+  width: initial;
+  text-indent: initial;
+}
+
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .hd {
+  font-family: Lato, Lato, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  background: $main-alternate-bg;
+  color: $main-font-color;
+  padding: 15px 15px 42px 19px;
+  margin: 0;
+  border-bottom: solid 1px #ddd;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  line-height: 25.7143px;
+  height: 25px;
+}
+
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd {
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  overflow: hidden;
+  max-height: 650px;
+}
+
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form {
+  /* form looking good. */
+}
+
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table td input[type="checkbox"] {
+  margin-top: 10px;
+  height: 30px;
+}
+
+
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr{
+  display: flex; 
+  border-bottom: none;
+  float: none;
+  width: auto;
+}
+
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.view td tr {
+  display: block;
+  border-bottom: none;
+  float: none;
+  width: auto;
+}
+
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td[scope=row]{
+  display: block;
+  list-style: none;
+  float: left;
+  width: auto;
+}
+
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.view td tr td {
+  display: block;
+  float: left;
+  width: auto;
+}
+
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td[scope=row] {
+  width: 30%;
+}
+
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table tr td[scope=row][colspan="4"] {
+  float: none;
+}
+
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table tr td[scope=row][colspan="4"] br {
+  display: none;
+}
+
+
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td table {
+
+}
+
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td table tbody {
+  display: table-row-group;
+  border-color: inherit;
+  float: initial;
+  vertical-align: middle;
+}
+
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td table tbody tr {
+  display: table-row;
+  border-color: inherit;
+  float: initial;
+  vertical-align: inherit;
+}
+
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td table tbody tr td {
+  display: table-cell;
+  float: initial;
+  vertical-align: inherit;
+}
+
+@media(min-width: 800px) {
+
+  .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td[scope=row] {
+    width: 20%;
+  }
+  .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr td[valign=top] {
+    float: left;
+    width: 25%;
+
+  }
+  .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit tr:last-child{
+    clear: both;
+  }
+
+  .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit {
+    position: relative;
+  }
+
+  .yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd form table.edit #edit_tabs {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+  }
+}
+
+.dashletNonTable {
+  padding: 10px 5px 10px 10px;
+}
+
+#add_dashlets {
+  display: none;
+}
+
+
+#dashletresponsive {
+  float: left;
+}
+
+.edit-dashboard-tabs .suitepicon {
+  font-size: 18px;
+  line-height: 18px;
+}
+
+.dashboardTbList {
+  max-width: 90% ;
+}
+@media (max-width: 999px) and (max-height: 1024px) {
+  #dashletsDialog_c {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: 0;
+    overflow: scroll;
+    height: 70%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .dashletcontainer.col-50 {
+    width: 100%;
+  }
+
+  table td[class*=col-] {
+    display: block;
+    clear: both;
+    float: none;
+    width: 100%;
+  }
+
+  table th[class*=col-] {
+    display: block;
+    clear: both;
+    float: none;
+    width: 100%;
+  }
+
+  .dashletcontainer {
+    display: block;
+    clear: both;
+    float: none;
+    width: 100%;
+  }
+}
+
+@media (min-width: 1025px) {
+  .dashletcontainer.col-50 {
+    width: 50%;
+  }
+}

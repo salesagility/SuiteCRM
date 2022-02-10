@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,35 +37,33 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 global $current_user;
 
-if(is_admin($current_user)){
-    if(count($_POST)){
-    	if(!empty($_POST['activate'])){
-
-    		$status = '';
-    		if($_POST['activate'] == 'false'){
-    			$status = 'Inactive';
-    		}else{
-    			$status = 'Active';
-    		}
-    	}
-    	$query = "UPDATE users SET status = '$status' WHERE id LIKE 'seed%'";
-   		$GLOBALS['db']->query($query);
+if (is_admin($current_user)) {
+    if (count($_POST)) {
+        if (!empty($_POST['activate'])) {
+            $status = '';
+            if ($_POST['activate'] == 'false') {
+                $status = 'Inactive';
+            } else {
+                $status = 'Active';
+            }
+        }
+        $query = "UPDATE users SET status = '$status' WHERE id LIKE 'seed%'";
+        DBManagerFactory::getInstance()->query($query);
     }
-    	$query = "SELECT status FROM users WHERE id LIKE 'seed%'";
-    	$result = $GLOBALS['db']->query($query);
-		$row = $GLOBALS['db']->fetchByAssoc($result);
-		if(!empty($row['status'])){
-			$activate = 'false';
-			if($row['status'] == 'Inactive'){
-				$activate = 'true';
-			}
-			?>
+    $query = "SELECT status FROM users WHERE id LIKE 'seed%'";
+    $result = DBManagerFactory::getInstance()->query($query);
+    $row = DBManagerFactory::getInstance()->fetchByAssoc($result);
+    if (!empty($row['status'])) {
+        $activate = 'false';
+        if ($row['status'] == 'Inactive') {
+            $activate = 'true';
+        } ?>
 				<p>
 				<form name="RepairSeedUsers" method="post" action="index.php">
 				<input type="hidden" name="module" value="Administration">
@@ -73,18 +74,20 @@ if(is_admin($current_user)){
 				<table cellspacing="{CELLSPACING}" class="otherview">
 					<tr>
 					    <td scope="row" width="30%"><?php echo $mod_strings['LBL_REPAIR_SEED_USERS_TITLE']; ?></td>
-					    <td><input type="submit" name="button" value="<?php if($row['status'] == 'Inactive'){echo $mod_strings['LBL_REPAIR_SEED_USERS_ACTIVATE'];}else{echo $mod_strings['LBL_REPAIR_SEED_USERS_DECACTIVATE'];} ?>"></td>
+					    <td><input type="submit" name="button" value="<?php if ($row['status'] == 'Inactive') {
+            echo $mod_strings['LBL_REPAIR_SEED_USERS_ACTIVATE'];
+        } else {
+            echo $mod_strings['LBL_REPAIR_SEED_USERS_DECACTIVATE'];
+        } ?>"></td>
 					</tr>
 				</table>
 				</form>
 				</p>
 			<?php
-
-		}else{
-			echo 'No seed Users';
-		}
-}
-else{
-	sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
+    } else {
+        echo 'No seed Users';
+    }
+} else {
+    sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
 }
 ?>

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,46 +34,53 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 interface HistoryInterface
 {
 
-    /*
+    /**
      * Get the most recent item in the history
-     * @return Id of the first item
+     * @return string Id of the first item
      */
-    function getFirst () ;
+    public function getFirst();
 
-    /*
+    /**
      * Get the next oldest item in the history
-     * @return Id of the next item
+     * @return string Id of the next item
      */
-    function getNext () ;
+    public function getNext();
 
-    /*
+    /**
      * Get the nth item in the history (where the zeroeth record is the most recent)
-     * @return Id of the nth item
+     * @param integer $n
+     * @return string Id of the nth item
      */
-    function getNth ($n) ;
+    public function getNth($n);
 
-    /*
+    /**
      * Restore the historical layout identified by timestamp
-     * @return Timestamp if successful, null if failure (if the file could not be copied for some reason)
+     * @param integer $timestamp
+     * @return integer Timestamp if successful, null if failure (if the file could not be copied for some reason)
      */
-    function restoreByTimestamp ($timestamp) ;
+    public function restoreByTimestamp($timestamp);
 
-    /*
+    /**
      * Undo the restore - revert back to the layout before the restore
      */
-    function undoRestore () ;
+    public function undoRestore();
 
-    /*
+    /**
      * Add an item to the history
-     * @return String   An timestamp for this newly added item
+     * @param string $path
+     * @return string   An timestamp for this newly added item
      */
-    function append ($path) ;
+    public function append($path);
 }

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,202 +34,219 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
-require_once 'modules/ModuleBuilder/parsers/constants.php' ;
-require_once 'modules/ModuleBuilder/parsers/views/HistoryInterface.php' ;
+require_once 'modules/ModuleBuilder/parsers/constants.php';
+require_once 'modules/ModuleBuilder/parsers/views/HistoryInterface.php';
 
+/**
+ * Class History
+ */
 class History implements HistoryInterface
 {
 
-    private $_dirname ; // base directory for the history files
-    private $_basename ; // base name for a history file, for example, listviewdef.php
-    private $_list ; // the history - a list of history files
+    /**
+     * @var string $_dirname
+     *  base directory for the history files
+     */
+    private $_dirname;
 
-    private $_previewFilename ; // the location of a file for preview
+    /**
+     * @var string $_basename
+     * base name for a history file, for example, listviewdef.php
+     */
+    private $_basename;
 
-    /*
-     * Constructor
+    /**
+     * @var array $_list
+     * the history - a list of history files
+     */
+    private $_list;
+
+    /**
+     * @var string $_previewFilename
+     * the location of a file for preview
+     */
+    private $_previewFilename;
+
+    /**
+     * History constructor.
      * @param string $previewFilename The filename which the caller expects for a preview file
      */
-    public function __construct ( $previewFilename )
+    public function __construct($previewFilename)
     {
-        $GLOBALS [ 'log' ]->debug ( get_class ( $this ) . "->__construct( {$previewFilename} )" ) ;
-        $this->_previewFilename = $previewFilename ;
-        $this->_list = array ( ) ;
+        $GLOBALS ['log']->debug(get_class($this) . "->__construct( {$previewFilename} )");
+        $this->_previewFilename = $previewFilename;
+        $this->_list = array();
 
-        $this->_basename = basename ( $this->_previewFilename ) ;
-        $this->_dirname = dirname ( $this->_previewFilename );
- 	    $this->_historyLimit = isset ( $GLOBALS [ 'sugar_config' ] [ 'studio_max_history' ] ) ? $GLOBALS [ 'sugar_config' ] [ 'studio_max_history' ] : 50 ;
+        $this->_basename = basename($this->_previewFilename);
+        $this->_dirname = dirname($this->_previewFilename);
+        $this->_historyLimit = isset($GLOBALS ['sugar_config'] ['studio_max_history']) ? $GLOBALS ['sugar_config'] ['studio_max_history'] : 50;
 
         // create the history directory if it does not already exist
         if (!is_dir($this->_dirname)) {
-           mkdir_recursive($this->_dirname);
-         }
-        else
-        {
+            mkdir_recursive($this->_dirname);
+        } else {
             // Reconstruct the history from the saved files
             $filenameList = glob($this->getFileByTimestamp('*'));
-            if (!empty($filenameList))
-            {
-                foreach ($filenameList as $filename)
-                {
-                    if(preg_match('/(\d+)$/', $filename, $match))
-                    {
+            if (!empty($filenameList)) {
+                foreach ($filenameList as $filename) {
+                    if (preg_match('/(\d+)$/', $filename, $match)) {
                         $this->_list [] = $match[1];
                     }
                 }
             }
         }
         // now sort the files, oldest first
-        if (count ( $this->_list ) > 0)
-        {
-            sort ( $this->_list ) ;
+        if (count($this->_list) > 0) {
+            sort($this->_list);
         }
     }
 
 
- /*
+    /**
      * Get the most recent item in the history
-     * @return timestamp of the first item
+     * @return integer timestamp of the first item
      */
-    public function getCount ()
+    public function getCount()
     {
-        return count ( $this->_list ) ;
+        return count($this->_list);
     }
 
-    /*
+    /**
      * Get the most recent item in the history
-     * @return timestamp of the first item
+     * @return integer timestamp of the first item
      */
-    public function getFirst ()
+    public function getFirst()
     {
-        return end ( $this->_list ) ;
+        return end($this->_list);
     }
 
-/*
+    /**
      * Get the oldest item in the history (the default layout)
-     * @return timestamp of the last item
+     * @return integer timestamp of the last item
      */
-    public function getLast ()
+    public function getLast()
     {
-        return reset ( $this->_list ) ;
+        return reset($this->_list);
     }
 
-    /*
+    /**
      * Get the next oldest item in the history
-     * @return timestamp of the next item
+     * @return integer timestamp of the next item
      */
-    public function getNext ()
+    public function getNext()
     {
-        return prev ( $this->_list ) ;
+        return prev($this->_list);
     }
 
-    /*
+    /**
      * Get the nth item in the history (where the zeroeth record is the most recent)
-     * @return timestamp of the nth item
+     * @param integer $index
+     * @return integer timestamp of the nth item
      */
-     public function getNth ( $index )
+    public function getNth($index)
     {
-        $value = end ( $this->_list ) ;
-        $i = 0 ;
-        while ( $i < $index )
-        {
-            $value = prev ( $this->_list ) ;
-            $i ++ ;
+        $value = end($this->_list);
+        $i = 0;
+        while ($i < $index) {
+            $value = prev($this->_list);
+            $i++;
         }
-        return $value ;
+
+        return $value;
     }
 
-    /*
+    /**
      * Add an item to the history
-     * @return String   A GMT Unix timestamp for this newly added item
+     * @param string $path
+     * @return string   A GMT Unix timestamp for this newly added item
      */
-    public function append ($path)
+    public function append($path)
     {
         // make sure we don't have a duplicate filename - highly unusual as two people should not be using Studio/MB concurrently, but when testing quite possible to do two appends within one second...
         // because so unlikely in normal use we handle this the naive way by waiting a second so our naming scheme doesn't get overelaborated
-        $retries = 0 ;
+        $retries = 0;
 
         $now = TimeDate::getInstance()->getNow();
         $new_file = null;
-        for($retries = 0; !file_exists($new_file) && $retries < 5; $retries ++)
-        {
+        for ($retries = 0; !file_exists($new_file) && $retries < 5; $retries++) {
             $now->modify("+1 second");
             $time = $now->__get('ts');
-            $new_file = $this->getFileByTimestamp( $time );
+            $new_file = $this->getFileByTimestamp($time);
         }
         // now we have a unique filename, copy the file into the history
-        copy ( $path, $new_file ) ;
- 	    $this->_list [ ] = $time ;
+        if (file_exists($path)) {
+            copy($path, $new_file);
+        }
+        $this->_list [] = $time;
 
         // finally, trim the number of files we're holding in the history to that specified in the configuration
-       // truncate the oldest files, keeping only the most recent $GLOBALS['sugar_config']['studio_max_history'] files (zero=keep them all)
+        // truncate the oldest files, keeping only the most recent $GLOBALS['sugar_config']['studio_max_history'] files (zero=keep them all)
         $to_delete = $this->getCount() - $this->_historyLimit;
-        if ($this->_historyLimit != 0 && $to_delete)
-        {
+        if ($this->_historyLimit != 0 && $to_delete) {
             // most recent files are at the end of the list, so we strip out the first count-max_history records
             // can't just use array_shift because it renumbers numeric keys (our timestamp keys) to start from zero...
-            for ( $i = 0 ; $i < $to_delete ; $i ++ )
-            {
-               $timestamp = array_shift( $this->_list ) ;
-               if (! unlink ( $this->getFileByTimestamp( $timestamp ) ))
-                {
-                    $GLOBALS [ 'log' ]->warn ( "History.php: unable to remove history file {$timestamp} from directory {$this->_dirname} - permissions problem?" ) ;                }
+            for ($i = 0; $i < $to_delete; $i++) {
+                $timestamp = array_shift($this->_list);
+                if (!unlink($this->getFileByTimestamp($timestamp))) {
+                    $GLOBALS ['log']->warn("History.php: unable to remove history file {$timestamp} from directory {$this->_dirname} - permissions problem?");
+                }
             }
         }
 
         // finally, remove any history preview file that might be lurking around - as soon as we append a new record it supercedes any old preview, so that must be removed (bug 20130)
-        if (file_exists($this->_previewFilename))
-        {
-            $GLOBALS [ 'log' ]->debug( get_class($this)."->append(): removing old history file at {$this->_previewFilename}");
-            unlink ( $this->_previewFilename);
+        if (file_exists($this->_previewFilename)) {
+            $GLOBALS ['log']->debug(get_class($this) . "->append(): removing old history file at {$this->_previewFilename}");
+            unlink($this->_previewFilename);
         }
 
-        return $time ;
+        return $time;
     }
 
-    /*
+    /**
      * Restore the historical layout identified by timestamp
-     * @param Unix timestamp $timestamp GMT Timestamp of the layout to recover
-     * @return GMT Timestamp if successful, null if failure (if the file could not be copied for some reason)
+     * @param integer $timestamp Unix timestamp GMT Timestamp of the layout to recover
+     * @return integer GMT Timestamp if successful, null if failure (if the file could not be copied for some reason)
      */
-   public function restoreByTimestamp ($timestamp)
+    public function restoreByTimestamp($timestamp)
     {
-         $filename = $this->getFileByTimestamp( $timestamp );
-        $GLOBALS [ 'log' ]->debug ( get_class ( $this ) . ": restoring from $filename to {$this->_previewFilename}" ) ;
+        $filename = $this->getFileByTimestamp($timestamp);
+        $GLOBALS ['log']->debug(get_class($this) . ": restoring from $filename to {$this->_previewFilename}");
 
-        if (file_exists ( $filename ))
-        {
-            copy ( $filename, $this->_previewFilename ) ;
-            return $timestamp ;
+        if (file_exists($filename)) {
+            copy($filename, $this->_previewFilename);
+
+            return $timestamp;
         }
-        return null ;
+
+        return null;
     }
 
-    /*
+    /**
      * Undo the restore - revert back to the layout before the restore
      */
-    public function undoRestore ()
+    public function undoRestore()
     {
-        if (file_exists ( $this->_previewFilename ))
-        {
-            unlink ( $this->_previewFilename ) ;
+        if (file_exists($this->_previewFilename)) {
+            unlink($this->_previewFilename);
         }
     }
 
     /**
      * Returns full path to history file by timestamp. This function returns file path even if file doesn't exist
-     * @param  $timestamp
+     * @param  integer $timestamp Unix timestamp
      * @return string
      */
     public function getFileByTimestamp($timestamp)
     {
-        return $this->_dirname . DIRECTORY_SEPARATOR . $this->_basename . '_' . $timestamp ;
+        return $this->_dirname . DIRECTORY_SEPARATOR . $this->_basename . '_' . $timestamp;
     }
-
-
 }

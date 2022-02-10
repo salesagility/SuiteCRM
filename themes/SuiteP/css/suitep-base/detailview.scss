@@ -1,0 +1,470 @@
+/**** Detail view ***/
+
+.favorite_icon_fill svg {
+  height: 28px;
+  width: 28px;
+
+}
+
+.favorite_icon_outline svg {
+  height: 28px;
+  width: 28px;
+
+}
+
+.vcard {
+  font-size: inherit;
+  border: none;
+  color: $main-font-color;
+}
+
+.vcard .suitepicon {
+  font-size: 18px;
+}
+
+p.msg {
+	padding:10px;
+}
+
+.moduleTitle .module-title-text {
+  height: auto;
+  line-height: 36px;
+  margin-bottom: $detail-view-module-title-space;
+}
+
+.nav-tabs > li.tab-inline-pagination {
+  float: right;
+  line-height: $tab-height;
+}
+
+.nav-tabs > li.tab-inline-pagination .btn-pagination[disabled],
+.nav-tabs > li.tab-inline-pagination .btn-pagination[disabled]:hover {
+  background-color: $disabled-btn-bg;
+  text-decoration: none;
+  cursor: default;
+}
+
+.btn-pagination .suitepicon {
+  line-height: inherit;
+}
+
+.buttons .pagination .btn-pagination {
+  height: 28px;
+  line-height: 18px;
+  font-size: 10px;
+  padding: 0 10px 0 10px;
+  background-color: $default-btn-bg;
+  font-weight: 600;
+}
+
+.nav-tabs > li.tab-inline-pagination .btn-pagination {
+  background-color: $default-btn-bg;
+  font-size: 10px;
+  font-weight: 600;
+  height: 28px;
+  line-height: 18px;
+  padding: 5px 10px 0 10px;
+  display: inline-block;
+}
+
+.buttons .pagination .btn-pagination:hover {
+  height: 28px;
+  line-height: 18px;
+  font-size: 10px;
+  padding: 0 10px 0 10px;
+  background-color: $default-btn-bg;
+  font-weight: 600;
+}
+
+.nav-tabs > li.tab-inline-pagination .btn-pagination:hover {
+  background-color: $default-btn-bg-hover;
+}
+
+.nav-tabs > li.tab-inline-pagination .glyphicon-chevron-left {
+  margin-right: 4px;
+}
+
+.nav-tabs > li.tab-inline-pagination .glyphicon-chevron-right {
+  margin-left: 4px;
+}
+
+.pagination-range-label {
+  color: $main-font-color;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.mobile-pagination {
+  display: none;
+  line-height: $tab-height;
+  visibility: collapse;
+}
+
+.mobile-pagination .btn-pagination[disabled] {
+  background-color: $disabled-btn-bg;
+}
+
+.mobile-pagination .btn-pagination {
+  background-color: $default-btn-bg;
+  font-size: 10px;
+  font-weight: 600;
+  height: 28px;
+  line-height: 14px;
+  padding: 2px 10px 2px 10px;
+}
+
+.mobile-pagination .btn-pagination:hover {
+  background-color: $default-btn-bg-hover;
+}
+
+.mobile-pagination .glyphicon-chevron-left {
+  margin-right: 0px;
+}
+
+.mobile-pagination .glyphicon-chevron-right {
+  margin-left: 0px;
+}
+
+@media (max-width: 750px) {
+
+  .moduleTitle {
+    display: inline-block;
+    text-align:center;
+    width:100%;
+  }
+
+  .favorite {
+    padding: 0 0;
+    display: inline-block;
+    float: none !important;
+    width: 32px;
+    height: 32px;
+    padding: 0 0;
+    width: 32px;
+  }
+
+  .nav-tabs > li.tab-inline-pagination {
+    display: none;
+    visibility: collapse;
+  }
+
+  .nav-tabs > .mobile-pagination {
+    display: none;
+    visibility: collapse;
+  }
+
+  .mobile-pagination {
+    display: block;
+    visibility: visible;
+  }
+
+  .mobile-pagination > table {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100px;
+  }
+
+  .mobile-pagination .pagination-range-label {
+    font-size: 10px;
+  }
+
+  .moduleTitle .module-title-text {
+    font-size: 18px;
+    float: none;
+    margin-bottom: 0;
+    display: inline-block;
+  }
+
+  .tab-inline-pagination .pagination-range-label {
+    display: none;
+    visibility: hidden;
+  }
+
+  .pointer {
+    font-size: 32px;
+  }
+  .buttons .pagination {
+    visibility: collapse;
+    display: none;
+  }
+}
+
+@media (max-width: 1200px) {
+  .pagination-label {
+    display: none;
+    visibility: collapse;
+  }
+
+  .nav-tabs > li.tab-inline-pagination .glyphicon-chevron-left {
+    margin-right: 0px;
+  }
+
+  .nav-tabs > li.tab-inline-pagination .glyphicon-chevron-right {
+    margin-left: 0px;
+  }
+
+  .mobile-pagination .glyphicon-chevron-left {
+    margin-right: 0px;
+  }
+
+  .mobile-pagination .glyphicon-chevron-right {
+    margin-left: 0px;
+  }
+}
+
+// Remove underline on the icons in activities panel and history panel
+#list_subpanel_activities .evenListRowS1 td:nth-of-type(2) a {
+  border-bottom: none;
+}
+
+#list_subpanel_activities .oddListRowS1 td:nth-of-type(2) a {
+  border-bottom: none;
+}
+
+#subpanel_history .evenListRowS1 td:nth-of-type(2) a {
+  border-bottom: none;
+}
+
+#subpanel_history .oddListRowS1 td:nth-of-type(2) a {
+  border-bottom: none;
+}
+
+// Fix subpanel button
+.subpanel-table .SugarActionMenu .sugar_action_button {
+  /*min-height: 32px;*/
+}
+
+.subpanel-table .SugarActionMenu .single a {
+  min-height: 32px;
+  line-height: 32px;
+}
+
+@media print {
+  .bootstrap-container {
+    margin: 0;
+  }
+
+  .bootstrap-container.col-sm-offset-3 {
+    margin-top: 0;
+  }
+
+
+  .btn {
+    @include hideWhenPrinting();
+  }
+
+  .button {
+    @include hideWhenPrinting();
+  }
+
+  .content {
+    padding: 0;
+  }
+
+  .detail-view-row .label {
+    border: none;
+    display: inline-block;
+    padding: 0;
+  }
+
+  .detail-view-row .detail-view-field {
+    display: inline-block;
+    padding: 0;
+  }
+
+  .detail-view-row {
+    .sugar_field:empty {
+      line-height: 0;
+      height: 0;
+      visibility: collapse;
+      display: none;
+    }
+  }
+
+  .detail-view-row > .col-sm-6 {
+    display: inline-block;
+    width: 50%;
+
+    .col-sm-4 {
+      display: inline-block;
+      width: 40%;
+      line-height: 24px;
+    }
+
+    .col-sm-8 {
+      display: inline-block;
+      width: 50%;
+      line-height: 24px;
+    }
+  }
+
+
+  .detail-view-row [field="description"] {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .detail-view-row [field="description_html"] {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .detail-view-row [field="billing_address_street"] {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .detail-view-row [field="shipping_address_street"] {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .detail-view-row [field="email1"] {
+    display: inline-block;
+    width: 100%;
+  }
+
+
+  .favorite {
+    @include hideWhenPrinting();
+  }
+
+
+  .module-title-text {
+    @include hideWhenPrinting();
+  }
+
+  .nav.nav-tabs {
+    @include hideWhenPrinting();
+  }
+
+  .mobile-pagination {
+    @include hideWhenPrinting();
+  }
+
+  #subpanel_list {
+    @include hideWhenPrinting();
+  }
+
+  .tab-inline-pagination {
+    @include hideWhenPrinting()
+  }
+
+
+  .tab-content > .active.tab-pane-NOBOOTSTRAPTOGGLER {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .tab-content > .fade.tab-pane-NOBOOTSTRAPTOGGLER {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .tab-content > .in.tab-pane-NOBOOTSTRAPTOGGLER {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .tab-content .tab-pane-NOBOOTSTRAPTOGGLER:not(.active) {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  footer {
+    @include hideWhenPrinting()
+  }
+}
+
+
+.email-link {
+    display: block;
+    float: left;
+}
+
+.confirm-opt-in-tick {
+    float: right;
+    padding: 0 10px;
+}
+
+
+.email-opt-in {
+  font-size: 14px;
+}
+
+
+
+.email-opt-in-not-sent {
+  color: $opt-in-tick-color-not-sent;
+}
+
+.email-opt-in-failed {
+  color: $opt-in-tick-color-failed;
+}
+
+.email-opt-in-sent {
+  color: $opt-in-tick-color-sent;
+}
+
+.email-opt-in-confirmed {
+  color: $confirm-opt-in-tick-color-in-confirmed;
+}
+
+.email-line-through {
+  text-decoration: line-through;
+}
+
+// Fix for list view confirm opt in ticks
+.table-responsive.list > tbody > tr > td {
+  .email-opt-in .suitepicon {
+    font-size: $page-font-size;
+  }
+
+  .email-opt-in-not-sent .suitepicon {
+    @extend  .email-opt-in-not-sent;
+  }
+
+  .email-opt-in-failed .suitepicon {
+    @extend  .email-opt-in-failed;
+  }
+
+  .email-opt-in-sent .suitepicon {
+    @extend  .email-opt-in-sent;
+  }
+
+  .email-opt-in-confirmed .suitepicon {
+    @extend  .email-opt-in-confirmed;
+  }
+}
+
+.email-opt-in .suitepicon {
+  line-height: inherit;
+}
+
+
+table.subpanel-table .pagination .action_buttons a:hover,
+table.subpanel-table .pagination .SugarActionMenu li.single a:hover,
+table.subpanel-table .pagination .action_buttons .button:hover {
+  background-color: $list-view-action-menu-bg;
+  color: $list-view-toolbar-bg;
+}
+
+
+table.subpanel-table .pagination li.sugar_action_button {
+  border: 1px solid;
+  border-color: $list-view-action-menu-bg;
+  border-radius: 3px;
+  line-height: initial;
+  height: initial;
+}
+table.subpanel-table .pagination li.sugar_action_button > form > a {
+  font-size: 13px;
+  padding: 2px 13px;
+  line-height: initial;
+  height: initial;
+  min-height: auto;
+}

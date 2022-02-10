@@ -1,0 +1,196 @@
+# Auto detect and handle line endings for all text eol=lf files while leaving binary files untouched.
+# This will handle all files NOT defined below.
+* text=auto
+
+# Linux specific
+*.sh text eol=lf
+*.so binary
+
+# Windows specific
+*.bat text eol=crlf
+*.exe binary
+*.dll binary
+
+# Sources
+*.coffee text eol=lf
+*.css text eol=lf
+*.htm text eol=lf
+*.html text eol=lf
+*.inc text eol=lf
+*.ini text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.jsx text eol=lf
+*.less text eol=lf
+*.od text eol=lf
+*.onlydata text eol=lf
+*.php text eol=lf
+*.pl text eol=lf
+*.py text eol=lf
+*.rb text eol=lf
+*.sass text eol=lf
+*.scm text eol=lf
+*.scss text eol=lf
+*.sql text eol=lf
+*.styl text eol=lf
+*.tag text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.xml text eol=lf
+*.xhtml text eol=lf
+*.lock text eol=lf
+
+# Documentation
+*.markdown text eol=lf
+*.md text eol=lf
+*.mdwn text eol=lf
+*.mdown text eol=lf
+*.mkd text eol=lf
+*.mkdn text eol=lf
+*.mdtxt text eol=lf
+*.mdtext text eol=lf
+*.txt text eol=lf
+AUTHORS text eol=lf
+CHANGELOG text eol=lf
+CHANGES text eol=lf
+CONTRIBUTING text eol=lf
+COPYING text eol=lf
+copyright text eol=lf
+*COPYRIGHT* text eol=lf
+INSTALL text eol=lf
+license text eol=lf
+LICENSE text eol=lf
+NEWS text eol=lf
+readme text eol=lf
+*README* text eol=lf
+TODO text eol=lf
+
+# Templates
+*.dot text eol=lf
+*.ejs text eol=lf
+*.haml text eol=lf
+*.handlebars text eol=lf
+*.hbs text eol=lf
+*.hbt text eol=lf
+*.jade text eol=lf
+*.latte text eol=lf
+*.mustache text eol=lf
+*.njk text eol=lf
+*.phtml text eol=lf
+*.phpt text eol=lf
+*.tmpl text eol=lf
+*.tpl text eol=lf
+*.twig text eol=lf
+
+# Configs
+*.cnf text eol=lf
+*.conf text eol=lf
+*.config text eol=lf
+.browserslistrc text eol=lf
+.editorconfig text eol=lf
+.htaccess text eol=lf
+*.npmignore text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+browserslist text eol=lf
+Makefile text eol=lf
+makefile text eol=lf
+
+# Git
+.gitattributes text eol=lf
+.gitignore text eol=lf
+.gitconfig text eol=lf
+.gitmodules text eol=lf
+
+# Docker
+*.dockerignore text eol=lf
+Dockerfile text eol=lf
+
+# Graphics
+*.ai binary
+*.bmp binary
+*.eps binary
+*.gif binary
+*.ico binary
+*.jng binary
+*.jp2 binary
+*.jpg binary
+*.jpeg binary
+*.jpx binary
+*.jxr binary
+*.pdf binary
+*.png binary
+*.psb binary
+*.psd binary
+*.svg text eol=lf
+*.svgz binary
+*.tif binary
+*.tiff binary
+*.wbmp binary
+*.webp binary
+
+# Audio
+*.kar binary
+*.m4a binary
+*.mid binary
+*.midi binary
+*.mp3 binary
+*.ogg binary
+*.ra binary
+
+# Video
+*.3gpp binary
+*.3gp binary
+*.as binary
+*.asf binary
+*.asx binary
+*.fla binary
+*.flv binary
+*.m4v binary
+*.mng binary
+*.mov binary
+*.mp4 binary
+*.mpeg binary
+*.mpg binary
+*.ogv binary
+*.swc binary
+*.swf binary
+*.webm binary
+
+# Archives
+*.7z binary
+*.gz binary
+*.jar binary
+*.rar binary
+*.tar binary
+*.zip binary
+
+# Fonts
+*.ttf binary
+*.eot binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+
+# Executables
+*.phar binary
+
+# Directories to exclude when creating an archive
+/tests export-ignore
+/build export-ignore
+/.github export-ignore
+
+# Files to exclude when creating an archive
+/.gitmodules export-ignore
+/.gitignore export-ignore
+/php_cs.xml export-ignore
+/codacy.yml export-ignore
+/codeception.dist.yml export-ignore
+/.codecov.yml export-ignore
+/.php_cs.dist export-ignore
+/.travis.yml export-ignore
+travis.php.ini export-ignore
+/.phpcs.xml export-ignore
+/.gitattributes export-ignore
+/custom/modules/unified_search_modules_display.php export-ignore
+/.env.dist export-ignore

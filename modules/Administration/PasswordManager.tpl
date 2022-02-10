@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -148,7 +149,16 @@
 										</tr>
 									</table>
 
-						<table id="userResetPassId" name="userResetPassName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+			<!-- PASSWORD SECURITY SETTINGS -->
+			<table id="pwdsec_table" width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
+				<tr>
+					<td>{include file="modules/Administration/PasswordManagerSecurity.tpl"}</td>
+				</tr>
+			</table>
+			<!-- END PASSWORD SECURITY SETTINGS -->
+
+
+			<table id="userResetPassId" name="userResetPassName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 							<tr>
 								<th align="left" scope="row" colspan="2"><h4>{$MOD.LBL_PASSWORD_USER_RESET}</h4>
 								</th>
@@ -265,11 +275,11 @@
 										<tr>
 									        <td  scope="row" width="35%">{$MOD.LBL_PASSWORD_GENERATE_TEMPLATE_MSG}: </td>
 									        <td  >
-										        <slot>
+										        <span>
 									        		<select tabindex='251' id="generatepasswordtmpl" name="passwordsetting_generatepasswordtmpl" {$IE_DISABLED}>{$TMPL_DRPDWN_GENERATE}</select>
 													<input type="button" class="button" onclick="javascript:open_email_template_form('generatepasswordtmpl')" value="{$MOD.LBL_PASSWORD_CREATE_TEMPLATE}" {$IE_DISABLED}>
 													<input type="button" value="{$MOD.LBL_PASSWORD_EDIT_TEMPLATE}" class="button" onclick="javascript:edit_email_template_form('generatepasswordtmpl')" name='edit_generatepasswordtmpl' id='edit_generatepasswordtmpl' style="{$EDIT_TEMPLATE}">
-												</slot>
+												</span>
 									        </td>
 									        <td ></td>
 									        <td  ></td>
@@ -277,15 +287,37 @@
 										<tr>
 									        <td  scope="row">{$MOD.LBL_PASSWORD_LOST_TEMPLATE_MSG}: </td>
 									        <td  >
-							        			<slot>
+							        			<span>
 									        		<select tabindex='251' id="lostpasswordtmpl" name="passwordsetting_lostpasswordtmpl" {$IE_DISABLED}>{$TMPL_DRPDWN_LOST}</select>
 													<input type="button" class="button" onclick="javascript:open_email_template_form('lostpasswordtmpl')" value="{$MOD.LBL_PASSWORD_CREATE_TEMPLATE}" {$IE_DISABLED}>
 													<input type="button" value="{$MOD.LBL_PASSWORD_EDIT_TEMPLATE}" class="button" onclick="javascript:edit_email_template_form('lostpasswordtmpl')" name='edit_lostpasswordtmpl' id='edit_lostpasswordtmpl' style="{$EDIT_TEMPLATE}">
-												</slot>
+												</span>
 							        		 </td>
 									        <td ></td>
 									        <td ></td>
 										</tr>
+
+
+							<tr>
+								<td  scope="row">{$MOD.LBL_TWO_FACTOR_AUTH_EMAIL_TPL}: </td>
+								<td>
+									<span>
+										<select tabindex='251' id="factoremailtmpl"
+                                                name="passwordsetting_factoremailtmpl" {$IE_DISABLED}>{$TMPL_DRPDWN_FACTOR}</select>
+										<input type="button" class="button"
+                                               onclick="open_email_template_form('factoremailtmpl')"
+                                               value="{$MOD.LBL_PASSWORD_CREATE_TEMPLATE}" {$IE_DISABLED}>
+										<input type="button" value="{$MOD.LBL_PASSWORD_EDIT_TEMPLATE}" class="button"
+                                               onclick="edit_email_template_form('factoremailtmpl')"
+                                               name='edit_factoremailtmpl' id='edit_factoremailtmpl'
+                                               style="{$EDIT_TEMPLATE}">
+									</span>
+                        </td>
+								<td ></td>
+								<td ></td>
+							</tr>
+
+
 									</table>
 
 
@@ -432,7 +464,9 @@
 							</table>
 
 						             <!-- start SAML -->
-						   {if !empty($config.authenticationClass) && $config.authenticationClass == 'SAMLAuthenticate'}
+                            {if !empty($config.authenticationClass)
+                                && ($config.authenticationClass == 'SAMLAuthenticate'
+                                || $config.authenticationClass == 'SAML2Authenticate')}
                            {assign var='saml_enabled_checked' value='CHECKED'}
                            {assign var='saml_display' value='inline'}
                         {else}
@@ -453,7 +487,7 @@
                                     </td><td valign='middle'>
 
                                     <input name="authenticationClass" id="system_saml_enabled" class="checkbox"
-                                       value="SAMLAuthenticate" type="checkbox"
+                                       value="SAML2Authenticate" type="checkbox"
                                        {if $saml_enabled_checked}checked="1"{/if}
                                        onclick='toggleDisplay("saml_display");enableDisablePasswordTable("system_saml_enabled");'>
                                     </td><td>&nbsp;</td><td>&nbsp;</td></tr>
@@ -465,6 +499,11 @@
                                              <td align="left"  valign='middle'><input name="SAML_loginurl" size='35' type="text" value="{$config.SAML_loginurl}"></td>
 
                                           </tr>
+										   <tr>
+											   <td scope="row" valign='middle' nowrap>{$MOD.LBL_SAML_LOGOUT_URL} {sugar_help text=$MOD.LBL_SAML_LOGOUT_URL_DESC}</td>
+											   <td align="left"  valign='middle'><input name="SAML_logouturl" size='35' type="text" value="{$config.SAML_logouturl}"></td>
+
+										   </tr>
                                           <tr>
                                              <td width='25%' scope="row" valign='top' nowrap>{$MOD.LBL_SAML_CERT} {sugar_help text=$MOD.LBL_SAML_CERT_DESC}</td>{$settings.proxy_host}
                                              <td width='25%' align="left"  valign='top'><textarea style='height:200px;width:600px' name="SAML_X509Cert" >{$config.SAML_X509Cert}</textarea></td>
@@ -619,7 +658,7 @@ function refresh_email_template_list(template_id, template_name) {
 		newElement.value=template_id;
 		field.options.add(newElement);
 	} // else
-	-->
+        
 }
 
 function testregex(customregex)

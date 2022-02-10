@@ -1,11 +1,16 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +21,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,96 +39,91 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-
-
-$subpanel_layout = array(
-	'where'				=> "",
-
-
-	'fill_in_additional_fields'	=> true,
-	'list_fields' => array(
-		'object_image'=>array(
-			'widget_class'			=> 'SubPanelIcon',
- 		 	'width'					=> '2%',
-		),
-		'name' => array(
-			 'vname'				=> 'LBL_LIST_SUBJECT',
-			 'widget_class'			=> 'SubPanelDetailViewLink',
-			 'width'				=> '30%',
-             'parent_info'          => true
-		),
-		'status' => array(
-			 'vname'				=> 'LBL_LIST_STATUS',
-			 'width'				=> '15%',
-		),
-		'reply_to_status' => array(
-			 'usage'				=> 'query_only',
-             'force_exists'			=> true,
-			 'force_default'		=> 0,
-		),
-		'contact_name'=>array(
-             'widget_class'         => 'SubPanelDetailViewLink',
-             'target_record_key'    => 'contact_id',
-             'target_module'        => 'Contacts',
-             'module'               => 'Contacts',
-             'vname'                => 'LBL_LIST_CONTACT',
-             'width'                => '11%',
-             'sortable'             => false,
-             'force_exists'			=> true,
-        ),
-        'contact_id'=>array(
-            'usage'=>'query_only',
-    		'force_exists'=>true
-        ),
-        'contact_name_owner'=>array(
-            'usage'=>'query_only',
-            'force_exists'=>true
-        ),
-        'contact_name_mod'=>array(
-            'usage'=>'query_only',
-            'force_exists'=>true
-        ),
-		'parent_id'=>array(
-            'usage'=>'query_only',
-			'force_exists'=>true
-        ),
-		'parent_type'=>array(
-            'usage'=>'query_only',
-			'force_exists'=>true
-        ),
-		'date_modified' => array(
-			'width'					=> '10%',
-		),
-		'date_entered'=>array(
-			'vname' => 'LBL_LIST_DATE_ENTERED',
-			'width' => '10%',
-		),
-		'assigned_user_name' => array (
-			'name' => 'assigned_user_name',
-			'vname' => 'LBL_LIST_ASSIGNED_TO_NAME',
-			'widget_class' => 'SubPanelDetailViewLink',
-		 	'target_record_key' => 'assigned_user_id',
-			'target_module' => 'Employees',
-			'width' => '10%',			
-		),
-		'edit_button' => array(
-			'vname' => 'LBL_EDIT_BUTTON',
-			'widget_class'			=> 'SubPanelEditButton',
-			 'width'				=> '2%',
-		),
-		'remove_button' => array(
-			'vname' => 'LBL_REMOVE',
-			 'widget_class'			=> 'SubPanelRemoveButton',
-			 'width'				=> '2%',
-		),
-		'filename' => array(
-			'usage'					=> 'query_only',
-			'force_exists'			=> true
-		),
-	), // end list_fields
-);
-?>
+$subpanel_layout = [
+    'where' => '',
+    'fill_in_additional_fields' => true,
+    'list_fields' => [
+        'object_image' => [
+            'widget_class' => 'SubPanelIcon',
+            'width' => '2%',
+        ],
+        'name' => [
+            'vname' => 'LBL_LIST_SUBJECT',
+            'widget_class' => 'SubPanelDetailViewLink',
+            'width' => '30%',
+            'parent_info' => true
+        ],
+        'status' => [
+            'vname' => 'LBL_LIST_STATUS',
+            'width' => '15%',
+        ],
+        'reply_to_status' => [
+            'usage' => 'query_only',
+            'force_exists' => true,
+            'force_default' => 0,
+        ],
+        'contact_name' => [
+            'widget_class' => 'SubPanelDetailViewLink',
+            'target_record_key' => 'contact_id',
+            'target_module' => 'Contacts',
+            'module' => 'Contacts',
+            'vname' => 'LBL_LIST_CONTACT',
+            'width' => '11%',
+            'sortable' => false,
+            'force_exists' => true,
+        ],
+        'contact_id' => [
+            'usage' => 'query_only',
+            'force_exists' => true
+        ],
+        'contact_name_owner' => [
+            'usage' => 'query_only',
+            'force_exists' => true
+        ],
+        'contact_name_mod' => [
+            'usage' => 'query_only',
+            'force_exists' => true
+        ],
+        'parent_id' => [
+            'usage' => 'query_only',
+            'force_exists' => true
+        ],
+        'parent_type' => [
+            'usage' => 'query_only',
+            'force_exists' => true
+        ],
+        'date_modified' => [
+            'width' => '10%',
+        ],
+        'date_entered' => [
+            'vname' => 'LBL_LIST_DATE_ENTERED',
+            'width' => '10%',
+        ],
+        'assigned_user_name' => [
+            'name' => 'assigned_user_name',
+            'vname' => 'LBL_LIST_ASSIGNED_TO_NAME',
+            'widget_class' => 'SubPanelDetailViewLink',
+            'target_record_key' => 'assigned_user_id',
+            'target_module' => 'Employees',
+            'width' => '10%',
+        ],
+        'edit_button' => [
+            'vname' => 'LBL_EDIT_BUTTON',
+            'widget_class' => 'SubPanelEditButton',
+            'width' => '2%',
+        ],
+        'remove_button' => [
+            'vname' => 'LBL_REMOVE',
+            'widget_class' => 'SubPanelRemoveButton',
+            'width' => '2%',
+        ],
+        'filename' => [
+            'usage' => 'query_only',
+            'force_exists' => true
+        ],
+    ],
+];

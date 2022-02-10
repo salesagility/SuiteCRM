@@ -24,7 +24,7 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'ISO-88
     switch ($esc_type) {
         case 'html':
             return htmlspecialchars($string, ENT_QUOTES, $char_set);
-
+            
         case 'html_entity_decode':
             return html_entity_decode($string, ENT_QUOTES, $char_set);
 

@@ -3,9 +3,9 @@
 $dictionary['SecurityGroup'] = array(
     'table'=>'securitygroups',
     'audited'=>true,
-    'fields'=>array (
-    'noninheritable' => 
-    array (
+    'fields'=>array(
+    'noninheritable' =>
+    array(
         'name' => 'noninheritable',
         'vname' => 'LBL_NONINHERITABLE',
         'type' => 'bool',
@@ -29,31 +29,31 @@ $dictionary['SecurityGroup'] = array(
     ),
     
     /** related editable fields with Users module */
-    'securitygroup_noninher_fields' => array (
+    'securitygroup_noninher_fields' => array(
         'name' => 'securitygroup_noninher_fields',
         'rname' => 'id',
         'relationship_fields'=>array('id' => 'securitygroup_noninherit_id', 'noninheritable' => 'securitygroup_noninheritable', 'primary_group' => 'securitygroup_primary_group'),
         'vname' => 'LBL_USER_NAME',
         'type' => 'relate',
-        'link' => 'users',         
+        'link' => 'users',
         'link_type' => 'relationship_info',
         'source' => 'non-db',
         'Importable' => false,
         'duplicate_merge'=> 'disabled',
     ),
-    'securitygroup_noninherit_id' => array (
+    'securitygroup_noninherit_id' => array(
         'name' => 'securitygroup_noninherit_id',
         'type' => 'varchar',
         'source' => 'non-db',
         'vname' => 'LBL_securitygroup_noninherit_id',
     ),
-    'securitygroup_noninheritable' => array (
+    'securitygroup_noninheritable' => array(
         'name' => 'securitygroup_noninheritable',
         'type' => 'bool',
         'source' => 'non-db',
         'vname' => 'LBL_SECURITYGROUP_NONINHERITABLE',
     ),
-    'securitygroup_primary_group' => array (
+    'securitygroup_primary_group' => array(
         'name' => 'securitygroup_primary_group',
         'type' => 'bool',
         'source' => 'non-db',
@@ -61,10 +61,9 @@ $dictionary['SecurityGroup'] = array(
     ),
 
 ),
-    'relationships'=>array (
+    'relationships'=>array(
 ),
-    'optimistic_lock'=>true,
+    'optimistic_locking'=>false,
 );
 require_once('include/SugarObjects/VardefManager.php');
-VardefManager::createVardef('SecurityGroups','SecurityGroup', array('basic','assignable'));
-?>
+VardefManager::createVardef('SecurityGroups', 'SecurityGroup', array('basic','assignable'));

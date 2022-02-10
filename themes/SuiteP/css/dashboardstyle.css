@@ -1,0 +1,63 @@
+ul.dashboardTabList {
+	margin:0;
+	padding:0;
+	list-style: none;
+	float:left;
+	width:100%;
+}
+
+ul.dashboardTabList li {position:relative;opacity:0.4;float:left;padding-right:20px;}
+ul.dashboardTabList li#pageNum_0 {border-left:none;}
+ul.dashboardTabList li.active {opacity:1;}
+
+ul.dashboardTabList li a {
+	float:left;
+	color:#196579;
+	font-size:24px;
+	font-weight:300;
+	letter-spacing:2px;
+	text-transform: uppercase;
+}
+
+ul.dashboardTabList li a:hover {text-decoration: none;}
+
+ul.dashboardTabList li span.glyphicon-remove {font-size:12px;position:absolute;top:0;}
+
+ul.dashboardTabList li#pageNum_0 a#pageNum_0_anchor {}
+
+ul.dashboardTabList li#pageNum_0 a#pageNum_0_anchor span {}
+
+
+
+
+ul.dashboardTabList li.addButton {
+	float:right;
+	padding-right:0;
+	opacity:1;
+}
+
+ul.dashboardTabList li.addButton a {
+	background-color:#aa9dcc;
+	color:#fff;
+	font-size:13px;
+	border-radius:3px;
+	height:40px;
+	line-height:40px;
+	letter-spacing:1px;
+	padding:0 20px 0 20px;
+	text-transform: uppercase;
+	display:inline-block;
+	margin:0 0 0 5px;
+	font-weight:normal;
+	letter-spacing:0;
+}
+
+ul.dashboardTabList li.addButton a:hover {background-color:#9589b3;text-decoration: none;} 
+
+
+
+
+
+
+
+

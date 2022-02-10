@@ -105,7 +105,7 @@ SUGAR.quickCompose = function() {
     		var panel_modal = dce_mode ? false : true,
     		    panel_width = '880px',
 			    panel_constrain = dce_mode ? false : true,
-    		    panel_height = dce_mode ? 'auto' : '400px',
+    		    panel_height = dce_mode ? 'auto' : '600px',
     		    panel_shadow = dce_mode ? false : true,
     		    panel_draggable = dce_mode ? false : true,
     		    panel_resize = dce_mode ? false : true,
@@ -136,7 +136,7 @@ SUGAR.quickCompose = function() {
                     handles: ['br'],
                     autoRatio: false,
                     minWidth: 400,
-                    minHeight: 350,
+                    minHeight: 550,
                     status: false
                 });
 
@@ -150,7 +150,7 @@ SUGAR.quickCompose = function() {
                 }, SQ.parentPanel, true);
 			} else {
                 SUGAR.util.doWhen("typeof SE.composeLayout[SE.composeLayout.currentInstanceId] != 'undefined'", function(){
-                    var panelHeight = 400;
+                    var panelHeight = 600;
                     SQ.parentPanel.cfg.setProperty("height", panelHeight + "px");
                     var layout = SE.composeLayout[SE.composeLayout.currentInstanceId];
                     layout.set("height", panelHeight);

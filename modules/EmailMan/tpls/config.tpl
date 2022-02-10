@@ -1,10 +1,11 @@
 <!--
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,13 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-/*********************************************************************************
-
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 -->
 
 <!-- BEGIN: main -->
@@ -81,328 +78,411 @@ function change_state(radiobutton) {
 		</td>
 	</tr>
 </table>
-<table width="100%" border="1" cellspacing="0" cellpadding="0" class="edit view">
-		<tr><th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_EMAIL_OUTBOUND_CONFIGURATION}</h4></th>
-		</tr>
-		<tr>
-			<td align="left" scope="row" colspan="4">
-					{$MOD.LBL_OUTGOING_SECTION_HELP}
-					<br />&nbsp;
-			</td>
-	   </tr>
-		<tr class="{$OUTBOUND_TYPE_CLASS}">
-			<td width="20%" scope="row">{$MOD.LBL_MAIL_SENDTYPE}</td>
-			<td width="30%">
-				<select id="mail_sendtype" name="mail_sendtype" onChange="notify_setrequired(document.ConfigureSettings); SUGAR.user.showHideGmailDefaultLink(this);" tabindex="1">{$mail_sendtype_options}</select>
-			</td>
-			<td scope="row">&nbsp;</td>
-			<td >&nbsp;</td>
-		</tr>
-		<tr>
-            <td width="20%" scope="row">{$MOD.LBL_NOTIFY_FROMNAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
-            <td width="30%" > <input id='notify_fromname' name='notify_fromname' tabindex='1' size='25' maxlength='128' type="text" value="{$notify_fromname}"></td>
-        </tr>
-		<tr>
-		    <td width="20%" scope="row">{$MOD.LBL_NOTIFY_FROMADDRESS} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
-            <td width="30%"><input id='notify_fromaddress' name='notify_fromaddress' tabindex='1' size='25' maxlength='128' type="text" value="{$notify_fromaddress}"></td>
-        </tr>
-		<tr>
-            <td align="left" scope="row" colspan="4">{$MOD.LBL_CHOOSE_EMAIL_PROVIDER}</td>
-        </tr>
-        <tr>
-            <td colspan="4">
-                <div id="smtpButtonGroup" class="yui-buttongroup">
-                    <span id="gmail" class="yui-button yui-radio-button{if $mail_smtptype == 'gmail'} yui-button-checked{/if}">
-                        <span class="first-child">
-                            <button type="button" name="mail_smtptype" value="gmail">
-                                &nbsp;&nbsp;&nbsp;&nbsp;{$APP.LBL_SMTPTYPE_GMAIL}&nbsp;&nbsp;&nbsp;&nbsp;
-                            </button>
-                        </span>
-                    </span>
-                    <span id="yahoomail" class="yui-button yui-radio-button{if $mail_smtptype == 'yahoomail'} yui-button-checked{/if}">
-                        <span class="first-child">
-                            <button type="button" name="mail_smtptype" value="yahoomail">
-                                &nbsp;&nbsp;&nbsp;&nbsp;{$APP.LBL_SMTPTYPE_YAHOO}&nbsp;&nbsp;&nbsp;&nbsp;
-                            </button>
-                        </span>
-                    </span>
-                    <span id="exchange" class="yui-button yui-radio-button{if $mail_smtptype == 'exchange'} yui-button-checked{/if}">
-                        <span class="first-child">
-                            <button type="button" name="mail_smtptype" value="exchange">
-                                &nbsp;&nbsp;&nbsp;&nbsp;{$APP.LBL_SMTPTYPE_EXCHANGE}&nbsp;&nbsp;&nbsp;&nbsp;
-                            </button>
-                        </span>
-                    </span>
-                    <span id="other" class="yui-button yui-radio-button{if $mail_smtptype == 'other' || empty($mail_smtptype)} yui-button-checked{/if}">
-                        <span class="first-child">
-                            <button type="button" name="mail_smtptype" value="other">
-                                &nbsp;&nbsp;&nbsp;&nbsp;{$APP.LBL_SMTPTYPE_OTHER}&nbsp;&nbsp;&nbsp;&nbsp;
-                            </button>
-                        </span>
-                    </span>
-                </div>
-            </td>
-        </tr>
-		<tr>
-			<td colspan="4">
-			     <div id="smtp_settings">
-					<table width="100%" cellpadding="0" cellspacing="0">
-						<tr id="mailsettings1">
-							<td width="20%" scope="row"><span id="mail_smtpserver_label">{$MOD.LBL_MAIL_SMTPSERVER}</span> <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
-							<td width="30%" ><input type="text" id="mail_smtpserver" name="mail_smtpserver" tabindex="1" size="25" maxlength="64" value="{$mail_smtpserver}"></td>
-							<td width="20%" scope="row"><span id="mail_smtpport_label">{$MOD.LBL_MAIL_SMTPPORT}</span> <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
-							<td width="30%" ><input type="text" id="mail_smtpport" name="mail_smtpport" tabindex="1" size="5" maxlength="5" value="{$mail_smtpport}"></td>
-						</tr>
-						<tr id="mailsettings2">
-					        <td scope="row"><span id='mail_smtpauth_req_label'>{$MOD.LBL_MAIL_SMTPAUTH_REQ}</span></td>
-							<td >
-								<input id='mail_smtpauth_req' name='mail_smtpauth_req' type="checkbox" class="checkbox" value="1" tabindex='1'
-								onclick="notify_setrequired(document.ConfigureSettings);" {$mail_smtpauth_req}>
+
+<div id="EditView_tabs">
+	<div class="panel-content">
+		<div class="panel panel-default">
+			<div class="panel-heading ">
+				<a class="" role="button" data-toggle="collapse-edit" aria-expanded="false">
+					<div class="col-xs-10 col-sm-11 col-md-11">
+						{$MOD.LBL_EMAIL_OUTBOUND_CONFIGURATION}
+					</div>
+				</a>
+			</div>
+			<div class="panel-body">
+				<div class="tab-content">
+					<table width="100%" border="1" cellspacing="0" cellpadding="0" class="edit view">
+						<tr>
+							<td align="left" scope="row" colspan="4">
+								{$MOD.LBL_OUTGOING_SECTION_HELP}
+								<br />&nbsp;
 							</td>
-						    <td width="15%" scope="row"><span id="mail_smtpssl_label">{$APP.LBL_EMAIL_SMTP_SSL_OR_TLS}</span></td>
-					        <td width="35%" >
-							<select id="mail_smtpssl" name="mail_smtpssl" tabindex="501" onchange="setDefaultSMTPPort();" >{$MAIL_SSL_OPTIONS}</select>
-					        </td>
 						</tr>
-						<tr id="smtp_auth1">
-                            <td width="20%" scope="row"><span id="mail_smtpuser_label">{$MOD.LBL_MAIL_SMTPUSER}</span> <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
-                            <td width="30%" ><input type="text" id="mail_smtpuser" name="mail_smtpuser" size="25" maxlength="64" value="{$mail_smtpuser}" tabindex='1' ></td>
-                            <td width="20%">&nbsp;</td>
-                            <td width="30%">&nbsp;</td>
-                       </tr>
-                       <tr id="smtp_auth2">
-                            <td width="20%" scope="row"><span id="mail_smtppass_label">{$MOD.LBL_MAIL_SMTPPASS}</span> <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
-                            <td width="30%" >
-                            <input type="password" id="mail_smtppass" name="mail_smtppass" size="25" maxlength="64" tabindex='1'>
-                            <a href="javascript:void(0)" id='mail_smtppass_link' onClick="SUGAR.util.setEmailPasswordEdit('mail_smtppass')" style="display: none">{$APP.LBL_CHANGE_PASSWORD}</a>
+						<tr class="{$OUTBOUND_TYPE_CLASS}">
+							<td width="20%" scope="row">{$MOD.LBL_MAIL_SENDTYPE}</td>
+							<td width="30%">
+								<select id="mail_sendtype" name="mail_sendtype" onChange="notify_setrequired(document.ConfigureSettings); SUGAR.user.showHideGmailDefaultLink(this);" tabindex="1">{$mail_sendtype_options}</select>
+							</td>
+							<td scope="row">&nbsp;</td>
+							<td >&nbsp;</td>
+						</tr>
+						<tr>
+							<td width="20%" scope="row">{$MOD.LBL_NOTIFY_FROMNAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
+							<td width="30%" > <input id='notify_fromname' name='notify_fromname' tabindex='1' size='25' maxlength='128' type="text" value="{$notify_fromname}"></td>
+						</tr>
+						<tr>
+							<td width="20%" scope="row">{$MOD.LBL_NOTIFY_FROMADDRESS} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
+							<td width="30%"><input id='notify_fromaddress' name='notify_fromaddress' tabindex='1' size='25' maxlength='128' type="text" value="{$notify_fromaddress}"></td>
+						</tr>
+						<tr>
+							<td align="left" scope="row" colspan="4">{$MOD.LBL_CHOOSE_EMAIL_PROVIDER}</td>
+						</tr>
+						<tr>
+							<td colspan="4">
+								<div id="smtpButtonGroup" class="yui-buttongroup">
+				<span id="gmail" class="yui-button yui-radio-button{if $mail_smtptype == 'gmail'} yui-button-checked{/if}">
+					<span class="first-child">
+						<button type="button" name="mail_smtptype" value="gmail" class="btn btn-danger">
+							&nbsp;&nbsp;&nbsp;&nbsp;{$APP.LBL_SMTPTYPE_GMAIL}&nbsp;&nbsp;&nbsp;&nbsp;
+						</button>
+					</span>
+				</span>
+									<span id="yahoomail" class="yui-button yui-radio-button{if $mail_smtptype == 'yahoomail'} yui-button-checked{/if}">
+					<span class="first-child">
+						<button type="button" name="mail_smtptype" value="yahoomail" class="btn btn-danger">
+							&nbsp;&nbsp;&nbsp;&nbsp;{$APP.LBL_SMTPTYPE_YAHOO}&nbsp;&nbsp;&nbsp;&nbsp;
+						</button>
+					</span>
+				</span>
+									<span id="exchange" class="yui-button yui-radio-button{if $mail_smtptype == 'exchange'} yui-button-checked{/if}">
+					<span class="first-child">
+						<button type="button" name="mail_smtptype" value="exchange" class="btn btn-danger">
+							&nbsp;&nbsp;&nbsp;&nbsp;{$APP.LBL_SMTPTYPE_EXCHANGE}&nbsp;&nbsp;&nbsp;&nbsp;
+						</button>
+					</span>
+				</span>
+									<span id="other" class="yui-button yui-radio-button{if $mail_smtptype == 'other' || empty($mail_smtptype)} yui-button-checked{/if}">
+					<span class="first-child">
+						<button type="button" name="mail_smtptype" value="other" class="btn btn-danger">
+							&nbsp;&nbsp;&nbsp;&nbsp;{$APP.LBL_SMTPTYPE_OTHER}&nbsp;&nbsp;&nbsp;&nbsp;
+						</button>
+					</span>
+				</span>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="4">
+								<div id="smtp_settings">
+									<table width="100%" cellpadding="0" cellspacing="0">
+										<tr id="mailsettings1">
+											<td width="20%" scope="row"><span id="mail_smtpserver_label">{$MOD.LBL_MAIL_SMTPSERVER}</span> <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
+											<td width="30%" ><input type="text" id="mail_smtpserver" name="mail_smtpserver" tabindex="1" size="25" maxlength="255" value="{$mail_smtpserver}"></td>
+											<td width="20%" scope="row"><span id="mail_smtpport_label">{$MOD.LBL_MAIL_SMTPPORT}</span> <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
+											<td width="30%" ><input type="text" id="mail_smtpport" name="mail_smtpport" tabindex="1" size="5" maxlength="5" value="{$mail_smtpport}"></td>
+										</tr>
+										<tr id="mailsettings2">
+											<td scope="row"><span id='mail_smtpauth_req_label'>{$MOD.LBL_MAIL_SMTPAUTH_REQ}</span></td>
+											<td >
+												<input id='mail_smtpauth_req' name='mail_smtpauth_req' type="checkbox" class="checkbox" value="1" tabindex='1'
+													   onclick="notify_setrequired(document.ConfigureSettings);" {$mail_smtpauth_req}>
+											</td>
+											<td width="15%" scope="row"><span id="mail_smtpssl_label">{$APP.LBL_EMAIL_SMTP_SSL_OR_TLS}</span></td>
+											<td width="35%" >
+												<select id="mail_smtpssl" name="mail_smtpssl" tabindex="501" onchange="setDefaultSMTPPort();" >{$MAIL_SSL_OPTIONS}</select>
+											</td>
+										</tr>
+										<tr id="smtp_auth1">
+											<td width="20%" scope="row"><span id="mail_smtpuser_label">{$MOD.LBL_MAIL_SMTPUSER}</span> <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
+											<td width="30%" ><input type="text" id="mail_smtpuser" name="mail_smtpuser" size="25" maxlength="255" value="{$mail_smtpuser}" tabindex='1' ></td>
+											<td width="20%">&nbsp;</td>
+											<td width="30%">&nbsp;</td>
+										</tr>
+										<tr id="smtp_auth2">
+											<td width="20%" scope="row"><span id="mail_smtppass_label">{$MOD.LBL_MAIL_SMTPPASS}</span> <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
+											<td width="30%" >
+												<input type="password" id="mail_smtppass" name="mail_smtppass" size="25" maxlength="255" tabindex='1'>
+												<a href="javascript:void(0)" id='mail_smtppass_link' onClick="SUGAR.util.setEmailPasswordEdit('mail_smtppass')" style="display: none">{$APP.LBL_CHANGE_PASSWORD}</a>
+											</td>
+											<td width="20%">&nbsp;</td>
+											<td width="30%">&nbsp;</td>
+										</tr>
+										<tr id="mail_allow_user">
+											<td width="20%" scope="row">
+												{$MOD.LBL_ALLOW_DEFAULT_SELECTION}&nbsp;
+												<img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_ALLOW_DEFAULT_SELECTION_HELP}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&themeName={$THEME}&imageName=helpInline.gif">
+											</td>
+											<td width="30%">
+												<input type='hidden' id="notify_allow_default_outbound_hidden_input" name='notify_allow_default_outbound' value='0'>
+												<input id="notify_allow_default_outbound" name='notify_allow_default_outbound' value="2" tabindex='1' class="checkbox" type="checkbox" {$notify_allow_default_outbound_on}>
+											</td>
+										</tr>
+									</table>
+                                                                                        
+                                                                        <table width="100%" cellpadding="0" cellspacing="0">
+                                                                            <tr>
+                                                                                <td width="20%" scope="row">
+                                                                                    {$MOD.LBL_ALLOW_SEND_AS_USER}&nbsp;
+                                                                                    <img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_ALLOW_SEND_AS_USER_DESC}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&themeName={$THEME}&imageName=helpInline.gif">
+                                                                                </td>
+                                                                                <td width="30%">
+                                                                                    <input type='hidden' id="mail_allowusersend_hidden_input" name='mail_allowusersend' value='0'>
+                                                                                    <input id='mail_allowusersend' name='mail_allowusersend' type="checkbox" class="checkbox" value="1" tabindex='1' {$mail_allow_user_send}>
+                                                                                </td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                            </tr>
+                                                                        </table>
+								</div>
+							</td>
+						</tr>
+						<tr><td colspan="4">&nbsp;</tr>
+						<tr>
+							<td width="15%"><input type="button" class="btn btn-info" value="{$APP.LBL_EMAIL_TEST_OUTBOUND_SETTINGS}" onclick="testOutboundSettings();">&nbsp;</td>
+							<td width="15%">&nbsp;</td>
+							<td width="40%">&nbsp;</td>
+							<td width="40%">&nbsp;</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading ">
+				<a class="" role="button" data-toggle="collapse-edit" aria-expanded="false">
+					<div class="col-xs-10 col-sm-11 col-md-11">
+						{$MOD.LBL_NOTIFY_TITLE}
+					</div>
+				</a>
+			</div>
+			<div class="panel-body">
+				<div class="tab-content">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
+						<tr>
+							<td width="20%" scope="row" valign='top'>
+								{$MOD.LBL_NOTIFY_ON}:&nbsp;
+								<img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_NOTIFICATION_ON_DESC}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&themeName={$THEME}&imageName=helpInline.gif">
+							</td>
+							<td width="30%"  valign='top'>
+								<input type='hidden' name='notify_on' value='0'><input name="notify_on" tabindex='1' value="1" class="checkbox" type="checkbox" {$notify_on}>
+							</td>
+							<td scope="row" width="17%"></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td width="20%" scope="row" valign='top'>
+								{$MOD.LBL_EMAIL_WARNING_NOTIFICATIONS}:&nbsp;
+							</td>
+							<td width="30%"  valign='top'>
+								<input type='checkbox' class='checkbox' name='email_warning_notifications' value="1" {$LBL_EMAIL_WARNING_NOTIFICATIONS}>
+							</td>
+						</tr>
+						<tr>
+							<td width="20%" scope="row" valign='top'>
+								{$MOD.LBL_EMAIL_DEFAULT_DELETE_ATTACHMENTS}:&nbsp;
+							</td>
+							<td width="30%"  valign='top'>
+								<input type='checkbox' class='checkbox' name='email_default_delete_attachments' value="1" {$DEFAULT_EMAIL_DELETE_ATTACHMENTS}>
+							</td>
+
+							<td scope="row" width="20%">
+								{$MOD.LBL_NOTIFY_SEND_FROM_ASSIGNING_USER}:
+								<img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_FROM_ADDRESS_HELP}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&themeName={$THEME}&imageName=helpInline.gif">
+							</td>
+							<td width="30%"  valign='top'><input type='hidden' name='notify_send_from_assigning_user' value='0'><input name='notify_send_from_assigning_user' value="2" tabindex='1' class="checkbox" type="checkbox" {$notify_send_from_assigning_user}></td>
+
+						</tr>
+						<tr>
+							<td width="20%" scope="row" valign='top'>
+								{$MOD.LBL_EMAIL_ENABLE_CONFIRM_OPT_IN}:&nbsp;
+							</td>
+							<td width="30%"  valign='top'>
+								<select name="email_enable_confirm_opt_in">{$EMAIL_ENABLE_CONFIRM_OPT_IN}</select>
+							</td>
+
+						</tr>
+                        <tr>
+                            <td width="20%" scope="row" valign='top'>
+                                {$MOD.LBL_EMAIL_ENABLE_SEND_OPT_IN}:&nbsp;
                             </td>
-                            <td width="20%">&nbsp;</td>
-                            <td width="30%">&nbsp;</td>
-                       </tr>
-				 		<tr id="mail_allow_user">
-				 		     <td width="20%" scope="row">
-									{$MOD.LBL_ALLOW_DEFAULT_SELECTION}&nbsp;
-									<img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_ALLOW_DEFAULT_SELECTION_HELP}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&themeName={$THEME}&imageName=helpInline.gif">
+                            <td width="30%"  valign='top'>
+                                <input type='checkbox' name='email_enable_auto_send_opt_in' value="1" {$EMAIL_ENABLE_AUTO_SEND_OPT_IN}>
+                            </td>
+
+                        </tr>
+                        <tr>
+							<td width="20%" scope="row" valign='top'>
+								{$MOD.LBL_EMAIL_CONFIRM_OPT_IN_TEMPLATE_ID}:&nbsp;
 							</td>
-				 		    <td width="30%">
-                                 <input type='hidden' id="notify_allow_default_outbound_hidden_input" name='notify_allow_default_outbound' value='0'>
-							     <input id="notify_allow_default_outbound" name='notify_allow_default_outbound' value="2" tabindex='1' class="checkbox" type="checkbox" {$notify_allow_default_outbound_on}>
+							<td width="30%"  valign='top'>
+								<select name="email_template_id_opt_in">{$EMAIL_OPT_IN_TEMPLATES}</select>
 							</td>
-							<td width="20%">&nbsp;</td>
-							<td width="30%">&nbsp;</td>
-				 		</tr>
-				 	</table>
-				 </div>
-			</td>
-		</tr>
-		<tr><td colspan="4">&nbsp;</tr>
-		<tr>
-		    <td width="15%"><input type="button" class="button" value="{$APP.LBL_EMAIL_TEST_OUTBOUND_SETTINGS}" onclick="testOutboundSettings();">&nbsp;</td>
-		    <td width="15%">&nbsp;</td>
-            <td width="40%">&nbsp;</td>
-		    <td width="40%">&nbsp;</td>
-		</tr>		
-</table>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
-	<tr>
-		<th align="left" scope="row" colspan="4">
-			<h4>{$MOD.LBL_NOTIFY_TITLE}</h4>
-		</th>
-    </tr>
-    <tr>
-    	<td width="20%" scope="row" valign='top'>
-    	   {$MOD.LBL_NOTIFY_ON}:&nbsp;
-        	<img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_NOTIFICATION_ON_DESC}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&themeName={$THEME}&imageName=helpInline.gif">
-    	</td>
-    	<td width="30%"  valign='top'>
-    		<input type='hidden' name='notify_on' value='0'><input name="notify_on" tabindex='1' value="1" class="checkbox" type="checkbox" {$notify_on}>
-    	</td>
-    	<td scope="row" width="17%"></td>
-        <td></td>
-    </tr>
-     <tr>
-    	<td width="20%" scope="row" valign='top'>
-    	   {$MOD.LBL_EMAIL_DEFAULT_DELETE_ATTACHMENTS}:&nbsp;
-    	</td>
-    	<td width="30%"  valign='top'>
-    		<input type='checkbox' name='email_default_delete_attachments' value="1" {$DEFAULT_EMAIL_DELETE_ATTACHMENTS}>
-    	</td>
-    	<td scope="row" width="20%">
-    	   {$MOD.LBL_NOTIFY_SEND_FROM_ASSIGNING_USER}:
-    	   <img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_FROM_ADDRESS_HELP}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&themeName={$THEME}&imageName=helpInline.gif">
-    	</td>
-    	<td width="30%"  valign='top'><input type='hidden' name='notify_send_from_assigning_user' value='0'><input name='notify_send_from_assigning_user' value="2" tabindex='1' class="checkbox" type="checkbox" {$notify_send_from_assigning_user}></td>
-    </tr>
-</table>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
-			<tr>
-				<th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_SECURITY_TITLE}</h4></th>
-			</tr>
-			<tr>
-				<td align="left" scope="row" colspan="4">
-					{$MOD.LBL_SECURITY_DESC}
-				</td>
-			</tr>
-			<tr>
-				<td valign="middle" valign="top" scope="row" colspan="3">
-					{$MOD.LBL_SECURITY_OUTLOOK_DEFAULTS}
-				</td>
-				<td width="10%" NOWRAP valign="top" >
-					<input type="checkbox" value="1" name="set_outlook_defaults" id="set_outlook_defaults" onclick="setOutlookDefaults();">&nbsp;
-					{literal}
-					<script type="text/javascript" language="Javascript">
-					<!--
-						function toggleAllSecurityOptions() {
-							document.getElementById('set_outlook_defaults').checked = false;
 
-							var check = false;
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading ">
+				<a class="" role="button" data-toggle="collapse-edit" aria-expanded="false">
+					<div class="col-xs-10 col-sm-11 col-md-11">
+						{$MOD.LBL_SECURITY_TITLE}
+					</div>
+				</a>
+			</div>
+			<div class="panel-body">
+				<div class="tab-content">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
+						<tr>
+							<td align="left" scope="row" colspan="4">
+								{$MOD.LBL_SECURITY_DESC}
+							</td>
+						</tr>
+						<tr>
+							<td valign="middle" valign="top" scope="row" colspan="3">
+								{$MOD.LBL_SECURITY_OUTLOOK_DEFAULTS}
+							</td>
+							<td width="10%" NOWRAP valign="top" >
+								<input type="checkbox" value="1" name="set_outlook_defaults" id="set_outlook_defaults" onclick="setOutlookDefaults();">&nbsp;
+								{literal}
+									<script type="text/javascript" language="Javascript">
+									  <!--
+									  function toggleAllSecurityOptions() {
+										document.getElementById('set_outlook_defaults').checked = false;
 
-							if(document.getElementById('toggle_all').checked == true) {
-								check = true;
-							}
-							document.getElementById('applet').checked = check;
-							document.getElementById('base').checked = check;
-							document.getElementById('embed').checked = check;
-							document.getElementById('form').checked = check;
-							document.getElementById('frame').checked = check;
-							document.getElementById('frameset').checked = check;
-							document.getElementById('iframe').checked = check;
-							document.getElementById('import').checked = check;
-							document.getElementById('layer').checked = check;
-							document.getElementById('link').checked = check;
-							document.getElementById('object').checked = check;
-							document.getElementById('style').checked = check;
-							document.getElementById('xmp').checked = check;
-						}
+										var check = false;
 
-						function setOutlookDefaults() {
-							document.getElementById('toggle_all').checked = false;
+										if(document.getElementById('toggle_all').checked == true) {
+										  check = true;
+										}
+										document.getElementById('applet').checked = check;
+										document.getElementById('base').checked = check;
+										document.getElementById('embed').checked = check;
+										document.getElementById('form').checked = check;
+										document.getElementById('frame').checked = check;
+										document.getElementById('frameset').checked = check;
+										document.getElementById('iframe').checked = check;
+										document.getElementById('import').checked = check;
+										document.getElementById('layer').checked = check;
+										document.getElementById('link').checked = check;
+										document.getElementById('object').checked = check;
+										document.getElementById('style').checked = check;
+										document.getElementById('xmp').checked = check;
+									  }
 
-							document.getElementById('applet').checked = true;
-							document.getElementById('base').checked = true;
-							document.getElementById('embed').checked = true;
-							document.getElementById('form').checked = true;
-							document.getElementById('frame').checked = true;
-							document.getElementById('frameset').checked = true;
-							document.getElementById('iframe').checked = true;
-							document.getElementById('import').checked = true;
-							document.getElementById('layer').checked = true;
-							document.getElementById('link').checked = true;
-							document.getElementById('object').checked = true;
-							document.getElementById('style').checked = false;
-							document.getElementById('xmp').checked = true;
-						}
-                    -->
-					</script>
-					{/literal}
-				</td>
-			</tr>
-			<tr>
-				<td valign="middle" valign="top" scope="row" colspan="3">
-					{$MOD.LBL_SECURITY_TOGGLE_ALL}
-				</td>
-				<td width="10%" NOWRAP valign="top" >
-					<input type="checkbox" value="1" name="toggle_all" id="toggle_all" onclick="toggleAllSecurityOptions();">&nbsp;
-				</td>
-			</tr>
-			<tr>
-				<td width="10%" valign="middle" scope="row">
-					{$MOD.LBL_SECURITY_APPLET}
-				</td>
-				<td width="40%" NOWRAP valign="middle" >
-					<input type="checkbox" value="1" name="applet" id="applet" {$appletChecked}>&nbsp; &lt;applet&gt;
-				</td>
-				<td width="10%" valign="middle" scope="row">
-					{$MOD.LBL_SECURITY_BASE}
-				</td>
-				<td width="40%" NOWRAP valign="middle" >
-					<input type="checkbox" value="1" name="base" id="base" {$baseChecked}>&nbsp; &lt;base&gt;
-				</td>
-			</tr>
-			<tr>
-				<td width="10%" valign="middle" scope="row">
-					{$MOD.LBL_SECURITY_EMBED}
-				</td>
-				<td width="40%" NOWRAP valign="middle" >
-					<input type="checkbox" value="1" name="embed" id="embed" {$embedChecked}>&nbsp; &lt;embed&gt;
-				</td>
-				<td width="10%" valign="middle" scope="row">
-					{$MOD.LBL_SECURITY_FORM}
-				</td>
-				<td width="40%" NOWRAP valign="middle" >
-					<input type="checkbox" value="1" name="form" id="form" {$formChecked}>&nbsp; &lt;form&gt;
-				</td>
-			</tr>
-			<tr>
-				<td width="10%" valign="middle" scope="row">
-					{$MOD.LBL_SECURITY_FRAME}
-				</td>
-				<td width="40%" NOWRAP valign="middle" >
-					<input type="checkbox" value="1" name="frame" id="frame" {$frameChecked}>&nbsp; &lt;frame&gt;
-				</td>
-				<td width="10%" valign="middle" scope="row">
-					{$MOD.LBL_SECURITY_FRAMESET}
-				</td>
-				<td width="40%" NOWRAP valign="middle" >
-					<input type="checkbox" value="1" name="frameset" id="frameset" {$framesetChecked}>&nbsp; &lt;frameset&gt;
-				</td>
-			</tr>
-			<tr>
-				<td width="10%" valign="middle" scope="row">
-					{$MOD.LBL_SECURITY_IFRAME}
-				</td>
-				<td width="40%" NOWRAP valign="middle" >
-					<input type="checkbox" value="1" name="iframe" id="iframe" {$iframeChecked}>&nbsp; &lt;iframe&gt;
-				</td>
-				<td width="10%" valign="middle" scope="row">
-					{$MOD.LBL_SECURITY_IMPORT}
-				</td>
-				<td width="40%" NOWRAP valign="middle" >
-					<input type="checkbox" value="1" name="import" id="import" {$importChecked}>&nbsp; &lt;import&gt;
-				</td>
-			</tr>
-			<tr>
-				<td width="10%" valign="middle" scope="row">
-					{$MOD.LBL_SECURITY_LAYER}
-				</td>
-				<td width="40%" NOWRAP valign="middle" >
-					<input type="checkbox" value="1" name="layer" id="layer" {$layerChecked}>&nbsp; &lt;layer&gt;
-				</td>
-				<td width="10%" valign="middle" scope="row">
-					{$MOD.LBL_SECURITY_LINK}
-				</td>
-				<td width="40%" NOWRAP valign="middle" >
-					<input type="checkbox" value="1" name="link" id="link" {$linkChecked}>&nbsp; &lt;link&gt;
-				</td>
-			</tr>
-			<tr>
-				<td width="10%" valign="middle" scope="row">
-					{$MOD.LBL_SECURITY_OBJECT}
-				</td>
-				<td width="40%" NOWRAP valign="middle" >
-					<input type="checkbox" value="1" name="object" id="object" {$objectChecked}>&nbsp; &lt;object&gt;
-				</td>
-				<td width="10%" valign="middle" scope="row">
-					{$MOD.LBL_SECURITY_STYLE}
-				</td>
-				<td width="40%" NOWRAP valign="middle" >
-					<input type="checkbox" value="1" name="style" id="style" {$styleChecked}>&nbsp; &lt;style&gt;
-				</td>
-			</tr>
-			<tr>
-				<td width="10%" valign="middle" scope="row">
-					{$MOD.LBL_SECURITY_XMP}
-				</td>
-				<td width="40%" NOWRAP valign="middle" >
-					<input type="checkbox" value="1" name="xmp" id="xmp" {$xmpChecked}>&nbsp; &lt;xmp&gt;
-				</td>
-				<td scope="row">&nbsp;</td>
-				<td>&nbsp;</td>
-		</tr>
-</table>
-</td>
-</tr>
-</table>
+									  function setOutlookDefaults() {
+										document.getElementById('toggle_all').checked = false;
+
+										document.getElementById('applet').checked = true;
+										document.getElementById('base').checked = true;
+										document.getElementById('embed').checked = true;
+										document.getElementById('form').checked = true;
+										document.getElementById('frame').checked = true;
+										document.getElementById('frameset').checked = true;
+										document.getElementById('iframe').checked = true;
+										document.getElementById('import').checked = true;
+										document.getElementById('layer').checked = true;
+										document.getElementById('link').checked = true;
+										document.getElementById('object').checked = true;
+										document.getElementById('style').checked = false;
+										document.getElementById('xmp').checked = true;
+									  }
+									  -->
+									</script>
+								{/literal}
+							</td>
+						</tr>
+						<tr>
+							<td valign="middle" valign="top" scope="row" colspan="3">
+								{$MOD.LBL_SECURITY_TOGGLE_ALL}
+							</td>
+							<td width="10%" NOWRAP valign="top" >
+								<input type="checkbox" value="1" name="toggle_all" id="toggle_all" onclick="toggleAllSecurityOptions();">&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<td width="10%" valign="middle" scope="row">
+								{$MOD.LBL_SECURITY_APPLET}
+							</td>
+							<td width="40%" NOWRAP valign="middle" >
+								<input type="checkbox" value="1" name="applet" id="applet" {$appletChecked}>&nbsp; &lt;applet&gt;
+							</td>
+							<td width="10%" valign="middle" scope="row">
+								{$MOD.LBL_SECURITY_BASE}
+							</td>
+							<td width="40%" NOWRAP valign="middle" >
+								<input type="checkbox" value="1" name="base" id="base" {$baseChecked}>&nbsp; &lt;base&gt;
+							</td>
+						</tr>
+						<tr>
+							<td width="10%" valign="middle" scope="row">
+								{$MOD.LBL_SECURITY_EMBED}
+							</td>
+							<td width="40%" NOWRAP valign="middle" >
+								<input type="checkbox" value="1" name="embed" id="embed" {$embedChecked}>&nbsp; &lt;embed&gt;
+							</td>
+							<td width="10%" valign="middle" scope="row">
+								{$MOD.LBL_SECURITY_FORM}
+							</td>
+							<td width="40%" NOWRAP valign="middle" >
+								<input type="checkbox" value="1" name="form" id="form" {$formChecked}>&nbsp; &lt;form&gt;
+							</td>
+						</tr>
+						<tr>
+							<td width="10%" valign="middle" scope="row">
+								{$MOD.LBL_SECURITY_FRAME}
+							</td>
+							<td width="40%" NOWRAP valign="middle" >
+								<input type="checkbox" value="1" name="frame" id="frame" {$frameChecked}>&nbsp; &lt;frame&gt;
+							</td>
+							<td width="10%" valign="middle" scope="row">
+								{$MOD.LBL_SECURITY_FRAMESET}
+							</td>
+							<td width="40%" NOWRAP valign="middle" >
+								<input type="checkbox" value="1" name="frameset" id="frameset" {$framesetChecked}>&nbsp; &lt;frameset&gt;
+							</td>
+						</tr>
+						<tr>
+							<td width="10%" valign="middle" scope="row">
+								{$MOD.LBL_SECURITY_IFRAME}
+							</td>
+							<td width="40%" NOWRAP valign="middle" >
+								<input type="checkbox" value="1" name="iframe" id="iframe" {$iframeChecked}>&nbsp; &lt;iframe&gt;
+							</td>
+							<td width="10%" valign="middle" scope="row">
+								{$MOD.LBL_SECURITY_IMPORT}
+							</td>
+							<td width="40%" NOWRAP valign="middle" >
+								<input type="checkbox" value="1" name="import" id="import" {$importChecked}>&nbsp; &lt;import&gt;
+							</td>
+						</tr>
+						<tr>
+							<td width="10%" valign="middle" scope="row">
+								{$MOD.LBL_SECURITY_LAYER}
+							</td>
+							<td width="40%" NOWRAP valign="middle" >
+								<input type="checkbox" value="1" name="layer" id="layer" {$layerChecked}>&nbsp; &lt;layer&gt;
+							</td>
+							<td width="10%" valign="middle" scope="row">
+								{$MOD.LBL_SECURITY_LINK}
+							</td>
+							<td width="40%" NOWRAP valign="middle" >
+								<input type="checkbox" value="1" name="link" id="link" {$linkChecked}>&nbsp; &lt;link&gt;
+							</td>
+						</tr>
+						<tr>
+							<td width="10%" valign="middle" scope="row">
+								{$MOD.LBL_SECURITY_OBJECT}
+							</td>
+							<td width="40%" NOWRAP valign="middle" >
+								<input type="checkbox" value="1" name="object" id="object" {$objectChecked}>&nbsp; &lt;object&gt;
+							</td>
+							<td width="10%" valign="middle" scope="row">
+								{$MOD.LBL_SECURITY_STYLE}
+							</td>
+							<td width="40%" NOWRAP valign="middle" >
+								<input type="checkbox" value="1" name="style" id="style" {if isset($styleChecked)}{$styleChecked}{else}{log msg="styleChecked is not set"}{/if}>&nbsp; &lt;style&gt;
+							</td>
+						</tr>
+						<tr>
+							<td width="10%" valign="middle" scope="row">
+								{$MOD.LBL_SECURITY_XMP}
+							</td>
+							<td width="40%" NOWRAP valign="middle" >
+								<input type="checkbox" value="1" name="xmp" id="xmp" {$xmpChecked}>&nbsp; &lt;xmp&gt;
+							</td>
+							<td scope="row">&nbsp;</td>
+							<td>&nbsp;</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <div id="testOutboundDialog" class="yui-hidden">
     <div id="testOutbound">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">

@@ -2,7 +2,7 @@
 Copyright (c) 2011, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
 http://developer.yahoo.com/yui/license.html
-version: 2.9.0
+version: 2.9.1
 */
 (function() {
 var Dom = YAHOO.util.Dom,
@@ -7218,85 +7218,85 @@ var Dom = YAHOO.util.Dom,
 */
 /**
 * @event editorMouseUp
-* @param {Event} ev The DOM Event that occured
+* @param {Event} ev The DOM Event that occurred
 * @description Passed through HTML Event. See <a href="YAHOO.util.Element.html#addListener">Element.addListener</a> for more information on listening for this event.
 * @type YAHOO.util.CustomEvent
 */
 /**
 * @event editorMouseDown
-* @param {Event} ev The DOM Event that occured
+* @param {Event} ev The DOM Event that occurred
 * @description Passed through HTML Event. See <a href="YAHOO.util.Element.html#addListener">Element.addListener</a> for more information on listening for this event.
 * @type YAHOO.util.CustomEvent
 */
 /**
 * @event editorDoubleClick
-* @param {Event} ev The DOM Event that occured
+* @param {Event} ev The DOM Event that occurred
 * @description Passed through HTML Event. See <a href="YAHOO.util.Element.html#addListener">Element.addListener</a> for more information on listening for this event.
 * @type YAHOO.util.CustomEvent
 */
 /**
 * @event editorClick
-* @param {Event} ev The DOM Event that occured
+* @param {Event} ev The DOM Event that occurred
 * @description Passed through HTML Event. See <a href="YAHOO.util.Element.html#addListener">Element.addListener</a> for more information on listening for this event.
 * @type YAHOO.util.CustomEvent
 */
 /**
 * @event editorKeyUp
-* @param {Event} ev The DOM Event that occured
+* @param {Event} ev The DOM Event that occurred
 * @description Passed through HTML Event. See <a href="YAHOO.util.Element.html#addListener">Element.addListener</a> for more information on listening for this event.
 * @type YAHOO.util.CustomEvent
 */
 /**
 * @event editorKeyPress
-* @param {Event} ev The DOM Event that occured
+* @param {Event} ev The DOM Event that occurred
 * @description Passed through HTML Event. See <a href="YAHOO.util.Element.html#addListener">Element.addListener</a> for more information on listening for this event.
 * @type YAHOO.util.CustomEvent
 */
 /**
 * @event editorKeyDown
-* @param {Event} ev The DOM Event that occured
+* @param {Event} ev The DOM Event that occurred
 * @description Passed through HTML Event. See <a href="YAHOO.util.Element.html#addListener">Element.addListener</a> for more information on listening for this event.
 * @type YAHOO.util.CustomEvent
 */
 /**
 * @event beforeEditorMouseUp
-* @param {Event} ev The DOM Event that occured
+* @param {Event} ev The DOM Event that occurred
 * @description Fires before editor event, returning false will stop the internal processing.
 * @type YAHOO.util.CustomEvent
 */
 /**
 * @event beforeEditorMouseDown
-* @param {Event} ev The DOM Event that occured
+* @param {Event} ev The DOM Event that occurred
 * @description Fires before editor event, returning false will stop the internal processing.
 * @type YAHOO.util.CustomEvent
 */
 /**
 * @event beforeEditorDoubleClick
-* @param {Event} ev The DOM Event that occured
+* @param {Event} ev The DOM Event that occurred
 * @description Fires before editor event, returning false will stop the internal processing.
 * @type YAHOO.util.CustomEvent
 */
 /**
 * @event beforeEditorClick
-* @param {Event} ev The DOM Event that occured
+* @param {Event} ev The DOM Event that occurred
 * @description Fires before editor event, returning false will stop the internal processing.
 * @type YAHOO.util.CustomEvent
 */
 /**
 * @event beforeEditorKeyUp
-* @param {Event} ev The DOM Event that occured
+* @param {Event} ev The DOM Event that occurred
 * @description Fires before editor event, returning false will stop the internal processing.
 * @type YAHOO.util.CustomEvent
 */
 /**
 * @event beforeEditorKeyPress
-* @param {Event} ev The DOM Event that occured
+* @param {Event} ev The DOM Event that occurred
 * @description Fires before editor event, returning false will stop the internal processing.
 * @type YAHOO.util.CustomEvent
 */
 /**
 * @event beforeEditorKeyDown
-* @param {Event} ev The DOM Event that occured
+* @param {Event} ev The DOM Event that occurred
 * @description Fires before editor event, returning false will stop the internal processing.
 * @type YAHOO.util.CustomEvent
 */
@@ -7407,4 +7407,4 @@ YAHOO.widget.EditorInfo = {
 
     
 })();
-YAHOO.register("simpleeditor", YAHOO.widget.SimpleEditor, {version: "2.9.0", build: "2800"});
+YAHOO.register("simpleeditor", YAHOO.widget.SimpleEditor, {version: "2.9.1", build: "2800"});

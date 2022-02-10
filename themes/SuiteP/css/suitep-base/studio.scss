@@ -1,0 +1,266 @@
+/**** Studio ***/
+
+#layoutEditor img {
+
+}
+
+#delete img {
+  width: 32px;
+  height: 32px;
+}
+
+#exportcustom h3 {
+  font-size: $page-font-size + 1px;
+  font-weight: bold;
+  padding-left: 0px;
+  margin: 3px;
+}
+
+#layoutEditor h4 {
+  font-size: $page-font-size + 1px;
+  font-weight: bold;
+  padding-left: 0px;
+  margin: 3px;
+}
+
+#layoutEditor h3 {
+  font-size: $page-font-size + 1px;
+  font-weight: bold;
+  padding-left: 0px;
+  margin: 3px;
+}
+
+#layoutEditor h2 {
+  font-size: $page-font-size + 1px;
+  font-weight: bold;
+  padding-left: 0px;
+  margin: 3px;
+}
+
+#layoutEditor h1 {
+  font-size: $page-font-size + 1px;
+  font-weight: bold;
+  padding-left: 0px;
+  margin: 3px;
+}
+
+.panel_name {
+  font-size: $page-font-size + 1px;
+  font-weight: bold;
+  padding-left: 0px;
+  margin: 3px;
+}
+
+.panel_name {
+  font-weight: bold;
+  color: #565656;
+  margin: 5px;
+  float: left;
+}
+
+#toolbox {
+  background: $main-alternate-bg;
+  padding: 5px;
+  border: 1px solid $panel-default-border;
+  border-radius: $border-radius-base;
+  float: left;
+  overflow-y: scroll;
+  width: 192px;
+}
+
+#panels {
+  position: absolute;
+  padding: 5px;
+  margin-left: 200px;
+  border: 1px solid $panel-default-border;
+  border-radius: $border-radius-base;
+  float: right;
+  width: 100%;
+
+}
+
+.le_panel {
+  background: $default-tab-bg;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+}
+
+.le_row {
+  background: $default-btn-bg;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+  //background: $main-bg;
+}
+
+
+#toolbox .special:nth-of-type(2) {
+  background: $default-btn-bg;
+  color: $default-btn-color;
+  padding: 5px;
+  margin: 2px 3px;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+  float: left;
+  overflow: hidden;
+  width: 150px;
+}
+
+
+
+#toolbox .special:nth-of-type(3) {
+  background: $default-tab-bg;
+  color: $default-btn-color;
+  padding: 5px;
+  margin: 2px 3px;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+  float: left;
+  overflow: hidden;
+  width: 150px;
+}
+
+
+#layoutEditor .le_panel {
+  padding: 5px 15px 15px 15px;
+  margin: 2px 2px 10px 2px;
+}
+
+#layoutEditor .le_panel .le_row {
+  padding: 5px 0px 5px 15px;
+  margin: 5px 5px;
+  clear: both;
+}
+
+#panels > .le_panel > .le_row {
+  line-height: 48px;
+  height: 48px;
+}
+
+#panels > .le_panel > .le_row > .le_field {
+  line-height: 18px;
+}
+
+#panels > .le_panel > .panel_label {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#panels span {
+  margin-bottom: 5px;
+}
+
+body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
+  display: none;
+}
+
+#toolbox .le_row,
+.le_field {
+  padding: 5px;
+  margin: 2px 3px;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+  float: left;
+  overflow: hidden;
+  width: 150px;
+}
+
+.le_field {
+  background: $main-bg;
+}
+
+#toolbox .le_panel img, #toolbox .le_row img, .le_field img {
+  margin: 0;
+}
+
+#delete {
+  background: $danger;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  margin: 5px;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+  width: 150px;
+}
+
+#delete span {
+  color: $default-btn-color;
+}
+#panels .le_row .le_field, #availablefields .le_field, #layoutPreview .le_row .le_field {
+  display: block;
+}
+
+.le_row .le_field {
+  display: none;
+}
+
+.field_tabindex, .field_label, .field_name, .panel_id {
+  display: none;
+}
+
+#availablefields .le_field {
+  clear: both;
+}
+
+#availablefields {
+  margin-top: 20px;
+}
+
+#layoutEditorButtons div {
+  float: left;
+}
+
+.le_edit {
+  cursor: pointer;
+  float: right;
+}
+
+.deleteme {
+  font-weight: normal;
+}
+
+#delete {
+  text-align: center;
+}
+
+#exportcustom > table > tbody > tr > .mbLBL {
+  line-height: $input-line-height;
+}
+
+#popup_form_id > table > tbody > tr > .mbLBL
+
+
+.relform td {
+  padding-bottom: 8px;
+  padding-left: 8px;
+}
+
+#editlabels td {
+  padding-bottom: 8px;
+  padding-left: 8px;
+}
+#exportcustom > table > tbody > tr > td {
+  padding-bottom: 8px;
+  padding-left: 8px;
+}
+#popup_form_id > table > tbody > tr > td {
+  padding-bottom: 8px;
+  padding-left: 8px;
+}
+
+// icons
+.studiolink .suitepicon,
+#package_modules .suitepicon,
+#factory-module .suitepicon {
+  display: inline-block;
+  font-size: 22px;
+  padding: 6px 0;
+}
+
+#factory-module td table {
+  margin: 0 7px;
+  border: 1px solid transparent;
+}
+
+#factory-module table.wizardButtonDown {
+  border: 1px solid $color-46;
+}

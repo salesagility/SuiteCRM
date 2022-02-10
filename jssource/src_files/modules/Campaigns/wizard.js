@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -451,8 +452,8 @@ var onEmailTemplateChange = function(elem, namePrefixCopyOf, templateIdDefault, 
                 //document.getElementById("html_frame").contentWindow.document.close();
 
                 var htmlCode = $('<textarea />').html(results.data.body_html).text();
-                $('#email_template_editor').html(htmlCode);
-                $('#email_template_editor').mozaik(window.mozaikSettings.email_template_editor);
+
+                SuiteEditor.apply(htmlCode);
 
                 $('#template_id').val(results.data.id);
                 $('input[name="update_exists_template"]').prop('checked', true);
@@ -498,6 +499,10 @@ var onSendAsTestClick = function(e, campaignId, marketingId) {
     $('#show_wizard_summary').val('1');
     $('#sendMarketingEmailSchedule').val('0');
     $('#sendMarketingEmailTest').val('1');
+    if ($('#wizform input[name="marketing_id"]').length == 0) {
+      $('#wizform').append('<input type="hidden" name="marketing_id">');
+    }
+    $('#wizform input[name="marketing_id"]').val(marketingId);
     $('#wizform').submit();
 };
 

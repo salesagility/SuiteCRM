@@ -1,12 +1,15 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -17,7 +20,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -35,40 +38,31 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 require_once("include/templates/Template.php");
 
-class TemplateDragDropChooser extends Template {
-    var $args;
-    function __construct() {
+class TemplateDragDropChooser extends Template
+{
+    public $args;
+    public function __construct()
+    {
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+
+
+
+    /*
+     * This function creates the html and uses the args parameter to call the class file
+     * ideally, you would want to call the displayScriptTags() function,
+     * followed by the displayDefinitionScript();
+     * and lastly call the display function
      */
-    function TemplateDragDropChooser(){
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
-
-
-/*
- * This function creates the html and uses the args parameter to call the class file
- * ideally, you would want to call the displayScriptTags() function,
- * followed by the displayDefinitionScript();
- * and lastly call the display function
- */
-    function display(){
+    public function display()
+    {
 
   /*   valid entries for expected arguments array are as follow:
    *   args['left_header'] = value of left table header
@@ -93,15 +87,16 @@ class TemplateDragDropChooser extends Template {
 
 
         //convert values for gridcount in case they are in string form
-        if($this->args['gridcount'] == 'one'){
+        if ($this->args['gridcount'] == 'one') {
             $this->args['gridcount'] = 0;
-        }elseif($this->args['gridcount'] == 'two'){
+        } elseif ($this->args['gridcount'] == 'two') {
             $this->args['gridcount'] = 1;
-        }elseif(
-            $this->args['gridcount'] == 'three'){$this->args['gridcount'] = 2;
+        } elseif (
+            $this->args['gridcount'] == 'three') {
+            $this->args['gridcount'] = 2;
         }
 
-        if(!isset($this->args['classname']) || empty($this->args['classname'])){
+        if (!isset($this->args['classname']) || empty($this->args['classname'])) {
             $this->args['classname'] = 'DragDropGrid';
         }
         $json = getJSONobj();
@@ -112,15 +107,15 @@ class TemplateDragDropChooser extends Template {
         $left_div_name = $this->args['left_div_name'];
 
         //if count is set to 1, then we are displaying two columns, set the 2 column variables
-        if($this->args['gridcount']==1){
-        	$this->args['right_data'][] = array(' ', ' ');
+        if ($this->args['gridcount']==1) {
+            $this->args['right_data'][] = array(' ', ' ');
             $data1_enc = $json->encode($this->args['right_data']);
             $right_div_name = $this->args['right_div_name'];
         }
 
         //if count is set to 2, then we are displaying three columns, set the 3 column variables
-        if($this->args['gridcount']==2){
-        	$this->args['mid_data'][] = array(' ', ' ');
+        if ($this->args['gridcount']==2) {
+            $this->args['mid_data'][] = array(' ', ' ');
             $data1_enc = $json->encode($this->args['mid_data']);
             $mid_div_name = $this->args['mid_div_name'];
             $this->args['right_data'][] = array(' ', ' ');
@@ -129,40 +124,44 @@ class TemplateDragDropChooser extends Template {
         }
         $html_str_arr = array();
         //create the table, with the divs that will get populated.  Populate both the string and array version
-         $html_str  =   "<div id='" . $this->args['classname'] . "'><table  align='left'  width='180px' border='1' cellspacing='0' cellpadding='0'>";
-         $html_str_arr['begin'] = $html_str;
-         $html_str .=   "<tr><td width='180px' class='tabDetailViewDF'><div id='$left_div_name' class='ygrid-mso' style='width:180px;height:270px;overflow:hidden;'> </div></td>";
-         $html_str_arr['left'] = "<tr><td width='180px' class='tabDetailViewDF'><div id='$left_div_name' class='ygrid-mso' style='width:180px;height:270px;overflow:hidden;'> </div></td>";
+        $html_str  =   "<div id='" . $this->args['classname'] . "'><table  align='left'  width='180px' border='1' cellspacing='0' cellpadding='0'>";
+        $html_str_arr['begin'] = $html_str;
+        $html_str .=   "<tr><td width='180px' class='tabDetailViewDF'><div id='$left_div_name' class='ygrid-mso' style='width:180px;height:270px;overflow:hidden;'> </div></td>";
+        $html_str_arr['left'] = "<tr><td width='180px' class='tabDetailViewDF'><div id='$left_div_name' class='ygrid-mso' style='width:180px;height:270px;overflow:hidden;'> </div></td>";
         //set the middle column only if we are displaying 3 columns
-         if($this->args['gridcount']==2){
+        if ($this->args['gridcount']==2) {
             $html_str .=   "<td width='180px' class='tabDetailViewDF'><div id='$mid_div_name' class='ygrid-mso' style='width:180px;height:270px;overflow:hidden;'> </div></td>";
             $html_str_arr['middle'] = "<td width='180px' class='tabDetailViewDF'><div id='$mid_div_name' class='ygrid-mso' style='width:180px;height:270px;overflow:hidden;'> </div></td>";
-         }
-         //set the right column if we are not in 1 column only mode
-         if($this->args['gridcount']>0){
+        }
+        //set the right column if we are not in 1 column only mode
+        if ($this->args['gridcount']>0) {
             $html_str .=   "<td width='180px' class='tabDetailViewDF'><div id='$right_div_name' class='ygrid-mso' style='width:180px;height:270px;overflow:hidden;'> </div></td>";
             $html_str_arr['right'] = "<td width='180px' class='tabDetailViewDF'><div id='$right_div_name' class='ygrid-mso' style='width:180px;height:270px;overflow:hidden;'> </div></td>";
-         }
-         $html_str .=   "</tr></table></div>";
-         $html_str_arr['end'] = "</tr></table></div>";
+        }
+        $html_str .=   "</tr></table></div>";
+        $html_str_arr['end'] = "</tr></table></div>";
 
         //create the needed javascript to set the values and invoke listener
         $j_str = "<script> ";
         $j_str .= $this->args['classname'] . ".rows0 = {$data0_enc};\n";
         $j_str .= $this->args['classname'] . ".hdr0 = '{$this->args['left_header']}';\n";
-        if($this->args['gridcount']==1){
+        if ($this->args['gridcount']==1) {
             $j_str .= $this->args['classname'] . ".rows1 = {$data1_enc};\n";
             $j_str .= $this->args['classname'] . ".hdr1 = '{$this->args['right_header']}';\n";
         }
-        if($this->args['gridcount']==2){
+        if ($this->args['gridcount']==2) {
             $j_str .= $this->args['classname'] . ".rows1 = {$data1_enc}; \n";
             $j_str .= $this->args['classname'] . ".rows2 = {$data2_enc}; \n";
             $j_str .= $this->args['classname'] . ".hdr1 = '{$this->args['mid_header']}'; \n";
             $j_str .= $this->args['classname'] . ".hdr2 = '{$this->args['right_header']}'; \n";
         }
         $divs_str = "'".$left_div_name ."'";
-        if($this->args['gridcount']==2){$divs_str .= ", '".$mid_div_name."'";}
-        if($this->args['gridcount']>0) {$divs_str .= ", '".$right_div_name."'";}
+        if ($this->args['gridcount']==2) {
+            $divs_str .= ", '".$mid_div_name."'";
+        }
+        if ($this->args['gridcount']>0) {
+            $divs_str .= ", '".$right_div_name."'";
+        }
 
         $j_str .= $this->args['classname'] . ".divs = [$divs_str]; ";
 
@@ -172,50 +171,52 @@ class TemplateDragDropChooser extends Template {
         $str = $j_str . '  ' . $html_str;
         $html_str_arr['script'] = $j_str;
 
-        if(isset($this->args['return_array']) && $this->args['return_array']){
+        if (isset($this->args['return_array']) && $this->args['return_array']) {
             return $html_str_arr;
-        }else{
+        } else {
             return $str;
         }
     }
 
-	/*
-	 * This script is the javascript class definition for the template drag drop object.  This
-	 * makes use of the args['classname'] parameter to name the class and to prefix variables with.  This is done
-	 * dynamically so that multiple template dragdrop objects can be defined on the same page if needed
-	 * without having the variables mix up as you drag rows around.
-	 */
-    function displayDefinitionScript() {
+    /*
+     * This script is the javascript class definition for the template drag drop object.  This
+     * makes use of the args['classname'] parameter to name the class and to prefix variables with.  This is done
+     * dynamically so that multiple template dragdrop objects can be defined on the same page if needed
+     * without having the variables mix up as you drag rows around.
+     */
+    public function displayDefinitionScript()
+    {
         //create some defaults in case arguments are missing
 
         //convert values for gridcount in case they are in string form
-        if(!isset($this->args['gridcount']) || empty($this->args['gridcount']) || $this->args['gridcount'] == 'one'){
+        if (!isset($this->args['gridcount']) || empty($this->args['gridcount']) || $this->args['gridcount'] == 'one') {
             $this->args['gridcount'] = 0;
-        }elseif($this->args['gridcount'] == 'two'){
+        } elseif ($this->args['gridcount'] == 'two') {
             $this->args['gridcount'] = 1;
-        }elseif(
-            $this->args['gridcount'] == 'three'){$this->args['gridcount'] = 2;
+        } elseif (
+            $this->args['gridcount'] == 'three') {
+            $this->args['gridcount'] = 2;
         }
 
 
 
         //default class name
-        if(!isset($this->args['classname']) || empty($this->args['classname'])){
+        if (!isset($this->args['classname']) || empty($this->args['classname'])) {
             $this->args['classname'] = 'DragDropGrid';
         }
         //default columns to one if the value is set to anything other than the expected 0,1 or 2
-        if(($this->args['gridcount'] != 0) && ($this->args['gridcount'] != 1) && ($this->args['gridcount'] != 2)){
+        if (($this->args['gridcount'] != 0) && ($this->args['gridcount'] != 1) && ($this->args['gridcount'] != 2)) {
             $this->args['gridcount'] = 0;
         }
 
         //default div names
-        if(!isset($this->args['left_div_name']) || empty($this->args['left_div_name'])){
+        if (!isset($this->args['left_div_name']) || empty($this->args['left_div_name'])) {
             $this->args['left_div_name'] = 'left';
         }
-        if(!isset($this->args['mid_div_name']) || empty($this->args['mid_div_name'])){
+        if (!isset($this->args['mid_div_name']) || empty($this->args['mid_div_name'])) {
             $this->args['mid_div_name'] = 'mid';
         }
-        if(!isset($this->args['right_div_name']) || empty($this->args['right_div_name'])){
+        if (!isset($this->args['right_div_name']) || empty($this->args['right_div_name'])) {
             $this->args['right_div_name'] = 'right';
         }
 
@@ -234,7 +235,7 @@ class TemplateDragDropChooser extends Template {
             */
 
             " . $this->args['classname'] . " =  {" ;
-	    $j_str .=   "
+        $j_str .=   "
             rows0 : [],
             rows1 : [],
             rows2 : [],
@@ -257,16 +258,16 @@ class TemplateDragDropChooser extends Template {
             },
             init : function(){
             ";
-            $count = 0;
-            while($count<$this->args['gridcount']+1){
-                // bug50219 Set up default strings for sortable grids
-                $sortParams = "sortable: false";
-                // set strings to sortable if it is SUGAR_GRID_grid0
-                if( $count == 0 )  {
-                    $sortParams = "sortable: true, sortOptions:{sortFunction: {$this->args['classname']}.customSort} ";
-                }
+        $count = 0;
+        while ($count<$this->args['gridcount']+1) {
+            // bug50219 Set up default strings for sortable grids
+            $sortParams = "sortable: false";
+            // set strings to sortable if it is SUGAR_GRID_grid0
+            if ($count == 0) {
+                $sortParams = "sortable: true, sortOptions:{sortFunction: {$this->args['classname']}.customSort} ";
+            }
 
-                $j_str .= "
+            $j_str .= "
                 {$this->args['classname']}_grid{$count}source = new YAHOO.util.LocalDataSource({$this->args['classname']}.rows$count);
                 {$this->args['classname']}_grid{$count}cols = [
                     {key:'label', {$sortParams} , label:{$this->args['classname']}.hdr$count, formatter: {$this->args['classname']}.formatter}
@@ -279,11 +280,11 @@ class TemplateDragDropChooser extends Template {
                     }
                 );";
 
-                $j_str .= "
+            $j_str .= "
                 {$this->args['classname']}_sugar_grid$count = {$this->args['classname']}_grid$count;";
 
-                $count = $count+1;
-            }
+            $count = $count+1;
+        }
         $j_str.="
             }
         };
@@ -295,20 +296,18 @@ class TemplateDragDropChooser extends Template {
     }
 
 
-/*
- * this function returns the src style sheet and script tags that need to be included
- * for the template chooser to work
- */
+    /*
+     * this function returns the src style sheet and script tags that need to be included
+     * for the template chooser to work
+     */
 
-    function displayScriptTags() {
+    public function displayScriptTags()
+    {
         global $sugar_version, $sugar_config;
-    	$j_str =   "
+        $j_str =   "
         <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/datatable/assets/skins/sam/datatable.css'/>
         <script type='text/javascript' src='cache/include/javascript/sugar_grp_yui_widgets.js'></script>";
 
         return $j_str;
     }
-
 }
-
-?>

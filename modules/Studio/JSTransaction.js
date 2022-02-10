@@ -1,6 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -11,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -28,11 +32,10 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
-function JSTransaction(){this.JSTransactions=new Array();this.JSTransactionIndex=0;this.JSTransactionCanRedo=false;this.JSTransactionTypes=new Array();}
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */function JSTransaction(){this.JSTransactions=new Array();this.JSTransactionIndex=0;this.JSTransactionCanRedo=false;this.JSTransactionTypes=new Array();}
 JSTransaction.prototype.record=function(transaction,data){this.JSTransactions[this.JSTransactionIndex]={'transaction':transaction,'data':data};this.JSTransactionIndex++;this.JSTransactionCanRedo=false}
 JSTransaction.prototype.register=function(transaction,undo,redo){this.JSTransactionTypes[transaction]={'undo':undo,'redo':redo};}
 JSTransaction.prototype.undo=function(){if(this.JSTransactionIndex>0){if(this.JSTransactionIndex>this.JSTransactions.length){this.JSTransactionIndex=this.JSTransactions.length;}

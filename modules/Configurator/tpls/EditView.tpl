@@ -1,11 +1,12 @@
 {*
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +35,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -214,9 +215,22 @@
     </tr>
 
 
-
+	<tr>
+		<td  scope="row" nowrap>{$MOD.LBL_HIDE_SUBPANELS}: &nbsp;{sugar_help text=$MOD.LBL_HIDE_SUBPANELS}</td>
+		{if (isset($config.hide_subpanels) && $config.hide_subpanels != "true") || !isset($config.hide_subpanels)}
+			{assign var='hide_subpanels' value=''}
+		{else}
+			{assign var='hide_subpanels' value='CHECKED'}
+		{/if}
+		<td>
+			<input type='hidden' name='hide_subpanels' value='false'>
+			<input name='hide_subpanels'  type="checkbox" value="true" {$hide_subpanels}>
+		</td>
+	</tr>
 
 </table>
+
+
 
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 
@@ -263,23 +277,6 @@
   </td>
   </tr>
  </table>
-
-
-<table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-	<tr>
-	<th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_SKYPEOUT_TITLE}</h4></th>
-	</tr>
-	<tr>
-	<td width="25%" scope="row" valign='middle'>{$MOD.LBL_SKYPEOUT_ON}&nbsp{sugar_help text=$MOD.LBL_SKYPEOUT_ON_DESC WIDTH=400}</td>
-	{if !empty($settings.system_skypeout_on)}
-		{assign var='system_skypeout_on_checked' value='CHECKED'}
-	{else}
-		{assign var='system_skypeout_on_checked' value=''}
-	{/if}
-	<td width="75%" align="left"  valign='middle'><input type='hidden' name='system_skypeout_on' value='0'><input name="system_skypeout_on" value="1" class="checkbox" tabindex='1' type="checkbox" {$system_skypeout_on_checked}></td>
-	</tr>
- </table>
-
 
 
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
@@ -368,7 +365,10 @@
 </tr>
 	<tr>
 		<td  scope="row" valign='middle'>{$MOD.LBL_LOGGER_FILENAME}</td>
-		<td   valign='middle' ><input type='text' name = 'logger_file_name'  value="{$config.logger.file.name}"></td>
+		<td   valign='middle' >
+			<input type='text' name = 'logger_file_name'  value="{$config.logger.file.name}">
+			<div><span class="small">{$APP.LBL_LOGGER_VALID_FILENAME_CHARACTERS}</span></div>
+		</td>
 		<td  scope="row">{$MOD.LBL_LOGGER_FILE_EXTENSION}</td>
 		<td ><input name ="logger_file_ext" type="text" size="5" value="{$config.logger.file.ext}"></td>
 		<td scope="row">{$MOD.LBL_LOGGER_FILENAME_SUFFIX}</td>
@@ -383,6 +383,13 @@
 	<tr>
 		<td scope="row">{$MOD.LBL_LOGGER_LOG_LEVEL} </td>
 		<td > <select name="logger_level">{$log_levels}</select></td>
+		<td  scope="row">{$MOD.LBL_STACK_TRACE}: </td>
+		{if !empty($config.stackTrace)}
+			{assign var='stackTraceChecked' value='CHECKED'}
+		{else}
+			{assign var='stackTraceChecked' value=''}
+		{/if}
+		<td ><input type='hidden' name='stackTrace' value='false'><input name='stackTrace'  type="checkbox" value='true' {$stackTraceChecked}></td>
 		<td scope="row">{$MOD.LBL_LOGGER_MAX_LOGS} </td>
 		<td > <input name="logger_file_maxLogs" value="{$config.logger.file.maxLogs}"></td>
 	</tr>

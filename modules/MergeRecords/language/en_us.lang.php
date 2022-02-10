@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,54 +34,42 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-$mod_strings = array (
-  'LBL_MODULE_NAME' => 'Merge Records',
-  'LBL_MODULE_TITLE' => 'Merge Records: Home',
-  'LBL_SEARCH_FORM_TITLE' => 'Merge Search',
-  'LBL_LIST_FORM_TITLE' => 'Merge List',
+$mod_strings = array(
+    'LBL_MODULE_NAME' => 'Merge Records',
+    'LBL_MODULE_TITLE' => 'Merge Records: Home',
+    'LBL_SEARCH_FORM_TITLE' => 'Merge Search',
+    'LBL_LIST_FORM_TITLE' => 'Merge List',
 
-  'LBL_LBL_MERGE_RECORDS_STEP_1' => 'Find Search Records to Merge With',
-  'LBL_AVAIL_FIELDS' => 'Available Fields',
-  'LBL_FILTER_COND' => 'Filter Condition',
-  'LBL_SELECTED_FIELDS' => 'Selected Fields',
-  'LBL_MERGE_RECORDS_WITH' => 'Merge Records With',
-  'LBL_MERGE_VALUE_OVER' => 'Merge value over',
+    'LBL_LBL_MERGE_RECORDS_STEP_1' => 'Find Search Records to Merge With',
+    'LBL_AVAIL_FIELDS' => 'Available Fields',
+    'LBL_FILTER_COND' => 'Filter Condition',
+    'LBL_MERGE_VALUE_OVER' => 'Merge value over',
 
-  'LBL_NEXT_STEP_TITLE' => 'Move to Next Step[Ctrl+N]',
-  'LBL_NEXT_STEP_BUTTON_KEY' => 'N',
-  'LBL_NEXT_STEP_BUTTON_LABEL' => 'Next Step >',
+    'LBL_NEXT_STEP_TITLE' => 'Move to Next Step',
+    'LBL_NEXT_STEP_BUTTON_LABEL' => 'Next Step >',
 
-  'LBL_PERFORM_MERGE_BUTTON_TITLE' => 'Perform Merge[Ctrl+P]',
-  'LBL_PERFORM_MERGE_BUTTON_KEY' => 'P',
-  'LBL_PERFORM_MERGE_BUTTON_LABEL' => 'Perform Merge',
+    'LBL_PERFORM_MERGE_BUTTON_TITLE' => 'Perform Merge',
+    'LBL_PERFORM_MERGE_BUTTON_KEY' => 'P',
+    'LBL_PERFORM_MERGE_BUTTON_LABEL' => 'Perform Merge',
 
-  'LBL_SAVE_MERGED_RECORD_BUTTON_TITLE' => 'Save Merge[Ctrl+S]',
-  'LBL_SAVE_MERGED_RECORD_BUTTON_KEY' => 'S',
-  'LBL_SAVE_MERGED_RECORD_BUTTON_LABEL' => 'Save Merge',
+    'LBL_SAVE_MERGED_RECORD_BUTTON_TITLE' => 'Save Merge',
+    'LBL_SAVE_MERGED_RECORD_BUTTON_LABEL' => 'Save Merge',
 
-  'LBL_STEP2_FORM_TITLE' => 'Records Found To Merge With',
-  'LBL_SELECT_ERROR'=>'You must make a selection before you can proceed.',
-  'LBL_SELECT_PRIMARY'=>'Select primary record for the merge.',
-  'LBL_CHANGE_PARENT'=>'Set as primary',
-  'LBL_REMOVE_FROM_MERGE'=>'Remove',
-  'LBL_DIFF_COL_VALUES'=>'Columns whose value in primary row differs from value in merging rows:',
-  'LBL_SAME_COL_VALUES'=>'Columns whose value is similar across all rows:',
-  'ERR_EXCEEDS_MAX'=>'You are only allowed to merge a maximum of 5 records. Records exceeding the limit were ignored.',
-  'LBL_DELETE_MESSAGE'=>'This action will delete following record(s):',
-  'LBL_PROCEED'=>'Proceed ?',
-  'LBL_STEP1_DIRECTIONS' => 'Find possible duplicate records. If possible duplicates are found, you can select which records to merge with the current record.',
+    'LBL_STEP2_FORM_TITLE' => 'Records Found To Merge With',
+    'LBL_SELECT_ERROR' => 'You must make a selection before you can proceed.',
+    'LBL_CHANGE_PARENT' => 'Set as primary',
+    'LBL_REMOVE_FROM_MERGE' => 'Remove',
+    'LBL_DIFF_COL_VALUES' => 'Columns whose value in primary row differs from value in merging rows:',
+    'LBL_SAME_COL_VALUES' => 'Columns whose value is similar across all rows:',
+    'LBL_DELETE_MESSAGE' => 'This action will delete following record(s):',
+    'LBL_PROCEED' => 'Proceed ?',
+    'LBL_STEP1_DIRECTIONS' => 'Find possible duplicate records. If possible duplicates are found, you can select which records to merge with the current record.',
 );
-
-
-?>

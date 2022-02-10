@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,115 +37,35 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-
-
-
-
-class SugarWidgetTabs
-{
- var $tabs;
- var $current_key;
-
- function __construct(&$tabs,$current_key,$jscallback)
- {
-   $this->tabs = $tabs;
-   $this->current_key = $current_key;
-   $this->jscallback = $jscallback;
- }
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     * Class SugarWidgetTabs
+     *
+     * Displays users subpanels in tabs
      */
-    function SugarWidgetTabs(&$tabs,$current_key,$jscallback){
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct($tabs, $current_key, $jscallback);
+class SugarWidgetTabs
+{
+    public $tabs;
+    public $current_key;
+
+    public function __construct(&$tabs, $current_key, $jscallback)
+    {
+        $this->tabs = $tabs;
+        $this->current_key = $current_key;
+        $this->jscallback = $jscallback;
     }
 
+    public function display()
+    {
+        $template = new Sugar_Smarty();
+        $template->assign('subpanel_tabs', $this->tabs);
+        $template->assign('subpanel_tabs_count', count($this->tabs));
+        $template->assign('jscallback', $this->jscallback);
+        $template->assign('subpanel_current_key', $this->current_key);
 
- function display()
- {
-	ob_start();
-?>
-<script>
-var keys = [ <?php
-$tabs_count = count($this->tabs);
-for($i=0; $i < $tabs_count;$i++)
-{
- $tab = $this->tabs[$i];
- echo "\"".$tab['key']."\"";
- if ($tabs_count > ($i + 1))
- {
-   echo ",";
- }
+        return $template->display('include/tabs.tpl');
+    }
 }
-?>];
-tabPreviousKey = '';
-
-function selectTabCSS(key)
-{
-
-
-  for( var i=0; i<keys.length;i++)
-  {
-   var liclass = '';
-   var linkclass = '';
-
- if ( key == keys[i])
- {
-   var liclass = 'active';
-   var linkclass = 'current';
- }
-  	document.getElementById('tab_li_'+keys[i]).className = liclass;
-
-  	document.getElementById('tab_link_'+keys[i]).className = linkclass;
-  }
-    <?php echo $this->jscallback;?>(key, tabPreviousKey);
-    tabPreviousKey = key;
-}
-</script>
-
-<ul id="searchTabs" class="tablist">
-<?php
-	foreach ($this->tabs as $tab)
-	{
-		$TITLE = $tab['title'];
-		$LI_ID = "";
-		$A_ID = "";
-
-	  if ( ! empty($tab['hidden']) && $tab['hidden'] == true)
-		{
-			  $LI_ID = "style=\"display: none\"";
-			  $A_ID = "style=\"display: none\"";
-
-		} else if ( $this->current_key == $tab['key'])
-		{
-			  $LI_ID = "class=\"active\"";
-			  $A_ID = "class=\"current\"";
-		}
-
-		$LINK = "<li $LI_ID id=\"tab_li_".$tab['link']."\"><a $A_ID id=\"tab_link_".$tab['link']."\" href=\"javascript:selectTabCSS('{$tab['link']}');\">$TITLE</a></li>";
-
-?>
-<?php echo $LINK; ?>
-<?php
-	}
-?>
-</ul>
-<?php
-	$ob_contents = ob_get_contents();
-        ob_end_clean();
-        return $ob_contents;
-	}
-}
-?>

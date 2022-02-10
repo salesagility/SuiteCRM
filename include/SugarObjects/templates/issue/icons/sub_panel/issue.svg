@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="30px"
+   height="30px"
+   viewBox="0 0 30 30"
+   version="1.1"
+   id="svg2"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="issue.svg">
+  <metadata
+     id="metadata27">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>my_pdf_templates_dark</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1855"
+     inkscape:window-height="1056"
+     id="namedview25"
+     showgrid="false"
+     inkscape:zoom="30.3"
+     inkscape:cx="9.1914191"
+     inkscape:cy="15"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g3775"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <!-- Generator: Sketch 39.1 (31720) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title4">my_pdf_templates_dark</title>
+  <desc
+     id="desc6">Created with Sketch.</desc>
+  <defs
+     id="defs8" />
+  <g
+     id="Page-1"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd">
+    <g
+       id="g3775"
+       transform="matrix(1.1619723,0,0,1.1619723,-2.3340882,-4.6322072)">
+      <path
+         style="fill:#ffffff;fill-opacity:1;stroke:none"
+         d="M 15.0625 1.59375 C 9.5323589 1.5152647 0.45733672 21.150118 4.375 24.78125 C 9.4141769 29.451871 21.615468 29.112183 25.78125 24.78125 C 29.253709 21.171129 20.684016 1.6735322 15.0625 1.59375 z M 10.875 6.96875 L 19.21875 6.96875 L 16.8125 19.5 L 13.375 19.5 L 10.875 6.96875 z M 13.4375 21.75 L 16.9375 21.75 L 16.9375 25.09375 L 13.4375 25.09375 L 13.4375 21.75 z "
+         transform="matrix(0.86060571,0,0,0.86060571,2.0087296,3.986504)"
+         id="path2999" />
+    </g>
+  </g>
+</svg>

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,56 +34,45 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-
-//global $modInvisList;
 $sugar_smarty = new Sugar_Smarty();
 $sugar_smarty->assign('MOD', $mod_strings);
 $sugar_smarty->assign('APP', $app_strings);
-
-//nsingh bug: 21669. Messes up localization
-/*foreach($modInvisList as $modinvisname){
-    if(empty($app_list_strings['moduleList'][$modinvisname])){
-	   $app_list_strings['moduleList'][$modinvisname] = $modinvisname;
-    }
-}*/
 $sugar_smarty->assign('APP_LIST', $app_list_strings);
-/*foreach($modInvisList as $modinvisname){
-	unset($app_list_strings['moduleList'][$modinvisname]);
-}*/
-$role = new ACLRole();
+
+$role = BeanFactory::newBean('ACLRoles');
+$categories = $role->getRoleActions($_REQUEST['record']);
 $role->retrieve($_REQUEST['record']);
-$categories = ACLRole::getRoleActions($_REQUEST['record']);
 $names = ACLAction::setupCategoriesMatrix($categories);
-if(!empty($names))$tdwidth = 100 / sizeof($names);
+if (!empty($names)) {
+    $tdWidth = 100 / count($names);
+}
 $sugar_smarty->assign('ROLE', $role->toArray());
 $sugar_smarty->assign('CATEGORIES', $categories);
-$sugar_smarty->assign('TDWIDTH', $tdwidth);
+$sugar_smarty->assign('TDWIDTH', $tdWidth);
 $sugar_smarty->assign('ACTION_NAMES', $names);
 
-$return= array('module'=>'ACLRoles', 'action'=>'DetailView', 'record'=>$role->id);
+$return = ['module' => 'ACLRoles', 'action' => 'DetailView', 'record' => $role->id];
 $sugar_smarty->assign('RETURN', $return);
-$params = array();
+$params = [];
 $params[] = "<a href='index.php?module=ACLRoles&action=index'>{$mod_strings['LBL_MODULE_NAME']}</a>";
 $params[] = $role->get_summary_text();
 echo getClassicModuleTitle("ACLRoles", $params, true);
-//$sugar_smarty->assign('TITLE', $title);
 $hide_hide_supanels = true;
 
 echo $sugar_smarty->fetch('modules/ACLRoles/DetailView.tpl');
-//for subpanels the variable must be named focus;
+// For subpanels the variable must be named focus;
 $focus =& $role;
 $_REQUEST['module'] = 'ACLRoles';
-require_once('include/SubPanel/SubPanelTiles.php');
+require_once __DIR__ . '/../../include/SubPanel/SubPanelTiles.php';
 
-$subpanel = new SubPanelTiles($role, 'ACLRoles');
+$subPanel = new SubPanelTiles($role, 'ACLRoles');
 
-echo $subpanel->display();
-
-
-
-?>
+echo $subPanel->display();

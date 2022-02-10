@@ -1,11 +1,12 @@
 {*
 
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +17,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +35,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
@@ -71,23 +72,23 @@
 <td>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-	<th align="left" scope="row" colspan="4"><h4><slot>{$MOD.LBL_BUG_INFORMATION}</slot></h4></th>
+	<th align="left" scope="row" colspan="4"><h4><span>{$MOD.LBL_BUG_INFORMATION}</span></h4></th>
 	</tr>
 	<tr>
-	<td valign="top" scope="row" width="15%"><slot>{$MOD.LBL_SUBJECT} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-	<td width="35%"><slot><textarea name='name' cols="40" tabindex='1' rows="1">{$NAME}</textarea></slot></td>
-	<td scope="row" width="15%"><slot>{$MOD.LBL_TYPE}</slot></td>
-	<td width="35%"><slot><select tabindex='2' name='type'>{$TYPE_OPTIONS}</select></slot></td>
+	<td valign="top" scope="row" width="15%"><span>{$MOD.LBL_SUBJECT} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></span></td>
+	<td width="35%"><span><textarea name='name' cols="40" tabindex='1' rows="1">{$NAME}</textarea></span></td>
+	<td scope="row" width="15%"><span>{$MOD.LBL_TYPE}</span></td>
+	<td width="35%"><span><select tabindex='2' name='type'>{$TYPE_OPTIONS}</select></span></td>
 	</tr>
 	<tr>
-	<td valign="top" scope="row" rowspan="2" width="15%"><slot>{$MOD.LBL_DESCRIPTION}</slot></td>
-	<td rowspan="2" width="35%"><slot><textarea name='description' tabindex='1' cols="40" rows="4">{$DESCRIPTION}</textarea></slot></td>
-	<td scope="row" width="15%"><slot>{$MOD.LBL_PRIORITY}</slot></td>
-	<td  nowrap width="35%"><slot><select  tabindex='2' name='priority'>{$PRIORITY_OPTIONS}</select></slot></td>
+	<td valign="top" scope="row" rowspan="2" width="15%"><span>{$MOD.LBL_DESCRIPTION}</span></td>
+	<td rowspan="2" width="35%"><span><textarea name='description' tabindex='1' cols="40" rows="4">{$DESCRIPTION}</textarea></span></td>
+	<td scope="row" width="15%"><span>{$MOD.LBL_PRIORITY}</span></td>
+	<td  nowrap width="35%"><span><select  tabindex='2' name='priority'>{$PRIORITY_OPTIONS}</select></span></td>
 	</tr>
 	<tr>
-	<td scope="row" width="15%"><slot>{$MOD.LBL_STATUS}</slot></td>
-	<td width="35%"><slot><select tabindex='2' name='status'>{$STATUS_OPTIONS}</select></slot></td>
+	<td scope="row" width="15%"><span>{$MOD.LBL_STATUS}</span></td>
+	<td width="35%"><span><select tabindex='2' name='status'>{$STATUS_OPTIONS}</select></span></td>
 	</tr>
 	</table>
 	</form>

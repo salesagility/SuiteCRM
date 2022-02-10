@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,45 +34,39 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+$mod_strings = array(
+    'LBL_ID' => 'Id',
+    'LBL_TRACKER_KEY' => 'Tracker Key',
+    'LBL_TRACKER_URL' => 'Tracker URL',
+    'LBL_TRACKER_NAME' => 'Tracker Name',
+    'LBL_CAMPAIGN_ID' => 'Campaign Id',
+    'LBL_DATE_ENTERED' => 'Date Entered',
+    'LBL_DATE_MODIFIED' => 'Date Modified',
+    'LBL_MODIFIED_USER_ID' => 'Modified User Id',
+    'LBL_CREATED_BY' => 'Created By',
+    'LBL_DELETED' => 'Deleted',
+    'LBL_CAMPAIGN' => 'Campaign',
+    'LBL_OPTOUT' => 'Opt-out',
 
-$mod_strings = array (
-	'LBL_ID'=>'Id',
-	'LBL_TRACKER_KEY'=>'Tracker Key',
-	'LBL_TRACKER_URL'=>'Tracker URL',
-	'LBL_TRACKER_NAME'=>'Tracker Name',
-	'LBL_CAMPAIGN_ID'=>'Campaign Id',
-	'LBL_DATE_ENTERED'=>'Date Entered',
-	'LBL_DATE_MODIFIED'=>'Date Modified',
-	'LBL_MODIFIED_USER_ID'=>'Modified User Id',
-	'LBL_CREATED_BY'=>'Created By',
-	'LBL_DELETED'=>'Deleted',
-	'LBL_CAMPAIGN'=>'Campaign',
-	'LBL_OPTOUT'=>'Opt-out',
-	
-	'LBL_MODULE_NAME'=>'Campaign Trackers',
-	'LBL_EDIT_CAMPAIGN_NAME'=>'Campaign Name:',
-	'LBL_EDIT_TRACKER_NAME'=>'Tracker Name:',
-	'LBL_EDIT_TRACKER_URL'=>'Tracker URL:',
-	
-	'LBL_SUBPANEL_TRACKER_NAME'=>'Name',
-	'LBL_SUBPANEL_TRACKER_URL'=>'URL',
-	'LBL_SUBPANEL_TRACKER_KEY'=>'Key',
-	'LBL_EDIT_MESSAGE_URL'=>'URL for Campaign Message:',
-	'LBL_EDIT_TRACKER_KEY'=>'Tracker Key:',
-	'LBL_EDIT_OPT_OUT'=>'Opt-out Link?',
-	'LNK_CAMPAIGN_LIST'=>'Campaigns',
-	'LBL_EDIT_LAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
+    'LBL_MODULE_NAME' => 'Campaign Trackers',
+    'LBL_EDIT_CAMPAIGN_NAME' => 'Campaign Name:',
+    'LBL_EDIT_TRACKER_NAME' => 'Tracker Name:',
+    'LBL_EDIT_TRACKER_URL' => 'Tracker URL:',
+
+    'LBL_SUBPANEL_TRACKER_NAME' => 'Name',
+    'LBL_SUBPANEL_TRACKER_URL' => 'URL',
+    'LBL_SUBPANEL_TRACKER_KEY' => 'Key',
+    'LBL_EDIT_MESSAGE_URL' => 'URL for Campaign Message:',
+    'LBL_EDIT_TRACKER_KEY' => 'Tracker Key:',
+    'LBL_EDIT_OPT_OUT' => 'Opt-out Link?',
+    'LNK_CAMPAIGN_LIST' => 'Campaigns',
+    'LBL_EDIT_LAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
 );
-
-?>

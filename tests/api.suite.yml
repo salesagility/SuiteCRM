@@ -1,0 +1,12 @@
+actor: ApiTester
+modules:
+    enabled:
+        - \Helper\api
+        - Filesystem
+        - Asserts
+        - \Helper\PhpBrowserDriverHelper
+        - PhpBrowser:
+            url: 'http://localhost/api/v8/'
+        - REST:
+            depends: PhpBrowser
+            url: 'http://localhost/api/v8/'

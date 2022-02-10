@@ -1,6 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -11,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -28,17 +32,13 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
-function DurationDependency(start_field,end_field,duration_field,format){this.duration=0;this.start_field=start_field;this.end_field=end_field;this.duration_field=duration_field;this.format=format;this.lock_end_listener=false;var format_parts=this.format.split(" ");this.date_format=format_parts[0];this.time_format=format_parts[1];if(format_parts.length==3)
-this.time_format+=""+this.time_format[2];this.date_delimiter=/([-.\\/])/.exec(this.date_format)[0];this.time_delimiter=/([.:])/.exec(this.time_format)[0];this.has_meridiem=/p/i.test(this.format);var delimiter=(this.date_delimiter=="."?"\\"+this.date_delimiter:this.date_delimiter);var date_format_cleaned=this.date_format.replace(/%/g,"").replace(new RegExp(delimiter,'g'),"");this.month_pos=date_format_cleaned.search(/m/);this.day_pos=date_format_cleaned.search(/d/);this.year_pos=date_format_cleaned.search(/Y/);if(YAHOO.util.Selector.query('input#'+end_field)[0].value!="")
-{this.calculate_duration();}
-else
-{this.change_duration();}
-this.update_duration_fields();this.set_duration_handler();var self=this;YAHOO.util.Event.addListener(YAHOO.util.Selector.query('input#'+start_field)[0],"change",function(){self.change_start();});YAHOO.util.Event.addListener(YAHOO.util.Selector.query('input#'+end_field)[0],"change",function(){if(self.lock_end_listener)
-{return;}
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */function DurationDependency(start_field,end_field,duration_field,format){this.duration=0;this.start_field=start_field;this.end_field=end_field;this.duration_field=duration_field;this.format=format;this.lock_end_listener=false;var format_parts=this.format.split(" ");this.date_format=format_parts[0];this.time_format=format_parts[1];if(format_parts.length==3)
+this.time_format+=""+this.time_format[2];this.date_delimiter=/([-.\\/])/.exec(this.date_format)[0];this.time_delimiter=/([.:])/.exec(this.time_format)[0];this.has_meridiem=/p/i.test(this.format);var delimiter=(this.date_delimiter=="."?"\\"+this.date_delimiter:this.date_delimiter);var date_format_cleaned=this.date_format.replace(/%/g,"").replace(new RegExp(delimiter,'g'),"");this.month_pos=date_format_cleaned.search(/m/);this.day_pos=date_format_cleaned.search(/d/);this.year_pos=date_format_cleaned.search(/Y/);if(YAHOO.util.Selector.query('input#'+end_field)[0].value!=""){this.calculate_duration();}
+else{this.change_duration();}
+this.update_duration_fields();this.set_duration_handler();var self=this;YAHOO.util.Event.addListener(YAHOO.util.Selector.query('input#'+start_field)[0],"change",function(){self.change_start();});YAHOO.util.Event.addListener(YAHOO.util.Selector.query('input#'+end_field)[0],"change",function(){if(self.lock_end_listener){return;}
 self.calculate_duration();self.update_duration_fields();self.set_duration_handler();});if(duration_field!=null){YAHOO.util.Event.addListener(YAHOO.util.Selector.query('select#'+duration_field)[0],"change",function(){self.change_duration();self.update_duration_fields();SugarWidgetScheduler.update_time();});}}
 DurationDependency.prototype.calculate_duration=function(){try{var start=this.parse_date(YAHOO.util.Selector.query('input#'+this.start_field)[0].value);var end=this.parse_date(YAHOO.util.Selector.query('input#'+this.end_field)[0].value);this.duration=(end.getTime()-start.getTime())/ 1000;}catch(e){this.duration=0;}}
 DurationDependency.prototype.change_start=function(){this.lock_end_listener=true;var start=this.parse_date(YAHOO.util.Selector.query('input#'+this.start_field)[0].value);var end=new Date(start.getTime()+this.duration*1000);this.set_date(end,this.end_field);var self=this;setTimeout(function(){self.lock_end_listener=false;},300);}
@@ -75,4 +75,4 @@ date+=month;if(i==this.day_pos)
 date+=day;}
 YAHOO.util.Selector.query('input#'+field+"_date")[0].value=date;YAHOO.util.Selector.query('select#'+field+"_hours")[0].value=hour;YAHOO.util.Selector.query('select#'+field+"_minutes")[0].value=minute;if(this.has_meridiem){var nodes=YAHOO.util.Selector.query('select#'+field+"_meridiem")[0].childNodes;for(var i=0;i<nodes.length;i++){if(nodes[i].value=="AM"){meridiem=meridiem.toUpperCase();break;}}
 YAHOO.util.Selector.query('select#'+field+"_meridiem")[0].value=meridiem;}
-eval("combo_"+field+".update()");}
+SUGAR.util.globalEval("combo_"+field+".update()");}

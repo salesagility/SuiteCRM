@@ -1,0 +1,62 @@
+codecov:
+  notify:
+    require_ci_to_pass: yes
+
+coverage:
+  precision: 2
+  round: down
+  range: "70...100"
+
+  status:
+    project:
+      default:
+        target: 0%
+        threshold: 5%
+        base: parent
+        branches: null
+        if_no_uploads: error
+        if_not_found: success
+        if_ci_failed: error
+        only_pulls: false
+        flags: null
+        paths: null
+    patch: no
+    changes: no
+
+parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: no
+      macro: no
+
+comment:
+  layout: "header, diff"
+  behavior: default
+  require_changes: false
+
+ignore:
+  - "include/timezone/.*"
+  - "include/SuiteGraphs/.*"
+  - "include/social/.*"
+  - "include/Smarty/.*"
+  - "include/reCaptcha/.*"
+  - "include/phpmailer/.*"
+  - "include/Pear/.*"
+  - "include/pclzip/.*"
+  - "include/nusoap/.*"
+  - "include/HTTP_WebDAV_Server/.*"
+  - "include/HTMLPurifier/.*"
+  - "include/ytree/.*"
+  - "include/php-sql-parser.php"
+  - "include/parsecsv.lib.php"
+  - "modules/AOS_PDF_Templates/PDF_Lib/.*"
+  - "Zend/.*"
+  - "modules/AOD_Index/Lib/.*"
+  - "modules/Users/authentication/SAML2Authenticate/lib/.*"
+  - "install/demoData.en_us.php"
+  - "include/tcpdf/.*"
+  - "modules/AOR_Charts/lib/.*"
+  # The old lowercase v8 API is deprecated/unsupported and the CI doesn't run the tests for it. The new API uses an upper-case V.
+  - "lib/API/.*"

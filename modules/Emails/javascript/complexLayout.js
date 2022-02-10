@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 /**
   Complex layout init
@@ -49,12 +50,18 @@ function complexLayoutInit() {
 	    		border:true,
 	            hideOnLayout: true,
 	            height: 400,
-				units: [{
-					position: "center",
-				    scroll:false, // grid should autoScroll itself
-				    split:true,
-				    body: "<div id='emailGrid'></div><div id='dt-pag-nav'></div> "
-				},{
+            units: [{
+              position: "top",
+              height: '64',
+              scroll: false,
+              split: true,
+              body: "<div id='dt-pag-nav'></div> "
+            }, {
+              position: "center",
+              scroll: false, // grid should autoScroll itself
+              split: true,
+              body: "<div id='emailGrid'></div>"
+            }, {
 					position: "bottom",
 				    scroll:true,
 				    collapse: false,
@@ -107,11 +114,12 @@ function complexLayoutInit() {
             // initialize state manager, we will use cookies
         	var viewHeight = document.documentElement ? document.documentElement.clientHeight : self.innerHeight;
             var heightOffset = $('#dcmenu').length > 0 ? $('#dcmenu').height() : $('#header').height();
+            var availableWidth = Dom.getViewportWidth() - 40 - getSideBarCurrentWidth();
         	se.complexLayout = new YAHOO.widget.Layout("container", {
         		border:true,
                 hideOnLayout: true,
                 height: Dom.getViewportHeight() - heightOffset - 65,
-                width: Dom.getViewportWidth() - 40,
+                width: availableWidth,
                 units: [{
                 	position: "center",
                     scroll:false,
@@ -277,4 +285,18 @@ myBufferedListenerObject.refit = function() {
     if(SUGAR.email2.grid) {
         SUGAR.email2.grid.autoSize();
     }
+}
+
+function getSideBarCurrentWidth() {
+  var $sideBarContainer = $('#sidebar_container');
+  if (!$sideBarContainer.length) {
+    return 0;
+  }
+
+  var $firstDivChild = $sideBarContainer.children('div:first');
+  if (!$firstDivChild.length || !$firstDivChild.is(':visible')) {
+    return 0;
+  }
+
+  return $firstDivChild.width();
 }

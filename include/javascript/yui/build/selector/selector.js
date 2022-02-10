@@ -2,7 +2,7 @@
 Copyright (c) 2011, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
 http://developer.yahoo.com/yui/license.html
-version: 2.9.0
+version: 2.9.1
 */
 var Y = YAHOO,
     Y_DOM = YAHOO.util.Dom, 
@@ -203,7 +203,7 @@ Selector = {
             fn = (useNative) ? Selector._nativeQuery : Selector._bruteQuery;
 
         if (selector && fn) {
-            // split group into seperate queries
+            // split group into separate queries
             if (!skipNative && // already done if skipping
                     (!useNative || root.tagName)) { // split native when element scoping is needed
                 queries = Selector._splitQueries(selector, root);
@@ -969,4 +969,4 @@ Y_mix(Selector.operators, {
 Selector.combinators['~'] = {
     axis: 'previousSibling'
 };
-YAHOO.register("selector", YAHOO.util.Selector, {version: "2.9.0", build: "2800"});
+YAHOO.register("selector", YAHOO.util.Selector, {version: "2.9.1", build: "2800"});

@@ -1,0 +1,74 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "meta": {
+    "created": {
+      "date": "2018-06-12 11:01:34",
+      "user_id": 1,
+      "user_name": "Administrator"
+    },
+    "modified": {
+      "date": "2018-06-12 11:01:34",
+      "user_id": 1,
+      "user_name": "Administrator"
+    },
+    "assigned": {
+      "user_id": "seed_max_id",
+      "user_name": "Max Jensen"
+    }
+  },
+  "name": {
+    "salutation": "Ms.",
+    "first": "Cindy",
+    "last": "Espana"
+  },
+  "account": {
+    "title": "Director Operations",
+    "department": "Genetics",
+    "id": "39363e96-5eed-0221-9889-5b1fa86ebb52",
+    "name": "Start Over Trust"
+  },
+  "phone": {
+    "home": "(445) 163-3872",
+    "mobile": "(978) 836-3300",
+    "work": "(711) 112-3512",
+    "other": null,
+    "fax": null
+  },
+  "address": {
+    "primary": {
+      "street": "345 Sugar Blvd.",
+      "city": "Salt Lake City",
+      "state": "CA",
+      "postalcode": 58821,
+      "country": "USA"
+    },
+    "alt": {
+      "street": null,
+      "city": null,
+      "state": null,
+      "postalcode": null,
+      "country": null
+    }
+  },
+  "assistant": {
+    "name": null,
+    "phone": null
+  },
+  "reports_to": {
+    "id": null,
+    "name": ""
+  },
+  "campaign": {
+    "name": "",
+    "id": null
+  },
+  "lead": {
+    "type": "Web Site"
+  },
+  "birthdate": null,
+  "age": null,
+  "email": [
+    "kid79@example.co.jp"
+  ],
+  "description": null
+}

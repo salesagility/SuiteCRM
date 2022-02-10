@@ -1,0 +1,25 @@
+.computeFieldContainer table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.computeFieldContainer legend {
+    margin-bottom: 5px;
+    padding-left: 5px;
+}
+
+.computeFieldContainer select {
+    margin: 5px;
+}
+
+.computeFieldContainer input[type="button"] {
+    margin: 5px;
+}
+
+.computeFieldContainer > fieldset > div {
+    padding: 5px;
+}
+
+.computeFieldFormulaContainer {
+    width: 100%;
+}

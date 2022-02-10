@@ -89,16 +89,6 @@ var FieldLineHandler = {
 
 };
 
-YUI().use('sortable', function(Y) {
-    var sortable = new Y.Sortable({
-        container: '#fieldLines',
-        nodes: 'tbody',
-        opacity: '.1'
-    });
-
-    Y.DD.DDM.on('drag:end', fieldSort);
-});
-
 function loadFieldLine(field){
 
     var prefix = 'aor_fields_';
@@ -128,7 +118,7 @@ function loadFieldLine(field){
 }
 
 function showFieldOptions(field, ln){
-    if(field.field_type == "datetime" || field.field_type == "date"){
+    if(field.field_type == "datetime" || field.field_type == "date" || field.field_type == "datetimecombo"){
         showElem("aor_fields_format" + ln);
     }
 }
@@ -245,44 +235,43 @@ function insertFieldHeader(){
     //a.style.color="rgb(68,68,68)";
 
     var b=x.insertCell(1);
-    b.style.color="rgb(0,0,0)";
     b.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_MODULE_PATH');
 
     var b1=x.insertCell(2);
-    b1.style.color="rgb(0,0,0)";
     b1.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_FIELD');
 
     var c=x.insertCell(3);
-    c.style.color="rgb(0,0,0)";
     c.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_DISPLAY');
 
     var d=x.insertCell(4);
-    d.style.color="rgb(0,0,0)";
     d.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_LINK');
 
     var e=x.insertCell(5);
-    e.style.color="rgb(0,0,0)";
     e.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_LABEL');
 
     var f=x.insertCell(6);
-    f.style.color="rgb(0,0,0)";
     f.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_FUNCTION');
 
     var g=x.insertCell(7);
-    g.style.color="rgb(0,0,0)";
     g.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_SORT');
 
     var h=x.insertCell(8);
-    h.style.color="rgb(0,0,0)";
     h.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_GROUP');
 
     var i=x.insertCell(9);
-    i.style.color="rgb(0,0,0)";
     i.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_FORMAT');
 
     var h=x.insertCell(10);
-    h.style.color="rgb(0,0,0)";
     h.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_TOTAL');
+
+    tablebody = document.createElement("tbody");
+    document.getElementById('fieldLines').appendChild(tablebody);
+
+    $('#fieldLines tbody').sortable({
+        stop: fieldSort,
+        axis: 'y',
+        containment: "#fieldLines"
+    });
 }
 
 function insertFieldLine(){
@@ -293,18 +282,14 @@ function insertFieldLine(){
         document.getElementById('fieldLines_head').style.display = '';
     }
 
-
-    tablebody = document.createElement("tbody");
-    tablebody.id = "aor_fields_body" + fieldln;
-    document.getElementById('fieldLines').appendChild(tablebody);
-
+    tablebody = document.getElementById('fieldLines').getElementsByTagName('tbody')[0];
 
     var x = tablebody.insertRow(-1);
     x.id = 'field_line' + fieldln;
 
     var a = x.insertCell(0);
     if(action_sugar_grp1 == 'EditView'){
-        a.innerHTML = "<button type='button' id='aor_fields_delete_line" + fieldln + "' class='button' value='' tabindex='116' onclick='markFieldLineDeleted(" + fieldln + ")'><img src='themes/default/images/id-ff-remove-nobg.png' alt=''></button><br>";
+        a.innerHTML = "<button type='button' id='aor_fields_delete_line" + fieldln + "' class='button' value='' tabindex='116' onclick='markFieldLineDeleted(" + fieldln + ")'>-</button><br>";
         a.innerHTML += "<input type='hidden' name='aor_fields_deleted[" + fieldln + "]' id='aor_fields_deleted" + fieldln + "' value='0'><input type='hidden' name='aor_fields_id[" + fieldln + "]' id='aor_fields_id" + fieldln + "' value=''>";
     } else{
         a.innerHTML = fieldln +1;
@@ -372,7 +357,7 @@ function insertFieldLine(){
 function markFieldLineDeleted(ln)
 {
     // collapse line; update deleted value
-    document.getElementById('aor_fields_body' + ln).style.display = 'none';
+    document.getElementById('field_line' + ln).style.display = 'none';
     document.getElementById('aor_fields_deleted' + ln).value = '1';
     document.getElementById('aor_fields_delete_line' + ln).onclick = '';
 

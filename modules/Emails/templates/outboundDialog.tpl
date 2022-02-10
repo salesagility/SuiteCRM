@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,10 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 <div id="outboundServers">
 	<form id="outboundEmailForm">
@@ -97,9 +97,15 @@
                 <td colspan="4">
                     <div id="smtp_settings">
                         <table width="100%" cellpadding="0" cellspacing="1">
+                            <tr>
+                                <td width="20%" scope="row" nowrap="nowrap"><span>{sugar_translate module='EmailMan' label='LBL_NOTIFY_FROMNAME'}:</span><span class="required" id="required_smtp_from_name">{$app_strings.LBL_REQUIRED_SYMBOL}</span></td>
+                                <td width="30%" ><input type="text" name="smtp_from_name" id="smtp_from_name" size="30" value="" title=""></td>
+                                <td width="20%" scope="row" nowrap="nowrap"><span>{sugar_translate module='EmailMan' label='LBL_NOTIFY_FROMADDRESS'}:</span><span class="required" id="required_smtp_from_addr">{$app_strings.LBL_REQUIRED_SYMBOL}</span></td>
+                                <td width="30%" ><input type="text" name="smtp_from_addr" id="smtp_from_addr" size="30" value="" title=""></td>
+                            </tr>
                             <tr id="mailsettings1">
                                 <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtpserver_label">{sugar_translate module='Emails' label='LBL_MAIL_SMTPSERVER'}</span> <span class="required" id="required_mail_smtpserver">{$app_strings.LBL_REQUIRED_SYMBOL}</span></td>
-                                <td width="30%" ><slot><input type="text" id="mail_smtpserver" name="mail_smtpserver" tabindex="1" size="25" maxlength="64"></slot></td>
+                                <td width="30%" ><slot><input type="text" id="mail_smtpserver" name="mail_smtpserver" tabindex="1" size="25" maxlength="255"></slot></td>
                                 <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtpport_label">{sugar_translate module='Emails' label='LBL_MAIL_SMTPPORT'}</span></td>
                                 <td width="30%" ><input type="text" id="mail_smtpport" name="mail_smtpport" tabindex="1" size="5" maxlength="5"></td>
                             </tr>
@@ -117,14 +123,14 @@
                             </tr>
                             <tr id="smtp_auth1">
                                 <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtpuser_label">{sugar_translate module='Emails' label='LBL_MAIL_SMTPUSER'}</span> <span class="required">{$app_strings.LBL_REQUIRED_SYMBOL}</span></td>
-                                <td width="30%" ><slot><input type="text" id="mail_smtpuser" name="mail_smtpuser" size="25" maxlength="64" tabindex='1' ></slot></td>
+                                <td width="30%" ><slot><input type="text" id="mail_smtpuser" name="mail_smtpuser" size="25" maxlength="255" tabindex='1' ></slot></td>
                                 <td >&nbsp;</td>
                                 <td >&nbsp;</td>
                             </tr>
                             <tr id="smtp_auth2">
                                 <td width="20%" scope="row" nowrap="nowrap"><span id="mail_smtppass_label">{sugar_translate module='Emails' label='LBL_MAIL_SMTPPASS'}</span> <span class="required">{$app_strings.LBL_REQUIRED_SYMBOL}</span></td>
                                 <td width="30%" ><slot>
-                                <input type="password" id="mail_smtppass" name="mail_smtppass" size="25" maxlength="64" abindex='1'>
+                                <input type="password" id="mail_smtppass" name="mail_smtppass" size="25" maxlength="255" abindex='1'>
                                 <a href="javascript:void(0)" id='mail_smtppass_link' onClick="SUGAR.util.setEmailPasswordEdit('mail_smtppass')" style="display: none">{$app_strings.LBL_CHANGE_PASSWORD}</a>
                                 </slot></td>
                                 <td >&nbsp;</td>

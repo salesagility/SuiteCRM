@@ -5,7 +5,7 @@
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -21,7 +21,7 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author SalesAgility Ltd <support@salesagility.com>
  */
 
 /*
@@ -31,24 +31,23 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
   $searchdefs['AOS_PDF_Templates'] = array(
-					'templateMeta' => array(
-							'maxColumns' => '3', 
-                            'widths' => array('label' => '10', 'field' => '30'),                 
+                    'templateMeta' => array(
+                            'maxColumns' => '3',
+                            'widths' => array('label' => '10', 'field' => '30'),
                            ),
-                    'layout' => array(  					
-						'basic_search' => array(
-							'name',
-							array('name'=>'current_user_only', 'label'=>'LBL_CURRENT_USER_FILTER', 'type'=>'bool'),
-							array ('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
-							),
-						'advanced_search' => array(
-							'name',
-							'date_entered',
-							'date_modified',
-							'type',
-							array('name' => 'created_by', 'label' => 'LBL_CREATED', 'type' => 'enum', 'function' => array('name' => 'get_user_array', 'params' => array(false))),
-													
-							),
-					),
- 			   );
-?>
+                    'layout' => array(
+                        'basic_search' => array(
+                            'name',
+                            array('name'=>'current_user_only', 'label'=>'LBL_CURRENT_USER_FILTER', 'type'=>'bool'),
+                            array('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
+                            ),
+                        'advanced_search' => array(
+                            'name',
+                            'date_entered',
+                            'date_modified',
+                            'type',
+                            array('name' => 'created_by', 'label' => 'LBL_CREATED', 'type' => 'enum', 'function' => array('name' => 'get_user_array', 'params' => array(false))),
+                                                    
+                            ),
+                    ),
+               );

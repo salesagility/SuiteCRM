@@ -1,11 +1,11 @@
 <?php
-if (!defined('sugarEntry')) define('sugarEntry', true);
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if (!defined('sugarEntry')) define('sugarEntry', true);
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@ if (!defined('sugarEntry')) define('sugarEntry', true);
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 /**
@@ -81,70 +85,109 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
      *               'relationship_list' -- Array - The records link field data. The example is if asked about accounts contacts email address then return data would look like Array ( [0] => Array ( [name] => email_addresses [records] => Array ( [0] => Array ( [0] => Array ( [name] => id [value] => 3fb16797-8d90-0a94-ac12-490b63a6be67 ) [1] => Array ( [name] => email_address [value] => hr.kid.qa@example.com ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 1 ) ) [1] => Array ( [0] => Array ( [name] => id [value] => 403f8da1-214b-6a88-9cef-490b63d43566 ) [1] => Array ( [name] => email_address [value] => kid.hr@example.name ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 0 ) ) ) ) )
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    function get_relationships($session, $module_name, $module_id, $link_field_name, $related_module_query, $related_fields, $related_module_link_name_to_fields_array, $deleted, $order_by = '', $offset = 0, $limit = false)
-    {
+    public function get_relationships(
+        $session,
+        $module_name,
+        $module_id,
+        $link_field_name,
+        $related_module_query,
+        $related_fields,
+        $related_module_link_name_to_fields_array,
+        $deleted,
+        $order_by = '',
+        $offset = 0,
+        $limit = false
+    ) {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_relationships');
         self::$helperObject = new SugarWebServiceUtilv4_1();
-        global  $beanList, $beanFiles;
-    	$error = new SoapError();
+        global $beanList, $beanFiles;
+        $error = new SoapError();
 
-    	if (!self::$helperObject->checkSessionAndModuleAccess($session, 'invalid_session', $module_name, 'read', 'no_access', $error)) {
-    		$GLOBALS['log']->info('End: SugarWebServiceImpl->get_relationships');
-    		return;
-    	} // if
+        if (!self::$helperObject->checkSessionAndModuleAccess(
+            $session,
+            'invalid_session',
+            $module_name,
+            'read',
+            'no_access',
+            $error
+        )
+        ) {
+            $GLOBALS['log']->info('End: SugarWebServiceImpl->get_relationships');
 
-    	$mod = BeanFactory::getBean($module_name, $module_id);
+            return;
+        } // if
+
+        $mod = BeanFactory::getBean($module_name, $module_id);
 
         if (!self::$helperObject->checkQuery($error, $related_module_query, $order_by)) {
-    		$GLOBALS['log']->info('End: SugarWebServiceImpl->get_relationships');
-        	return;
+            $GLOBALS['log']->info('End: SugarWebServiceImpl->get_relationships');
+
+            return;
         } // if
 
         if (!self::$helperObject->checkACLAccess($mod, 'DetailView', $error, 'no_access')) {
-    		$GLOBALS['log']->info('End: SugarWebServiceImpl->get_relationships');
-        	return;
+            $GLOBALS['log']->info('End: SugarWebServiceImpl->get_relationships');
+
+            return;
         } // if
 
         $output_list = array();
-    	$linkoutput_list = array();
+        $linkoutput_list = array();
 
-    	// get all the related modules data.
-        $result = self::$helperObject->getRelationshipResults($mod, $link_field_name, $related_fields, $related_module_query, $order_by, $offset, $limit);
+        // get all the related modules data.
+        $result = self::$helperObject->getRelationshipResults(
+            $mod,
+            $link_field_name,
+            $related_fields,
+            $related_module_query,
+            $order_by,
+            $offset,
+            $limit
+        );
 
         if (self::$helperObject->isLogLevelDebug()) {
-    		$GLOBALS['log']->debug('SoapHelperWebServices->get_relationships - return data for getRelationshipResults is ' . var_export($result, true));
+            $GLOBALS['log']->debug('SoapHelperWebServices->get_relationships - return data for getRelationshipResults is ' . var_export(
+                $result,
+                true
+            ));
         } // if
-    	if ($result) {
+        if ($result) {
+            $list = $result['rows'];
+            $filterFields = $result['fields_set_on_rows'];
 
-    		$list = $result['rows'];
-    		$filterFields = $result['fields_set_on_rows'];
-
-    		if (sizeof($list) > 0) {
-    			// get the related module name and instantiate a bean for that
-    			$submodulename = $mod->$link_field_name->getRelatedModuleName();
+            if (count($list) > 0) {
+                // get the related module name and instantiate a bean for that
+                $submodulename = $mod->$link_field_name->getRelatedModuleName();
                 $submoduletemp = BeanFactory::getBean($submodulename);
 
-    			foreach($list as $row) {
-    				$submoduleobject = @clone($submoduletemp);
-    				// set all the database data to this object
-    				foreach ($filterFields as $field) {
-    					$submoduleobject->$field = $row[$field];
-    				} // foreach
-    				if (isset($row['id'])) {
-    					$submoduleobject->id = $row['id'];
-    				}
-    				$output_list[] = self::$helperObject->get_return_value_for_fields($submoduleobject, $submodulename, $filterFields);
-    				if (!empty($related_module_link_name_to_fields_array)) {
-    					$linkoutput_list[] = self::$helperObject->get_return_value_for_link_fields($submoduleobject, $submodulename, $related_module_link_name_to_fields_array);
-    				} // if
+                foreach ($list as $row) {
+                    $submoduleobject = @clone($submoduletemp);
+                    // set all the database data to this object
+                    foreach ($filterFields as $field) {
+                        $submoduleobject->$field = $row[$field];
+                    } // foreach
+                    if (isset($row['id'])) {
+                        $submoduleobject->id = $row['id'];
+                    }
+                    $output_list[] = self::$helperObject->get_return_value_for_fields(
+                        $submoduleobject,
+                        $submodulename,
+                        $filterFields
+                    );
+                    if (!empty($related_module_link_name_to_fields_array)) {
+                        $linkoutput_list[] = self::$helperObject->get_return_value_for_link_fields(
+                            $submoduleobject,
+                            $submodulename,
+                            $related_module_link_name_to_fields_array
+                        );
+                    } // if
+                } // foreach
+            }
+        } // if
 
-    			} // foreach
-    		}
+        $GLOBALS['log']->info('End: SugarWebServiceImpl->get_relationships');
 
-    	} // if
-
-    	$GLOBALS['log']->info('End: SugarWebServiceImpl->get_relationships');
-    	return array('entry_list'=>$output_list, 'relationship_list' => $linkoutput_list);
+        return array('entry_list' => $output_list, 'relationship_list' => $linkoutput_list);
     }
 
 
@@ -155,74 +198,136 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
      * help facilitate sync operations.  The module_name should be "Users" and the related_module one of "Meetings", "Calls" and
      * "Contacts".
      *
-     * @param xsd:string $session String of the session id
-     * @param xsd:string $module_name String value of the primary module to retrieve relationship against
-     * @param xsd:string $related_module String value of the related module to retrieve records off of
-     * @param xsd:string $from_date String value in YYYY-MM-DD HH:MM:SS format of date_start range (required)
-     * @param xsd:string $to_date String value in YYYY-MM-DD HH:MM:SS format of ending date_start range (required)
-     * @param xsd:int $offset Integer value of the offset to begin returning records from
-     * @param xsd:int $max_results Integer value of the max_results to return; -99 for unlimited
-     * @param xsd:int $deleted Integer value indicating deleted column value search (defaults to 0).  Set to 1 to find deleted records
-     * @param xsd:string $module_user_id String value of the user id (optional, but defaults to SOAP session user id anyway)  The module_user_id value
+     * @param xsd :string $session String of the session id
+     * @param xsd :string $module_name String value of the primary module to retrieve relationship against
+     * @param xsd :string $related_module String value of the related module to retrieve records off of
+     * @param xsd :string $from_date String value in YYYY-MM-DD HH:MM:SS format of date_start range (required)
+     * @param xsd :string $to_date String value in YYYY-MM-DD HH:MM:SS format of ending date_start range (required)
+     * @param xsd :int $offset Integer value of the offset to begin returning records from
+     * @param xsd :int $max_results Integer value of the max_results to return; -99 for unlimited
+     * @param xsd :int $deleted Integer value indicating deleted column value search (defaults to 0).  Set to 1 to find deleted records
+     * @param xsd :string $module_user_id String value of the user id (optional, but defaults to SOAP session user id anyway)  The module_user_id value
      * here ought to be the user id of the user initiating the SOAP session
-     * @param tns:select_fields $select_fields Array value of fields to select and return as name/value pairs
-     * @param xsd:string $relationship_name String value of the relationship name to search on
-     * @param xsd:string $deletion_date String value in YYYY-MM-DD HH:MM:SS format for filtering on deleted records whose date_modified falls within range
+     * @param tns :select_fields $select_fields Array value of fields to select and return as name/value pairs
+     * @param xsd :string $relationship_name String value of the relationship name to search on
+     * @param xsd :string $deletion_date String value in YYYY-MM-DD HH:MM:SS format for filtering on deleted records whose date_modified falls within range
      * this allows deleted records to be returned as well
      *
      * @return Array records that match search criteria
      */
-    function get_modified_relationships($session, $module_name, $related_module, $from_date, $to_date, $offset, $max_results, $deleted=0, $module_user_id = '', $select_fields = array(), $relationship_name = '', $deletion_date = ''){
-        global  $beanList, $beanFiles, $current_user;
+    public function get_modified_relationships(
+        $session,
+        $module_name,
+        $related_module,
+        $from_date,
+        $to_date,
+        $offset,
+        $max_results,
+        $deleted = 0,
+        $module_user_id = '',
+        $select_fields = array(),
+        $relationship_name = '',
+        $deletion_date = ''
+    ) {
+        global $beanList, $beanFiles, $current_user;
         $error = new SoapError();
         $output_list = array();
 
-        if(empty($from_date))
-        {
+        if (empty($from_date)) {
             $error->set_error('invalid_call_error, missing from_date');
-            return array('result_count'=>0, 'next_offset'=>0, 'field_list'=>$select_fields, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
+
+            return array(
+                'result_count' => 0,
+                'next_offset' => 0,
+                'field_list' => $select_fields,
+                'entry_list' => array(),
+                'error' => $error->get_soap_array()
+            );
         }
 
-        if(empty($to_date))
-        {
+        if (empty($to_date)) {
             $error->set_error('invalid_call_error, missing to_date');
-            return array('result_count'=>0, 'next_offset'=>0, 'field_list'=>$select_fields, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
+
+            return array(
+                'result_count' => 0,
+                'next_offset' => 0,
+                'field_list' => $select_fields,
+                'entry_list' => array(),
+                'error' => $error->get_soap_array()
+            );
         }
 
         self::$helperObject = new SugarWebServiceUtilv4_1();
-        if (!self::$helperObject->checkSessionAndModuleAccess($session, 'invalid_session', $module_name, 'read', 'no_access', $error))
-        {
-       		$GLOBALS['log']->info('End: SugarWebServiceImpl->get_modified_relationships');
-       		return;
-       	} // if
+        if (!self::$helperObject->checkSessionAndModuleAccess(
+            $session,
+            'invalid_session',
+            $module_name,
+            'read',
+            'no_access',
+            $error
+        )
+        ) {
+            $GLOBALS['log']->info('End: SugarWebServiceImpl->get_modified_relationships');
 
-        if(empty($beanList[$module_name]) || empty($beanList[$related_module]))
-        {
+            return;
+        } // if
+
+        if (empty($beanList[$module_name]) || empty($beanList[$related_module])) {
             $error->set_error('no_module');
-            return array('result_count'=>0, 'next_offset'=>0, 'field_list'=>$select_fields, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
+
+            return array(
+                'result_count' => 0,
+                'next_offset' => 0,
+                'field_list' => $select_fields,
+                'entry_list' => array(),
+                'error' => $error->get_soap_array()
+            );
         }
 
         global $current_user;
-        if(!self::$helperObject->check_modules_access($current_user, $module_name, 'read') || !self::$helperObject->check_modules_access($current_user, $related_module, 'read')){
+        if (!self::$helperObject->check_modules_access(
+            $current_user,
+            $module_name,
+            'read'
+        ) || !self::$helperObject->check_modules_access($current_user, $related_module, 'read')
+        ) {
             $error->set_error('no_access');
-            return array('result_count'=>0, 'next_offset'=>0, 'field_list'=>$select_fields, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
+
+            return array(
+                'result_count' => 0,
+                'next_offset' => 0,
+                'field_list' => $select_fields,
+                'entry_list' => array(),
+                'error' => $error->get_soap_array()
+            );
         }
 
-        if($max_results > 0 || $max_results == '-99'){
+        if ($max_results > 0 || $max_results == '-99') {
             global $sugar_config;
             $sugar_config['list_max_entries_per_page'] = $max_results;
         }
 
         // Cast to integer
         $deleted = (int)$deleted;
-        $query = "(m1.date_modified > " . db_convert("'".$GLOBALS['db']->quote($from_date)."'", 'datetime'). " AND m1.date_modified <= ". db_convert("'".$GLOBALS['db']->quote($to_date)."'", 'datetime')." AND {0}.deleted = $deleted)";
-        if(isset($deletion_date) && !empty($deletion_date)){
-            $query .= " OR ({0}.date_modified > " . db_convert("'".$GLOBALS['db']->quote($deletion_date)."'", 'datetime'). " AND {0}.date_modified <= ". db_convert("'".$GLOBALS['db']->quote($to_date)."'", 'datetime')." AND {0}.deleted = 1)";
+        $query = "(m1.date_modified > " . DBManagerFactory::getInstance()->convert(
+            "'" . DBManagerFactory::getInstance()->quote($from_date) . "'",
+            'datetime'
+        ) . " AND m1.date_modified <= " . DBManagerFactory::getInstance()->convert(
+            "'" . DBManagerFactory::getInstance()->quote($to_date) . "'",
+            'datetime'
+                ) . " AND {0}.deleted = $deleted)";
+        if (isset($deletion_date) && !empty($deletion_date)) {
+            $query .= " OR ({0}.date_modified > " . DBManagerFactory::getInstance()->convert(
+                "'" . DBManagerFactory::getInstance()->quote($deletion_date) . "'",
+                'datetime'
+            ) . " AND {0}.date_modified <= " . DBManagerFactory::getInstance()->convert(
+                "'" . DBManagerFactory::getInstance()->quote($to_date) . "'",
+                'datetime'
+                    ) . " AND {0}.deleted = 1)";
         }
 
-        if(!empty($current_user->id))
-        {
-            $query .= " AND m2.id = '".$GLOBALS['db']->quote($current_user->id)."'";
+        if (!empty($current_user->id)) {
+            $query .= " AND m2.id = '" . DBManagerFactory::getInstance()->quote($current_user->id) . "'";
         }
 
         //if($related_module == 'Meetings' || $related_module == 'Calls' || $related_module = 'Contacts'){
@@ -230,23 +335,30 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
         //}
 
         require_once('soap/SoapRelationshipHelper.php');
-        $results = retrieve_modified_relationships($module_name, $related_module, $query, $deleted, $offset, $max_results, $select_fields, $relationship_name);
+        $results = retrieve_modified_relationships(
+            $module_name,
+            $related_module,
+            $query,
+            $deleted,
+            $offset,
+            $max_results,
+            $select_fields,
+            $relationship_name
+        );
 
         $list = $results['result'];
 
-        foreach($list as $value)
-        {
-             $output_list[] = self::$helperObject->array_get_return_value($value, $results['table_name']);
+        foreach ($list as $value) {
+            $output_list[] = self::$helperObject->array_get_return_value($value, $results['table_name']);
         }
 
         $next_offset = $offset + count($output_list);
 
         return array(
-            'result_count'=> count($output_list),
+            'result_count' => count($output_list),
             'next_offset' => $next_offset,
             'entry_list' => $output_list,
             'error' => $error->get_soap_array()
         );
     }
-
 }

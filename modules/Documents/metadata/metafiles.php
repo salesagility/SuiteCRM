@@ -8,4 +8,3 @@ $metafiles['Documents'] = array(
     'searchfields'	  =>    'modules/Documents/metadata/SearchFields.php',
 
 );
-?>

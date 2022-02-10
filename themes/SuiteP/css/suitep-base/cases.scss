@@ -1,0 +1,83 @@
+/**** Cases ***/
+
+#caseStyleUser {
+  background: $case-user-bg;
+  color: $case-user-color;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid $case-user-border-color;
+  border-radius: $border-radius-base;
+}
+
+#caseStyleContact {
+  background: $case-contact-bg;
+  color: $case-contact-color;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid $case-contact-border-color;
+  border-radius: $border-radius-base;
+}
+
+#caseStyleInternal {
+  background: $case-internal-bg;
+  color: $case-internal-color;
+  padding: 10px;
+  margin: 10px 60px 10px 10px;
+  border: 1px solid $case-internal-border-color;
+  border-radius: $border-radius-base;
+}
+
+.caseUpdateImage {
+  margin: 0 5px 0 0;
+}
+/** Style expanded/collapse like buttons**/
+#aop_case_updates_threaded_span > a:first-of-type {
+  margin-left: 10px;
+}
+
+#aop_case_updates_threaded_span > a {
+  display: inline-block;
+  font-size: 13px;
+  font-size: 13px;
+  font-weight: 500;
+  background-color: $danger-btn-bg;
+  color: $default-btn-color;
+  cursor: pointer;
+  cursor: pointer;
+  padding: 0 20px 0 20px;
+  margin-bottom: 4px;
+  margin-right: 4px;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+  letter-spacing: 1px;
+  line-height: $button-line-height;
+  height: $button-line-height;
+  text-transform: uppercase;
+}
+
+
+#case_updates label {
+  margin-left: 10px;
+}
+
+#case_updates textarea {
+  margin-left: 10px;
+}
+
+#case_updates input[type=button] {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+
+.caseUpdate {
+  margin: 5px 0 0 15px;
+}
+
+#extramargin {
+  margin: 0 50px 0 50px;
+}
+
+#lessmargin {
+  margin: 0 50px 0 0;
+}

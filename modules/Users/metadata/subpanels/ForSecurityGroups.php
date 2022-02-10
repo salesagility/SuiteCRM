@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $subpanel_layout = array(
     'top_buttons' => array(
@@ -49,11 +51,11 @@ $subpanel_layout = array(
             'vname' => 'LBL_LIST_EMAIL',
             'width' => '20%',
         ),
-        'phone_work'=>array (
+        'phone_work'=>array(
             'name'=>'phone_work',
             'vname' => 'LBL_LIST_PHONE',
             'width' => '10%',
-        ),      
+        ),
         'edit_button'=>array(
             'widget_class' => 'SubPanelEditSecurityGroupUserButton',
             'securitygroup_noninherit_id'=>'securitygroup_noninherit_id',
@@ -68,5 +70,3 @@ $subpanel_layout = array(
         ),
     ),
 );
-
-?>

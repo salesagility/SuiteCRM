@@ -1,14 +1,11 @@
 <?php
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -19,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -37,15 +34,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
- * Description:
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
- * Reserved. Contributor(s): ______________________________________..
- * *******************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+
 logThis('[At end.php]');
 global $unzip_dir;
 global $path;
@@ -79,10 +76,10 @@ foreach ($beanFiles as $bean => $file) {
     if (file_exists($file)) {
         require_once $file;
         unset($GLOBALS['dictionary'][$bean]);
-        $focus = new $bean ();
+        $focus = new $bean();
         if (($focus instanceof SugarBean)) {
             if (!isset($repairedTables[$focus->table_name])) {
-                $sql = $GLOBALS['db']->repairTable($focus, true);
+                $sql = DBManagerFactory::getInstance()->repairTable($focus, true);
                 if (trim($sql) != '') {
                     logThis('Running sql:'.$sql, $path);
                 }
@@ -115,7 +112,7 @@ foreach ($dictionary as $meta) {
     }
     $fielddefs = $meta['fields'];
     $indices = $meta['indices'];
-    $sql = $GLOBALS['db']->repairTableParams($tablename, $fielddefs, $indices, true);
+    $sql = DBManagerFactory::getInstance()->repairTableParams($tablename, $fielddefs, $indices, true);
     if (trim($sql) != '') {
         logThis('Running sql:'.$sql, $path);
     }
@@ -170,7 +167,7 @@ if (isset($_SESSION['current_db_version']) && isset($_SESSION['target_db_version
         $db = &DBManagerFactory::getInstance();
         if ($ce_to_pro_ent) {
             //Also set license information
-            $admin = new Administration();
+            $admin = BeanFactory::newBean('Administration');
             $category = 'license';
             $value = '0';
             $admin->saveSetting($category, 'users', $value);
@@ -184,7 +181,7 @@ if (isset($_SESSION['current_db_version']) && isset($_SESSION['target_db_version
 }
 
 // Mark the instance as having gone thru the admin wizard
-$admin = new Administration();
+$admin = BeanFactory::newBean('Administration');
 $admin->saveSetting('system', 'adminwizard', 1);
 
 //Upgrade connectors
@@ -212,6 +209,10 @@ require_once 'modules/Administration/upgrade_custom_relationships.php';
 upgrade_custom_relationships();
 
 require_once 'modules/UpgradeWizard/uw_utils.php';
+
+// guarantee the cron user check mechanism works for people upgrading from systems installed before the check existed:
+require_once 'include/utils.php';
+addCronAllowedUser(getRunningUser());
 
 set_upgrade_progress('end', 'done');
 
@@ -270,6 +271,9 @@ $cleanUrl = "{$parsedSiteUrl['scheme']}://{$host}{$port}{$path}/index.php";
 check_now(get_sugarbeat());
 ob_end_clean();*/
 
+include 'PasswordExpirationService.php';
+$expirationMessage = (new PasswordExpirationService())->getExpirationMessage();
+
 $uwMain = <<<eoq
 <table cellpadding="3" cellspacing="0" border="0">
 
@@ -282,6 +286,8 @@ $uwMain = <<<eoq
 			<br>
             <b>{$mod_strings['LBL_UW_END_LOGOUT_PRE']}</b> {$mod_strings['LBL_UW_END_LOGOUT']}
 			</p>
+			<br>
+			<p>{$expirationMessage}</p>
 		</td>
 	</tr>
 </table>
@@ -314,3 +320,9 @@ $stepRecheck = 0;
 $_SESSION['step'][$steps['files'][$_REQUEST['step']]] = ($stop) ? 'failed' : 'success';
 unset($_SESSION['current_db_version']);
 unset($_SESSION['target_db_version']);
+
+
+ob_start();
+include __DIR__ . '/../Administration/UpgradeAccess.php';
+echo $cnt = ob_get_contents();
+ob_get_clean();

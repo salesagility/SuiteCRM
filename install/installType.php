@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,14 +37,14 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 
 
 
-if( !isset( $install_script ) || !$install_script ){
+if (!isset($install_script) || !$install_script) {
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 // $mod_strings come from calling page.
@@ -50,19 +53,17 @@ $langDropDown = get_select_options_with_id($supportedLanguages, $current_languag
 
 
 
-if( !isset($_SESSION['licenseKey_submitted']) || !$_SESSION['licenseKey_submitted'] ) {
+if (!isset($_SESSION['licenseKey_submitted']) || !$_SESSION['licenseKey_submitted']) {
     $_SESSION['setup_license_key_users']        = 0;
     $_SESSION['setup_license_key_expire_date']  = "";
     $_SESSION['setup_license_key']              = "";
     $_SESSION['setup_num_lic_oc']              = 0;
-
 } else {
-
 }
 
 //php version suggestion
 $php_suggested_ver = '';
-if(version_compare(phpversion(),'5.2.2') < 0){
+if (check_php_version() === -1) {
     $php_suggested_ver=$mod_strings['LBL_YOUR_PHP_VERSION'].phpversion().$mod_strings['LBL_RECOMMENDED_PHP_VERSION'];
 }
 
@@ -78,10 +79,10 @@ $out = <<<EOQ
     <meta http-equiv="Content-Style-Type" content="text/css">
     <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_INSTALL_TYPE_TITLE']}</title>   <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
     <link rel="stylesheet" href="install/install.css" type="text/css">
-    <link rel="stylesheet" href="themes/Suite7/css/responsiveslides.css" type="text/css">
-    <link rel="stylesheet" href="themes/Suite7/css/themes.css" type="text/css">
-    <link rel="stylesheet" href="themes/Suite7/css/fontello.css">
-    <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
+    <link rel="stylesheet" href="themes/SuiteP/css/responsiveslides.css" type="text/css">
+    <link rel="stylesheet" href="themes/SuiteP/css/themes.css" type="text/css">
+    <link rel="stylesheet" href="themes/SuiteP/css/fontello.css">
+    <link rel="stylesheet" href="themes/SuiteP/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
     <script src="include/javascript/jquery/jquery-min.js"></script>
 </head>
 <body onload="javascript:document.getElementById('button_next').focus();">
@@ -98,12 +99,11 @@ EOQ;
 
 $typical_checked ='checked';
 $custom_checked ='';
-if(isset($_SESSION['install_type']) && $_SESSION['install_type']=='custom'){
+if (isset($_SESSION['install_type']) && $_SESSION['install_type']=='custom') {
     $typical_checked ='';
     $custom_checked ='checked';
-
-}else{
-//do nothing because defaults handle this condition
+} else {
+    //do nothing because defaults handle this condition
 }
 
 $out .= <<<EOQ2
@@ -129,11 +129,10 @@ $out .= <<<EOQ2
             </form>
         </div>
         <footer id="install_footer">
-    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
+    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/suitecrm/forum" target="_blank">Support Forums</a> | <a href="https://docs.suitecrm.com/admin/installation-guide/" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
 </footer>
 </div>
 </body>
 </html>
 EOQ2;
 echo $out;
-?>
