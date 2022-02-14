@@ -364,7 +364,7 @@ class Bug extends SugarBean
         $xtpl->assign("BUG_STATUS", $app_list_strings['bug_status_dom'][$bug->status]);
         $xtpl->assign("BUG_RESOLUTION", $app_list_strings['bug_resolution_dom'][$bug->resolution]);
         $xtpl->assign("BUG_RELEASE", $bug->release_name);
-        $xtpl->assign("BUG_DESCRIPTION", $bug->description);
+        $xtpl->assign("BUG_DESCRIPTION", nl2br($bug->description));
         $xtpl->assign("BUG_WORK_LOG", $bug->work_log);
         $xtpl->assign("BUG_BUG_NUMBER", $bug->bug_number);
         return $xtpl;

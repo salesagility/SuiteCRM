@@ -587,7 +587,7 @@ class Call extends SugarBean
         $xtpl->assign("CALL_HOURS", $call->duration_hours);
         $xtpl->assign("CALL_MINUTES", $call->duration_minutes);
         $xtpl->assign("CALL_STATUS", ((isset($call->status))?$app_list_strings['call_status_dom'][$call->status] : ""));
-        $xtpl->assign("CALL_DESCRIPTION", $call->description);
+        $xtpl->assign("CALL_DESCRIPTION", nl2br($call->description));
 
         return $xtpl;
     }
