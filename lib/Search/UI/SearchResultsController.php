@@ -86,6 +86,16 @@ class SearchResultsController extends Controller
         $this->results = $results;
     }
 
+    public function getQuery(): SearchQuery
+    {
+        return $this->query;
+    }
+
+    public function getResults(): SearchResults
+    {
+        return $this->results;
+    }
+
     public function display(): void
     {
         $headers = [];
