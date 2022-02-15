@@ -1863,7 +1863,7 @@ div.qtip.qtip-default {
 }
 
 .search_form .view .dateTimeRangeChoice select {
-  width: 90px;
+  width: 130px;
   margin-right: 4px;
 }
 
@@ -3422,7 +3422,7 @@ ul.clickMenu > li > span.searchAppliedAlert {
 
 .search_form.non-popup input[type="text"] {
   border: none;
-  height: 20px;
+  height: 28px;
   min-height: 20px;
   padding: 5px;
   line-height: 20px;
@@ -3430,10 +3430,11 @@ ul.clickMenu > li > span.searchAppliedAlert {
 
 .search_form.non-popup select {
   border: none;
-  height: 20px;
+  height: 28px;
   min-height: 20px;
   padding: 5px;
   line-height: 20px;
+  width: 150px;
 }
 
 .search_form.non-popup textarea {
