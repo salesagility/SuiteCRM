@@ -95,7 +95,12 @@ class DetailView2 extends EditView
             $this->showVCRControl = !$GLOBALS['sugar_config']['disable_vcr'];
         }
         if (!empty($this->metadataFile) && file_exists($this->metadataFile)) {
+            // issue_9514 ( require echoes a whitespace, so we will discard that whitespace )
+            ob_start();
             require($this->metadataFile);
+            $discardableContent = ob_get_contents();
+            ob_end_clean();
+            unset( $discardableContent );
         } else {
             //If file doesn't exist we create a best guess
             if (!file_exists("modules/$this->module/metadata/$metadataFileName.php") &&
