@@ -349,7 +349,7 @@
     };
 
 
-    self.updateSignature = function () {
+    $.fn.EmailsComposeView.updateSignature = self.updateSignature = function () {
       var inboundId = $('#from_addr_name').find('option:selected').attr('inboundId');
       if (inboundId === undefined) {
         console.warn('Unable to retrieve selected inbound id in the "From" field.');
@@ -1340,6 +1340,7 @@
         $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse(response);
         $(form).find('[name="name"]').val(response.data.subject);
         tinymce.activeEditor.setContent(response.data.body_from_html, {format: 'html'});
+        $.fn.EmailsComposeView.updateSignature();
       });
       set_return(args);
     };
