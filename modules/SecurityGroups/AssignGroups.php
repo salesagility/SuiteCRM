@@ -12,8 +12,8 @@ class AssignGroups
 
         //only process if action is Save (meaning a user has triggered this event and not the portal or automated process)
         if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'Save'
-        && isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true
-        && empty($bean->fetched_row['id']) && $bean->module_dir != "Users" && $bean->module_dir != "SugarFeed") {
+            && isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true
+            && empty($bean->fetched_row['id']) && $bean->module_dir != "Users" && $bean->module_dir != "SugarFeed") {
             //Upload an attachment to an Email Template and save. If user with multi groups - popup select option
             //it will redirect to notes instead of EmailTemplate and relationship will fail...check below to avoid
             if (!empty($_REQUEST['module']) && $_REQUEST['module'] != $bean->module_dir) {
@@ -26,7 +26,7 @@ class AssignGroups
                 //sanity check
                 if (in_array($bean->module_dir, array_keys($security_modules))) {
                     //add each group in securitygroup_list to new record
-                    $rel_name = SecurityGroup::getLinkName($bean->module_dir,"SecurityGroups");
+                    $rel_name = SecurityGroup::getLinkName($bean->module_dir, "SecurityGroups");
 
                     $bean->load_relationship($rel_name);
                     foreach ($_REQUEST['securitygroup_list'] as $group_id) {
@@ -42,8 +42,8 @@ class AssignGroups
                 $_SESSION['securitysuite_error'] = $ss_mod_strings['LBL_ERROR_DUPLICATE'];
             }
         } elseif (isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true
-        && empty($bean->fetched_row['id']) && $bean->module_dir == "Users"
-        && isset($_REQUEST['action']) && $_REQUEST['action'] != 'SaveSignature') { //Bug: 589
+            && empty($bean->fetched_row['id']) && $bean->module_dir == "Users"
+            && isset($_REQUEST['action']) && $_REQUEST['action'] != 'SaveSignature') { //Bug: 589
 
             //$_REQUEST['return_module'] = $bean->module_dir;
             //$_REQUEST['return_action'] = "DetailView";
@@ -55,9 +55,9 @@ class AssignGroups
                 $_SESSION['securitygroups_popup'] = array();
             }
             $_SESSION['securitygroups_popup'][] = array(
-            'module' => $bean->module_dir,
-            'id' => $bean->id
-        );
+                'module' => $bean->module_dir,
+                'id' => $bean->id
+            );
         }
     }
 
@@ -69,9 +69,9 @@ class AssignGroups
         }
 
         /** //test user popup
-        	//always have this loaded
-        	echo '<script type="text/javascript" src="modules/SecurityGroups/javascript/popup_relate.js"></script>';
-        */
+         * //always have this loaded
+         * echo '<script type="text/javascript" src="modules/SecurityGroups/javascript/popup_relate.js"></script>';
+         */
         global $sugar_config;
 
         $action = null;
@@ -94,14 +94,14 @@ class AssignGroups
         }
 
         if ((
-            //(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true)
-            //||
+                //(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true)
+                //||
             ($module == "Users" && isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true)
-        )
+            )
 
-        //&& isset($_SESSION['securitygroups_popup_'.$module]) && !empty($_SESSION['securitygroups_popup_'.$module])
-        && !empty($_SESSION['securitygroups_popup'])
-    ) {
+            //&& isset($_SESSION['securitygroups_popup_'.$module]) && !empty($_SESSION['securitygroups_popup_'.$module])
+            && !empty($_SESSION['securitygroups_popup'])
+        ) {
             foreach ($_SESSION['securitygroups_popup'] as $popup_index => $popup) {
                 $record_id = $popup['id'];
                 $module = $popup['module'];
@@ -111,7 +111,7 @@ class AssignGroups
                 if ($module == 'Users') {
                     $rel_name = "SecurityGroups";
                 } else {
-                    $rel_name = SecurityGroup::getLinkName($module,"SecurityGroups");
+                    $rel_name = SecurityGroup::getLinkName($module, "SecurityGroups");
                 }
 
                 //this only works if on the detail view of the record actually saved...
@@ -144,13 +144,13 @@ EOQ;
             LoggerManager::getLogger()->warn('Not defined module in request');
         }
 
-  
-        $no_mass_assign_list = array("Emails"=>"Emails","ACLRoles"=>"ACLRoles"); //,"Users"=>"Users");
+
+        $no_mass_assign_list = array("Emails" => "Emails", "ACLRoles" => "ACLRoles"); //,"Users"=>"Users");
         //check if security suite enabled
         $action = strtolower($action);
         if (isset($module) && ($action == "list" || $action == "index" || $action == "listview")
-        && (!isset($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] != true)
-        && !array_key_exists($module, $no_mass_assign_list)
+            && (!isset($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] != true)
+            && !array_key_exists($module, $no_mass_assign_list)
         ) {
             global $current_user;
             if (is_admin($current_user) || ACLAction::getUserAccessLevel($current_user->id, "SecurityGroups", 'access') == ACL_ALLOW_ENABLED) {
@@ -167,14 +167,14 @@ EOQ;
                     $form_header = get_form_header($current_module_strings['LBL_MASS_ASSIGN'], '', false);
 
                     $groups = $groupFocus->get_list("name", "", 0, -99, -99);
-                    $options = array(""=>"");
+                    $options = array("" => "");
                     foreach ($groups['list'] as $group) {
                         $options[$group->id] = $group->name;
                     }
-                    $group_options =  get_select_options_with_id($options, "");
+                    $group_options = get_select_options_with_id($options, "");
 
-				    $export_where = !empty($_SESSION['export_where']) ? $_SESSION['export_where'] : '';
-				    $export_where_md5 = md5($export_where);
+                    $export_where = !empty($_SESSION['export_where']) ? $_SESSION['export_where'] : '';
+                    $export_where_md5 = md5($export_where);
 
                     $mass_assign = <<<EOQ
 
@@ -238,12 +238,15 @@ function send_massassign(mode, no_record_txt, start_string, end_string, del) {
 							ar.push(document.MassUpdate.elements[wp].value);
 				}
 			}
-			if(document.MassAssign_SecurityGroups.uid.value != '') document.MassAssign_SecurityGroups.uid.value += ',';
-			document.MassAssign_SecurityGroups.uid.value += ar.join(',');
-			if(document.MassAssign_SecurityGroups.uid.value == '') {
+			if(document.MassUpdate.uid.value != '') { 
+                document.MassUpdate.uid.value += ',';
+                document.MassUpdate.uid.value += ar.join(',');
+                document.MassAssign_SecurityGroups.uid.value = document.MassUpdate.uid.value;
+                if(document.MassAssign_SecurityGroups.uid.value == '') {
 				alert(no_record_txt);
 				return false;
-			}
+                }
+            }
 			break;
 		case 'entire':
 			var entireInput = document.createElement('input');
