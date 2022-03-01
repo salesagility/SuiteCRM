@@ -606,6 +606,10 @@ class User extends Person implements EmailInterface
     {
         global $current_user, $mod_strings;
 
+        if (!$this->hasSaveAccess()) {
+           throw new RuntimeException('Not authorized');
+        }
+
         $msg = '';
 
         $isUpdate = !empty($this->id) && !$this->new_with_id;
@@ -1591,6 +1595,11 @@ EOQ;
 
     public function create_export_query($order_by, $where, $relate_link_join = '')
     {
+        global $current_user;
+        if (!is_admin($current_user)) {
+            throw new RuntimeException('Not authorized');
+        }
+
         include('modules/Users/field_arrays.php');
 
         $cols = '';
@@ -2436,5 +2445,26 @@ EOQ;
             $subTheme = $sugarTheme->getSubThemeDefault();
         }
         return $subTheme;
+    }
+
+    /**
+     * Check if current user can save the current user record
+     * @return bool
+     */
+    protected function hasSaveAccess(): bool
+    {
+        global $current_user;
+
+        if (empty($this->id)) {
+            return true;
+        }
+
+        if (empty($current_user->id)) {
+            return true;
+        }
+
+        $sameUser = $current_user->id === $this->id;
+
+        return $sameUser || is_admin($current_user);
     }
 }
