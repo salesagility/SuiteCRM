@@ -186,6 +186,11 @@ class Employee extends Person
 
     public function create_export_query($order_by, $where, $relate_link_join = '')
     {
+        global $current_user;
+        if (!is_admin($current_user)) {
+            throw new RuntimeException('Not authorized');
+        }
+
         include('modules/Employees/field_arrays.php');
 
         $cols = '';

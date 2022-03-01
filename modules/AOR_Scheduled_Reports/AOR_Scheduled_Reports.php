@@ -83,9 +83,7 @@ class AOR_Scheduled_Reports extends basic
 
     public function save($check_notify = false)
     {
-        if (isset($_POST['email_recipients']) && is_array($_POST['email_recipients'])) {
-            $this->email_recipients = base64_encode(serialize($_POST['email_recipients']));
-        }
+        $this->parseRecipients();
 
         return parent::save($check_notify);
     }
@@ -180,7 +178,7 @@ class AOR_Scheduled_Reports extends basic
         }
 
         $lastRun = $this->last_run ? $timedate->fromDb($this->last_run) : $timedate->fromDb($this->date_entered);
-        
+
         $this->handleTimeZone($lastRun);
         $next = $cron->getNextRunDate($lastRun);
 
@@ -198,6 +196,28 @@ class AOR_Scheduled_Reports extends basic
         $timezone = new DateTimeZone($timezone);
         $offset = $timezone->getOffset($date);
         $date->modify($offset . 'second');
+    }
+
+    /**
+     * Parse and set recipients
+     * @return void
+     */
+    protected function parseRecipients(): void
+    {
+        $recipients = $_POST['email_recipients'] ?? null;
+        unset($_POST['email_recipients'], $_REQUEST['email_recipients'], $_GET['email_recipients']);
+        $this->email_recipients = null;
+
+        if (is_array($recipients)) {
+            $types = $recipients['email_target_type'] ?? [];
+            $emailInfo = $recipients['email'] ?? [];
+            $recipients = [
+                'email_target_type' => $types,
+                'email' => $emailInfo,
+            ];
+
+            $this->email_recipients = base64_encode(serialize($recipients));
+        }
     }
 
 }

@@ -123,7 +123,7 @@
         public function create_sugar_freebusy($user_bean, $start_date_time, $end_date_time)
         {
             $ical_array = array();
-            global $DO_USER_TIME_OFFSET, $timedate, $current_user;
+            global $DO_USER_TIME_OFFSET, $timedate;
 
             $DO_USER_TIME_OFFSET = true;
             if (empty($GLOBALS['current_user']) || empty($GLOBALS['current_user']->id)) {
@@ -138,11 +138,11 @@
             // loop thru each activity, get start/end time in UTC, and return FREEBUSY strings
             foreach ($acts_arr as $act) {
                 if (empty($act->start_time)) {
-                    $startTime = $timedate->fromUser($act->sugar_bean->date_start, $user_bean);
+                    $act->start_time = $timedate->fromUser($act->sugar_bean->date_start, $user_bean);
                 }
 
                 if (empty($act->end_time)) {
-                    $endTime = $timedate->fromUser($act->sugar_bean->date_finish, $user_bean);
+                    $act->end_time = $timedate->fromUser($act->sugar_bean->date_finish, $user_bean);
                 }
 
                 $ID = $act->sugar_bean->id;
