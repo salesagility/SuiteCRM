@@ -717,7 +717,8 @@ $_POST['user_theme'] = (string) SugarThemeRegistry::getDefault();
 $_REQUEST['do_not_redirect'] = true;
 
 // restore superglobals and vars
-$GLOBALS = $varStack['GLOBALS'];
+foreach ($varStack['GLOBALS'] as $__key => $__value)
+    $GLOBALS[$__key] = $__value;
 foreach ($varStack['defined_vars'] as $__key => $__value) {
     $$__key = $__value;
 }
