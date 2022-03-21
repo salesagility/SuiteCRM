@@ -2397,6 +2397,10 @@ class SugarBean
             $this->custom_fields->save($isUpdate);
         }
 
+        if(empty($this->parent_id)) {
+            $this->parent_type = "";
+        }
+
         $this->_sendNotifications($check_notify);
 
         if ($isUpdate) {
