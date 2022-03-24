@@ -1079,6 +1079,8 @@
               selectOption.attr('value', v.attributes.from);
               selectOption.attr('inboundId', v.id);
               selectOption.attr('infos', '(<b>Reply-to:</b> ' + v.attributes.reply_to + ', <b>From:</b> ' + v.attributes.from + ')');
+              selectOption.attr('reply_to_addr', v.attributes.reply_to);
+              selectOption.attr('from_name', v.attributes.name);
               selectOption.html(v.attributes.name);
               selectOption.appendTo(selectFrom);
 
@@ -1111,8 +1113,13 @@
               $(selectFrom).val(selectInboundEmailOption.val());
             }
 
+            $(self).find('[name=from_addr_name]').val(selectFrom.find('option:selected').attr('from_name'));
+            $(self).find('[name=reply_to_addr]').val(selectFrom.find('option:selected').attr('reply_to_addr'));
+
             $(selectFrom).change(function (e) {
               $(self).find('[name=inbound_email_id]').val($(this).find('option:selected').attr('inboundId'));
+              $(self).find('[name=from_addr_name]').val($(this).find('option:selected').attr('from_name'));
+              $(self).find('[name=reply_to_addr]').val($(this).find('option:selected').attr('reply_to_addr'));
               self.updateSignature();
               self.updateFromInfos();
             });

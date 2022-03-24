@@ -4421,15 +4421,15 @@ eoq;
         $useDefaultFromAddressName = false;
         $useDefaultFromAddressEmail = false;
 
-        // is from address in the request?
+        // is from address name in the request?
 
         if (!isset($request['from_addr_name']) || !$request['from_addr_name']) {
             $useDefaultFromAddressName = true;
         }
 
-        // is from name in the request?
+        // is from adrress email in the request?
 
-        if (!isset($request['from_addr_email']) || !$request['from_addr_email']) {
+        if (!isset($request['from_addr']) || !$request['from_addr']) {
             $useDefaultFromAddressEmail = true;
         }
 
@@ -4454,7 +4454,7 @@ eoq;
 
                 // use the default one
 
-                $request['from_addr_email'] = $defaultEmail['email'];
+                $request['from_addr'] = $defaultEmail['email'];
             }
 
             // do we have to use the default name?
@@ -4473,12 +4473,14 @@ eoq;
             }
         }
 
-        if (isset($request['from_addr']) && $request['from_addr'] != $request['from_addr_name'] . ' &lt;' . $request['from_addr_email'] . '&gt;') {
+        if (isset($request['from_addr']) && $request['from_addr'] != $request['from_addr_name'] . ' &lt;' . $request['from_addr'] . '&gt;') {
             if (false === strpos($request['from_addr'], '&lt;')) { // we have an email only?
                 $bean->from_addr = $request['from_addr'];
                 isValidEmailAddress($bean->from_addr);
-                $bean->from_name = '';
-                $bean->reply_to_addr = $bean->from_addr;
+                $bean->from_name = $bean->from_addr_name;
+                if (!isset($bean->reply_to_addr) || !$bean->reply_to_addr) {
+                    $bean->reply_to_addr = $bean->from_addr;
+                }
                 $bean->reply_to_name = $bean->from_name;
             } else { // we have a compound string
                 $newFromAddr = str_replace($old, $new, $request['from_addr']);
@@ -4492,8 +4494,8 @@ eoq;
                 $bean->reply_to_addr = $bean->from_addr;
                 $bean->reply_to_name = $bean->from_name;
             }
-        } elseif (!empty($request['from_addr_email']) && isset($request['from_addr_email'])) {
-            $bean->from_addr = $request['from_addr_email'];
+        } elseif (!empty($request['from_addr']) && isset($request['from_addr'])) {
+            $bean->from_addr = $request['from_addr'];
             isValidEmailAddress($bean->from_addr);
             $bean->from_name = $request['from_addr_name'];
         } else {

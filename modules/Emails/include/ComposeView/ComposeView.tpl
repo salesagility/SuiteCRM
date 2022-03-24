@@ -48,6 +48,8 @@
     <input type="hidden" name="record" value="{$RECORD}">
     <input type="hidden" name="type" value="out">
     <input type="hidden" name="send" value="1">
+    <input type="hidden" name="from_addr_name" value="">
+    <input type="hidden" name="reply_to_addr" value="">
     <input type="hidden" name="return_module" value="{$RETURN_MODULE}">
     <input type="hidden" name="return_action" value="{$RETURN_ACTION}">
     <input type="hidden" name="return_id" value="{$RETURN_ID}">
