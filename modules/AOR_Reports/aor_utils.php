@@ -324,7 +324,7 @@ function getPeriodDate($date_time_period_list_selected)
     // set time to 00:00:00
     $datetime_period = $datetime_period->setTime(0, 0, 0);
 
-    $datetime_period->add(DateInterval::createFromDateString($timedate->getUserUTCOffset().' minutes'));
+    $datetime_period->sub(DateInterval::createFromDateString($timedate->getUserUTCOffset().' minutes'));
 
     return $datetime_period;
 }
