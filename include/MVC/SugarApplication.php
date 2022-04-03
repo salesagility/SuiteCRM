@@ -50,6 +50,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 require_once('include/MVC/Controller/ControllerFactory.php');
 require_once('include/MVC/View/ViewFactory.php');
+require_once('include/MVC/Responds/Respond.php');
+require_once('include/MVC/Responds/RespondInterface.php');
 
 /**
  * SugarCRM application
@@ -61,11 +63,19 @@ class SugarApplication
     public $headerDisplayed = false;
     public $default_module = 'Home';
     public $default_action = 'index';
+    public static SuiteCRM\MVC\Responds\RespondInterface $respond;
+
 
     public function __construct()
     {
     }
 
+    public static function addRespond(\SuiteCRM\MVC\Responds\RespondInterface $respond ){
+        static::$respond = $respond;
+    }
+    public static function getRespond(){
+        return static::$respond;
+    }
 
 
     /**
@@ -98,7 +108,16 @@ class SugarApplication
         $this->loadDisplaySettings();
         $this->loadGlobals();
         $this->setupResourceManagement($module);
+        ob_start();
         $this->controller->execute();
+        $out = ob_get_contents();
+        ob_end_clean();
+        $respond = SugarApplication::getRespond();
+        if (($respond instanceof \SuiteCRM\MVC\Responds\RespondInterface) && (!$respond->is_empty())) {
+            echo $respond->show();
+        } else {
+            echo $out;
+        }
         sugar_cleanup();
     }
 
