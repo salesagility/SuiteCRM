@@ -41,7 +41,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
+use Symfony\Component\HttpFoundation\Request;
 /*
  * Created on Mar 21, 2007
  *
@@ -64,10 +64,13 @@ class SugarApplication
     public $default_module = 'Home';
     public $default_action = 'index';
     public static SuiteCRM\MVC\Responds\RespondInterface $respond;
+    public Request $request;
 
 
     public function __construct()
     {
+        require_once './vendor/autoload.php';
+        $this->request = Request::createFromGlobals();
     }
 
     public static function addRespond(\SuiteCRM\MVC\Responds\RespondInterface $respond ){
