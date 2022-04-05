@@ -93,7 +93,7 @@ class CleanCSV
      */
     public function escapeField($cell)
     {
-        if (!is_string($cell)) {
+        if (!is_string($cell) || empty($cell)) {
             return $cell;
         }
 
