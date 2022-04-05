@@ -426,7 +426,7 @@ class SugarApplication
         }
 
         if (!is_null($theme) && !headers_sent()) {
-            setcookie('sugar_user_theme', $theme, time() + 31536000, null, null, isSSL(), true); // expires in a year
+            self::setCookie('sugar_user_theme', $theme, time() + 31536000, null, null, isSSL(), true); // expires in a year
         }
 
         SugarThemeRegistry::set($theme);
