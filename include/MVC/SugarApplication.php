@@ -800,6 +800,15 @@ class SugarApplication
             }
         }
 
+        $defaultCookiePath = ini_get('session.cookie_path');
+        if ($path === null) {
+            if(empty($defaultCookiePath)) {
+                $path = '/';
+            } else {
+                $path = $defaultCookiePath;
+            }
+        }
+
         if (!headers_sent()) {
             setcookie($name, $value, $expire, $path, $domain, $secure, $httponly);
         }
