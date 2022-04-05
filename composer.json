@@ -55,6 +55,7 @@
     "slim/slim": "^3.8",
     "smarty/smarty": "^2.6",
     "soundasleep/html2text": "~0.5",
+    "symfony/http-foundation": "v5.4.6",
     "symfony/options-resolver": "^3.4",
     "symfony/validator": "^3.4",
     "symfony/yaml": "^5.2",
