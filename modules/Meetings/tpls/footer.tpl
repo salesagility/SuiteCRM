@@ -55,9 +55,9 @@
 
 <div class="h3Row" id="scheduler"></div>
 
-<script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
-<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui2.js'}"></script>
-<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
+<script type='text/javascript' src='{sugar_getjspath file='/include/javascript/popup_helper.js'}'></script>
+<script type="text/javascript" src="{sugar_getjspath file='/cache/include/javascript/sugar_grp_yui2.js'}"></script>
+<script type="text/javascript" src="{sugar_getjspath file='/cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
   
 <script type="text/javascript">
 {literal}
@@ -90,7 +90,7 @@ var meetingsLoader = new YAHOO.util.YUILoader({
 meetingsLoader.addModule({
     name :"sugar_grp_jsolait",
     type : "js",
-    fullpath: "cache/include/javascript/sugar_grp_jsolait.js",
+    fullpath: "/cache/include/javascript/sugar_grp_jsolait.js",
     varName: "global_rpcClient",
     requires: []
 });

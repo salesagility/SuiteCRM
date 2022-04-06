@@ -48,7 +48,7 @@
 }
 {/literal}
 </style>
-<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
+<script type="text/javascript" src="{sugar_getjspath file='/cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
 <div class="dashletPanelMenu wizard">
     <div class="bd">
             <div class="screen">

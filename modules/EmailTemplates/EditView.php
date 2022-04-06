@@ -187,7 +187,7 @@ if (!is_file(sugar_cached('jsLanguage/') . $GLOBALS['current_language'] . '.js')
     require_once('include/language/jsLanguage.php');
     jsLanguage::createAppStringsCache($GLOBALS['current_language']);
 }
-$jsLang = getVersionedScript("cache/jsLanguage/{$GLOBALS['current_language']}.js", $GLOBALS['sugar_config']['js_lang_version']);
+$jsLang = getVersionedScript("/cache/jsLanguage/{$GLOBALS['current_language']}.js", $GLOBALS['sugar_config']['js_lang_version']);
 $xtpl->assign("JSLANG", $jsLang);
 
 $xtpl->assign("ID", $focus->id);
@@ -342,7 +342,7 @@ if (true) {
 			       </option>";
         $xtpl->assign("DROPDOWN", $dropdown);
         $xtpl->assign("DEFAULT_MODULE", 'Contacts');
-    //$xtpl->assign("CAMPAIGN_POPUP_JS", '<script type="text/javascript" src="include/javascript/sugar_3.js"></script>');
+    //$xtpl->assign("CAMPAIGN_POPUP_JS", '<script type="text/javascript" src="/include/javascript/sugar_3.js"></script>');
     } else {
         $xtpl->assign("DROPDOWN", genDropDownJS2());
         $xtpl->assign("DEFAULT_MODULE", 'Accounts');

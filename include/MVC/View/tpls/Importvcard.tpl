@@ -46,7 +46,7 @@
 <div class="import-vcard">
 <b>{$MOD.LBL_IMPORT_VCARDTEXT}</b>
 {literal}
-<script type="text/javascript" src="cache/include/javascript/sugar_grp_yui_widgets.js"></script>
+<script type="text/javascript" src="/cache/include/javascript/sugar_grp_yui_widgets.js"></script>
 <script type="text/javascript">
 <!--
 function validate_vcard()

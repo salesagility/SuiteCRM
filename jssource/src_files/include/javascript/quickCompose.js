@@ -252,7 +252,7 @@ SUGAR.quickCompose = function() {
 				    data: o,
 				    onSuccess: this.initComposePackage,
 				    allowRollup: true,
-				    base: "include/javascript/yui/build/"
+				    base: "/include/javascript/yui/build/"
 				});
 
 				//TiinyMCE cannot be added into the sugar_grp_quickcomp file as it breaks the build, needs to be loaded
@@ -261,14 +261,14 @@ SUGAR.quickCompose = function() {
 				    name :"tinymce",
 				    type : "js",
 				    varName: "TinyMCE",
-				    fullpath: "include/javascript/tiny_mce/tiny_mce.js"
+				    fullpath: "/include/javascript/tiny_mce/tiny_mce.js"
 				});
 
 				//Load the Sugar widgets with dependancies on the yui library.
 				loader.addModule({
 				    name :"sugarwidgets",
 				    type : "js",
-				    fullpath: "include/javascript/sugarwidgets/SugarYUIWidgets.js",
+				    fullpath: "/include/javascript/sugarwidgets/SugarYUIWidgets.js",
 				    varName: "YAHOO.SUGAR",
 				    requires: ["datatable", "dragdrop", "treeview", "tabview"]
 				});
@@ -279,7 +279,7 @@ SUGAR.quickCompose = function() {
 				    type : "js",
 				    varName: "SUGAR.email2.complexLayout",
 				    requires: ["layout", "sugarwidgets", "tinymce"],
-				    fullpath: "cache/include/javascript/sugar_grp_quickcomp.js"
+				    fullpath: "/cache/include/javascript/sugar_grp_quickcomp.js"
 				});
 
 				//Load the css needed for the quickCompose.

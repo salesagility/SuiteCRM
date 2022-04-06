@@ -45,9 +45,9 @@
     {$ieCompatMode}
     <meta http-equiv="Content-Type" content="text/html; charset="{$charset}">
     {$css}
-    <script type="text/javascript" src="cache/include/javascript/sugar_grp1_jquery.js"></script>
-    <script type="text/javascript" src="cache/include/javascript/sugar_grp1_yui.js"></script>
-    <script type="text/javascript" src="cache/include/javascript/sugar_grp1.js"></script>
+    <script type="text/javascript" src="/cache/include/javascript/sugar_grp1_jquery.js"></script>
+    <script type="text/javascript" src="/cache/include/javascript/sugar_grp1_yui.js"></script>
+    <script type="text/javascript" src="/cache/include/javascript/sugar_grp1.js"></script>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>

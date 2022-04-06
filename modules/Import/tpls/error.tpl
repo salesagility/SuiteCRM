@@ -43,7 +43,7 @@
 
 
 *}
-<script type="text/javascript" src="{sugar_getjspath file='include/javascript/sugar_grp_yui_widgets.js'}"></script>
+<script type="text/javascript" src="{sugar_getjspath file='/include/javascript/sugar_grp_yui_widgets.js'}"></script>
 <script>
 
     //set the variables

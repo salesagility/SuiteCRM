@@ -70,9 +70,9 @@
 	<input type="hidden" name="addTaskReminder" id="addTaskReminder">
 	<input type="hidden" name="addEmailReminder" id="addEmailReminder">
     {if !isset($includeContainerCSS) || $includeContainerCSS}
-    <link rel='stylesheet' type='text/css' href="{sugar_getjspath file='include/javascript/yui/assets/container.css'}" />
+    <link rel='stylesheet' type='text/css' href="{sugar_getjspath file='/include/javascript/yui/assets/container.css'}" />
         {if $step == 'commit'}
-    <link rel='stylesheet' type='text/css' href="{sugar_getjspath file='include/javascript/yui/build/container/assets/container.css'}"/>
+    <link rel='stylesheet' type='text/css' href="{sugar_getjspath file='/include/javascript/yui/build/container/assets/container.css'}"/>
        {/if}
     {/if}
 		{if $showBack}
@@ -175,9 +175,9 @@
 	<input type="hidden" name="addTaskReminder" id="addTaskReminder">
 	<input type="hidden" name="addEmailReminder" id="addEmailReminder">
     {if !isset($includeContainerCSS) || $includeContainerCSS}
-    <link rel='stylesheet' type='text/css' href='include/javascript/yui/assets/container.css' />
+    <link rel='stylesheet' type='text/css' href='/include/javascript/yui/assets/container.css' />
         {if $step == 'commit'}
-    <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css'/>
+    <link rel='stylesheet' type='text/css' href='/include/javascript/yui/build/container/assets/container.css'/>
        {/if}
     {/if}
 		{if $showBack}

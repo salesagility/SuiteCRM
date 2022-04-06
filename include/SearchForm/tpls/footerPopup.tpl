@@ -57,11 +57,11 @@
             $(function () {
                 // load qtip
                 if (typeof $.qtip == 'undefined') {
-                    $.getScript('include/javascript/qtip/jquery.qtip.min.js');
+                    $.getScript('/include/javascript/qtip/jquery.qtip.min.js');
                     $("<link/>", {
                         rel: "stylesheet",
                         type: "text/css",
-                        href: "include/javascript/qtip/jquery.qtip.min.css"
+                        href: "/include/javascript/qtip/jquery.qtip.min.css"
                     }).appendTo("head");
                 }
 

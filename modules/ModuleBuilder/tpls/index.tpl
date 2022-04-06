@@ -72,12 +72,12 @@ var MBLoader = new YAHOO.util.YUILoader({
     skin: { base: 'blank', defaultSkin: '' },
 	onSuccess: ModuleBuilder.init,
     allowRollup: true,
-    base: "include/javascript/yui/build/"
+    base: "/include/javascript/yui/build/"
 });
 MBLoader.addModule({
     name :"sugarwidgets",
     type : "js",
-    fullpath: "include/javascript/sugarwidgets/SugarYUIWidgets.js",
+    fullpath: "/include/javascript/sugarwidgets/SugarYUIWidgets.js",
     varName: "YAHOO.SUGAR",
     requires: ["datatable", "dragdrop", "treeview", "tabview"]
 });

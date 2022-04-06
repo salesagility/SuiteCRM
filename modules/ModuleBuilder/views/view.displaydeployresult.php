@@ -72,6 +72,6 @@ class ViewDisplaydeployresult extends SugarView
     public function display()
     {
         $message = $this->view_object_map['message'];
-        echo $message.getVersionedScript('cache/include/javascript/sugar_grp1_yui.js?')."<script type='text/javascript' language='Javascript'>YAHOO.util.Connect.asyncRequest('GET', 'index.php?module=Administration&action=RebuildRelationship&silent=true');</script>";
+        echo $message.getVersionedScript('/cache/include/javascript/sugar_grp1_yui.js?')."<script type='text/javascript' language='Javascript'>YAHOO.util.Connect.asyncRequest('GET', 'index.php?module=Administration&action=RebuildRelationship&silent=true');</script>";
     }
 }

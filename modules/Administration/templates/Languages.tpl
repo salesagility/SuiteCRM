@@ -40,7 +40,7 @@
 
 *}
 <link rel="stylesheet" type="text/css" href="{sugar_getjspath file='modules/Connectors/tpls/tabs.css'}"/>
-{sugar_getscript file="cache/include/javascript/sugar_grp_yui_widgets.js"}
+{sugar_getscript file="/cache/include/javascript/sugar_grp_yui_widgets.js"}
 <style>.yui-dt-scrollable .yui-dt-bd {ldelim}overflow-x: hidden;{rdelim}</style>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">

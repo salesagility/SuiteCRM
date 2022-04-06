@@ -305,8 +305,8 @@ class TemplateDragDropChooser extends Template
     {
         global $sugar_version, $sugar_config;
         $j_str =   "
-        <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/datatable/assets/skins/sam/datatable.css'/>
-        <script type='text/javascript' src='cache/include/javascript/sugar_grp_yui_widgets.js'></script>";
+        <link rel='stylesheet' type='text/css' href='/include/javascript/yui/build/datatable/assets/skins/sam/datatable.css'/>
+        <script type='text/javascript' src='/cache/include/javascript/sugar_grp_yui_widgets.js'></script>";
 
         return $j_str;
     }

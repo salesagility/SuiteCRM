@@ -47,7 +47,7 @@
 <tr>
 <td colspan="100">
 
-<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
+<script type="text/javascript" src="{sugar_getjspath file='/cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
 <link rel="stylesheet" type="text/css" href="{sugar_getjspath file='modules/Connectors/tpls/tabs.css'}"/>
 
 	<div class="search-module-selector">

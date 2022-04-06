@@ -66,7 +66,7 @@ array(
       array(
         0 =>
         array(
-          'file' => 'include/javascript/tiny_mce/tiny_mce.js',
+          'file' => '/include/javascript/tiny_mce/tiny_mce.js',
         ),
       ),
       'useTabs' => false,

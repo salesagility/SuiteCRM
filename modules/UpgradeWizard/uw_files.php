@@ -77,7 +77,7 @@ if (count($uwFilesCurrent) < 5) {
     );
 } else {
     $uwFilesCurrent = findAllFiles('ModuleInstall', $uwFilesCurrent);
-    $uwFilesCurrent = findAllFiles('include/javascript/yui', $uwFilesCurrent);
+    $uwFilesCurrent = findAllFiles('/include/javascript/yui', $uwFilesCurrent);
     $uwFilesCurrent[] = 'HandleAjaxCall.php';
 
     $uwFiles = array();

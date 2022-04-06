@@ -196,7 +196,7 @@
 
 
 {{if $useTabs}}
-{sugar_getscript file="cache/include/javascript/sugar_grp_yui_widgets.js"}
+{sugar_getscript file="/cache/include/javascript/sugar_grp_yui_widgets.js"}
 <script type="text/javascript">
 var {{$form_name}}_tabs = new YAHOO.widget.TabView("{{$form_name}}_tabs");
 {{$form_name}}_tabs.selectTab(0);

@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="vendor/components/jqueryui/themes/ui-lightness/jquery-ui.min.css">
 <script src='vendor/components/jquery/jquery.min.js'></script>
 <script src="vendor/components/jqueryui/jquery-ui.min.js"></script>
-<script src='vendor/tinymce/tinymce/tinymce.min.js'></script>
+<script src='/vendor/tinymce/tinymce/tinymce.min.js'></script>
 <script src="vendor/gymadarasz/imagesloaded/imagesloaded.pkgd.min.js"></script>
 <script src="vendor/gymadarasz/ace/src-min/ace.js" type="text/javascript" charset="utf-8"></script>
 

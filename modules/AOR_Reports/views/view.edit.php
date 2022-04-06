@@ -39,17 +39,17 @@ class AOR_ReportsViewEdit extends ViewEdit
         //readfile('modules/AOR_Reports/css/edit.css');
         readfile('modules/AOR_Reports/js/jqtree/jqtree.css');
         echo "</style>";
-        if (!is_file('cache/jsLanguage/AOR_Fields/' . $GLOBALS['current_language'] . '.js')) {
+        if (!is_file('/cache/jsLanguage/AOR_Fields/' . $GLOBALS['current_language'] . '.js')) {
             require_once('include/language/jsLanguage.php');
             jsLanguage::createModuleStringsCache('AOR_Fields', $GLOBALS['current_language']);
         }
-        echo '<script src="cache/jsLanguage/AOR_Fields/'. $GLOBALS['current_language'] . '.js"></script>';
+        echo '<script src="/cache/jsLanguage/AOR_Fields/'. $GLOBALS['current_language'] . '.js"></script>';
 
-        if (!is_file('cache/jsLanguage/AOR_Conditions/' . $GLOBALS['current_language'] . '.js')) {
+        if (!is_file('/cache/jsLanguage/AOR_Conditions/' . $GLOBALS['current_language'] . '.js')) {
             require_once('include/language/jsLanguage.php');
             jsLanguage::createModuleStringsCache('AOR_Conditions', $GLOBALS['current_language']);
         }
-        echo '<script src="cache/jsLanguage/AOR_Conditions/'. $GLOBALS['current_language'] . '.js"></script>';
+        echo '<script src="/cache/jsLanguage/AOR_Conditions/'. $GLOBALS['current_language'] . '.js"></script>';
 
         echo "<script>";
         echo "sort_by_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_sort_operator'], '')))."\";";

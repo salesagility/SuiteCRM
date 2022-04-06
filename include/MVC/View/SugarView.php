@@ -839,15 +839,15 @@ class SugarView
         echo '<script>jscal_today = 1000*' .
             $timedate->asUserTs($timedate->getNow()) .
             '; if(typeof app_strings == "undefined") app_strings = new Array();</script>';
-        if (!is_file(sugar_cached("include/javascript/sugar_grp1.js"))) {
+        if (!is_file(sugar_cached("/include/javascript/sugar_grp1.js"))) {
             $_REQUEST['root_directory'] = ".";
             require_once("jssource/minify_utils.php");
             ConcatenateFiles(".");
         }
-        $template->assign('SUGAR_GRP1_JQUERY', getVersionedPath('cache/include/javascript/sugar_grp1_jquery.js'));
-        $template->assign('SUGAR_GRP1_YUI', getVersionedPath('cache/include/javascript/sugar_grp1_yui.js'));
-        $template->assign('SUGAR_GRP1', getVersionedPath('cache/include/javascript/sugar_grp1.js'));
-        $template->assign('CALENDAR', getVersionedPath('include/javascript/calendar.js'));
+        $template->assign('SUGAR_GRP1_JQUERY', getVersionedPath('/cache/include/javascript/sugar_grp1_jquery.js'));
+        $template->assign('SUGAR_GRP1_YUI', getVersionedPath('/cache/include/javascript/sugar_grp1_yui.js'));
+        $template->assign('SUGAR_GRP1', getVersionedPath('/cache/include/javascript/sugar_grp1.js'));
+        $template->assign('CALENDAR', getVersionedPath('/include/javascript/calendar.js'));
 
         echo $template->fetch('include/MVC/View/tpls/displayLoginJS.tpl');
     }
@@ -927,18 +927,18 @@ EOHTML;
             echo '<script>jscal_today = 1000*' .
                 $timedate->asUserTs($timedate->getNow()) .
                 '; if(typeof app_strings == "undefined") app_strings = new Array();</script>';
-            if (!is_file(sugar_cached("include/javascript/sugar_grp1.js")) ||
-                !is_file(sugar_cached("include/javascript/sugar_grp1_yui.js")) ||
-                !is_file(sugar_cached("include/javascript/sugar_grp1_jquery.js"))
+            if (!is_file(sugar_cached("/include/javascript/sugar_grp1.js")) ||
+                !is_file(sugar_cached("/include/javascript/sugar_grp1_yui.js")) ||
+                !is_file(sugar_cached("/include/javascript/sugar_grp1_jquery.js"))
             ) {
                 $_REQUEST['root_directory'] = ".";
                 require_once("jssource/minify_utils.php");
                 ConcatenateFiles(".");
             }
-            echo getVersionedScript('cache/include/javascript/sugar_grp1_jquery.js');
-            echo getVersionedScript('cache/include/javascript/sugar_grp1_yui.js');
-            echo getVersionedScript('cache/include/javascript/sugar_grp1.js');
-            echo getVersionedScript('include/javascript/calendar.js');
+            echo getVersionedScript('/cache/include/javascript/sugar_grp1_jquery.js');
+            echo getVersionedScript('/cache/include/javascript/sugar_grp1_yui.js');
+            echo getVersionedScript('/cache/include/javascript/sugar_grp1.js');
+            echo getVersionedScript('/include/javascript/calendar.js');
 
             // output necessary config js in the top of the page
             $config_js = $this->getSugarConfigJS();
@@ -969,7 +969,7 @@ EOHTML;
                 jsLanguage::createAppStringsCache($GLOBALS['current_language']);
             }
             echo getVersionedScript(
-                'cache/jsLanguage/' . $GLOBALS['current_language'] . '.js',
+                '/cache/jsLanguage/' . $GLOBALS['current_language'] . '.js',
                 $GLOBALS['sugar_config']['js_lang_version']
             );
 
@@ -995,7 +995,7 @@ EOHTML;
         }
 
         return getVersionedScript(
-            "cache/jsLanguage/{$this->module}/" . $GLOBALS['current_language'] . '.js',
+            "/cache/jsLanguage/{$this->module}/" . $GLOBALS['current_language'] . '.js',
             $GLOBALS['sugar_config']['js_lang_version']
         );
     }

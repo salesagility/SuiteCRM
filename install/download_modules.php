@@ -194,8 +194,8 @@ $out =<<<EOQ
    <script type="text/javascript" src="install/installCommon.js"></script>
    <link rel="stylesheet" type="text/css" media="all" href="jscalendar/calendar-win2k-cold-1.css?s={$sugar_version}&c={$js_custom_version}">
    <script>jscal_today = 1161698116000; if(typeof app_strings == "undefined") app_strings = new Array();</script>
-   <script type="text/javascript" src="cache/include/javascript/sugar_grp1.js?s={$sugar_version}&c={$js_custom_version}"></script>
-   <script type="text/javascript" src="cache/include/javascript/sugar_grp1_yui.js?s={$sugar_version}&c={$js_custom_version}"></script>
+   <script type="text/javascript" src="/cache/include/javascript/sugar_grp1.js?s={$sugar_version}&c={$js_custom_version}"></script>
+   <script type="text/javascript" src="/cache/include/javascript/sugar_grp1_yui.js?s={$sugar_version}&c={$js_custom_version}"></script>
    <script type="text/javascript">
    <!--
    if ( YAHOO.env.ua )

@@ -28,6 +28,9 @@ class RouteParser
                 $this->action = $this->routeParams[2] ?? '';
                 $this->record = $this->routeParams[3] ?? '';
             }
+                $this->module = $this->routeParams[0] ?? '';
+                $this->action = $this->routeParams[1] ?? '';
+                $this->record = $this->routeParams[2] ?? '';
          }
     }
 

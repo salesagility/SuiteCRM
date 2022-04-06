@@ -62,7 +62,7 @@ array(
           'field' => '30',
         ),
       ),
-      'javascript' => '{sugar_getscript file="include/javascript/dashlets.js"}
+      'javascript' => '{sugar_getscript file="/include/javascript/dashlets.js"}
 <script>toggle_portal_flag(); function toggle_portal_flag()  {literal} { {/literal} {$TOGGLE_JS} {literal} } {/literal} </script>',
     ),
     'panels' =>

@@ -37,7 +37,7 @@ array(
         ),
       ),
       'javascript' => '<script type="text/javascript">{$JSON_CONFIG_JAVASCRIPT}</script>
-		{sugar_getscript file="cache/include/javascript/sugar_grp_project.js"}
+		{sugar_getscript file="/cache/include/javascript/sugar_grp_project.js"}
 		<script>toggle_portal_flag();function toggle_portal_flag()  {ldelim} {$TOGGLE_JS} {rdelim} 
 		function formSubmitCheck(){ldelim}if(check_form(\'EditView\')){ldelim}document.EditView.submit();{rdelim}{rdelim}</script>',
       'useTabs' => false,

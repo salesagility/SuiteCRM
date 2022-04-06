@@ -118,7 +118,7 @@ class Popup_Picker
         global $currentModule;
         global $app_list_strings, $sugar_version, $sugar_config;
 
-        $output_html = "<script type=\"text/javascript\" src=\"" . getJSPath('include/javascript/sugar_3.js'). "\"></script>";
+        $output_html = "<script type=\"text/javascript\" src=\"" . getJSPath('/include/javascript/sugar_3.js'). "\"></script>";
         $where = '';
 
         if (empty($_REQUEST[$currentModule . '_' . strtoupper($this->_popupMeta['moduleMain']) . '_offset'])) {

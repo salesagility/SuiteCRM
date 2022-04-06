@@ -543,7 +543,7 @@ EOQ;
 	</script>
 
 	<!-- Drag and Drop source file -->
-	<script type="text/javascript" src="include/javascript/yui/build/dragdrop/dragdrop.js?v=$v" ></script>
+	<script type="text/javascript" src="/include/javascript/yui/build/dragdrop/dragdrop.js?v=$v" ></script>
 	<script type="text/javascript" src="modules/Studio/studiodd.js?v=$v" ></script>
 	<script type="text/javascript" src="modules/Studio/studio.js?v=$v" ></script>
 	<script>

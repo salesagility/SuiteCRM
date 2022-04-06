@@ -68,10 +68,10 @@ jsChartsArray = new Array();
 var moduleName = 'Home';
 </script>
 
-<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
-<script type="text/javascript" src="{sugar_getjspath file='include/javascript/dashlets.js'}"></script>
+<script type="text/javascript" src="{sugar_getjspath file='/cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
+<script type="text/javascript" src="{sugar_getjspath file='/include/javascript/dashlets.js'}"></script>
 <script type='text/javascript' src='{sugar_getjspath file='include/MySugar/javascript/MySugar.js'}'></script>
-<link rel='stylesheet' href='{sugar_getjspath file='include/javascript/yui/build/assets/skins/sam/skin.css'}'>
+<link rel='stylesheet' href='{sugar_getjspath file='/include/javascript/yui/build/assets/skins/sam/skin.css'}'>
 
 
 <!-- CSS Files -->

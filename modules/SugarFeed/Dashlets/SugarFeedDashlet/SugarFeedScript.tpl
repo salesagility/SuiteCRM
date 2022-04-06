@@ -124,5 +124,5 @@ if(SUGAR.util.isTouchScreen()) {
 }
 </script>
 {/literal}
-<script type="text/javascript" src="{sugar_getjspath file="include/javascript/popup_helper.js"}">
+<script type="text/javascript" src="{sugar_getjspath file="/include/javascript/popup_helper.js"}">
 </script>

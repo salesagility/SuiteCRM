@@ -29,12 +29,12 @@ function display_field_lines($focus, $field, $value, $view)
 
     $html = '';
 
-    if (!is_file('cache/jsLanguage/AOR_Fields/' . $GLOBALS['current_language'] . '.js')) {
+    if (!is_file('/cache/jsLanguage/AOR_Fields/' . $GLOBALS['current_language'] . '.js')) {
         require_once('include/language/jsLanguage.php');
         jsLanguage::createModuleStringsCache('AOR_Fields', $GLOBALS['current_language']);
     }
 
-    $html .= '<script src="cache/jsLanguage/AOR_Fields/'. $GLOBALS['current_language'] . '.js"></script>';
+    $html .= '<script src="/cache/jsLanguage/AOR_Fields/'. $GLOBALS['current_language'] . '.js"></script>';
 
     if ($view == 'EditView') {
         $html .= '<script src="modules/AOR_Fields/fieldLines.js"></script>';

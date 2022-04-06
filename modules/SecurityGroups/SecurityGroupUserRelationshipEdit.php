@@ -82,7 +82,7 @@ $xtpl->parse("main");
 
 $xtpl->out("main");
 
-require_once('include/javascript/javascript.php');
+require_once('/include/javascript/javascript.php');
 $javascript = new javascript();
 $javascript->setFormName('EditView');
 $javascript->setSugarBean($focus);

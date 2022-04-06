@@ -289,8 +289,8 @@ YAHOO.util.Event.onDOMReady(function(){
 {/literal}	
 </script>
 	
-<script type="text/javascript" src="include/javascript/jsclass_base.js"></script>
-<script type="text/javascript" src="include/javascript/jsclass_async.js"></script>	
+<script type="text/javascript" src="/include/javascript/jsclass_base.js"></script>
+<script type="text/javascript" src="/include/javascript/jsclass_async.js"></script>
 	
 <style type="text/css">
 {literal}
@@ -308,7 +308,7 @@ YAHOO.util.Event.onDOMReady(function(){
 <link type="text/css" href="{sugar_getjspath file="modules/Calendar/fullcalendar/fullcalendar.min.css"}" rel="stylesheet" />
 <link type="text/css" href="{sugar_getjspath file="modules/Calendar/fullcalendar/fullcalendar.print.min.css"}" media='print' rel="stylesheet" />
 
-<script src='{sugar_getjspath file="include/javascript/qtip/jquery.qtip.min.js"}'></script>
+<script src='{sugar_getjspath file="/include/javascript/qtip/jquery.qtip.min.js"}'></script>
 <script src='{sugar_getjspath file="modules/Calendar/fullcalendar/lib/moment.min.js"}'></script>
 <script src='{sugar_getjspath file="modules/Calendar/fullcalendar/fullcalendar.min.js"}'></script>
 <script src='{sugar_getjspath file="modules/Calendar/fullcalendar/locale-all.js"}'></script>

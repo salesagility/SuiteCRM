@@ -60,14 +60,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
         //add prefix to key if it was passed in
         $compress_exempt_files = array(
             rtrim($prefix.sugar_cached(''), '/')  => true,
-            $prefix.'include/javascript/tiny_mce'   => true,
-            $prefix.'include/javascript/yui'        => true,
+            $prefix.'/include/javascript/tiny_mce'   => true,
+            $prefix.'/include/javascript/yui'        => true,
             $prefix.'modules/Emails'                => true,
             $prefix.'jssource'                      => true,
             $prefix.'upload'                        => true,
             $prefix.'modules/ModuleBuilder'         => true,
-            $prefix.'include/javascript/jquery'     => true,
-            $prefix.'include/javascript/jquery/bootstrap'     => true,
+            $prefix.'/include/javascript/jquery'     => true,
+            $prefix.'/include/javascript/jquery/bootstrap'     => true,
             $prefix.'tests/PHPUnit/PHP/CodeCoverage/Report/HTML/Template' => true,
             $prefix.'tests/jssource/minify/expect'  => true,
             $prefix.'tests/jssource/minify/test'    => true,

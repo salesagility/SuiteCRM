@@ -62,8 +62,8 @@
 
 
 
-{sugar_getscript file="cache/include/javascript/sugar_grp_yui_widgets.js"}
-{sugar_getscript file='include/javascript/dashlets.js'}
+{sugar_getscript file="/cache/include/javascript/sugar_grp_yui_widgets.js"}
+{sugar_getscript file='/include/javascript/dashlets.js'}
 
 {$chartResources}
 {$mySugarChartResources}
@@ -240,7 +240,7 @@
                 mySugarLoader.addModule({
                     name: "sugar_charts",
                     type: "js",
-                    fullpath: {/literal}"{sugar_getjspath file="include/SugarCharts/Jit/js/mySugarCharts.js"}"{literal},
+                    fullpath: {/literal}"{sugar_getjspath file="/include/SugarCharts/Jit/js/mySugarCharts.js"}"{literal},
                     varName: "initmySugarCharts",
                     requires: []
                 });

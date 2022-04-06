@@ -65,9 +65,9 @@
 <input type='hidden' name='action' value='SaveUserWizard'/>
 <input type='hidden' name='module' value='Users'/>
 <span class='error'>{$error.main}</span>
-<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
+<script type="text/javascript" src="{sugar_getjspath file='/cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
 <script type="text/javascript" src="{sugar_getjspath file='modules/Emails/javascript/vars.js'}"></script>
-<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_emails.js'}"></script>
+<script type="text/javascript" src="{sugar_getjspath file='/cache/include/javascript/sugar_grp_emails.js'}"></script>
 <script type="text/javascript" src="{sugar_getjspath file='modules/Users/User.js'}"></script>
 
 <div class="dashletPanelMenu wizard">
@@ -416,12 +416,12 @@ function startOutBoundEmailSettingsTest()
         skin: { base: 'blank', defaultSkin: '' },
         onSuccess: testOutboundSettings,
         allowRollup: true,
-        base: "include/javascript/yui/build/"
+        base: "/include/javascript/yui/build/"
     });
     loader.addModule({
         name :"sugarwidgets",
         type : "js",
-        fullpath: "include/javascript/sugarwidgets/SugarYUIWidgets.js",
+        fullpath: "/include/javascript/sugarwidgets/SugarYUIWidgets.js",
         varName: "YAHOO.SUGAR",
         requires: ["datatable", "dragdrop", "treeview", "tabview"]
     });

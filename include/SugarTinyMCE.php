@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SugarTinyMCE
 {
-    public $jsroot = "include/javascript/tiny_mce/";
+    public $jsroot = "/include/javascript/tiny_mce/";
     public $customConfigFile = 'custom/include/tinyButtonConfig.php';
     public $customDefaultConfigFile = 'custom/include/tinyMCEDefaultConfig.php';
     public $buttonConfigs = array(
@@ -91,7 +91,7 @@ class SugarTinyMCE
         'plugins' => 'advhr,insertdatetime,table,preview,paste,searchreplace,directionality',
         'elements'	=> '',
         'extended_valid_elements' => 'style[dir|lang|media|title|type],hr[class|width|size|noshade],@[class|style]',
-        'content_css' => 'include/javascript/tiny_mce/themes/advanced/skins/default/content.css',
+        'content_css' => '/include/javascript/tiny_mce/themes/advanced/skins/default/content.css',
 
     );
 
@@ -121,7 +121,7 @@ class SugarTinyMCE
         $config = $this->defaultConfig;
         //include tinymce lang file
         $lang = substr($GLOBALS['current_language'], 0, 2);
-        if (file_exists('include/javascript/tiny_mce/langs/'.$lang.'.js')) {
+        if (file_exists('/include/javascript/tiny_mce/langs/'.$lang.'.js')) {
             $config['language'] = $lang;
         }
         $config['directionality'] = SugarThemeRegistry::current()->directionality;
@@ -141,7 +141,7 @@ class SugarTinyMCE
                 $instantiateCall .= "tinyMCE.execCommand('mceAddControl', false, document.getElementById('{$instance}'));\n";
             }
         }
-        $path = getJSPath('include/javascript/tiny_mce/tiny_mce.js');
+        $path = getJSPath('/include/javascript/tiny_mce/tiny_mce.js');
         $ret =<<<eoq
 <script type="text/javascript"  src="$path"></script>
 <script type="text/javascript">
@@ -191,7 +191,7 @@ eoq;
         $config = $this->defaultConfig;
         //include tinymce lang file
         $lang = substr($GLOBALS['current_language'], 0, 2);
-        if (file_exists('include/javascript/tiny_mce/langs/'.$lang.'.js')) {
+        if (file_exists('/include/javascript/tiny_mce/langs/'.$lang.'.js')) {
             $config['language'] = $lang;
         }
         $config['theme_advanced_buttons1'] = $this->buttonConfigs[$type]['buttonConfig'];

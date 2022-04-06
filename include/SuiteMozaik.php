@@ -2,7 +2,7 @@
 
 class SuiteMozaik
 {
-    private $mozaikPath = 'include/javascript/mozaik';
+    private $mozaikPath = '/include/javascript/mozaik';
     private $vendorPath;
 
     private static $defaultThumbnails = array(

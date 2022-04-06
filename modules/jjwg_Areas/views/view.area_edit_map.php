@@ -24,7 +24,7 @@ class Jjwg_AreasViewArea_Edit_Map extends SugarView
   <title><?php echo $GLOBALS['mod_strings']['LBL_AREA_MAP']; ?></title>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-  <link rel="stylesheet" type="text/css" href="cache/themes/<?php echo $GLOBALS['theme']; ?>/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="/cache/themes/<?php echo $GLOBALS['theme']; ?>/css/style.css" />
   <style type="text/css">
     html,body{
       margin:0;

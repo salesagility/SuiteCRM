@@ -86,11 +86,11 @@ class AOR_ReportsViewDetail extends ViewDetail
         $this->ss->assign('report_content', $reportHTML);
 
         echo "<input type='hidden' name='report_module' id='report_module' value='{$this->bean->report_module}'>";
-        if (!is_file('cache/jsLanguage/AOR_Conditions/' . $GLOBALS['current_language'] . '.js')) {
+        if (!is_file('/cache/jsLanguage/AOR_Conditions/' . $GLOBALS['current_language'] . '.js')) {
             require_once('include/language/jsLanguage.php');
             jsLanguage::createModuleStringsCache('AOR_Conditions', $GLOBALS['current_language']);
         }
-        echo '<script src="cache/jsLanguage/AOR_Conditions/'. $GLOBALS['current_language'] . '.js"></script>';
+        echo '<script src="/cache/jsLanguage/AOR_Conditions/'. $GLOBALS['current_language'] . '.js"></script>';
 
         $params = $this->getReportParameters();
         echo "<script>var reportParameters = ".json_encode($params).";</script>";

@@ -118,7 +118,7 @@ EOQ;
     {
         $out = <<<EOQ
             <script src="include/javascript/jquery/jquery-min.js"></script>
-            <script src="cache/include/javascript/sugar_grp1_yui.js?s={$sugar_version}&c={$js_custom_version}"></script>
+            <script src="/cache/include/javascript/sugar_grp1_yui.js?s={$sugar_version}&c={$js_custom_version}"></script>
 EOQ;
         return $out;
     }

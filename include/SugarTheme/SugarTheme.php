@@ -622,9 +622,9 @@ class SugarTheme
         // include style.css file
         $html = '
             <!-- qtip & suggestion box -->
-            <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" />';
+            <link rel="stylesheet" type="text/css" href="/include/javascript/qtip/jquery.qtip.min.css" />';
         $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('yui.css').'" />';
-        $html .= '<link rel="stylesheet" type="text/css" href="include/javascript/jquery/themes/base/jquery.ui.all.css" />';
+        $html .= '<link rel="stylesheet" type="text/css" href="/include/javascript/jquery/themes/base/jquery.ui.all.css" />';
 
         // sprites
         if (!empty($GLOBALS['sugar_config']['use_sprites']) && $GLOBALS['sugar_config']['use_sprites']) {
@@ -659,7 +659,7 @@ class SugarTheme
             } else {
                 $color = $this->colors[0];
             }
-            $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('colors.'.$color.'.css').'" id="current_color_style" />';
+            $html .= '<link rel="stylesheet" type="text/css" href="/'.$this->getCSSURL('colors.'.$color.'.css').'" id="current_color_style" />';
         }
 
         if (!empty($this->fonts)) {
@@ -668,11 +668,11 @@ class SugarTheme
             } else {
                 $font = $this->fonts[0];
             }
-            $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('fonts.'.$font.'.css').'" id="current_font_style" />';
+            $html .= '<link rel="stylesheet" type="text/css" href="/'.$this->getCSSURL('fonts.'.$font.'.css').'" id="current_font_style" />';
         }
 
 
-        $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('style.css').'" />';
+        $html .= '<link rel="stylesheet" type="text/css" href="/'.$this->getCSSURL('style.css').'" />';
         return $html;
     }
 
@@ -1058,9 +1058,9 @@ EOHTML;
         // files before the theme styles
         if ($cssFileName == 'style.css' && !isset($this->parentTheme)) {
             if (inDeveloperMode()) {
-                $cssFileContents = file_get_contents('include/javascript/yui/build/base/base.css') . $cssFileContents;
+                $cssFileContents = file_get_contents('/include/javascript/yui/build/base/base.css') . $cssFileContents;
             } else {
-                $cssFileContents = file_get_contents('include/javascript/yui/build/base/base-min.css') . $cssFileContents;
+                $cssFileContents = file_get_contents('/include/javascript/yui/build/base/base-min.css') . $cssFileContents;
             }
         }
 
@@ -1093,7 +1093,7 @@ EOHTML;
     {
         if (isset($this->_jsCache[$jsFileName]) && is_file(sugar_cached($this->_jsCache[$jsFileName]))) {
             if ($returnURL) {
-                return getJSPath("cache/".$this->_jsCache[$jsFileName]);
+                return getJSPath("/cache/".$this->_jsCache[$jsFileName]);
             } else {
                 return sugar_cached($this->_jsCache[$jsFileName]);
             }
@@ -1110,15 +1110,15 @@ EOHTML;
             if (is_file($defaultFileName)) {
                 $jsFileContents .= file_get_contents($defaultFileName);
             }
-            if (is_file('custom/'.$defaultFileName)) {
-                $jsFileContents .= file_get_contents('custom/'.$defaultFileName);
+            if (is_file('/custom/'.$defaultFileName)) {
+                $jsFileContents .= file_get_contents('/custom/'.$defaultFileName);
             }
         }
         if (is_file($fullFileName)) {
             $jsFileContents .= file_get_contents($fullFileName);
         }
-        if (is_file('custom/'.$fullFileName)) {
-            $jsFileContents .= file_get_contents('custom/'.$fullFileName);
+        if (is_file('/custom/'.$fullFileName)) {
+            $jsFileContents .= file_get_contents('/custom/'.$fullFileName);
         }
         if (empty($jsFileContents)) {
             $GLOBALS['log']->warn("Javascript File $jsFileName not found");
@@ -1141,7 +1141,7 @@ EOHTML;
         $this->_jsCache[$jsFileName] = $fullFileName;
 
         if ($returnURL) {
-            return getJSPath("cache/".$fullFileName);
+            return getJSPath("/cache/".$fullFileName);
         }
 
         return sugar_cached($fullFileName);

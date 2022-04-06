@@ -325,12 +325,12 @@ class EmailUI
                     skin: { base: 'blank', defaultSkin: '' },
                     onSuccess: email2init,
                     allowRollup: true,
-                    base: "include/javascript/yui/build/"
+                    base: "/include/javascript/yui/build/"
                 });
                 loader.addModule({
                     name :"sugarwidgets",
                     type : "js",
-                    fullpath: "include/javascript/sugarwidgets/SugarYUIWidgets.js",
+                    fullpath: "/include/javascript/sugarwidgets/SugarYUIWidgets.js",
                     varName: "YAHOO.SUGAR",
                     requires: ["datatable", "dragdrop", "treeview", "tabview", "calendar"]
                 });
@@ -1725,7 +1725,7 @@ HTML;
             jsLanguage::createModuleStringsCache($_REQUEST['qc_module'], $GLOBALS['current_language']);
         }
         $jsLanguage = getVersionedScript(
-            "cache/jsLanguage/{$_REQUEST['qc_module']}/{$GLOBALS['current_language']}.js",
+            "/cache/jsLanguage/{$_REQUEST['qc_module']}/{$GLOBALS['current_language']}.js",
             $GLOBALS['sugar_config']['js_lang_version']
         );
 

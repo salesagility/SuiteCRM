@@ -54,7 +54,7 @@ if (isset($_GET["entryPoint"])) {
         die();
     } else {
         if ($_GET["entryPoint"] == "getYUIComboFile") {
-            include("include/javascript/getYUIComboFile.php");
+            include("/include/javascript/getYUIComboFile.php");
             die();
         }
     }

@@ -38,10 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
-<link rel="stylesheet" type="text/css" href="include/javascript/c3/c3.min.css">
-<script type="text/javascript" src="include/javascript/touchPunch/jquery.ui.touch-punch.min.js"></script>
-<link rel="stylesheet" type="text/css" href="include/javascript/pivottable/pivot.css">
-<script type="text/javascript" src="include/javascript/suitespots/suitespots.js"></script>
+<link rel="stylesheet" type="text/css" href="/include/javascript/c3/c3.min.css">
+<script type="text/javascript" src="/include/javascript/touchPunch/jquery.ui.touch-punch.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/include/javascript/pivottable/pivot.css">
+<script type="text/javascript" src="/include/javascript/suitespots/suitespots.js"></script>
 
 
 <script type="text/javascript">

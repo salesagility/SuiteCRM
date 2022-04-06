@@ -41,12 +41,12 @@
 *}
 
 {include file="modules/Emails/templates/_baseJsVars.tpl"}
-<script type="text/javascript" src='{sugar_getjspath file='include/javascript/tiny_mce/tiny_mce.js'}'></script>
-<script type="text/javascript" src='{sugar_getjspath file='cache/include/javascript/sugar_grp_emails.js'}'></script>
+<script type="text/javascript" src='{sugar_getjspath file='/include/javascript/tiny_mce/tiny_mce.js'}'></script>
+<script type="text/javascript" src='{sugar_getjspath file='/cache/include/javascript/sugar_grp_emails.js'}'></script>
 <script type="text/javascript"
-        src='{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}'></script>
-<script type="text/javascript" src="include/javascript/jsclass_base.js"></script>
-<script type="text/javascript" src="include/javascript/jsclass_async.js"></script>
+        src='{sugar_getjspath file='/cache/include/javascript/sugar_grp_yui_widgets.js'}'></script>
+<script type="text/javascript" src="/include/javascript/jsclass_base.js"></script>
+<script type="text/javascript" src="/include/javascript/jsclass_async.js"></script>
 
 <script type="text/javascript" language="Javascript">
 
@@ -61,7 +61,7 @@
 
 
     var isAdmin = {$is_admin};
-    var loadingSprite = app_strings.LBL_EMAIL_LOADING + " <img src='include/javascript/yui/build/assets/skins/sam/wait.gif' alt=$mod_strings.LBL_WAIT height='14' align='absmiddle'>";
+    var loadingSprite = app_strings.LBL_EMAIL_LOADING + " <img src='/include/javascript/yui/build/assets/skins/sam/wait.gif' alt=$mod_strings.LBL_WAIT height='14' align='absmiddle'>";
 </script>
 <div class="email">
     <form id="emailUIForm" name="emailUIForm">

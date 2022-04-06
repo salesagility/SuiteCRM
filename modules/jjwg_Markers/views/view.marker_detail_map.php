@@ -24,7 +24,7 @@ class Jjwg_MarkersViewMarker_Detail_Map extends SugarView
   <title><?php echo $GLOBALS['mod_strings']['LBL_MARKER_DISPLAY']; ?></title>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-  <link rel="stylesheet" type="text/css" href="cache/themes/<?php echo $GLOBALS['theme']; ?>/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="/cache/themes/<?php echo $GLOBALS['theme']; ?>/css/style.css" />
   <style type="text/css">
     html { height: 100% }
     body { height: 100%; margin: 0px; padding: 0px }

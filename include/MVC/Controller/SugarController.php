@@ -252,10 +252,10 @@ class SugarController
     private function loadPropertiesFromRequest()
     {
         if (!empty($this->routeParser->getAction())) {
-            $this->action = $_REQUEST['action'];
+            $this->action = $this->routeParser->getAction();
         }
-        if (!empty($this->routeParser->getAction())) {
-            $this->record = $_REQUEST['record'];
+        if (!empty($this->routeParser->getRecord())) {
+            $this->record = $this->routeParser->getRecord();
         }
         
     }
@@ -360,6 +360,8 @@ class SugarController
         } catch (Exception $e) {
             $this->handleException($e);
         }
+        $s = var_export($this,1);
+        //\SuiteCRM\MVC\Responds\RespondFactory::createRespond('html',"<pre>{$s}</pre>");
     }
 
     /**

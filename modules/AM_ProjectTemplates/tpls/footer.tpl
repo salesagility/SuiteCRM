@@ -55,9 +55,9 @@
 
 <div class="h3Row" id="scheduler"></div>
 
-<script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
-<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui2.js'}"></script>
-<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
+<script type='text/javascript' src='{sugar_getjspath file='/include/javascript/popup_helper.js'}'></script>
+<script type="text/javascript" src="{sugar_getjspath file='/cache/include/javascript/sugar_grp_yui2.js'}"></script>
+<script type="text/javascript" src="{sugar_getjspath file='/cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
   
 <script type="text/javascript">
 {literal}
@@ -94,7 +94,7 @@ var project_templateLoader = new YAHOO.util.YUILoader({
 project_templateLoader.addModule({
     name :"sugar_grp_project_template",
     type : "js",
-    fullpath: "cache/include/javascript/sugar_grp_project_template.js",
+    fullpath: "/cache/include/javascript/sugar_grp_project_template.js",
     varName: "global_rpcClient",
     requires: []
 });

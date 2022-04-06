@@ -721,7 +721,7 @@ if ($has_campaign) {
     }
     $ss->assign("DROPDOWN", $dropdown);
     $ss->assign("DEFAULT_MODULE", 'Contacts');
-//$xtpl->assign("CAMPAIGN_POPUP_JS", '<script type="text/javascript" src="include/javascript/sugar_3.js"></script>');
+//$xtpl->assign("CAMPAIGN_POPUP_JS", '<script type="text/javascript" src="/include/javascript/sugar_3.js"></script>');
 } else {
     $ss->assign("DROPDOWN", genDropDownJS2());
     $ss->assign("DEFAULT_MODULE", 'Accounts');

@@ -48,7 +48,7 @@ class SugarWidgetSubPanelDelegatesSelectButton extends SugarWidgetSubPanelTopBut
     public function display($defines, $additionalFormFields = null, $nonbutton = false)
     {
         global $mod_strings;
-        $button = "<script src='include/javascript/checkbox.js' type='text/javascript'></script>";
+        $button = "<script src='/include/javascript/checkbox.js' type='text/javascript'></script>";
         $button  .= "<form id='CustSelectForm' name='CustSelectForm' method='post' action=''>";
 
         // $button .= "<input id='custom_hidden_5' type='hidden' name='custom_hidden_5' value=''/>";

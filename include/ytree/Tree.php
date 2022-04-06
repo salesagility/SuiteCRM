@@ -58,7 +58,7 @@ class Tree
 {
     public $tree_style = 'include/ytree/TreeView/css/folders/tree.css';
     public $_header_files = array(
-        'include/javascript/yui/build/treeview/treeview.js',
+        '/include/javascript/yui/build/treeview/treeview.js',
         'include/ytree/treeutil.js',
     );
 

@@ -70,7 +70,7 @@ $entry_point_registry = array(
     'getImage' => array('file' => 'include/SugarTheme/getImage.php', 'auth' => false),
     'GenerateQuickComposeFrame' => array('file' => 'modules/Emails/GenerateQuickComposeFrame.php', 'auth' => true),
     'DetailUserRole' => array('file' => 'modules/ACLRoles/DetailUserRole.php', 'auth' => true),
-    'getYUIComboFile' => array('file' => 'include/javascript/getYUIComboFile.php', 'auth' => false),
+    'getYUIComboFile' => array('file' => '/include/javascript/getYUIComboFile.php', 'auth' => false),
     'UploadFileCheck' => array('file' => 'modules/Configurator/UploadFileCheck.php', 'auth' => true),
     'SAML'=>  array('file' => 'modules/Users/authentication/SAMLAuthenticate/index.php', 'auth' => false),
     'SAML2Metadata'=>  array('file' => 'modules/Users/authentication/SAML2Authenticate/SAML2Metadata.php', 'auth' => false),

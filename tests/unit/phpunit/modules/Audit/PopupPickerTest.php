@@ -22,7 +22,7 @@ class PopupPickerTest extends SuitePHPUnitFrameworkTestCase
         self::assertStringContainsStringIgnoringCase('<!DOCTYPE HTML>', $output);
         self::assertStringContainsStringIgnoringCase('<html lang=\'en_us\'>', $output);
         self::assertStringContainsStringIgnoringCase('<title>SuiteCRM - Open Source CRM</title>', $output);
-        self::assertStringContainsStringIgnoringCase('<link rel="stylesheet" type="text/css" href="cache/themes/SuiteP/css/Dawn/style.css', $output);
+        self::assertStringContainsStringIgnoringCase('<link rel="stylesheet" type="text/css" href="/cache/themes/SuiteP/css/Dawn/style.css', $output);
         self::assertStringContainsStringIgnoringCase('<meta http-equiv="Content-Type" content="text/html; charset="{$charset}">', $output);
         self::assertStringContainsStringIgnoringCase('<body class="popupBody">', $output);
         self::assertStringContainsStringIgnoringCase('<div class=\'moduleTitle\'>', $output);

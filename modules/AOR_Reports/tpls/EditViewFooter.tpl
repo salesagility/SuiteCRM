@@ -6,8 +6,8 @@
     <script src="modules/AOR_Conditions/conditionLines.js"></script>
     <script src="modules/AOR_Charts/chartLines.js"></script>
 
-    <link rel="stylesheet" href="include/javascript/jquery/themes/base/jquery-ui.min.css">
-    <script src="include/javascript/jquery/jquery-ui-min.js"></script>
+    <link rel="stylesheet" href="/include/javascript/jquery/themes/base/jquery-ui.min.css">
+    <script src="/include/javascript/jquery/jquery-ui-min.js"></script>
     <script src="modules/AOR_Reports/AOR_Report_Before.js"></script>
 {/literal}
 

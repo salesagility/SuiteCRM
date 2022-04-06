@@ -241,7 +241,7 @@ class QuickSearchDefaults
     {
         global $sugar_version, $sugar_config, $theme;
         $qsScripts = '<script type="text/javascript">sqsWaitGif = "' . SugarThemeRegistry::current()->getImageURL('sqsWait.gif') . '";</script>
-		<script type="text/javascript" src="'. getJSPath('include/javascript/quicksearch.js') . '"></script>';
+		<script type="text/javascript" src="'. getJSPath('/include/javascript/quicksearch.js') . '"></script>';
         return $qsScripts;
     }
 
@@ -253,7 +253,7 @@ class QuickSearchDefaults
     public function getQSScriptsJSONAlreadyDefined()
     {
         global $sugar_version, $sugar_config, $theme;
-        $qsScriptsJSONAlreadyDefined = '<script type="text/javascript">sqsWaitGif = "' . SugarThemeRegistry::current()->getImageURL('sqsWait.gif') . '";</script><script type="text/javascript" src="' . getJSPath('include/javascript/quicksearch.js') . '"></script>';
+        $qsScriptsJSONAlreadyDefined = '<script type="text/javascript">sqsWaitGif = "' . SugarThemeRegistry::current()->getImageURL('sqsWait.gif') . '";</script><script type="text/javascript" src="' . getJSPath('/include/javascript/quicksearch.js') . '"></script>';
         return $qsScriptsJSONAlreadyDefined;
     }
     // END QuickSearch functions for 4.5.x backwards compatibility support

@@ -54,15 +54,15 @@ class Jit extends JsChart
     public function getChartResources()
     {
         return '
-		<script language="javascript" type="text/javascript" src="'.getJSPath('include/SugarCharts/Jit/js/Jit/jit.js').'"></script>
-		<script language="javascript" type="text/javascript" src="'.getJSPath('include/SugarCharts/Jit/js/sugarCharts.js').'"></script>
+		<script language="javascript" type="text/javascript" src="/'.getJSPath('include/SugarCharts/Jit/js/Jit/jit.js').'"></script>
+		<script language="javascript" type="text/javascript" src="/'.getJSPath('include/SugarCharts/Jit/js/sugarCharts.js').'"></script>
 		';
     }
     
     public function getMySugarChartResources()
     {
         return '
-		<script language="javascript" type="text/javascript" src="'.getJSPath('include/SugarCharts/Jit/js/mySugarCharts.js').'"></script>
+		<script language="javascript" type="text/javascript" src="/'.getJSPath('include/SugarCharts/Jit/js/mySugarCharts.js').'"></script>
 		';
     }
     

@@ -62,7 +62,7 @@ array(
       array(
           0 =>
               array(
-                  'file' => 'include/javascript/bindWithDelay.js',
+                  'file' => '/include/javascript/bindWithDelay.js',
               ),
         1 =>
         array(
@@ -70,7 +70,7 @@ array(
         ),
           2 =>
               array(
-                  'file' => 'include/javascript/qtip/jquery.qtip.min.js',
+                  'file' => '/include/javascript/qtip/jquery.qtip.min.js',
               ),
       ),
       'useTabs' => false,

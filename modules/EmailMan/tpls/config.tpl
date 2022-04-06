@@ -41,7 +41,7 @@
 
 <!-- BEGIN: main -->
 <script type="text/javascript" src="{sugar_getjspath file='modules/Users/User.js'}"></script>
-<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
+<script type="text/javascript" src="{sugar_getjspath file='/cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
 {literal}
 <script type="text/javascript" >
 <!--
@@ -523,12 +523,12 @@ var loader = new YAHOO.util.YUILoader({
     loadOptional: true,
     skin: { base: 'blank', defaultSkin: '' },
     allowRollup: true,
-    base: "include/javascript/yui/build/"
+    base: "/include/javascript/yui/build/"
 });
 loader.addModule({
     name :"sugarwidgets",
     type : "js",
-    fullpath: "include/javascript/sugarwidgets/SugarYUIWidgets.js",
+    fullpath: "/include/javascript/sugarwidgets/SugarYUIWidgets.js",
     varName: "YAHOO.SUGAR",
     requires: ["datatable", "dragdrop", "treeview", "tabview"]
 });

@@ -265,7 +265,7 @@ abstract class DBManager
      */
     public function __construct()
     {
-        $this->timedate = TimeDate::getInstance();
+        $this->timedate = \TimeDate::getInstance();
         $this->log = isset($GLOBALS['log']) ? $GLOBALS['log'] : null;
         $this->helper = $this; // compatibility
     }

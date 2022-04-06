@@ -92,7 +92,7 @@
 </table>
 </form>
 
-<script type="text/javascript" src="{sugar_getjspath file="include/javascript/popup_parent_helper.js"}"></script>
+<script type="text/javascript" src="{sugar_getjspath file="/include/javascript/popup_parent_helper.js"}"></script>
 <script type="text/javascript" src="{sugar_getjspath file="modules/Campaigns/wizard.js"}"></script>
 
 {$WIZ_JAVASCRIPT}

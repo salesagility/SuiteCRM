@@ -149,7 +149,7 @@
 </table>
 </table>
 
-{sugar_getscript file="include/javascript/yui/build/dragdrop/dragdrop-min.js"}
+{sugar_getscript file="/include/javascript/yui/build/dragdrop/dragdrop-min.js"}
 {literal}
 <script>
 

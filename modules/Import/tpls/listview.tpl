@@ -47,7 +47,7 @@
 }{/literal}
 </style>
 
-<script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
+<script type='text/javascript' src='{sugar_getjspath file='/include/javascript/popup_helper.js'}'></script>
 
 <div id="{$tableID}_content">
     <table cellpadding='0' cellspacing='0' width='50%' border='0' class='list view'>

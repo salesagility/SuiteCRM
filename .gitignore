@@ -93,10 +93,10 @@ node_modules/
 
 
 #Ignore Sass Generated files in SuiteP
-themes/SuiteP/css/*.map
-themes/SuiteP/css/*/*.map
-themes/SuiteP/css/*/color-palette.css
-themes/SuiteP/css/*/variables.css
+/themes/SuiteP/css/*.map
+/themes/SuiteP/css/*/*.map
+/themes/SuiteP/css/*/color-palette.css
+/themes/SuiteP/css/*/variables.css
 tests/_output/*
 
 

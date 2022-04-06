@@ -433,7 +433,7 @@ HTML;
         $webFormRequiredFieldsMsg,
         $formCols = array('colsFirst', 'colsSecond')
                                     ) {
-        $sugarGrp1Js = getJSPath($siteURL.'/cache/include/javascript/sugar_grp1.js');
+        $sugarGrp1Js = getJSPath($siteURL.'//cache/include/javascript/sugar_grp1.js');
 
         $Web_To_Lead_Form_html = self::getFormStartHTML(
             $sugarGrp1Js,

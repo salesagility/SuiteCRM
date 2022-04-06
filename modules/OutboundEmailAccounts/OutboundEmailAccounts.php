@@ -122,7 +122,7 @@ HTML;
         $adminNotifyFromName = $admin->settings['notify_fromname'];
         $html = <<<HTML
 			<input id="sendTestOutboundEmailSettingsBtn" type="button" class="button" value="{$APP['LBL_EMAIL_TEST_OUTBOUND_SETTINGS']}" onclick="testOutboundSettings();">
-			<script type="text/javascript" src="cache/include/javascript/sugar_grp_yui_widgets.js"></script>
+			<script type="text/javascript" src="/cache/include/javascript/sugar_grp_yui_widgets.js"></script>
 			<script type="text/javascript">
 
 				function overlay(reqtitle, body, type) {

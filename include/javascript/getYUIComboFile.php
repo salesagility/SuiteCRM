@@ -46,10 +46,10 @@ if (empty($_REQUEST)) {
 }
 
 $yui_path = array(
-    "2.9.0" => "include/javascript/yui",
-    "2_9_0" => "include/javascript/yui",
-    "3.3.0" => "include/javascript/yui3",
-    "3_3_0" => "include/javascript/yui3"
+    "2.9.0" => "/include/javascript/yui",
+    "2_9_0" => "/include/javascript/yui",
+    "3.3.0" => "/include/javascript/yui3",
+    "3_3_0" => "/include/javascript/yui3"
 );
 $types = array(
     "js" => "application/javascript",

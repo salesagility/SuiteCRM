@@ -39,7 +39,7 @@
  */
 
 *}
-{sugar_getscript file="cache/include/javascript/sugar_grp_yui_widgets.js"}
+{sugar_getscript file="/cache//include/javascript/sugar_grp_yui_widgets.js"}
 {literal}
 <script>
  /*
@@ -139,7 +139,7 @@ if(typeof PackageManager == 'undefined') {
 														);
 
 					_loadingBar.setHeader("{/literal}{$MOD.SEARCHING_UPDATES}{literal}");
-					_loadingBar.setBody("<img src=\"include/javascript/yui/assets/rel_interstitial_loading.gif\"/>");
+					_loadingBar.setBody("<img src=\"/include/javascript/yui/assets/rel_interstitial_loading.gif\"/>");
 					_loadingBar.render(document.body);
 					_loadingBar.show();
 	        		_pmg = new PackageManagerGrid();
@@ -176,7 +176,7 @@ if(typeof PackageManager == 'undefined') {
 														);
 
 					_loadingBar.setHeader("{/literal}{$MOD.DOWNLOADING}{literal}");
-					_loadingBar.setBody("<img src=\"include/javascript/yui/assets/rel_interstitial_loading.gif\"/>");
+					_loadingBar.setBody("<img src=\"/include/javascript/yui/assets/rel_interstitial_loading.gif\"/>");
 					_loadingBar.render(document.body);
 					_loadingBar.show();
 	        			//_numPackagesToDownload = nodes.length;
@@ -829,7 +829,7 @@ if(typeof PackageManager == 'undefined') {
 														);
 
 					_loadingBar.setHeader("{/literal}{$MOD.AUTHENTICATING}{literal}");
-					_loadingBar.setBody("<img src=\"include/javascript/yui/assets/rel_interstitial_loading.gif\"/>");
+					_loadingBar.setBody("<img src=\"/include/javascript/yui/assets/rel_interstitial_loading.gif\"/>");
 					_loadingBar.render(document.body);
 					_loadingBar.show();
 				//PackageManager.showWaiting();

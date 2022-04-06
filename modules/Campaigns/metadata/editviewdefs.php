@@ -58,7 +58,7 @@ array(
           'field' => '30',
         ),
       ),
-      'javascript' => '<script type="text/javascript" src="include/javascript/popup_parent_helper.js?v=igGzALk_bn-xeyTYyoHxog"></script>
+      'javascript' => '<script type="text/javascript" src="/include/javascript/popup_parent_helper.js?v=igGzALk_bn-xeyTYyoHxog"></script>
 <script type="text/javascript">
 function type_change() {ldelim}
 	type = document.getElementsByName(\'campaign_type\');

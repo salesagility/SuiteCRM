@@ -23,7 +23,7 @@ class Jjwg_MapsViewMap_Markers extends SugarView
   <head>
   <title><?php echo $GLOBALS['mod_strings']['LBL_MAP_DISPLAY']; ?></title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-  <link rel="stylesheet" type="text/css" href="cache/themes/<?php echo $GLOBALS['theme']; ?>/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="/cache/themes/<?php echo $GLOBALS['theme']; ?>/css/style.css" />
 <?php if (!empty($GLOBALS['jjwg_config']['google_maps_api_key'])): ?>
   <style type="text/css">
     html,body{

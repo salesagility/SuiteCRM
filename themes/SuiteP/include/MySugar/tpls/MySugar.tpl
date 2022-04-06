@@ -56,8 +56,8 @@
 
 
 
-{sugar_getscript file="cache/include/javascript/sugar_grp_yui_widgets.js"}
-{sugar_getscript file='include/javascript/dashlets.js'}
+{sugar_getscript file="/cache/include/javascript/sugar_grp_yui_widgets.js"}
+{sugar_getscript file='/include/javascript/dashlets.js'}
 
 {$chartResources}
 {$mySugarChartResources}
@@ -188,8 +188,8 @@
         <div id="dashletsDialog_c"></div>
     </div>
 
-<script type="text/javascript" src="themes/SuiteP/include/MySugar/javascript/AddRemoveDashboardPages.js"></script>
-<script type="text/javascript" src="themes/SuiteP/include/MySugar/javascript/retrievePage.js"></script>
+<script type="text/javascript" src="/themes/SuiteP/include/MySugar/javascript/AddRemoveDashboardPages.js"></script>
+<script type="text/javascript" src="/themes/SuiteP/include/MySugar/javascript/retrievePage.js"></script>
 <script type="text/javascript">
 
     var activePage = {$activePage};
@@ -244,14 +244,14 @@
     mySugarLoader.addModule({
         name: "my_sugar",
         type: "js",
-        fullpath: {/literal}"{sugar_getjspath file='include/MySugar/javascript/MySugar.js'}"{literal},
+        fullpath: {/literal}"{sugar_getjspath file='/include/MySugar/javascript/MySugar.js'}"{literal},
         varName: "initMySugar",
         requires: []
     });
     mySugarLoader.addModule({
         name: "sugar_charts",
         type: "js",
-        fullpath: {/literal}"{sugar_getjspath file="include/SugarCharts/Jit/js/mySugarCharts.js"}"{literal},
+        fullpath: {/literal}"{sugar_getjspath file="/include/SugarCharts/Jit/js/mySugarCharts.js"}"{literal},
         varName: "initmySugarCharts",
         requires: []
     });

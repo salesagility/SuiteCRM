@@ -13,10 +13,10 @@ $surveyName = !empty($_REQUEST['name']) ? $_REQUEST['name'] : 'Survey';
 
     <title><?= $surveyName; ?></title>
 
-    <link href="themes/SuiteP/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/themes/SuiteP/css/bootstrap.min.css" rel="stylesheet">
     <link href="custom/include/javascript/rating/rating.min.css" rel="stylesheet">
     <link href="custom/include/javascript/datetimepicker/jquery-ui-timepicker-addon.css" rel="stylesheet">
-    <link href="include/javascript/jquery/themes/base/jquery.ui.all.css" rel="stylesheet">
+    <link href="/include/javascript/jquery/themes/base/jquery.ui.all.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -27,7 +27,7 @@ $surveyName = !empty($_REQUEST['name']) ? $_REQUEST['name'] : 'Survey';
         </div>
     </div>
 </div>
-<script src="include/javascript/jquery/jquery-min.js"></script>
-<script src="include/javascript/jquery/jquery-ui-min.js"></script>
+<script src="/include/javascript/jquery/jquery-min.js"></script>
+<script src="/include/javascript/jquery/jquery-ui-min.js"></script>
 </body>
 </html>

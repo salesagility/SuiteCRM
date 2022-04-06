@@ -51,12 +51,12 @@
 <html {$langHeader}>
 <head>
 <script type="text/javascript" src="modules/InboundEmail/InboundEmail.js?v={VERSION_MARK}"></script>
-<script type="text/javascript" src="include/javascript/sugar_3.js?v={VERSION_MARK}"></script>
-<script type="text/javascript" src="cache/include/javascript/sugar_grp1_yui.js?v={VERSION_MARK}"></script>
+<script type="text/javascript" src="/include/javascript/sugar_3.js?v={VERSION_MARK}"></script>
+<script type="text/javascript" src="/cache/include/javascript/sugar_grp1_yui.js?v={VERSION_MARK}"></script>
 <script type="text/javascript" src="include/SugarFields/Teamset/Teamset.js?v={VERSION_MARK}"></script>
 {$languageStrings}
-<script type="text/javascript" src="cache/include/javascript/sugar_grp1_yui.js??v={VERSION_MARK}"></script>
-<script type="text/javascript" src="cache/include/javascript/sugar_grp1.js??v={VERSION_MARK}"></script>
+<script type="text/javascript" src="/cache/include/javascript/sugar_grp1_yui.js??v={VERSION_MARK}"></script>
+<script type="text/javascript" src="/cache/include/javascript/sugar_grp1.js??v={VERSION_MARK}"></script>
 <script type="text/javascript" language="Javascript">
 currentFolders = {$group_folder_array};
 {literal}

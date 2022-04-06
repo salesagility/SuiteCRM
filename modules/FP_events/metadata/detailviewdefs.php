@@ -26,11 +26,11 @@ $viewdefs [$module_name] =
                             array(
                                 0 =>
                                     array(
-                                        'file' => 'include/javascript/checkbox.js',
+                                        'file' => '/include/javascript/checkbox.js',
                                     ),
                                 1 =>
                                     array(
-                                        'file' => 'cache/include/javascript/sugar_grp_yui_widgets.js',
+                                        'file' => '/cache/include/javascript/sugar_grp_yui_widgets.js',
                                     ),
                             ),
                         'widths' =>

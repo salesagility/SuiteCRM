@@ -85,14 +85,14 @@ $out =<<<EOQ
     <meta http-equiv="Content-Style-Type" content="text/css">
     <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_DBCONF_TITLE']}</title>
     <link rel="stylesheet" href="install/install.css" type="text/css" />
-    <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
-    <link rel="stylesheet" href="themes/SuiteP/css/fontello.css">
-    <link rel="stylesheet" href="themes/SuiteP/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
+    <link rel='stylesheet' type='text/css' href='/include/javascript/yui/build/container/assets/container.css' />
+    <link rel="stylesheet" href="/themes/SuiteP/css/fontello.css">
+    <link rel="stylesheet" href="/themes/SuiteP/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
     <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
     <script type="text/javascript" src="install/installCommon.js"></script>
     <script type="text/javascript" src="install/dbConfig.js"></script>
-    <script src="cache/include/javascript/sugar_grp1_yui.js?s={$sugar_version}&c={$js_custom_version}"></script>
-    <script src="cache/include/javascript/sugar_grp1_jquery.js?s={$sugar_version}&c={$js_custom_version}"></script>
+    <script src="/cache/include/javascript/sugar_grp1_yui.js?s={$sugar_version}&c={$js_custom_version}"></script>
+    <script src="/cache/include/javascript/sugar_grp1_jquery.js?s={$sugar_version}&c={$js_custom_version}"></script>
 </head>
 
 EOQ;

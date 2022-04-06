@@ -39,7 +39,7 @@
  */
 
 *}
-<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
+<script type="text/javascript" src="{sugar_getjspath file='/cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
 <form name="ConfigureAjaxUI" method="POST"  method="POST" action="index.php">
 	<input type="hidden" name="module" value="Administration">
 	<input type="hidden" name="action" value="UpdateAjaxUI">

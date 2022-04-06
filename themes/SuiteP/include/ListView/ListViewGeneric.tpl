@@ -40,7 +40,7 @@
 *}
 {sugar_include include=$includes}
 {include file='include/ListView/ListViewColumnsFilterDialog.tpl'}
-<script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
+<script type='text/javascript' src='{sugar_getjspath file='/include/javascript/popup_helper.js'}'></script>
 
 
 <script>

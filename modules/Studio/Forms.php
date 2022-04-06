@@ -96,9 +96,9 @@ function get_new_record_form()
         $html .= <<<EOQ
 
 
-	   <link rel="stylesheet" type="text/css" href="include/javascript/yui-old/assets/container.css" />
-		            	<script type="text/javascript" src="include/javascript/yui-old/container.js"></script>
-					<script type="text/javascript" src="include/javascript/yui-old/PanelEffect.js"></script>
+	   <link rel="stylesheet" type="text/css" href="/include/javascript/yui-old/assets/container.css" />
+		            	<script type="text/javascript" src="/include/javascript/yui-old/container.js"></script>
+					<script type="text/javascript" src="/include/javascript/yui-old/PanelEffect.js"></script>
 
 
 

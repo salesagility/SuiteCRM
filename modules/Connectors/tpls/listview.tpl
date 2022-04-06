@@ -39,7 +39,7 @@
  */
 
 *}
-<script type='text/javascript' src='{sugar_getjspath file='include/javascript/sugar_3.js'}'></script>
+<script type='text/javascript' src='{sugar_getjspath file='/include/javascript/sugar_3.js'}'></script>
 
 <table cellpadding='0' cellspacing='0' width='100%' border='0' class='list view'>
 <tr>
