@@ -79,7 +79,7 @@ class ViewWizard extends SugarView
         $this->ss->assign('FAVICON_URL', getJSPath($favicon));
         $this->ss->assign('CSS', '<link rel="stylesheet" type="text/css" href="'.SugarThemeRegistry::current()->getCSSURL('wizard.css').'" />');
         $this->ss->assign('JAVASCRIPT', user_get_validate_record_js().user_get_chooser_js().user_get_confsettings_js());
-        $this->ss->assign('PRINT_URL', 'index.php?'.$GLOBALS['request_string']);
+        $this->ss->assign('PRINT_URL', 'index.php?'.SugarApplication::getStringRequest());
         $this->ss->assign('SKIP_WELCOME', isset($_REQUEST['skipwelcome']) && $_REQUEST['skipwelcome'] == 1);
         $this->ss->assign('ID', $current_user->id);
         $this->ss->assign('USER_NAME', $current_user->user_name);

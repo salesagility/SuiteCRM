@@ -89,7 +89,7 @@ if (isset($focus->campaign_type) && $focus->campaign_type == "NewsLetter") {
     $smarty->assign("APP", $app_strings);
 
     $smarty->assign("GRIDLINE", $gridline);
-    $smarty->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
+    $smarty->assign("PRINT_URL", "index.php?".SugarApplication::getStringRequest());
     $smarty->assign("ID", $focus->id);
     $smarty->assign("ASSIGNED_TO", $focus->assigned_user_name);
     $smarty->assign("STATUS", $app_list_strings['campaign_status_dom'][$focus->status]);

@@ -74,7 +74,7 @@ $xtpl->assign('APP', $app_strings);
 $xtpl->assign("CREATED_BY", $focus->created_by_name);
 $xtpl->assign("MODIFIED_BY", $focus->modified_by_name);
 $xtpl->assign("GRIDLINE", $gridline);
-$xtpl->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
+$xtpl->assign("PRINT_URL", "index.php?".SugarApplication::getStringRequest());
 $xtpl->assign("ID", $focus->id);
 $xtpl->assign('USER_NAME', $focus->user_name);
 

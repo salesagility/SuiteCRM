@@ -99,7 +99,7 @@ if (isset($_REQUEST['return_id'])) {
 if (empty($_REQUEST['return_id'])) {
     $ss->assign("RETURN_ACTION", 'index');
 }
-$ss->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
+$ss->assign("PRINT_URL", "index.php?".SugarApplication::getStringRequest());
 
 require_once('include/QuickSearchDefaults.php');
 $qsd = QuickSearchDefaults::getQuickSearchDefaults();

@@ -49,7 +49,7 @@ $xtpl->assign("RETURN_ACTION", "index");
 
 $xtpl->assign("MODULE", $currentModule);
 $xtpl->assign("THEME", $theme);
-$xtpl->assign("IMAGE_PATH", $image_path);$xtpl->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
+$xtpl->assign("IMAGE_PATH", $image_path);$xtpl->assign("PRINT_URL", "index.php?".SugarApplication::getStringRequest());
 $xtpl->assign("HEADER", get_module_title("SecurityGroups", "{MOD.LBL_CONFIGURE_SETTINGS}", true));
 
 

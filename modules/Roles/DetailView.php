@@ -81,7 +81,7 @@ $xtpl=new XTemplate('modules/Roles/DetailView.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 $xtpl->assign("GRIDLINE", $gridline);
-$xtpl->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
+$xtpl->assign("PRINT_URL", "index.php?".SugarApplication::getStringRequest());
 $xtpl->assign("ID", $focus->id);
 $xtpl->assign("RETURN_MODULE", "Roles");
 $xtpl->assign("RETURN_ACTION", "DetailView");

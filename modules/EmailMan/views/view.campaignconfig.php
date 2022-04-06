@@ -98,7 +98,7 @@ class ViewCampaignconfig extends SugarView
         $this->ss->assign("RETURN_ACTION", "index");
         
         $this->ss->assign("MODULE", $currentModule);
-        $this->ss->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
+        $this->ss->assign("PRINT_URL", "index.php?".SugarApplication::getStringRequest());
         
         if (isset($focus->settings['massemailer_campaign_emails_per_run']) && !empty($focus->settings['massemailer_campaign_emails_per_run'])) {
             $this->ss->assign("EMAILS_PER_RUN", $focus->settings['massemailer_campaign_emails_per_run']);

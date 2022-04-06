@@ -111,10 +111,10 @@ class Popup_Picker
         $printImageURL = SugarThemeRegistry::current()->getImageURL('print.gif');
                 
         $requestString = '';
-        if (!isset($GLOBALS['request_string'])) {
-            LoggerManager::getLogger()->warn("Popup picker needs focus bean but \$GLOBALS['request_string'] is not set.");
+        if (!isset(SugarApplication::getStringRequest())) {
+            LoggerManager::getLogger()->warn("Popup picker needs focus bean but \SugarApplication::getStringRequest() is not set.");
         } else {
-            $requestString = $GLOBALS['request_string'];
+            $requestString = SugarApplication::getStringRequest();
         }
                 
         $titleExtra = <<<EOHTML

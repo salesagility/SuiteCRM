@@ -100,7 +100,7 @@ class ViewConfig extends SugarView
         $this->ss->assign("RETURN_ACTION", "index");
 
         $this->ss->assign("MODULE", $currentModule);
-        $this->ss->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
+        $this->ss->assign("PRINT_URL", "index.php?".SugarApplication::getStringRequest());
         $this->ss->assign("HEADER", get_module_title("EmailMan", "{MOD.LBL_CONFIGURE_SETTINGS}", true));
         $this->ss->assign("notify_fromaddress", $focus->settings['notify_fromaddress']);
         $this->ss->assign("notify_send_from_assigning_user", (isset($focus->settings['notify_send_from_assigning_user']) && !empty($focus->settings['notify_send_from_assigning_user'])) ? "checked='checked'" : "");

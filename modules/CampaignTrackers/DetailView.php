@@ -85,7 +85,7 @@ if (isset($_REQUEST['return_id'])) {
 }
  
 $xtpl->assign("GRIDLINE", $gridline);
-$xtpl->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
+$xtpl->assign("PRINT_URL", "index.php?".SugarApplication::getStringRequest());
 $xtpl->assign("ID", $focus->id);
 if (!empty($_REQUEST['campaign_name'])) {
     $xtpl->assign("CAMPAIGN_NAME", $_REQUEST['campaign_name']);

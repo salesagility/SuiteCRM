@@ -57,8 +57,8 @@ function getPrintLink()
         return "javascript:SUGAR.ajaxUI.print();";
     }
     $requestString = null;
-    if (isset($GLOBALS['request_string'])) {
-        $requestString = $GLOBALS['request_string'];
+    if (isset(SugarApplication::getStringRequest())) {
+        $requestString = SugarApplication::getStringRequest();
     } else {
         LoggerManager::getLogger()->warn('Undefined index: request_string');
     }

@@ -86,7 +86,7 @@ $sugar_smarty->assign("RETURN_ACTION", "index");
 $sugar_smarty->assign("DB_NAME", $db->dbName);
 
 $sugar_smarty->assign("MODULE", $currentModule);
-$sugar_smarty->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
+$sugar_smarty->assign("PRINT_URL", "index.php?".SugarApplication::getStringRequest());
 
 
 $sugar_smarty->assign("ADVANCED_SEARCH_PNG", SugarThemeRegistry::current()->getImage('advanced_search', 'border="0"', null, null, '.gif', $app_strings['LNK_ADVANCED_FILTER']));

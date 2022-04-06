@@ -72,7 +72,7 @@ $GLOBALS['log']->info("Groups edit view");
 $xtpl= new XTemplate('modules/Groups/EditView.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
-$xtpl->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
+$xtpl->assign("PRINT_URL", "index.php?".SugarApplication::getStringRequest());
 $xtpl->assign("ID", $focus->id);
 $xtpl->assign("USER_NAME", $focus->user_name);
 $xtpl->assign("DESCRIPTION", $focus->description);

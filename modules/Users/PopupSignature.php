@@ -89,7 +89,7 @@ if (empty($_REQUEST['return_id'])) {
     $xtpl->assign('RETURN_ACTION', 'index');
 }
 $xtpl->assign('INPOPUPWINDOW', 'true');
-$xtpl->assign('PRINT_URL', 'index.php?'.$GLOBALS['request_string']);
+$xtpl->assign('PRINT_URL', 'index.php?'.SugarApplication::getStringRequest());
 $xtpl->assign('JAVASCRIPT', get_set_focus_js());
 $xtpl->assign('ID', $focus->id);
 $xtpl->assign('NAME', $focus->name);

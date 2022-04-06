@@ -67,7 +67,7 @@ echo getClassicModuleTitle('Contacts', array($moduleName,$mod_strings['LBL_SAVE_
 $xtpl=new XTemplate('modules/Contacts/ShowDuplicates.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
-$xtpl->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
+$xtpl->assign("PRINT_URL", "index.php?".SugarApplication::getStringRequest());
 $xtpl->assign("MODULE", $_REQUEST['module']);
 if ($error_msg != '') {
     $xtpl->assign("ERROR", $error_msg);

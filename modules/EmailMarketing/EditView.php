@@ -119,7 +119,7 @@ if (empty($time_ampm) || empty($focus->time_start)) {
     $split = $timedate->splitTime($focus->time_start, $timedate->get_time_format());
     $time_start = $split['h'].$timedate->timeSeparator().$split['m'];
 }
-$xtpl->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
+$xtpl->assign("PRINT_URL", "index.php?".SugarApplication::getStringRequest());
 $xtpl->assign("JAVASCRIPT", get_set_focus_js().get_validate_record_js());
 $xtpl->assign("DATE_ENTERED", $focus->date_entered);
 $xtpl->assign("DATE_MODIFIED", $focus->date_modified);

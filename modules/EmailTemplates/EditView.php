@@ -180,7 +180,7 @@ $sqs_objects = array('EditView_assigned_user_name' => $qsd->getQSUser());
 $quicksearch_js = '<script type="text/javascript" language="javascript">sqs_objects = ' . $json->encode($sqs_objects) . '; enableQS();</script>';
 
 $xtpl->assign("CANCEL_SCRIPT", $cancel_script);
-$xtpl->assign("PRINT_URL", "index.php?" . $GLOBALS['request_string']);
+$xtpl->assign("PRINT_URL", "index.php?" . SugarApplication::getStringRequest());
 $xtpl->assign("JAVASCRIPT", get_set_focus_js() . $quicksearch_js);
 
 if (!is_file(sugar_cached('jsLanguage/') . $GLOBALS['current_language'] . '.js')) {

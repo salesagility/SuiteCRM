@@ -55,7 +55,7 @@ $xtpl->assign("RETURN_MODULE", $_REQUEST['return_module']);
 $xtpl->assign("RETURN_ACTION", $_REQUEST['return_action']);
 $xtpl->assign("RETURN_ID", $_REQUEST['return_id']);
 $xtpl->assign("THEME", $theme);
-$xtpl->assign("IMAGE_PATH", $image_path);$xtpl->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
+$xtpl->assign("IMAGE_PATH", $image_path);$xtpl->assign("PRINT_URL", "index.php?".SugarApplication::getStringRequest());
 $xtpl->assign("ID", $focus->id);
 $xtpl->assign("SECURITYGROUP", $securityGroup = array("NAME" => $focus->securitygroup_name, "ID" => $focus->securitygroup_id));
 $xtpl->assign("USER", $user = array("NAME" => $focus->user_name, "ID" => $focus->user_id));
