@@ -53,17 +53,17 @@ function loadParentView($type)
 
 function getPrintLink()
 {
-    if (isset($_REQUEST['action']) && $_REQUEST['action'] == "ajaxui") {
-        return "javascript:SUGAR.ajaxUI.print();";
-    }
-    $requestString = null;
-    if (isset(SugarApplication::getStringRequest())) {
-        $requestString = SugarApplication::getStringRequest();
-    } else {
-        LoggerManager::getLogger()->warn('Undefined index: request_string');
-    }
-    return "javascript:void window.open('index.php?{$requestString}',"
-         . "'printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')";
+//    if (isset($_REQUEST['action']) && $_REQUEST['action'] == "ajaxui") {
+//        return "javascript:SUGAR.ajaxUI.print();";
+//    }
+//    $requestString = null;
+//    if (isset(SugarApplication::getStringRequest())) {
+//        $requestString = SugarApplication::getStringRequest();
+//    } else {
+//        LoggerManager::getLogger()->warn('Undefined index: request_string');
+//    }
+//    return "javascript:void window.open('index.php?{$requestString}',"
+//         . "'printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')";
 }
 
 

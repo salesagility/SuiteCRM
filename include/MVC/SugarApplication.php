@@ -50,7 +50,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 require_once('include/MVC/Controller/ControllerFactory.php');
 require_once('include/MVC/View/ViewFactory.php');
-require_once('include/MVC/Responds/Respond.php');
+require_once('include/MVC/Responds/RespondFactory.php');
 require_once('include/MVC/Responds/RespondInterface.php');
 
 /**
@@ -63,7 +63,7 @@ class SugarApplication
     public $headerDisplayed = false;
     public $default_module = 'Home';
     public $default_action = 'index';
-    public static SuiteCRM\MVC\Responds\RespondInterface $respond;
+    public static $respond;
     public Request $request;
     protected static string $StringRequest = '';
 

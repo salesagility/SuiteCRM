@@ -38,7 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+use SuiteCRM\MVC\RouteParser\RouteParser;
+
 require_once('include/MVC/Controller/SugarController.php');
+require_once('include/MVC/RouteParser/RouteParser.php');
 /**
  * MVC Controller Factory
  * @api
@@ -48,15 +51,17 @@ class ControllerFactory
     /**
      * Obtain an instance of the correct controller.
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return an instance of SugarController
      */
-    public static function getController($module)
+    public static function getController(Symfony\Component\HttpFoundation\Request $request)
     {
-        $class = ucfirst($module).'Controller';
+        $routeParser = new RouteParser($request);
+        $class = ucfirst($routeParser->getModule()).'Controller';
         $customClass = 'Custom' . $class;
-        if (file_exists('custom/modules/'.$module.'/controller.php')) {
+        if (file_exists('custom/modules/'.$routeParser->getModule().'/controller.php')) {
             $customClass = 'Custom' . $class;
-            require_once('custom/modules/'.$module.'/controller.php');
+            require_once('custom/modules/'.$routeParser->getModule().'/controller.php');
             if (class_exists($customClass)) {
                 $controller = new $customClass();
             } else {
@@ -64,8 +69,8 @@ class ControllerFactory
                     $controller = new $class();
                 }
             }
-        } elseif (file_exists('modules/'.$module.'/controller.php')) {
-            require_once('modules/'.$module.'/controller.php');
+        } elseif (file_exists('modules/'.$routeParser->getModule().'/controller.php')) {
+            require_once('modules/'.$routeParser->getModule().'/controller.php');
             if (class_exists($customClass)) {
                 $controller = new $customClass();
             } else {
@@ -84,7 +89,7 @@ class ControllerFactory
             }
         }
         //setup the controller
-        $controller->setup($module);
+        $controller->setup($routeParser);
         return $controller;
     }
 }

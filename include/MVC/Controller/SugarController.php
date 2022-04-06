@@ -181,6 +181,8 @@ class SugarController
      */
     public $hasAccess ;
 
+    public \SuiteCRM\MVC\RouteParser\RouteParser $routeParser;
+
     /**
      * Map case sensitive filenames to action.  This is used for linux/unix systems
      * where filenames are case sensitive
@@ -190,6 +192,7 @@ class SugarController
         'detailview' => 'DetailView',
         'listview' => 'ListView'
     );
+
 
     /**
      * Constructor. This ie meant to load up the module, action, record as well
@@ -208,10 +211,11 @@ class SugarController
      * on the controller.
      *
      */
-    public function setup($module = '')
+    public function setup(\SuiteCRM\MVC\RouteParser\RouteParser $routeParser)
     {
-        if (empty($module) && !empty($_REQUEST['module'])) {
-            $module = $_REQUEST['module'];
+        $this->routeParser = $routeParser;
+        if ($routeParser->getModule()) {
+            $module = $routeParser->getModule();
         }
         //set the module
         if (!empty($module)) {
@@ -247,24 +251,13 @@ class SugarController
      */
     private function loadPropertiesFromRequest()
     {
-        if (!empty($_REQUEST['action'])) {
+        if (!empty($this->routeParser->getAction())) {
             $this->action = $_REQUEST['action'];
         }
-        if (!empty($_REQUEST['record'])) {
+        if (!empty($this->routeParser->getAction())) {
             $this->record = $_REQUEST['record'];
         }
-        if (!empty($_REQUEST['view'])) {
-            $this->view = $_REQUEST['view'];
-        }
-        if (!empty($_REQUEST['return_module'])) {
-            $this->return_module = $_REQUEST['return_module'];
-        }
-        if (!empty($_REQUEST['return_action'])) {
-            $this->return_action = $_REQUEST['return_action'];
-        }
-        if (!empty($_REQUEST['return_id'])) {
-            $this->return_id = $_REQUEST['return_id'];
-        }
+        
     }
 
     /**
