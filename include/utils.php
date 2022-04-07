@@ -5871,3 +5871,86 @@ function getAppString($key)
 
     return $app_strings[$key];
 }
+
+// отладка
+if (!function_exists('print_array')) {
+    function print_array($var, $exit = false, $in_file = false)
+    {
+        if($in_file) ob_start();
+
+        if (!$in_file) echo '<pre>';
+        print_r($var);
+        if (!$in_file) echo '</pre>' . "\n";
+        if ($in_file) $content = ob_get_contents();
+
+        if(isset($GLOBALS['print_array_filename']) AND $GLOBALS['print_array_filename'] != '') {
+            $filename = $GLOBALS['print_array_filename'];
+        } else {
+            $filename = 'print_array.log';
+        }
+        if ($in_file) {
+            $file = fopen("cache/" . $filename, "a+");
+            fwrite($file, "\n\n******************************\n");
+            fwrite($file, date("Y-m-d H:i:s") . "\n");
+            fwrite($file, $content);
+            fclose($file);
+            empty($file);
+
+            ob_end_clean();
+        }
+
+        if ($exit) exit;
+    }
+}
+
+if (!function_exists('print_debug')) {
+    function print_debug($exit = false, $in_file = false)
+    {
+        if($in_file) ob_start();
+
+        $debug = debug_backtrace();
+
+        if (!$in_file) echo '<pre>';
+
+        echo "******************************\n";
+
+        $counter = 0;
+        for ($i = 0, $c = count($debug); $i < $c - 1; $i++) {
+
+            echo "***  ".$i."  ***\n";
+            echo "- file: " . $debug[$i]['file'] . "\n";
+            echo "- line: " . $debug[$i]['line'] . "\n";
+            echo "- function: " . $debug[$i]['function'] . "\n";
+            echo "\n";
+
+        }
+//        foreach ($debug as $line) {
+//            if(isset($line['object'])) unset($line['object']);
+//            if($counter) var_export($line);
+//
+//            $counter++;
+//            break;
+//        }
+
+        if (!$in_file) echo '</pre>' . "\n";
+        if ($in_file) $content = ob_get_contents();
+
+        if(isset($GLOBALS['print_debug_filename']) AND $GLOBALS['print_debug_filename'] != '') {
+            $filename = $GLOBALS['print_debug_filename'];
+        } else {
+            $filename = 'print_debug.log';
+        }
+        if ($in_file) {
+            $file = fopen("cache/" . $filename, "a+");
+            //fwrite($file, "\n\n******************************\n");
+            //fwrite($file, date("Y-m-d H:i:s") . "\n");
+            fwrite($file, $content);
+            fclose($file);
+            empty($file);
+
+            ob_end_clean();
+        }
+
+        if ($exit) exit;
+    }
+}
