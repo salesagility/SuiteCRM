@@ -151,7 +151,7 @@ class ConfiguratorViewSugarpdfsettings extends SugarView
 
         $this->ss->display('modules/Configurator/tpls/SugarpdfSettings.tpl');
 
-        require_once("/include/javascript/javascript.php");
+        require_once("include/javascript/javascript.php");
         $javascript = new javascript();
         $javascript->setFormName("ConfigureSugarpdfSettings");
         foreach ($SugarpdfSettings as $k=>$v) {

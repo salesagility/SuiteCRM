@@ -44,7 +44,7 @@ class SugarAutoLoader
         'XTemplate' => 'XTemplate/xtpl.php',
         'ListView' => 'include/ListView/ListView.php',
         'Sugar_Smarty' => 'include/Sugar_Smarty.php',
-        'Javascript' => '/include/javascript/javascript.php',
+        'Javascript' => 'include/javascript/javascript.php',
     );
 
     public static $noAutoLoad = array(
