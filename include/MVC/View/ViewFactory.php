@@ -71,7 +71,8 @@ class ViewFactory
         $module = '',
         $bean = null,
         $view_object_map = array(),
-        $target_module = ''
+        $target_module = '',
+        \SuiteCRM\MVC\RouteParser\RouteParser $routeParser = null
     ) {
         $type = strtolower($type);
 
@@ -117,6 +118,7 @@ class ViewFactory
             $view = new SugarView();
         }
         ViewFactory::_loadConfig($view, $type);
+        $view->setRouteParser($routeParser);
         return $view;
     }
 

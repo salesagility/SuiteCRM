@@ -414,7 +414,8 @@ class SugarController
             $this->module,
             $this->bean,
             $this->view_object_map,
-            $this->target_module
+            $this->target_module,
+            $this->routeParser
         );
         $GLOBALS['current_view'] = $view;
         if (!empty($this->bean) && !$this->bean->ACLAccess($view->type) && $view->type != 'list') {
@@ -424,7 +425,9 @@ class SugarController
         if (isset($this->errors)) {
             $view->errors = $this->errors;
         }
+       //print_array($view,1);
         $view->process();
+
     }
 
     /**

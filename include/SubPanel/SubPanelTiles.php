@@ -175,6 +175,7 @@ class SubPanelTiles
     }
     public function display($showContainer = true, $forceTabless = false)
     {
+        print_debug(0,1);
         global $layout_edit_mode, $sugar_version, $sugar_config, $current_user, $app_strings, $modListHeader;
 
         if (isset($layout_edit_mode) && $layout_edit_mode) {

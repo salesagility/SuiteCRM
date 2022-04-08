@@ -11,9 +11,11 @@ class RouteParser
     protected string $action = '';
     protected string $record = '';
     protected array $routeParams = [];
+    protected \Symfony\Component\HttpFoundation\Request $request;
 
     public function __construct(\Symfony\Component\HttpFoundation\Request $request)
     {
+        $this->request = $request;
         $this->routeParams = [];
         $this->routeParams = explode('/', $request->get('uri'));
 
@@ -65,5 +67,14 @@ class RouteParser
     {
         return $this->routeParams;
     }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    public function getRequest(): \Symfony\Component\HttpFoundation\Request
+    {
+        return $this->request;
+    }
+
 
 }

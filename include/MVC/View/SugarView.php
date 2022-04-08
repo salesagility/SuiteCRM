@@ -141,9 +141,16 @@ class SugarView
      * SugarView constructor.
      * @deprecated since version 7.11
      */
-    public function __construct()
+    public function __construct($routeParser = null)
     {
+        if ($routeParser instanceof \SuiteCRM\MVC\RouteParser\RouteParser) {
+            $this->routeParser = $routeParser;
+        }
         LoggerManager::getLogger()->deprecated();
+    }
+
+    public function setRouteParser(\SuiteCRM\MVC\RouteParser\RouteParser $routeParser){
+        $this->routeParser = $routeParser;
     }
 
     /**
@@ -234,8 +241,7 @@ class SugarView
                 echo $jsAlertsOutput;
             }
         }
-
-        if ($this->_getOption('show_subpanels') && !empty($_REQUEST['record'])) {
+        if ($this->_getOption('show_subpanels') && !empty($this->routeParser->getRecord())) {
             $this->_displaySubPanels();
         }
 
