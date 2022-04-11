@@ -191,6 +191,10 @@ class SearchResultsController extends Controller
                 $viewList->module = $module;
 
                 $metaDataFile = $viewList->getMetaDataFile();
+                if(empty($metaDataFile)) {
+                    $GLOBALS['log']->error('getListViewDefs error: No listviewdefs file found for '.$module);
+                    continue;
+                }
                 /** @noinspection PhpIncludeInspection */
                 require($metaDataFile);
             }
