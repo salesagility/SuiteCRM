@@ -92,4 +92,4 @@ function cal_isValidDuration(){
 }
 {/literal}
 </script>
-<script type="text/javascript" src="include/SugarFields/Fields/Datetimecombo/Datetimecombo.js"></script>
+<script type="text/javascript" src="/include/SugarFields/Fields/Datetimecombo/Datetimecombo.js"></script>

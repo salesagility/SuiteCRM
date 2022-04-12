@@ -1,6 +1,6 @@
 <br>
 
-<script type="text/javascript" src="{sugar_getjspath file='include/SubPanel/SubPanelTiles.js'}"></script>
+<script type="text/javascript" src="{sugar_getjspath file='/include/SubPanel/SubPanelTiles.js'}"></script>
 
 <ul class="noBullet" id="subpanel_list">
 {foreach from=$subpanel_tabs key=i item=subpanel_tab}

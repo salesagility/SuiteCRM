@@ -46,7 +46,7 @@
 <script type="text/javascript" src="{sugar_getjspath file='/cache/include/javascript/sugar_grp_emails.js'}"></script>
 <link rel="stylesheet" type="text/css" href="{sugar_getjspath file='modules/Users/PasswordRequirementBox.css'}">
 <script type="text/javascript" src="{sugar_getjspath file='/cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
-<script type='text/javascript' src='{sugar_getjspath file='include/SubPanel/SubPanelTiles.js'}'></script>
+<script type='text/javascript' src='{sugar_getjspath file='/include/SubPanel/SubPanelTiles.js'}'></script>
 <script type='text/javascript'>
 var ERR_RULES_NOT_MET = '{$MOD.ERR_RULES_NOT_MET}';
 var ERR_ENTER_OLD_PASSWORD = '{$MOD.ERR_ENTER_OLD_PASSWORD}';

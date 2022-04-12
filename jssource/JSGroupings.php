@@ -97,7 +97,7 @@
             ),
            $sugar_field_grp = array(
                'include/SugarFields/Fields/Collection/SugarFieldCollection.js' => '/include/javascript/sugar_field_grp.js',
-               'include/SugarFields/Fields/Datetimecombo/Datetimecombo.js' => '/include/javascript/sugar_field_grp.js',
+               '/include/SugarFields/Fields/Datetimecombo/Datetimecombo.js' => '/include/javascript/sugar_field_grp.js',
            ),
 
            $sugar_grp1_yui = array(

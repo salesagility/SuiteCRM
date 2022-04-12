@@ -577,6 +577,6 @@ var {{$module}}_detailview_tabs = new YAHOO.widget.TabView("{{$module}}_detailvi
 {{$module}}_detailview_tabs.selectTab(0);
 </script>
 {{/if}}
-<script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
+<script type="text/javascript" src="/include/InlineEditing/inlineEditing.js"></script>
 <script type="text/javascript" src="modules/Favorites/favorites.js"></script>
 <script type='text/javascript' src='{sugar_getjspath file='modules/Users/DetailView.js'}'></script>

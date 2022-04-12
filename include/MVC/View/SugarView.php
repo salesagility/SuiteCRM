@@ -137,15 +137,14 @@ class SugarView
      */
     private $settings = [];
 
+    protected \SuiteCRM\MVC\RouteParser\RouteParser $routeParser;
+
     /**
      * SugarView constructor.
      * @deprecated since version 7.11
      */
-    public function __construct($routeParser = null)
+    public function __construct()
     {
-        if ($routeParser instanceof \SuiteCRM\MVC\RouteParser\RouteParser) {
-            $this->routeParser = $routeParser;
-        }
         LoggerManager::getLogger()->deprecated();
     }
 
@@ -831,6 +830,8 @@ class SugarView
 
     protected function _displayLoginJS()
     {
+        print_debug(0,1);
+        file_put_contents('/var/www/html/cache/test.log',var_export($this->routeParser,1));
         global $sugar_config, $timedate;
 
         $template = new Sugar_Smarty();
@@ -838,8 +839,9 @@ class SugarView
         if (isset($this->bean->module_dir)) {
             $template->assign('MODULE_SUGAR_GRP1', $this->bean->module_dir);
         }
-        if (isset($_REQUEST['action'])) {
-            $template->assign('ACTION_SUGAR_GRP1', $_REQUEST['action']);
+        print_array($this->routeParser->getAction(),0,1);
+        if ($this->routeParser->getAction() !== null) {
+            $template->assign('ACTION_SUGAR_GRP1', $this->routeParser->getAction());
         }
 
         echo '<script>jscal_today = 1000*' .

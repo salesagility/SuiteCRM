@@ -319,8 +319,8 @@
             </div>
 
             {{include file=$footerTpl}}
-            <script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
-            <script type="text/javascript" src="modules/Favorites/favorites.js"></script>
+            <script type="text/javascript" src="/include/InlineEditing/inlineEditing.js"></script>
+            <script type="text/javascript" src="/modules/Favorites/favorites.js"></script>
 
             {literal}
 

@@ -77,7 +77,7 @@ array(
       array(
         0 =>
         array(
-          'file' => 'modules/Accounts/Account.js',
+          'file' => '/modules/Accounts/Account.js',
         ),
       ),
       'useTabs' => true,

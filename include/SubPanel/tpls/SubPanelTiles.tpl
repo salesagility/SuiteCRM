@@ -1,5 +1,5 @@
 <br>
-    <script type="text/javascript" src="{sugar_getjspath file='include/SubPanel/SubPanelTiles.js'}"></script>
+    <script type="text/javascript" src="{sugar_getjspath file='/include/SubPanel/SubPanelTiles.js'}"></script>
     <script>
         {literal}
     if(document.DetailView != null &&

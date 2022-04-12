@@ -332,7 +332,7 @@ function lvg_nav(m,id,act,offset,t){
     function lvg_dtails(id){{/literal}
         return SUGAR.util.getAdditionalDetails( '{$pageData.bean.moduleDir|default:$params.module}',id, 'adspan_'+id);{literal}}{/literal}
 </script>
-<script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
+<script type="text/javascript" src="/include/InlineEditing/inlineEditing.js"></script>
 {/if}
 
 
