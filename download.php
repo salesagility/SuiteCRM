@@ -264,7 +264,15 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
 
             $showPreview = false;
 
-            if (in_array($row['file_ext'], $sugar_config['allowed_preview'], true)) {
+            global $sugar_config;
+
+            $allowedPreview = $sugar_config['allowed_preview'] ?? [];
+
+            if (empty($row['file_ext'])) {
+                $row['file_ext'] = pathinfo($name, PATHINFO_EXTENSION);
+            }
+
+            if (in_array($row['file_ext'], $allowedPreview, true)) {
                 $showPreview = isset($_REQUEST['preview']) && $_REQUEST['preview'] === 'yes' && $mime_type !== 'text/html';
             }
 
@@ -273,6 +281,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             } else {
                 header('Content-Disposition: attachment; filename="' . $name . '";');
             }
+
         }
         // disable content type sniffing in MSIE
         header("X-Content-Type-Options: nosniff");
