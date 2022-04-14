@@ -830,8 +830,6 @@ class SugarView
 
     protected function _displayLoginJS()
     {
-        print_debug(0,1);
-        file_put_contents('/var/www/html/cache/test.log',var_export($this->routeParser,1));
         global $sugar_config, $timedate;
 
         $template = new Sugar_Smarty();
@@ -929,8 +927,8 @@ EOHTML;
             if (isset($this->bean->module_dir)) {
                 $js_vars['module_sugar_grp1'] = $this->bean->module_dir;
             }
-            if (isset($_REQUEST['action'])) {
-                $js_vars['action_sugar_grp1'] = $_REQUEST['action'];
+            if ($this->routeParser->getAction() !== null) {
+                $js_vars['action_sugar_grp1'] = $this->routeParser->getAction();
             }
             echo '<script>jscal_today = 1000*' .
                 $timedate->asUserTs($timedate->getNow()) .
