@@ -95,6 +95,10 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
                 }
             }
 
+            if (empty($bean->email1)) {
+                $bean->email1 = '';
+            }
+
             $emailUI = new EmailUI();
             $emailUI->appendTick = false;
             $button = '<a class="email-link" onclick="$(document).openComposeViewModal(this);" data-module="'

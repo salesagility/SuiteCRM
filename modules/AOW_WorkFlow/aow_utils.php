@@ -618,7 +618,11 @@ function getModuleField(
         $fieldlist[$fieldname]['name'] = $aow_field;
     } elseif (isset($fieldlist[$fieldname]['type']) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')) {
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
-        $displayValue = $timedate->to_display_date_time($value);
+        if($fieldlist[$fieldname]['type'] === "date"){
+            $displayValue = $timedate->to_display_date($value);
+        }else{
+            $displayValue = $timedate->to_display_date_time($value);
+        }
         $fieldlist[$fieldname]['value'] = $fieldlist[$aow_field]['value'] = $displayValue;
         $fieldlist[$fieldname]['name'] = $aow_field;
     } else {
@@ -942,7 +946,8 @@ function fixUpFormatting($module, $field, $value)
     switch ($bean->field_defs[$field]['type']) {
         case 'datetime':
         case 'datetimecombo':
-            if (empty($value)) {
+            // If value is array, don't attempt to convert to DB format
+            if (empty($value) || is_array($value)) {
                 break;
             }
             if ($value == 'NULL') {
@@ -955,7 +960,8 @@ function fixUpFormatting($module, $field, $value)
             }
             break;
         case 'date':
-            if (empty($value)) {
+            // If value is array, don't attempt to convert to DB format
+            if (empty($value) || is_array($value)) {
                 break;
             }
             if ($value == 'NULL') {
@@ -1014,9 +1020,6 @@ function fixUpFormatting($module, $field, $value)
             } else {
                 $value = true;
             }
-            break;
-        case 'encrypt':
-            $value = $this->encrpyt_before_save($value);
             break;
     }
     return $value;

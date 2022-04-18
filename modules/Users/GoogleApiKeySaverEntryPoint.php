@@ -71,7 +71,7 @@ class GoogleApiKeySaverEntryPoint
 
     /**
      *
-     * @var Google_Client
+     * @var Google\Client
      */
     protected $client;
 
@@ -85,10 +85,10 @@ class GoogleApiKeySaverEntryPoint
      *
      * @param User $current_user
      * @param array $sugar_config
-     * @param Google_Client $client
+     * @param Google\Client $client
      * @param array $request
      */
-    public function __construct(User $current_user, $sugar_config, Google_Client $client, $request)
+    public function __construct(User $current_user, $sugar_config, Google\Client $client, $request)
     {
         $this->currentUser = $current_user;
         $this->sugarConfig = $sugar_config;
@@ -105,7 +105,7 @@ class GoogleApiKeySaverEntryPoint
     protected function handleEntryPoint()
     {
         $this->client->setApplicationName('SuiteCRM');
-        $this->client->setScopes(Google_Service_Calendar::CALENDAR);
+        $this->client->setScopes(Google\Service\Calendar::CALENDAR);
         if (!isset($this->sugarConfig['google_auth_json'])) {
             throw new Exception('google_auth_json requested variable is missing', 1);
         }

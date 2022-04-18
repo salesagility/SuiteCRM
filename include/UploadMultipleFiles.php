@@ -45,6 +45,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/externalAPI/ExternalAPIFactory.php');
 require_once 'include/UploadStream.php';
 
+use SuiteCRM\Exception\MalwareFoundException;
+use SuiteCRM\Utility\AntiMalware\AntiMalwareTrait;
+
 /**
  * @api
  * Manage uploaded files with multi-file support
@@ -52,6 +55,8 @@ require_once 'include/UploadStream.php';
  */
 class UploadMultipleFiles
 {
+    use AntiMalwareTrait;
+
     public $field_name;
     public $stored_file_name;
     public $uploaded_file_name;
@@ -107,10 +112,10 @@ class UploadMultipleFiles
 
     /**
      * Get URL for a document
-     * @deprecated
      * @param string stored_file_name File name in filesystem
      * @param string bean_id note bean ID
      * @return string path with file name
+     * @deprecated
      */
     public static function get_url($stored_file_name, $bean_id)
     {
@@ -286,6 +291,14 @@ class UploadMultipleFiles
 
         if (!UploadStream::writable()) {
             $GLOBALS['log']->fatal("ERROR: cannot write to upload directory");
+
+            return false;
+        }
+
+        try {
+            $this->scanPathForMalware($_FILES[$this->field_name]['tmp_name'][$this->index]);
+        } catch (MalwareFoundException $exception) {
+            LoggerManager::getLogger()->security("Malware found, unable to save file: {$_FILES[$this->field_name]['name'][$this->index]}");
 
             return false;
         }

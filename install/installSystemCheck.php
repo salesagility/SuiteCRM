@@ -134,20 +134,7 @@ function runCheck($install_script, $mod_strings = array())
         ';
     }
 
-    //Php Backward compatibility checks
-    if (ini_get("zend.ze1_compatibility_mode")) {
-        installLog($mod_strings['LBL_BACKWARD_COMPATIBILITY_ON'].'  '.'Php Backward Compatibility');
-        $phpCompatibility = "<b><span class=stop>{$mod_strings['LBL_BACKWARD_COMPATIBILITY_ON']}</span></b>";
-        $error_found = true;
-        $error_txt .= '
-      <tr>
-        <p><b>Php Backward Compatibility</b></p>
-        <p><span class="error">'.$phpCompatibility.'</span></p>
-    ';
-    }
-
     // database and connect
-
     if (!empty($_REQUEST['setup_db_type'])) {
         $_SESSION['setup_db_type'] = $_REQUEST['setup_db_type'];
     }

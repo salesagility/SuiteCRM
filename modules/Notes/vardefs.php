@@ -256,7 +256,7 @@ $dictionary['Note'] = array(
                 'reportable'=>false,
                 'comment' => 'Record deletion indicator'
             ],
-        
+
         'filecontents' =>
             [
                 'name' => 'filecontents',
@@ -333,6 +333,15 @@ $dictionary['Note'] = array(
                 'type' => 'id',
                 'reportable'=>false,
                 'source'=>'non-db',
+            ],
+
+        'campaign_id' =>
+            [
+                'name' => 'campaign_id',
+                'vname' => 'LBL_CAMPAIGN_ID',
+                'type' => 'id',
+                'reportable' => false,
+                'source' => 'non-db',
             ],
 
           'acase_id' =>
@@ -430,6 +439,15 @@ $dictionary['Note'] = array(
                 'source'=>'non-db',
                 'vname'=>'LBL_BUGS',
               ],
+
+        'campaigns' =>
+            [
+                'name' => 'campaigns',
+                'type' => 'link',
+                'relationship' => 'campaign_notes',
+                'source' => 'non-db',
+                'vname' => 'LBL_CAMPAIGNS',
+            ],
 
           'aos_contracts' =>
               [

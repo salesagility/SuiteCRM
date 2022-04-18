@@ -26,7 +26,11 @@ class Sort extends BaseOption
                 ]),
             ], true))
             ->setNormalizer('sort', function (Options $options, $value) {
-                $bean = $this->beanManager->newBeanSafe($options->offsetGet('moduleName'));
+                if ($options->offsetExists('linkFieldName')) {
+                    $bean = $this->beanManager->getLinkedFieldBean($options->offsetGet('sourceBean'), $options->offsetGet('linkFieldName'));
+                } else {
+                    $bean = $this->beanManager->newBeanSafe($options->offsetGet('moduleName'));
+                }
                 $sort = new SortRepository();
 
                 return $sort->parseOrderBy($bean, $value);

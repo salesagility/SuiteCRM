@@ -121,8 +121,8 @@ while ($row = $db->fetchByAssoc($result)) {
             }
         }
         if ($execute) {
-            $newstr = mysql_real_escape_string(base64_encode(serialize($newprefs)));
-            $db->query("UPDATE users SET user_preferences = '{$newstr}' WHERE id = '{$row['id']}'");
+            $newStr = $db->quoted(base64_encode(serialize($newprefs)));
+            $db->query("UPDATE users SET user_preferences = {$newStr} WHERE id = '{$row['id']}'");
         }
     }
     if (!empty($setTo)) {
@@ -158,7 +158,7 @@ while ($row = $db->fetchByAssoc($result)) {
 
     unset($prefs);
     unset($newprefs);
-    unset($newstr);
+    unset($newStr);
 }
 
 echo "</table>";

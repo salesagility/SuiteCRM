@@ -152,19 +152,7 @@ class User extends Person implements EmailInterface
         }
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function User()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+
 
     protected function _loadUserPreferencesFocus()
     {
@@ -618,6 +606,10 @@ class User extends Person implements EmailInterface
     {
         global $current_user, $mod_strings;
 
+        if (!$this->hasSaveAccess()) {
+           throw new RuntimeException('Not authorized');
+        }
+
         $msg = '';
 
         $isUpdate = !empty($this->id) && !$this->new_with_id;
@@ -678,6 +670,10 @@ class User extends Person implements EmailInterface
             $this->portal_only = 0;
         }
 
+        // If the current user is not an admin, do not allow them to set the admin flag to true.
+        if (!is_admin($current_user)) {
+            $this->is_admin = 0;
+        }
 
         // set some default preferences when creating a new user
         $setNewUserPreferences = empty($this->id) || !empty($this->new_with_id);
@@ -1599,6 +1595,11 @@ EOQ;
 
     public function create_export_query($order_by, $where, $relate_link_join = '')
     {
+        global $current_user;
+        if (!is_admin($current_user)) {
+            throw new RuntimeException('Not authorized');
+        }
+
         include('modules/Users/field_arrays.php');
 
         $cols = '';
@@ -1935,7 +1936,7 @@ EOQ;
 
         $ret1 = '';
         $ret2 = '';
-        for ($i = 0; $i < strlen($macro); $i++) {
+        for ($i = 0, $iMax = strlen($macro); $i < $iMax; $i++) {
             if (array_key_exists($macro[$i], $format)) {
                 $ret1 .= "<i>" . $format[$macro[$i]] . "</i>";
                 $ret2 .= "<i>" . $name[$macro[$i]] . "</i>";
@@ -2021,6 +2022,16 @@ EOQ;
         }
 
         return $myModules;
+    }
+
+    /**
+     * Is user enabled
+     *
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return ($this->status !== 'Inactive') && ($this->employee_status === 'Active');
     }
 
     /**
@@ -2434,5 +2445,26 @@ EOQ;
             $subTheme = $sugarTheme->getSubThemeDefault();
         }
         return $subTheme;
+    }
+
+    /**
+     * Check if current user can save the current user record
+     * @return bool
+     */
+    protected function hasSaveAccess(): bool
+    {
+        global $current_user;
+
+        if (empty($this->id)) {
+            return true;
+        }
+
+        if (empty($current_user->id)) {
+            return true;
+        }
+
+        $sameUser = $current_user->id === $this->id;
+
+        return $sameUser || is_admin($current_user);
     }
 }

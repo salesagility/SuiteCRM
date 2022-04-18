@@ -70,21 +70,6 @@ class DynamicField
     }
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     * @param string $module
-     */
-    public function DynamicField($module = '')
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct($module);
-    }
-
-    /**
      * @return array|bool|int|mixed|string
      */
     public function getModuleName()
@@ -460,6 +445,11 @@ class DynamicField
                 if ($field['type'] == 'html' || $field['type'] == 'parent') {
                     continue;
                 }
+
+                if (!empty($this->bean->bean_fields_to_save) && !in_array($name, $this->bean->bean_fields_to_save, true)){
+                    continue;
+                }
+
                 if (isset($this->bean->$name)) {
                     $quote = "'";
 
@@ -671,6 +661,10 @@ class DynamicField
             $fmd->save();
             $this->buildCache($this->module);
             $this->saveExtendedAttributes($field, array_keys($fmd->field_defs));
+            // Fix #9119 - The cache/themes folder needs to be rebuilt after changing custom field properties.
+            // https://github.com/salesagility/SuiteCRM/issues/9119
+            include_once('include/TemplateHandler/TemplateHandler.php');
+            TemplateHandler::clearCache($this->module);
         }
 
         return true;

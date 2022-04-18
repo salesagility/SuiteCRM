@@ -118,7 +118,7 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
                          $pattern_match = '/\s*\$app_list_strings\s*\[\s*\''.$dropdown_name.'\'\s*\]\[\s*\''.$key.'\'\s*\]\s*=\s*[\'\"]{1}.*?[\'\"]{1};\s*/ism';
                          $contents = preg_replace($pattern_match, "\n", $contents);
                          //add the new ones
-                         $contents .= "\n\$GLOBALS['app_list_strings']['$dropdown_name']['$key']=" . var_export_helper($value) . ";";
+                         $contents .= "\n\$app_list_strings['$dropdown_name']['$key']=" . var_export_helper($value) . ";";
                      }
                  }
              } else {
@@ -206,10 +206,15 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
          return $sub;
      }
 
-     public function getPatternMatch($dropdown_name)
+     public function getPatternMatchGlobal($dropdown_name)
      {
          return '/\s*\$GLOBALS\s*\[\s*\'app_list_strings\s*\'\s*\]\[\s*\''
              . $dropdown_name.'\'\s*\]\s*=\s*array\s*\([^\)]*\)\s*;\s*/ism';
+     }
+
+     public function getPatternMatch($dropdown_name)
+     {
+         return '/\s*\$app_list_strings\s*\[\s*\''.$dropdown_name.'\'\s*\]\s*=\s*array\s*\([^\)]*\)\s*;\s*/ism';
      }
 
      public function getNewCustomContents($dropdown_name, $dropdown, $lang)
@@ -219,8 +224,9 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
          if (empty($contents)) {
              $contents = "<?php";
          }
+         $contents = preg_replace($this->getPatternMatchGlobal($dropdown_name), "\n", $contents);
          $contents = preg_replace($this->getPatternMatch($dropdown_name), "\n", $contents);
-         $contents .= "\n\$GLOBALS['app_list_strings']['$dropdown_name']=" . var_export_helper($dropdown) . ";";
+         $contents .= "\n\$app_list_strings['$dropdown_name']=" . var_export_helper($dropdown) . ";";
          return $contents;
      }
  }

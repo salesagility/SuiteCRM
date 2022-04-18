@@ -89,21 +89,6 @@ class PopupSmarty extends ListViewSmarty
     }
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function PopupSmarty($seed, $module)
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct($seed, $module);
-    }
-
-
-    /**
      * Assign several arrow image attributes to TemplateHandler smarty. Such as width, height, etc.
      *
      * @return void
@@ -264,6 +249,7 @@ class PopupSmarty extends ListViewSmarty
         $this->th->ss->assign('footerTpl', $this->footerTpl);
         $this->th->ss->assign('ASSOCIATED_JAVASCRIPT_DATA', 'var associated_javascript_data = '.$json->encode($associated_row_data). '; var is_show_fullname = '.$is_show_fullname.';');
         $this->th->ss->assign('module', $this->seed->module_dir);
+        $this->th->ss->assign('metadata', empty($_REQUEST['metadata']) ? '' : $_REQUEST['metadata']);
         $request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
 
         $this->th->ss->assign('request_data', $request_data);

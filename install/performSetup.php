@@ -465,12 +465,7 @@ FP;
     $enabled_tabs[] = 'AOS_Products';
     $enabled_tabs[] = 'AOS_Product_Categories';
     $enabled_tabs[] = 'AOS_PDF_Templates';
-    $enabled_tabs[] = 'jjwg_Maps';
-    $enabled_tabs[] = 'jjwg_Markers';
-    $enabled_tabs[] = 'jjwg_Areas';
-    $enabled_tabs[] = 'jjwg_Address_Cache';
     $enabled_tabs[] = 'AOR_Reports';
-    $enabled_tabs[] = 'AOW_WorkFlow';
     $enabled_tabs[] = 'AOK_KnowledgeBase';
     $enabled_tabs[] = 'AOK_Knowledge_Base_Categories';
     $enabled_tabs[] = 'EmailTemplates';
@@ -535,16 +530,12 @@ if (!is_null($_SESSION['scenarios'])) {
 
 
 //Write the tabstructure to custom so that the grouping are not shown for the un-selected scenarios
-$fp = sugar_fopen('custom/include/tabConfig.php', 'w');
 $fileContents = "<?php \n" .'$GLOBALS["tabStructure"] ='.var_export($GLOBALS['tabStructure'], true).';';
-fwrite($fp, $fileContents);
-fclose($fp);
+sugar_file_put_contents('custom/include/tabConfig.php', $fileContents);
 
 //Write the dashlets to custom so that the dashlets are not shown for the un-selected scenarios
-$fp = sugar_fopen('custom/modules/Home/dashlets.php', 'w');
 $fileContents = "<?php \n" .'$defaultDashlets ='.var_export($defaultDashlets, true).';';
-fwrite($fp, $fileContents);
-fclose($fp);
+sugar_file_put_contents('custom/modules/Home/dashlets.php', $fileContents);
 
 
 // End of the scenario implementations
