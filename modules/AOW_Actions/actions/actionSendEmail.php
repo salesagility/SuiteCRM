@@ -150,7 +150,7 @@ class actionSendEmail extends actionBase
         return $html;
     }
 
-    private function getEmailsFromParams(SugarBean $bean, $params)
+    protected function getEmailsFromParams(SugarBean $bean, $params)
     {
         $emails = array();
         //backward compatible
