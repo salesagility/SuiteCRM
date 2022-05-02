@@ -75,6 +75,7 @@ $dictionary['Note'] = array(
                 'type' => 'datetime',
                 'comment' => 'Date record last modified',
                 'enable_range_search' => true,
+                'options' => 'date_range_search_dom',
               ],
 
           'modified_user_id' =>
