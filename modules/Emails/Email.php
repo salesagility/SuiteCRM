@@ -1929,6 +1929,30 @@ class Email extends Basic
         //return from_html($ret);
     }
 
+    public function getEmailHeaderOutgoing($emailCc)
+    {
+        global $mod_strings;
+        global $current_user;
+
+        $mailAccount = BeanFactory::getBean('InboundEmail', $this->mailbox_id);
+
+        $toEmail = $mailAccount->email_user;
+
+        //$from = str_replace(array("&gt;","&lt;"), array(")","("), $this->from_name);
+        $from = to_html($this->from_name);
+        $subject = to_html($this->name);
+        $ret = "<br /><br />";
+        $ret .= $this->replyDelimiter . "{$mod_strings['LBL_FROM']} {$this->reply_to_addr}<br />";
+        $ret .= $this->replyDelimiter . "{$mod_strings['LBL_DATE_SENT_RECEIVED']} {$this->date_sent_received}<br />";
+        $ret .= $this->replyDelimiter . "{$mod_strings['LBL_TO']} {$toEmail}<br />";
+        $ret .= $this->replyDelimiter . "{$mod_strings['LBL_CC']} {$emailCc}<br />";
+        $ret .= $this->replyDelimiter . "{$mod_strings['LBL_SUBJECT']} {$subject}<br />";
+        $ret .= $this->replyDelimiter . "<br />";
+
+        return $ret;
+        //return from_html($ret);
+    }
+
     /**
      * retrieves Notes that belong to this Email and stuffs them into the "attachments" attribute
      */

@@ -790,6 +790,8 @@ class EmailsController extends SugarController
             // Populate to
         }
 
+        $emailCc = $this->bean->cc_addrs_names;
+
         if ($mode !== self::COMPOSE_BEAN_MODE_REPLY_TO_ALL) {
             $this->bean->cc_addrs_arr = array();
             $this->bean->cc_addrs_names = '';
@@ -822,6 +824,10 @@ class EmailsController extends SugarController
                     $this->bean->description;
             }
         }
+
+        $info = $this->bean->getEmailHeaderOutgoing($emailCc);
+
+        $this->bean->description = $info . $this->bean->description_html;
 
         $this->bean->description_html = '';
     }
