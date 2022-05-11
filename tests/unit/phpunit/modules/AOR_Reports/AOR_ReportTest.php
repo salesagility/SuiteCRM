@@ -170,7 +170,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
                 'label' => 'total',
                 'module' => 'Meetings',
                 'field' => 'duration_hours',
-                'params' => ''
+                'params' => ['value_set' => 'value_set']
 
             ]
         ];
