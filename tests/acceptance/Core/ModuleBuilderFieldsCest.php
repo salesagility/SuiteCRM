@@ -297,7 +297,7 @@ class ModuleBuilderFieldsCest
         // Click save
         $I->click(['name' => 'fsavebtn']);
 
-        $moduleBuilder->closePopupSuccess();
+        $moduleBuilder->waitUntilPopupSuccessDisappeared();
 
         // Add to layout viewlayoutsbtn
         $moduleBuilder->selectModule(\Page\ModuleFields::$PACKAGE_NAME, \Page\ModuleFields::$NAME);
@@ -305,7 +305,7 @@ class ModuleBuilderFieldsCest
         $I->waitForElementVisible(['name' => 'viewlayoutsbtn']);
         $I->click(['name' => 'viewlayoutsbtn']);
 
-        $moduleBuilder->closePopupSuccess();
+        $moduleBuilder->waitUntilPopupSuccessDisappeared();
 
         // Click Edit View
         $I->waitForElementVisible('.bodywrapper', 30);
@@ -326,7 +326,7 @@ class ModuleBuilderFieldsCest
 
         $I->checkOption('#syncCheckbox');
         $I->click('Save');
-        $moduleBuilder->closePopupSuccess();
+        $moduleBuilder->waitUntilPopupSuccessDisappeared();
     }
 
     /**
