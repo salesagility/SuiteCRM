@@ -110,21 +110,45 @@ function export($type, $records = null, $members = false, $sample=false)
     global $timedate;
     global $mod_strings;
     global $current_language;
+    global $log;
     $sampleRecordNum = 5;
 
     //Array of fields that should not be exported, and are only used for logic
     $remove_from_members = array("ea_deleted", "ear_deleted", "primary_address");
     $focus = 0;
 
-    $bean = $beanList[$type];
+    $db = DBManagerFactory::getInstance();
+    if (empty($db)){
+        $log->fatal('export: not able to get db instance');
+        throw new RuntimeException('Unexpected error. See logs.');
+    }
+
+    if (empty($beanList[$db->quote($type)])) {
+        $log->security("export: trying to access an invalid module '" . $db->quote($type) . "'");
+        throw new RuntimeException('Unexpected error. See logs.');
+    }
+
+    $bean = $beanList[$db->quote($type)];
+
     require_once($beanFiles[$bean]);
     $focus = new $bean;
     $searchFields = array();
-    $db = DBManagerFactory::getInstance();
 
-    if ($records) {
-        $records = explode(',', $records);
-        $records = "'" . implode("','", $records) . "'";
+    $records = $db->quote($records);
+    $recordsArray = [];
+
+    if (!empty($records)) {
+        $recordsArray = explode(',', $records);
+    }
+
+    if (!empty($recordsArray)) {
+        $quotedRecords = [];
+
+        foreach ($recordsArray as $record) {
+            $quotedRecords[] = $db->quote($record);
+        }
+
+        $records = "'" . implode("','", $quotedRecords) . "'";
         $where = "{$focus->table_name}.id in ($records)";
     } elseif (isset($_REQUEST['all'])) {
         $where = '';

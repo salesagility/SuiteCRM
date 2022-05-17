@@ -147,6 +147,8 @@ class SugarApplication
         }
 
         $GLOBALS['current_user'] = BeanFactory::newBean('Users');
+
+        $isLogicActionCall = $this->controller->module === 'Users' && in_array($this->controller->action, $allowed_actions);
         if (isset($_SESSION['authenticated_user_id'])) {
             // set in modules/Users/Authenticate.php
             if (!$authController->sessionAuthenticate()) {
@@ -156,7 +158,7 @@ class SugarApplication
                 SugarApplication::redirect('index.php?action=Login&module=Users');
                 die();
             }//fi
-        } elseif (!($this->controller->module == 'Users' && in_array($this->controller->action, $allowed_actions))) {
+        } elseif (!$isLogicActionCall || !empty($_REQUEST['entryPoint'])) {
             session_destroy();
             SugarApplication::redirect('index.php?action=Login&module=Users');
             die();

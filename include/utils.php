@@ -215,6 +215,8 @@ function make_sugar_config(&$sugar_config)
             'vbs',
             'html',
             'htm',
+            'phtml',
+            'phar',
         ) : $upload_badext,
         'valid_image_ext' => [
             'gif',
@@ -476,6 +478,7 @@ function get_sugar_config_defaults(): array
             'html',
             'htm',
             'phtml',
+            'phar',
         ],
         'valid_image_ext' => [
             'gif',
@@ -554,6 +557,7 @@ function get_sugar_config_defaults(): array
             'min_cron_interval' => 30, // minimal interval between cron jobs
         ],
         'strict_id_validation' => false,
+        'id_validation_pattern' => '/^[a-zA-Z0-9_-]*$/i',
         'session_gc' => [
             'enable' => true,
             'gc_probability' => 1,
@@ -5977,4 +5981,19 @@ function isTrue($value): bool {
  */
 function isFalse($value): bool {
     return $value === false || $value === 'false' || $value === 0;
+}
+
+/**
+ * Get validation pattern
+ * @return string
+ */
+function get_id_validation_pattern(): string {
+    global $sugar_config;
+
+    $pattern = '/^[a-zA-Z0-9_-]*$/i';
+    if (!empty($sugar_config['id_validation_pattern'])){
+        $pattern = $sugar_config['id_validation_pattern'];
+    }
+
+    return $pattern;
 }
