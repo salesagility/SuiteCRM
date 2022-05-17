@@ -106,7 +106,7 @@ class AOW_Action extends Basic
                             } else {
                                 if ($post_data[$key . 'param'][$i]['value_type'][$p_id] == 'Value' && is_array($p_value)) {
                                     $param_value[$p_id] = encodeMultienumValue($p_value);
-                                }else{
+                                }elseif($post_data[$key . 'param'][$i]['value_type'][$p_id] == 'Value'){
                                     $param_value[$p_id] = fixUpFormatting($params["record_type"], $post_data[$key . 'param'][$i]["field"][$p_id], $p_value);
                                 }
                             }
