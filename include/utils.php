@@ -495,6 +495,13 @@ function get_sugar_config_defaults(): array
             'jpg'
         ],
         'upload_maxsize' => 30000000,
+        'allowed_preview' => [
+            'pdf',
+            'gif',
+            'png',
+            'jpeg',
+            'jpg'
+        ],
         'import_max_execution_time' => 3600,
 //	'use_php_code_json' => returnPhpJsonStatus(),
         'verify_client_ip' => true,
