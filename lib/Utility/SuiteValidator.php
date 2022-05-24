@@ -43,11 +43,15 @@ namespace SuiteCRM\Utility;
 class SuiteValidator
 {
     /**
-     * @param string $id
+     * @param string|null $id
      * @return bool
      */
-    public function isValidId(string $id): bool
+    public function isValidId(?string $id): bool
     {
+        if (empty($id)) {
+            return false;
+        }
+
         $pattern = $this->getIdValidationPattern();
 
         return is_numeric($id) || (is_string($id) && preg_match($pattern, $id));
