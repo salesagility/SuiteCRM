@@ -106,7 +106,7 @@ class SearchResultsController extends Controller
             LoggerManager::getLogger()->warn('Failed to fetch list-view headers: ' . $e->getMessage());
         }
 
-        $total = count($this->results->getHits());
+        $total = $this->results->getTotal();
         if ($total > 1) {
             $size = $this->query->getSize();
             if ($size) {
@@ -132,10 +132,9 @@ class SearchResultsController extends Controller
                 throw new SearchException('Search Size can not be Zero.', SearchException::ZERO_SIZE);
             }
         }
-        $totalResults = $this->results->getTotal();
 
         $smarty = $this->view->getTemplate();
-        $smarty->assign('total', $totalResults);
+        $smarty->assign('total', $total);
         $smarty->assign('headers', $headers);
         $smarty->assign('results', $this->results);
         try {
