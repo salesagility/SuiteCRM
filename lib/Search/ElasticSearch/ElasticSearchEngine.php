@@ -125,7 +125,7 @@ class ElasticSearchEngine extends SearchEngine
         }
 
         // Add wildcard at the end of search string
-        if ((!substr_compare($searchStr, $wildcardBe, -strlen($wildcardBe))) === 0) {
+        if ((substr_compare($searchStr, $wildcardBe, -strlen($wildcardBe))) !== 0) {
             $searchStr .= $wildcardBe;
         }
 

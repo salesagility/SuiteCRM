@@ -409,8 +409,12 @@ class ArrayMapper
     private function fixStringValue($value)
     {
         if (is_string($value)) {
-            $value = mb_convert_encoding($value, 'UTF-8', 'HTML-ENTITIES');
-            $value = trim($value);
+            preg_match_all("/&#?\w+;/", $value, $entities, PREG_SET_ORDER);
+            $entities = array_unique(array_column($entities, 0));
+            foreach ($entities as $entity) {
+                $decoded = mb_convert_encoding($entity, 'UTF-8', 'HTML-ENTITIES');
+                $value = str_replace($entity, $decoded, $value);
+            }
         }
         return $value;
     }

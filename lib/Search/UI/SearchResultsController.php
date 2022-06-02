@@ -111,7 +111,8 @@ class SearchResultsController extends Controller
             $size = $this->query->getSize();
             if ($size) {
                 $from = $this->query->getFrom();
-                $string = $this->query->getSearchString();
+                $queryString = $_REQUEST['query_string'] ?? '';
+                $string = !empty($_REQUEST['search-query-string']) ? $_REQUEST['search-query-string'] : $queryString;
 
                 $page = (int)($from / $size) + 1;
                 $prev = $page > 1;
