@@ -277,16 +277,9 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue($aowWorkFlow->compare_condition('', '', 'is_null'));
         self::assertTrue($aowWorkFlow->compare_condition('test2', array('test1', 'test2'), 'One_of'));
         self::assertTrue($aowWorkFlow->compare_condition('test', array('test1', 'test2'), 'Not_One_of'));
-
-        //These do not return bool but 'strpos' result
-        //$this->assertNotFalse($aowWorkFlow->compare_condition('test1', 'test', 'Contains'));
-        self::assertEquals(0, $aowWorkFlow->compare_condition('test1', 'test', 'Contains'));
-
-        //$this->assertNotFalse($aowWorkFlow->compare_condition('test1', 'test', 'Starts_With'));
-        self::assertEquals(0, $aowWorkFlow->compare_condition('test1', 'test', 'Starts_With'));
-
-        //$this->assertNotFalse($aowWorkFlow->compare_condition('test1', '1', 'Ends_With'));
-        self::assertEquals(4, $aowWorkFlow->compare_condition('test1', '1', 'Ends_With'));
+        self::assertTrue($aowWorkFlow->compare_condition('test1', 'test', 'Contains'));
+        self::assertTrue($aowWorkFlow->compare_condition('test1', 'test', 'Starts_With'));
+        self::assertTrue($aowWorkFlow->compare_condition('test1', '1', 'Ends_With'));
     }
 
     public function testcheck_in_group(): void
