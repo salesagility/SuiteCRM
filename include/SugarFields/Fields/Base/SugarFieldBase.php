@@ -639,7 +639,7 @@ class SugarFieldBase
      */
     protected function isRangeSearchView($vardef)
     {
-        return !empty($vardef['enable_range_search']) && !empty($_REQUEST['action']) && $_REQUEST['action'] != 'Popup';
+        return !empty($vardef['enable_range_search']) && !empty($_REQUEST['action']);
     }
 
     /**
