@@ -153,7 +153,7 @@ class actionComputeField extends actionBase
             if ($parameterTypes[$i] == actionComputeField::FORMATTED_VALUE) {
                 $dataType = $bean->field_name_map[$parameters[$i]]['type'];
 
-                if ($dataType == 'enum') {
+                if ($dataType == 'enum' || $dataType == 'dynamicenum') {
                     $resolvedParameters[$i] =
                         $GLOBALS['app_list_strings'][$bean->field_defs[$parameters[$i]]['options']][$bean->{$parameters[$i]}];
                 } else {
