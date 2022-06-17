@@ -140,6 +140,7 @@ function write_override_label_to_file($the_name, $the_array, $the_file, $mode = 
     }
 
     foreach ($the_array as $labelName => $labelValue) {
+        $labelValue = htmlentities($labelValue, ENT_QUOTES, 'UTF-8');
         $the_string .= '$' . "{$the_name}['{$labelName}'] = '{$labelValue}';\n";
     }
 
