@@ -152,7 +152,7 @@ class actionComputeField extends actionBase
             if ($parameterTypes[$i] == actionComputeField::FORMATTED_VALUE) {
                 $dataType = $bean->field_name_map[$parameters[$i]]['type'];
 
-                if ($dataType == 'enum') {
+                if ($dataType == 'enum' || $dataType == 'dynamicenum') {
                     $resolvedParameters[$i] =
                         $GLOBALS['app_list_strings'][$bean->field_defs[$parameters[$i]]['options']][$bean->{$parameters[$i]}];
                 } else {
@@ -472,7 +472,7 @@ class actionComputeField extends actionBase
 					
 					function onFieldChange$line(dropdown, valueDropdown) {
 						var value = $(dropdown).find('option:selected').attr('dataType');						
-						if (value == 'enum' || value == 'multienum') {
+						if (value == 'enum' || value == 'multienum' || value == 'dynamicenum') {
 							$(valueDropdown).show();
 						} else {
 							$(valueDropdown).hide();
