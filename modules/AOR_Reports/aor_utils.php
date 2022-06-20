@@ -229,7 +229,9 @@ function getConditionsAsParameters($report, $override = array())
 function getPeriodDate($date_time_period_list_selected)
 {
     global $sugar_config;
-    $datetime_period = new DateTime();
+    $timezone = new DateTimeZone(getReportTimeZone());
+
+    $datetime_period = new DateTime("now", $timezone);
 
     // Setup when year quarters start & end
     if (isset($sugar_config['aor']['quarters_begin'])) {
@@ -239,7 +241,7 @@ function getPeriodDate($date_time_period_list_selected)
     }
 
     if ($date_time_period_list_selected == 'today') {
-        $datetime_period = new DateTime();
+        $datetime_period = new DateTime("now", $timezone);
     } elseif ($date_time_period_list_selected == 'yesterday') {
         $datetime_period = $datetime_period->sub(new DateInterval("P1D"));
     } elseif ($date_time_period_list_selected == 'this_week') {
@@ -321,8 +323,14 @@ function getPeriodDate($date_time_period_list_selected)
             1
         );
     }
-    // set time to 00:00:00
     $datetime_period = $datetime_period->setTime(0, 0, 0);
+
+    $datetime_period->setTimezone($timezone);
+    $offset = $timezone->getOffset(new DateTime());
+
+//    //set offset to negative to push offset the other way
+    $datetime_period->modify(-$offset . 'second');
+
 
     return $datetime_period;
 }
@@ -334,81 +342,90 @@ function getPeriodDate($date_time_period_list_selected)
  */
 function getPeriodEndDate($dateTimePeriodListSelected)
 {
+    $timezone = new DateTimeZone(getReportTimeZone());
+
     switch ($dateTimePeriodListSelected) {
         case 'today':
-            $datetimePeriod = new DateTime();
+            $datetimePeriod = new DateTime("today", $timezone);
+            $datetimePeriod->setTime(23, 59, 59);
             break;
         case 'yesterday':
-            $datetimePeriod = new DateTime("yesterday");
+            $datetimePeriod = new DateTime("yesterday",$timezone);
             $datetimePeriod->setTime(23, 59, 59);
             break;
         case 'this_week':
-            $datetimePeriod = new DateTime("next week monday");
+            $datetimePeriod = new DateTime("next week monday", $timezone);
             $datetimePeriod->setTime(0, 0, 0);
             break;
         case 'last_week':
-            $datetimePeriod = new DateTime("this week monday");
+            $datetimePeriod = new DateTime("this week monday", $timezone);
             $datetimePeriod->setTime(0, 0, 0);
             break;
         case 'this_month':
-            $datetimePeriod = new DateTime('first day of next month');
+            $datetimePeriod = new DateTime('first day of next month', $timezone);
             $datetimePeriod->setTime(0, 0, 0);
             break;
         case 'last_month':
-            $datetimePeriod = new DateTime("first day of this month");
+            $datetimePeriod = new DateTime("first day of this month", $timezone);
             $datetimePeriod->setTime(0, 0, 0);
             break;
         case 'this_quarter':
-            $thisMonth = new DateTime('first day of this month');
+            $thisMonth = new DateTime('first day of this month', $timezone);
             $thisMonth = $thisMonth->format('n');
             if ($thisMonth < 4) {
                 // quarter 1
-                $datetimePeriod = new DateTime('first day of april');
+                $datetimePeriod = new DateTime('first day of april', $timezone);
                 $datetimePeriod->setTime(0, 0, 0);
             } elseif ($thisMonth > 3 && $thisMonth < 7) {
                 // quarter 2
-                $datetimePeriod = new DateTime('first day of july');
+                $datetimePeriod = new DateTime('first day of july', $timezone);
                 $datetimePeriod->setTime(0, 0, 0);
             } elseif ($thisMonth > 6 && $thisMonth < 10) {
                 // quarter 3
-                $datetimePeriod = new DateTime('first day of october');
+                $datetimePeriod = new DateTime('first day of october', $timezone);
                 $datetimePeriod->setTime(0, 0, 0);
             } elseif ($thisMonth > 9) {
                 // quarter 4
-                $datetimePeriod = new DateTime('next year first day of january');
+                $datetimePeriod = new DateTime('next year first day of january', $timezone);
                 $datetimePeriod->setTime(0, 0, 0);
             }
             break;
         case 'last_quarter':
-            $thisMonth = new DateTime('first day of this month');
+            $thisMonth = new DateTime('first day of this month', $timezone);
             $thisMonth = $thisMonth->format('n');
             if ($thisMonth < 4) {
                 // previous quarter 1
-                $datetimePeriod = new DateTime('this year first day of january');
+                $datetimePeriod = new DateTime('this year first day of january', $timezone);
                 $datetimePeriod->setTime(0, 0, 0);
             } elseif ($thisMonth > 3 && $thisMonth < 7) {
                 // previous quarter 2
-                $datetimePeriod = new DateTime('first day of april');
+                $datetimePeriod = new DateTime('first day of april', $timezone);
                 $datetimePeriod->setTime(0, 0, 0);
             } elseif ($thisMonth > 6 && $thisMonth < 10) {
                 // previous quarter 3
-                $datetimePeriod = new DateTime('first day of july');
+                $datetimePeriod = new DateTime('first day of july', $timezone);
                 $datetimePeriod->setTime(0, 0, 0);
             } elseif ($thisMonth > 9) {
                 // previous quarter 4
-                $datetimePeriod = new DateTime('first day of october');
+                $datetimePeriod = new DateTime('first day of october', $timezone);
                 $datetimePeriod->setTime(0, 0, 0);
             }
             break;
         case 'this_year':
-            $datetimePeriod = new DateTime('next year first day of january');
+            $datetimePeriod = new DateTime('next year first day of january', $timezone);
             $datetimePeriod->setTime(0, 0, 0);
             break;
         case 'last_year':
-            $datetimePeriod = new DateTime("this year first day of january");
+            $datetimePeriod = new DateTime("this year first day of january", $timezone);
             $datetimePeriod->setTime(0, 0, 0);
             break;
     }
+
+    $timezone = getReportTimeZone();
+    $tzOffset = new DateTimeZone($timezone);
+    $datetimePeriod->setTimezone($timezone);
+    $offset = $tzOffset->getOffset(new DateTime());
+    $datetimePeriod->modify(-$offset . 'second');
 
     return $datetimePeriod;
 }
@@ -569,4 +586,59 @@ function convertToDateTime($value)
     $dateTime->setTimezone(new DateTimeZone('UTC'));
 
     return $dateTime;
+}
+
+/**
+ * gets the most appropriate timezone string
+ * $sugar_config['default_timezone'] takes priority
+ * if it is not a cron job and a user is logged in it returns the user timezone
+ * if all else fails it returns the php timezone
+ * @return mixed|string
+ */
+function getReportTimeZone(){
+    global $sugar_config, $current_user;
+
+    if(!empty($sugar_config['default_timezone'])){
+        return $sugar_config['default_timezone'];
+    }
+    if($current_user !== null && getSchedulerJobId() === false) {
+        return TimeDate::userTimezone();
+    }
+    return date_default_timezone_get();
+
+}
+
+/**
+ * gets the offset in seconds.
+ * difference between the report timezone and the server timezone.
+ * formatted with + - to suit SQL queries
+ * @return float|int|string
+ */
+function getReportTimeZoneOffset(){
+    require_once ('include/TimeDate.php');
+    global $dateTime;
+
+    $reportTimezone = getReportTimeZone();
+    $tzObject = new DateTimeZone($reportTimezone);
+    $dateTime = new DateTime();
+    $dateTime->setTimezone($reportTimezone);
+    $tzOffset = $tzObject->getOffset(new DateTime());
+
+    $tzOffset = $tzOffset / 60 / 60;
+
+    if($tzOffset >= 0){
+        $tzOffset = "+" . $tzOffset;
+    }
+
+    return $tzOffset;
+
+}
+
+/**
+ * checks if running on scheduler
+ * returns either the job id or false
+ * @return false
+ */
+function getSchedulerJobId(){
+    return $GLOBALS['jobq']->job->id ?? false;
 }
