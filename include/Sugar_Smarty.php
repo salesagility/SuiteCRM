@@ -169,6 +169,22 @@ class Sugar_Smarty extends Smarty
     }
 
     /**
+     * compile the template and clear opcache
+     *
+     * @param string $resource_name
+     * @param string $compile_path
+     * @return boolean
+     */
+    function _compile_resource($resource_name, $compile_path)
+    {
+        if(parent::_compile_resource($resource_name, $compile_path)) {
+            SugarCache::cleanFile($compile_path);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Log smarty error out to default log location
      * @param string $error_msg
      * @param integer $error_type
