@@ -14,16 +14,21 @@
  */
 function smarty_function_sugar_varname($params, &$smarty)
 {
-    if (empty($params['key'])) {
-        $smarty->trigger_error("sugarvar: missing 'key' parameter");
-        return;
-    }
+	if (empty($params['key'])) {
+		$smarty->trigger_error("sugarvar: missing 'key' parameter");
+		return;
+	}
 
-    $object = (empty($params['objectName']))?$smarty->get_template_vars('parentFieldArray'): $params['objectName'];
+	$object = (empty($params['objectName']))?$smarty->get_template_vars('parentFieldArray'): $params['objectName'];
 
-    $vardefs = $smarty->get_template_vars('vardef');
-    $member = $vardefs['name'];
+	$vardefs = $smarty->get_template_vars('vardef');
+	$member = $vardefs['name'];
 
-    $_contents =  '$'. $object . '.' . $member . '.' . $params['key'];
-    return $_contents;
+	$_contents =  '$'. $object . '.' . $member . '.' . $params['key'];
+
+	if(empty($member)) {
+		$_contents = '$'. $object . '.' . $params['key'];
+		$smarty->trigger_error("sugarvar: get_template_vars(vardef.name) returned empty string. fallback to '$_contents' instead");
+	}
+	return $_contents;
 }
