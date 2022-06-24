@@ -69,26 +69,32 @@ r22124 - 2007-04-20 16:54:53 -0700 (Fri, 20 Apr 2007) - clee -
 function smarty_function_sugarvar($params, &$smarty)
 {
 	if(empty($params['key']))  {
-	    $smarty->trigger_error("sugarvar: missing 'key' parameter");
-	    return;
+		$smarty->trigger_error("sugarvar: missing 'key' parameter");
+		return;
 	}
 
 	$object = (empty($params['objectName']))?$smarty->get_template_vars('parentFieldArray'): $params['objectName'];
 	$displayParams = $smarty->get_template_vars('displayParams');
 
-
-	if(empty($params['memberName'])){
-		$member = $smarty->get_template_vars('vardef');
-		$member = $member['name'];
-	}else{
+	$member = null;
+	if(!empty($params['memberName'])){
 		$members = explode('.', $params['memberName']);
 		$member =  $smarty->get_template_vars($members[0]);
 		for($i = 1; $i < count($members); $i++){
 			$member = $member[$members[$i]];
 		}
 	}
+	if(empty($member)) {
+		$member = $smarty->get_template_vars('vardef');
+		$member = $member['name'];
+	}
 
-    $_contents =  '$'. $object . '.' . $member . '.' . $params['key'];
+	$_contents =  '$'. $object . '.' . $member . '.' . $params['key'];
+	if(empty($member)) {
+		$_contents = '$'. $object . '.' . empty($params['memberName']) ? 'vardef.name' : $params['memberName'] . '.' . $params['key'];
+		$smarty->trigger_error("sugarvar: get_template_vars(memberName) failed. fallback to '$_contents' instead");
+	}
+
 	if(empty($params['stringFormat']) && empty($params['string'])) {
 		$_contents = '{' . $_contents;
 		if(!empty($displayParams['htmlescape'])){
@@ -108,7 +114,7 @@ function smarty_function_sugarvar($params, &$smarty)
 		}
 
 		$_contents .= '}';
-    }
-    return $_contents;
+	}
+	return $_contents;
 }
 ?>
