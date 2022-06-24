@@ -92,7 +92,7 @@ function smarty_function_sugarvar($params, &$smarty)
 	$_contents =  '$'. $object . '.' . $member . '.' . $params['key'];
 	if(empty($member)) {
 		$_contents = '$'. $object . '.' . empty($params['memberName']) ? 'vardef.name' : $params['memberName'] . '.' . $params['key'];
-		$smarty->trigger_error("sugarvar: get_template_vars(memberName) failed. fallback to '$_contents' instead");
+		$smarty->trigger_error("sugarvar: get_template_vars(memberName) failed.");
 	}
 
 	if(empty($params['stringFormat']) && empty($params['string'])) {
