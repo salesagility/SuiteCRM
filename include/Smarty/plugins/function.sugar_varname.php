@@ -28,7 +28,7 @@ function smarty_function_sugar_varname($params, &$smarty)
 
 	if(empty($member)) {
 		$_contents = '$'. $object . '.' . $params['key'];
-		$smarty->trigger_error("sugarvar: get_template_vars(vardef.name) returned empty string. fallback to '$_contents' instead");
+		$smarty->trigger_error("sugarvar: get_template_vars(vardef.name) returned empty string.");
 	}
 	return $_contents;
 }
