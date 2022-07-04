@@ -330,9 +330,9 @@ class SearchQuery implements JsonSerializable
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getModules(): array
+    public function getModules(): ?array
     {
         return $this->modules;
     }
