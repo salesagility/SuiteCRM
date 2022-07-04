@@ -75,6 +75,7 @@ class SearchFormController extends Controller
         $smarty->assign('searchQuerySize', $this->query->getSize());
         $smarty->assign('searchQueryFrom', $this->query->getFrom());
         $smarty->assign('searchQueryEngine', $this->query->getEngine());
+        $smarty->assign('searchQueryModules', $this->query->getModules());
 
         parent::display();
     }

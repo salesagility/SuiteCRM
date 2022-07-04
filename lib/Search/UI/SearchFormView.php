@@ -81,8 +81,15 @@ class SearchFormView extends View
             $engines = [];
         }
 
+        $searchModules = SearchWrapper::getModules();
+        foreach ($searchModules as $key => $module) {
+            $searchModules[strtolower($module)] = $module;
+            unset($searchModules[$key]);
+        }
+
         $this->smarty->assign('sizeOptions', $sizes);
         $this->smarty->assign('engineOptions', $engines);
+        $this->smarty->assign('moduleOptions', $searchModules);
 
         parent::display();
     }

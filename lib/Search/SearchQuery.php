@@ -80,6 +80,8 @@ class SearchQuery implements JsonSerializable
     private $engine;
     /** @var array Structure containing additional search parameters */
     private $options;
+    /** @var null|array Optional parameter to specify the Modules to search. */
+    private $modules;
 
     /**
      * SearchQuery constructor.
@@ -90,14 +92,16 @@ class SearchQuery implements JsonSerializable
      * @param null $size Number of results
      * @param int $from Offset of the search. Used for pagination
      * @param array $options [optional] used for additional options by SearchEngines.
+     * @param array $modules [optional] Module filter selection.
      */
-    private function __construct(string $searchString, $engine = null, $size = null, $from = 0, array $options = [])
+    private function __construct(string $searchString, $engine = null, $size = null, $from = 0, array $options = [], $modules = null)
     {
         $this->query = $searchString;
         $this->size = $size ? (int)$size : $this->getDefaultSearchSize();
         $this->from = (int)$from;
         $this->options = $options;
         $this->engine = $engine ? (string)$engine : $this->getDefaultEngine();
+        $this->modules = $modules;
     }
 
     /**
@@ -142,6 +146,7 @@ class SearchQuery implements JsonSerializable
         $searchSize = self::filterArray($request, 'search-query-size', null, FILTER_SANITIZE_NUMBER_INT);
         $searchFrom = self::filterArray($request, 'search-query-from', 0, FILTER_SANITIZE_NUMBER_INT);
         $searchEngine = self::filterArray($request, 'search-engine', null, FILTER_SANITIZE_STRING);
+        $searchModules = self::filterArray($request, 'search-query-modules', null);
 
         if (!empty($searchQueryAlt) && empty($searchQuery)) {
             $searchQuery = $searchQueryAlt;
@@ -152,10 +157,11 @@ class SearchQuery implements JsonSerializable
             $request['query_string'],
             $request['search-query-size'],
             $request['search-query-from'],
-            $request['search-engine']
+            $request['search-engine'],
+            $request['search-query-modules']
         );
 
-        return new self($searchQuery, $searchEngine, $searchSize, $searchFrom, $request);
+        return new self($searchQuery, $searchEngine, $searchSize, $searchFrom, $request, $searchModules);
     }
 
     /**
@@ -186,6 +192,14 @@ class SearchQuery implements JsonSerializable
         }
 
         $value = filter_var($array[$key], $filter);
+
+        // if array, set keys
+        if (is_array($array[$key])) {
+            $value = [];
+            foreach ($array[$key] as $selected) {
+                $value[$selected] = $selected;
+            }
+        }
 
         if ($value === false) {
             return $default;
@@ -313,6 +327,14 @@ class SearchQuery implements JsonSerializable
     public function getSearchString(): string
     {
         return $this->query;
+    }
+
+    /**
+     * @return string
+     */
+    public function getModules(): array
+    {
+        return $this->modules;
     }
 
     /**
