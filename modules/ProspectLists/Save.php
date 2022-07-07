@@ -76,7 +76,6 @@ if (!empty($_REQUEST['duplicateId'])) {
             $focus->set_relationship('prospect_lists_prospects', $rel, true);
         }
     }
-    $focus->save();
 }
 
 
