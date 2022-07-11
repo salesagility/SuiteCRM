@@ -147,13 +147,13 @@ class SugarTinyMCE
 <script type="text/javascript">
 <!--
 $(document).ready(function(){
-  if (!SUGAR.ajaxUI.hist_loaded){
-	load_mce_{$unique}();
-	}
-});
-if (SUGAR.ajaxUI && SUGAR.ajaxUI.hist_loaded){
-    setTimeout(function(){ load_mce_{$unique}();},40);
-}
+    if (!SUGAR.ajaxUI.hist_loaded){
+      load_mce_{$unique}();
+    }
+    if (SUGAR.ajaxUI && SUGAR.ajaxUI.hist_loaded){
+      setTimeout(function(){ load_mce_{$unique}();},40);
+    }
+  });
 function load_mce_{$unique}(){
     if (!SUGAR.util.isTouchScreen()) {
         if(tinyMCE.editors.length === 0 ){
