@@ -948,8 +948,44 @@ function fixUpFormatting($module, $field, $value)
 
     static $boolean_false_values = array('off', 'false', '0', 'no');
 
-    switch ($bean->field_defs[$field]['type']) {
-        case 'datetime':
+    $type="";
+    if ($bean->field_defs[$field]) {
+        // $field exists in $bean->field_defs. Probably because in root report module, but could be Date Created / Modified in related module
+        $type=$bean->field_defs[$field]['type'];
+    }else{
+        // $field does not exists in $bean->field_defs, so it will have come from a field in a related module
+        // Check to see if it has a date format
+
+        $date_part = substr($value, 0, 10);
+
+        // Allowing for different date separators
+        $date_part = str_replace(".", "/", $date_part);
+        $date_part = str_replace("-", "/", $date_part);
+
+        $is_date = false;
+
+        $date_formats= array (
+            '^([0-9]{4})/[0-9]{2}/[0-9]{2}', // 'Y/m/d'
+            '^([0-9]{2})/[0-9]{2}/[0-9]{4}'  // 'd/m/Y' or m/d/Y
+        );
+
+        foreach ($date_formats as $regexp) {
+            if (preg_match ('|' . $regexp . '|', $date_part)) {
+                $is_date = true;
+                break;
+            }
+        }
+
+        if($is_date) {
+            $type='datetimecombo'; // It matches a date format
+        }
+        else {
+            $type="unknown"; // Other kind of error
+        }
+    }
+
+    switch ($type) {
+	case 'datetime':
         case 'datetimecombo':
             // If value is array, don't attempt to convert to DB format
             if (empty($value) || is_array($value)) {
@@ -959,10 +995,7 @@ function fixUpFormatting($module, $field, $value)
                 $value = '';
                 break;
             }
-            if (! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/', $value)) {
-                // This appears to be formatted in user date/time
-                $value = $timedate->to_db($value);
-            }
+            $value = $timedate->to_db($value);
             break;
         case 'date':
             // If value is array, don't attempt to convert to DB format
@@ -973,10 +1006,7 @@ function fixUpFormatting($module, $field, $value)
                 $value = '';
                 break;
             }
-            if (! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $value)) {
-                // This date appears to be formatted in the user's format
-                $value = $timedate->to_db_date($value, false);
-            }
+            $value = $timedate->to_db_date($value, false);
             break;
         case 'time':
             if (empty($value)) {
