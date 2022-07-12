@@ -3489,7 +3489,13 @@ class Email extends Basic
             $this->status_name = $app_list_strings['dom_email_status'][$this->status];
         }
 
-        if (empty($this->name) && empty($_REQUEST['record']) && !empty($mod_strings['LBL_NO_SUBJECT'])) {
+        if($_REQUEST['targetModule'] === "Cases" && !empty($_REQUEST["ids"])) {
+            $caseId = $_REQUEST['ids'];
+            $aCase = BeanFactory::getBean('Cases', $caseId);
+
+            $this->name = str_replace('%1', $aCase->case_number, $aCase->getEmailSubjectMacro() . " " . $aCase->name);
+
+        } elseif(empty($this->name) && empty($_REQUEST['record']) && !empty($mod_strings['LBL_NO_SUBJECT'])) {
             $this->name = $mod_strings['LBL_NO_SUBJECT'];
         }
 
