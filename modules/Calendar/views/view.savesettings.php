@@ -44,7 +44,7 @@ class CalendarViewSaveSettings extends SugarView
 {
     public function CalendarViewSettings()
     {
-        parent::SugarView();
+        parent::__construct();
     }
     
     public function process()
