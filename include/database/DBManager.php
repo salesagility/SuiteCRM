@@ -3027,6 +3027,7 @@ abstract class DBManager
      */
     public function getDataChanges(SugarBean &$bean, array $field_filter = null)
     {
+        $bean->fixUpFormatting();
         $changed_values = array();
 
         $fetched_row = array();
