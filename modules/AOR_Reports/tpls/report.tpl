@@ -60,6 +60,8 @@
             <script>
               document.getElementById('detailpanel_parameters').className += ' expanded';
             </script>
+            {* Fix 22_07_11 Embeds the user date format into the conditions panel *}
+            <input type="hidden" value="{$USER_DATEFORMAT}" id="user_dateFormat" />
         </h4>
         <div id="aor_conditionLines" class="panelContainer" style="min-height: 50px;">
         </div>
@@ -82,9 +84,6 @@
                   var ln = $elem.attr('id').substr(17);
                   var id = $elem.val();
                   appendHiddenFields(_form, ln, id);
-                  updateTimeDateFields(fieldInput, ln);
-                  // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
-                  updateHiddenReportFields(ln, _form);
                 });
                 _form.submit();
               });

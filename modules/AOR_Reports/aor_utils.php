@@ -120,52 +120,39 @@ function requestToUserParameters($reportBean = null)
                 'value' => $value,
             );
 
-            // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
-            if ($_REQUEST['parameter_type'][$key] === 'Date') {
-                $values = array();
-                $values[] = $_REQUEST['parameter_date_value'][$key];
-                $values[] = $_REQUEST['parameter_date_sign'][$key];
-                $values[] = $_REQUEST['parameter_date_number'][$key];
-                $values[] = $_REQUEST['parameter_date_time'][$key];
-
-                $params[$parameterId] = array(
-                    'id' => $parameterId,
-                    'operator' => $_REQUEST['parameter_operator'][$key],
-                    'type' => $_REQUEST['parameter_type'][$key],
-                    'value' => $values,
-                );
-                $dateCount++;
-            }
-
             // determine if parameter is a date
             if ($_REQUEST['parameter_type'][$key] === 'Value') {
                 $paramLength = strlen($_REQUEST['parameter_value'][$key]);
-                $paramValue = $_REQUEST['parameter_value'][$key];
+                
+            // Fix 22_07_12 A rewrite of this code to fix the datetime parameter returned.
+            // convertToDateTime function used to be called but is no longer
+            // required due correct format in the $_REQUEST[]. 
+            
                 if ($paramLength === 10) {
-                    if (strpos($paramValue, '/') === 2 || strpos($paramValue, '/') === 4) {
+                    // Gets the date part
+                    $paramValue = $_REQUEST['parameter_value'][$key]; 
+                    // Gets the time part
+                    $paramValueTime = $_REQUEST['parameter_date_time'][$key];
+                    // Creates the date time string
+                    $dateTime = $paramValue . " " . $paramValueTime;         
+                    preg_match("/[^a-zA-Z\d\s:]/",
+                    $paramValue,
+                    $matches
+                    );
+                    // Finds the separator in the date part. 
+                    // Double checking it is a date? Is this actually necessary?
+                    $dateSeparator=$matches[0]; 
+            
+                    if ($dateSeparator == '/' || $dateSeparator == '-' || $dateSeparator == '.') {
                         $params[$parameterId] = array(
                             'id' => $parameterId,
                             'operator' => $_REQUEST['parameter_operator'][$key],
                             'type' => $_REQUEST['parameter_type'][$key],
-                            'value' => $value,
-                        );
-                    } elseif (strpos($paramValue, '-') === 2 || strpos($paramValue, '-') === 4) {
-                        $params[$parameterId] = array(
-                            'id' => $parameterId,
-                            'operator' => $_REQUEST['parameter_operator'][$key],
-                            'type' => $_REQUEST['parameter_type'][$key],
-                            'value' => $value,
-                        );
-                    } elseif (strpos($paramValue, '.') === 2 || strpos($paramValue, '.') === 4) {
-                        $params[$parameterId] = array(
-                            'id' => $parameterId,
-                            'operator' => $_REQUEST['parameter_operator'][$key],
-                            'type' => $_REQUEST['parameter_type'][$key],
-                            'value' => $value,
+                            'value' => $dateTime,
                         );
                     }
                 }
-            }
+            } 
         }
     }
 
@@ -468,105 +455,4 @@ function calculateQuarters($offsetMonths = 0)
     $q['4']['end'] = $q4end;
 
     return $q;
-}
-
-/**
- * convertDateValue
- * @param string $value - date in any user format
- * @return DateTime $dateTime - converted string
- */
-function convertToDateTime($value)
-{
-    global $current_user, $timedate;
-
-    $user_dateformat = $current_user->getPreference('datef');
-
-    // In some cases the date string already is in database format
-    if ($timedate->check_matching_format($value, $timedate->get_db_date_format())) {
-        $user_dateformat = $timedate->get_db_date_format();
-    }
-
-    switch ($user_dateformat) {
-        case 'Y-m-d':
-            $formattedValue = date('Y-m-d', strtotime($value));
-            break;
-        case 'm-d-Y':
-            $formattedValue = $value;
-            $day = substr($formattedValue, 3, 2);
-            $month = substr($formattedValue, 0, 2);
-            $year = substr($formattedValue, 6, 4);
-            $formattedValue = substr_replace($formattedValue, $day, 6, 4);
-            $formattedValue = substr_replace($formattedValue, $month, 3, 2);
-            $formattedValue = substr_replace($formattedValue, $year, 0, 2);
-            $formattedValue = date('Y-m-d', strtotime($formattedValue));
-            break;
-        case 'd-m-Y':
-            $formattedValue = $value;
-            $day = substr($formattedValue, 0, 2);
-            $month = substr($formattedValue, 3, 2);
-            $year = substr($formattedValue, 6, 4);
-            $formattedValue = substr_replace($formattedValue, $day, 6, 4);
-            $formattedValue = substr_replace($formattedValue, $month, 3, 2);
-            $formattedValue = substr_replace($formattedValue, $year, 0, 2);
-            $formattedValue = date('Y-m-d', strtotime($formattedValue));
-            break;
-        case 'Y/m/d':
-            $formattedValue = str_replace('/', '-', $value);
-            break;
-        case 'm/d/Y':
-            $formattedValue = str_replace('/', '-', $value);
-            $day = substr($formattedValue, 3, 2);
-            $month = substr($formattedValue, 0, 2);
-            $year = substr($formattedValue, 6, 4);
-            $formattedValue = substr_replace($formattedValue, $day, 6, 4);
-            $formattedValue = substr_replace($formattedValue, $month, 3, 2);
-            $formattedValue = substr_replace($formattedValue, $year, 0, 2);
-            $formattedValue = date('Y-m-d', strtotime($formattedValue));
-            break;
-        case 'd/m/Y':
-            $formattedValue = str_replace('/', '-', $value);
-            $day = substr($formattedValue, 0, 2);
-            $month = substr($formattedValue, 3, 2);
-            $year = substr($formattedValue, 6, 4);
-            $formattedValue = substr_replace($formattedValue, $day, 6, 4);
-            $formattedValue = substr_replace($formattedValue, $month, 3, 2);
-            $formattedValue = substr_replace($formattedValue, $year, 0, 2);
-            $formattedValue = date('Y-m-d', strtotime($formattedValue));
-            break;
-        case 'Y.m.d':
-            $formattedValue = str_replace('.', '-', $value);
-            break;
-        case 'd.m.Y':
-            $formattedValue = str_replace('.', '-', $value);
-            $day = substr($formattedValue, 0, 2);
-            $month = substr($formattedValue, 3, 2);
-            $year = substr($formattedValue, 6, 4);
-            $formattedValue = substr_replace($formattedValue, $day, 6, 4);
-            $formattedValue = substr_replace($formattedValue, $month, 3, 2);
-            $formattedValue = substr_replace($formattedValue, $year, 0, 2);
-            $formattedValue = date('Y-m-d', strtotime($formattedValue));
-            break;
-        case 'm.d.Y':
-            $formattedValue = str_replace('.', '-', $value);
-            $day = substr($formattedValue, 3, 2);
-            $month = substr($formattedValue, 0, 2);
-            $year = substr($formattedValue, 6, 4);
-            $formattedValue = substr_replace($formattedValue, $day, 6, 4);
-            $formattedValue = substr_replace($formattedValue, $month, 3, 2);
-            $formattedValue = substr_replace($formattedValue, $year, 0, 2);
-            $formattedValue = date('Y-m-d', strtotime($formattedValue));
-            break;
-    }
-
-    $formattedValue .= ' 00:00:00';
-    $userTimezone = $current_user->getPreference('timezone');
-    $utz = new DateTimeZone($userTimezone);
-    $dateTime = DateTime::createFromFormat(
-        'Y-m-d H:i:s',
-        $formattedValue,
-        $utz
-    );
-    $dateTime->setTimezone(new DateTimeZone('UTC'));
-
-    return $dateTime;
 }
