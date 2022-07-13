@@ -561,18 +561,18 @@ class MBPackage
     private function getCustomMetadataManifestForModule($module, &$installdefs)
     {
         $meta_path = 'custom/modules/' . $module . '/metadata';
+        $working_array = [
+            'editviewdefs.php',
+            'detailviewdefs.php',
+            'quickcreatedefs.php'
+        ];
         foreach (scandir($meta_path) as $meta_file) {
             if (substr($meta_file, 0, 1) !== '.' && is_file($meta_path . '/' . $meta_file)) {
-                if ($meta_file === 'listviewdefs.php') {
-                    $installdefs['copy'][] = array(
-                        'from' => '<basepath>/SugarModules/modules/' . $module . '/metadata/' . $meta_file,
-                        'to' => 'custom/modules/' . $module . '/metadata/' . $meta_file,
-                    );
-                } else {
-                    $installdefs['copy'][] = array(
-                        'from' => '<basepath>/SugarModules/modules/' . $module . '/metadata/' . $meta_file,
-                        'to' => 'custom/modules/' . $module . '/metadata/' . $meta_file,
-                    );
+                $installdefs['copy'][] = array(
+                    'from' => '<basepath>/SugarModules/modules/' . $module . '/metadata/' . $meta_file,
+                    'to' => 'custom/modules/' . $module . '/metadata/' . $meta_file,
+                );
+                if (in_array($meta_file, $working_array, true)) {
                     $installdefs['copy'][] = array(
                         'from' => '<basepath>/SugarModules/modules/' . $module . '/metadata/' . $meta_file,
                         'to' => 'custom/working/modules/' . $module . '/metadata/' . $meta_file,
