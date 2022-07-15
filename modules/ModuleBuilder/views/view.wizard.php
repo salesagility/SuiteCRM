@@ -172,7 +172,7 @@ class ModuleBuilderViewWizard extends SugarView
                     $this->help = 'moduleHelp' ;
                     global $current_user;
                     if (is_admin($current_user)) {
-                        $this->actions = "<input class=\"button\" type=\"button\" id=\"exportBtn\" name=\"exportBtn\" "
+                        $this->actions = "<input class=\"button\" type=\"button\" id=\"resetModule\" name=\"resetModule\" "
                         . "onclick=\"ModuleBuilder.getContent('module=ModuleBuilder&action=resetmodule&view_module=$this->editModule');\" value=\""
                         . translate('LBL_RESET_MODULE') . '">' ;
                     }
