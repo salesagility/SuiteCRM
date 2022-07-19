@@ -235,8 +235,10 @@
                     </slot>&nbsp;{sugar_help text=$MOD.LBL_RECEIVE_NOTIFICATIONS_TEXT}
                 </td>
                 <td width="33%">
-                    <slot><input name='receive_notifications' class="checkbox" tabindex='12' type="checkbox"
-                                 value="12" {$RECEIVE_NOTIFICATIONS}></slot>
+                    <slot>
+                        <input type='hidden' value='0' name='receive_notifications'>
+                        <input name='receive_notifications' class="checkbox" tabindex='12' type="checkbox" value="1" {$RECEIVE_NOTIFICATIONS}>
+                    </slot>
                 </td>
             </tr>
 
