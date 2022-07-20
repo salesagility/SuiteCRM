@@ -363,7 +363,7 @@ class Importer
 
             if (isset($dbrow['id']) && $dbrow['id'] != -1) {
                 // if it exists but was deleted, just remove it
-                if (isset($dbrow['deleted']) && $dbrow['deleted'] == 1 && $this->isUpdateOnly ==false) {
+                if (isset($dbrow['deleted']) && $dbrow['deleted'] == 1) {
                     $this->removeDeletedBean($focus);
                     $focus->new_with_id = true;
                 } else {
