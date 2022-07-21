@@ -21,7 +21,7 @@
     }
 
     a[href]:after {
-        content: " (" attr(href) ")";
+        content: none !important;
     }
 
     abbr[title]:after {
