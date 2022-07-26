@@ -390,6 +390,7 @@ class SugarView
         $ss->assign("THEME_IE6COMPAT", $themeObject->ie6compat ? 'true' : 'false');
         $ss->assign("MODULE_NAME", $this->module);
         $ss->assign("langHeader", get_language_header());
+        $ss->assign("BROWSER_TITLE", $this->getBrowserTitle());
 
 
         // set ab testing if exists
