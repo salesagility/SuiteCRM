@@ -151,6 +151,6 @@ EOF;
                     "'index.php?entryPoint=jjwg_Maps&display_module={$_REQUEST['module']}', " .
                     "'{$app_strings['LBL_LISTVIEW_NO_SELECTED']}')\">{$app_strings['LBL_MAP']}</a>";
 
-        return formLetter::LVSmarty().$script;
+        return $script;
     }
 }

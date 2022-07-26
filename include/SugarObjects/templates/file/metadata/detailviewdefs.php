@@ -47,6 +47,13 @@ $_object_name = '<_object_name>';
 $viewdefs[$module_name]['DetailView'] = array(
     'templateMeta' => array(
         'maxColumns' => '2',
+        'form' => array(
+            'buttons' => array(
+                'EDIT',
+                'DUPLICATE',
+                'DELETE',
+            )
+        ),        
         'form' => array(),
         'widths' => array(
             array('label' => '10', 'field' => '30'),

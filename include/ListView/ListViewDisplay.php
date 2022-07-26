@@ -380,6 +380,9 @@ class ListViewDisplay
                 && $this->export
             ) {
                 $menuItems[] = $this->buildExportLink($location);
+                if (!in_array($this->seed->module_dir, AOS_PDF_Templates::$excludedModulesToAddButtons)){
+                    $menuItems[] = $this->buildPDFLinkAndPopupHtml();
+                }
             }
 
             foreach ($this->actionsMenuExtraItems as $item) {
@@ -414,6 +417,13 @@ class ListViewDisplay
     {
         global $app_strings;
         return "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id=\"export_listview_". $loc ." \" onclick=\"return sListView.send_form(true, '{$this->seed->module_dir}', 'index.php?entryPoint=export','{$app_strings['LBL_LISTVIEW_NO_SELECTED']}')\">{$app_strings['LBL_EXPORT']}</a>";
+    }
+
+    protected function buildPDFLinkAndPopupHtml()
+    {
+        require_once('modules/AOS_PDF_Templates/formLetter.php'); 
+        formLetter::LVPopupHtml($this->seed->module_name);
+        return formLetter::LVSmarty();
     }
 
     /**

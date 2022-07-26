@@ -96,6 +96,11 @@ class DetailView2 extends EditView
         }
         if (!empty($this->metadataFile) && file_exists($this->metadataFile)) {
             require($this->metadataFile);
+            if (!in_array($this->module, AOS_PDF_Templates::$excludedModulesToAddButtons)){
+                $viewdefs[$this->module][$this->view]['templateMeta']['form']['buttons']['AOS_GENLET'] = array ('customCode' => '<input type="button" class="button" onClick="showPopup(\'pdf\');" value="{$APP.LBL_PRINT_AS_PDF}">');
+                require_once('modules/AOS_PDF_Templates/formLetter.php');
+                formLetter::DVPopupHtml($this->module);
+            }            
         } else {
             //If file doesn't exist we create a best guess
             if (!file_exists("modules/$this->module/metadata/$metadataFileName.php") &&

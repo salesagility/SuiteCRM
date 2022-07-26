@@ -30,10 +30,42 @@
 require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates_sugar.php');
 class AOS_PDF_Templates extends AOS_PDF_Templates_sugar
 {
+    public static $excludedModulesForCreateTemplates = ['Home', 'Calendar'];
+    public static $excludedModulesToAddButtons = [
+        'Home', 
+        'Calendar', 
+        'Users', 
+        'SecurityGroups',
+        'OAuth2Clients', 
+        'OAuthKeys',  
+        'Schedulers',  
+        'AOS_Contracts',  //  The Contracts, Quotes and Invoices modules
+        'AOS_Quotes',     //  add their own custom buttons 
+        'AOS_Invoices'    //  and therefore they are excluded.
+    ];
+
     public function __construct()
     {
         parent::__construct();
+        global $app_list_strings;
+        $app_list_strings['pdf_template_type_dom'] = $this->loadTabModules();        
     }
 
+    public static function loadTabModules()
+    {
+        global $app_list_strings;
+        include_once 'modules/MySettings/TabController.php';
+        $controller = new TabController();
+        $currentTabs = $controller->get_system_tabs();
 
+        $modules = array();
+        foreach($currentTabs as $key => $mod){
+            if (!in_array($mod, self::$excludedModulesForCreateTemplates)) {
+                $modules[$key] = (isset($app_list_strings['moduleList'][$key])) ? $app_list_strings['moduleList'][$key] : $key;
+            }
+        }
+
+        asort($modules);
+        return $modules;
+    }
 }
