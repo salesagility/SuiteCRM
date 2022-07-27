@@ -106,6 +106,14 @@
                 &nbsp;<label for="type">{$MOD.LBL_UPDATE_BUTTON}</label> &nbsp;{sugar_help text=$MOD.LBL_UPDATE_BUTTON_HELP}
             </td>
           </tr>
+        {if $IMPORT_MODULE === "Contacts"}
+          <tr>
+            <td scope="row" colspan="3">
+                <input id="import_update_email" class="radio" type="radio" name="type" id="type" value="update_email" />
+                &nbsp;<label for="type">{$MOD.LBL_UPDATE_EMAIL_BUTTON}</label> &nbsp;{sugar_help text=$MOD.LBL_UPDATE_EMAIL_BUTTON_HELP}
+            </td>
+          </tr>
+        {/if}
 	</table>
     <br>
     <table border="0" cellspacing="0" cellpadding="0" width="100%">

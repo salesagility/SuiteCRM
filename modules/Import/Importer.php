@@ -76,6 +76,11 @@ class Importer
     protected $isUpdateOnly;
 
     /**
+     * @var $isUpdateEmail
+     */
+    protected $isUpdateEmail;
+
+    /**
      * @var  $bean
      */
     protected $bean;
@@ -113,7 +118,8 @@ class Importer
 
         //Get our import column definitions
         $this->importColumns = $this->getImportColumns();
-        $this->isUpdateOnly = (isset($_REQUEST['import_type']) && $_REQUEST['import_type'] == 'update');
+        $this->isUpdateOnly = (isset($_REQUEST['import_type']) && $_REQUEST['import_type'] === 'update');
+        $this->isUpdateEmail = (isset($_REQUEST['import_type']) && $_REQUEST['import_type'] === 'update_email');
     }
 
     public function import()
@@ -384,6 +390,39 @@ class Importer
                 }
             } else {
                 $focus->new_with_id = true;
+            }
+        }
+
+        // if updating based on email
+        if (!empty($focus->email1) && $focus->module_name === 'Contacts' && $this->isUpdateEmail) {
+
+            // check if it already exists
+            $query = "SELECT eabr.bean_id, c.deleted FROM email_addr_bean_rel eabr 
+                    LEFT JOIN email_addresses ea ON (eabr.email_address_id = ea.id) 
+                    LEFT JOIN contacts c ON (c.id = eabr.bean_id) 
+                    WHERE ea.email_address='".$focus->db->quote($focus->email1)."' AND eabr.bean_module = 'Contacts'";
+            $result = $focus->db->query($query)
+            or sugar_die("Error selecting sugarbean: ");
+
+            $dbrow = $focus->db->fetchByAssoc($result);
+
+            if (isset($dbrow['bean_id']) && $dbrow['bean_id'] != -1) {
+                // set id
+                $focus->id = $dbrow['bean_id'];
+                // if it exists but was deleted, just remove it
+                if (isset($dbrow['deleted']) && $dbrow['deleted'] === 1) {
+                    $this->removeDeletedBean($focus);
+                    $focus->new_with_id = true;
+                } else {
+                    $clonedBean = $this->cloneExistingBean($focus);
+                    if ($clonedBean === false) {
+                        $this->importSource->writeError($mod_strings['LBL_RECORD_CANNOT_BE_UPDATED'], 'ID', $focus->id);
+                        $this->_undoCreatedBeans(ImportFieldSanitize::$createdBeans);
+                        return;
+                    }
+                    $focus = $clonedBean;
+                    $newRecord = false;
+                }
             }
         }
 

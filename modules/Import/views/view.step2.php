@@ -157,7 +157,7 @@ if( document.getElementById('goback') )
 
 document.getElementById('gonext').onclick = function(){
     // warning message that tells user that updates can not be undone
-    if(document.getElementById('import_update').checked)
+    if(document.getElementById('import_update').checked || document.getElementById('import_update_email').checked)
     {
         ret = confirm(SUGAR.language.get("Import", 'LBL_CONFIRM_IMPORT'));
         if (!ret) {
