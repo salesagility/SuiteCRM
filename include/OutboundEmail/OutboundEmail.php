@@ -500,6 +500,8 @@ class OutboundEmail
      */
     public function save()
     {
+        $this->checkSavePermissions();
+
         require_once('include/utils/encryption_utils.php');
         if (empty($this->id)) {
             $this->id = create_guid();
@@ -656,5 +658,45 @@ class OutboundEmail
         }
 
         return $this->retrieve($a['id']);
+    }
+
+    /**
+     * @return void
+     */
+    protected function checkSavePermissions(): void
+    {
+        global $log;
+
+
+        $original = null;
+
+        if (!empty($this->id)) {
+            $original = new OutboundEmail();
+            $original->retrieve($this->id);
+        }
+
+        if (empty($original)) {
+            $original = $this;
+        }
+
+        $type = $this->type ?? '';
+
+        $authenticatedUser = get_authenticated_user();
+        if ($authenticatedUser === null) {
+            $log->security("OutboundEmail::checkSavePermissions - not logged in - skipping check");
+            return;
+        }
+
+        if ($type === 'system' && !is_admin($authenticatedUser)) {
+            $log->security("OutboundEmail::checkSavePermissions - trying to save a system outbound email with non-admin user");
+            throw new RuntimeException('Access denied');
+        }
+
+        $oeUserId = $original->user_id ?? '';
+
+        if (!empty($oeUserId) && $oeUserId !== $authenticatedUser->id && !is_admin($authenticatedUser)) {
+            $log->security("OutboundEmail::checkSavePermissions - trying to save a outbound email for another user");
+            throw new RuntimeException('Access denied');
+        }
     }
 }

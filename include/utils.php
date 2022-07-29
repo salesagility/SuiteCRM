@@ -872,6 +872,27 @@ function get_user_name($id)
     return (empty($a)) ? '' : $a['user_name'];
 }
 
+/**
+ * Get currently authenticated user
+ * @return User
+ */
+function get_authenticated_user(): ?User {
+    $authenticatedUserId = $_SESSION['authenticated_user_id'] ?? '';
+
+    if (empty($authenticatedUserId)){
+        return null;
+    }
+
+    /** @var User $authenticatedUser */
+    $authenticatedUser = BeanFactory::getBean('Users', $authenticatedUserId);
+
+    if (empty($authenticatedUser)) {
+        return null;
+    }
+
+    return $authenticatedUser;
+}
+
 //TODO Update to use global cache
 /**
  * get_user_array.
