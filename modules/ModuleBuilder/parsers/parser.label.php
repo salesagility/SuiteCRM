@@ -215,7 +215,11 @@ class ParserLabel
             }
         }
 
-        $filename = "$basepath/_override_$language.lang.php";
+        if (!$deployedModule) {
+            $filename = "$basepath/$language.lang.php";
+        } else {
+            $filename = "$basepath/_override_$language.lang.php";
+        }
         $dir_exists = is_dir($basepath);
 
         $mod_strings = array();
