@@ -357,7 +357,7 @@ class Importer
 
         // if the id was specified
         $newRecord = true;
-        if (!empty($focus->id)) {
+        if (!empty($focus->id) && $this->isUpdateOnly) {
             $focus->id = $this->_convertId($focus->id);
 
             // check if it already exists
