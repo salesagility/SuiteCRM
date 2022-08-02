@@ -3187,6 +3187,7 @@ $app_list_strings['aow_date_type_list']['hour'] = 'Hours';
 $app_list_strings['aow_date_type_list']['day'] = 'Days';
 $app_list_strings['aow_date_type_list']['week'] = 'Weeks';
 $app_list_strings['aow_date_type_list']['month'] = 'Months';
+$app_list_strings['aow_date_type_list']['year'] = 'Years';
 $app_list_strings['aow_date_type_list']['business_hours'] = 'Business Hours';
 $app_list_strings['aow_date_options']['now'] = 'Now';
 $app_list_strings['aow_date_options']['today'] = 'Today';
