@@ -400,7 +400,8 @@ class Importer
             $query = "SELECT eabr.bean_id, c.deleted FROM email_addr_bean_rel eabr 
                     LEFT JOIN email_addresses ea ON (eabr.email_address_id = ea.id) 
                     LEFT JOIN contacts c ON (c.id = eabr.bean_id) 
-                    WHERE ea.email_address='".$focus->db->quote($focus->email1)."' AND eabr.bean_module = 'Contacts'";
+                    WHERE ea.email_address='".$focus->db->quote($focus->email1)."' AND eabr.bean_module = 'Contacts'
+                    AND c.deleted = 0 AND eabr.deleted = 0 AND ea.deleted = 0";
             $result = $focus->db->query($query)
             or sugar_die("Error selecting sugarbean: ");
 
@@ -416,13 +417,15 @@ class Importer
                 } else {
                     $clonedBean = $this->cloneExistingBean($focus);
                     if ($clonedBean === false) {
-                        $this->importSource->writeError($mod_strings['LBL_RECORD_CANNOT_BE_UPDATED'], 'ID', $focus->id);
+                        $this->importSource->writeError($mod_strings['LBL_RECORD_CANNOT_BE_UPDATED'], 'Email Address', $focus->email1);
                         $this->_undoCreatedBeans(ImportFieldSanitize::$createdBeans);
                         return;
                     }
                     $focus = $clonedBean;
                     $newRecord = false;
                 }
+            } elseif (!empty($focus->id)) {
+                $focus->new_with_id = true;
             }
         }
 
@@ -540,7 +543,7 @@ class Importer
         * Bug 34854: Added all conditions besides the empty check on date modified.
         */
         if ((!empty($focus->new_with_id) && !empty($focus->date_modified)) ||
-             (empty($focus->new_with_id) && $timedate->to_db($focus->date_modified) != $timedate->to_db($timedate->to_display_date_time($focus->fetched_row['date_modified'])))
+             (empty($focus->new_with_id) && !empty($focus->fetched_row['date_modified']) && $timedate->to_db($focus->date_modified) != $timedate->to_db($timedate->to_display_date_time($focus->fetched_row['date_modified'])))
         ) {
             $focus->update_date_modified = false;
         }
