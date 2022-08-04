@@ -395,6 +395,7 @@ class Importer
 
         // if updating based on email
         if (!empty($focus->email1) && $focus->module_name === 'Contacts' && $this->isUpdateEmail) {
+            $focus->id = $this->_convertId($focus->id);
 
             // check if it already exists
             $query = "SELECT eabr.bean_id, c.deleted FROM email_addr_bean_rel eabr 
@@ -425,7 +426,31 @@ class Importer
                     $newRecord = false;
                 }
             } elseif (!empty($focus->id)) {
-                $focus->new_with_id = true;
+                // check if it already exists
+                $query = "SELECT * FROM {$focus->table_name} WHERE id='".$focus->db->quote($focus->id)."'";
+                $result = $focus->db->query($query)
+                or sugar_die("Error selecting sugarbean: ");
+
+                $dbrow = $focus->db->fetchByAssoc($result);
+
+                if (isset($dbrow['id']) && $dbrow['id'] != -1) {
+                    // if it exists but was deleted, just remove it
+                    if (isset($dbrow['deleted']) && $dbrow['deleted'] == 1) {
+                        $this->removeDeletedBean($focus);
+                        $focus->new_with_id = true;
+                    } else {
+                        $clonedBean = $this->cloneExistingBean($focus);
+                        if ($clonedBean === false) {
+                            $this->importSource->writeError($mod_strings['LBL_RECORD_CANNOT_BE_UPDATED'], 'ID', $focus->id);
+                            $this->_undoCreatedBeans(ImportFieldSanitize::$createdBeans);
+                            return;
+                        }
+                        $focus = $clonedBean;
+                        $newRecord = false;
+                    }
+                } else {
+                    $focus->new_with_id = true;
+                }
             }
         }
 
