@@ -6173,7 +6173,8 @@ class InboundEmail extends SugarBean
             $ret = $this->getImap()->search('UNDELETED UNSEEN');
         }
 
-        LoggerManager::getLogger()->debug('-----> getNewMessageIds() got ' . count($ret) . ' new Messages');
+        $nmessages = is_countable($ret)? count($ret) : 0;
+        LoggerManager::getLogger()->debug('-----> getNewMessageIds() got ' . $nmessages . ' new Messages');
 
         return $ret;
     }
