@@ -665,6 +665,9 @@ function pollMonitoredInboxesAOP()
                                             throw new Exception('Email retrieving error to handle case create, email id was: ' . $emailId);
                                         }
                                     }
+                                    if (empty($aopInboundEmailX->email)) {
+                                        throw new Exception('Invalid type for email id ' . $emailId);
+                                    }
                                     $aopInboundEmailX->handleCreateCase($aopInboundEmailX->email, $userId);
                                 } // if
                             } // if
