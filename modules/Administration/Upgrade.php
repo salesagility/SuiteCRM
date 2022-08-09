@@ -70,6 +70,10 @@ if (DBManagerFactory::getInstance()->supports('fulltext')) {
 	<td scope="row"><?php echo SugarThemeRegistry::current()->getImage('Repair', 'align="absmiddle" border="0"', null, null, '.gif', $mod_strings['LBL_EXPAND_DATABASE_COLUMNS']); ?>&nbsp;<a href="./index.php?module=Administration&action=expandDatabase"><?php echo $mod_strings['LBL_EXPAND_DATABASE_COLUMNS']; ?></a></td>
 	<td> <?php echo $mod_strings['LBL_EXPAND_DATABASE_COLUMNS_DESC'] ; ?> </td>
 </tr>
+    <tr>
+        <td scope="row"><?php echo SugarThemeRegistry::current()->getImage('Repair', 'align="absmiddle" border="0"', null, null, '.gif', $mod_strings['LBL_REPAIR_ELASTICSEARCH_INDEX']); ?>&nbsp;<a href="./index.php?module=Administration&action=RepairESIndex"><?php echo $mod_strings['LBL_REPAIR_ELASTICSEARCH_INDEX']; ?></a></td>
+        <td> <?php echo $mod_strings['LBL_REPAIR_ELASTICSEARCH_INDEX'] ; ?> </td>
+    </tr>
 <tr>
 <?php
 $server_software = $_SERVER["SERVER_SOFTWARE"];
