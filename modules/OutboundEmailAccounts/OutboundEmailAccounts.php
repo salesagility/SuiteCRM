@@ -69,6 +69,12 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
             }
         }
         $this->mail_smtppass = $this->mail_smtppass ? blowfishEncode(blowfishGetKey('OutBoundEmail'), $this->mail_smtppass) : null;
+
+        $this->smtp_from_name = trim($this->smtp_from_name);
+        $this->smtp_from_addr = trim($this->smtp_from_addr);
+        $this->mail_smtpserver = trim($this->mail_smtpserver);
+        $this->mail_smtpuser = trim($this->mail_smtpuser);
+		
         $results = parent::save($check_notify);
         return $results;
     }
