@@ -278,7 +278,7 @@ class actionComputeField extends actionBase
             if ($relationParameterTypes[$i] == actionComputeField::FORMATTED_VALUE) {
                 $dataType = $entity->field_name_map[$relationParameterFields[$i]]['type'];
 
-                if ($dataType == 'enum') {
+                if ($dataType == 'enum' || $dataType == 'dynamicenum') {
                     $resolvedRelationParameters[$i] =
                         $GLOBALS['app_list_strings'][$entity->field_defs[$relationParameterFields[$i]]['options']][$entity->{$relationParameterFields[$i]}];
                 } else {
@@ -472,7 +472,7 @@ class actionComputeField extends actionBase
 					
 					function onFieldChange$line(dropdown, valueDropdown) {
 						var value = $(dropdown).find('option:selected').attr('dataType');						
-						if (value == 'enum' || value == 'multienum') {
+						if (value == 'enum' || value == 'multienum' || value == 'dynamicenum') {
 							$(valueDropdown).show();
 						} else {
 							$(valueDropdown).hide();
