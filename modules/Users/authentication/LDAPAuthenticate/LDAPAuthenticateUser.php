@@ -109,6 +109,28 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
         }
 
         $GLOBALS['log']->info("ldapauth: Bind attempt complete.");
+        
+        // If ldap_authentication_checkbox is checked use it to retrive info from LDAP directory
+        if (!empty($GLOBALS['ldap_config']->settings['ldap_authentication'])) {
+            // Check for invalid user credentials
+            if (!$bind) {
+                $GLOBALS['log']->fatal("SECURITY: failed LDAP bind (login) by $this->user_name using bind_user=$bind_user");
+                $GLOBALS['log']->fatal("ldapauth: failed LDAP bind (login) by $this->user_name using bind_user=$bind_user");
+                ldap_unbind($ldapconn);
+                return '';
+            }
+
+            $admin_user = htmlspecialchars_decode($GLOBALS['ldap_config']->settings['ldap_admin_user']);
+            $admin_password = htmlspecialchars_decode($GLOBALS['ldap_config']->settings['ldap_admin_password']);
+
+            $GLOBALS['log']->info("ldapauth: Binding with admin user");
+            
+            $bind = @ldap_bind($ldapconn, $admin_user, $admin_password);
+            $error = ldap_errno($ldapconn);
+            if ($this->loginError($error)) {
+                return '';
+            }
+        }
 
         if ($bind) {
             // Authentication succeeded, get info from LDAP directory
@@ -142,8 +164,6 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
             if ($this->loginError($error)) {
                 return '';
             }
-
-
 
             $GLOBALS['log']->debug("ldapauth: User info from Directory fetched.");
 
