@@ -122,11 +122,6 @@ $viewdefs['Emails']['ListView'] = array(
 );
 
 $listViewDefs['Emails'] = array(
-    'FROM_ADDR_NAME' => array(
-        'width' => '32',
-        'label' => 'LBL_LIST_FROM_ADDR',
-        'default' => true,
-    ),
     'INDICATOR' => array(
         'width' => '32',
         'label' => 'LBL_INDICATOR',
@@ -134,27 +129,22 @@ $listViewDefs['Emails'] = array(
         'sortable' => false,
         'hide_header_label' => true,
     ),
-    'SUBJECT' => array(
-        // Uses function field
-        'width' => '32',
-        'label' => 'LBL_LIST_SUBJECT',
+    'NAME' => array (
+        'type' => 'name',
+        'link' => true,
+        'label' => 'LBL_SUBJECT',
+        'width' => '10%',
         'default' => true,
-        'link' => false,
-        'customCode' => ''
     ),
-    'HAS_ATTACHMENT' => array(
+    'FROM_ADDR_NAME' => array(
         'width' => '32',
-        'label' => 'LBL_HAS_ATTACHMENT_INDICATOR',
-        'default' => false,
-        'sortable' => false,
-        'hide_header_label' => true,
+        'label' => 'LBL_LIST_FROM_ADDR',
+        'default' => true,
     ),
-    'ASSIGNED_USER_NAME' => array(
-        'width' => '9',
-        'label' => 'LBL_ASSIGNED_TO_NAME',
-        'module' => 'Employees',
-        'id' => 'ASSIGNED_USER_ID',
-        'default' => false
+    'TO_ADDRS_NAMES' => array(
+        'width' => '32',
+        'label' => 'LBL_LIST_TO_ADDR',
+        'default' => true,
     ),
     'DATE_ENTERED' => array(
         'width' => '32',
@@ -166,15 +156,31 @@ $listViewDefs['Emails'] = array(
         'label' => 'LBL_LIST_DATE_SENT_RECEIVED',
         'default' => true,
     ),
-    'TO_ADDRS_NAMES' => array(
-        'width' => '32',
-        'label' => 'LBL_LIST_TO_ADDR',
-        'default' => false,
+    'CATEGORY_ID' => array(
+        'width' => '10%',
+        'label' => 'LBL_LIST_CATEGORY',
+        'default' => true,
     ),
-    'CATEGORY_ID' =>
-        array(
-            'width' => '10%',
-            'label' => 'LBL_LIST_CATEGORY',
-            'default' => true,
-        ),
+    'ASSIGNED_USER_NAME' => array(
+        'width' => '9',
+        'label' => 'LBL_ASSIGNED_TO_NAME',
+        'module' => 'Employees',
+        'id' => 'ASSIGNED_USER_ID',
+        'default' => true
+    ),    
+    'SUBJECT' => array(
+        // Uses function field
+        'width' => '32',
+        'label' => 'LBL_LIST_SUBJECT',
+        'default' => false,
+        'link' => false,
+        'customCode' => ''
+    ),
+    'HAS_ATTACHMENT' => array(
+        'width' => '32',
+        'label' => 'LBL_HAS_ATTACHMENT_INDICATOR',
+        'default' => false,
+        'sortable' => false,
+        'hide_header_label' => true,
+    ),
 );
