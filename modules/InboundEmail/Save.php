@@ -198,6 +198,11 @@ if (!empty($focus->groupfolder_id)) {
     } else {
         $stored_options['leaveMessagesOnMailServer'] = 0;
     }
+    if ($_REQUEST['markAsReadOnMailServer'] == "1") {
+        $stored_options['markAsReadOnMailServer'] = 1;
+    } else {
+        $stored_options['markAsReadOnMailServer'] = 0;
+    }
 }
 
 $focus->stored_options = base64_encode(serialize($stored_options));
