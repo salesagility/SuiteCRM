@@ -245,6 +245,12 @@ function pollMonitoredInboxes()
                     } // if
                 } // if
                 if ($isGroupFolderExists) {
+                    $markAsReadOnMailServer = $ieX->get_stored_options("markAsReadOnMailServer", 0);
+                    if ($markAsReadOnMailServer) {
+                        if (!$ieX->markEmailsAsReadOnMailServer(implode(',', $messagesToDelete))) {
+                            $GLOBALS['log']->error("Failed to mark all emails as read when importing");
+                        }
+                    }
                     $leaveMessagesOnMailServer = $ieX->get_stored_options("leaveMessagesOnMailServer", 0);
                     if (!$leaveMessagesOnMailServer) {
                         if ($ieX->isPop3Protocol()) {
@@ -692,6 +698,13 @@ function pollMonitoredInboxesAOP()
                 } // if
 
                 if (!empty($isGroupFolderExists)) {
+                    $markAsReadOnMailServer = $aopInboundEmailX->get_stored_options("markAsReadOnMailServer", 0);
+                    if ($markAsReadOnMailServer) {
+                        if (!$aopInboundEmailX->markEmailsAsReadOnMailServer(implode(',', $messagesToDelete))) {
+                            $GLOBALS['log']->error("Failed to mark all emails as read when importing");
+                        }
+                    }
+
                     $leaveMessagesOnMailServer = $aopInboundEmailX->get_stored_options("leaveMessagesOnMailServer", 0);
                     if (!$leaveMessagesOnMailServer) {
                         if ($aopInboundEmailX->isPop3Protocol()) {

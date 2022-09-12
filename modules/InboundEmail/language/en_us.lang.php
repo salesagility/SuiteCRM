@@ -94,6 +94,7 @@ $mod_strings = array(
     'LBL_MARK_READ_NO' => 'Email marked deleted after import',
     'LBL_MARK_READ_YES' => 'Email left on server after import',
     'LBL_MARK_READ' => 'Leave Messages On Server',
+    'LBL_MARK_AS_READ' => 'Mark As Read On Mail Server',
     'LBL_MAX_AUTO_REPLIES' => 'Number of Auto-responses',
     'LBL_MAX_AUTO_REPLIES_DESC' => 'Set the maximum number of auto-responses to send to a unique email address during a period of 24 hours.',
     'LBL_PERSONAL_MODULE_NAME' => 'Personal Mail Account',
