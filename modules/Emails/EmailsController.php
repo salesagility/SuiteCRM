@@ -814,6 +814,21 @@ class EmailsController extends SugarController
             $this->bean->parent_name = $parent_name;
         }
 
+        $arrayOfToNames = explode(", ", $this->bean->to_addrs_names);
+        $mailbox = BeanFactory::getBean('InboundEmail', $this->bean->mailbox_id);
+
+        if(count($arrayOfToNames) > 1){
+            foreach($arrayOfToNames as $name){
+                if($name !== $mailbox->email_user){
+                    if(!empty($this->bean->cc_addrs_names)){
+                        $this->bean->cc_addrs_names .= ', ' .$name;
+                    } else {
+                        $this->bean->cc_addrs_names = $name;
+                    }
+                }
+            }
+        }
+
         if ($mode === self::COMPOSE_BEAN_MODE_REPLY_TO || $mode === self::COMPOSE_BEAN_MODE_REPLY_TO_ALL) {
             // Move email addresses from the "from" field to the "to" field
             $this->bean->to_addrs = $this->bean->from_addr;
