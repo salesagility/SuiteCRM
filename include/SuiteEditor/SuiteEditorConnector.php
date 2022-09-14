@@ -78,6 +78,7 @@ class SuiteEditorConnector
                 height : '480',
                 plugins: ['code', 'table', 'link', 'image'],
                 toolbar: ['fontselect | fontsizeselect | bold italic underline | forecolor backcolor | styleselect | outdent indent | link image'],
+                convert_urls: false,
             }"
         );
     }
