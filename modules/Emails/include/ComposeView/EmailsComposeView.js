@@ -1387,7 +1387,8 @@
   $.fn.EmailsComposeView.defaults = {
     "tinyMceOptions": {
       menubar: false,
-      toolbar: ['fontselect | fontsizeselect | bold italic underline | forecolor backcolor | styleselect | outdent indent'],
+      plugins: ['link'],
+      toolbar: ['fontselect | fontsizeselect | bold italic underline | forecolor backcolor | styleselect | outdent indent | link'],
       formats: {
         bold: {inline: 'b'},
         italic: {inline: 'i'},
@@ -1396,6 +1397,8 @@
       convert_urls: true,
       relative_urls: false,
       remove_script_host: false,
+      relative_urls: false,
+      remove_script_host : false,      
     }
   };
 }(jQuery));
