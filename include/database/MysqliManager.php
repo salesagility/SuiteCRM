@@ -427,4 +427,21 @@ class MysqliManager extends MysqlManager
     {
         return function_exists("mysqli_connect") && empty($GLOBALS['sugar_config']['mysqli_disabled']);
     }
+
+    public function compareVarDefs($fielddef1, $fielddef2, $ignoreName = false)
+    {
+        /**
+         * Int lengths are ignored in MySQL versions >= 8.0.19 so we need to ignore when comparing vardefs.
+         */
+        if($fielddef1['type'] == 'int') {
+            $db_version = $this->version();
+            if (!empty($db_version)
+                && version_compare($db_version, '8.0.19') >= 0
+                && strpos($db_version, "MariaDB") === false
+            ) {
+                unset($fielddef2['len']);
+            }
+        }
+        return parent::compareVarDefs($fielddef1, $fielddef2, $ignoreName);
+    }
 }
