@@ -174,7 +174,7 @@ if (!empty($focus->stored_options)) {
         $leaveMessagesOnMailServer = $app_strings['LBL_EMAIL_NO'];
     } // else
 
-    if (!isset($storedOptions['markAsReadOnMailServer']) || $storedOptions['markAsReadOnMailServer'] == 1) {
+    if (isset($storedOptions['markAsReadOnMailServer']) && $storedOptions['markAsReadOnMailServer'] === 1) {
         $markAsReadOnMailServer = $app_strings['LBL_EMAIL_YES'];
     } else {
         $markAsReadOnMailServer = $app_strings['LBL_EMAIL_NO'];
@@ -253,6 +253,7 @@ if ($focus->is_personal) {
 }
 $xtpl->assign('LEAVEMESSAGESONMAILSERVER_STYLE', $leaveMessagesOnMailServerStyle);
 $xtpl->assign('LEAVEMESSAGESONMAILSERVER', $leaveMessagesOnMailServer);
+$xtpl->assign('MARKASREADONMAILSERVER', $markAsReadOnMailServer);
 $xtpl->assign('CREATE_CASE_ROW_STYLE', $createCaseRowStyle);
 $xtpl->assign('DISTRIBUTION_METHOD', $distributionMethod);
 $xtpl->assign('CREATE_CASE_EMAIL_TEMPLATE', $create_case_email_template_name);

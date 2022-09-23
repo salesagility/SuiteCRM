@@ -181,7 +181,7 @@ if (!empty($focus->stored_options)) {
         $leaveMessagesOnMailServer = 0;
     } // else
 
-    if (!isset($storedOptions['markAsReadOnMailServer']) || $storedOptions['markAsReadOnMailServer'] == 1) {
+    if (isset($storedOptions['markAsReadOnMailServer']) && $storedOptions['markAsReadOnMailServer'] === 1) {
         $markAsReadOnMailServer = 1;
     } else {
         $markAsReadOnMailServer = 0;
