@@ -150,15 +150,12 @@ class OutboundEmail
      */
     public function getMailerByEmail(string $email)
     {
-        $query = "SELECT id FROM outbound_email WHERE mail_smtpuser = '$email' AND deleted = 0";
+        $emailQuoted = $this->db->quoted($email);
+        $query = "SELECT id FROM outbound_email WHERE mail_smtpuser = " . $emailQuoted . " AND deleted = 0";
         $rs = $this->db->query($query);
         $row = $this->db->fetchByAssoc($rs);
         if (!empty($row['id'])) {
-            $oe = new OutboundEmail();
-            $oe->retrieve($row['id']);
-            return $oe;
-        } else {
-            return null;
+            $this->retrieve($row['id']);
         }
     }
 
