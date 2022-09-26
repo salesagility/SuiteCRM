@@ -146,7 +146,6 @@ class OutboundEmail
      * Get mailer by using mailboxes smtp user
      *
      * @param string $email
-     * @return OutboundEmail|false
      */
     public function getMailerByEmail(string $email)
     {
