@@ -43,8 +43,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__ .'/../../../modules/SchedulersJobs/SchedulersJob.php';
-require_once __DIR__ .'/../Batch/BatchJob.php';
+require_once __DIR__ . '/../../../modules/SchedulersJobs/SchedulersJob.php';
+require_once __DIR__ . '/../Batch/BatchJob.php';
 
 
 class NormalizeRecords extends BatchJob
@@ -110,6 +110,9 @@ class NormalizeRecords extends BatchJob
             if (empty($ids)) {
                 $this->debugLog("No ids found for module $type");
                 $this->echoOutput($echo, "No ids found for module $type");
+                $this->echoOutput($echo, "$type 0 records normalized");
+                $messages[] = "$type 0 records normalized";
+                $this->debugLog("$type 0 records normalized");
                 continue;
             }
 
@@ -291,17 +294,13 @@ class NormalizeRecords extends BatchJob
     protected function setupTracking(): array
     {
         // Populate the $moduleList variable to target only specific modules
-        $moduleList = [];
-        if (empty($moduleList)) {
-            $moduleList = $GLOBALS["moduleList"];
-            $moduleList[] = 'Users';
-        }
+        $moduleList = $this->getModulesToNormalize();
 
         $tracking = [];
 
         foreach ($moduleList as $module) {
 
-            if (empty($GLOBALS["beanList"][$module])){
+            if (empty($GLOBALS["beanList"][$module])) {
                 continue;
             }
 
@@ -406,8 +405,8 @@ class NormalizeRecords extends BatchJob
         $records = $this->getRecordChunk($ids, $type);
         foreach ($records as $row) {
 
-            $normalized = $this->repairStringValues($row, $fieldList);
-            if (!$normalized) {
+            $normalized = $this->repairStringValues($type, $row, $fieldList);
+            if (empty($normalized)) {
                 continue;
             }
 
@@ -417,7 +416,7 @@ class NormalizeRecords extends BatchJob
             $bean->update_modified_by = false;
             $bean->processed = true;
             $bean->notify_inworkflow = false;
-            $bean->save(false);
+            $bean->saveFields($normalized);
             $this->debugLog("$type - " . $bean->id . " normalized");
             ++$i;
             if ($i % 100 === 0) {
@@ -425,7 +424,7 @@ class NormalizeRecords extends BatchJob
             }
         }
         $messages[] = "$type " . $i . " records normalized";
-        $result['normalize_count']  = $i;
+        $result['normalize_count'] = $i;
         $this->debugLog("$type " . $i . " records normalized");
 
         $result['messages'] = $messages;
@@ -437,14 +436,29 @@ class NormalizeRecords extends BatchJob
      * Check and Normalize values from database row
      * which exist in the $fieldList array
      *
-     * @param $row
+     * @param string $type
+     * @param array $row
      * @param array $fieldList
-     * @return bool
+     * @return array
      */
-    protected function repairStringValues(&$row, array $fieldList): bool
+    protected function repairStringValues(string $type, &$row, array $fieldList): array
     {
-        $normalized = false;
+        $fieldsToExclude = [
+            'Users' => [
+                'user_hash' => true
+            ],
+        ];
+
+        $normalized = [];
         foreach ($fieldList as $fieldName) {
+
+            $exclude = $fieldsToExclude[$type][$fieldName] ?? false;
+
+            if ($exclude === true) {
+                $this->debugLog("Excluded $fieldName");
+                continue;
+            }
+
             if (!empty($row[$fieldName])) {
 
                 // Check if normalization is required
@@ -455,7 +469,7 @@ class NormalizeRecords extends BatchJob
                 //debugLog("Pre : $row[$fieldName]");
                 $row[$fieldName] = Normalizer::normalize($row[$fieldName], Normalizer::FORM_C);
                 //debugLog("Post: $row[$fieldName]");
-                $normalized = true;
+                $normalized[] = $fieldName;
             }
         }
 
@@ -478,6 +492,10 @@ class NormalizeRecords extends BatchJob
 
         $repairableTypes = ['enum', 'longtext', 'name', 'text', 'varchar'];
         $varDefFields = $bean->getFieldDefinitions();
+
+        if ($type === 'Users') {
+            $repairableTypes[] = 'user_name';
+        }
 
         $fieldList = array();
         foreach ($varDefFields as $field) {
@@ -532,7 +550,7 @@ class NormalizeRecords extends BatchJob
     {
         global $log;
 
-        $log->info("[utf-normalize]" . $string);
+        $log->info("[utf-normalize] " . $string);
     }
 
     /**
@@ -542,13 +560,105 @@ class NormalizeRecords extends BatchJob
      */
     protected function echoOutput(bool $echo, string $string): void
     {
-        if (empty($echo)){
+        if (empty($echo)) {
             return;
         }
 
-        echo '<div>' . $string. '</div>';
+        echo '<div>' . $string . '</div>';
         ob_flush();
         flush();
+    }
+
+    /**
+     * @return array|mixed
+     */
+    protected function getModulesToNormalize()
+    {
+        $moduleList = [];
+        if (empty($moduleList)) {
+            $moduleList = $GLOBALS["moduleList"];
+            $moduleList[] = 'Users';
+        }
+
+        $modInvisList = $GLOBALS["modInvisList"] ?? [];
+
+        $toExlude = [
+            'Calendar',
+            'Administration',
+            'CustomFields',
+            'Connectors',
+            'Dropdown',
+            'Dynamic',
+            'DynamicFields',
+            'DynamicLayout',
+            'EditCustomFields',
+            'Help',
+            'Import',
+            'MySettings',
+            'EditCustomFields',
+            'FieldsMetaData',
+            'UpgradeWizard',
+            'Trackers',
+            'Connectors',
+            'Employees',
+            'Calendar',
+            'Sync',
+            'Versions',
+            'LabelEditor',
+            'Roles',
+            'EmailMarketing',
+            'OptimisticLock',
+            'TeamMemberships',
+            'TeamSets',
+            'TeamSetModule',
+            'Audit',
+            'MailMerge',
+            'MergeRecords',
+            'EmailText',
+            'Schedulers',
+            'Schedulers_jobs',
+            'CampaignTrackers',
+            'CampaignLog',
+            'EmailMan',
+            'Groups',
+            'InboundEmail',
+            'ACLActions',
+            'ACLRoles',
+            'DocumentRevisions',
+            'ModuleBuilder',
+            'Alert',
+            'ResourceCalendar',
+            'ACL',
+            'Configurator',
+            'UserPreferences',
+            'SavedSearch',
+            'Studio',
+            'Connectors',
+            'SugarFeed',
+            'EAPM',
+            'OAuthKeys',
+            'OAuthTokens',
+            'AM_TaskTemplates',
+            'Reminders',
+            'Reminders_Invitees',
+            'AOD_IndexEvent',
+            'AOD_Index',
+            'AOR_Fields',
+            'AOR_Charts',
+            'AOR_Conditions',
+            'AOS_Line_Item_Groups',
+            'AOW_Processed',
+            'Calls_Reschedule',
+            'OutboundEmailAccounts',
+            'TemplateSectionLine',
+            'OAuth2Tokens',
+            'OAuth2Clients',
+        ];
+
+        $modInvisList = array_diff($modInvisList, $toExlude);
+        $moduleList = array_merge($moduleList, $modInvisList);
+
+        return $moduleList;
     }
 
 }

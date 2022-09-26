@@ -905,7 +905,7 @@ class EmailTemplate extends SugarBean
 
     private function repairEntryPointImages()
     {
-        global $sugar_config;
+        global $sugar_config, $log;
 
         // repair the images url at entry points, change to a public direct link for remote email clients..
 
@@ -914,8 +914,17 @@ class EmailTemplate extends SugarBean
         $regex = '#<img[^>]*[\s]+src=[\s]*["\'](' . preg_quote($siteUrl) . '\/index\.php\?entryPoint=download&type=Notes&id=([a-f0-9]{8}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{12})&filename=.+?)["\']#si';
 
         if (preg_match($regex, $html, $match)) {
+
             $splits = explode('.', $match[1]);
+
             $fileExtension = end($splits);
+
+            $toFile = $match[2] . '.' . $fileExtension;
+            if (is_string($toFile) && !has_valid_image_extension('repair-entrypoint-images-fileext', $toFile)){
+                $log->error("repairEntryPointImages | file with invalid extension '$toFile'");
+                return;
+            }
+
             $this->makePublicImage($match[2], $fileExtension);
             $newSrc = $sugar_config['site_url'] . '/public/' . $match[2] . '.' . $fileExtension;
             $this->body_html = to_html(str_replace($match[1], $newSrc, $html));

@@ -61,6 +61,11 @@ class ParserLabel
     protected $moduleName;
 
     /**
+     * @var LoggerManager
+     */
+    protected static $logger;
+
+    /**
      * ParserLabel constructor.
      * @param string $moduleName
      * @param string $packageName
@@ -71,6 +76,16 @@ class ParserLabel
         if (!empty($packageName)) {
             $this->packageName = $packageName;
         }
+
+        static::setLogger();
+    }
+
+    /**
+     * @return void
+     */
+    protected static function setLogger()
+    {
+        static::$logger = LoggerManager::getLogger();
     }
 
     /**
@@ -111,7 +126,9 @@ class ParserLabel
      */
     public static function removeLabel($language, $label, $labelvalue, $moduleName, $basepath = null, $forRelationshipLabel = false)
     {
-        $GLOBALS [ 'log' ]->debug("ParserLabel::removeLabels($language, \$label, \$labelvalue, $moduleName, $basepath );");
+        static::setLogger();
+
+        static::$logger->debug("ParserLabel::removeLabels($language, \$label, \$labelvalue, $moduleName, $basepath );");
         if (is_null($basepath)) {
             $deployedModule = true;
             $basepath = "custom/modules/$moduleName/language";
@@ -119,7 +136,7 @@ class ParserLabel
                 $basepath = "custom/modules/$moduleName/Ext/Language";
             }
             if (!is_dir($basepath)) {
-                $GLOBALS ['log']->debug("$basepath is not a directory.");
+                static::$logger->debug("$basepath is not a directory.");
 
                 return false;
             }
@@ -139,12 +156,12 @@ class ParserLabel
                 // obtain $mod_strings
                 include $filename;
             } else {
-                $GLOBALS ['log']->debug("file $filename does not exist.");
+                static::$logger->debug("file $filename does not exist.");
 
                 return false;
             }
         } else {
-            $GLOBALS ['log']->debug("directory $basepath does not exist.");
+            static::$logger->debug("directory $basepath does not exist.");
 
             return false;
         }
@@ -158,11 +175,11 @@ class ParserLabel
 
         if ($changed) {
             if (!write_array_to_file('mod_strings', $mod_strings, $filename)) {
-                $GLOBALS [ 'log' ]->fatal("Could not write $filename");
+                static::$logger->fatal("Could not write $filename");
             } else {
                 // if we have a cache to worry about, then clear it now
                 if ($deployedModule) {
-                    $GLOBALS ['log']->debug('PaserLabel::addLabels: clearing language cache');
+                    static::$logger->debug('PaserLabel::addLabels: clearing language cache');
                     $cache_key = 'module_language.'.$language.$moduleName;
                     sugar_cache_clear($cache_key);
                     LanguageManager::clearLanguageCache($moduleName, $language);
@@ -184,25 +201,21 @@ class ParserLabel
      */
     public static function addLabels($language, $labels, $moduleName, $basepath = null, $forRelationshipLabel = false)
     {
-        $GLOBALS [ 'log' ]->debug("ParserLabel::addLabels($language, \$labels, $moduleName, $basepath );");
-        $GLOBALS [ 'log' ]->debug('$labels:'.print_r($labels, true));
+        static::setLogger();
+
+        static::$logger->debug("ParserLabel::addLabels($language, \$labels, $moduleName, $basepath );");
+        static::$logger->debug('$labels:' . print_r($labels, true));
 
         $deployedModule = false;
         if (null === $basepath) {
             $deployedModule = true;
-            $basepath = "custom/modules/$moduleName/language";
-            if ($forRelationshipLabel) {
-                $basepath = "custom/modules/$moduleName/Ext/Language";
-            }
+            $basepath = "custom/Extension/modules/$moduleName/Ext/Language";
             if (!is_dir($basepath)) {
                 mkdir_recursive($basepath);
             }
         }
 
-        $filename = "$basepath/$language.lang.php";
-        if ($forRelationshipLabel) {
-            $filename = "$basepath/$language.lang.ext.php";
-        }
+        $filename = "$basepath/_override_$language.lang.php";
         $dir_exists = is_dir($basepath);
 
         $mod_strings = array();
@@ -231,15 +244,15 @@ class ParserLabel
         }
 
         if ($changed) {
-            $GLOBALS [ 'log' ]->debug("ParserLabel::addLabels: writing new mod_strings to $filename");
-            $GLOBALS [ 'log' ]->debug('ParserLabel::addLabels: mod_strings='.print_r($mod_strings, true));
-            if (!write_array_to_file('mod_strings', $mod_strings, $filename)) {
-                $GLOBALS [ 'log' ]->fatal("Could not write $filename");
+            static::$logger->debug("ParserLabel::addLabels: writing new mod_strings to $filename");
+            static::$logger->debug('ParserLabel::addLabels: mod_strings='.print_r($mod_strings, true));
+            if (!write_override_label_to_file('mod_strings', $mod_strings, $filename)) {
+                static::$logger->fatal("Could not write $filename");
             } else {
                 // if we have a cache to worry about, then clear it now
                 if ($deployedModule) {
                     SugarCache::cleanOpcodes();
-                    $GLOBALS [ 'log' ]->debug('PaserLabel::addLabels: clearing language cache');
+                    static::$logger->debug('PaserLabel::addLabels: clearing language cache');
                     $cache_key = 'module_language.'.$language.$moduleName;
                     sugar_cache_clear($cache_key);
                     LanguageManager::clearLanguageCache($moduleName, $language);
@@ -295,8 +308,8 @@ class ParserLabel
                     fwrite($file_contents, $out, strlen($out));
                     fclose($file_contents);
                 } catch (Exception $e) {
-                    $GLOBALS ['log']->fatal("Could not write $filename");
-                    $GLOBALS ['log']->fatal('Exception '.$e->getMessage());
+                    static::$logger->fatal("Could not write $filename");
+                    static::$logger->fatal('Exception '.$e->getMessage());
                 }
 
                 //2. Overwrite custom/Extension/modules/relationships/language/{ModuleName}.php
@@ -342,8 +355,8 @@ class ParserLabel
                     fwrite($file_contents, $out, strlen($out));
                     fclose($file_contents);
                 } catch (Exception $e) {
-                    $GLOBALS ['log']->fatal("Could not write $filename");
-                    $GLOBALS ['log']->fatal('Exception '.$e->getMessage());
+                    static::$logger->fatal("Could not write $filename");
+                    static::$logger->fatal('Exception '.$e->getMessage());
                     $failed_to_write = true;
                 }
 
@@ -352,7 +365,7 @@ class ParserLabel
                         // if we have a cache to worry about, then clear it now
                         if ($deployedModule) {
                             SugarCache::cleanOpcodes();
-                            $GLOBALS ['log']->debug('PaserLabel::addLabels: clearing language cache');
+                            static::$logger->debug('PaserLabel::addLabels: clearing language cache');
                             $cache_key = 'module_language.'.$language.$moduleName;
                             sugar_cache_clear($cache_key);
                             LanguageManager::clearLanguageCache($moduleName, $language);

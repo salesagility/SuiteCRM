@@ -40,15 +40,15 @@ class ProjectController extends SugarController
 
         $project = BeanFactory::newBean('Project');
         $project->retrieve($_POST["pid"]);
-        
+
         //Get project tasks
         $Task = BeanFactory::getBean('ProjectTask');
         $tasks = $Task->get_full_list("order_number", "project_task.project_id = '".$project->id."'");
-        
+
         //Get the start and end date of the project in database format
         $query = "SELECT min(date_start) FROM project_task WHERE project_id = '{$project->id}'";
         $start_date = $db->getOne($query);
-        
+
         $query = "SELECT max(date_finish) FROM project_task WHERE project_id = '{$project->id}'";
         $end_date = $db->getOne($query);
 
@@ -347,12 +347,12 @@ class ProjectController extends SugarController
         //Get  specified dates and users
         $start = $_POST['start'];
         //$end = $_POST['end'];
-        $projects = explode(',', $_POST['projects']);
-        $users = explode(',', $_POST['users']);
-        $contacts = explode(',', $_POST['contacts']);
-        $month = $_POST['month'];
+        $projects = explode(',', $db->quote($_POST['projects']));
+        $users = explode(',', $db->quote($_POST['users']));
+        $contacts = explode(',', $db->quote($_POST['contacts']));
+        $month = is_numeric($_POST['month']) ? $_POST['month'] : '1' ;
         $flag = $_POST['flag'];
-        $chart_type = $_POST['chart_type'];
+        $chart_type = $db->quote($_POST['chart_type']);
         //$type = $_POST['type'];
 
         $start = new DateTime($start);
@@ -499,7 +499,7 @@ class ProjectController extends SugarController
         }
 
         $Task = BeanFactory::getBean('ProjectTask');
-        
+
         $tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$resource_id."' AND ( ( project_task.date_start BETWEEN '".$start_date."'  AND '".$end_date."' ) OR ( project_task.date_finish BETWEEN '".$start_date."' AND '".$end_date."' ) OR ( '".$start_date."' BETWEEN project_task.date_start  AND project_task.date_finish ) OR ( '".$end_date."' BETWEEN project_task.date_start AND project_task.date_finish ) ) AND (project_id is not null AND project_id <> '') " . $project_where);
 
         echo '<table class="qtip_table">';

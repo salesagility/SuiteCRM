@@ -148,16 +148,16 @@ class DropDownHelper
                 //only if the value has changed or does not exist do we want to add it this way
                 if (!isset($my_list_strings[$dropdown_name][$key]) || strcmp($my_list_strings[$dropdown_name][$key], $value) != 0) {
                     //clear out the old value
-                    $contents = preg_replace($this->getPatternMatchGlobal($dropdown_name), "\n", $contents);
-                    $contents = preg_replace($this->getPatternMatch($dropdown_name), "\n", $contents);
+                    $contents = preg_replace(self::getPatternMatchGlobal($dropdown_name), "\n", $contents);
+                    $contents = preg_replace(self::getPatternMatch($dropdown_name), "\n", $contents);
                     //add the new ones
                     $contents .= "\n\$app_list_strings['$dropdown_name']['$key']=" . var_export_helper($value) . ";";
                 }
             }
         } else {
             //clear out the old value
-            $contents = preg_replace($this->getPatternMatchGlobal($dropdown_name), "\n", $contents);
-            $contents = preg_replace($this->getPatternMatch($dropdown_name), "\n", $contents);
+            $contents = preg_replace(self::getPatternMatchGlobal($dropdown_name), "\n", $contents);
+            $contents = preg_replace(self::getPatternMatch($dropdown_name), "\n", $contents);
             //add the new ones
             $contents .= "\n\$app_list_strings['$dropdown_name']=" . var_export_helper($dropdown) . ";";
         }
@@ -175,13 +175,13 @@ class DropDownHelper
         // ~~~~~~~~
     }
 
-    public function getPatternMatchGlobal($dropdown_name)
+    public static function getPatternMatchGlobal($dropdown_name)
     {
         return '/\s*\$GLOBALS\s*\[\s*\'app_list_strings\s*\'\s*\]\[\s*\''
             . $dropdown_name.'\'\s*\]\s*=\s*array\s*\([^\)]*\)\s*;\s*/ism';
     }
 
-    public function getPatternMatch($dropdown_name)
+    public static function getPatternMatch($dropdown_name)
     {
         return '/\s*\$app_list_strings\s*\[\s*\''.$dropdown_name.'\'\s*\]\s*=\s*array\s*\([^\)]*\)\s*;\s*/ism';
     }
