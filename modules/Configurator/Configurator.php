@@ -135,6 +135,11 @@ class Configurator
 
         $logFileExt = $this->prependDot($logFileExt);
 
+        if (!$this->hasValidExtension('logger_file_ext', $logFileExt)) {
+            $_POST['logger_file_ext'] = 'log';
+            $logFileExt = $this->prependDot('log');
+            LoggerManager::getLogger()->security("Setting logger_file_ext to '.log'.");
+        }
 
         $fullName = $logFileName . $logFileExt;
         $_POST['logger_file_name'] = $logFileName;
@@ -146,12 +151,6 @@ class Configurator
         ) {
             LoggerManager::getLogger()->security("Setting logger_file_name to ''.");
             $_POST['logger_file_name'] = '';
-            $valid = false;
-        }
-
-        if (!$this->hasValidExtension('logger_file_ext', $logFileExt)) {
-            $_POST['logger_file_ext'] = '';
-            LoggerManager::getLogger()->security("Setting logger_file_ext to ''.");
             $valid = false;
         }
 
@@ -203,7 +202,7 @@ class Configurator
      * @param string $value
      * @return bool
      */
-    public function hasValidExtension($fieldName, $value)
+    public function hasValidExtension(string $fieldName, string $value): bool
     {
 
         if ($value === '.' || empty($value)) {
@@ -212,7 +211,11 @@ class Configurator
             return false;
         }
 
-        $badExt = array_map('strtolower', $this->config['upload_badext']);
+        $defaults = get_sugar_config_defaults() ?? [];
+        $badExtDefaults = $defaults['upload_badext'] ?? [];
+        $badExtensions = array_merge($badExtDefaults, $this->config['upload_badext'] ?? []) ?? [];
+
+        $badExt = array_map('strtolower', $badExtensions);
 
         $parts = explode('.', $value);
 

@@ -685,7 +685,7 @@ class Meeting extends SugarBean
         $xtpl->assign("MEETING_ENDDATE", $timedate->asUser($enddate, $notifyUser)." ".TimeDate::userTimezoneSuffix($enddate, $notifyUser));
         $xtpl->assign("MEETING_HOURS", $meeting->duration_hours);
         $xtpl->assign("MEETING_MINUTES", $meeting->duration_minutes);
-        $xtpl->assign("MEETING_DESCRIPTION", $meeting->description);
+        $xtpl->assign("MEETING_DESCRIPTION", nl2br($meeting->description));
         $xtpl->assign("MEETING_LOCATION", $meeting->location);
         if (!empty($meeting->join_url)) {
             $xtpl->assign('MEETING_URL', $meeting->join_url);

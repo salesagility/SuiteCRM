@@ -566,7 +566,7 @@ class Contact extends Person implements EmailInterface
         global $locale;
 
         $xtpl->assign("CONTACT_NAME", trim($locale->getLocaleFormattedName($contact->first_name, $contact->last_name)));
-        $xtpl->assign("CONTACT_DESCRIPTION", $contact->description);
+        $xtpl->assign("CONTACT_DESCRIPTION", nl2br($contact->description));
 
         return $xtpl;
     }

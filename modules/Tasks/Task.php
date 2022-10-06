@@ -346,7 +346,7 @@ class Task extends SugarBean
         }
 
         $xtpl->assign("TASK_STATUS", (isset($task->status)?$app_list_strings['task_status_dom'][$task->status]:""));
-        $xtpl->assign("TASK_DESCRIPTION", $task->description);
+        $xtpl->assign("TASK_DESCRIPTION", nl2br($task->description));
 
         return $xtpl;
     }

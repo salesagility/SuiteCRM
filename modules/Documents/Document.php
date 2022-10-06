@@ -266,9 +266,12 @@ class Document extends File
                 $img_name = SugarThemeRegistry::current()->getImageURL(strtolower($row['file_ext']) . "_image_inline.gif");
                 $img_name_bare = strtolower($row['file_ext']) . "_image_inline";
 
-                if (in_array($row['file_ext'], $sugar_config['allowed_preview'])) {
+                $allowedPreview = $sugar_config['allowed_preview'] ?? [];
+
+                if (in_array($row['file_ext'], $allowedPreview, true)) {
                     $this->show_preview = true;
                 }
+
             }
         }
 

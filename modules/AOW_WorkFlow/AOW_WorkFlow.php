@@ -300,10 +300,11 @@ class AOW_WorkFlow extends Basic
         SugarBean $module,
         $query = array()
     ) {
+	    global $db;
         if (!isset($query['join'][$name])) {
             if ($module->load_relationship($name)) {
                 $params['join_type'] = 'LEFT JOIN';
-                $params['join_table_alias'] = $name;
+                $params['join_table_alias'] = $db->quoteIdentifier($name);
                 $join = $module->$name->getJoin($params, true);
 
                 $query['join'][$name] = $join['join'];

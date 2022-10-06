@@ -186,6 +186,11 @@ class Employee extends Person
 
     public function create_export_query($order_by, $where, $relate_link_join = '')
     {
+        global $current_user;
+        if (!is_admin($current_user)) {
+            throw new RuntimeException('Not authorized');
+        }
+
         include('modules/Employees/field_arrays.php');
 
         $cols = '';
@@ -309,6 +314,31 @@ class Employee extends Person
             }
         }
 
+        if (!$this->hasSaveAccess()) {
+            throw new RuntimeException('Not authorized');
+        }
+
         return parent::save($check_notify);
+    }
+
+    /**
+     * Check if current user can save the current employee record
+     * @return bool
+     */
+    protected function hasSaveAccess(): bool
+    {
+        global $current_user;
+
+        if (empty($this->id)) {
+            return true;
+        }
+
+        if (empty($current_user->id)) {
+            return false;
+        }
+
+        $sameUser = $current_user->id === $this->id;
+
+        return $sameUser || is_admin($current_user);
     }
 }

@@ -361,7 +361,7 @@ class Account extends Company implements EmailInterface
     {
         $xtpl->assign("ACCOUNT_NAME", $account->name);
         $xtpl->assign("ACCOUNT_TYPE", $account->account_type);
-        $xtpl->assign("ACCOUNT_DESCRIPTION", $account->description);
+        $xtpl->assign("ACCOUNT_DESCRIPTION", nl2br($account->description));
 
         return $xtpl;
     }

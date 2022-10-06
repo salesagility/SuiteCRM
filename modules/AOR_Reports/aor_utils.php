@@ -228,7 +228,7 @@ function getConditionsAsParameters($report, $override = array())
  */
 function getPeriodDate($date_time_period_list_selected)
 {
-    global $sugar_config;
+    global $sugar_config, $timedate;
     $datetime_period = new DateTime();
 
     // Setup when year quarters start & end
@@ -324,6 +324,8 @@ function getPeriodDate($date_time_period_list_selected)
     // set time to 00:00:00
     $datetime_period = $datetime_period->setTime(0, 0, 0);
 
+    $datetime_period->sub(DateInterval::createFromDateString($timedate->getUserUTCOffset().' minutes'));
+
     return $datetime_period;
 }
 
@@ -334,6 +336,7 @@ function getPeriodDate($date_time_period_list_selected)
  */
 function getPeriodEndDate($dateTimePeriodListSelected)
 {
+    global $timedate;
     switch ($dateTimePeriodListSelected) {
         case 'today':
             $datetimePeriod = new DateTime();
@@ -409,7 +412,7 @@ function getPeriodEndDate($dateTimePeriodListSelected)
             $datetimePeriod->setTime(0, 0, 0);
             break;
     }
-
+    $datetimePeriod->sub(DateInterval::createFromDateString($timedate->getUserUTCOffset().' minutes'));
     return $datetimePeriod;
 }
 

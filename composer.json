@@ -12,7 +12,7 @@
   "support": {
     "issues": "https://github.com/salesagility/SuiteCRM/issues",
     "wiki": "https://docs.suitecrm.com",
-    "forum": "https://suitecrm.com/suitecrm/forum",
+    "forum": "https://community.suitecrm.com",
     "chat": "https://gitter.im/suitecrm/Lobby",
     "source": "https://github.com/salesagility/SuiteCRM"
   },
@@ -22,15 +22,20 @@
       "php": "7.3.0"
     },
     "optimize-autoloader": true,
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "wikimedia/composer-merge-plugin": true
+    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "suggest": {
+    "ext-imap": "Needed for emails module"
+  },
   "require": {
     "php": ">=7.3.0",
     "ext-curl": "*",
     "ext-gd": "*",
-    "ext-imap": "*",
     "ext-json": "*",
     "ext-openssl": "*",
     "ext-zip": "*",
@@ -60,7 +65,7 @@
     "symfony/yaml": "^5.2",
     "tecnickcom/tcpdf": "^6.4",
     "tedivm/jshrink": "^1.3",
-    "tinymce/tinymce": "^4.9.11",
+    "tinymce/tinymce": "^5.10",
     "tuupola/slim-jwt-auth": "^2.0",
     "vlucas/phpdotenv": "^3.5",
     "voku/anti-xss": "^4.0",
@@ -84,7 +89,7 @@
     "filp/whoops": "^2.3",
     "flow/jsonpath": "^0.4",
     "friendsofphp/php-cs-fixer": "^2.15",
-    "jeroendesloovere/vcard": "v1.5",
+    "jeroendesloovere/vcard": "^1.7",
     "mikey179/vfsstream": "1.6.*",
     "mockery/mockery": "^1.1.0",
     "phpunit/phpunit": "^9.5",

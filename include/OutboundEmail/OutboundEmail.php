@@ -146,15 +146,19 @@ class OutboundEmail
      * Get mailer by using mailboxes smtp user
      *
      * @param string $email
+     * @return OutboundEmail|false
      */
     public function getMailerByEmail(string $email)
     {
-        $emailQuoted = $this->db->quoted($email);
-        $query = "SELECT id FROM outbound_email WHERE mail_smtpuser = " . $emailQuoted . " AND deleted = 0";
+        $query = "SELECT id FROM outbound_email WHERE mail_smtpuser = '$email' AND deleted = 0";
         $rs = $this->db->query($query);
         $row = $this->db->fetchByAssoc($rs);
         if (!empty($row['id'])) {
-            $this->retrieve($row['id']);
+            $oe = new OutboundEmail();
+            $oe->retrieve($row['id']);
+            return $oe;
+        } else {
+            return null;
         }
     }
 
@@ -516,6 +520,8 @@ class OutboundEmail
      */
     public function save()
     {
+        $this->checkSavePermissions();
+
         require_once('include/utils/encryption_utils.php');
         if (empty($this->id)) {
             $this->id = create_guid();
@@ -672,5 +678,45 @@ class OutboundEmail
         }
 
         return $this->retrieve($a['id']);
+    }
+
+    /**
+     * @return void
+     */
+    protected function checkSavePermissions(): void
+    {
+        global $log;
+
+
+        $original = null;
+
+        if (!empty($this->id)) {
+            $original = new OutboundEmail();
+            $original->retrieve($this->id);
+        }
+
+        if (empty($original)) {
+            $original = $this;
+        }
+
+        $type = $this->type ?? '';
+
+        $authenticatedUser = get_authenticated_user();
+        if ($authenticatedUser === null) {
+            $log->security("OutboundEmail::checkSavePermissions - not logged in - skipping check");
+            return;
+        }
+
+        if ($type === 'system' && !is_admin($authenticatedUser)) {
+            $log->security("OutboundEmail::checkSavePermissions - trying to save a system outbound email with non-admin user");
+            throw new RuntimeException('Access denied');
+        }
+
+        $oeUserId = $original->user_id ?? '';
+
+        if (!empty($oeUserId) && $oeUserId !== $authenticatedUser->id && !is_admin($authenticatedUser)) {
+            $log->security("OutboundEmail::checkSavePermissions - trying to save a outbound email for another user");
+            throw new RuntimeException('Access denied');
+        }
     }
 }

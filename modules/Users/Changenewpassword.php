@@ -69,12 +69,20 @@ if (getRecaptchaChallengeField() !== false) {
 ////			   - send the filled form to authenticate.php after changing the password in the database
 $redirect = true;
 $errors = '';
-if (isset($_REQUEST['guid'])) {
+if (!empty($_REQUEST['guid']) && !empty($_REQUEST['key'])) {
     // Change 'deleted = 0' clause to 'COALESCE(deleted, 0) = 0' because by default the values were NULL
     $Q = "SELECT * FROM users_password_link WHERE id = '" . $db->quote($_REQUEST['guid']) . "' AND COALESCE(deleted, 0) = '0'";
     $result = DBManagerFactory::getInstance()->limitQuery($Q, 0, 1, false);
     $row = DBManagerFactory::getInstance()->fetchByAssoc($result);
-    if (!empty($row)) {
+
+    $keyHash = !empty($row['keyhash']) ? $row['keyhash'] : null;
+
+    $isValid = false;
+    if ($keyHash !== null) {
+        $isValid = User::checkPassword($_REQUEST['key'], $keyHash);
+    }
+
+    if (!empty($row) && $isValid === true) {
         $pwd_settings = $GLOBALS['sugar_config']['passwordsetting'];
         $expired = false;
 
@@ -179,5 +187,9 @@ $sugar_smarty->assign('SUBMIT_BUTTON', '<input title="' . $mod_strings['LBL_LOGI
 if (!empty($_REQUEST['guid'])) {
     $sugar_smarty->assign("GUID", $_REQUEST['guid']);
 }
+if (!empty($_REQUEST['key'])) {
+    $sugar_smarty->assign("KEY", $_REQUEST['key']);
+}
+
 $sugar_smarty->display('modules/Users/Changenewpassword.tpl');
 $view->displayFooter();

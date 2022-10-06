@@ -1482,7 +1482,7 @@ abstract class BaseFacebook
             unset($_COOKIE[$cookie_name]);
             if (!headers_sent()) {
                 $base_domain = $this->getBaseDomain();
-                setcookie($cookie_name, '', 1, '/', '.'.$base_domain, false, true);
+                SugarApplication::setCookie($cookie_name, '', 1, '/', '.'.$base_domain, false, true);
             } else {
                 // @codeCoverageIgnoreStart
                 self::errorLog(

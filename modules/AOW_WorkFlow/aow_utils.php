@@ -523,8 +523,7 @@ function getModuleField(
         // fill in enums
         if (isset($fieldlist[$name]['options']) && is_string($fieldlist[$name]['options']) && isset($app_list_strings[$fieldlist[$name]['options']])) {
             $fieldlist[$name]['options'] = $app_list_strings[$fieldlist[$name]['options']];
-        }
-        // Bug 32626: fall back on checking the mod_strings if not in the app_list_strings
+        } // Bug 32626: fall back on checking the mod_strings if not in the app_list_strings
         elseif (isset($fieldlist[$name]['options']) && is_string($fieldlist[$name]['options']) && isset($mod_strings[$fieldlist[$name]['options']])) {
             $fieldlist[$name]['options'] = $mod_strings[$fieldlist[$name]['options']];
         }
@@ -532,6 +531,12 @@ function getModuleField(
         // Make sure the enum has an 'options' array to append a new value to.
         if (isset($fieldlist[$name]['options']) && is_array($fieldlist[$name]['options']) && !isset($fieldlist[$name]['options'][''])) {
             $fieldlist[$name]['options'][''] = '';
+        }
+
+        if ($fieldlist[$name]['type'] == 'enum' || $fieldlist[$name]['type'] == 'multienum' || $fieldlist[$name]['type'] == 'dynamicenum') {
+            if ($params['value_set'] === true && $value === "") {
+                $fieldlist[$name]['default'] = $value;
+            }
         }
     }
 
