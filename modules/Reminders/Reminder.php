@@ -553,16 +553,21 @@ class Reminder extends Basic
 
     /**
      * Default values for Reminders from User Preferences
+     * @param User $user
      * @return array default values
      */
-    public static function loadRemindersDefaultValuesData()
+    public static function loadRemindersDefaultValuesData($user = null)
     {
         global $current_user;
 
-        $preferencePopupReminderTime = $current_user->getPreference('reminder_time');
-        $preferenceEmailReminderTime = $current_user->getPreference('email_reminder_time');
-        $preferencePopupReminderChecked = $current_user->getPreference('reminder_checked');
-        $preferenceEmailReminderChecked = $current_user->getPreference('email_reminder_checked');
+        if(!$user){
+            $user = $current_user;
+        }
+
+        $preferencePopupReminderTime = $user->getPreference('reminder_time');
+        $preferenceEmailReminderTime = $user->getPreference('email_reminder_time');
+        $preferencePopupReminderChecked = $user->getPreference('reminder_checked');
+        $preferenceEmailReminderChecked = $user->getPreference('email_reminder_checked');
 
         return array(
             'popup' => $preferencePopupReminderChecked,

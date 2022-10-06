@@ -495,6 +495,13 @@ function get_sugar_config_defaults(): array
             'jpg'
         ],
         'upload_maxsize' => 30000000,
+        'allowed_preview' => [
+            'pdf',
+            'gif',
+            'png',
+            'jpeg',
+            'jpg'
+        ],
         'import_max_execution_time' => 3600,
 //	'use_php_code_json' => returnPhpJsonStatus(),
         'verify_client_ip' => true,
@@ -863,6 +870,27 @@ function get_user_name($id)
     $a = $db->fetchByAssoc($r);
 
     return (empty($a)) ? '' : $a['user_name'];
+}
+
+/**
+ * Get currently authenticated user
+ * @return User
+ */
+function get_authenticated_user(): ?User {
+    $authenticatedUserId = $_SESSION['authenticated_user_id'] ?? '';
+
+    if (empty($authenticatedUserId)){
+        return null;
+    }
+
+    /** @var User $authenticatedUser */
+    $authenticatedUser = BeanFactory::getBean('Users', $authenticatedUserId);
+
+    if (empty($authenticatedUser)) {
+        return null;
+    }
+
+    return $authenticatedUser;
 }
 
 //TODO Update to use global cache

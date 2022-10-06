@@ -546,7 +546,7 @@ class ElasticSearchIndexer extends AbstractIndexer
     private function makeParamsHeaderFromBean(SugarBean $bean): array
     {
         return [
-            'index' => $bean->module_name,
+            'index' => strtolower($bean->module_name),
             'id' => $bean->id,
         ];
     }

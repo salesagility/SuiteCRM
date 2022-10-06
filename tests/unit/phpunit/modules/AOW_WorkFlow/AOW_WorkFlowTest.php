@@ -149,8 +149,8 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
 
         //test with type relationship
         $expected = array(
-                'join' => array('aos_products_quotes' => "LEFT JOIN aos_products_quotes aos_products_quotes ON aos_quotes.id=aos_products_quotes.parent_id AND aos_products_quotes.deleted=0\n\n"),
-                'select' => array("aos_products_quotes.id AS 'aos_products_quotes_id'"),
+            'join' => array('aos_products_quotes' => "LEFT JOIN aos_products_quotes `aos_products_quotes` ON aos_quotes.id=`aos_products_quotes`.parent_id AND `aos_products_quotes`.deleted=0\n\n"),
+            'select' => array("`aos_products_quotes`.id AS 'aos_products_quotes_id'"),
         );
         $result = $aowWorkFlow->build_flow_relationship_query_join('aos_products_quotes', BeanFactory::newBean('AOS_Quotes'), array());
         self::assertSame($expected, $result);
