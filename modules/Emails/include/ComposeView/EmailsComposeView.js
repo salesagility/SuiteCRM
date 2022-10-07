@@ -1553,6 +1553,41 @@
     });
   };
 
+  $.fn.EmailsComposeView.onTemplateChange = function (args) {
+    var confirmed = function (args) {
+      var args = JSON.parse(args);
+      var form = $('[name="' + args.form_name + '"]');
+      $.post('index.php?entryPoint=emailTemplateData', {
+        emailTemplateId: args.name_to_value_array.emails_email_templates_idb
+      }, function (jsonResponse) {
+        var response = JSON.parse(jsonResponse);
+        $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse(response);
+        $(form).find('[name="name"]').val(response.data.subject);
+        tinymce.activeEditor.setContent(response.data.body_from_html, {format: 'html'});
+        $.fn.EmailsComposeView.updateSignature();
+      });
+      set_return(args);
+    };
+    var mb = messageBox();
+    mb.setTitle(SUGAR.language.translate('Emails', 'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_TITLE'));
+    mb.setBody(SUGAR.language.translate('Emails', 'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_BODY'));
+    mb.show();
+
+    mb.on('ok', function () {
+      "use strict";
+      var id=$('#emails_email_templates_idb').val();
+      var name=$('#emails_email_templates_name').val();
+      args = JSON.stringify({"form_name":"ComposeView","name_to_value_array":{"emails_email_templates_idb": id,"emails_email_templates_name": name}})
+      confirmed(args);
+      mb.remove();
+    });
+
+    mb.on('cancel', function () {
+      "use strict";
+      mb.remove();
+    });
+  }
+
   $.fn.EmailsComposeView.onParentSelect = function (args) {
     set_return(args);
     if (isValidEmail(args.name_to_value_array.email1)) {
