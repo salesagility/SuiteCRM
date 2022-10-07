@@ -261,6 +261,9 @@
           {rdelim}
         {rdelim}{/if});
       {rdelim});
+      $( "#emails_email_templates_name" ).change(function() {ldelim}
+          $.fn.EmailsComposeView.onTemplateChange()
+      {rdelim});
     </script>
     {/if}
 </form>
