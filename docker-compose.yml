@@ -1,0 +1,36 @@
+version: '3'
+services:
+  # Use the database service name as host in the suitecrm installation
+  mariadb:
+    image: docker.io/bitnami/mariadb:10.6
+    networks:
+      - main_network
+    ports:
+      - '3306:3306'
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=cc_suitecrm
+      - MARIADB_DATABASE=cc_suitecrm
+    volumes:
+      - ${PWD}/database:/bitnami/mariadb
+  suitecrm:
+    build:
+      context: .
+    command: composer install --no-dev --no-interaction --working-dir=/var/www/html/
+    networks:
+      - main_network
+    ports:
+      - '80:80'
+    volumes:
+      - ${PWD}:/var/www/html
+    depends_on:
+      - mariadb
+volumes:
+  mariadb_data:
+    driver: local
+  suitecrm_data:
+    driver: local
+
+networks:
+  main_network:

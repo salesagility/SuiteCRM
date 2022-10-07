@@ -124,3 +124,6 @@ codeception.yml
 .env
 .env.test
 .env.dev
+
+# Ignore database folder
+database/
