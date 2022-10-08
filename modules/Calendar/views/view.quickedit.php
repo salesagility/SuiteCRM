@@ -84,6 +84,14 @@ class CalendarViewQuickEdit extends SugarView
         $this->ev->view = "QuickCreate";
         $this->ev->ss = new Sugar_Smarty();
         $this->ev->formName = "CalendarEditView";
+	     //Fix #9781 Meetings and Calls quick edit via Calender does not populate correct reminders
+        //Fetch Reminders Data for existing Calls or Meetings and assign to smarty template
+        if (!empty($this->bean->id)) {
+            $this->ev->ss->assign('remindersData', Reminder::loadRemindersData($module, $this->bean->id, false));
+            $this->ev->ss->assign('remindersDataJson', Reminder::loadRemindersDataJson($module, $this->bean->id, false));
+            $this->ev->ss->assign('remindersDefaultValuesDataJson', Reminder::loadRemindersDefaultValuesDataJson());
+            $this->ev->ss->assign('remindersDisabled', json_encode(false));
+        }
         $this->ev->setup($module, $this->bean, $source, $tpl);
         $this->ev->defs['templateMeta']['form']['headerTpl'] = "modules/Calendar/tpls/editHeader.tpl";
         $this->ev->defs['templateMeta']['form']['footerTpl'] = "modules/Calendar/tpls/empty.tpl";
