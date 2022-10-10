@@ -290,6 +290,7 @@ class RepairAndClear
             }
         } else {
             $this->_clearCache(sugar_cached('modules/'), '.tpl');
+            $this->_clearCache(sugar_cached('include/InlineEditing/'), '.tpl');
         }
     }
     public function clearVardefs()
