@@ -1,42 +1,31 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.154.0/containers/php-mariadb
-// Update the VARIANT arg in docker-compose.yml to pick a PHP version: 7, 7.3, 7.4 
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.245.2/containers/php-mariadb
+// Update the VARIANT arg in docker-compose.yml to pick a PHP version
 {
 	"name": "PHP & MariaDB",
 	"dockerComposeFile": "docker-compose.yml",
-	"service": "app",
-	"workspaceFolder": "/workspace",
-	// Set *default* container specific settings.json values on container create.
-	"settings": {
-		"terminal.integrated.shell.linux": "/bin/bash",
-		"sqltools.connections": [
-			{
-				"name": "Container database",
-				"driver": "MariaDB",
-				"server": "localhost",
-				"previewLimit": 50,
-				"port": 3306,
-				"database": "mariadb",
-				"username": "root",
-				"password": "mariadb"
-			}
-		]
+	"service": "suitecrm",
+	"workspaceFolder": "/var/www/html/suitecrm",
+
+	// Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"xdebug.php-debug"
+			]
+		}
 	},
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"felixfbecker.php-debug",
-		"felixfbecker.php-intellisense",
-		"mrmlnc.vscode-apache",
-		"mtxr.sqltools",
-		"mtxr.sqltools-driver-mysql"
-	],
+
 	// For use with PHP or Apache (e.g.php -S localhost:8080 or apache2ctl start)
-	"forwardPorts": [
-		8080,
-		3306
-	],
+	"forwardPorts": [80, 3306]
+
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "sudo chmod a+x \"$(pwd)\" && sudo rm -rf /var/www/html && sudo ln -s \"$(pwd)\" /var/www/html"
-	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode"
+
+	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	// "remoteUser": "vscode",
+	// "features": {
+	// }
 }
