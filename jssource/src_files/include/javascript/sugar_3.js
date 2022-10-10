@@ -4510,17 +4510,15 @@ function open_popup(module_name, width, height, initial_filter, close_popup, hid
   if (field_to_name_array_url) {
     URL += field_to_name_array_url;
   }
-
   win = SUGAR.util.openWindow(URL, windowName, windowFeatures);
-
-  if (window.focus) {
-    // put the focus on the popup if the browser supports the focus() method
-    win.focus();
+  if(win) {
+      $(win).focus(function(){
+        win.focus();
+      });
+      win.popupCount = popupCount;
+      return win;
   }
-
-  win.popupCount = popupCount;
-
-  return win;
+  return '';
 }
 
 /**
