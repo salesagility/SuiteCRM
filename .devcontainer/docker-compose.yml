@@ -10,8 +10,8 @@ services:
     environment:
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
       - ALLOW_EMPTY_PASSWORD=yes
-      - MARIADB_USER=cc_suitecrm
-      - MARIADB_DATABASE=cc_suitecrm
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_DATABASE=${MARIADB_DATABASE}
     volumes:
       - ${PWD}/.devcontainer/database:/bitnami/mariadb
   suitecrm:
@@ -24,6 +24,8 @@ services:
       - '80:80'
     volumes:
       - ${PWD}:/var/www/html/suitecrm
+      - ${PWD}/.devcontainer/config/php.ini:/etc/php/7.4/apache2/php.ini
+      - ${PWD}/.devcontainer/logs:/var/log/apache2
     depends_on:
       - mariadb
 
