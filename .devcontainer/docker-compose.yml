@@ -1,44 +1,33 @@
 version: '3'
-
-services: 
-  app:
+services:
+  # Use the database service name as host in the suitecrm installation
+  mariadb:
+    image: docker.io/bitnami/mariadb:10.6
+    networks:
+      - main_network
+    ports:
+      - '3306:3306'
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_DATABASE=${MARIADB_DATABASE}
+    volumes:
+      - ${PWD}/.devcontainer/database:/bitnami/mariadb
+  suitecrm:
     build:
       context: .
-      dockerfile: Dockerfile
-      args:
-        # On Linux, you may need to update USER_UID and USER_GID below if not your local UID is not 1000.
-        USER_UID: 1000
-        USER_GID: 1000
-        USERNAME: vscode
-
+    command: sh -c "composer install --no-dev --no-interaction --working-dir=/var/www/html/suitecrm && exec apache2-foreground"
+    networks:
+      - main_network
+    ports:
+      - '80:80'
     volumes:
-      - ..:/workspace:cached
+      - ${PWD}:/var/www/html/suitecrm
+      - ${PWD}/.devcontainer/config/php.ini:/etc/php/7.4/apache2/php.ini
+      - ${PWD}/.devcontainer/logs:/var/log/apache2
+    depends_on:
+      - mariadb
 
-    # Overrides default command so things don't shut down after the process ends.
-    command: sleep infinity
-
-    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
-    network_mode: service:db
-
-    # Uncomment the next line to use a non-root user for all processes.
-    # user: vscode
-
-    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally. 
-    # (Adding the "ports" property to this file will not forward from a Codespace.)
-
-  db:
-    image: mariadb:10.4
-    restart: unless-stopped
-    volumes:
-      - mariadb-data:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: mariadb
-      MYSQL_DATABASE: mariadb
-      MYSQL_USER: mariadb
-      MYSQL_PASSWORD: mariadb
-
-    # Add "forwardPorts": ["3306"] to **devcontainer.json** to forward MariaDB locally.
-    # (Adding the "ports" property to this file will not forward from a Codespace.)
-  
-volumes:
-  mariadb-data:
+networks:
+  main_network:

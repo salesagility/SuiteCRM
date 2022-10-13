@@ -1,39 +1,15 @@
-FROM debian:buster
+FROM ubuntu/apache2:2.4-22.04_beta
 
-# Install MariaDB client
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get install -y mariadb-client
+RUN apt update -y && \
+    apt install -y mariadb-client software-properties-common git && \
+    add-apt-repository -y ppa:ondrej/php
 
-# Install supporting stuff
-RUN apt-get -y install git iproute2 procps apt-transport-https gnupg2 curl lsb-release jq nano \
-    && apt-get install -y sudo 
+# Install php7.4 and set it as default. Also setting upload_max_filesize to 200M
+RUN apt install -y php7.4-xdebug php7.4 php7.4-curl php7.4-gd php7.4-zip php7.4-imap php7.4-mbstring php7.4-intl php7.4-simplexml php7.4-dom php7.4-mysql
+RUN update-alternatives --set php /usr/bin/php7.4
 
-# Install php
-RUN apt install -y php php-common php-cli php-fpm php-json php-pdo php-mysql php-zip php-gd \
-    php-mbstring php-curl php-xml php-pear php-bcmath php-imap php-intl
-
-
-# Install PHP composer
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php -r "if (hash_file('sha384', 'composer-setup.php') === '756890a4488ce9024fc62c56153228907f1545c228516cbf63f885e036d37e9a59d27d63f46af1d4d07ee0f76181c7d3') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
-    && php composer-setup.php --install-dir=/usr/bin \
-    && php -r "unlink('composer-setup.php');" \
-    && mv /usr/bin/composer.phar /usr/bin/composer
-
-
-# Clean apt
-RUN apt-get autoremove -y \
-    && apt-get clean -y
-
-# Create user and group
-# Update args in docker-compose.yaml to set the UID/GID of the "vscode" user.
-ARG USER_UID=1000
-ARG USER_GID=$USER_UID
-ARG USERNAME=vscode
-
-RUN groupadd --gid $USER_GID $USERNAME \
-    && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
-    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
-    && chmod 0440 /etc/sudoers.d/$USERNAME \
-    && chown -R $USER_UID:$USER_GID /home/vscode 
-
+# Install compatible composer
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+    php composer-setup.php && \
+    php -r "unlink('composer-setup.php');" && \
+    mv composer.phar /usr/local/bin/composer
