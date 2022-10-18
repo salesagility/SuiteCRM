@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,10 +42,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once 'php_version.php';
-require_once 'include/SugarObjects/SugarConfig.php';
-require_once 'include/utils/security_utils.php';
+require_once __DIR__ . '/../php_version.php';
+require_once __DIR__ . '/../include/SugarObjects/SugarConfig.php';
+require_once __DIR__ . '/../include/utils/security_utils.php';
 
+use voku\helper\AntiXSS;
 
 /**
  * @param $sugar_config
@@ -113,6 +114,9 @@ function make_sugar_config(&$sugar_config)
         'calculate_response_time' => empty($calculate_response_time) ? true : $calculate_response_time,
         'create_default_user' => empty($create_default_user) ? false : $create_default_user,
         'chartEngine' => 'Jit',
+        'pdf' => [
+            'defaultEngine' => 'TCPDFEngine'
+        ],
         'date_formats' => empty($dateFormats) ? array(
             'Y-m-d' => '2010-12-23',
             'd-m-Y' => '23-12-2010',
@@ -211,9 +215,25 @@ function make_sugar_config(&$sugar_config)
             'vbs',
             'html',
             'htm',
+            'phtml',
+            'phar',
         ) : $upload_badext,
+        'valid_image_ext' => [
+            'gif',
+            'png',
+            'jpg',
+            'jpeg',
+            'svg'
+        ],
         'upload_dir' => $upload_dir, // this must be set!!
         'upload_maxsize' => empty($upload_maxsize) ? 30000000 : $upload_maxsize,
+        'allowed_preview' => [
+            'pdf',
+            'gif',
+            'png',
+            'jpeg',
+            'jpg'
+        ],
         'import_max_execution_time' => empty($import_max_execution_time) ? 3600 : $import_max_execution_time,
         'lock_homepage' => false,
         'lock_subpanels' => false,
@@ -261,26 +281,43 @@ function make_sugar_config(&$sugar_config)
 }
 
 /**
+ * Used for getting base values for array style config.php
  * @return array
+ * @throws Exception
  */
-function get_sugar_config_defaults()
+function get_sugar_config_defaults(): array
 {
     global $locale;
-    /*
-     * used for getting base values for array style config.php.  used by the
-     * installer and to fill in new entries on upgrades.  see also:
-     * sugar_config_union
-     */
 
-    $sugar_config_defaults = array(
+    $sugar_config_defaults = [
         'admin_export_only' => false,
+        'anti_malware_scanners' => [
+            'SuiteCRM\Utility\AntiMalware\Providers\ClamTCP' => [
+                'name' => 'ClamAntiVirus TCP',
+                'support_page' => 'https://www.clamav.net/',
+                'enabled' => false,
+                'path' => null,
+                'options' => [
+                    'ip' => '127.0.0.1',
+                    'port' => 3310,
+                    'type' => 'local'
+                ],
+            ],
+            'SuiteCRM\Utility\AntiMalware\Providers\Sophos' => [
+                'name' => 'Sophos Anti Virus (Linux)',
+                'support_page' => 'https://www.sophos.com/en-us/products/free-tools/sophos-antivirus-for-linux.aspx',
+                'enabled' => false,
+                'path' => '/opt/sophos-av/bin/savscan',
+                'options' => '-ss'
+            ]
+        ],
         'export_delimiter' => ',',
         'export_excel_compatible' => false,
         'cache_dir' => 'cache/',
         'calculate_response_time' => true,
         'create_default_user' => false,
         'chartEngine' => 'Jit',
-        'date_formats' => array(
+        'date_formats' => [
             'Y-m-d' => '2010-12-23',
             'm-d-Y' => '12-23-2010',
             'd-m-Y' => '23-12-2010',
@@ -290,8 +327,8 @@ function get_sugar_config_defaults()
             'Y.m.d' => '2010.12.23',
             'd.m.Y' => '23.12.2010',
             'm.d.Y' => '12.23.2010',
-        ),
-        'name_formats' => array(
+        ],
+        'name_formats' => [
             's f l' => 's f l',
             'f l' => 'f l',
             's l' => 's l',
@@ -300,20 +337,22 @@ function get_sugar_config_defaults()
             's l, f' => 's l, f',
             'l s f' => 'l s f',
             'l f s' => 'l f s',
-        ),
-        'dbconfigoption' => array(
+        ],
+        'dbconfigoption' => [
             'persistent' => true,
             'autofree' => false,
             'debug' => 0,
             'ssl' => false,
-        ),
+        ],
         'default_action' => 'index',
         'default_charset' => return_session_value_or_default('default_charset', 'UTF-8'),
         'default_currency_name' => return_session_value_or_default('default_currency_name', 'US Dollar'),
         'default_currency_symbol' => return_session_value_or_default('default_currency_symbol', '$'),
         'default_currency_iso4217' => return_session_value_or_default('default_currency_iso4217', 'USD'),
-        'default_currency_significant_digits' => return_session_value_or_default('default_currency_significant_digits', 2),
-        'default_number_grouping_seperator' => return_session_value_or_default('default_number_grouping_seperator', ','),
+        'default_currency_significant_digits' => return_session_value_or_default('default_currency_significant_digits',
+            2),
+        'default_number_grouping_seperator' => return_session_value_or_default('default_number_grouping_seperator',
+            ','),
         'default_decimal_seperator' => return_session_value_or_default('default_decimal_seperator', '.'),
         'default_date_format' => 'm/d/Y',
         'default_locale_name_format' => 's f l',
@@ -321,18 +360,23 @@ function get_sugar_config_defaults()
         'default_language' => return_session_value_or_default('default_language', 'en_us'),
         'default_module' => 'Home',
         'default_password' => '',
-        'default_permissions' => array(
+        'default_permissions' => [
             'dir_mode' => 02770,
             'file_mode' => 0755,
             'user' => '',
             'group' => '',
-        ),
+        ],
         'default_theme' => return_session_value_or_default('site_default_theme', 'SuiteP'),
         'default_time_format' => 'h:ia',
         'default_user_is_admin' => false,
         'default_user_name' => '',
         'disable_export' => false,
-        'disable_persistent_connections' => return_session_value_or_default('disable_persistent_connections', 'false'),
+        'disable_persistent_connections' => return_session_value_or_default('disable_persistent_connections', false),
+        'default_module_favicon' => false,
+        'dashlet_auto_refresh_min' => 30,
+        'stack_trace_errors' => false,
+        'developerMode' => false,
+        'stackTrace' => false,
         'display_email_template_variable_chooser' => false,
         'display_inbound_email_buttons' => false,
         'dump_slow_queries' => false,
@@ -343,8 +387,8 @@ function get_sugar_config_defaults()
         'email_warning_notifications' => true,
         'email_enable_auto_send_opt_in' => false,
         'email_enable_confirm_opt_in' => SugarEmailAddress::COI_STAT_DISABLED,
-        'filter_module_fields' => array(
-            'Users' => array(
+        'filter_module_fields' => [
+            'Users' => [
                 'show_on_employees',
                 'portal_only',
                 'is_group',
@@ -359,8 +403,8 @@ function get_sugar_config_defaults()
                 'password',
                 'last_login',
                 'oauth_tokens',
-            ),
-            'Employees' => array(
+            ],
+            'Employees' => [
                 'show_on_employees',
                 'portal_only',
                 'is_group',
@@ -375,14 +419,14 @@ function get_sugar_config_defaults()
                 'password',
                 'last_login',
                 'oauth_tokens',
-            )
-        ),
+            ]
+        ],
         'google_auth_json' => '',
         'history_max_viewed' => 50,
         'installer_locked' => true,
         'import_max_records_per_file' => 100,
         'import_max_records_total_limit' => '',
-        'languages' => array('en_us' => 'English (US)'),
+        'languages' => ['en_us' => 'English (US)'],
         'large_scale_test' => false,
         'list_max_entries_per_page' => 20,
         'list_max_entries_per_subpanel' => 10,
@@ -390,11 +434,14 @@ function get_sugar_config_defaults()
         'log_memory_usage' => false,
         'oauth2_encryption_key' => base64_encode(random_bytes(32)),
         'portal_view' => 'single_user',
-        'resource_management' => array(
+        'pdf' => [
+            'defaultEngine' => 'TCPDFEngine'
+        ],
+        'resource_management' => [
             'special_query_limit' => 50000,
-            'special_query_modules' => array('AOR_Reports', 'Export', 'Import', 'Administration', 'Sync'),
+            'special_query_modules' => ['AOR_Reports', 'Export', 'Import', 'Administration', 'Sync'],
             'default_limit' => 1000,
-        ),
+        ],
         'require_accounts' => true,
         'rss_cache_time' => return_session_value_or_default('rss_cache_time', '10800'),
         'save_query' => 'all',
@@ -402,7 +449,7 @@ function get_sugar_config_defaults()
         'showThemePicker' => true,
         'slow_query_time_msec' => '100',
         'sugarbeet' => true,
-        'time_formats' => array(
+        'time_formats' => [
             'H:i' => '23:00',
             'h:ia' => '11:00pm',
             'h:iA' => '11:00PM',
@@ -413,10 +460,10 @@ function get_sugar_config_defaults()
             'h.iA' => '11.00PM',
             'h.i a' => '11.00 pm',
             'h.i A' => '11.00 PM',
-        ),
+        ],
         'tracker_max_display_length' => 15,
         'translation_string_prefix' => return_session_value_or_default('translation_string_prefix', false),
-        'upload_badext' => array(
+        'upload_badext' => [
             'php',
             'php3',
             'php4',
@@ -431,8 +478,30 @@ function get_sugar_config_defaults()
             'html',
             'htm',
             'phtml',
-        ),
+            'phar',
+        ],
+        'valid_image_ext' => [
+            'gif',
+            'png',
+            'jpg',
+            'jpeg',
+            'svg'
+        ],
+        'allowed_preview' => [
+            'pdf',
+            'gif',
+            'png',
+            'jpeg',
+            'jpg'
+        ],
         'upload_maxsize' => 30000000,
+        'allowed_preview' => [
+            'pdf',
+            'gif',
+            'png',
+            'jpeg',
+            'jpg'
+        ],
         'import_max_execution_time' => 3600,
 //	'use_php_code_json' => returnPhpJsonStatus(),
         'verify_client_ip' => true,
@@ -443,7 +512,7 @@ function get_sugar_config_defaults()
         'lock_subpanels' => false,
         'max_dashlets_homepage' => '15',
         'default_max_tabs' => 10,
-        'dashlet_display_row_options' => array('1', '3', '5', '10'),
+        'dashlet_display_row_options' => ['1', '3', '5', '10'],
         'default_subpanel_tabs' => true,
         'default_subpanel_links' => false,
         'default_swap_last_viewed' => false,
@@ -453,7 +522,7 @@ function get_sugar_config_defaults()
         'use_common_ml_dir' => false,
         'common_ml_dir' => '',
         'vcal_time' => '2',
-        'calendar' => array(
+        'calendar' => [
             'default_view' => 'week',
             'show_calls_by_default' => true,
             'show_tasks_by_default' => true,
@@ -466,8 +535,8 @@ function get_sugar_config_defaults()
             'items_resizable' => true,
             'enable_repeat' => true,
             'max_repeat_count' => 1000,
-        ),
-        'passwordsetting' => empty($passwordsetting) ? array(
+        ],
+        'passwordsetting' => empty($passwordsetting) ? [
             'SystemGeneratedPasswordON' => '',
             'generatepasswordtmpl' => '',
             'lostpasswordtmpl' => '',
@@ -480,28 +549,32 @@ function get_sugar_config_defaults()
             'systexpirationtime' => '7',
             'systexpirationtype' => '1',
             'systexpirationlogin' => '',
-        ) : $passwordsetting,
+        ] : $passwordsetting,
         'use_real_names' => true,
         'search_wildcard_infront' => false,
         'search_wildcard_char' => '%',
-        'jobs' => array(
+        'jobs' => [
             'min_retry_interval' => 30, // 30 seconds minimal job retry
             'max_retries' => 5, // how many times to retry the job
             'timeout' => 86400, // how long a job may spend as running before being force-failed
-        ),
-        'cron' => array(
+        ],
+        'cron' => [
             'max_cron_jobs' => 10, // max jobs per cron schedule run
             'max_cron_runtime' => 30, // max runtime for cron jobs
             'min_cron_interval' => 30, // minimal interval between cron jobs
-        ),
+        ],
         'strict_id_validation' => false,
-    );
+        'id_validation_pattern' => '/^[a-zA-Z0-9_-]*$/i',
+        'session_gc' => [
+            'enable' => true,
+            'gc_probability' => 1,
+            'gc_divisor' => 100,
+        ]
+    ];
 
     if (!is_object($locale)) {
         $locale = new Localization();
     }
-
-    $sugar_config_defaults['default_currencies'] = $locale->getDefaultCurrencies();
 
     $sugar_config_defaults = sugarArrayMerge($locale->getLocaleConfigDefaults(), $sugar_config_defaults);
 
@@ -799,6 +872,27 @@ function get_user_name($id)
     return (empty($a)) ? '' : $a['user_name'];
 }
 
+/**
+ * Get currently authenticated user
+ * @return User
+ */
+function get_authenticated_user(): ?User {
+    $authenticatedUserId = $_SESSION['authenticated_user_id'] ?? '';
+
+    if (empty($authenticatedUserId)){
+        return null;
+    }
+
+    /** @var User $authenticatedUser */
+    $authenticatedUser = BeanFactory::getBean('Users', $authenticatedUserId);
+
+    if (empty($authenticatedUser)) {
+        return null;
+    }
+
+    return $authenticatedUser;
+}
+
 //TODO Update to use global cache
 /**
  * get_user_array.
@@ -1000,20 +1094,6 @@ function clean($string, $maxLength)
     $string = substr($string, 0, $maxLength);
 
     return escapeshellcmd($string);
-}
-
-/**
- * @param $string
- * @return string
- */
-function cleanCSV($string)
-{
-    $check = '/^[=@]/';
-    if (!is_numeric($string)) {
-        $check = '/^[=@+-]/';
-    }
-
-    return preg_replace($check, "", $string);
 }
 
 /**
@@ -2074,7 +2154,7 @@ function translate($string, $mod = '', $selectedValue = '')
 
 /**
  * Converts a number from '1,000' to '1000', and '1,50' (if using commas as a decimal separator) to '1.50'.
- * 
+ *
  * @deprecated This function is unused and will be removed in a future release.
  */
 function unTranslateNum($num)
@@ -2517,23 +2597,39 @@ function str_end($str, $end)
     return substr($str, strlen($str) - strlen($end)) == $end;
 }
 
-function securexss($value)
+/**
+ * @param $uncleanString
+ * @return array
+ */
+function securexss($uncleanString)
 {
-    if (is_array($value)) {
-        $new = array();
-        foreach ($value as $key => $val) {
+    if (is_array($uncleanString)) {
+        $new = [];
+        foreach ($uncleanString as $key => $val) {
             $new[$key] = securexss($val);
         }
 
         return $new;
     }
-    
-    static $xss_cleanup = ['&quot;' => '&#38;', '"' => '&quot;', "'" => '&#039;', '<' => '&lt;', '>' => '&gt;', '`' => '&#96;'];
 
-    $value = preg_replace(array('/javascript:/i', '/\0/'), array('java script:', ''), $value);
-    $value = preg_replace('/javascript:/i', 'java script:', $value);
+    static $xss_cleanup = [
+        '&quot;' => '&#38;',
+        '"' => '&quot;',
+        "'" => '&#039;',
+        '<' => '&lt;',
+        '>' => '&gt;',
+        '`' => '&#96;'
+    ];
 
-    return str_replace(array_keys($xss_cleanup), array_values($xss_cleanup), $value);
+    $uncleanString = preg_replace(array('/javascript:/i', '/\0/', '/javascript:/i'),
+        array('java script:', '', 'java script:'), $uncleanString);
+
+    $partialString = str_replace(array_keys($xss_cleanup), $xss_cleanup, $uncleanString);
+
+    $antiXss = new AntiXSS();
+    $antiXss->removeEvilAttributes(['style']);
+
+    return $antiXss->xss_clean($partialString);
 }
 
 function securexsskey($value, $die = true)
@@ -3127,7 +3223,7 @@ function display_notice($msg = false)
 
 /**
  * Checks if it is a number that at least has the plus at the beginning.
- * 
+ *
  * @deprecated No longer used, will be removed without replacement in SuiteCRM 7.12.
  */
 function skype_formatted($number)
@@ -3782,7 +3878,7 @@ function mark_delete_components($sub_object_array, $run_second_level = false, $s
  * Translates php.ini memory values into bytes.
  * For example, an input value of '8M' will return 8388608.
  * 8M is 8 mebibytes, 1 mebibyte is 1,048,576 bytes or 2^20 bytes.
- * 
+ *
  * @param string $val A string like '8M'.
  * @return integer The number of bytes represented by that string.
  */
@@ -4154,10 +4250,10 @@ function string_format($format, $args, $escape = true)
             $args[$i] = implode("','", $values);
             $result = str_replace('{'.$i.'}', $args[$i], $result);
        }
-        else if ($escape){       
+        else if ($escape){
             $result = str_replace('{'.$i.'}', $db->quote($args[$i]), $result);
         }
-        else{       
+        else{
             $result = str_replace('{'.$i.'}', $args[$i], $result);
         }
     }
@@ -5832,4 +5928,100 @@ function getAppString($key)
     }
 
     return $app_strings[$key];
+}
+
+/**
+ * Check if has valid image extension
+ * @param string $fieldName
+ * @param string $value
+ * @return bool
+ */
+function has_valid_image_extension($fieldName, $name)
+{
+    global $sugar_config;
+
+    $validExtensions = [
+        'gif',
+        'png',
+        'jpg',
+        'jpeg',
+        'svg'
+    ];
+
+    if (isset($sugar_config['valid_image_ext']) && is_array($sugar_config['valid_image_ext'])){
+        $validExtensions = $sugar_config['valid_image_ext'];
+    }
+
+    return has_valid_extension($fieldName, $name, $validExtensions);
+}
+
+/**
+ * Check if has valid extension
+ * @param string $fieldName
+ * @param string $name
+ * @param array $validExtensions
+ * @return bool
+ */
+function has_valid_extension($fieldName, $name, $validExtensions)
+{
+
+    if ($name === '.' || empty($name)) {
+        LoggerManager::getLogger()->security("Invalid ext  $fieldName : '$name'.");
+
+        return false;
+    }
+
+    $validExtensions = array_map('strtolower', $validExtensions);
+
+    $parts = explode('.', $name);
+
+    if (empty($parts)) {
+        LoggerManager::getLogger()->security("Invalid ext  $fieldName : '$name'.");
+
+        return false;
+    }
+
+    $ext = array_pop($parts);
+    $trimmedValue = preg_replace('/.*\.([^\.]+)$/', '\1', $ext);
+
+    if (!in_array(strtolower($trimmedValue), $validExtensions, true)) {
+        LoggerManager::getLogger()->security("Invalid $fieldName: '$name'.");
+
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Check if value is one of the accepted true representations
+ * @param $value
+ * @return bool
+ */
+function isTrue($value): bool {
+    return $value === true || $value === 'true' || $value === 1;
+}
+
+/**
+ * Check if value is one of the accepted false representations
+ * @param $value
+ * @return bool
+ */
+function isFalse($value): bool {
+    return $value === false || $value === 'false' || $value === 0;
+}
+
+/**
+ * Get validation pattern
+ * @return string
+ */
+function get_id_validation_pattern(): string {
+    global $sugar_config;
+
+    $pattern = '/^[a-zA-Z0-9_-]*$/i';
+    if (!empty($sugar_config['id_validation_pattern'])){
+        $pattern = $sugar_config['id_validation_pattern'];
+    }
+
+    return $pattern;
 }

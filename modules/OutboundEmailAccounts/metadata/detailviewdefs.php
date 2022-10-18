@@ -1,6 +1,5 @@
 <?php
-$module_name = 'OutboundEmailAccounts';
-$viewdefs [$module_name] =
+$viewdefs ['OutboundEmailAccounts'] =
 array(
   'DetailView' =>
   array(
@@ -53,12 +52,7 @@ array(
         0 =>
         array(
           0 => 'name',
-          //1 => 'assigned_user_name',
         ),
-//        1 =>
-//        array (
-//          0 => 'description',
-//        ),
       ),
       'lbl_editview_panel1' =>
       array(

@@ -133,19 +133,7 @@ class Meeting extends SugarBean
         }
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function Meeting()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+
 
     /**
      * Disable edit if meeting is recurring and source is not Sugar. It should be edited only from Outlook.
@@ -697,7 +685,7 @@ class Meeting extends SugarBean
         $xtpl->assign("MEETING_ENDDATE", $timedate->asUser($enddate, $notifyUser)." ".TimeDate::userTimezoneSuffix($enddate, $notifyUser));
         $xtpl->assign("MEETING_HOURS", $meeting->duration_hours);
         $xtpl->assign("MEETING_MINUTES", $meeting->duration_minutes);
-        $xtpl->assign("MEETING_DESCRIPTION", $meeting->description);
+        $xtpl->assign("MEETING_DESCRIPTION", nl2br($meeting->description));
         $xtpl->assign("MEETING_LOCATION", $meeting->location);
         if (!empty($meeting->join_url)) {
             $xtpl->assign('MEETING_URL', $meeting->join_url);

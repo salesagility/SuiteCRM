@@ -35,8 +35,7 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
-initMySugar=function(){SUGAR.mySugar=function(){var originalLayout=null;var configureDashletId=null;var currentDashlet=null;var leftColumnInnerHTML=null;var leftColObj=null;var maxCount;var warningLang;var closeDashletsDialogTimer=null;var activeTab=activePage;var current_user=current_user_id;var module=moduleName;var charts={};if(module=='Dashboard'){cookiePageIndex=current_user+"_activeDashboardPage";}
+ */initMySugar=function(){SUGAR.mySugar=function(){var originalLayout=null;var configureDashletId=null;var currentDashlet=null;var leftColumnInnerHTML=null;var leftColObj=null;var maxCount;var warningLang;var closeDashletsDialogTimer=null;var activeTab=activePage;var current_user=current_user_id;var module=moduleName;var charts={};if(module=='Dashboard'){cookiePageIndex=current_user+"_activeDashboardPage";}
 else{cookiePageIndex=current_user+"_activePage";}
 var homepage_dd;return{getLayout:function(asString){columns=[];for(je=0;je<3;je++){dashlets=document.getElementById('col_'+activeTab+'_'+je);if(dashlets!=null){dashletIds=[];for(wp=0;wp<dashlets.childNodes.length;wp++){if(typeof dashlets.childNodes[wp].id!='undefined'&&dashlets.childNodes[wp].id.match(/dashlet_[\w-]*/)){dashletIds.push(dashlets.childNodes[wp].id.replace(/dashlet_/,''));}}
 if(asString)

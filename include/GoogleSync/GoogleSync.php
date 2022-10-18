@@ -63,11 +63,11 @@ class GoogleSync extends GoogleSyncBase
      * Gets the combined titles of a Meeting/Event pair for Logging
      *
      * @param Meeting $meeting The CRM Meeting
-     * @param \Google_Service_Calendar_Event $event The Google Event
+     * @param \Google\Service\Calendar\Event $event The Google Event
      *
      * @return string The combined title
      */
-    protected function getTitle(Meeting $meeting = null, Google_Service_Calendar_Event $event = null)
+    protected function getTitle(Meeting $meeting = null, Google\Service\Calendar\Event $event = null)
     {
         $meetingTitle = isset($meeting) ? $meeting->name : null;
         $eventTitle = isset($event) ? $event->getSummary() : null;
@@ -89,13 +89,13 @@ class GoogleSync extends GoogleSyncBase
      *
      * @param string $action The action to take with the two events
      * @param Meeting $meeting The CRM Meeting
-     * @param \Google_Service_Calendar_Event $event The Google Event
+     * @param \Google\Service\Calendar\Event $event The Google Event
      *
      * @return bool Success/Failure
      * @throws GoogleSyncException if $action is invalid.
      * @throws GoogleSyncException if something else fails.
      */
-    protected function doAction($action, Meeting $meeting = null, Google_Service_Calendar_Event $event = null)
+    protected function doAction($action, Meeting $meeting = null, Google\Service\Calendar\Event $event = null)
     {
         $title = $this->getTitle($meeting, $event);
 
@@ -194,12 +194,12 @@ class GoogleSync extends GoogleSyncBase
      * Used when an event w/ a matching ID is on both ends of the sync.
      * At least one of the params is required.
      *
-     * @param Meeting|null $meeting (optional) Meeting Bean or Google_Service_Calendar_Event Object
-     * @param \Google_Service_Calendar_Event|null $event (optional) Google_Service_Calendar_Event Object
+     * @param Meeting|null $meeting (optional) Meeting Bean or Google\Service\Calendar\Event Object
+     * @param \Google\Service\Calendar\Event|null $event (optional) Google\Service\Calendar\Event Object
      *
      * @return string|bool 'push(_delete)', 'pull(_delete)', 'skip', false (on error)
      */
-    protected function pushPullSkip(Meeting $meeting = null, Google_Service_Calendar_Event $event = null)
+    protected function pushPullSkip(Meeting $meeting = null, Google\Service\Calendar\Event $event = null)
     {
         if (empty($meeting) && empty($event)) {
             throw new GoogleSyncException('Missing Parameter, You must pass at least one event');

@@ -160,10 +160,9 @@ EOQ;
         } else {
             $focus->text_only = 0;
         }
-        if (!$focus->ACLAccess('Save')) {
-            ACLController::displayNoAccess(true);
-            sugar_cleanup(true);
-        }
+
+        $this->checkAccess($focus);
+
         if (!isset($_REQUEST['published'])) {
             $focus->published = 'off';
         }
@@ -408,6 +407,34 @@ EOQ;
             handleRedirect($return_id, "EmailTemplates");
         } else {
             return $focus;
+        }
+    }
+
+    /**
+     * @param SugarBean $focus
+     * @return void
+     */
+    protected function checkAccess(SugarBean $focus): void
+    {
+        global $current_user;
+
+        if (!$focus->ACLAccess('Save')) {
+            ACLController::displayNoAccess(true);
+            sugar_cleanup(true);
+        }
+
+        $type = !empty($focus->type) ? $focus->type : '';
+        if (!empty($focus->id)) {
+            $template = BeanFactory::getBean('EmailTemplates', $focus->id);
+
+            if (!empty($template) && !empty($template->type)) {
+                $type = $template->type;
+            }
+        }
+
+        if ($type === 'system' && !is_admin($current_user)) {
+            ACLController::displayNoAccess(true);
+            sugar_cleanup(true);
         }
     }
 }

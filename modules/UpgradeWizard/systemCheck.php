@@ -202,7 +202,6 @@ $checks = array(
     'curlStatus'				=> $mod_strings['LBL_UW_COMPLIANCE_CURL'],
     'imapStatus'				=> $mod_strings['LBL_UW_COMPLIANCE_IMAP'],
     'mbstringStatus'			=> $mod_strings['LBL_UW_COMPLIANCE_MBSTRING'],
-    'safeModeStatus'			=> $mod_strings['LBL_UW_COMPLIANCE_SAFEMODE'],
     'callTimeStatus'			=> $mod_strings['LBL_UW_COMPLIANCE_CALLTIME'],
     'memory_msg'				=> $mod_strings['LBL_UW_COMPLIANCE_MEMORY'],
     'stream_msg'                => $mod_strings['LBL_UW_COMPLIANCE_STREAM'],

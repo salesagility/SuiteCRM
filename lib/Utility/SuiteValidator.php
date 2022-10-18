@@ -43,28 +43,25 @@ namespace SuiteCRM\Utility;
 class SuiteValidator
 {
     /**
-     * @param string $id
+     * @param string|null $id
      * @return bool
      */
-    public function isValidId($id)
+    public function isValidId(?string $id): bool
     {
-        global $sugar_config;
-
-        if ($sugar_config['strict_id_validation']) {
-            $valid = is_numeric($id) || (is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i',
-                        $id));
-        } else {
-            $valid = is_numeric($id) || (is_string($id) && preg_match('/^[a-zA-Z0-9_-]*$/i', $id));
+        if (empty($id)) {
+            return false;
         }
 
-        return $valid;
+        $pattern = $this->getIdValidationPattern();
+
+        return is_numeric($id) || (is_string($id) && preg_match($pattern, $id));
     }
 
     /**
      * @param string $fieldname
      * @return bool
      */
-    public function isPercentageField($fieldname)
+    public function isPercentageField(string $fieldname): bool
     {
         if ($fieldname === 'aos_products_quotes_vat' ||
             strpos(strtolower($fieldname), 'pct') !== false ||
@@ -74,5 +71,22 @@ class SuiteValidator
         }
 
         return false;
+    }
+
+    /**
+     * Get id validation pattern
+     * @return string
+     */
+    public function getIdValidationPattern(): string
+    {
+        global $sugar_config;
+
+        if (isset($sugar_config['strict_id_validation']) && $sugar_config['strict_id_validation']) {
+            $pattern = '/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i';
+        } else {
+            $pattern = get_id_validation_pattern();
+        }
+
+        return $pattern;
     }
 }

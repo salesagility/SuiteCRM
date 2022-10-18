@@ -538,7 +538,7 @@ $mod_strings = array(
     'LBL_UPTODATE' => 'You have the latest version available',
     'LBL_USER_NAME' => 'User Name:',
     'LBL_USERNAME' => 'User Name',
-    'LBL_USERS_TITLE' => 'Users',
+    'LBL_USERS_TITLE' => 'Users & Authentication',
     'LBL_HISTORY_CONTACTS_EMAILS' => 'History Subpanel',
     'LBL_HISTORY_CONTACTS_EMAILS_DESC' => 'Enable/Disable contacts\' emails in history',
 
@@ -615,6 +615,8 @@ $mod_strings = array(
     'LBL_QUICK_REPAIR_TITLE' => 'Please select Module(s) to repair:',
     'LBL_QUICK_REPAIR_AND_REBUILD_DESC' => 'Repairs and rebuilds DB, Extensions, Vardefs, SuiteCRM Dashlets etc.',
     'LBL_ALL_MODULES' => 'All Modules',
+    'LBL_REPAIR_ELASTICSEARCH_INDEX' => 'Repair ElasticSearch Index',
+    'LBL_REPAIR_ELASTICSEARCH_INDEX_DONE' => 'ElasticSearch Indexing has been repaired',
     'LBL_CAMPAIGN_CONFIG_TITLE' => 'Campaign Email Settings',
     'LBL_CAMPAIGN_CONFIG_DESC' => 'Configure email settings for campaigns',
     'LBL_REPAIR_ORACLE_FULLTEXT' => 'Rebuild fulltext indices',
@@ -744,8 +746,8 @@ $mod_strings = array(
     'LBL_SAML_TITLE' => 'SAML Authentication',
     'LBL_SAML_CERT' => 'X509 Certificate',
     'LBL_SAML_CERT_DESC' => 'Enter X509 Certificate',
-    'LBL_SAML_LOGIN_URL' => 'Login URL',
-    'LBL_SAML_LOGOUT_URL' => 'SLO URL',
+    'LBL_SAML_LOGIN_URL' => 'Login URL', //SAML Authentication
+    'LBL_SAML_LOGOUT_URL' => 'SLO URL', //SAML Single Log-out
     'LBL_SAML_LOGIN_URL_DESC' => 'Enter Login URL',
     'LBL_SAML_LOGOUT_URL_DESC' => 'Enter Logout URL',
 
@@ -793,6 +795,7 @@ $mod_strings = array(
     'LBL_JJWG_MAPS_ADMIN_ADDRESS_CACHE_DESC' => 'Provides access to Address Cache information. This is only cache.',
 
     // Google Calendar
+    'LBL_GOOGLE_AUTH_TITLE' => 'Google Sync Settings',
     'LBL_GOOGLE_CALENDAR_SETTINGS_TITLE' => 'Google Calendar Settings',
     'LBL_GOOGLE_CALENDAR_SETTINGS_DESC' => 'Configuration settings to adjust your Google Calendar',
     'LBL_GOOGLE_CALENDAR_SETTINGS_JSON' => 'Upload Google API Credentials File',
@@ -826,9 +829,10 @@ $mod_strings = array(
     'LBL_SUGGESTION_POPUP_FROM' => 'Suggestion & Pop-up gradient (from):',
     'LBL_SUGGESTION_POPUP_TO' => 'Suggestion & Pop-up gradient (to):',
 
-    'LBL_SALESAGILITY_ADMIN' => 'Advanced OpenAdmin',
-    'LBL_AOP_ADMIN_MANAGE_AOP' => 'Advanced OpenPortal Settings',
-    'LBL_AOP_ENABLE_AOP' => 'Enable AOP',
+    'LBL_MODULE_ADMIN' => 'Module Settings',
+    'LBL_MODULE_ADMIN_HEADER_DESC' => 'Configure Module specifics and settings',
+    'LBL_AOP_ADMIN_MANAGE_AOP' => 'Case Module Settings',
+    'LBL_AOP_ENABLE_AOP' => 'Enable Case Automations',
     'LBL_AOP_ENABLE_PORTAL' => 'Enable External Portal',
     'LBL_AOP_JOOMLA_SETTINGS' => 'Portal Settings',
     'LBL_AOP_JOOMLA_URL' => 'Joomla URL',
@@ -846,12 +850,12 @@ $mod_strings = array(
     'LBL_AOP_JOOMLA_ACCOUNT_CREATION_EMAIL_TEMPLATE' => 'Joomla Support Portal Account Creation Template',
 
     'LBL_AOP_BUSINESS_HOURS_SETTINGS' => 'Business Hours',
-    'LBL_AOP_BUSINESS_HOURS_DESC' => "Restrict 'Only In The Scheduler' Workflows to launch only in certain days and times",
+    'LBL_AOP_BUSINESS_HOURS_DESC' => "Restrict Workflow & Case automations to certain days and times",
     'LBL_SUPPORT_FROM_ADDRESS' => 'Support Email From Address',
     'LBL_SUPPORT_FROM_NAME' => 'Support Email From Name',
     'LBL_CREATE_EMAIL_TEMPLATE' => 'Create',
     'LBL_EDIT_EMAIL_TEMPLATE' => 'Edit',
-    'LBL_AOP_SETTINGS' => 'AOP Settings',
+    'LBL_AOP_SETTINGS' => 'Case Module Settings',
 
     'LBL_AOP_CASE_STATUS_SETTINGS' => 'Case Status Changes',
     'LBL_AOP_IF_STATUS' => 'If status is',
@@ -859,13 +863,9 @@ $mod_strings = array(
     'LBL_AOP_ADD_STATUS' => 'Add',
     'LBL_AOP_REMOVE_STATUS' => 'Remove',
 
-    'LBL_AOD_ADMIN_MANAGE_AOD' => 'Advanced OpenDiscovery Settings',
-    'LBL_AOD_ENABLE' => 'Enable AOD',
-    'LBL_AOD_SETTINGS' => 'AOD Settings',
-
     'LBL_AOS_ADMIN_CONTRACT_SETTINGS' => 'Contract Settings',
     'LBL_AOS_ADMIN_CONTRACT_RENEWAL_REMINDER' => 'Renewal Reminder period',
-    'LBL_AOS_ADMIN_MANAGE_AOS' => 'Advanced OpenSales Settings',
+    'LBL_AOS_ADMIN_MANAGE_AOS' => 'Sales Module Settings',
     'LBL_AOS_ADMIN_INVOICE_SETTINGS' => 'Invoice Settings',
     'LBL_AOS_ADMIN_INITIAL_INVOICE_NUMBER' => 'Initial Invoice Number',
     'LBL_AOS_ADMIN_QUOTE_SETTINGS' => 'Quote Settings',
@@ -873,12 +873,11 @@ $mod_strings = array(
     'LBL_AOS_ADMIN_LINE_ITEM_SETTINGS' => 'Line Item Settings',
     'LBL_AOS_ADMIN_ENABLE_LINE_ITEM_GROUPS' => 'Enable Line Items Groups',
     'LBL_AOS_ADMIN_ENABLE_LINE_ITEM_TOTAL_TAX' => 'Add TAX To Line Total',
-    'LBL_AOS_SETTINGS' => 'AOS Settings',
-    'LBL_AOS_PRODUCTS' => 'AOS Products',
+    'LBL_AOS_SETTINGS' => 'Sales Module Settings',
     'LBL_AOS_DAYS' => 'days',
-    'LBL_CHANGE_SETTINGS' => 'Change settings for Advanced OpenSales',
+    'LBL_CHANGE_SETTINGS' => 'Change settings for Quotes, Contracts and Invoices',
     'LBL_CHANGE_SETTINGS_AOD' => 'Change settings for Advanced OpenDiscovery',
-    'LBL_CHANGE_SETTINGS_AOP' => 'Change settings for Advanced OpenPortal',
+    'LBL_CHANGE_SETTINGS_AOP' => 'Change settings for Cases and the Cases Portal',
 
     'LBL_MANAGE_SECURITYGROUPS_TITLE' => 'Security Suite Group Management',
     'LBL_MANAGE_SECURITYGROUPS' => 'Security Suite Group Editor',
@@ -935,6 +934,7 @@ $mod_strings = array(
     'LBL_ELASTIC_SEARCH_TEST_CONNECTION' => 'Test connection',
     'LBL_ELASTIC_SEARCH_TEST_CONNECTION_SUCCESS' => 'Connection successful.',
     'LBL_ELASTIC_SEARCH_TEST_CONNECTION_FAIL' => 'Connection failed.',
+    'LBL_SETUP_ELASTICSEARCH' => 'Please enable ElasticSearch before repairing Indexes',
     'LBL_ELASTIC_SEARCH_TEST_CONNECTION_ERROR' => 'Failed perform ping request.',
     'LBL_ELASTIC_SEARCH_SERVER' => 'Server',
     'LBL_ELASTIC_SEARCH_HOST' => 'Host',
@@ -960,18 +960,67 @@ $mod_strings = array(
     'LBL_SEARCH_ENGINE' => 'Search Engine',
     'LBL_SEARCH_ENGINE_HELP' => 'Configure the default search engine used by the search.',
     'LBL_SEARCH_ENGINE_TOOLTIP' => 'Select a search engine for the Global Search.',
+    'LBL_SEARCH_GENERAL' => 'General',
 
     'LBL_SEARCH_MODULES' => 'Search Modules',
     'LBL_SEARCH_MODULES_HELP' => 'Select the module(s) that users will be able to search against using the Global Search.',
 
     // Search Engines Translations
-    'LBL_LEGACY_SEARCH_ENGINES' => 'Legacy Search',
-    'LBL_SEARCH_WRAPPER_ENGINES' => 'Search Engines (new)',
+    'LBL_SEARCH_WRAPPER_ENGINES' => 'Search Engines',
     'LBL_BASIC_SEARCH_ENGINE' => 'Basic Search',
     'LBL_BASIC_AND_AOD_ENGINE' => 'Basic + Advanced Search',
     'LBL_ELASTIC_SEARCH_ENGINE' => 'Elasticsearch Engine',
     'LBL_SIMPLE_SQL_SEARCH_ENGINE' => 'Simple SQL Search Engine',
 
+    // SearchWrapper Settings
+    'LBL_PDF_HEADER' => 'PDF Settings',
+    'LBL_CHANGE_PDF_SETTINGS' => 'Change PDF Settings',
+    'LBL_PDF_HEADER_DESC' => 'Manage your PDF preferences',
+    'LBL_PDF_OPTIONS' => 'PDF Engine',
+    'LBL_PDF_OPTIONS_HELP' => 'Select the PDF engine that users will be able to use.',
+    'LBL_PDF_INTERFACE' => 'PDF Interface',
+
+    // PDF Engines Translations
+    'LBL_PDF_WRAPPER_ENGINES' => 'PDF Engines',
+    'LBL_MPDF_ENGINE' => 'MPDF Engine',
+
     // Ajax Submit
     'LBL_AJAX_SUBMIT_FAIL' => 'An error has occurred while saving the settings.',
+
+    'LBL_ADMIN_TOOLS_TITLE' => 'Admin Tools',
+    'LBL_ADMIN_TOOLS_HEADER_DESC' => 'Repair, upgrade and run diagnosis on your SuiteCRM instance',
+    'LBL_WORKFLOW_MANAGER' => 'Workflow Manager',
+    'LBL_WORKFLOW_MANAGER_DESC' => 'Manage, Add, delete or change Workflow processes',
+
+
+    'LBL_WARNING' => 'Warning',
+    'LBL_ERROR' => 'Error',
+    'LBL_SUBMIT' => 'Submit',
+    'LBL_REPAIR_UTF_ENCODING' => 'Repair utf encoding',
+    'LBL_REPAIR_UTF_ENCODING_DESC' => 'Repair records with wrongly encoded utf characters',
+    'LBL_REPAIR_UTF_ENCODING_DATA_WARNING' => 'The data on your tables is going to be updated.',
+    'LBL_REPAIR_UTF_ENCODING_BACKUP_WARNING' => 'Please make sure to backup your database before you run this action.',
+    'LBL_REPAIR_UTF_ENCODING_SYNC_WARNING' => 'By default this action will add a job to the job queue. It will normalize records in batches. This requires cron to be configured.',
+    'LBL_REPAIR_UTF_ENCODING_ASYNC_WARNING' => 'Running in asynchronous mode. A job should have been added to the job queue. It will normalize records in batches. This requires cron to be configured.',
+    'LBL_REPAIR_UTF_ENCODING_ASYNC_PROGRESS_CHECK' => "For progress information, please check the data on the job_queue table entry with name 'repair utf encoding' ",
+    'LBL_REPAIR_UTF_ENCODING_SYNC_PROGRESS_CHECK' => "Running in synchronous mode. This action will take a while. For progress information, please check SuiteCRM logs. Check logs with '[utf-normalize]'",
+    'LBL_KEEP_TRACKING_TABLES' => 'Keep Tracking tables',
+    'LBL_REPAIR_FROM_DATE' => 'Repair from',
+    'LBL_REPAIR_UTF_ENCODING_REPAIR_FROM_INVALID' => 'Provided \'Repair from\' value is not valid',
+    'LBL_SYNC_RUN' => 'Run Repair Synchronously?',
+    'LBL_SYNC_RUNNING' => 'Running in sync mode',
+    'LBL_SYNC_RUNNING_INFORMATION_OUTPUT' => 'Do not move away from this page/view. Result information will be displayed.',
+    'LBL_SYNC_RUNNING_INFORMATION_LOGS' => "You can also check SuiteCRM logs for more information. Check logs with '[utf-normalize]'",
+    'LBL_SYNC_LONG_EXECUTION_WARNING' => 'This action will take a while.',
+    'LBL_SYNC_RUN_DESC' => 'Check to run action in synchronous mode. This action will take a while. Please check SuiteCRM logs for progress information. Check logs with \'[utf-normalize]\'',
+    'LBL_NORMALIZE_SUCCESS' => 'Normalize records successfully executed',
+    'LBL_NORMALIZE_FAILURE' => 'Error while running normalize records',
+    'LBL_EXECUTION_STATUS' => 'Execution Status',
+    'LBL_EXECUTION_MODE' => 'Execution Mode',
+    'LBL_IN_PROGRESS' => 'In Progress',
+    'LBL_REPAIRED' => 'Repaired',
+    'LBL_SYNCHRONOUS' => 'Synchronous',
+    'LBL_ASYNCHRONOUS' => 'Asynchronous',
+    'LBL_OUTPUT' => 'OUTPUT',
+    'LBL_RESULT' => 'Result'
 );

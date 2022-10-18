@@ -76,7 +76,7 @@ class Controller extends AbstractController
     /**
      * Shows the view.
      */
-    public function display()
+    public function display(): void
     {
         $this->view->getTemplate()->assign('schedulers', $this->getSchedulers());
         parent::display();
@@ -184,6 +184,7 @@ class Controller extends AbstractController
         $where = "schedulers.job='function::runElasticSearchIndexerScheduler'";
         /** @var Scheduler[]|null $schedulers */
         $schedulers = BeanFactory::getBean('Schedulers')->get_full_list(null, $where);
+
         return $schedulers;
     }
 

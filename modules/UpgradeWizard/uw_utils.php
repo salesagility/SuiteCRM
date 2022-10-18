@@ -42,6 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once __DIR__ . '/../../include/dir_inc.php';
+
 /**
  * Implodes some parts of version with specified delimiter, beta & rc parts are removed all time
  *
@@ -122,7 +124,7 @@ function commitMakeBackupFiles($rest_dir, $install_file, $unzip_dir, $zip_from_d
                 RecursiveDirectoryIterator::SKIP_DOTS | RecursiveIteratorIterator::SELF_FIRST
             )
         );
-	    
+
         // keep this around for canceling
         $_SESSION['uw_restore_dir'] = getUploadRelativeName($rest_dir);
 
@@ -143,7 +145,7 @@ function commitMakeBackupFiles($rest_dir, $install_file, $unzip_dir, $zip_from_d
             if (is_file($oldFile)) {
                 if (is_writable($rest_dir)) {
                     logThis('Backing up file: ' . $oldFile, $path);
-                    if (!copy($oldFile, $rest_dir . '/' . $cleanFile)) {
+                    if (!copy_recursive($oldFile, $rest_dir . '/' . $cleanFile)) {
                         logThis('*** ERROR: could not backup file: ' . $oldFile, $path);
                         $errors[] = "{$mod_strings['LBL_UW_BACKUP']}::{$mod_strings['ERR_UW_FILE_NOT_COPIED']}: {$oldFile}";
                     } else {
@@ -233,7 +235,7 @@ function commitCopyNewFiles($unzip_dir, $zip_from_dir, $path='')
                 continue;
             }
 
-            if (!copy($srcFile, $targetFile)) {
+            if (!copy_recursive($srcFile, $targetFile)) {
                 logThis('*** ERROR: could not copy file: ' . $targetFile, $path);
             } else {
                 $copiedFiles[] = $targetFile;
@@ -320,7 +322,7 @@ function copyRecursiveBetweenDirectories($from, $to)
                     continue;
                 }
 
-                if (!copy($srcFile, $targetFile)) {
+                if (!copy_recursive($srcFile, $targetFile)) {
                     logThis("*** ERROR: could not copy file $srcFile to $targetFile");
                 }
             }
@@ -398,7 +400,7 @@ function deleteAndOverWriteSelectedFiles($unzip_dir, $zip_from_dir, $delete_dirs
 
                     //logThis('Copying file to destination: ' . $targetFile);
 
-                    if (!copy($srcFile, $targetFile)) {
+                    if (!copy_recursive($srcFile, $targetFile)) {
                         logThis('*** ERROR: could not copy file: ' . $targetFile);
                     } else {
                         $copiedFiles[] = $targetFile;
@@ -1184,15 +1186,6 @@ function checkSystemCompliance()
         $ret['error_found'] = false;
     }
 
-
-    // safe mode
-    if ('1' == ini_get('safe_mode')) {
-        $ret['safeModeStatus'] = "<b><span class=stop>{$installer_mod_strings['ERR_CHECKSYS_SAFE_MODE']}</span></b>";
-        $ret['error_found'] = true;
-    } else {
-        $ret['safeModeStatus'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
-    }
-
     // memory limit
     $ret['memory_msg']     = "";
     $memory_limit   = "-1";//ini_get('memory_limit');
@@ -1321,7 +1314,11 @@ function logThis($entry, $path='')
     }
 
     if (is_resource($fp)) {
-        fclose($fp);
+        if (function_exists('sugar_fclose')) {
+            sugar_fclose($fp);
+	} else {
+            fclose($fp);
+        }
     }
 }
 
@@ -1335,6 +1332,10 @@ function logThis($entry, $path='')
  **/
 function updateQuickCreateDefs()
 {
+    if (file_exists(__DIR__.'/../../include/utils/sugar_file_utils.php')) {
+        require_once(__DIR__.'/../../include/utils/sugar_file_utils.php');
+    }
+
     $d = dir('modules');
     $studio_modules = array();
 
@@ -1364,7 +1365,11 @@ function updateQuickCreateDefs()
                 if (file_exists($quickcreatedefs) && is_readable($quickcreatedefs)) {
                     $file = file($quickcreatedefs);
                     //replace 'EditView' with 'QuickCreate'
-                    $fp = fopen($quickcreatedefs, 'wb');
+                    if (function_exists('sugar_fopen')) {
+                        $fp = sugar_fopen($quickcreatedefs, 'wb');
+                    } else {
+                        $fp = fopen($quickcreatedefs, 'wb');
+                    }
                     foreach ($file as &$line) {
                         if (preg_match('/^\s*\'EditView\'\s*=>\s*$/', $line) > 0) {
                             $line = "'QuickCreate' =>\n";
@@ -1372,7 +1377,11 @@ function updateQuickCreateDefs()
                         fwrite($fp, $line);
                     }
                     //write back.
-                    fclose($fp);
+                    if (function_exists('sugar_fclose')) {
+                        sugar_fclose($fp);
+                    } else {
+                        fclose($fp);
+                    }
                 } else {
                     $GLOBALS['log']->debug("Failed to replace 'EditView' with QuickCreate because $quickcreatedefs is either not readable or does not exist.");
                 }
@@ -3517,7 +3526,7 @@ function upgradeTeamColumn($bean, $column_name)
         }
         if ($fh = @sugar_fopen($file, 'wt')) {
             fwrite($fh, $contents);
-            fclose($fh);
+            sugar_fclose( $fh );
         }
 
 
@@ -3641,8 +3650,8 @@ function addNewSystemTabsFromUpgrade($from_dir)
         $newTB = new TabController();
 
         //make sure new modules list has a key we can reference directly
-        $newModuleList = $newTB->get_key_array($newModuleList);
-        $oldModuleList = $newTB->get_key_array($oldModuleList);
+        $newModuleList = TabController::get_key_array($newModuleList);
+        $oldModuleList = TabController::get_key_array($oldModuleList);
 
         //iterate through list and remove commonalities to get new modules
         foreach ($newModuleList as $remove_mod) {
@@ -3734,11 +3743,7 @@ function fix_dropdown_list()
                     //Now write out the file contents
                     //Create backup just in case
                     copy($file, $file . '.php_bak');
-                    $fp = @sugar_fopen($file, 'w');
-                    if ($fp) {
-                        fwrite($fp, $contents);
-                        fclose($fp);
-                    } else {
+                    if (sugar_file_put_contents($file, $contents) === false) {
                         $GLOBALS['log']->error("Unable to update file contents in fix_dropdown_list for {$file}");
                     } //if-else
                 }
@@ -3856,11 +3861,7 @@ function fix_dropdown_list()
                 if ($touched) {
                     //Create a backup just in case
                     copy($file, $file . '.bak');
-                    $fp = @sugar_fopen($file, 'w');
-                    if ($fp) {
-                        fwrite($fp, $out);
-                        fclose($fp);
-                    } else {
+                    if (sugar_file_put_contents($file, $out) === false) {
                         //If we can't update the file, just return
                         $GLOBALS['log']->error("Unable to update file contents in fix_dropdown_list.");
                         return;
@@ -4373,7 +4374,6 @@ function writeSilentUpgradeVars()
     $cacheFileDir = "{$GLOBALS['sugar_config']['cache_dir']}/silentUpgrader";
     $cacheFile = "{$cacheFileDir}/silentUpgradeCache.php";
 
-    require_once('include/dir_inc.php');
     if (!mkdir_recursive($cacheFileDir)) {
         return false;
     }
@@ -4635,7 +4635,6 @@ function repairSearchFields($globString='modules/*/metadata/SearchFields.php', $
         logThis('Begin repairSearchFields', $path);
     }
 
-    require_once('include/dir_inc.php');
     require_once('modules/DynamicFields/templates/Fields/TemplateRange.php');
     require('include/modules.php');
 

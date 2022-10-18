@@ -44,14 +44,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use SuiteCRM\Exception\Exception;
 
 /**
  * Class TestCaseAbstract
  * @package SuiteCRM
  */
-abstract class TestCaseAbstract extends PHPUnit_Framework_TestCase
+abstract class TestCaseAbstract extends TestCase
 {
     use DatabaseTransactions;
     use RefreshDatabase;
@@ -62,7 +62,7 @@ abstract class TestCaseAbstract extends PHPUnit_Framework_TestCase
     /**
      * @throws Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (self::$verbose) {
             $currentTestName = get_class($this) . '::' . $this->getName(false);
@@ -82,7 +82,7 @@ abstract class TestCaseAbstract extends PHPUnit_Framework_TestCase
         parent::setUp();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

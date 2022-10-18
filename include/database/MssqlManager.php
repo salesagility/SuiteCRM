@@ -997,7 +997,7 @@ class MssqlManager extends DBManager
 
     /**
      * Get tables like expression
-     * @param $like string
+     * @param string $like
      * @return array
      */
     public function tablesLike($like)
@@ -1492,6 +1492,9 @@ EOSQL;
     {
         $type = $definition['type'];
         $fields = is_array($definition['fields']) ? implode(',', $definition['fields']) : $definition['fields'];
+
+        $fields = $this->removeIndexLimit($fields);
+
         $name = $definition['name'];
         $sql = '';
 
@@ -2128,5 +2131,15 @@ EOQ;
     public function getGuidSQL()
     {
         return 'NEWID()';
+    }
+
+    /**
+     * Remove unsupported index limit
+     * @param $fields
+     * @return string|string[]|null
+     */
+    protected function removeIndexLimit($fields)
+    {
+        return preg_replace('/(\s?\(\d+\))/', '', $fields);
     }
 }

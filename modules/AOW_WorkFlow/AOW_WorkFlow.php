@@ -217,13 +217,14 @@ class AOW_WorkFlow extends Basic
      */
     public function run_bean_flows(SugarBean $bean)
     {
-        if (!defined('SUGARCRM_IS_INSTALLING') && (!isset($_REQUEST['module']) || $_REQUEST['module'] != 'Import')) {
-            $query = "SELECT id FROM aow_workflow WHERE aow_workflow.flow_module = '" . $bean->module_dir . "' AND aow_workflow.status = 'Active' AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'On_Save' OR aow_workflow.run_when = 'Create') AND aow_workflow.deleted = 0 ";
+        $query = "SELECT id FROM aow_workflow WHERE aow_workflow.flow_module = '" . $bean->module_dir . "' AND aow_workflow.status = 'Active' AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'On_Save' OR aow_workflow.run_when = 'Create') AND aow_workflow.deleted = 0 ";
 
-            $result = $this->db->query($query, false);
-            $flow = BeanFactory::newBean('AOW_WorkFlow');
-            while (($row = $bean->db->fetchByAssoc($result)) != null) {
-                $flow->retrieve($row['id']);
+        $result = $this->db->query($query, false);
+        $flow = BeanFactory::newBean('AOW_WorkFlow');
+        while (($row = $bean->db->fetchByAssoc($result)) != null) {
+            $flow->retrieve($row['id']);
+
+            if ((!defined('SUGARCRM_IS_INSTALLING') && (!isset($_REQUEST['module'])) || $_REQUEST['module'] != 'Import') || $flow->run_on_import) {
                 if ($flow->check_valid_bean($bean)) {
                     $flow->run_actions($bean, true);
                 }
@@ -299,10 +300,11 @@ class AOW_WorkFlow extends Basic
         SugarBean $module,
         $query = array()
     ) {
+	    global $db;
         if (!isset($query['join'][$name])) {
             if ($module->load_relationship($name)) {
                 $params['join_type'] = 'LEFT JOIN';
-                $params['join_table_alias'] = $name;
+                $params['join_table_alias'] = $db->quoteIdentifier($name);
                 $join = $module->$name->getJoin($params, true);
 
                 $query['join'][$name] = $join['join'];

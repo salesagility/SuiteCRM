@@ -151,19 +151,7 @@ class Lead extends Person implements EmailInterface
         parent::__construct();
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function Lead()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+
 
 
     public function get_account()
@@ -408,7 +396,7 @@ class Lead extends Person implements EmailInterface
         $xtpl->assign("LEAD_NAME", $locale->getLocaleFormattedName($lead->first_name, $lead->last_name, $lead->salutation));
         $xtpl->assign("LEAD_SOURCE", (isset($lead->lead_source) ? $app_list_strings['lead_source_dom'][$lead->lead_source] : ""));
         $xtpl->assign("LEAD_STATUS", (isset($lead->status)? $app_list_strings['lead_status_dom'][$lead->status]:""));
-        $xtpl->assign("LEAD_DESCRIPTION", $lead->description);
+        $xtpl->assign("LEAD_DESCRIPTION", nl2br($lead->description));
 
         return $xtpl;
     }
@@ -525,7 +513,13 @@ class Lead extends Person implements EmailInterface
         foreach ($this->field_defs as $field => $value) {
             if (!empty($value['source']) && $value['source'] == 'custom_fields') {
                 if (!empty($tempBean->field_defs[$field]) and isset($tempBean->field_defs[$field])) {
-                    $form .= "<tr><td nowrap colspan='4' class='dataLabel'>".$mod_strings[$tempBean->field_defs[$field]['vname']].":";
+                    $label = $tempBean->field_defs[$field]['vname'];
+                    if(isset($mod_strings[$label])){
+                        $label = $mod_strings[$label];
+                    } elseif(isset($app_strings[$label])){
+                        $label = $app_strings[$label];
+                    }
+                    $form .= "<tr><td nowrap colspan='4' class='dataLabel'>".$label.":";
 
                     if (!empty($tempBean->custom_fields->avail_fields[$field]['required']) and (($tempBean->custom_fields->avail_fields[$field]['required']== 1) or ($tempBean->custom_fields->avail_fields[$field]['required']== '1') or ($tempBean->custom_fields->avail_fields[$field]['required']== 'true') or ($tempBean->custom_fields->avail_fields[$field]['required']== true))) {
                         $form .= "&nbsp;<span class='required'>".$lbl_required_symbol."</span>";

@@ -294,7 +294,7 @@ abstract class DBManager
     }
 
     /**
-     * Returns this instance's DBHelper
+     * Returns this instance's DBManager
      * Actually now returns $this
      * @deprecated
      * @return DBManager
@@ -958,6 +958,10 @@ abstract class DBManager
 
             if (in_array($value['type'], array('alternate_key', 'foreign'))) {
                 $value['type'] = 'index';
+            }
+
+            if (isset($value['fields'])) {
+                $value['fields'] = $this->removeIndexLimit($value['fields']);
             }
 
             if (!isset($compareIndices[$name])) {
@@ -1876,7 +1880,7 @@ abstract class DBManager
      * Takes a prepared stmt index and the data to replace and creates the query and runs it.
      *
      * @deprecated This is no longer used and will be removed in a future release. See createPreparedQuery() for an alternative.
-     * 
+     *
      * @param  int $stmt The index of the prepared statement from preparedTokens
      * @param  array $data The array of data to replace the tokens with.
      * @return resource result set or false on error
@@ -2086,6 +2090,11 @@ abstract class DBManager
                 if (!empty($val) && !empty($fieldDef['len']) && strlen($val) > $fieldDef['len']) {
                     $val = $this->truncate($val, $fieldDef['len']);
                 }
+
+                if (!empty($bean->bean_fields_to_save) && !in_array($fieldDef['name'], $bean->bean_fields_to_save, true)) {
+                    continue;
+                }
+
                 $columnName = $this->quoteIdentifier($fieldDef['name']);
                 if (!is_null($val) || !empty($fieldDef['required'])) {
                     $columns[] = "{$columnName}=".$this->massageValue($val, $fieldDef);
@@ -4113,5 +4122,14 @@ abstract class DBManager
     public function removeLineBreaks($sql)
     {
         return trim(str_replace(array("\r", "\n"), " ", $sql));
+    }
+
+    /**
+     * @param $fields
+     * @return string|string[]|null
+     */
+    protected function removeIndexLimit($fields)
+    {
+        return $fields;
     }
 }

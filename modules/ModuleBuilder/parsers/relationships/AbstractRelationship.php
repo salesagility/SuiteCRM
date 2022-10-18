@@ -609,7 +609,7 @@ class AbstractRelationship
     /*
      * Return a version of $proposed that can be used as a column name in any of our supported databases
      * Practically this means no longer than 25 characters as the smallest identifier length for our supported DBs is 30 chars for Oracle plus we add on at least four characters in some places (for indicies for example)
-     * TODO: Ideally this should reside in DBHelper as it is such a common db function...
+     * TODO: Ideally this should reside in DBManager as it is such a common db function...
      * @param string $name Proposed name for the column
      * @param string $ensureUnique
      * @return string Valid column name trimmed to right length and with invalid characters removed

@@ -247,10 +247,7 @@ class SugarFolder
         $res = $this->db->query($query);
         $a = $this->db->fetchByAssoc($res);
 
-        if ($a['c'] > 0) {
-            return true;
-        }
-        return false;
+        return $a['c'] > 0;
     }
 
     /**
@@ -466,15 +463,16 @@ class SugarFolder
      */
     public function generateArchiveFolderQuery()
     {
-        $query = "SELECT emails.id , emails.name, emails.date_sent_received, emails.status, emails.type, emails.flagged, ".
-            "emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs, 'Emails'".
-            " polymorphic_module FROM emails JOIN emails_text on emails.id = emails_text.email_id ".
-            "WHERE emails.deleted=0 AND emails.type NOT IN ('out', 'draft')"." AND emails.status NOT IN ('sent', 'draft') AND emails.id IN (".
-            "SELECT eear.email_id FROM emails_email_addr_rel eear " .
-            "JOIN email_addr_bean_rel eabr ON eabr.email_address_id=eear.email_address_id AND".
-            " eabr.bean_id = " . $this->db->quoted($this->currentUser->id) . " AND eabr.bean_module = 'Users' WHERE eear.deleted=0)";
-
-        return $query;
+        return "SELECT emails.id , emails.name, emails.date_sent_received, emails.status, emails.type, emails.flagged, " .
+            "emails.reply_to_status, emails_text.from_addr, emails_text.to_addrs, 'Emails' polymorphic_module " .
+            "FROM emails " .
+            "JOIN emails_text on emails.id = emails_text.email_id " .
+            "JOIN emails_email_addr_rel eear ON eear.email_id = emails.id " .
+            "JOIN email_addr_bean_rel eabr ON eabr.email_address_id=eear.email_address_id " .
+            "WHERE emails.deleted=0 AND emails.type NOT IN ('out', 'draft') AND emails.status NOT IN ('sent', 'draft') " .
+            "AND eabr.bean_id = " . $this->db->quoted($this->currentUser->id) . " AND eabr.bean_module = 'Users' " .
+            "AND eear.deleted=0 " .
+            "GROUP BY id";
     }
 
     public function generateSugarsDynamicFolderQuery()
@@ -580,9 +578,45 @@ class SugarFolder
     }
 
     /**
+     * Get the count of items for dynamic folder
+     *
+     * @param bool $unread
+     * @return int
+     */
+    public function getDynamicFolderCount($unread = false)
+    {
+        $selectQuery = $this->generateSugarsDynamicFolderQuery();
+        $pattern = '/SELECT(.*?)(\s){1}FROM(\s){1}/is';  // ignores the case
+
+        if ($this->folder_type === 'archived') {
+            $replacement = 'SELECT count(DISTINCT emails.id) c FROM ';
+            $modifiedSelectQuery = preg_replace($pattern, $replacement, $selectQuery, 1);
+
+            // remove GROUP BY statement
+            $pattern = '/GROUP BY id(\s)?/s';
+            $modifiedSelectQuery = preg_replace($pattern, '', $modifiedSelectQuery, 1);
+        } else {
+            $replacement = 'SELECT count(*) c FROM ';
+            $modifiedSelectQuery = preg_replace($pattern, $replacement, $selectQuery, 1);
+        }
+
+        $query = from_html($modifiedSelectQuery);
+
+        if ($unread) {
+            $query .= " AND emails.status = 'unread'";
+        }
+
+        $res = $this->db->query($query);
+
+        $result = $this->db->fetchByAssoc($res);
+
+        return $result['c'];
+    }
+
+    /**
      * Get the count of items
      *
-     * @param  string $folderId
+     * @param string $folderId
      * @return int
      */
     public function getCountItems($folderId)
@@ -590,22 +624,18 @@ class SugarFolder
         $this->retrieve($folderId);
 
         if ($this->is_dynamic) {
-            $pattern = '/SELECT(.*?)(\s){1}FROM(\s){1}/is';  // ignores the case
-            $replacement = 'SELECT count(*) c FROM ';
-            $modifiedSelectQuery = preg_replace($pattern, $replacement, $this->generateSugarsDynamicFolderQuery(), 1);
-
-            $res = $this->db->query(from_html($modifiedSelectQuery));
-        } else {
-            // get items and iterate through them
-            $query = "SELECT count(*) c FROM folders_rel JOIN emails ON emails.id = folders_rel.polymorphic_id" .
-                " WHERE folder_id = " . $this->db->quoted($folderId) . " AND folders_rel.deleted = 0 AND emails.deleted = 0";
-
-            if ($this->is_group) {
-                $query .= " AND (emails.assigned_user_id is null or emails.assigned_user_id = '')";
-            }
-
-            $res = $this->db->query($query);
+            return $this->getDynamicFolderCount();
         }
+
+        // Get items and iterate through them
+        $query = "SELECT count(*) c FROM folders_rel JOIN emails ON emails.id = folders_rel.polymorphic_id" .
+            " WHERE folder_id = " . $this->db->quoted($folderId) . " AND folders_rel.deleted = 0 AND emails.deleted = 0";
+
+        if ($this->is_group) {
+            $query .= " AND (emails.assigned_user_id is null or emails.assigned_user_id = '')";
+        }
+
+        $res = $this->db->query($query);
 
         $result = $this->db->fetchByAssoc($res);
 
@@ -615,7 +645,7 @@ class SugarFolder
     /**
      * Get a count of the Unread Items
      *
-     * @param  string $folderId
+     * @param string $folderId
      * @return integer
      */
     public function getCountUnread($folderId)
@@ -623,26 +653,23 @@ class SugarFolder
         $this->retrieve($folderId);
 
         if ($this->is_dynamic) {
-            $pattern = '/SELECT(.*?)(\s){1}FROM(\s){1}/is';  // ignores the case
-            $replacement = 'SELECT count(*) c FROM ';
-            $modified_select_query = preg_replace($pattern, $replacement, $this->generateSugarsDynamicFolderQuery(), 1);
-            $r = $this->db->query(from_html($modified_select_query) . " AND emails.status = 'unread'");
-        } else {
-            // get items and iterate through them
-            $query = "SELECT count(*) c FROM folders_rel fr JOIN emails on fr.folder_id = " . $this->db->quoted($folderId) .
-                " AND fr.deleted = 0 " .
-                "AND fr.polymorphic_id = emails.id AND emails.status = 'unread' AND emails.deleted = 0";
-
-            if ($this->is_group) {
-                $query .= " AND (emails.assigned_user_id is null or emails.assigned_user_id = '')";
-            }
-
-            $r = $this->db->query($query);
+            return $this->getDynamicFolderCount(true);
         }
 
-        $a = $this->db->fetchByAssoc($r);
+        // Get items and iterate through them
+        $query = "SELECT count(*) c FROM folders_rel fr JOIN emails on fr.folder_id = " . $this->db->quoted($folderId) .
+            " AND fr.deleted = 0 " .
+            "AND fr.polymorphic_id = emails.id AND emails.status = 'unread' AND emails.deleted = 0";
 
-        return $a['c'];
+        if ($this->is_group) {
+            $query .= " AND (emails.assigned_user_id is null or emails.assigned_user_id = '')";
+        }
+
+        $res = $this->db->query($query);
+
+        $result = $this->db->fetchByAssoc($res);
+
+        return $result['c'];
     }
 
 
@@ -665,6 +692,25 @@ class SugarFolder
             return false;
         }
 
+        /*
+        Fix issue #9192 - Duplicating rows for folders_rel
+        First check if a row with the same data already exists
+        If so, return false
+        */
+
+        $q = "SELECT id FROM folders_rel WHERE".
+            " folder_id = ".$this->db->quoted($this->id).
+            " AND polymorphic_module = ".$this->db->quoted($bean->module_dir).
+            " AND polymorphic_id = ".$this->db->quoted($bean->id).
+            " AND deleted = 0";
+
+        $result = $this->db->fetchByAssoc($this->db->query($q));
+
+        if($result) {
+            $GLOBALS['log']->debug("*** FOLDERS: addBean() is trying to create an already existing relationship");
+            return false;
+        }
+        
         $guid = create_guid();
 
         $query = "INSERT INTO folders_rel " .
@@ -1249,8 +1295,10 @@ class SugarFolder
             }
 
             // if parent_id is set, update parent's has_child flag
-            $query3 = "UPDATE folders SET has_child = 1 WHERE id = " . $this->db->quoted($this->parent_folder);
-            $r3 = $this->db->query($query3);
+            if (!empty($this->parent_folder)) {
+                $query3 = "UPDATE folders SET has_child = 1 WHERE id = " . $this->db->quoted($this->parent_folder);
+                $r3 = $this->db->query($query3);
+            }
         } else {
             $query = "UPDATE folders SET " .
                 "name = " . $this->db->quoted($this->name) . ", " .

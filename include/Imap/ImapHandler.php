@@ -107,7 +107,7 @@ class ImapHandler implements ImapHandlerInterface
     protected function setStream($stream, $validate = true)
     {
         if ($validate && !is_resource($stream)) {
-            $this->logger->error('ImapHandler trying to set a non valid resource az stream.');
+            $this->logger->warn('ImapHandler trying to set a non valid resource az stream.');
         }
         $this->stream = $stream;
     }
@@ -120,7 +120,7 @@ class ImapHandler implements ImapHandlerInterface
     protected function getStream($validate = true)
     {
         if ($validate && !is_resource($this->stream)) {
-            $this->logger->error('ImapHandler trying to use a non valid resource stream.');
+            $this->logger->warn('ImapHandler trying to use a non valid resource stream.');
         }
 
         return $this->stream;

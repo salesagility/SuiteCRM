@@ -74,22 +74,6 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
         $this->reporter = $this->layout_manager->getAttribute('reporter');
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function SugarWidgetFieldCurrency(&$layout_manager)
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct($layout_manager);
-    }
-
-
-
     public function & displayList(&$layout_def)
     {
         global $locale;
@@ -243,7 +227,7 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
 
     /**
      * Return currency for layout_def
-     * @param $layout_def mixed
+     * @param mixed $layout_def
      * @return array Array with currency symbol and currency ID
      */
     protected function getCurrency($layout_def)

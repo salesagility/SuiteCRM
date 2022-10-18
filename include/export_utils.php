@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,6 +37,8 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+use SuiteCRM\CleanCSV;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -108,21 +110,45 @@ function export($type, $records = null, $members = false, $sample=false)
     global $timedate;
     global $mod_strings;
     global $current_language;
+    global $log;
     $sampleRecordNum = 5;
 
     //Array of fields that should not be exported, and are only used for logic
     $remove_from_members = array("ea_deleted", "ear_deleted", "primary_address");
     $focus = 0;
 
-    $bean = $beanList[$type];
+    $db = DBManagerFactory::getInstance();
+    if (empty($db)){
+        $log->fatal('export: not able to get db instance');
+        throw new RuntimeException('Unexpected error. See logs.');
+    }
+
+    if (empty($beanList[$db->quote($type)])) {
+        $log->security("export: trying to access an invalid module '" . $db->quote($type) . "'");
+        throw new RuntimeException('Unexpected error. See logs.');
+    }
+
+    $bean = $beanList[$db->quote($type)];
+
     require_once($beanFiles[$bean]);
     $focus = new $bean;
     $searchFields = array();
-    $db = DBManagerFactory::getInstance();
 
-    if ($records) {
-        $records = explode(',', $records);
-        $records = "'" . implode("','", $records) . "'";
+    $records = $db->quote($records);
+    $recordsArray = [];
+
+    if (!empty($records)) {
+        $recordsArray = explode(',', $records);
+    }
+
+    if (!empty($recordsArray)) {
+        $quotedRecords = [];
+
+        foreach ($recordsArray as $record) {
+            $quotedRecords[] = $db->quote($record);
+        }
+
+        $records = "'" . implode("','", $quotedRecords) . "'";
         $where = "{$focus->table_name}.id in ($records)";
     } elseif (isset($_REQUEST['all'])) {
         $where = '';
@@ -314,7 +340,8 @@ function export($type, $records = null, $members = false, $sample=false)
                 }
 
                 // Keep as $key => $value for post-processing
-                $new_arr[$key] = preg_replace("/\"/", "\"\"", cleanCSV($value));
+                $cleanCSV = new CleanCSV();
+                $new_arr[$key] = preg_replace("/\"/", "\"\"", $cleanCSV->escapeField($value));
             }
 
             // Use Bean ID as key for records
@@ -451,8 +478,8 @@ function export($type, $records = null, $members = false, $sample=false)
 
 /**
  * Parse custom related fields
- * @param $line string CSV line
- * @param $record array of current line
+ * @param string $line CSV line
+ * @param array $record of current line
  * @return mixed string CSV line
  */
 function parseRelateFields($line, $record, $customRelateFields)

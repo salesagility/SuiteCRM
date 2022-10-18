@@ -1,7 +1,4 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -41,7 +38,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
- 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 require_once("modules/Calendar/CalendarUtils.php");
 
 class CalendarController extends SugarController
@@ -138,8 +138,8 @@ class CalendarController extends SugarController
             if (!empty($_REQUEST['edit_all_recurrences'])) {
                 $jsonData['edit_all_recurrences'] = 'true';
             }
-            if ($jsonData['duration_hours'] %24 == 0) {
-                $jsonData['allDay'] = "true";
+            if (!empty($jsonData['duration_hours']) && $jsonData['duration_hours'] %24 === 0) {
+                $jsonData['allDay'] = 'true';
             }
         } else {
             $jsonData = array(

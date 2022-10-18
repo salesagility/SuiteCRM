@@ -328,6 +328,12 @@ class AOW_WorkFlowController extends SugarController
             $value = '';
         }
 
+        if ($_REQUEST['is_value_set'] === 'false'){
+            $params['value_set'] = false;
+        } else{
+            $params['value_set'] = true;
+        }
+
         switch ($_REQUEST['aow_type']) {
             case 'Field':
                 if (isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') {
@@ -354,7 +360,7 @@ class AOW_WorkFlowController extends SugarController
                 // no break
             case 'Value':
             default:
-                echo getModuleField($rel_module, $fieldname, $aow_field, $view, $value);
+                echo getModuleField($rel_module, $fieldname, $aow_field, $view, $value, '', '', $params);
                 break;
         }
         die;

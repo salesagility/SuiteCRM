@@ -451,9 +451,9 @@ $errors = [];
 
 if ($upgradeType !== constant('DCE_INSTANCE')) {
     ini_set('error_reporting', 1);
-    require_once 'include/entryPoint.php';
-    require_once 'include/SugarLogger/SugarLogger.php';
-    require_once 'include/utils/zip_utils.php';
+    require_once('include/entryPoint.php');
+    require_once('include/SugarLogger/SugarLogger.php');
+    require_once('include/utils/php_zip_utils.php');
 
 
     if (!function_exists('sugar_cached')) {
@@ -996,14 +996,10 @@ function repairTableDictionaryExtFile()
 
 
                     if ($altered) {
-                        if (function_exists('sugar_fopen')) {
-                            $fp = @sugar_fopen($entry, 'w');
+                        if (function_exists('sugar_file_put_contents')) {
+                            @sugar_file_put_contents($entry, $contents);
                         } else {
-                            $fp = fopen($entry, 'wb');
-                        }
-
-                        if ($fp && fwrite($fp, $contents)) {
-                            fclose($fp);
+                            file_put_contents($entry, $contents);
                         }
                     }
                 }
