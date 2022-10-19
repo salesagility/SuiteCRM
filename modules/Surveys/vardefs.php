@@ -50,7 +50,7 @@ $dictionary['Surveys'] = array(
             'vname'                     => 'LBL_STATUS',
             'type'                      => 'enum',
             'massupdate'                => 0,
-            'default'                   => 'Draft',
+            'default'                   => 'LBL_DRAFT',
             'no_default'                => false,
             'comments'                  => '',
             'help'                      => '',
@@ -111,7 +111,7 @@ $dictionary['Surveys'] = array(
             'vname'      => 'LBL_SUBMIT_TEXT',
             'type'       => 'varchar',
             'massupdate' => 0,
-            'default'    => 'Submit',
+            'default'    => 'LBL_SUBMIT',
         ),
         'satisfied_text'           => array(
             'required'   => false,
@@ -119,7 +119,7 @@ $dictionary['Surveys'] = array(
             'vname'      => 'LBL_SATISFIED_TEXT',
             'type'       => 'varchar',
             'massupdate' => 0,
-            'default'    => 'Satisfied',
+            'default'    => 'LBL_SATISFIED_RESPONSE',
         ),
         'neither_text'             => array(
             'required'   => false,
@@ -127,7 +127,7 @@ $dictionary['Surveys'] = array(
             'vname'      => 'LBL_NEITHER_TEXT',
             'type'       => 'varchar',
             'massupdate' => 0,
-            'default'    => 'Neither Satisfied nor Dissatisfied',
+            'default'    => 'LBL_NOT_SATISFIED_NOR_DISSATISFIED',
         ),
         'dissatisfied_text'        => array(
             'required'   => false,
@@ -135,7 +135,7 @@ $dictionary['Surveys'] = array(
             'vname'      => 'LBL_DISSATISFIED_TEXT',
             'type'       => 'varchar',
             'massupdate' => 0,
-            'default'    => 'Dissatisfied',
+            'default'    => 'LBL_DISSATISFIED',
         ),
         "surveys_surveyquestions"  => array(
             'name'         => 'surveys_surveyquestions',
