@@ -182,12 +182,14 @@ EOF;
 
     private function getRatingQuestionSkeleton($arr)
     {
+        global $mod_strings;
+
         for ($x = 1; $x <= 5; $x++) {
-            $arr['chartLabels'][$x] = $x . ' Stars';
+            $arr['chartLabels'][$x] = $x . $mod_strings['LBL_STARS'];
             $arr['chartData'][$x] = 0;
             $arr['responses'][$x] = array(
                 'count' => 0,
-                'label' => $x . ' Stars',
+                'label' => $x . $mod_strings['LBL_STARS'],
                 'order' => $x
             );
         }
