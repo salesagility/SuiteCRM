@@ -1,5 +1,5 @@
 /*!
- * jQuery UI CSS Framework 1.13.1
+ * jQuery UI CSS Framework 1.13.2
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
@@ -56,8 +56,8 @@
 .ui-widget-header .ui-state-default,
 .ui-button,
 
-/* We use html here because we need a greater specificity to make sure disabled
-works properly when clicked or hovered */
+	/* We use html here because we need a greater specificity to make sure disabled
+    works properly when clicked or hovered */
 html .ui-button.ui-state-disabled:hover,
 html .ui-button.ui-state-disabled:active {
 	border: 1px solid #d3d3d3;
