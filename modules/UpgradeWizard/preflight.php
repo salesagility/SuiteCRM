@@ -401,24 +401,6 @@ eoq;
 }
 //Add the backward compatibility check as well.
 
-//Php Backward compatibility checks
-if (ini_get("zend.ze1_compatibility_mode")) {
-    $stop = true;
-    if (empty($mod_strings['LBL_BACKWARD_COMPATIBILITY_ON'])) {
-        $mod_strings['LBL_BACKWARD_COMPATIBILITY_ON'] = 'Php Backward Compatibility mode is turned on. Set zend.ze1_compatibility_mode to Off for proceeding further';
-    }
-
-    $php_compatibility_warning =<<<eoq
-	<table cellpadding="3" cellspacing="0" border="0">
-		<tr>
-			<th colspan="2" align="left">
-				<span class='error'><b>{$mod_strings['LBL_BACKWARD_COMPATIBILITY_ON']}</b></span>
-			</th>
-		</tr>
-	</table>
-eoq;
-    $php_warnings .= $php_compatibility_warning;
-}
 if ($php_warnings != null) {
     $uwMain = $php_warnings;
 }

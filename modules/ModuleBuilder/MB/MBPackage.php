@@ -303,16 +303,14 @@ class MBPackage
     public function build($export = true, $clean = false)
     {
         $this->loadModules();
-        require_once 'include/utils/zip_utils.php';
+        require_once 'include/utils/php_zip_utils.php';
         $path = $this->getBuildDir() . '/SugarModules';
         if ($clean && file_exists($path)) {
             rmdir_recursive($path);
         }
         if (mkdir_recursive($path)) {
             $manifest = $this->getManifest() . $this->buildInstall($path);
-            $fp = sugar_fopen($this->getBuildDir() . '/manifest.php', 'w');
-            fwrite($fp, $manifest);
-            fclose($fp);
+            sugar_file_put_contents($this->getBuildDir() . '/manifest.php', $manifest);
         }
         if (file_exists('modules/ModuleBuilder/MB/LICENSE.txt')) {
             copy('modules/ModuleBuilder/MB/LICENSE.txt', $this->getBuildDir() . '/LICENSE.txt');
@@ -563,18 +561,18 @@ class MBPackage
     private function getCustomMetadataManifestForModule($module, &$installdefs)
     {
         $meta_path = 'custom/modules/' . $module . '/metadata';
+        $working_array = [
+            'editviewdefs.php',
+            'detailviewdefs.php',
+            'quickcreatedefs.php'
+        ];
         foreach (scandir($meta_path) as $meta_file) {
             if (substr($meta_file, 0, 1) !== '.' && is_file($meta_path . '/' . $meta_file)) {
-                if ($meta_file === 'listviewdefs.php') {
-                    $installdefs['copy'][] = array(
-                        'from' => '<basepath>/SugarModules/modules/' . $module . '/metadata/' . $meta_file,
-                        'to' => 'custom/modules/' . $module . '/metadata/' . $meta_file,
-                    );
-                } else {
-                    $installdefs['copy'][] = array(
-                        'from' => '<basepath>/SugarModules/modules/' . $module . '/metadata/' . $meta_file,
-                        'to' => 'custom/modules/' . $module . '/metadata/' . $meta_file,
-                    );
+                $installdefs['copy'][] = array(
+                    'from' => '<basepath>/SugarModules/modules/' . $module . '/metadata/' . $meta_file,
+                    'to' => 'custom/modules/' . $module . '/metadata/' . $meta_file,
+                );
+                if (in_array($meta_file, $working_array, true)) {
                     $installdefs['copy'][] = array(
                         'from' => '<basepath>/SugarModules/modules/' . $module . '/metadata/' . $meta_file,
                         'to' => 'custom/working/modules/' . $module . '/metadata/' . $meta_file,
@@ -688,7 +686,7 @@ class MBPackage
                 copy('LICENSE.txt', $path . '/LICENSE.txt');
             }
         }
-        require_once 'include/utils/zip_utils.php';
+        require_once 'include/utils/php_zip_utils.php';
         $date = date('Y_m_d_His');
         $zipDir = $this->getZipDir();
         if (!file_exists($zipDir)) {
@@ -1041,9 +1039,7 @@ class MBPackage
             if (mkdir_recursive($tmppath)) {
                 copy_recursive($this->getPackageDir(), $tmppath . '/' . $this->name);
                 $manifest = $this->getManifest(true, $export) . $this->exportProjectInstall($package, $export);
-                $fp = sugar_fopen($tmppath . '/manifest.php', 'w');
-                fwrite($fp, $manifest);
-                fclose($fp);
+                sugar_file_put_contents($tmppath . '/manifest.php', $manifest);
                 if (file_exists('modules/ModuleBuilder/MB/LICENSE.txt')) {
                     copy('modules/ModuleBuilder/MB/LICENSE.txt', $tmppath . '/LICENSE.txt');
                 } else {
@@ -1052,12 +1048,10 @@ class MBPackage
                     }
                 }
                 $readme_contents = $this->readme;
-                $readmefp = sugar_fopen($tmppath . '/README.txt', 'w');
-                fwrite($readmefp, $readme_contents);
-                fclose($readmefp);
+                sugar_file_put_contents($tmppath . '/README.txt', $readme_contents);
             }
         }
-        require_once 'include/utils/zip_utils.php';
+        require_once 'include/utils/php_zip_utils.php';
         $date = date('Y_m_d_His');
         $zipDir = 'custom/modulebuilder/packages/ExportProjectZips';
         if (!file_exists($zipDir)) {

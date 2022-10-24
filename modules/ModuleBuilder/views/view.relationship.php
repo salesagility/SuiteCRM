@@ -140,8 +140,8 @@ class ViewRelationship extends SugarView
             }
         } else {
             $definition = array( ) ;
-            $firstModuleDefinition = each($relatableModules) ;
-            $definition [ 'rhs_module' ] = $firstModuleDefinition [ 'key' ] ;
+            $firstModuleDefinition = [key($relatableModules), current($relatableModules)];
+            $definition [ 'rhs_module' ] = $firstModuleDefinition[0];
             $definition [ 'lhs_module' ] = $moduleName ;
             $definition [ 'lhs_label' ] = translate($moduleName);
             $definition [ 'relationship_type' ] = MB_MANYTOMANY ;

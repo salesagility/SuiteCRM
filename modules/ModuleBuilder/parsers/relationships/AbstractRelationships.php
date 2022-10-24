@@ -442,7 +442,9 @@ class AbstractRelationships
         mkdir_recursive("$basepath/relationships") ;
         
         $installDefs = array( ) ;
-        list($rhs_module, $properties) = each($relationshipMetaData) ;
+        $rhs_module = key($relationshipMetaData);
+        $properties = current($relationshipMetaData);
+
         $filename = "$basepath/relationships/{$relationshipName}MetaData.php" ;
         $GLOBALS [ 'log' ]->debug(get_class($this) . "->saveRelationshipMetaData(): saving the following to {$filename}" . print_r($properties, true)) ;
         write_array_to_file('dictionary["' . $relationshipName . '"]', $properties, (string)($filename), 'w') ;
@@ -528,7 +530,7 @@ class AbstractRelationships
                 $out .= '$dictionary["' . $object . '"]["fields"]["' . $definition [ 'name' ] . '"] = '
                          . var_export_helper($definition) . ";\n";
             }
-            file_put_contents($filename, $out);
+            sugar_file_put_contents($filename, $out);
             
             $installDefs [ $moduleName ] = array(
                 'from' => "{$installDefPrefix}/relationships/vardefs/{$relName}_{$moduleName}.php" ,

@@ -67,15 +67,15 @@
                         "7"=>array("R"=>224,"G"=>176,"B"=>46,"Alpha"=>100));
 
      /* Class creator */
-     public function pData()
+     public function __construct()
      {
-         $this->Data = "";
-         $this->Data["XAxisDisplay"]	= AXIS_FORMAT_DEFAULT;
-         $this->Data["XAxisFormat"]		= null;
-         $this->Data["XAxisName"]		= null;
-         $this->Data["XAxisUnit"]		= null;
-         $this->Data["Abscissa"]		= null;
-         $this->Data["AbsicssaPosition"]	= AXIS_POSITION_BOTTOM;
+     $this->Data = "";
+     $this->Data["XAxisDisplay"]	= AXIS_FORMAT_DEFAULT;
+     $this->Data["XAxisFormat"]		= NULL;
+     $this->Data["XAxisName"]		= NULL;
+     $this->Data["XAxisUnit"]		= NULL;
+     $this->Data["Abscissa"]		= NULL;
+     $this->Data["AbsicssaPosition"]	= AXIS_POSITION_BOTTOM;
 
          $this->Data["Axis"][0]["Display"]  = AXIS_FORMAT_DEFAULT;
          $this->Data["Axis"][0]["Position"] = AXIS_POSITION_LEFT;
@@ -804,7 +804,7 @@
              $this->Data["Series"][$Serie]["Color"]["Alpha"] = 100;
          }
      }
-     
+
      public function normalize($NormalizationFactor=100, $UnitChange=null, $Round=1)
      {
          $Abscissa = $this->Data["Abscissa"];

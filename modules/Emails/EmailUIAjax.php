@@ -103,11 +103,12 @@ $ie = BeanFactory::newBean('InboundEmail');
 $ie->email = $email;
 $json = getJSONobj();
 
+global $current_user;
 
 $showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
 
 if (isset($_REQUEST['emailUIAction'])) {
-    if (isset($_REQUEST['user']) && $_REQUEST['user']) {
+    if (isset($_REQUEST['user']) && $_REQUEST['user'] && is_admin($current_user)) {
         $cid = $current_user->id;
         $current_user = BeanFactory::getBean('Users', $_REQUEST['user']);
     } else {

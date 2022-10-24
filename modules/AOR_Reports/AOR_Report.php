@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2021 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,6 +37,8 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+use SuiteCRM\CleanCSV;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -75,19 +77,7 @@ class AOR_Report extends Basic
         require_once('modules/AOR_Reports/aor_utils.php');
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function AOR_Report()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+
 
 
     public function bean_implements($interface)
@@ -661,18 +651,9 @@ class AOR_Report extends Basic
                 $total_rows = $assoc['c'];
             }
         }
-
-        // Fix #5427
-        $report_style = '';
-        $thead_style = '';
-        if ((isset($_REQUEST['action']) ? $_REQUEST['action'] : null) == 'DownloadPDF') {
-            $report_style = 'margin-top: 0px;';
-            $thead_style = 'background: #919798; color: #fff';
-        }
-        $html = '<div class="list-view-rounded-corners" style="' . $report_style . '">';
-        //End
-
-        $html.='<table id="report_table_'.$tableIdentifier.$group_value.'" cellpadding="0" cellspacing="0" width="100%" border="0" class="list view table-responsive aor_reports">';
+        
+        $html = '<div class="list-view-rounded-corners">';
+        $html.='<table id="report_table_'.$tableIdentifier.$group_value.'" width="100%" border="0" class="list view table-responsive aor_reports">';
 
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND deleted = 0 ORDER BY field_order ASC";
         $result = $this->db->query($sql);
@@ -710,13 +691,13 @@ class AOR_Report extends Basic
             $fields[$label]['alias'] = $field_alias;
             $fields[$label]['link'] = $field->link;
             $fields[$label]['total'] = $field->total;
-
             $fields[$label]['format'] = $field->format;
+            $fields[$label]['params'] = [];
 
 
             if ($fields[$label]['display']) {
                 // Fix #5427
-                $html .= "<th scope='col' style='{$thead_style}'>";
+                $html .= "<th scope='col'>";
                 // End
                 $html .= "<div>";
                 $html .= $field->label;
@@ -830,7 +811,7 @@ class AOR_Report extends Basic
                         } else {
                             $params = [];
                         }
-                        $html .= getModuleField(
+                        $html .= trim(getModuleField(
                             $att['module'],
                             $att['field'],
                             $att['field'],
@@ -839,7 +820,7 @@ class AOR_Report extends Basic
                             '',
                             $currency_id,
                             $params
-                        );
+                        ));
                     }
 
                     if ($att['total']) {
@@ -863,7 +844,10 @@ class AOR_Report extends Basic
 
         $html .= '</div>';
 
-        $html .= "    <script type=\"text/javascript\">
+        $currentTheme = SugarThemeRegistry::current();
+
+        if (empty($_REQUEST['action']) || $_REQUEST['action'] !== 'DownloadPDF') {
+            $html .= "    <script type=\"text/javascript\">
                             groupedReportToggler = {
 
                                 toggleList: function(elem) {
@@ -872,16 +856,17 @@ class AOR_Report extends Basic
                                             $(e).toggle();
                                         }
                                     });
-                                    if($(elem).find('img').first().attr('src') == '".SugarThemeRegistry::current()->getImagePath('basic_search.gif')."') {
-                                        $(elem).find('img').first().attr('src', '".SugarThemeRegistry::current()->getImagePath('advanced_search.gif')."');
+                                    if($(elem).find('img').first().attr('src') == '" . $currentTheme->getImageURL('basic_search.gif') . "') {
+                                        $(elem).find('img').first().attr('src', '" . $currentTheme->getImageURL('advanced_search.gif') . "');
                                     }
                                     else {
-                                        $(elem).find('img').first().attr('src', '".SugarThemeRegistry::current()->getImagePath('basic_search.gif')."');
+                                        $(elem).find('img').first().attr('src', '" . $currentTheme->getImageURL('basic_search.gif') . "');
                                     }
                                 }
 
                             };
                         </script>";
+        }
 
         return $html;
     }
@@ -977,6 +962,7 @@ class AOR_Report extends Basic
             if ($field['total'] && isset($totals[$label])) {
                 $type = $field['total'];
                 $total = $this->calculateTotal($type, $totals[$label]);
+                $params = isset($field['params']) ? $field['params'] : [];
                 switch ($type) {
                     case 'SUM':
                     case 'AVG':
@@ -988,7 +974,7 @@ class AOR_Report extends Basic
                             $total,
                             '',
                             $currency->id,
-                            $field['params']
+                            $params
                         );
                         break;
                     case 'COUNT':
@@ -1019,9 +1005,15 @@ class AOR_Report extends Basic
         }
     }
 
+    /**
+     * @param string $field
+     * @return string
+     */
     private function encloseForCSV($field)
     {
-        return '"' .  cleanCSV($field) . '"';
+        $cleanCSV = new CleanCSV();
+
+        return '"' . $cleanCSV->escapeField($field) . '"';
     }
 
     public function build_report_csv()

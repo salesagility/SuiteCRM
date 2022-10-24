@@ -63,13 +63,15 @@ class CaseUpdatesHook
     private function arrangeFilesArray()
     {
         $count = 0;
-        foreach ($_FILES['case_update_file'] as $key => $vals) {
-            foreach ($vals as $index => $val) {
-                if (!array_key_exists('case_update_file' . $index, $_FILES)) {
-                    $_FILES['case_update_file' . $index] = [];
-                    ++$count;
+        if(!empty($_FILES['case_update_file'] )) {
+            foreach ($_FILES['case_update_file'] as $key => $vals) {
+                foreach ($vals as $index => $val) {
+                    if (!array_key_exists('case_update_file' . $index, $_FILES)) {
+                        $_FILES['case_update_file' . $index] = [];
+                        ++$count;
+                    }
+                    $_FILES['case_update_file' . $index][$key] = $val;
                 }
-                $_FILES['case_update_file' . $index][$key] = $val;
             }
         }
 
@@ -102,7 +104,7 @@ class CaseUpdatesHook
 
             return;
         }
-        if ($_REQUEST['module'] === 'Import') {
+        if (isset($_REQUEST['module']) && $_REQUEST['module'] === 'Import') {
             return;
         }
         //Grab the update field and create a new update with it.

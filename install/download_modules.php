@@ -57,11 +57,28 @@ if (empty($sugar_config['upload_maxsize'])) {
     $sugar_config['upload_maxsize'] = 8192000;
 }
 if (empty($sugar_config['upload_badext'])) {
-    $sugar_config['upload_badext'] = array('php', 'php3', 'php4', 'php5', 'pl', 'cgi', 'py', 'asp', 'cfm', 'js', 'vbs', 'html', 'htm');
+    $sugar_config['upload_badext'] = [
+        'php',
+        'php3',
+        'php4',
+        'php5',
+        'pl',
+        'cgi',
+        'py',
+        'asp',
+        'cfm',
+        'js',
+        'vbs',
+        'html',
+        'htm',
+        'phtml',
+        'phar',
+    ];
+
 }
 ////    END PREFILL $sugar_config VARS
 ///////////////////////////////////////////////////////////////////////////////
-require_once('include/utils/zip_utils.php');
+require_once('include/utils/php_zip_utils.php');
 
 require_once('include/upload_file.php');
 

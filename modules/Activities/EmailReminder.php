@@ -301,7 +301,7 @@ class EmailReminder
         while ($row = $db->fetchByAssoc($re)) {
             $user = BeanFactory::newBean('Users');
             $user->retrieve($row['user_id']);
-            if (!empty($user->email1)) {
+            if (!empty($user->email1) && $user->isEnabled() ) {
                 $arr = array(
                     'type' => 'Users',
                     'name' => $user->full_name,

@@ -379,6 +379,11 @@ class SugarBean
     public $in_save;
 
     /**
+     * @var array $bean_fields_to_save
+     */
+    public $bean_fields_to_save;
+
+    /**
      * @var integer $logicHookDepth
      */
     public $logicHookDepth;
@@ -413,6 +418,16 @@ class SugarBean
      */
     public $old_modified_by_name;
 
+    /**
+     * @var bool $createdAuditRecords
+     */
+    public $createdAuditRecords;
+
+    /**
+     * Keeps track of emails sent to notify_user ids to avoid duplicate emails
+     * @var array $sentAssignmentNotifications
+     */
+    public $sentAssignmentNotifications = array();
 
     /**
      * SugarBean constructor.
@@ -500,23 +515,6 @@ class SugarBean
     }
 
     /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8,
-     * please update your code, use __construct instead
-     * @see SugarBean::__construct
-     */
-    public function SugarBean()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, ' .
-            'please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
-
-    /**
      * Loads the definition of custom fields defined for the module.
      * Local file system cache is created as needed.
      *
@@ -544,7 +542,7 @@ class SugarBean
     public function populateDefaultValues($force = false)
     {
         if (!is_array($this->field_defs)) {
-            $GLOBALS['log']->fatal('SugarBean::populateDefaultValues $field_defs should be an array');
+            $GLOBALS['log']->warn($this->module_name.'::populateDefaultValues $field_defs should be an array');
             return;
         }
         foreach ($this->field_defs as $field => $value) {
@@ -2435,6 +2433,70 @@ class SugarBean
     }
 
     /**
+     * Saves only the listed fields. Does not create record, existing records only.
+     * @param array $fieldToSave
+     * @return void
+     */
+    public function saveFields(array $fieldToSave): void
+    {
+        global $current_user, $action, $timedate;
+
+        if (empty($this->id) || $this->new_with_id || empty($fieldToSave)) {
+            return;
+        }
+
+        $this->in_save = true;
+
+        // cn: SECURITY - strip XSS potential vectors
+        $this->cleanBean();
+
+        // This is used so custom/3rd-party code can be upgraded with fewer issues,
+        // this will be removed in a future release
+        $this->fixUpFormatting();
+
+        $isUpdate = true;
+
+        $this->bean_fields_to_save = $fieldToSave;
+
+        if (empty($this->date_modified) || $this->update_date_modified) {
+            $this->date_modified = $timedate->nowDb();
+            $this->bean_fields_to_save[] = 'date_modified';
+        }
+
+        $this->_checkOptimisticLocking($action, $isUpdate);
+
+        if (!empty($this->modified_by_name)) {
+            $this->old_modified_by_name = $this->modified_by_name;
+        }
+
+        if ($this->update_modified_by) {
+            $this->modified_user_id = 1;
+            $this->bean_fields_to_save[] = 'modified_user_id';
+
+            if (!empty($current_user)) {
+                $this->modified_user_id = $current_user->id;
+
+                $this->modified_by_name = $current_user->user_name;
+                $this->bean_fields_to_save[] = 'modified_by_name';
+            }
+        }
+
+        if ($this->deleted != 1) {
+            $this->deleted = 0;
+        }
+
+        if (isset($this->custom_fields)) {
+            $this->custom_fields->bean = $this;
+            $this->custom_fields->save($isUpdate);
+        }
+
+        $this->db->update($this);
+
+        $this->bean_fields_to_save = null;
+        $this->in_save = false;
+    }
+
+    /**
      * Cleans char, varchar, text, etc. fields of XSS type materials
      */
     public function cleanBean()
@@ -3199,7 +3261,7 @@ class SugarBean
     {
         global $current_user;
 
-        if (($this->object_name == 'Meeting' || $this->object_name == 'Call') || $notify_user->receive_notifications) {
+        if ((($this->object_name == 'Meeting' || $this->object_name == 'Call') || $notify_user->receive_notifications) && !in_array($notify_user->id, $this->sentAssignmentNotifications, true)) {
             $sendToEmail = $notify_user->emailAddress->getPrimaryAddress($notify_user);
             $sendEmail = true;
             if (empty($sendToEmail)) {
@@ -3264,6 +3326,7 @@ class SugarBean
                     $GLOBALS['log']->fatal("Notifications: error sending e-mail (method: {$notify_mail->Mailer}), " .
                         "(error: {$notify_mail->ErrorInfo})");
                 } else {
+                    $this->sentAssignmentNotifications[] = $notify_user->id;
                     $GLOBALS['log']->info("Notifications: e-mail successfully sent");
                 }
             }
@@ -4527,7 +4590,7 @@ class SugarBean
             $query .= " AND $this->table_name.deleted=0";
         }
         $GLOBALS['log']->debug("Retrieve $this->object_name : " . $query);
-        $result = $this->db->limitQuery($query, 0, 1, true, "Retrieving record by id $this->table_name:$id found ");
+        $result = $this->db->limitQuery($query, 0, 1, false, "Retrieving record by id $this->table_name:$id found ");
         if (empty($result)) {
             return null;
         }
@@ -4972,7 +5035,7 @@ class SugarBean
                             ($this->object_name == $related_module && $this->$id_name != $this->id))
                     ) {
                         if (!empty($this->$id_name) && isset($this->$name)) {
-                            $mod = BeanFactory::getBean($related_module, $this->$id_name);
+                            $mod = BeanFactory::getShallowBean($related_module, $this->$id_name);
                             if ($mod) {
                                 if (!empty($field['rname'])) {
                                     $rname = $field['rname'];
@@ -4982,8 +5045,6 @@ class SugarBean
                                         $this->$name = $mod->name;
                                     }
                                 }
-                                // The related bean is incomplete due to $fill_in_rel_depth, we don't want to cache it
-                                BeanFactory::unregisterBean($related_module, $this->$id_name);
                             }
                         }
                     }
@@ -6041,7 +6102,7 @@ class SugarBean
 
     /**
      * Check whether the user has access to a particular view for the current bean/module
-     * @param $view string required, the view to determine access for i.e. DetailView, ListView...
+     * @param string $view required, the view to determine access for i.e. DetailView, ListView...
      * @param bool|string $is_owner bool optional, this is part of the ACL check if the current user
      * is an owner they will receive different access
      * @param bool|string $in_group
@@ -6230,7 +6291,7 @@ class SugarBean
      */
     public function auditBean($isUpdate)
     {
-        if ($this->is_AuditEnabled() && $isUpdate) {
+        if ($this->is_AuditEnabled() && $isUpdate && !$this->createdAuditRecords) {
             $auditDataChanges = $this->db->getAuditDataChanges($this);
 
             if (!empty($auditDataChanges)) {
@@ -6253,6 +6314,7 @@ class SugarBean
             $this->db->save_audit_records($this, $change);
             $this->fetched_row[$change['field_name']] = $change['after'];
         }
+        $this->createdAuditRecords = true;
     }
 
     /**

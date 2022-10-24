@@ -100,30 +100,30 @@
         fields[$(this).attr('data-open-popup-email-address-field')] = 'qtip_bar_email_address';
       }
 
-        $.fn.EmailsComposeView.setEmailAddressFieldFromPopup = function(resultData) {
-            var contact_name = resultData.name_to_value_array.qtip_bar_name;
-            var contact_email_address = resultData.name_to_value_array.qtip_bar_email_address;
+      $.fn.EmailsComposeView.setEmailAddressFieldFromPopup = function(resultData) {
+        var contact_name = resultData.name_to_value_array.qtip_bar_name;
+        var contact_email_address = resultData.name_to_value_array.qtip_bar_email_address;
 
-            if (trim(contact_email_address) !== '') {
-                var formatted_email_address = '';
-                if (trim(contact_name) !== '') {
-                    // use name <email address> format
-                    formatted_email_address = contact_name + ' <' + contact_email_address + '>';
-                } else {
-                    // use email address
-                    formatted_email_address = contact_email_address;
-                }
+        if (trim(contact_email_address) !== '') {
+          var formatted_email_address = '';
+          if (trim(contact_name) !== '') {
+            // use name <email address> format
+            formatted_email_address = contact_name + ' <' + contact_email_address + '>';
+          } else {
+            // use email address
+            formatted_email_address = contact_email_address;
+          }
 
-                if (trim($(self.active_elementQTipBar).val()) === '') {
-                    $(self.active_elementQTipBar).val(formatted_email_address);
-                } else {
-                    $(self.active_elementQTipBar).val(
-                        $(self.active_elementQTipBar).val() + ', ' +
-                        formatted_email_address
-                    );
-                }
-            }
-        };
+          if (trim($(self.active_elementQTipBar).val()) === '') {
+            $(self.active_elementQTipBar).val(formatted_email_address);
+          } else {
+            $(self.active_elementQTipBar).val(
+              $(self.active_elementQTipBar).val() + ', ' +
+              formatted_email_address
+            );
+          }
+        }
+      };
 
       var popupWindow = open_popup(
         $(this).attr('data-open-popup-module'),
@@ -217,7 +217,7 @@
       var valid = self.isValid();
       if (valid === false) {
         if (typeof messageBox !== "undefined") {
-          var mb = messageBox({size: 'lg'});
+          var mb = messageBox({size: 'lg', backdrop: 'static'});
           mb.setTitle(SUGAR.language.translate('', 'ERR_INVALID_REQUIRED_FIELDS'));
           mb.setBody(self.translatedErrorMessage);
 
@@ -230,6 +230,7 @@
           });
 
           mb.show();
+          mb.hideCancel();
         } else {
           alert(self.translatedErrorMessage);
         }
@@ -348,7 +349,7 @@
     };
 
 
-    self.updateSignature = function () {
+    $.fn.EmailsComposeView.updateSignature = self.updateSignature = function () {
       var inboundId = $('#from_addr_name').find('option:selected').attr('inboundId');
       if (inboundId === undefined) {
         console.warn('Unable to retrieve selected inbound id in the "From" field.');
@@ -467,12 +468,13 @@
       $(self).trigger("sendEmail", [self]);
 
       // Tell the user we are sending an email
-      var mb = messageBox();
+      var mb = messageBox({backdrop:'static'});
       mb.hideHeader();
       mb.hideFooter();
       document.activeElement.blur();
       mb.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
       mb.show();
+
       mb.on('ok', function () {
         "use strict";
         mb.remove();
@@ -533,11 +535,13 @@
           mb.showHeader();
           mb.setBody(response.errors.title);
           mb.showFooter();
+          mb.hideCancel();
           $(self).trigger("sentEmailError", [self, response]);
         } else {
           mb.showHeader();
           mb.setBody(response.data.title);
           mb.showFooter();
+          mb.hideCancel();
 
           // If the user is viewing the form in the standard view
           if ($(self).find('input[type="hidden"][name="return_module"]').val() !== '') {
@@ -838,7 +842,7 @@
       "use strict";
       $(self).trigger("saveDraft", [self]);
       // Tell the user we are sending an email
-      var mb = messageBox();
+      var mb = messageBox({backdrop:'static'});
       mb.hideHeader();
       mb.hideFooter();
       mb.setBody('<div class="email-in-progress"><img src="themes/' + SUGAR.themes.theme_name + '/images/loading.gif"></div>');
@@ -899,11 +903,13 @@
           mb.showHeader();
           mb.setBody(response.errors.title);
           mb.showFooter();
+          mb.hideCancel();
           $(self).trigger("saveEmailError", [self, response]);
         } else {
           mb.showHeader();
           mb.setBody(response.data.title);
           mb.showFooter();
+          mb.hideCancel();
           $(self).trigger("saveEmailSuccess", [self, response]);
 
           var id = undefined;
@@ -1053,7 +1059,7 @@
       }
 
       if (typeof opts.tinyMceOptions.selector === "undefined") {
-        opts.tinyMceOptions.selector = 'form[name="ComposeView"] textarea#description';
+        opts.tinyMceOptions.selector = 'form[name="ComposeView"] textarea[id=description]';
       }
 
       if ($(self).find('#from_addr_name').length !== 0) {
@@ -1119,11 +1125,14 @@
 
           if ($(self).find('#is_only_plain_text').length === 1) {
             $(self).find('#is_only_plain_text').click(function () {
-              var tinemceToolbar = $(tinymce.EditorManager.activeEditor.getContainer()).find('.mce-toolbar');
+              let tinymceContainer = $(tinymce.EditorManager.activeEditor.getContainer());
+              let description = $(self).find('#description');
               if ($('#is_only_plain_text').prop('checked')) {
-                tinemceToolbar.hide();
+                tinymceContainer.hide();
+                description.show();
               } else {
-                tinemceToolbar.show();
+                description.hide();
+                tinymceContainer.show();
               }
             });
           }
@@ -1334,6 +1343,7 @@
         $.fn.EmailsComposeView.loadAttachmentDataFromAjaxResponse(response);
         $(form).find('[name="name"]').val(response.data.subject);
         tinymce.activeEditor.setContent(response.data.body_from_html, {format: 'html'});
+        $.fn.EmailsComposeView.updateSignature();
       });
       set_return(args);
     };
@@ -1376,19 +1386,16 @@
 
   $.fn.EmailsComposeView.defaults = {
     "tinyMceOptions": {
-      skin_url: "themes/default/css",
-      skin: "",
-      plugins: "fullscreen",
       menubar: false,
-      toolbar: ['fontselect | fontsizeselect | bold italic underline | styleselect'],
+      toolbar: ['fontselect | fontsizeselect | bold italic underline | forecolor backcolor | styleselect | outdent indent'],
       formats: {
         bold: {inline: 'b'},
         italic: {inline: 'i'},
         underline: {inline: 'u'}
       },
-      convert_urls:true,
-      relative_urls:false,
-      remove_script_host:false,
+      convert_urls: true,
+      relative_urls: false,
+      remove_script_host: false,
     }
   };
 }(jQuery));

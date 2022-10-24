@@ -585,19 +585,7 @@ class Email extends Basic
     }
 
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function Email()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+
 
     /**
      * assigns $this->ev with EmailUI
@@ -1004,11 +992,7 @@ class Email extends Basic
 
             if (isset($request['parent_type']) && !empty($request['parent_type']) &&
                 isset($request['parent_id']) && !empty($request['parent_id']) &&
-                ($request['parent_type'] == 'Accounts' ||
-                $request['parent_type'] == 'Contacts' ||
-                $request['parent_type'] == 'Leads' ||
-                $request['parent_type'] == 'Users' ||
-                $request['parent_type'] == 'Prospects')) {
+                in_array($request['parent_type'], ['Accounts', 'Cases', 'Contacts', 'Leads', 'Users', 'Prospects'])) {
                 if (isset($beanList[$request['parent_type']]) && !empty($beanList[$request['parent_type']])) {
                     $className = $beanList[$request['parent_type']];
                     if (isset($beanFiles[$className]) && !empty($beanFiles[$className])) {
@@ -1612,7 +1596,7 @@ class Email extends Basic
 
 
             $validator = new EmailFromValidator();
-            if (!$validator->isValid($this)) {
+            if (!defined('SUGARCRM_IS_INSTALLING') && !$validator->isValid($this)) {
                 $errors = $validator->getErrorsAsText();
                 $details = "Details:\n{$errors['messages']}\ncodes:{$errors['codes']}";
                 LoggerManager::getLogger()->error("Saving Email with invalid From name and/or Address. $details");

@@ -139,19 +139,7 @@ class Call extends SugarBean
         }
     }
 
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function Call()
-    {
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if (isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        } else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct();
-    }
+
 
     /**
      * Disable edit if call is recurring and source is not Sugar. It should be edited only from Outlook.
@@ -599,7 +587,7 @@ class Call extends SugarBean
         $xtpl->assign("CALL_HOURS", $call->duration_hours);
         $xtpl->assign("CALL_MINUTES", $call->duration_minutes);
         $xtpl->assign("CALL_STATUS", ((isset($call->status))?$app_list_strings['call_status_dom'][$call->status] : ""));
-        $xtpl->assign("CALL_DESCRIPTION", $call->description);
+        $xtpl->assign("CALL_DESCRIPTION", nl2br($call->description));
 
         return $xtpl;
     }

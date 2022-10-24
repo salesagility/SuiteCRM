@@ -441,7 +441,7 @@ class UserViewHelper
         $this->ss->assign("REMINDER_TIME", $reminder_time);
         $this->ss->assign("EMAIL_REMINDER_TIME", $email_reminder_time);
 
-        $remindersDefaultPreferences = Reminder::loadRemindersDefaultValuesData();
+        $remindersDefaultPreferences = Reminder::loadRemindersDefaultValuesData($this->bean);
         $this->ss->assign("REMINDER_CHECKED", $remindersDefaultPreferences['popup']);
         $this->ss->assign("EMAIL_REMINDER_CHECKED", $remindersDefaultPreferences['email']);
 
