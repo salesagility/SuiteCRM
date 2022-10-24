@@ -26,6 +26,7 @@ services:
       - ${PWD}:/var/www/html/suitecrm
       - ${PWD}/.devcontainer/config/php.ini:/etc/php/7.4/apache2/php.ini
       - ${PWD}/.devcontainer/logs:/var/log/apache2
+      - /var/www/html/suitecrm/.devcontainer/database # Exclude database directory
     depends_on:
       - mariadb
 
