@@ -91,6 +91,7 @@
     {/if}
 
     {foreach from=$resultsAsBean item=beans key=module}
+    <h3>{sugar_translate label='LBL_MODULE_NAME' module=$module}</h3>
     <table class="list view">
         <thead>
             <tr>
