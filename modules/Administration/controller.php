@@ -76,7 +76,12 @@ class AdministrationController extends SugarController
 
     public function action_savelanguages()
     {
-        global $sugar_config;
+        global $current_user, $app_strings;
+
+        if (!is_admin($current_user)) {
+            sugar_die($app_strings['ERR_NOT_ADMIN']);
+        }
+
         $toDecode = html_entity_decode($_REQUEST['disabled_langs'], ENT_QUOTES);
         $disabled_langs = json_decode($toDecode);
         $toDecode = html_entity_decode($_REQUEST['enabled_langs'], ENT_QUOTES);
@@ -137,6 +142,12 @@ class AdministrationController extends SugarController
     public function action_UpdateAjaxUI()
     {
         require_once('modules/Configurator/Configurator.php');
+        global $current_user, $app_strings;
+
+        if (!is_admin($current_user)) {
+            sugar_die($app_strings['ERR_NOT_ADMIN']);
+        }
+
         $cfg = new Configurator();
         $disabled = json_decode(html_entity_decode($_REQUEST['disabled_modules'], ENT_QUOTES));
         $cfg->config['addAjaxBannedModules'] = empty($disabled) ? false : $disabled;
@@ -154,7 +165,12 @@ class AdministrationController extends SugarController
      */
     public function action_callRebuildSprites()
     {
-        global $current_user;
+        global $current_user, $app_strings;
+
+        if (!is_admin($current_user)) {
+            sugar_die($app_strings['ERR_NOT_ADMIN']);
+        }
+
         $this->view = 'ajax';
         if (function_exists('imagecreatetruecolor')) {
             if (is_admin($current_user)) {
@@ -168,6 +184,11 @@ class AdministrationController extends SugarController
     }
 
     public function action_diagnosticquickviewphpinfo() {
+        global $current_user, $app_strings;
+
+        if (!is_admin($current_user)) {
+            sugar_die($app_strings['ERR_NOT_ADMIN']);
+        }
         phpinfo();
         die;
     }
