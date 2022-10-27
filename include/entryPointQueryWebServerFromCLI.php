@@ -57,15 +57,15 @@ if (!$diags->checkToken()) {
 // from this point on the call is considered valid, but remember we're running unauthenticated
 // so only execute specific actions where that is acceptable, i.e., what you would allow
 // to be done by someone who can write a file in our cache directory, run Robo commands, etc.
-
+/*
 if (isset($_REQUEST['module']) &&
     ($_REQUEST['module']==='Administration') &&
     isset($_REQUEST['action']) &&
     ($_REQUEST['action']==='DiagnosticQuickReport')) {
-
+*/
     $ret = $diags->buildQuickReport(true);
     header('Content-Type: application/json');
     echo json_encode($ret);
-}
+//}
 
 
