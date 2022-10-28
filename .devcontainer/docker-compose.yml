@@ -17,7 +17,7 @@ services:
   suitecrm:
     build:
       context: .
-    command: sh -c "composer install --no-dev --no-interaction --working-dir=/var/www/html/suitecrm && exec apache2-foreground"
+    command: sh -c "composer install --no-dev --no-interaction --working-dir=/var/www/html/suitecrm; exec apache2-foreground"
     networks:
       - main_network
     ports:
