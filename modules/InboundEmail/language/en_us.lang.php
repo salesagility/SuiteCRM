@@ -128,6 +128,7 @@ $mod_strings = array(
     'LBL_SYSTEM_DEFAULT' => 'System Default',
     'LBL_TEST_BUTTON_TITLE' => 'Test',
     'LBL_TEST_SETTINGS' => 'Test Settings',
+    'LBL_TEST_CONNECTION_SETTINGS' => 'Test Connection Settings',
     'LBL_TEST_SUCCESSFUL' => 'Connection completed successfully.',
     'LBL_TEST_WAIT_MESSAGE' => 'One moment please...',
     'LBL_WARN_IMAP_TITLE' => 'Inbound Email Disabled',
