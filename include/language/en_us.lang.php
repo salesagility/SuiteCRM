@@ -700,6 +700,17 @@ $app_list_strings = array(
         'PM' => 'PM',
     ),
 
+    'dom_inbound_email_account_types' => [
+        'personal' => 'Personal',
+        'group' => 'Group',
+        'bounce' => 'Bounce',
+    ],
+
+    'dom_inbound_email_account_status' => [
+        'Active' => 'Active',
+        'Inactive' => 'Inactive',
+    ],
+
     'dom_email_types' => array(
         'out' => 'Sent',
         'archived' => 'Archived',
