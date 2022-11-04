@@ -3732,3 +3732,5 @@ $app_strings['ERR_INVALID_FILE_NAME'] = 'Invalid file name:';
 $app_strings['LBL_LOGGER_VALID_FILENAME_CHARACTERS'] = 'This can only be alphanumeric characters, plus \'.\' , \'-\' and \'_\'';
 $app_strings['LBL_LOGGER_INVALID_FILENAME'] = 'Invalid import file name';
 
+$app_strings['LBL_PASSWORD_SET_NEW_VALUE_TO_RESET'] = 'Password set. Enter value to set new password';
+
