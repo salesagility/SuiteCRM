@@ -422,3 +422,4 @@ $dictionary["OutboundEmailAccounts"] = [
     'custom_fields' => false,
 ];
 
+VardefManager::createVardef('OutboundEmailAccounts', 'OutboundEmailAccounts', ['security_groups']);
