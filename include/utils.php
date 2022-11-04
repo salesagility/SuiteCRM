@@ -5089,6 +5089,27 @@ function filterInboundEmailPopSelection($protocol)
 }
 
 /**
+ * Get Inbound Email protocols
+ *
+ * @return array
+ */
+function getInboundEmailProtocols(): array
+{
+    global $app_list_strings, $sugar_config;
+
+    $protocols = $app_list_strings['dom_email_server_type'];
+    if (!isset($sugar_config['allow_pop_inbound']) || !$sugar_config['allow_pop_inbound']) {
+        if (isset($protocols['pop3'])) {
+            unset($protocols['pop3']);
+        }
+    } else {
+        $protocols['pop3'] = 'POP3';
+    }
+
+    return $protocols;
+}
+
+/**
  * The function is used because currently we are not supporting mbstring.func_overload
  * For some user using mssql without FreeTDS, they may store multibyte charaters in varchar using latin_general collation. It cannot store so many mutilbyte characters, so we need to use strlen.
  * The varchar in MySQL, Orcale, and nvarchar in FreeTDS, we can store $length mutilbyte charaters in it. we need mb_substr to keep more info.
@@ -5999,7 +6020,7 @@ function has_valid_extension($fieldName, $name, $validExtensions)
  * @return bool
  */
 function isTrue($value): bool {
-    return $value === true || $value === 'true' || $value === 1;
+    return $value === true || $value === 'true' || $value === 1 || $value === '1' || $value === 'on';
 }
 
 /**
@@ -6008,7 +6029,7 @@ function isTrue($value): bool {
  * @return bool
  */
 function isFalse($value): bool {
-    return $value === false || $value === 'false' || $value === 0;
+    return $value === false || $value === 'false' || $value === 0 || $value === '0';
 }
 
 /**

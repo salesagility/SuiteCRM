@@ -119,6 +119,7 @@ $mod_strings = array(
     'LBL_SAME_AS_ABOVE' => 'Using From Name/Address',
     'LBL_SERVER_OPTIONS' => 'Advanced Setup',
     'LBL_SERVER_TYPE' => 'Mail Server Protocol',
+    'LBL_SERVER_PORT' => 'Mail Server Port',
     'LBL_SERVER_URL' => 'Mail Server Address',
     'LBL_SSL_DESC' => 'If your mail server supports secure socket connections, enabling this will force SSL connections when importing email.',
     'LBL_ASSIGN_TO_TEAM_DESC' => 'The selected team has access to the mail account.',
@@ -164,4 +165,33 @@ $mod_strings = array(
     'LBL_SERVICE' => 'Service',
     'LBL_STORED_OPTIONS' => 'Stored Options',
     'LBL_GROUP_ID' => 'Group ID',
+
+    'LBL_OUTBOUND_CONFIGURATION' => 'Outbound Configuration',
+    'LBL_CONNECTION_CONFIGURATION' => 'Server Configuration',
+    'LBL_AUTO_REPLY_CONFIGURATION' => 'Auto Reply Configuration',
+    'LBL_CASE_CONFIGURATION' => 'Case Configuration',
+    'LBL_GROUP_CONFIGURATION' => 'Group Configuration',
+
+
+    'LBL_OUTBOUND_EMAIL_ACCOUNT' => 'Outbound Email Account',
+    'LBL_OUTBOUND_EMAIL_ACCOUNT_ID' => 'Outbound Email Account id',
+    'LBL_OUTBOUND_EMAIL_ACCOUNT_NAME' => 'Outbound Email Account',
+
+    'LBL_AUTOREPLY_EMAIL_TEMPLATE' => 'Auto Reply Email Template',
+    'LBL_AUTOREPLY_EMAIL_TEMPLATE_ID' => 'Auto Reply Email Template id',
+    'LBL_AUTOREPLY_EMAIL_TEMPLATE_NAME' => 'Auto Reply Email Template',
+
+    'LBL_CASE_EMAIL_TEMPLATE' => 'Case Email Template',
+    'LBL_CASE_EMAIL_TEMPLATE_ID' => 'Case Email Template id',
+    'LBL_CASE_EMAIL_TEMPLATE_NAME' => 'Case Email Template',
+
+    'LBL_PROTOCOL' => 'Protocol',
+    'LBL_DISTRIB_METHOD' => 'Distribution Method',
+    'LBL_DISTRIB_OPTIONS' => 'Distribution Options',
+
+    'LBL_DISTRIBUTION_USER' => 'Distribution User',
+    'LBL_DISTRIBUTION_USER_ID' => 'Distribution User id',
+    'LBL_DISTRIBUTION_USER_NAME' => 'Distribution User',
+
+    'LBL_TYPE' => 'Type',
 );
