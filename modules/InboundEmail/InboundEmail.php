@@ -182,6 +182,101 @@ class InboundEmail extends SugarBean
     private $overview;
 
     /**
+     * @var string|null
+     */
+    public $from_addr;
+
+    /**
+     * @var string|null
+     */
+    public $from_name;
+
+    /**
+     * @var string|null
+     */
+    public $reply_to_name;
+
+    /**
+     * @var string|null
+     */
+    public $reply_to_addr;
+
+    /**
+     * @var string|null
+     */
+    public $only_since;
+
+    /**
+     * @var string|null
+     */
+    public $filter_domain;
+
+    /**
+     * @var string|null
+     */
+    public $trashFolder;
+
+    /**
+     * @var string|null
+     */
+    public $sentFolder;
+
+    /**
+     * @var string|null
+     */
+    public $distrib_method;
+
+    /**
+     * @var string|null
+     */
+    public $distribution_user_id;
+
+    /**
+     * @var string|null
+     */
+    public $distribution_options;
+
+    /**
+     * @var string|null
+     */
+    public $create_case_template_id;
+
+    /**
+     * @var int|null
+     */
+    public $email_num_autoreplies_24_hours;
+
+    /**
+     * @var bool|null
+     */
+    public $is_auto_import;
+
+    /**
+     * @var bool|null
+     */
+    public $is_create_case;
+
+    /**
+     * @var bool|string|null
+     */
+    public $allow_outbound_group_usage;
+
+    /**
+     * @var string|null
+     */
+    public $outbound_email_id;
+
+    /**
+     * @var bool|string|null
+     */
+    public $leave_messages_on_mail_server;
+
+    /**
+     * @var string|null
+     */
+    public $type;
+
+    /**
      * Email constructor
      * @param ImapHandlerInterface|null $imapHandler
      * @param MailMimeParser|null $mailParser
@@ -6610,6 +6705,9 @@ class InboundEmail extends SugarBean
      */
     public function fill_in_additional_detail_fields()
     {
+        $this->calculateType();
+        $this->expandStoreOptions();
+
         if (!empty($this->service)) {
             $exServ = explode('::', $this->service);
             $this->tls = $exServ[0];
@@ -6623,6 +6721,71 @@ class InboundEmail extends SugarBean
                 $this->protocol = $exServ[3];
             }
         }
+    }
+
+    public function calculateType(): void {
+
+        if (!empty($this->type)){
+            return;
+        }
+
+        if (isTrue($this->is_personal ?? false)) {
+            $this->type = 'personal';
+            return;
+        }
+
+        $mailboxType = $this->mailbox_type ?? '';
+        if ($mailboxType === 'createcase') {
+            $this->type = 'group';
+            return;
+        }
+
+        if ($mailboxType === 'bounce') {
+            $this->type = 'bounce';
+            return;
+        }
+
+        if ($mailboxType === 'pick' ) {
+            $this->type = 'group';
+        }
+    }
+
+    /**
+     * Expand options
+     * @return void
+     */
+    public function expandStoreOptions(): void {
+
+        if (empty($this->stored_options)) {
+            return;
+        }
+
+        // FROM NAME and Address
+        $storedOptions = unserialize(base64_decode($this->stored_options), ['allowed_classes' => false]);
+
+        $this->from_name = ($storedOptions['from_name'] ?? '');
+        $this->from_addr = ($storedOptions['from_addr'] ?? '');
+        $this->reply_to_name = $storedOptions['reply_to_name'] ?? '';
+        $this->reply_to_addr = $storedOptions['reply_to_addr'] ?? '';
+        $this->only_since = isTrue($storedOptions['LBL_ONLY_SINCE_NO'] ?? false);
+        $this->filter_domain = $storedOptions['filter_domain'] ?? '';
+        $this->trashFolder =  $storedOptions['trashFolder'] ?? '';
+        $this->sentFolder = $storedOptions['sentFolder'] ?? '';
+        $this->mailbox = $storedOptions['mailbox'] ?? '';
+
+        $this->leave_messages_on_mail_server = isTrue($storedOptions['leaveMessagesOnMailServer'] ?? false);
+
+        $this->distrib_method = $storedOptions['distrib_method'] ?? '';
+        $this->distribution_user_id = $storedOptions['distribution_user_id'] ?? '';
+        $this->distribution_options = $storedOptions['distribution_options'] ?? '';
+        $this->create_case_template_id = $storedOptions['create_case_email_template'] ?? '';
+        $this->email_num_autoreplies_24_hours = $storedOptions['email_num_autoreplies_24_hours'] ?? $this->defaultEmailNumAutoreplies24Hours;
+
+        $this->is_auto_import = isTrue($storedOptions['isAutoImport'] ?? false);
+        $this->is_create_case = ($this->mailbox_type ?? '') === 'createcase';
+        $this->allow_outbound_group_usage = isTrue($storedOptions['allow_outbound_group_usage'] ?? false);
+
+        $this->outbound_email_id = $storedOptions['outbound_email'] ?? '';
     }
 
     /**
@@ -8086,5 +8249,14 @@ eoq;
         }
 
         return $uid;
+    }
+
+    public function bean_implements($interface)
+    {
+        if ($interface === 'ACL') {
+            return true;
+        }
+
+        return false;
     }
 } // end class definition
