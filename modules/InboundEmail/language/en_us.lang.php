@@ -135,9 +135,12 @@ $mod_strings = array(
     'LBL_WARN_IMAP' => 'Warnings:',
     'LBL_WARN_NO_IMAP' => 'Inbound Email <b>cannot</b> function without the IMAP c-client libraries enabled/compiled with the PHP module. Please contact your administrator to resolve this issue.',
 
+    'LNK_LIST_CREATE_NEW_PERSONAL' => 'New Personal Mail Account',
     'LNK_LIST_CREATE_NEW_GROUP' => 'New Group Mail Account',
+    'LNK_LIST_CREATE_NEW_CASES_TYPE' => 'New Case Handling Account',
     'LNK_LIST_CREATE_NEW_BOUNCE' => 'New Bounce Handling Account',
     'LNK_LIST_MAILBOXES' => 'All Mail Accounts',
+    'LNK_LIST_OUTBOUND_EMAILS' => 'Outbound Mail Accounts',
     'LNK_LIST_SCHEDULER' => 'Schedulers',
     'LNK_SEED_QUEUES' => 'Seed Queues From Teams',
     'LBL_GROUPFOLDER_ID' => 'Group Folder Id',
