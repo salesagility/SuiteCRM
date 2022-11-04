@@ -65,6 +65,7 @@ $mod_strings = array(
     'LBL_HOMEPAGE_TITLE' => 'My Outbound Email Accounts',
     'LNK_NEW_RECORD' => 'Create Outbound Email Accounts',
     'LNK_LIST' => 'View Outbound Email Accounts',
+    'LNK_LIST_INBOUND_EMAIL_ACCOUNTS' => 'Inbound Email Accounts',
     'LBL_SEARCH_FORM_TITLE' => 'Search Outbound Email Accounts',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
