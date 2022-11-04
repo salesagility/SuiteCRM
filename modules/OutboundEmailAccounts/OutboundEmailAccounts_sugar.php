@@ -75,16 +75,16 @@ class OutboundEmailAccounts_sugar extends Basic
     //	var $smtp_auth;
     //	var $smtp_port;
     //	var $smtp_protocol;
-    
+
     public function __construct()
     {
         parent::__construct();
     }
-    
+
     public function bean_implements($interface)
     {
-        switch ($interface) {
-            case 'ACL': return true;
+        if ($interface == 'ACL') {
+            return true;
         }
         return false;
     }
