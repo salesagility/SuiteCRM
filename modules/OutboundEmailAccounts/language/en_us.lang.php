@@ -103,4 +103,6 @@ $mod_strings = array(
     'LBL_MAIL_SMTPSSL' => 'Mail SMTP/SSL',
     'LBL_SMTP_FROM_NAME' => '"From" name',
     'LBL_SMTP_FROM_ADDR' => '"From" address',
+
+    'LBL_SECURITYGROUPS_SUBPANEL_TITLE' => 'Security Groups'
 );
