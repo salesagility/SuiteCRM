@@ -176,6 +176,8 @@ $mod_strings = array(
     'LBL_CASE_CONFIGURATION' => 'Case Configuration',
     'LBL_GROUP_CONFIGURATION' => 'Group Configuration',
 
+    'LBL_SECURITYGROUPS_SUBPANEL_TITLE' => 'Security Groups',
+
 
     'LBL_OUTBOUND_EMAIL_ACCOUNT' => 'Outbound Email Account',
     'LBL_OUTBOUND_EMAIL_ACCOUNT_ID' => 'Outbound Email Account id',
