@@ -364,6 +364,11 @@ class InboundEmail extends SugarBean
             $this->retrieveMailBoxFolders();
         }
 
+        if (!empty($ret) && !$this->checkPersonalAccountAccess()) {
+            $this->logPersonalAccountAccessDenied('retrieve');
+            return null;
+        }
+
         return $ret;
     }
 
@@ -373,6 +378,11 @@ class InboundEmail extends SugarBean
      */
     public function save($check_notify = false)
     {
+        if (!$this->checkPersonalAccountAccess()) {
+            $this->logPersonalAccountAccessDenied('save');
+            throw new RuntimeException('Access Denied');
+        }
+
         // generate cache table for email 2.0
         $multiDImArray = $this->generateMultiDimArrayFromFlatArray(
             explode(",", $this->mailbox),
@@ -388,6 +398,55 @@ class InboundEmail extends SugarBean
         $ret = parent::save($check_notify);
 
         return $ret;
+    }
+
+    /**
+     * Check if user has access to personal account
+     * @return bool
+     */
+    public function checkPersonalAccountAccess() : bool {
+        global $current_user;
+
+        if (is_admin($current_user)) {
+            return true;
+        }
+
+        if (!isTrue($this->is_personal ?? false)) {
+            return true;
+        }
+
+        if (empty($this->created_by)) {
+            return true;
+        }
+
+        if($this->created_by === $current_user->id) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Log personal account access denied
+     * @param string $action
+     * @return void
+     */
+    public function logPersonalAccountAccessDenied(string $action) : void {
+        global $log, $current_user;
+
+        $log->fatal("InboundEmail | Access denied. Non-admin user trying to access personal account. Action: '" . $action . "' | Current user id: '" . $current_user->id . "' | record: '" . $this->id . "'" );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function ACLAccess($view, $is_owner = 'not_set', $in_group = 'not_set')
+    {
+        if (!$this->checkPersonalAccountAccess()) {
+            $this->logPersonalAccountAccessDenied("ACLAccess-$view");
+            return false;
+        }
+        return parent::ACLAccess($view, $view, $is_owner, $in_group);
     }
 
     public function filterMailBoxFromRaw($mailboxArray, $rawArray)
@@ -6671,6 +6730,57 @@ class InboundEmail extends SugarBean
     public function create_export_query($order_by, $where, $show_deleted = 0)
     {
         return $this->create_new_list_query($order_by, $where, array(), array(), $show_deleted);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function create_new_list_query(
+        $order_by,
+        $where,
+        $filter = array(),
+        $params = array(),
+        $show_deleted = 0,
+        $join_type = '',
+        $return_array = false,
+        $parentbean = null,
+        $singleSelect = false,
+        $ifListForExport = false
+    ) {
+        global $current_user, $db;
+
+        $ret_array = parent::create_new_list_query(
+            $order_by,
+            $where,
+            $filter,
+            $params ,
+            $show_deleted,
+            $join_type,
+            true,
+            $parentbean,
+            $singleSelect,
+            $ifListForExport
+        );
+
+        if(is_admin($current_user)) {
+            if ($return_array) {
+                return $ret_array;
+            }
+
+            return $ret_array['select'] . $ret_array['from'] . $ret_array['where'] . $ret_array['order_by'];
+        }
+
+        if (is_array($ret_array) && !empty($ret_array['where'])){
+            $tableName = $db->quote($this->table_name);
+            $currentUserId = $db->quote($current_user->id);
+            $ret_array['where'] = $ret_array['where'] . " AND ( ($tableName.is_personal IS NULL) OR ($tableName.is_personal = 0) OR ($tableName.is_personal = 1 AND $tableName.created_by = '$currentUserId') )";
+        }
+
+        if ($return_array) {
+            return $ret_array;
+        }
+
+        return $ret_array['select'] . $ret_array['from'] . $ret_array['where'] . $ret_array['order_by'];
     }
 
     /**
