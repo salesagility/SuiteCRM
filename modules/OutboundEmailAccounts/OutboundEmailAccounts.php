@@ -50,6 +50,11 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
      */
     public $mail_smtppass;
 
+    /**
+     * @var string
+     */
+    public $type;
+
     public function __construct()
     {
         parent::__construct();
@@ -57,6 +62,11 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
 
     public function save($check_notify = false)
     {
+        if (!$this->checkPersonalAccountAccess()) {
+            $this->logPersonalAccountAccessDenied('save');
+            throw new RuntimeException('Access Denied');
+        }
+
         if (!$this->mail_smtppass && $this->id) {
             $bean = BeanFactory::newBean('OutboundEmailAccounts');
             $bean->retrieve($this->id);
@@ -79,11 +89,124 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
         return $results;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function retrieve($id = -1, $encode = true, $deleted = true)
     {
         $results = parent::retrieve($id, $encode, $deleted);
+
+        if (!empty($results) && !$this->checkPersonalAccountAccess()) {
+            $this->logPersonalAccountAccessDenied('retrieve');
+            return null;
+        }
+
         $this->mail_smtppass = $this->mail_smtppass ? blowfishDecode(blowfishGetKey('OutBoundEmail'), $this->mail_smtppass) : null;
         return $results;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function create_new_list_query(
+        $order_by,
+        $where,
+        $filter = array(),
+        $params = array(),
+        $show_deleted = 0,
+        $join_type = '',
+        $return_array = false,
+        $parentbean = null,
+        $singleSelect = false,
+        $ifListForExport = false
+    ) {
+        global $current_user, $db;
+
+        $ret_array = parent::create_new_list_query(
+            $order_by,
+            $where,
+            $filter,
+            $params ,
+            $show_deleted,
+            $join_type,
+            true,
+            $parentbean,
+            $singleSelect,
+            $ifListForExport
+        );
+
+        if(is_admin($current_user)) {
+            if ($return_array) {
+                return $ret_array;
+            }
+
+            return $ret_array['select'] . $ret_array['from'] . $ret_array['where'] . $ret_array['order_by'];
+        }
+
+        if (is_array($ret_array) && !empty($ret_array['where'])){
+            $tableName = $db->quote($this->table_name);
+            $currentUserId = $db->quote($current_user->id);
+            $ret_array['where'] = $ret_array['where'] . " AND ( ($tableName.type IS NULL) OR ($tableName.type != 'user' ) OR ($tableName.type = 'user' AND $tableName.user_id = '$currentUserId') )";
+        }
+
+        if ($return_array) {
+            return $ret_array;
+        }
+
+        return $ret_array['select'] . $ret_array['from'] . $ret_array['where'] . $ret_array['order_by'];
+    }
+
+    /**
+     * Check if user has access to personal account
+     * @return bool
+     */
+    public function checkPersonalAccountAccess() : bool {
+        global $current_user;
+
+        if (is_admin($current_user)) {
+            return true;
+        }
+
+        if (empty($this->type)) {
+            return true;
+        }
+
+        if ($this->type !== 'user') {
+            return true;
+        }
+
+        if (empty($this->user_id)) {
+            return true;
+        }
+
+        if ($this->user_id === $current_user->id) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Log personal account access denied
+     * @param string $action
+     * @return void
+     */
+    public function logPersonalAccountAccessDenied(string $action) : void {
+        global $log, $current_user;
+
+        $log->fatal("OutBoundEmailAccount | Access denied. Non-admin trying to access personal account. Action: '" . $action . "' | Current user id: '" . $current_user->id . "' | record: '" . $this->id . "'" );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function ACLAccess($view, $is_owner = 'not_set', $in_group = 'not_set')
+    {
+        if (!$this->checkPersonalAccountAccess()) {
+            $this->logPersonalAccountAccessDenied("ACLAccess-$view");
+            return false;
+        }
+        return parent::ACLAccess($view, $view, $is_owner, $in_group);
     }
 
     public static function getPasswordChange()
