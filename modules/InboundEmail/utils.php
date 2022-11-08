@@ -51,12 +51,110 @@ require_once 'modules/AOP_Case_Updates/util.php';
  * @param string $view
  * @return string
  */
-function getInboundEmailDistributionOptions(?InboundEmail $focus, string $field='distribution_options', $value='', string $view='DetailView'): string
-{
+function getInboundEmailDistributionOptions(
+    ?InboundEmail $focus,
+    string $field = 'distribution_options',
+    $value = '',
+    string $view = 'DetailView'
+): string {
     if ($view === 'EditView' || $view === 'MassUpdate' || $view === 'QuickCreate' || $view === 'ConvertLead') {
         $html = getAOPAssignField('distribution_options', [$value]);
+
         return $html;
     }
 
     return $focus->distribution_options ?? '';
+}
+
+/**
+ * @param InboundEmail|null $focus
+ * @param string $field
+ * @param string $value
+ * @param string $view
+ * @return string
+ */
+function getUserSignature(
+    ?InboundEmail $focus,
+    string $field = 'account_signature_id',
+    string $value = '',
+    string $view = 'DetailView'
+): string {
+
+    global $current_user, $app_strings;
+
+    $createdBy = $focus->created_by ?? '';
+    /** @var User $owner */
+    $owner = $current_user;
+
+    if ($createdBy !== '') {
+        $owner = BeanFactory::getBean('Users', $createdBy);
+    }
+
+    $defaultSignatureId = $owner->getPreference('signature_default') ?? '';
+
+    $isEditView = $view === 'EditView' || $view === 'MassUpdate' || $view === 'QuickCreate' || $view === 'ConvertLead';
+
+    $inboundEmailId = $focus->id ?? '';
+
+    if ($inboundEmailId === '' && $isEditView === true) {
+        return getInboundEmailSignatures($owner, $defaultSignatureId, 'account_signature_id');
+    }
+
+    if ($inboundEmailId === '' && $isEditView !== true) {
+        return '';
+    }
+
+    $emailSignatures = $owner->getPreference('account_signatures', 'Emails');
+    $emailSignatures = sugar_unserialize(base64_decode($emailSignatures));
+
+    $signatureId = $emailSignatures[$inboundEmailId] ?? '';
+
+    if ($signatureId !== '' && $isEditView === true) {
+        return getInboundEmailSignatures($owner, $defaultSignatureId, 'account_signature_id', $signatureId);
+    }
+
+    $signatures = $owner->getSignaturesArray(false);
+
+    $signature = $signatures[$signatureId] ?? null;
+
+    if ($signature === null) {
+        return $app_strings['LBL_DEFAULT_EMAIL_SIGNATURES'];
+    }
+
+    if (empty($signature)) {
+        return $app_strings['LBL_DEFAULT_EMAIL_SIGNATURES'];
+    }
+
+    return $signature['name'] ?? '';
+}
+
+/**
+ * @param User $owner
+ * @param string $defaultSig
+ * @param string $elementId
+ * @param string $selected
+ * @return string
+ */
+function getInboundEmailSignatures(
+    User $owner,
+    string $defaultSig = '',
+    string $elementId = 'account_signature_id',
+    string $selected = ''
+): string {
+    $sig = $owner->getSignaturesArray();
+    $sigs = array();
+    foreach ($sig as $key => $arr) {
+        $sigs[$key] = !empty($arr['name']) ? $arr['name'] : '';
+    }
+
+    $out = "<select id='{$elementId}' name='{$elementId}'>";
+    if (empty($defaultSig)) {
+        $out .= get_select_empty_option($defaultSig, false, 'LBL_DEFAULT_EMAIL_SIGNATURES');
+    } else {
+        $out .= get_select_empty_option($defaultSig, $defaultSig === $selected, 'LBL_DEFAULT_EMAIL_SIGNATURES');
+    }
+    $out .= get_select_full_options_with_id($sigs, $selected);
+    $out .= '</select>';
+
+    return $out;
 }

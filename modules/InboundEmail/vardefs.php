@@ -366,6 +366,19 @@ $dictionary['InboundEmail'] = [
             'inline_edit' => false,
             'source' => 'non-db',
         ],
+        'account_signature_id' => [
+            'name' => 'account_signature_id',
+            'vname' => 'LBL_SIGNATURE',
+            'function' => [
+                'name' => 'getUserSignature',
+                'returns' => 'html',
+                'include' => 'modules/InboundEmail/utils.php',
+            ],
+            'type' => 'varchar',
+            'reportable' => false,
+            'inline_edit' => false,
+            'source' => 'non-db',
+        ],
         'filter_domain' => [
             'name' => 'filter_domain',
             'vname' => 'LBL_FILTER_DOMAIN',

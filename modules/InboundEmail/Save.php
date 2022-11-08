@@ -237,7 +237,19 @@ $GLOBALS['sugar_config']['disable_team_access_check'] = true;
 
 $focus->save();
 
+$idValidator = new \SuiteCRM\Utility\SuiteValidator();
 
+if ($type === 'personal' && isset($_REQUEST['account_signature_id']) && $idValidator->isValidId($_REQUEST['account_signature_id'])) {
+    $owner = BeanFactory::getBean('Users', $focus->created_by);
+    $email_signatures = $owner->getPreference('account_signatures', 'Emails');
+    $email_signatures = sugar_unserialize(base64_decode($email_signatures));
+    if (empty($email_signatures)) {
+        $email_signatures = array();
+    }
+
+    $email_signatures[$focus->id] = $_REQUEST['account_signature_id'];
+    $owner->setPreference('account_signatures', base64_encode(serialize($email_signatures)), 0, 'Emails');
+}
 
 
 // Folders
