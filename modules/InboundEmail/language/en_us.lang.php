@@ -198,4 +198,7 @@ $mod_strings = array(
     'LBL_DISTRIBUTION_USER_NAME' => 'Distribution User',
 
     'LBL_TYPE' => 'Type',
+    'LBL_IS_DEFAULT' => 'Default',
+
+    'LBL_SET_AS_DEFAULT_BUTTON' => 'Set as default',
 );

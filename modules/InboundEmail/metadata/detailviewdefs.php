@@ -45,6 +45,16 @@ $viewdefs ['InboundEmail'] = [
                 'buttons' => [
                     'EDIT',
                     'DELETE',
+                    [
+                        'customCode' => '
+                            <input title="{$MOD.LBL_SET_AS_DEFAULT_BUTTON}"
+                                   type="button"
+                                   class="button"
+                                   id="set-as-default-inbound"
+                                   onClick="document.location.href=\'index.php?module=InboundEmail&action=SetDefault&record={$fields.id.value}&return_module=InboundEmail&return_action=DetailView&return_id={$fields.id.value}\';"
+                                   name="button" value="{$MOD.LBL_SET_AS_DEFAULT_BUTTON}" />
+                        '
+                    ]
                 ],
             ],
             'maxColumns' => '2',
@@ -102,6 +112,7 @@ $viewdefs ['InboundEmail'] = [
             'default' => [
                 [
                     'name',
+                    'is_default'
                 ],
                 [
                     'type',

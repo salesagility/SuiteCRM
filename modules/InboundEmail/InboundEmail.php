@@ -277,6 +277,11 @@ class InboundEmail extends SugarBean
     public $type;
 
     /**
+     * @var int|null
+     */
+    public $is_default;
+
+    /**
      * Email constructor
      * @param ImapHandlerInterface|null $imapHandler
      * @param MailMimeParser|null $mailParser
@@ -6706,6 +6711,8 @@ class InboundEmail extends SugarBean
     public function fill_in_additional_detail_fields()
     {
         $this->calculateType();
+        $this->calculateDefault();
+
         $this->expandStoreOptions();
 
         if (!empty($this->service)) {
@@ -6747,6 +6754,15 @@ class InboundEmail extends SugarBean
 
         if ($mailboxType === 'pick' ) {
             $this->type = 'group';
+        }
+    }
+
+    public function calculateDefault(): void {
+
+        global $current_user;
+
+        if ($this->type === 'personal' && $this->getUsersDefaultOutboundServerId($current_user) === $this->id) {
+            $this->is_default = 1;
         }
     }
 
