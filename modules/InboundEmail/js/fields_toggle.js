@@ -44,21 +44,25 @@ function toggleFields(type) {
       'outbound_email_name': true,
       'allow_outbound_group_usage': false,
       'is_default': true,
+      'account_signature_id': true
     },
     'group': {
       'outbound_email_name': false,
       'allow_outbound_group_usage': true,
       'is_default': false,
+      'account_signature_id': false
     },
     'cases': {
       'outbound_email_name': false,
       'allow_outbound_group_usage': true,
       'is_default': false,
+      'account_signature_id': false
     },
     'bounce': {
       'outbound_email_name': false,
       'allow_outbound_group_usage': false,
       'is_default': false,
+      'account_signature_id': false
     }
   };
 

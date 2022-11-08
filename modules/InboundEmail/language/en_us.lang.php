@@ -199,6 +199,7 @@ $mod_strings = array(
 
     'LBL_TYPE' => 'Type',
     'LBL_IS_DEFAULT' => 'Default',
+    'LBL_SIGNATURE' => 'Signature',
 
     'LBL_SET_AS_DEFAULT_BUTTON' => 'Set as default',
 );

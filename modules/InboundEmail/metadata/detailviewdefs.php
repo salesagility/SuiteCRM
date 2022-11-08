@@ -145,6 +145,7 @@ $viewdefs ['InboundEmail'] = [
             'lbl_outbound_configuration' => [
                 [
                     'outbound_email_name',
+                    'account_signature_id'
                 ],
                 [
                     'allow_outbound_group_usage',

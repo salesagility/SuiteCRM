@@ -6712,6 +6712,7 @@ class InboundEmail extends SugarBean
     {
         $this->calculateType();
         $this->calculateDefault();
+        $this->calculateSignature();
 
         $this->expandStoreOptions();
 
@@ -6763,6 +6764,27 @@ class InboundEmail extends SugarBean
 
         if ($this->type === 'personal' && $this->getUsersDefaultOutboundServerId($current_user) === $this->id) {
             $this->is_default = 1;
+        }
+    }
+
+    public function calculateSignature(): void {
+        $inboundEmailId = $this->id ?? '';
+        $createdBy = $this->created_by ?? '';
+
+        if ($inboundEmailId === '' || $createdBy === '') {
+            return;
+        }
+
+        /** @var User $owner */
+        $owner = BeanFactory::getBean('Users', $createdBy);
+
+        $emailSignatures = $owner->getPreference('account_signatures', 'Emails');
+        $emailSignatures = sugar_unserialize(base64_decode($emailSignatures));
+
+        $signatureId = $emailSignatures[$inboundEmailId] ?? '';
+
+        if ($signatureId !== '') {
+            $this->account_signature_id = $signatureId;
         }
     }
 
