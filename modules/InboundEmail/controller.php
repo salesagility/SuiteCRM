@@ -1,3 +1,4 @@
+<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -36,47 +37,28 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-function toggleFields(type) {
-
-  var fieldsPerType = {
-    'personal': {
-      'outbound_email_name': true,
-      'allow_outbound_group_usage': false,
-      'is_default': true,
-    },
-    'group': {
-      'outbound_email_name': false,
-      'allow_outbound_group_usage': true,
-      'is_default': false,
-    },
-    'cases': {
-      'outbound_email_name': false,
-      'allow_outbound_group_usage': true,
-      'is_default': false,
-    },
-    'bounce': {
-      'outbound_email_name': false,
-      'allow_outbound_group_usage': false,
-      'is_default': false,
-    }
-  };
-
-  var fieldDisplay = fieldsPerType[type] || fieldsPerType.personal;
-
-  Object.keys(fieldDisplay).forEach(function (fieldKey) {
-    var display = fieldDisplay[fieldKey];
-    var method = 'show';
-    if(!display) {
-      method = 'hide';
-    }
-
-    inboundEmailFields[method](fieldKey);
-  });
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
 
+class InboundEmailController extends SugarController
+{
+    public function action_SetDefault()
+    {
+        global $current_user;
+        $outbound_id = empty($_REQUEST['record']) ? "" : $_REQUEST['record'];
+        $ie = BeanFactory::newBean('InboundEmail');
+        $owner = $this->bean->created_by ?? '';
 
-$(document).ready(function () {
-  var type = inboundEmailFields.getValue('type');
-  toggleFields(type);
-});
+        if($owner === $current_user->id){
+            $ie->setUsersDefaultOutboundServerId($current_user, $outbound_id);
+        }
+
+        $module = (!empty($this->return_module) ? $this->return_module : $this->module);
+        $action = (!empty($this->return_action) ? $this->return_action : 'DetailView');
+        $id = (!empty($this->return_id) ? $this->return_id : $outbound_id);
+
+        $url = "index.php?module=" . $module . "&action=" . $action . "&record=" . $id;
+        $this->set_redirect($url);
+    }
+}

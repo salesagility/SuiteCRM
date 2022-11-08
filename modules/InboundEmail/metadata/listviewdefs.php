@@ -56,6 +56,11 @@ $listViewDefs [$module_name] = [
         'width' => '10%',
         'default' => true,
     ],
+    'IS_DEFAULT' => [
+        'label' => 'LBL_IS_DEFAULT',
+        'width' => '10%',
+        'default' => true,
+    ],
     'STATUS' => [
         'label' => 'LBL_STATUS',
         'width' => '10%',

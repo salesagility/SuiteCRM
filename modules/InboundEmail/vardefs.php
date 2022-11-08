@@ -324,6 +324,16 @@ $dictionary['InboundEmail'] = [
             'reportable' => false,
             'inline_edit' => false,
         ],
+        'is_default' => [
+            'name' => 'is_default',
+            'vname' => 'LBL_IS_DEFAULT',
+            'type' => 'bool',
+            'required' => false,
+            'default' => '0',
+            'reportable' => false,
+            'inline_edit' => false,
+            'source' => 'non-db',
+        ],
         'from_name' => [
             'name' => 'from_name',
             'vname' => 'LBL_FROM_NAME',
