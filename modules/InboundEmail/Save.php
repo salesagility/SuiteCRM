@@ -53,6 +53,37 @@ if (!empty($_REQUEST['record'])) {
     unset($focus->id);
     unset($focus->groupfolder_id);
 }
+
+$isNewRecord = (empty($focus->id) || $focus->new_with_id);
+
+if (!empty($_REQUEST['created_by']) && is_admin($current_user)) {
+    $focus->created_by = $_REQUEST['created_by'];
+    $focus->set_created_by = false;
+}
+
+if ($isNewRecord && !empty($_REQUEST['created_by']) && !is_admin($current_user)) {
+    $_REQUEST['created_by'] = '';
+    $focus->created_by = '';
+}
+
+if (!$isNewRecord && !empty($_REQUEST['created_by']) && !is_admin($current_user)) {
+    $_REQUEST['created_by'] = '';
+    if (!empty($focus->fetched_row['created_by'])) {
+        $focus->created_by = $focus->fetched_row['created_by'];
+    }
+}
+
+if ($isNewRecord && empty($focus->created_by)) {
+    $focus->created_by = $current_user->id;
+}
+
+$ownerId = $current_user->id;
+if (!empty($focus->created_by)) {
+    $ownerId = $focus->created_by;
+}
+
+$owner = BeanFactory::getBean('Users', $ownerId);
+
 foreach ($focus->column_fields as $field) {
     if ($field === 'email_password' && empty($_REQUEST['email_password']) && !empty($_REQUEST['email_user'])) {
         continue;
@@ -106,7 +137,7 @@ if (isTrue($focus->is_personal)) {
     $this->mailbox_type = 'pick';
 
     if (empty($this->group_id) ) {
-        $this->group_id = $current_user->id;
+        $this->group_id = $owner->id;
     }
 }
 
@@ -240,7 +271,6 @@ $focus->save();
 $idValidator = new \SuiteCRM\Utility\SuiteValidator();
 
 if ($type === 'personal' && isset($_REQUEST['account_signature_id']) && $idValidator->isValidId($_REQUEST['account_signature_id'])) {
-    $owner = BeanFactory::getBean('Users', $focus->created_by);
     $email_signatures = $owner->getPreference('account_signatures', 'Emails');
     $email_signatures = sugar_unserialize(base64_decode($email_signatures));
     if (empty($email_signatures)) {
@@ -258,7 +288,7 @@ $foldersFoundRow = $focus->db->fetchRow($foldersFound);
 $sf = new SugarFolder();
 if (empty($foldersFoundRow)) {
     // Create Folders
-    $focusUser = $current_user;
+    $focusUser = $owner;
     $params = array(
         // Inbox
         "inbound" => array(

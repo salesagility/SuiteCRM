@@ -446,6 +446,11 @@ class InboundEmail extends SugarBean
             $this->logPersonalAccountAccessDenied("ACLAccess-$view");
             return false;
         }
+
+        if (isTrue($this->is_personal) && $this->checkPersonalAccountAccess()) {
+            return true;
+        }
+
         return parent::ACLAccess($view, $view, $is_owner, $in_group);
     }
 

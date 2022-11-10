@@ -37,50 +37,22 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class InboundEmailController extends SugarController
+class InboundEmailViewEdit extends ViewEdit
 {
-    public function action_EditView() {
-        $this->view = 'edit';
-        if (!empty($this->bean) && !empty($_REQUEST['is_personal'])) {
-            $this->bean->is_personal = isTrue($_REQUEST['is_personal'] ?? false);
-        }
 
-        if (empty($_REQUEST['record']) && isTrue($_REQUEST['is_personal'] ?? false)) {
-            $this->hasAccess = true;
-            return;
-        }
-
-        if (!empty($this->bean) && isTrue($this->bean->is_personal) && $this->bean->checkPersonalAccountAccess()) {
-            $this->hasAccess = true;
-        }
-    }
-
-    public function action_SetDefault()
+    /**
+     * @inheritdoc
+     */
+    public function display()
     {
         global $current_user;
-        $outbound_id = empty($_REQUEST['record']) ? "" : $_REQUEST['record'];
-        $ie = BeanFactory::newBean('InboundEmail');
 
-        $ownerId = $this->bean->created_by ?? '';
-        if (empty($ownerId)) {
-            $ownerId = $current_user->id;
-        }
-
-        $owner = BeanFactory::getBean('Users', $ownerId);
-
-        if($ownerId === $current_user->id || is_admin($current_user)){
-            $ie->setUsersDefaultOutboundServerId($owner, $outbound_id);
-        }
-
-        $module = (!empty($this->return_module) ? $this->return_module : $this->module);
-        $action = (!empty($this->return_action) ? $this->return_action : 'DetailView');
-        $id = (!empty($this->return_id) ? $this->return_id : $outbound_id);
-
-        $url = "index.php?module=" . $module . "&action=" . $action . "&record=" . $id;
-        $this->set_redirect($url);
+        $this->ev->ss->assign('is_admin', is_admin($current_user));
+        parent::display();
     }
 }

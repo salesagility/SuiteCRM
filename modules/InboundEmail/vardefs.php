@@ -43,6 +43,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $dictionary['InboundEmail'] = [
     'table' => 'inbound_email',
+    'inline_edit' => false,
+    'duplicate_merge' => false,
     'comment' => 'Inbound email parameters',
     'fields' => [
         'id' => [
@@ -117,6 +119,23 @@ $dictionary['InboundEmail'] = [
             'dbType' => 'id',
             'inline_edit' => false,
             'comment' => 'User who created record'
+        ],
+        'owner_name' => [
+            'name' => 'owner_name',
+            'rname' => 'name',
+            'id_name' => 'created_by',
+            'vname' => 'LBL_OWNER_NAME',
+            'join_name' => 'owner_user',
+            'type' => 'relate',
+            'link' => 'created_by_link',
+            'table' => 'users',
+            'isnull' => 'true',
+            'module' => 'Users',
+            'dbType' => 'varchar',
+            'len' => '255',
+            'source' => 'non-db',
+            'unified_search' => true,
+            'inline_edit' => false,
         ],
         'created_by_link' => [
             'name' => 'created_by_link',
