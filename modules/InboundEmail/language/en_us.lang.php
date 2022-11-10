@@ -79,8 +79,10 @@ $mod_strings = array(
     'LBL_LIST_NAME' => 'Name:',
     'LBL_LIST_GLOBAL_PERSONAL' => 'Type',
     'LBL_LIST_SERVER_URL' => 'Mail Server',
+    'LBL_SERVER_ADDRESS' => 'Server Address',
     'LBL_LIST_STATUS' => 'Status',
     'LBL_LOGIN' => 'User Name',
+    'LBL_USERNAME' => 'User Name',
     'LBL_MAILBOX_DEFAULT' => 'INBOX',
     'LBL_MAILBOX_SSL' => 'Use SSL',
     'LBL_MAILBOX_TYPE' => 'Possible Actions',
@@ -202,6 +204,8 @@ $mod_strings = array(
     'LBL_TYPE' => 'Type',
     'LBL_IS_DEFAULT' => 'Default',
     'LBL_SIGNATURE' => 'Signature',
+
+    'LBL_OWNER_NAME' => 'Owner',
 
     'LBL_SET_AS_DEFAULT_BUTTON' => 'Set as default',
 );

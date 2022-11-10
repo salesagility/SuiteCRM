@@ -47,12 +47,14 @@ $viewdefs ['InboundEmail'] = [
                     'DELETE',
                     [
                         'customCode' => '
+                            {if $fields.type.value === "personal" && $fields.created_by.value === $current_user_id}
                             <input title="{$MOD.LBL_SET_AS_DEFAULT_BUTTON}"
                                    type="button"
                                    class="button"
                                    id="set-as-default-inbound"
                                    onClick="document.location.href=\'index.php?module=InboundEmail&action=SetDefault&record={$fields.id.value}&return_module=InboundEmail&return_action=DetailView&return_id={$fields.id.value}\';"
                                    name="button" value="{$MOD.LBL_SET_AS_DEFAULT_BUTTON}" />
+                           {/if}
                         '
                     ]
                 ],
@@ -98,11 +100,13 @@ $viewdefs ['InboundEmail'] = [
             'preForm' => '
                 {sugar_getscript file="modules/InboundEmail/InboundEmail.js"}
                 <script type="text/javascript">
+                    {literal}var userService = function() { return { isAdmin: function() { return {/literal}{if $is_admin}true{else}false{/if}{literal};}}}();{/literal}
                     {suite_combinescripts
                         files="modules/InboundEmail/js/fields.js,
                                modules/InboundEmail/js/case_create_toggle.js,
                                modules/InboundEmail/js/distribution_toggle.js,
                                modules/InboundEmail/js/mail_folders.js,
+                               modules/InboundEmail/js/owner_toggle.js,
                                modules/InboundEmail/js/fields_toggle.js,
                                modules/InboundEmail/js/panel_toggle.js"}
                 </script>
@@ -117,6 +121,9 @@ $viewdefs ['InboundEmail'] = [
                 [
                     'type',
                     'status'
+                ],
+                [
+                    'owner_name',
                 ],
             ],
             'lbl_connection_configuration' => [

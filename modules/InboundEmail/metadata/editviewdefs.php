@@ -102,6 +102,7 @@ $viewdefs ['InboundEmail'] = [
             'javascript' => '
                 {sugar_getscript file="modules/InboundEmail/InboundEmail.js"}
                 <script type="text/javascript">
+                    {literal}var userService = function() { return { isAdmin: function() { return {/literal}{if $is_admin}true{else}false{/if}{literal};}}}();{/literal}
                     {suite_combinescripts
                         files="modules/InboundEmail/js/fields.js,
                                modules/InboundEmail/js/case_create_toggle.js,
@@ -109,6 +110,7 @@ $viewdefs ['InboundEmail'] = [
                                modules/InboundEmail/js/mail_folders.js,
                                modules/InboundEmail/js/ssl_port_set.js,
                                modules/InboundEmail/js/fields_toggle.js,
+                               modules/InboundEmail/js/owner_toggle.js,
                                modules/InboundEmail/js/test_configuration.js,
                                modules/InboundEmail/js/panel_toggle.js"}
                 </script>
@@ -122,6 +124,9 @@ $viewdefs ['InboundEmail'] = [
                 [
                     'name',
                     'status'
+                ],
+                [
+                    'owner_name',
                 ],
             ],
             'lbl_connection_configuration' => [
