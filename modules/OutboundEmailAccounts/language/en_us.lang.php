@@ -64,6 +64,10 @@ $mod_strings = array(
     'LBL_MODULE_TITLE' => 'Outbound Email Accounts',
     'LBL_HOMEPAGE_TITLE' => 'My Outbound Email Accounts',
     'LNK_NEW_RECORD' => 'Create Outbound Email Accounts',
+
+    'LNK_LIST_CREATE_NEW_PERSONAL' => 'New Personal Outbound Mail Account',
+    'LNK_LIST_CREATE_NEW_GROUP' => 'New System Outbound Mail Account',
+
     'LNK_LIST' => 'View Outbound Email Accounts',
     'LNK_LIST_INBOUND_EMAIL_ACCOUNTS' => 'Inbound Email Accounts',
     'LBL_SEARCH_FORM_TITLE' => 'Search Outbound Email Accounts',
@@ -106,5 +110,9 @@ $mod_strings = array(
     'LBL_SMTP_FROM_NAME' => '"From" name',
     'LBL_SMTP_FROM_ADDR' => '"From" address',
 
-    'LBL_SECURITYGROUPS_SUBPANEL_TITLE' => 'Security Groups'
+    'LBL_SECURITYGROUPS_SUBPANEL_TITLE' => 'Security Groups',
+
+
+    'LBL_OWNER' => 'Owner',
+    'LBL_OWNER_NAME' => 'Owner'
 );

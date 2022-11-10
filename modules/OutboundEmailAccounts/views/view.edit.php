@@ -37,54 +37,21 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class OutboundEmailAccountsController extends SugarController
+class OutboundEmailAccountsViewEdit extends ViewEdit
 {
-    public function action_EditView() {
-        $this->view = 'edit';
-        $type = $_REQUEST['type'] ?? '';
-        if (!empty($this->bean) && $type !== '') {
-            $this->bean->type = $type;
-        }
 
-        if (empty($_REQUEST['record']) && $type === 'user') {
-            $this->hasAccess = true;
-            return;
-        }
-
-        if (!empty($this->bean) && $type === 'user' && $this->bean->checkPersonalAccountAccess()) {
-            $this->hasAccess = true;
-        }
-    }
-
-    public function action_save() {
+    /**
+     * @inheritdoc
+     */
+    public function display()
+    {
         global $current_user;
-        $isNewRecord = (empty($this->bean->id) || $this->bean->new_with_id);
-
-        if (!empty($_REQUEST['user_id']) && is_admin($current_user)) {
-            $this->bean->assigned_user_id = $_REQUEST['user_id'];
-            $this->bean->user_id = $_REQUEST['user_id'];
-        }
-
-        if ($isNewRecord && !empty($_REQUEST['user_id']) && !is_admin($current_user)) {
-             $_REQUEST['user_id'] = '';
-             $this->bean->user_id = '';
-        }
-
-        if (!$isNewRecord && !empty($_REQUEST['user_id']) && !is_admin($current_user)) {
-             $_REQUEST['user_id'] = '';
-             if (!empty($this->bean->fetched_row['user_id'])) {
-                 $this->bean->user_id = $this->bean->fetched_row['user_id'];
-             }
-        }
-
-        if ($isNewRecord && empty($this->bean->user_id)) {
-            $this->bean->user_id = $current_user->id;
-        }
-
-        parent::action_save();
+        $this->ev->ss->assign('is_admin', is_admin($current_user));
+        parent::display();
     }
 }

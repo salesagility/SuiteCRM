@@ -1,4 +1,3 @@
-<?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,54 +36,41 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+function toggleOwnerField(type, isAdmin) {
+  var status = 'non-admin';
+  if (isAdmin) {
+    status = 'admin';
+  }
 
-class OutboundEmailAccountsController extends SugarController
-{
-    public function action_EditView() {
-        $this->view = 'edit';
-        $type = $_REQUEST['type'] ?? '';
-        if (!empty($this->bean) && $type !== '') {
-            $this->bean->type = $type;
-        }
+  var fieldsPerStatus = {
+    'admin': {
+      'owner_name': true,
+    },
+    'non-admin': {
+      'owner_name': false,
+    },
+  };
 
-        if (empty($_REQUEST['record']) && $type === 'user') {
-            $this->hasAccess = true;
-            return;
-        }
+  var fieldDisplay = fieldsPerStatus[status] || fieldsPerStatus.disabled;
 
-        if (!empty($this->bean) && $type === 'user' && $this->bean->checkPersonalAccountAccess()) {
-            $this->hasAccess = true;
-        }
+  Object.keys(fieldDisplay).forEach(function (fieldKey) {
+    var display = fieldDisplay[fieldKey];
+    var method = 'show';
+    if(!display) {
+      method = 'hide';
     }
 
-    public function action_save() {
-        global $current_user;
-        $isNewRecord = (empty($this->bean->id) || $this->bean->new_with_id);
-
-        if (!empty($_REQUEST['user_id']) && is_admin($current_user)) {
-            $this->bean->assigned_user_id = $_REQUEST['user_id'];
-            $this->bean->user_id = $_REQUEST['user_id'];
-        }
-
-        if ($isNewRecord && !empty($_REQUEST['user_id']) && !is_admin($current_user)) {
-             $_REQUEST['user_id'] = '';
-             $this->bean->user_id = '';
-        }
-
-        if (!$isNewRecord && !empty($_REQUEST['user_id']) && !is_admin($current_user)) {
-             $_REQUEST['user_id'] = '';
-             if (!empty($this->bean->fetched_row['user_id'])) {
-                 $this->bean->user_id = $this->bean->fetched_row['user_id'];
-             }
-        }
-
-        if ($isNewRecord && empty($this->bean->user_id)) {
-            $this->bean->user_id = $current_user->id;
-        }
-
-        parent::action_save();
+    if(type !== 'user') {
+      method = 'hide';
     }
+
+    outboundEmailFields[method](fieldKey);
+  });
 }
+
+$(document).ready(function () {
+  var isAdmin = userService.isAdmin();
+  var type = outboundEmailFields.getValue('type');
+  toggleOwnerField(type, isAdmin);
+});
+
