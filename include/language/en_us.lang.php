@@ -706,6 +706,13 @@ $app_list_strings = array(
         'bounce' => 'Bounce',
     ],
 
+    'dom_outbound_email_account_types' => [
+        'user' => 'Personal',
+        'group' => 'Group',
+        'system' => 'System',
+        'system-override' => 'System Override',
+    ],
+
     'dom_inbound_email_account_status' => [
         'Active' => 'Active',
         'Inactive' => 'Inactive',
@@ -2963,7 +2970,7 @@ $app_list_strings['contact_portal_user_type_dom'] =
         'Account' => 'Account user',
     );
 $app_list_strings['dom_email_distribution_for_auto_create'] = array(
-    'AOPDefault' => 'Use AOP Default',
+    'AOPDefault' => 'System Default',
     'singleUser' => 'Single User',
     'roundRobin' => 'Round-Robin',
     'leastBusy' => 'Least-Busy',

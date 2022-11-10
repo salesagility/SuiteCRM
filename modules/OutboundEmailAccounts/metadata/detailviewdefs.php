@@ -4,17 +4,17 @@ $viewdefs ['OutboundEmailAccounts'] = [
         'templateMeta' => [
             'form' => [
                 'buttons' => [
-                    0 => 'EDIT',
-                    2 => 'DELETE',
+                    'EDIT',
+                    'DELETE',
                 ],
             ],
             'maxColumns' => '2',
             'widths' => [
-                0 => [
+                [
                     'label' => '10',
                     'field' => '30',
                 ],
-                1 => [
+                [
                     'label' => '10',
                     'field' => '30',
                 ],
@@ -30,53 +30,48 @@ $viewdefs ['OutboundEmailAccounts'] = [
                     'panelDefault' => 'expanded',
                 ],
             ],
-            'syncDetailEditViews' => true,
+            'preForm' => '
+                <script type="text/javascript">
+                    {suite_combinescripts
+                        files="modules/OutboundEmailAccounts/js/fields.js,
+                               modules/OutboundEmailAccounts/js/smtp_auth_toggle.js"}
+                </script>
+            ',
         ],
         'panels' => [
             'default' => [
-                0 => [
-                    0 => 'name',
+                [
+                    'name',
+                    ''
+                ],
+                [
+                    'type',
+                    ''
+                ],
+                [
+                    'owner_name',
                 ],
             ],
-            'lbl_editview_panel1' => [
+            'lbl_connection_configuration' => [
                 [
-                    0 => [
-                        'name' => 'smtp_from_name',
-                        'label' => 'LBL_SMTP_FROM_NAME',
-                    ],
+                    'mail_smtpserver',
+                    'mail_smtpauth_req',
                 ],
                 [
-                    0 => [
-                        'name' => 'smtp_from_addr',
-                        'label' => 'LBL_SMTP_FROM_ADDR',
-                    ],
+                    'mail_smtpssl',
+                    'mail_smtpuser',
                 ],
                 [
-                    0 => [
-                        'name' => 'mail_smtpserver',
-                        'label' => 'LBL_SMTP_SERVERNAME',
-                    ],
-                    1 => [
-                        'name' => 'mail_smtpport',
-                        'label' => 'LBL_SMTP_PORT',
-                    ],
+                    'mail_smtpport',
+                    '',
+                ],
+            ],
+            'lbl_outbound_configuration' => [
+                [
+                    'smtp_from_name',
                 ],
                 [
-                    0 => [
-                        'name' => 'mail_smtpauth_req',
-                        'label' => 'LBL_SMTP_AUTH',
-                    ],
-                    1 => [
-                        'name' => 'mail_smtpssl',
-                        'studio' => 'visible',
-                        'label' => 'LBL_SMTP_PROTOCOL',
-                    ],
-                ],
-                [
-                    [
-                        'name' => 'mail_smtpuser',
-                        'label' => 'LBL_USERNAME',
-                    ],
+                    'smtp_from_addr',
                 ],
             ],
         ],

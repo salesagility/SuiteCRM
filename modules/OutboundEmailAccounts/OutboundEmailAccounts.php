@@ -206,6 +206,12 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
             $this->logPersonalAccountAccessDenied("ACLAccess-$view");
             return false;
         }
+
+        if ($this->type === 'user' && $this->checkPersonalAccountAccess()) {
+            return true;
+        }
+
+
         return parent::ACLAccess($view, $view, $is_owner, $in_group);
     }
 
@@ -291,7 +297,7 @@ HTML;
 					EmailMan.testOutboundDialog.render();
 					EmailMan.testOutboundDialog.show();
 				}
-                
+
                                 function showFullSmtpLogDialog(headerText, bodyHtml, dialogType) {
 
                                      var config = { };
@@ -302,11 +308,11 @@ HTML;
                                      config.width = 600;
                                      YAHOO.SUGAR.MessageBox.show(config);
                                 }
-				
+
 				function sendTestEmail() {
 					var toAddress = document.getElementById("outboundtest_to_address").value;
-					
-					if (trim(toAddress) == "") 
+
+					if (trim(toAddress) == "")
 					{
 						overlay("{$APP['ERR_MISSING_REQUIRED_FIELDS']}", "{$APP['LBL_EMAIL_SETTINGS_FROM_TO_EMAIL_ADDR']}", 'alert');
 						//return;
@@ -315,11 +321,11 @@ HTML;
 						overlay("{$APP['ERR_INVALID_REQUIRED_FIELDS']}", "{$APP['LBL_EMAIL_SETTINGS_FROM_TO_EMAIL_ADDR']}", 'alert');
 						return;
 					}
-					
+
 					//Hide the email address window and show a message notifying the user that the test email is being sent.
 					EmailMan.testOutboundDialog.hide();
 					overlay("{$APP['LBL_EMAIL_PERFORMING_TASK']}", "{$APP['LBL_EMAIL_ONE_MOMENT']}", 'alert');
-                    
+
 					var callbackOutboundTest = {
 						success	: function(o) {
 							hideOverlay();
@@ -327,17 +333,17 @@ HTML;
 							if (responseObject.status)
 								overlay("{$APP['LBL_EMAIL_TEST_OUTBOUND_SETTINGS']}", "{$APP['LBL_EMAIL_TEST_NOTIFICATION_SENT']}", 'alert');
        							else {
-                                
-                                                           var dialogBody = 
+
+                                                           var dialogBody =
                                                             "<div style='padding: 10px'>" +
                                                                "<div class='well'>" + responseObject.errorMessage + "</div>" +
                                                                "<div >" +
-                                                                   "<button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#fullSmtpLog' aria-expanded='false' aria-controls='fullSmtpLog'>" + 
+                                                                   "<button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#fullSmtpLog' aria-expanded='false' aria-controls='fullSmtpLog'>" +
                                                                        "{$APP['LBL_EMAIL_TEST_SEE_FULL_SMTP_LOG']}" +
                                                                   "</button>" +
                                                                    "<div class='collapse' id='fullSmtpLog'>" +
                                                                        "<pre style='height: 300px; overflow: scroll;'>" +
-                                                                           responseObject.fullSmtpLog + 
+                                                                           responseObject.fullSmtpLog +
                                                                        "</pre>" +
                                                                    "</div>" +
                                                                "</div>" +
@@ -351,7 +357,7 @@ HTML;
 					var smtpPort = document.getElementById('mail_smtpport').value;
 					var smtpssl  = document.getElementById('mail_smtpssl').value;
 					var mailsmtpauthreq = document.getElementById('mail_smtpauth_req');
-					var mail_sendtype = 'SMTP'; 
+					var mail_sendtype = 'SMTP';
                                                                 var adminNotifyFromAddress = document.getElementById('smtp_from_addr').value ? document.getElementById('smtp_from_addr').value :'$adminNotifyFromName';
                                                                 var adminNotifyFromName = document.getElementById('smtp_from_name').value ? document.getElementById('smtp_from_name').value : '$adminNotifyFromAddress';
 					var postDataString =
