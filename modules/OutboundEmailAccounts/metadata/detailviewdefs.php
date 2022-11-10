@@ -32,8 +32,10 @@ $viewdefs ['OutboundEmailAccounts'] = [
             ],
             'preForm' => '
                 <script type="text/javascript">
+                    {literal}var userService = function() { return { isAdmin: function() { return {/literal}{if $is_admin}true{else}false{/if}{literal};}}}();{/literal}
                     {suite_combinescripts
                         files="modules/OutboundEmailAccounts/js/fields.js,
+                               modules/OutboundEmailAccounts/js/owner_toggle.js,
                                modules/OutboundEmailAccounts/js/smtp_auth_toggle.js"}
                 </script>
             ',
