@@ -13,6 +13,11 @@ $listViewDefs [$module_name] = [
         'width' => '10%',
         'default' => true,
     ],
+    'TYPE' => [
+        'label' => 'LBL_TYPE',
+        'width' => '10%',
+        'default' => true,
+    ],
     'MAIL_SMTPSERVER' => [
         'type' => 'varchar',
         'label' => 'LBL_SMTP_SERVERNAME',

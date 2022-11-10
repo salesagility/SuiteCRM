@@ -83,7 +83,7 @@ class OutboundEmailAccounts_sugar extends Basic
 
     public function bean_implements($interface)
     {
-        if ($interface == 'ACL') {
+        if ($interface === 'ACL') {
             return true;
         }
         return false;
