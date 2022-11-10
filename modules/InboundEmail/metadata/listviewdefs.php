@@ -46,6 +46,11 @@ $listViewDefs [$module_name] = [
         'default' => true,
         'link' => true,
     ],
+    'EMAIL_USER' => [
+        'label' => 'LBL_USERNAME',
+        'width' => '10%',
+        'default' => true,
+    ],
     'TYPE' => [
         'label' => 'LBL_TYPE',
         'width' => '10%',
@@ -67,7 +72,7 @@ $listViewDefs [$module_name] = [
         'default' => true,
     ],
     'SERVER_URL' => [
-        'label' => 'LBL_SERVER_URL',
+        'label' => 'LBL_SERVER_ADDRESS',
         'width' => '10%',
         'default' => true,
     ],

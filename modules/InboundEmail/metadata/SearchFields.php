@@ -47,4 +47,6 @@ $searchFields[$module_name] = [
     'type' => ['query_type' => 'default'],
     'status' => ['query_type' => 'default'],
     'server_url' => ['query_type' => 'default'],
+    'is_personal' => ['query_type' => 'default'],
+    'created_by' => ['query_type' => 'default'],
 ];
