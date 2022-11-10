@@ -19,8 +19,9 @@
 	},
 
 	// For use with PHP or Apache (e.g.php -S localhost:8080 or apache2ctl start)
-	"forwardPorts": [80, 3306]
-
+	"forwardPorts": [80, 3306],
+	// Adding git safe directories so it can be used inside the containers
+	"postStartCommand": "git config --global --add safe.directory '*'"
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "sudo chmod a+x \"$(pwd)\" && sudo rm -rf /var/www/html && sudo ln -s \"$(pwd)\" /var/www/html"
 
