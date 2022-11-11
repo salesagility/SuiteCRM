@@ -40,7 +40,7 @@
 *}
 
 <form name="Diagnostic" method="POST" action="index.php">
-    <h4>Quick Report</h4><br/>
+    <h4>{$MOD.LBL_DIAGNOSTIC_QUICKREPORT}</h4><br/>
     <input type="hidden" name="module" value="Administration">
     <input type="hidden" name="action" value="DiagnosticRun">
     <!-- Keep the following report output in such a way that it copy-pastes well from browser into
@@ -64,7 +64,7 @@
 </form>
 
 <form name="Diagnostic" method="POST" action="index.php">
-    <h4>Download Diagnostic Files</h4><br/>
+    <h4>{$MOD.LBL_DIAGNOSTIC_DOWNLOADLINK}</h4><br/>
     <input type="hidden" name="module" value="Administration">
     <input type="hidden" name="action" value="DiagnosticRun">
 
