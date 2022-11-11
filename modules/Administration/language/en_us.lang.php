@@ -204,6 +204,7 @@ $mod_strings = array(
     'LBL_DIAGNOSTIC_DESC' => 'Capture system configuration for diagnostics and analysis',
     'LBL_DIAGNOSTIC_DONE' => 'Done',
     'LBL_DIAGNOSTIC_DOWNLOADLINK' => 'Download the Diagnostic file',
+    'LBL_DIAGNOSTIC_QUICKREPORT' => 'Quick Report',
     'LBL_DIAGNOSTIC_EXECUTING' => 'Executing Diagnostic Operations...',
     'LBL_DIAGNOSTIC_FILESMD5' => '&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;Copy files.md5',
     'LBL_DIAGNOSTIC_GETBEANFILES' => 'Checking that bean files exist...',
