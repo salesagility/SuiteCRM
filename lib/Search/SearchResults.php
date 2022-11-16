@@ -209,7 +209,12 @@ class SearchResults
     {
         $relField = $idName;
         if (isset($obj->$link)) {
-            $relId = $obj->$link->getFocus()->$relField;
+            $linkedbeans=$obj->$link->getBeans();
+            if(count($linkedbeans)==1){
+                $relId = array_keys($linkedbeans)[0];
+            }else{
+                $relId = $obj->$link->getFocus()->$relField;
+            }
             if (is_object($relId)) {
                 if (method_exists($relId, "getFocus")) {
                     $relId = $relId->getFocus()->id;
