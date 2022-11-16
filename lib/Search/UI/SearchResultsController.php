@@ -137,6 +137,12 @@ class SearchResultsController extends Controller
         $smarty->assign('total', $total);
         $smarty->assign('headers', $headers);
         $smarty->assign('results', $this->results);
+        global $app_list_strings;
+        $moduleHeader=[];
+        foreach($this->results->getHits() as $moduleloop => $loophits){
+            $moduleHeader[$moduleloop]=$app_list_strings['moduleList'][$moduleloop];
+        }
+        $smarty->assign('moduleHeader', $moduleHeader);
         try {
             $smarty->assign('resultsAsBean', $this->results->getHitsAsBeans());
         } catch (\SuiteCRM\Exception\Exception $e) {
