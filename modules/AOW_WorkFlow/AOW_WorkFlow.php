@@ -165,6 +165,10 @@ class AOW_WorkFlow extends Basic
     {
         global $beanList, $app_list_strings;
 
+        if (!isset($app_list_strings['aow_moduleList'])) {
+            return;
+        }
+
         if (!empty($app_list_strings['moduleList'])) {
             $app_list_strings['aow_moduleList'] = $app_list_strings['moduleList'];
             foreach ($app_list_strings['aow_moduleList'] as $mkey => $mvalue) {
@@ -174,7 +178,7 @@ class AOW_WorkFlow extends Basic
             }
         }
 
-        $app_list_strings['aow_moduleList'] = array_merge((array)array(''=>''), (array)$app_list_strings['aow_moduleList']);
+        $app_list_strings['aow_moduleList'] = array_merge([''=>''], $app_list_strings['aow_moduleList']);
 
         asort($app_list_strings['aow_moduleList']);
     }
