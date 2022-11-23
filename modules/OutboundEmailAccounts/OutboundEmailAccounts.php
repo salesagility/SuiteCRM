@@ -67,6 +67,8 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
             throw new RuntimeException('Access Denied');
         }
 
+        $this->keepWriteOnlyFieldValues();
+
         if (!$this->mail_smtppass && $this->id) {
             $bean = BeanFactory::newBean('OutboundEmailAccounts');
             $bean->retrieve($this->id);
@@ -213,6 +215,32 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
 
 
         return parent::ACLAccess($view, $view, $is_owner, $in_group);
+    }
+
+    /**
+     * @return void
+     */
+    protected function keepWriteOnlyFieldValues(): void
+    {
+        if (empty($this->fetched_row)) {
+            return;
+        }
+
+        foreach ($this->field_defs as $field => $field_def) {
+            if (empty($field_def['display']) || $field_def['display'] !== 'writeonly') {
+                continue;
+            }
+
+            if (empty($this->fetched_row[$field])) {
+                continue;
+            }
+
+            if (!empty($this->$field)) {
+                continue;
+            }
+
+            $this->$field = $this->fetched_row[$field];
+        }
     }
 
     public static function getPasswordChange()
