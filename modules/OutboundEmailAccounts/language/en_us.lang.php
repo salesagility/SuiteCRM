@@ -68,7 +68,7 @@ $mod_strings = array(
     'LNK_LIST_CREATE_NEW_PERSONAL' => 'New Personal Outbound Mail Account',
     'LNK_LIST_CREATE_NEW_GROUP' => 'New System Outbound Mail Account',
 
-    'LNK_LIST' => 'View Outbound Email Accounts',
+    'LNK_LIST' => 'Outbound Email Accounts',
     'LNK_LIST_INBOUND_EMAIL_ACCOUNTS' => 'Inbound Email Accounts',
     'LBL_SEARCH_FORM_TITLE' => 'Search Outbound Email Accounts',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
@@ -112,7 +112,8 @@ $mod_strings = array(
 
     'LBL_SECURITYGROUPS_SUBPANEL_TITLE' => 'Security Groups',
 
-
     'LBL_OWNER' => 'Owner',
-    'LBL_OWNER_NAME' => 'Owner'
+    'LBL_OWNER_NAME' => 'Owner',
+
+    'LNK_EXTERNAL_OAUTH_CONNECTIONS' => 'External OAuth Connections'
 );
