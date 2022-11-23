@@ -108,6 +108,7 @@ $viewdefs ['InboundEmail'] = [
                                modules/InboundEmail/js/mail_folders.js,
                                modules/InboundEmail/js/owner_toggle.js,
                                modules/InboundEmail/js/fields_toggle.js,
+                               modules/InboundEmail/js/auth_type_fields_toggle.js,
                                modules/InboundEmail/js/panel_toggle.js"}
                 </script>
             '
@@ -127,6 +128,10 @@ $viewdefs ['InboundEmail'] = [
                 ],
             ],
             'lbl_connection_configuration' => [
+                [
+                    'auth_type',
+                    'external_oauth_connection_name',
+                ],
                 [
                     'server_url',
                     'email_user'

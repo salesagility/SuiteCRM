@@ -282,6 +282,11 @@ class InboundEmail extends SugarBean
     public $is_default;
 
     /**
+     * @var string|null
+     */
+    public $external_oauth_connection_id;
+
+    /**
      * Email constructor
      * @param ImapHandlerInterface|null $imapHandler
      * @param MailMimeParser|null $mailParser
@@ -383,6 +388,9 @@ class InboundEmail extends SugarBean
             throw new RuntimeException('Access Denied');
         }
 
+        $this->clearAuthTypeDependantFields();
+        $this->keepWriteOnlyFieldValues();
+
         // generate cache table for email 2.0
         $multiDImArray = $this->generateMultiDimArrayFromFlatArray(
             explode(",", $this->mailbox),
@@ -452,6 +460,50 @@ class InboundEmail extends SugarBean
         }
 
         return parent::ACLAccess($view, $view, $is_owner, $in_group);
+    }
+
+    /**
+     * @return void
+     */
+    protected function keepWriteOnlyFieldValues(): void
+    {
+        if (empty($this->fetched_row)) {
+            return;
+        }
+
+        foreach ($this->field_defs as $field => $field_def) {
+            if (empty($field_def['display']) || $field_def['display'] !== 'writeonly') {
+                continue;
+            }
+
+            if (empty($this->fetched_row[$field])) {
+                continue;
+            }
+
+            if (!empty($this->$field)) {
+                continue;
+            }
+
+            $this->$field = $this->fetched_row[$field];
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function clearAuthTypeDependantFields(): void
+    {
+        if (empty($this->auth_type)) {
+            return;
+        }
+
+        if ($this->auth_type === 'basic') {
+            $this->external_oauth_connection_id = '';
+        }
+
+        if ($this->auth_type === 'oauth') {
+            $this->email_password = '';
+        }
     }
 
     public function filterMailBoxFromRaw($mailboxArray, $rawArray)
@@ -6800,11 +6852,15 @@ class InboundEmail extends SugarBean
         global $mod_strings;
         global $app_list_strings;
         $temp_array = $this->get_list_view_array();
-        if (!isset($app_list_strings['dom_mailbox_type'][$this->mailbox_type])) {
-            LoggerManager::getLogger()->fatal('Language string not found for app_list_string[dom_mailbox_type][' . $this->mailbox_type . ']');
+
+        $temp_array['MAILBOX_TYPE_NAME'] = '';
+        if (!empty($this->mailbox_type)) {
+            if (!isset($app_list_strings['dom_mailbox_type'][$this->mailbox_type])) {
+                LoggerManager::getLogger()->fatal('Language string not found for app_list_string[dom_mailbox_type][' . $this->mailbox_type . ']');
+            }
+            $temp_array['MAILBOX_TYPE_NAME'] = $app_list_strings['dom_mailbox_type'][$this->mailbox_type] ?? null;
         }
-        $temp_array['MAILBOX_TYPE_NAME'] = isset($app_list_strings['dom_mailbox_type'][$this->mailbox_type]) ?
-            $app_list_strings['dom_mailbox_type'][$this->mailbox_type] : null;
+
         //cma, fix bug 21670.
         $temp_array['GLOBAL_PERSONAL_STRING'] = ($this->is_personal ? $mod_strings['LBL_IS_PERSONAL'] : $mod_strings['LBL_IS_GROUP']);
         $temp_array['STATUS'] = ($this->status == 'Active') ? $mod_strings['LBL_STATUS_ACTIVE'] : $mod_strings['LBL_STATUS_INACTIVE'];
@@ -8412,4 +8468,5 @@ eoq;
 
         return false;
     }
+
 } // end class definition
