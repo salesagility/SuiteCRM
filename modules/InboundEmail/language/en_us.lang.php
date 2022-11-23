@@ -137,11 +137,11 @@ $mod_strings = array(
     'LBL_WARN_IMAP' => 'Warnings:',
     'LBL_WARN_NO_IMAP' => 'Inbound Email <b>cannot</b> function without the IMAP c-client libraries enabled/compiled with the PHP module. Please contact your administrator to resolve this issue.',
 
-    'LNK_LIST_CREATE_NEW_PERSONAL' => 'New Personal Mail Account',
-    'LNK_LIST_CREATE_NEW_GROUP' => 'New Group Mail Account',
-    'LNK_LIST_CREATE_NEW_CASES_TYPE' => 'New Case Handling Account',
-    'LNK_LIST_CREATE_NEW_BOUNCE' => 'New Bounce Handling Account',
-    'LNK_LIST_MAILBOXES' => 'All Mail Accounts',
+    'LNK_LIST_CREATE_NEW_PERSONAL' => 'New Personal Inbound Mail Account',
+    'LNK_LIST_CREATE_NEW_GROUP' => 'New Group Inbound Mail Account',
+    'LNK_LIST_CREATE_NEW_CASES_TYPE' => 'New Case Handling Mail Account',
+    'LNK_LIST_CREATE_NEW_BOUNCE' => 'New Bounce Handling Mail Account',
+    'LNK_LIST_MAILBOXES' => 'Inbound Mail Accounts',
     'LNK_LIST_OUTBOUND_EMAILS' => 'Outbound Mail Accounts',
     'LNK_LIST_SCHEDULER' => 'Schedulers',
     'LNK_SEED_QUEUES' => 'Seed Queues From Teams',
@@ -201,7 +201,13 @@ $mod_strings = array(
     'LBL_DISTRIBUTION_USER_ID' => 'Distribution User id',
     'LBL_DISTRIBUTION_USER_NAME' => 'Distribution User',
 
+    'LBL_EXTERNAL_OAUTH_CONNECTION' => 'External OAuth Connection',
+    'LBL_EXTERNAL_OAUTH_CONNECTION_ID' => 'External OAuth Connection id',
+    'LBL_EXTERNAL_OAUTH_CONNECTION_NAME' => 'External OAuth Connection',
+    'LNK_EXTERNAL_OAUTH_CONNECTIONS' => 'External OAuth Connections',
+
     'LBL_TYPE' => 'Type',
+    'LBL_AUTH_TYPE' => 'Auth Type',
     'LBL_IS_DEFAULT' => 'Default',
     'LBL_SIGNATURE' => 'Signature',
 

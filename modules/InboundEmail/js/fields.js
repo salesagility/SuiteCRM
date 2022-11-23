@@ -103,6 +103,15 @@ var inboundEmailFields = function () {
       'searchField': {
         type: 'varchar'
       },
+      'auth_type': {
+        type: 'varchar'
+      },
+      'external_oauth_connection_name': {
+        type: 'varchar',
+        getField$: function (field) {
+          return $('input[name=' + field + ']') || null;
+        }
+      },
     },
 
     getters: {
@@ -193,11 +202,23 @@ var inboundEmailFields = function () {
     },
 
     getValueGetter: function (field) {
+      var handler = (this.fields[field] && this.fields[field].getter) || null;
+
+      if (handler) {
+        return handler;
+      }
+
       var type = this.getFieldType(field);
       return this.getters[type] || this.getters['default'];
     },
 
     getValueSetter: function (field) {
+      var handler = (this.fields[field] && this.fields[field].setter) || null;
+
+      if (handler) {
+        return handler;
+      }
+
       var type = this.getFieldType(field);
       return this.setters[type] || this.setters['default'];
     }
