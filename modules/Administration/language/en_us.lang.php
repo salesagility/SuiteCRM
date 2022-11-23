@@ -326,6 +326,10 @@ $mod_strings = array(
     'LBL_LOCALE' => 'Set default localization settings for your system',
     'LBL_MAILBOX_DESC' => 'Set up group mail accounts for monitoring inbound email and manage personal inbound mail account information for users',
     'LBL_MAILBOX_OUTBOUND_DESC' => 'Configure outbound email settings',
+
+    'LBL_MANAGE_EXTERNAL_OAUTH_CONNECTIONS' => 'External OAuth Connections',
+    'LBL_MANAGE_EXTERNAL_OAUTH_CONNECTIONS_DESC' => 'Setup external OAuth connections',
+
     'LBL_MANAGE_CURRENCIES' => 'Currencies',
     'LBL_MANAGE_LANGUAGES' => 'Languages',
     'LBL_MANAGE_LICENSE_TITLE' => 'License Management',
