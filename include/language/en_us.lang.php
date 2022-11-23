@@ -706,6 +706,16 @@ $app_list_strings = array(
         'bounce' => 'Bounce',
     ],
 
+    'dom_inbound_email_auth_types' => [
+        'basic' => 'Basic Auth',
+        'oauth' => 'OAuth',
+    ],
+
+    'dom_external_oauth_connection_types' => [
+        'personal' => 'Personal',
+        'group' => 'Group',
+    ],
+
     'dom_outbound_email_account_types' => [
         'user' => 'Personal',
         'group' => 'Group',
@@ -3533,6 +3543,7 @@ $app_list_strings['moduleList']['SecurityGroups'] = 'Security Suite Management';
 $app_strings['LBL_SECURITYGROUP'] = 'Security Group';
 
 $app_list_strings['moduleList']['OutboundEmailAccounts'] = 'Outbound Email Accounts';
+$app_list_strings['moduleList']['ExternalOAuthConnection'] = 'External OAuth Connection';
 
 //social
 $app_strings['FACEBOOK_USER_C'] = 'Facebook';
