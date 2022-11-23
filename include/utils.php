@@ -277,6 +277,8 @@ function make_sugar_config(&$sugar_config)
             'min_cron_interval' => 30, // minimal interval between cron jobs
         ),
         'strict_id_validation' => false,
+        'external_oauth_providers' => [
+        ]
     );
 }
 
@@ -569,6 +571,8 @@ function get_sugar_config_defaults(): array
             'enable' => true,
             'gc_probability' => 1,
             'gc_divisor' => 100,
+        ],
+        'external_oauth_providers' => [
         ]
     ];
 

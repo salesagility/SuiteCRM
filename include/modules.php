@@ -514,6 +514,10 @@ $modules_exempt_from_availability_check['OutboundEmailAccounts'] = 'OutboundEmai
 $report_include_modules['OutboundEmailAccounts'] = 'OutboundEmailAccounts';
 $modInvisList[] = 'OutboundEmailAccounts';
 
+$beanList['ExternalOAuthConnection'] = 'ExternalOAuthConnection';
+$beanFiles['ExternalOAuthConnection'] = 'modules/ExternalOAuthConnection/ExternalOAuthConnection.php';
+$modInvisList[] = 'ExternalOAuthConnection';
+
 $beanList['TemplateSectionLine'] = 'TemplateSectionLine';
 $beanFiles['TemplateSectionLine'] = 'modules/TemplateSectionLine/TemplateSectionLine.php';
 $modules_exempt_from_availability_check['TemplateSectionLine'] = 'TemplateSectionLine';
