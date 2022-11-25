@@ -151,9 +151,10 @@ class ExternalOAuthConnection extends Basic
      */
     public function ACLAccess($view, $is_owner = 'not_set', $in_group = 'not_set')
     {
-        $notAllowed = ['export', 'import', 'massupdate', 'duplicate'];
+        global $current_user;
 
-        if (in_array(strtolower($view), $notAllowed)) {
+        $isNotAllowAction = $this->isNotAllowedAction($view);
+        if ($isNotAllowAction === true) {
             return false;
         }
 
@@ -163,11 +164,27 @@ class ExternalOAuthConnection extends Basic
             return false;
         }
 
-        if ($this->type === 'personal' && $this->checkPersonalAccountAccess()) {
+        $isPersonal = $this->type === 'personal';
+        $isAdmin = is_admin($current_user);
+
+        if ($isPersonal === true && $this->checkPersonalAccountAccess()) {
             return true;
         }
 
-        return parent::ACLAccess($view, $view, $is_owner, $in_group);
+        $isAdminOnlyAction = $this->isAdminOnlyAction($view);
+        if (!$isPersonal && !$isAdmin && $isAdminOnlyAction === true) {
+            return false;
+        }
+
+        $hasActionAclsDefined = has_group_action_acls_defined('ExternalOAuthConnection', 'view');
+        $isSecurityGroupBasedAction = $this->isSecurityGroupBasedAction($view);
+
+        if (!$isPersonal && !$isAdmin && !$hasActionAclsDefined && $isSecurityGroupBasedAction === true) {
+            return false;
+        }
+
+
+        return parent::ACLAccess($view, $is_owner, $in_group);
     }
 
     /**
@@ -203,7 +220,16 @@ class ExternalOAuthConnection extends Basic
         if (is_array($ret_array) && !empty($ret_array['where'])) {
             $tableName = $db->quote($this->table_name);
             $currentUserId = $db->quote($current_user->id);
-            $ret_array['where'] = $ret_array['where'] . " AND ( ($tableName.type != 'personal') OR ($tableName.type = 'personal' AND $tableName.created_by = '$currentUserId') )";
+
+            $showGroupRecords = "($tableName.type IS NULL) OR ($tableName.type != 'personal' ) OR ";
+
+            $hasActionAclsDefined = has_group_action_acls_defined('ExternalOAuthConnection', 'list');
+
+            if($hasActionAclsDefined === false) {
+                $showGroupRecords = '';
+            }
+
+            $ret_array['where'] = $ret_array['where'] . " AND ( $showGroupRecords ($tableName.type = 'personal' AND $tableName.created_by = '$currentUserId') )";
         }
 
         if ($return_array) {
@@ -238,5 +264,38 @@ class ExternalOAuthConnection extends Basic
 
             $this->$field = $this->fetched_row[$field];
         }
+    }
+
+    /**
+     * Check if its admin only action
+     * @param string $view
+     * @return bool
+     */
+    protected function isAdminOnlyAction(string $view): bool
+    {
+        $adminOnlyAction = ['edit', 'delete', 'editview', 'save'];
+        return in_array(strtolower($view), $adminOnlyAction);
+    }
+
+    /**
+     * Check if its a security based action
+     * @param string $view
+     * @return bool
+     */
+    protected function isSecurityGroupBasedAction(string $view): bool
+    {
+        $securityBasedActions = ['detail', 'detailview', 'view'];
+        return in_array(strtolower($view), $securityBasedActions);
+    }
+
+    /**
+     * Get not allowed action
+     * @param string $view
+     * @return bool
+     */
+    protected function isNotAllowedAction(string $view): bool
+    {
+        $notAllowed = ['export', 'import', 'massupdate', 'duplicate'];
+        return in_array(strtolower($view), $notAllowed);
     }
 }
