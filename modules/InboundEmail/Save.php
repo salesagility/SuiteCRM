@@ -265,6 +265,16 @@ $GLOBALS['sugar_config']['disable_team_access_check'] = true;
 
 $focus->save();
 
+$showFolders = sugar_unserialize(base64_decode($current_user->getPreference('showFolders', 'Emails')));
+if (!is_array($showFolders)) {
+    $showFolders = [];
+}
+if (!in_array($focus->id, $showFolders)) {
+    $showFolders[] = $focus->id;
+    $showStore = base64_encode(serialize($showFolders));
+    $current_user->setPreference('showFolders', $showStore, 0, 'Emails');
+}
+
 $idValidator = new \SuiteCRM\Utility\SuiteValidator();
 
 if ($type === 'personal' && isset($_REQUEST['account_signature_id']) && $idValidator->isValidId($_REQUEST['account_signature_id'])) {
