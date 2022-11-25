@@ -39,6 +39,52 @@
 
 var inboundEmailFields = function () {
 
+  var requiredLabelTemplate = '<span class="required">*</span>';
+  var validationMessageTemplate = '<div class="required validation-message">Missing required field: $FIELD_NAME</div>';
+
+  var getValidationDefinition = function (formName, field) {
+    if (validate[formName]) {
+      for (i = 0; i < validate[formName].length; i++) {
+        if (validate[formName][i][nameIndex] == field) {
+          return validate[formName][i];
+        }
+      }
+    }
+    return null;
+  };
+
+  var configureValidation = function (formName, field, required) {
+
+    var definition = getValidationDefinition(formName, field);
+
+    if(!definition){
+      return;
+    }
+    var isRequired = true;
+
+    if(!required){
+      isRequired = false;
+    }
+
+    definition[requiredIndex] = isRequired;
+  };
+
+  var addRequiredIndicator = function ($label) {
+    var $indicator = $label.find('.required');
+
+    if ($indicator.length < 1) {
+      $label.append($(requiredLabelTemplate));
+    }
+  };
+
+  var removeRequiredIndicator = function ($label) {
+    var $indicator = $label.find('.required');
+
+    if ($indicator.length > 0) {
+      $indicator.remove();
+    }
+  };
+
   var getDefaultFieldGetter = function () {
     return function (field$) {
       return (field$ && field$.val()) || '';
@@ -162,6 +208,15 @@ var inboundEmailFields = function () {
       return getter(field$);
     },
 
+    getData: function (field, dataKey) {
+      var field$ = this.getField$(field);
+      if (!field$) {
+        return null;
+      }
+
+      return field$.data(dataKey);
+    },
+
     hide: function (field) {
       var field$ = this.getFieldCell$(field);
 
@@ -221,7 +276,31 @@ var inboundEmailFields = function () {
 
       var type = this.getFieldType(field);
       return this.setters[type] || this.setters['default'];
-    }
+    },
+
+    setRequired: function (field, fieldType, formName, required) {
+      configureValidation(this.formName, this.name, required);
+
+      this.setRequiredIndicator(field, required);
+
+      if (required) {
+        addToValidate(formName, field, fieldType, true, SUGAR.language.get('InboundEmail',"LBL_" + field.toUpperCase()));
+      } else {
+        removeFromValidate(formName, field);
+      }
+
+    },
+
+    setRequiredIndicator: function (field, required) {
+      var $label = this.getFieldCell$(field).find('.label');
+      if (required) {
+        addRequiredIndicator($label);
+      } else {
+        removeRequiredIndicator($label);
+      }
+    },
 
   };
 }();
+
+
