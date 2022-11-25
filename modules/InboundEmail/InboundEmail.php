@@ -450,16 +450,38 @@ class InboundEmail extends SugarBean
      */
     public function ACLAccess($view, $is_owner = 'not_set', $in_group = 'not_set')
     {
+        global $current_user;
+
+        $isNotAllowAction = $this->isNotAllowedAction($view);
+        if ($isNotAllowAction === true) {
+            return false;
+        }
+
         if (!$this->checkPersonalAccountAccess()) {
             $this->logPersonalAccountAccessDenied("ACLAccess-$view");
             return false;
         }
 
-        if (isTrue($this->is_personal) && $this->checkPersonalAccountAccess()) {
+        $isPersonal = isTrue($this->is_personal);
+        $isAdmin = is_admin($current_user);
+
+        if ($isPersonal === true && $this->checkPersonalAccountAccess()) {
             return true;
         }
 
-        return parent::ACLAccess($view, $view, $is_owner, $in_group);
+        $isAdminOnlyAction = $this->isAdminOnlyAction($view);
+        if (!$isPersonal && !$isAdmin && $isAdminOnlyAction === true) {
+            return false;
+        }
+
+        $hasActionAclsDefined = has_group_action_acls_defined('InboundEmail', 'view');
+        $isSecurityGroupBasedAction = $this->isSecurityGroupBasedAction($view);
+
+        if (!$isPersonal && !$isAdmin && !$hasActionAclsDefined && $isSecurityGroupBasedAction === true) {
+            return false;
+        }
+
+        return parent::ACLAccess($view, $is_owner, $in_group);
     }
 
     /**
@@ -6830,7 +6852,16 @@ class InboundEmail extends SugarBean
         if (is_array($ret_array) && !empty($ret_array['where'])){
             $tableName = $db->quote($this->table_name);
             $currentUserId = $db->quote($current_user->id);
-            $ret_array['where'] = $ret_array['where'] . " AND ( ($tableName.is_personal IS NULL) OR ($tableName.is_personal = 0) OR ($tableName.is_personal = 1 AND $tableName.created_by = '$currentUserId') )";
+
+            $showGroupRecords = "($tableName.is_personal IS NULL) OR ($tableName.is_personal = 0) OR ";
+
+            $hasActionAclsDefined = has_group_action_acls_defined('InboundEmail', 'list');
+
+            if($hasActionAclsDefined === false) {
+                $showGroupRecords = '';
+            }
+
+            $ret_array['where'] = $ret_array['where'] . " AND ( $showGroupRecords ($tableName.is_personal = 1 AND $tableName.created_by = '$currentUserId') )";
         }
 
         if ($return_array) {
@@ -8467,6 +8498,39 @@ eoq;
         }
 
         return false;
+    }
+
+    /**
+     * Check if its admin only action
+     * @param string $view
+     * @return bool
+     */
+    protected function isAdminOnlyAction(string $view): bool
+    {
+        $adminOnlyAction = ['edit', 'delete', 'editview', 'save'];
+        return in_array(strtolower($view), $adminOnlyAction);
+    }
+
+    /**
+     * Check if its a security based action
+     * @param string $view
+     * @return bool
+     */
+    protected function isSecurityGroupBasedAction(string $view): bool
+    {
+        $securityBasedActions = ['detail', 'detailview', 'view'];
+        return in_array(strtolower($view), $securityBasedActions);
+    }
+
+    /**
+     * Get not allowed action
+     * @param string $view
+     * @return bool
+     */
+    protected function isNotAllowedAction(string $view): bool
+    {
+        $notAllowed = ['export', 'import', 'massupdate', 'duplicate'];
+        return in_array(strtolower($view), $notAllowed);
     }
 
 } // end class definition
