@@ -69,6 +69,7 @@ class ListViewSmarty extends ListViewDisplay
     public $showMassupdateFields = true;
     public $menu_location = 'top';
     public $templateMeta = array();
+    public $displayEmptyDataMessages = null;
 
     /**
      * Constructor, Smarty object immediately available after
@@ -311,7 +312,9 @@ class ListViewSmarty extends ListViewDisplay
             'of' => $app_strings['LBL_LIST_OF']);
         $this->ss->assign('navStrings', $navStrings);
 
-        $displayEmptyDataMessages = true;
+        if ($this->displayEmptyDataMessages === null) {
+            $displayEmptyDataMessages = true;
+        }
         //TODO: Cleanup, better logic for which modules are exempt from the new messaging.
         $modulesExemptFromEmptyDataMessages = array('WorkFlow','ContractTypes', 'OAuthKeys', 'TimePeriods');
         if ((isset($GLOBALS['moduleTabMap'][$currentModule]) && $GLOBALS['moduleTabMap'][$currentModule] == 'Administration')
