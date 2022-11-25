@@ -50,16 +50,30 @@ function authTypetoggleFields(type) {
     },
   };
 
+  var fieldType = {
+    'email_password': 'password',
+    'external_oauth_connection_name': 'relate',
+  };
+
   var fieldDisplay = fieldsPerType[type] || fieldsPerType.personal;
 
   Object.keys(fieldDisplay).forEach(function (fieldKey) {
     var display = fieldDisplay[fieldKey];
     var method = 'show';
+    var required = true;
+
     if(!display) {
       method = 'hide';
       inboundEmailFields.setValue(fieldKey, '');
+      required = false;
     }
 
+    var isValue = inboundEmailFields.getData(fieldKey, 'is-value-set');
+    if(isValue === true) {
+      required = false;
+    }
+
+    inboundEmailFields.setRequired(fieldKey, fieldType[fieldKey], 'EditView', required );
     inboundEmailFields[method](fieldKey);
   });
 }
