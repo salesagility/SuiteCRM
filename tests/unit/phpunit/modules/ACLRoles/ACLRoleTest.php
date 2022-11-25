@@ -78,14 +78,12 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetUserRoleNames(): void
     {
-        $aclRole = BeanFactory::newBean('ACLRoles');
-
         //test with empty value
-        $result = $aclRole->getUserRoleNames('');
+        $result = ACLRole::getUserRoleNames('');
         self::assertIsArray($result);
 
         //test with non empty but non existing role id value
-        $result = $aclRole->getUserRoleNames('1');
+        $result = ACLRole::getUserRoleNames('1');
         self::assertIsArray($result);
     }
 
