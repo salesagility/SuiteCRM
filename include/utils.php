@@ -6050,3 +6050,32 @@ function get_id_validation_pattern(): string {
 
     return $pattern;
 }
+
+/**
+ * Check if user has group and action acls defined
+ * @param string $module
+ * @param string $action
+ * @return bool
+ */
+function has_group_action_acls_defined(string $module, string $action): bool
+{
+    global $current_user;
+
+    $hasGroupActionAcls = true;
+
+    $groups = SecurityGroup::getUserSecurityGroups($current_user->id);
+    $hasGroups = !empty($groups);
+
+    $aclActions = ACLAction::getUserActions($current_user->id, false, $module, 'module', $action);
+    $isDefaultListACL = !empty($aclActions['isDefault']) && isTrue($aclActions['isDefault']);
+
+    if (!$hasGroups) {
+        $hasGroupActionAcls = false;
+    }
+
+    if ($isDefaultListACL) {
+        $hasGroupActionAcls = false;
+    }
+
+    return $hasGroupActionAcls;
+}
