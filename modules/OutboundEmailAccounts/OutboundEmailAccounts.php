@@ -148,7 +148,16 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
         if (is_array($ret_array) && !empty($ret_array['where'])){
             $tableName = $db->quote($this->table_name);
             $currentUserId = $db->quote($current_user->id);
-            $ret_array['where'] = $ret_array['where'] . " AND ( ($tableName.type IS NULL) OR ($tableName.type != 'user' ) OR ($tableName.type = 'user' AND $tableName.user_id = '$currentUserId') )";
+
+            $showGroupRecords = "($tableName.type IS NULL) OR ($tableName.type != 'user' ) OR ";
+
+            $hasActionAclsDefined = has_group_action_acls_defined('OutboundEmailAccounts', 'list');
+
+            if($hasActionAclsDefined === false) {
+                $showGroupRecords = '';
+            }
+
+            $ret_array['where'] = $ret_array['where'] . " AND ( $showGroupRecords ($tableName.type = 'user' AND $tableName.user_id = '$currentUserId') )";
         }
 
         if ($return_array) {
@@ -204,17 +213,38 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
      */
     public function ACLAccess($view, $is_owner = 'not_set', $in_group = 'not_set')
     {
+        global $current_user;
+
+        $isNotAllowAction = $this->isNotAllowedAction($view);
+        if ($isNotAllowAction === true) {
+            return false;
+        }
+
         if (!$this->checkPersonalAccountAccess()) {
             $this->logPersonalAccountAccessDenied("ACLAccess-$view");
             return false;
         }
 
-        if ($this->type === 'user' && $this->checkPersonalAccountAccess()) {
+        $isPersonal = $this->type === 'user';
+        $isAdmin = is_admin($current_user);
+
+        if ($isPersonal === true && $this->checkPersonalAccountAccess()) {
             return true;
         }
 
+        $isAdminOnlyAction = $this->isAdminOnlyAction($view);
+        if (!$isPersonal && !$isAdmin && $isAdminOnlyAction === true) {
+            return false;
+        }
 
-        return parent::ACLAccess($view, $view, $is_owner, $in_group);
+        $hasActionAclsDefined = has_group_action_acls_defined('OutboundEmailAccounts', 'view');
+        $isSecurityGroupBasedAction = $this->isSecurityGroupBasedAction($view);
+
+        if (!$isPersonal && !$isAdmin && !$hasActionAclsDefined && $isSecurityGroupBasedAction === true) {
+            return false;
+        }
+
+        return parent::ACLAccess($view, $is_owner, $in_group);
     }
 
     /**
@@ -431,5 +461,38 @@ HTML;
 			</div>
 HTML;
         return $html;
+    }
+
+    /**
+     * Check if its admin only action
+     * @param string $view
+     * @return bool
+     */
+    protected function isAdminOnlyAction(string $view): bool
+    {
+        $adminOnlyAction = ['edit', 'delete', 'editview', 'save'];
+        return in_array(strtolower($view), $adminOnlyAction);
+    }
+
+    /**
+     * Check if its a security based action
+     * @param string $view
+     * @return bool
+     */
+    protected function isSecurityGroupBasedAction(string $view): bool
+    {
+        $securityBasedActions = ['detail', 'detailview', 'view'];
+        return in_array(strtolower($view), $securityBasedActions);
+    }
+
+    /**
+     * Get not allowed action
+     * @param string $view
+     * @return bool
+     */
+    protected function isNotAllowedAction(string $view): bool
+    {
+        $notAllowed = ['export', 'import', 'massupdate', 'duplicate'];
+        return in_array(strtolower($view), $notAllowed);
     }
 }
