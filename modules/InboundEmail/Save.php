@@ -67,10 +67,7 @@ if ($isNewRecord && !empty($_REQUEST['created_by']) && !is_admin($current_user))
 }
 
 if (!$isNewRecord && !empty($_REQUEST['created_by']) && !is_admin($current_user)) {
-    $_REQUEST['created_by'] = '';
-    if (!empty($focus->fetched_row['created_by'])) {
-        $focus->created_by = $focus->fetched_row['created_by'];
-    }
+    unset($_REQUEST['created_by']);
 }
 
 if ($isNewRecord && empty($focus->created_by)) {
