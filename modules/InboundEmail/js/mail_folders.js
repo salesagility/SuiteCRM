@@ -37,6 +37,31 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+function showMissingMailboxCredentialsDialog() {
+  var $modal = $('<div id="mail-credentials-warning">');
+  var $modalText = $('<p>');
+  $modalText.append(SUGAR.language.get('app_strings',"LBL_EMAIL_WARNING_MISSING_CREDS"));
+  $modal.append($modalText);
+  $modal.dialog();
+}
+
+function validateMailFolderRequiredFields() {
+  var password = Rot13.write(inboundEmailFields.getValue('email_password'));
+  var isPasswordSet = inboundEmailFields.getData('email_password', 'is-value-set');
+  var authType = inboundEmailFields.getValue('auth_type');
+  var externalOAuthConnectionName = inboundEmailFields.getValue('external_oauth_connection_name');
+
+  if (authType === 'basic' && !password && isPasswordSet === false) {
+    return false;
+  }
+
+  if (authType === 'oauth' && !externalOAuthConnectionName) {
+    return false;
+  }
+
+  return true;
+}
+
 function openTrashMailboxPopup() {
   var serverUrl = inboundEmailFields.getValue('server_url');
   var protocol = inboundEmailFields.getValue('protocol');
@@ -46,6 +71,12 @@ function openTrashMailboxPopup() {
   var trashFolder = inboundEmailFields.getValue('trashFolder');
   var useSSL = inboundEmailFields.getValue('is_ssl');
   var isPersonal = inboundEmailFields.getValue('type') === 'personal';
+
+
+  if (!validateMailFolderRequiredFields()) {
+    showMissingMailboxCredentialsDialog();
+    return;
+  }
 
   getFoldersListForInboundAccount(
     "InboundEmail",
@@ -77,6 +108,11 @@ function openMailboxPopup() {
   var isPersonal = inboundEmailFields.getValue('type') === 'personal';
   var searchField = inboundEmailFields.getValue('searchField');
 
+  if (!validateMailFolderRequiredFields()) {
+    showMissingMailboxCredentialsDialog();
+    return;
+  }
+
   getFoldersListForInboundAccount(
     "InboundEmail",
     "ShowInboundFoldersList",
@@ -105,6 +141,11 @@ function openSentMailboxPopup() {
   var useSSL = inboundEmailFields.getValue('is_ssl');
   var isPersonal = inboundEmailFields.getValue('type') === 'personal';
   var sentFolder = inboundEmailFields.getValue('sentFolder');
+
+  if (!validateMailFolderRequiredFields()) {
+    showMissingMailboxCredentialsDialog();
+    return;
+  }
 
   getFoldersListForInboundAccount(
     "InboundEmail",

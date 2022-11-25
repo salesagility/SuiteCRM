@@ -1126,6 +1126,7 @@ $app_strings = array(
     'LBL_EMAIL_ACCOUNTS_SMTPUSER' => 'SMTP Username',
     'LBL_EMAIL_ACCOUNTS_SMTPDEFAULT' => 'Default',
     'LBL_EMAIL_WARNING_MISSING_USER_CREDS' => 'Warning: Missing username and password for outgoing mail account.',
+    'LBL_EMAIL_WARNING_MISSING_CREDS' => 'Warning: Missing credentials',
     'LBL_EMAIL_ACCOUNTS_SUBTITLE' => 'Set up Mail Accounts to view incoming emails from your email accounts.',
     'LBL_EMAIL_ACCOUNTS_OUTBOUND_SUBTITLE' => 'Provide SMTP mail server information to use for outgoing email in Mail Accounts.',
 
