@@ -467,6 +467,8 @@ if ($_REQUEST['module'] == 'Campaigns') {
 
     header($redirectUrl);
 }
+require('modules/InboundEmail/PostSave.php');
+
 
 /**
  * Certain updates to the IE account need to be reflected in the related SugarFolder since they are
