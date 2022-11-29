@@ -160,8 +160,9 @@ class MBPackage
         $time = time();
         $this->description = to_html($this->description);
         $isUninstallable = ($this->is_uninstallable ? true : false);
+        
         if ($GLOBALS['sugar_flavor'] === 'CE') {
-            $flavors = array('CE', 'PRO', 'ENT');
+            $flavors = array('CE');
         } else {
             $flavors = array($GLOBALS['sugar_flavor']);
         }
