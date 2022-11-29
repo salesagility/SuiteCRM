@@ -6588,7 +6588,7 @@ class InboundEmail extends SugarBean
             $user = $GLOBALS['current_user'];
         }
 
-        $query = "SELECT count(*) as c FROM inbound_email WHERE deleted=0 AND is_personal='1' AND group_id='{$user->id}' AND status='Active'";
+        $query = "SELECT count(*) as c FROM inbound_email WHERE deleted=0 AND is_personal='1' AND (group_id='{$user->id}' OR created_by='{$user->id}') AND status='Active'";
 
         $rs = $this->db->query($query);
         $row = $this->db->fetchByAssoc($rs);
@@ -7355,6 +7355,30 @@ class InboundEmail extends SugarBean
         }
 
         return $id;
+    }
+
+
+    public function isOnlyPersonalInbound()
+    {
+        $inboundAccount = $this->getUserPersonalAccountCount();
+        if ($inboundAccount == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function isDefaultPersonalInbound($userId): bool
+    {
+        $user = BeanFactory::getBean('Users', $userId);
+        $isDefault = $user->getPreference($this->keyForUsersDefaultIEAccount, 'Emails');
+        if ($isDefault == $userId){
+            return true;
+        }
+        return false;
     }
 
     /**
