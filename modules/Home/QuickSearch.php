@@ -281,22 +281,6 @@ class quicksearchQuery
                 if ($field == "user_hash") {
                     continue;
                 }
-                // handle enums
-                if ((isset($results[$i]->field_name_map[$field]['type']) && $results[$i]->field_name_map[$field]['type'] == 'enum')
-                    || (isset($results[$i]->field_name_map[$field]['custom_type']) && $results[$i]->field_name_map[$field]['custom_type'] == 'enum')) {
-
-                    // get fields to match enum vals
-                    if (empty($app_list_strings)) {
-                        $current_language = get_current_language();
-                        $app_list_strings = return_app_list_strings_language($current_language);
-                    }
-
-                    // match enum vals to text vals in language pack for return
-                    if (!empty($app_list_strings[$results[$i]->field_name_map[$field]['options']])) {
-                        $results[$i]->$field = $app_list_strings[$results[$i]->field_name_map[$field]['options']][$results[$i]->$field];
-                    }
-                }
-
 
                 if (isset($listData[$field])) {
                     $data['fields'][$i][$field] = $listData[$field];
