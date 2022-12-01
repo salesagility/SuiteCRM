@@ -2634,6 +2634,11 @@ class SugarBean
                         default:
                             //do nothing
                     }
+
+
+                    if ($def['type'] !== 'encrypt' && isTrue($def['db_encrypted'] ?? false)) {
+                        $this->$field = $this->encrpyt_before_save($this->$field);
+                    }
                 }
                 if ($reformatted) {
                     $GLOBALS['log']->info('Formatting correction: ' . $this->module_dir . '->' . $field .
@@ -4856,7 +4861,7 @@ class SugarBean
                                 $this->$field = $timedate->to_display_time($this->$field, true, false);
                             }
                         }
-                    } elseif ($type == 'encrypt' && empty($disable_date_format)) {
+                    } elseif (($type == 'encrypt' && empty($disable_date_format)) || isTrue($fieldDef['db_encrypted'] ?? false)) {
                         $this->$field = $this->decrypt_after_retrieve($this->$field);
                     }
                 }
