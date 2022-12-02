@@ -62,6 +62,28 @@ function validateMailFolderRequiredFields() {
   return true;
 }
 
+function getExtraMailboxListParams() {
+  var authType = inboundEmailFields.getValue('auth_type');
+  var recordId = inboundEmailFields.getValue('record');
+  var oauthConnectionId = inboundEmailFields.getValue('external_oauth_connection_id');
+
+  var extraParams = {};
+
+  if (oauthConnectionId) {
+    extraParams.external_oauth_connection_id = oauthConnectionId;
+  }
+
+  if (authType) {
+    extraParams.auth_type = authType;
+  }
+
+  if (recordId) {
+    extraParams.ie_id = recordId;
+  }
+
+  return extraParams;
+}
+
 function openTrashMailboxPopup() {
   var serverUrl = inboundEmailFields.getValue('server_url');
   var protocol = inboundEmailFields.getValue('protocol');
@@ -78,6 +100,8 @@ function openTrashMailboxPopup() {
     return;
   }
 
+  var extraParams = getExtraMailboxListParams();
+
   getFoldersListForInboundAccount(
     "InboundEmail",
     "ShowInboundFoldersList",
@@ -93,7 +117,8 @@ function openTrashMailboxPopup() {
     useSSL,
     isPersonal,
     "trash",
-    "EditView"
+    "EditView",
+    extraParams
   );
 }
 
@@ -113,6 +138,8 @@ function openMailboxPopup() {
     return;
   }
 
+  var extraParams = getExtraMailboxListParams();
+
   getFoldersListForInboundAccount(
     "InboundEmail",
     "ShowInboundFoldersList",
@@ -128,7 +155,8 @@ function openMailboxPopup() {
     useSSL,
     isPersonal,
     searchField,
-    "EditView"
+    "EditView",
+    extraParams
   );
 }
 
@@ -147,6 +175,8 @@ function openSentMailboxPopup() {
     return;
   }
 
+  var extraParams = getExtraMailboxListParams();
+
   getFoldersListForInboundAccount(
     "InboundEmail",
     "ShowInboundFoldersList",
@@ -162,7 +192,8 @@ function openSentMailboxPopup() {
     useSSL,
     isPersonal,
     "sent",
-    "EditView"
+    "EditView",
+    extraParams
   );
 
 }

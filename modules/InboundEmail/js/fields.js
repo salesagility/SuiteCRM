@@ -158,6 +158,12 @@ var inboundEmailFields = function () {
           return $('input[name=' + field + ']') || null;
         }
       },
+      'external_oauth_connection_id': {
+        type: 'varchar',
+        getField$: function (field) {
+          return $('input[name=' + field + ']') || null;
+        }
+      },
     },
 
     getters: {
