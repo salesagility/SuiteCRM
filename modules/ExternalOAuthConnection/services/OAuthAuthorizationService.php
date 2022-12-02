@@ -165,6 +165,120 @@ class OAuthAuthorizationService
     }
 
     /**
+     * Refresh the current token for connection
+     * @param ExternalOAuthConnection $connection
+     * @return void
+     */
+    public function refreshConnectionToken(ExternalOAuthConnection $connection): array {
+
+
+        $providerId = $connection->provider ?? '';
+
+        if (!$this->hasProvider($providerId)) {
+            $this->log('fatal', 'OAuthAuthorizationService::refreshConnectionToken::provider', "The specified OAuth2 provider '$providerId' is not supported or not properly configured");
+            return [
+                'success' => false,
+                'reLogin' => false,
+                'message' => "The specified OAuth2 provider '$providerId' is not supported or not properly configured"
+            ];
+        }
+
+        $provider = $this->getProvider($providerId);
+
+        if ($provider === null) {
+            $this->log('fatal', 'OAuthAuthorizationService::refreshConnectionToken::provider', 'provider not found');
+            return [
+                'success' => false,
+                'reLogin' => false,
+                'message' => "The specified OAuth2 provider '$providerId' was not found"
+            ];
+        }
+
+        $refreshToken = $connection->refresh_token ?? '';
+
+        if ($refreshToken === '') {
+            $this->log('fatal', 'OAuthAuthorizationService::refreshConnectionToken::refreshToken', 'Refersh token not set');
+            return [
+                'success' => false,
+                'reLogin' => true,
+                'message' => "Refresh token not set. Need to re-login"
+            ];
+        }
+
+        $token =  $provider->refreshAccessToken($refreshToken);
+
+        if ($token === null) {
+            $this->log('fatal', 'OAuthAuthorizationService::refreshToken::token', 'Not able to get access token. Check logs for more details');
+            return [
+                'success' => false,
+                'reLogin' => true,
+                'message' => "Was not able to refresh the token. Your session may have expired. Please try to re-login."
+            ];
+        }
+
+        $mappedToken = $this->mapToken($providerId, $token);
+
+        $connection->access_token = $mappedToken['access_token'];
+        $connection->expires_in = $mappedToken['expires_in'];
+        $connection->refresh_token = $mappedToken['refresh_token'];
+        $connection->token_type = $mappedToken['token_type'];
+
+        $connection->save();
+
+        $this->log('debug', 'OAuthAuthorizationService::refreshConnectionToken::token', 'successfully refreshed token');
+
+        // reset as the connection tokens have now been encripted
+        $connection->access_token = $mappedToken['access_token'];
+        $connection->expires_in = $mappedToken['expires_in'];
+        $connection->refresh_token = $mappedToken['refresh_token'];
+        $connection->token_type = $mappedToken['token_type'];
+
+        return [
+            'success' => true,
+            'reLogin' => false,
+            'message' => "successfully refreshed token"
+        ];
+    }
+
+    /**
+     * Check if token for connection has expired
+     * @param ExternalOAuthConnection $connection
+     * @return void
+     */
+    public function hasConnectionTokenExpired(ExternalOAuthConnection $connection): array {
+
+        $expireTimeStamp = $connection->expires_in ?? '';
+
+        if (empty($expireTimeStamp)) {
+            $this->log('fatal', 'OAuthAuthorizationService::hasConnectionTokenExpired', 'expires_in not set');
+            return [
+                'expired' => true,
+                'refreshToken' => false,
+                'message' => "Expiry date not set"
+            ];
+        }
+
+        if (!empty($expireTimeStamp)) {
+            $expireTimeStamp = (int) $expireTimeStamp;
+        }
+
+        if(time() > $expireTimeStamp) {
+            $this->log('fatal', 'OAuthAuthorizationService::hasConnectionTokenExpired', 'Access token has expired');
+            return [
+                'expired' => true,
+                'refreshToken' => true,
+                'message' => "Token expired"
+            ];
+        }
+
+        return [
+            'expired' => false,
+            'refreshToken' => false,
+            'message' => "Token valid"
+        ];
+    }
+
+    /**
      * Map token to bean fields array
      * @param string $providerId
      * @param AccessTokenInterface|null $token
