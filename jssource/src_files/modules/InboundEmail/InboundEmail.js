@@ -220,7 +220,7 @@ function isDataValid(formName, validateMonitoredFolder) {
 
 } // fn
 
-function getFoldersListForInboundAccount(module_name, action, pageTarget, width, height, mail_server, protocol, port, login, password, mailbox, ssl, personal, searchFieldValue, formName) {
+function getFoldersListForInboundAccount(module_name, action, pageTarget, width, height, mail_server, protocol, port, login, password, mailbox, ssl, personal, searchFieldValue, formName, extraParams) {
 	if (!formName) formName = "testSettingsView";
 
 	var words = getEncryptedPassword(login, password, mailbox);
@@ -242,6 +242,12 @@ function getFoldersListForInboundAccount(module_name, action, pageTarget, width,
         + '&ssl=' + ssl
         + '&personal=' + isPersonal
 		+ '&searchField='+ searchFieldValue;
+
+  if(extraParams && typeof extraParams === 'object' && Object.keys(extraParams).length) {
+    Object.keys(extraParams).forEach(function (key) {
+      URL += '&' + key + '=' + (extraParams[key] || '');
+    })
+  }
 
 	var SI = SUGAR.inboundEmail;
     if (!SI.listDlg) {

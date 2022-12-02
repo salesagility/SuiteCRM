@@ -73,7 +73,7 @@ if(formObject.port.value==""){errors.push(SUGAR.language.get('app_strings','LBL_
 if(errors.length>0){out=SUGAR.language.get('app_strings','LBL_EMAIL_ERROR_DESC');for(i=0;i<errors.length;i++){if(out!=""){out+="\n";}
 out+=errors[i];}
 alert(out);return false;}else{return true;}}
-function getFoldersListForInboundAccount(module_name,action,pageTarget,width,height,mail_server,protocol,port,login,password,mailbox,ssl,personal,searchFieldValue,formName){if(!formName)formName="testSettingsView";var words=getEncryptedPassword(login,password,mailbox);var isPersonal=(personal)?'true':'false';URL='index.php?'
+function getFoldersListForInboundAccount(module_name,action,pageTarget,width,height,mail_server,protocol,port,login,password,mailbox,ssl,personal,searchFieldValue,formName,extraParams){if(!formName)formName="testSettingsView";var words=getEncryptedPassword(login,password,mailbox);var isPersonal=(personal)?'true':'false';URL='index.php?'
 +'module='+module_name
 +'&to_pdf=1'
 +'&action='+action
@@ -87,7 +87,8 @@ function getFoldersListForInboundAccount(module_name,action,pageTarget,width,hei
 +'&mailbox='+words[2]
 +'&ssl='+ssl
 +'&personal='+isPersonal
-+'&searchField='+searchFieldValue;var SI=SUGAR.inboundEmail;if(!SI.listDlg){SI.listDlg=new YAHOO.widget.SimpleDialog("selectFoldersDiv",{width:width+"px",draggable:true,dragOnly:true,close:true,constraintoviewport:true,modal:true,loadingText:SUGAR.language.get("app_strings","LBL_EMAIL_LOADING")});SI.listDlg._updateContent=function(o){var w=this.cfg.config.width.value+"px";this.setBody(o.responseText);SUGAR.util.evalScript(o.responseText);if(!SUGAR.isIE)
++'&searchField='+searchFieldValue;if(extraParams&&typeof extraParams==='object'&&Object.keys(extraParams).length){Object.keys(extraParams).forEach(function(key){URL+='&'+key+'='+(extraParams[key]||'');})}
+var SI=SUGAR.inboundEmail;if(!SI.listDlg){SI.listDlg=new YAHOO.widget.SimpleDialog("selectFoldersDiv",{width:width+"px",draggable:true,dragOnly:true,close:true,constraintoviewport:true,modal:true,loadingText:SUGAR.language.get("app_strings","LBL_EMAIL_LOADING")});SI.listDlg._updateContent=function(o){var w=this.cfg.config.width.value+"px";this.setBody(o.responseText);SUGAR.util.evalScript(o.responseText);if(!SUGAR.isIE)
 this.body.style.width=w}}
 SI.listDlg.setHeader(SUGAR.language.get("app_strings","LBL_EMAIL_LOADING"));SI.listDlg.setBody('');SI.listDlg.render(document.body);var Connect=YAHOO.util.Connect;if(Connect.url)URL=Connect.url+"&"+url;Connect.asyncRequest("POST",URL,{success:SI.listDlg._updateContent,failure:SI.listDlg.hide,scope:SI.listDlg});SI.listDlg.show();SI.listDlg.center();}
 function setPortDefault(){var prot=document.getElementById('protocol');var ssl=document.getElementById('ssl');var port=document.getElementById('port');var stdPorts=new Array("110","143","993","995");var stdBool=new Boolean(false);if(port.value==''){stdBool.value=true;}else{for(i=0;i<stdPorts.length;i++){if(stdPorts[i]==port.value){stdBool.value=true;}}}
