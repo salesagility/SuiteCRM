@@ -115,6 +115,11 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
         $_REQUEST['joomla_account_creation_email_template_id'];
     $cfg->config['aop']['support_from_address'] = $_REQUEST['support_from_address'];
     $cfg->config['aop']['support_from_name'] = $_REQUEST['support_from_name'];
+
+    if(isset($_REQUEST['inbound_email_case_macro'])){
+        $cfg->config['inbound_email_case_subject_macro'] = $_REQUEST['inbound_email_case_macro'];
+    }
+
     /*
      * We save the case_status_changes array as json since the way config changes are persisted to config.php
      * means that removing entries is tricky. json simplifies this.
@@ -150,6 +155,9 @@ $closureEmailTemplateDropdown =
 $joomlaEmailTemplateDropdown =
     get_select_options_with_id($emailTemplateList, $cfg->config['aop']['joomla_account_creation_email_template_id']);
 
+$inboundEmailCaseMacro = $cfg->config['inbound_email_case_subject_macro'] ?? '';
+
+$sugar_smarty->assign('inbound_email_case_macro', $inboundEmailCaseMacro);
 $sugar_smarty->assign('USER_EMAIL_TEMPLATES', $userEmailTemplateDropdown);
 $sugar_smarty->assign('CONTACT_EMAIL_TEMPLATES', $contactEmailTemplateDropdown);
 $sugar_smarty->assign('CREATION_EMAIL_TEMPLATES', $creationEmailTemplateDropdown);
