@@ -70,7 +70,7 @@ class Folder
      * @var string
      */
     public $mailbox;
-    
+
     /**
      * private, use Folder::getType() instead
      * @var string folder type
@@ -129,6 +129,9 @@ class Folder
         if (isset($request['folders_id']) && !empty($request['folders_id'])) {
             $foldersId = $request['folders_id'];
             $this->retrieve($foldersId);
+            $_SESSION['CURRENT_IMAP_MAILBOX_ID'] = $request['folders_id'];
+        } elseif(!empty($_SESSION['CURRENT_IMAP_MAILBOX_ID'])) {
+            $this->retrieve($_SESSION['CURRENT_IMAP_MAILBOX_ID']);
         } else {
             $GLOBALS['log']->warn("Empty or undefined Email Folder ID");
         }
