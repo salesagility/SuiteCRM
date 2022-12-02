@@ -120,6 +120,7 @@ $dictionary['ExternalOAuthConnection'] = [
             'unified_search' => false,
             'sensitive' => true,
             'api-visible' => false,
+            'db_encrypted' => true,
         ],
         'token_type' => [
             'name' => 'token_type',
@@ -162,6 +163,7 @@ $dictionary['ExternalOAuthConnection'] = [
             'unified_search' => false,
             'sensitive' => true,
             'api-visible' => false,
+            'db_encrypted' => true,
         ],
         'refresh_token' => [
             'name' => 'refresh_token',
@@ -177,6 +179,7 @@ $dictionary['ExternalOAuthConnection'] = [
             'unified_search' => false,
             'sensitive' => true,
             'api-visible' => false,
+            'db_encrypted' => true,
         ],
         'provider' => [
             'name' => 'provider',
