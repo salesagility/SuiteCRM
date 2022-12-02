@@ -123,7 +123,7 @@ function caseUpdates(record){
 
             showSubPanel('history', null, true);
             //Reload the case updates stream and history panels
-		    $("#LBL_AOP_CASE_UPDATES").load("index.php?module=Cases&action=DetailView&record="+record + " #LBL_AOP_CASE_UPDATES", function(){
+		    $("#aop_case_updates_threaded_span").load("index.php?module=Cases&action=DetailView&record="+record + " #aop_case_updates_threaded_span", function(){
 
 
             //Collapse all except newest update
