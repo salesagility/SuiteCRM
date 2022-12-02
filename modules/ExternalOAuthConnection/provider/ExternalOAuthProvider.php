@@ -150,6 +150,30 @@ abstract class ExternalOAuthProvider implements ExternalOAuthProviderInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function refreshAccessToken(string $refreshToken): ?AccessTokenInterface
+    {
+        $config = $this->getProviderConfig();
+        $provider = $this->getProvider('', '');
+
+        if ($provider === null || empty($config)) {
+            return null;
+        }
+
+        $options = [
+            'refresh_token' => $refreshToken,
+        ];
+
+        $options = array_merge_recursive($options, $this->getRefreshTokenRequestOptions($config));
+
+        return $provider->getAccessToken(
+            $this->getRefreshTokenRequestGrant($config),
+            $options
+        );
+    }
+
+    /**
      * Get provider config
      * @return array
      */
@@ -251,6 +275,26 @@ abstract class ExternalOAuthProvider implements ExternalOAuthProviderInterface
     }
 
     /**
+     * Get options for the refresh token call
+     * @param array $providerConfig
+     * @return array
+     */
+    public function getRefreshTokenRequestOptions(array $providerConfig): array
+    {
+        return $providerConfig['refresh_token_request_options'] ?? [];
+    }
+
+    /**
+     * Get grant for refresh token request
+     * @param array $providerConfig
+     * @return string
+     */
+    public function getRefreshTokenRequestGrant(array $providerConfig): string
+    {
+        return $providerConfig['refresh_token_request_grant'] ?? 'refresh_token';
+    }
+
+    /**
      * Get token mapping configuration
      * @return array|mixed
      */
@@ -272,7 +316,8 @@ abstract class ExternalOAuthProvider implements ExternalOAuthProviderInterface
      * @param string $path
      * @return array|mixed|null
      */
-    public function getArrayValue(array $data, string $path) {
+    public function getArrayValue(array $data, string $path)
+    {
 
         if (empty($path)) {
             return null;

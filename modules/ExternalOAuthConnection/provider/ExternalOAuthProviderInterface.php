@@ -73,6 +73,13 @@ interface ExternalOAuthProviderInterface
     public function getAccessToken(string $code): ?AccessTokenInterface;
 
     /**
+     * Refresh access token
+     * @param string $refreshToken
+     * @return AccessTokenInterface | null
+     */
+    public function refreshAccessToken(string $refreshToken): ?AccessTokenInterface;
+
+    /**
      * Map access token info to internal format
      * @param AccessTokenInterface|null $token
      * @return array
