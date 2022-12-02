@@ -314,6 +314,8 @@ class ListViewSmarty extends ListViewDisplay
 
         if ($this->displayEmptyDataMessages === null) {
             $displayEmptyDataMessages = true;
+        } else {
+            $displayEmptyDataMessages = $this->displayEmptyDataMessages;
         }
         //TODO: Cleanup, better logic for which modules are exempt from the new messaging.
         $modulesExemptFromEmptyDataMessages = array('WorkFlow','ContractTypes', 'OAuthKeys', 'TimePeriods');
