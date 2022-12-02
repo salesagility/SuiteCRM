@@ -102,6 +102,10 @@ class ExternalOAuthConnection extends Basic
     {
         global $current_user;
 
+        if (is_admin($current_user)) {
+            return true;
+        }
+
         if (empty($this->type)) {
             return true;
         }
@@ -225,7 +229,7 @@ class ExternalOAuthConnection extends Basic
 
             $hasActionAclsDefined = has_group_action_acls_defined('ExternalOAuthConnection', 'list');
 
-            if($hasActionAclsDefined === false) {
+            if($hasActionAclsDefined === false && !is_admin($current_user)) {
                 $showGroupRecords = '';
             }
 
