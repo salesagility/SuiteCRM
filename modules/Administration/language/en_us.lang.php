@@ -853,6 +853,10 @@ $mod_strings = array(
     'LBL_AOP_CASE_CLOSURE_EMAIL_TEMPLATE' => 'Case Closed Email Template',
     'LBL_AOP_JOOMLA_ACCOUNT_CREATION_EMAIL_TEMPLATE' => 'Joomla Support Portal Account Creation Template',
 
+    'LBL_CASE_MACRO' => 'Case Macro',
+    'LBL_CASE_MACRO_DESC' => 'Set the macro which will be parsed and used to link imported email to a Case.',
+    'LBL_CASE_MACRO_DESC2' => 'Set this to any value, but preserve the <b>"%1"</b>.',
+
     'LBL_AOP_BUSINESS_HOURS_SETTINGS' => 'Business Hours',
     'LBL_AOP_BUSINESS_HOURS_DESC' => "Restrict Workflow & Case automations to certain days and times",
     'LBL_SUPPORT_FROM_ADDRESS' => 'Support Email From Address',
