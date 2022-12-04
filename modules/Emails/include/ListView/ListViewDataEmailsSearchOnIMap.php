@@ -202,10 +202,6 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
             $nextOffset = $offset + $limitPerPage;
         }
 
-        if ($nextOffset >= $total) {
-            $nextOffset = $total;
-        }
-
         if ($page > 0) {
             $prevOffset = $offset - $limitPerPage;
             if ($prevOffset < 0) {
@@ -219,20 +215,33 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         }
 
         if ($total > 0) {
-            $endOffset = $total / $limitPerPage;
+            $endOffset = ceil($total / $limitPerPage);
+        }
+
+        if ($nextOffset >= $total) {
+            $nextOffset = -1;
+            $endOffset = $offset;
         }
 
         $pageData['offsets']['current'] = $offset;
         $pageData['offsets']['total'] = $total;
         $pageData['offsets']['next'] = $nextOffset;
         $pageData['offsets']['prev'] = $prevOffset;
-        $pageData['offsets']['end'] = ceil($endOffset);
+        $pageData['offsets']['end'] = $endOffset;
 
-        $queries = array('baseUrl', 'endPage', 'nextPage', 'orderBy');
+        $queries = array('baseUrl', 'orderBy');
 
         if ((int)$pageData['offsets']['current'] >= $limitPerPage) {
             $queries[] = 'prevPage';
             $queries[] = 'startPage';
+        }
+
+        if ($nextOffset !== -1) {
+            $queries[] =  'nextPage';
+        }
+
+        if ($endOffset !== -1) {
+            $queries[] =  'endPage';
         }
 
         foreach ($queries as $query) {
@@ -286,8 +295,11 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
             );
         }
 
-        // TODO: TASK: UNDEFINED - HANDLE in second filter after IMap
-        $endOffset = floor(($total - 1) / $limit) * $limit;
+        if ($endOffset !== -1) {
+            // TODO: TASK: UNDEFINED - HANDLE in second filter after IMap
+            $endOffset = floor(($total - 1) / $limit) * $limit;
+        }
+
 
         if (!isset($pageData['ordering']) || !isset($pageData['ordering']['sortOrder'])) {
             LoggerManager::getLogger()->warn('ListViewDataEmailsSearchOnIMap::search: sort order is not set. Using null by default.');
