@@ -387,7 +387,7 @@ class ImapHandler implements ImapHandlerInterface
         }
         
         return $ret;
-    }    
+    }
 
     /**
      *
@@ -401,18 +401,18 @@ class ImapHandler implements ImapHandlerInterface
     public function sort($criteria, $reverse, $options = 0, $search_criteria = null, $charset = null)
     {
         $this->logCall(__FUNCTION__, func_get_args());
-        
+
         $call = function($charset) use ($criteria, $reverse, $options, $search_criteria){
           return imap_sort($this->getStream(), $criteria, $reverse, $options, $search_criteria, $charset);
         };
-        
+
         $ret = $this->executeImapCmd($call, $charset);
 
         if (!$ret) {
             $this->log('IMAP sort error');
         }
         $this->logReturn(__FUNCTION__, $ret);
-        
+
         return $ret;
     }
 
@@ -795,13 +795,13 @@ class ImapHandler implements ImapHandlerInterface
     public function search($criteria, $options = SE_FREE, $charset = null)
     {
         $this->logCall(__FUNCTION__, func_get_args());
-        
+
         $call = function($charset) use ($criteria, $options){
           return imap_search($this->getStream(), $criteria, $options, $charset);
         };
-        
+
         $ret = $this->executeImapCmd($call, $charset);
-        
+
         if (!$ret) {
             $this->log('IMAP search error');
         }
@@ -894,4 +894,12 @@ class ImapHandler implements ImapHandlerInterface
         return $ret;
     }
 
+    /**
+     * @param $stream
+     * @return bool
+     */
+    public function isValidStream($stream): bool
+    {
+        return is_resource($stream);
+    }
 }
