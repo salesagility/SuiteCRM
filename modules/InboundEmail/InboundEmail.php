@@ -811,6 +811,10 @@ class InboundEmail extends SugarBean
      */
     public function messageStructureHasAttachment($imapStructure)
     {
+        if(empty($imapStructure)){
+            return false;
+        }
+
         if (($imapStructure->type !== 0) && ($imapStructure->type !== 1)) {
             return true;
         }
@@ -888,7 +892,7 @@ class InboundEmail extends SugarBean
             if ($this->isPop3Protocol()) {
                 $uid = $this->getCorrectMessageNoForPop3($uid);
             }
-            if (!is_resource($this->conn)) {
+            if (!$this->getImap()->isValidStream($this->conn)) {
                 LoggerManager::getLogger()->fatal('Inbound Email connection is not a resource for getting Formatted Raw Source');
 
                 return null;
@@ -940,7 +944,7 @@ class InboundEmail extends SugarBean
             $uid = $this->getCorrectMessageNoForPop3($uid);
         }
 
-        if (!is_resource($this->conn)) {
+        if (!$this->getImap()->isValidStream($this->conn)) {
             LoggerManager::getLogger()->fatal('Inbound Email connection is not a resource');
 
             return null;
@@ -987,7 +991,7 @@ class InboundEmail extends SugarBean
         }
         $this->connectMailserver();
 
-        if (is_resource($this->conn)) {
+        if ($this->getImap()->isValidStream($this->conn)) {
             $uids = $this->getImap()->search("ALL", SE_UID);
         } else {
             LoggerManager::getLogger()->warn('connection is not a valid resource to empty trush');
@@ -1896,7 +1900,7 @@ class InboundEmail extends SugarBean
     {
         $fetchedOverviews = array();
         if ($this->isPop3Protocol()) {
-            if (!is_resource($this->conn)) {
+            if (!$this->getImap()->isValidStream($this->conn)) {
                 LoggerManager::getLogger()->fatal('Connection is not a valid resource but it is a POP3 Protocol');
             } else {
                 $fetchedOverviews = $this->getImap()->fetchOverview($msgno);
@@ -1906,7 +1910,7 @@ class InboundEmail extends SugarBean
                 }
             }
         } else {
-            if (!is_resource($this->conn)) {
+            if (!$this->getImap()->isValidStream($this->conn)) {
                 LoggerManager::getLogger()->fatal('Connection is not a valid resource');
             } else {
                 $fetchedOverviews = $this->getImap()->fetchOverview($uid, FT_UID);
@@ -1953,7 +1957,7 @@ class InboundEmail extends SugarBean
         }
         $this->setCacheTimestamp($mailbox);
         $GLOBALS['log']->info("[EMAIL] Performing IMAP search using criteria [{$criteria}] on mailbox [{$mailbox}] for user [{$current_user->user_name}]");
-        if (!is_resource($this->conn)) {
+        if (!$this->getImap()->isValidStream($this->conn)) {
             LoggerManager::getLogger()->warn('checkEmailOneMailbox: connection is not a valid resource');
             $searchResults = null;
         } else {
@@ -1998,7 +2002,7 @@ class InboundEmail extends SugarBean
         }
 
         if ($this->mailbox != $trashFolder) {
-            if (!is_resource($this->conn)) {
+            if (!$this->getImap()->isValidStream($this->conn)) {
                 LoggerManager::getLogger()->warn('connection is not a valid resource for checkEmailOneMailbox()');
                 $searchResults = null;
             } else {
@@ -2106,7 +2110,7 @@ class InboundEmail extends SugarBean
             }
 
             if ($this->mailbox != $trashFolder) {
-                if (!is_resource($this->conn)) {
+                if (!$this->getImap()->isValidStream($this->conn)) {
                     LoggerManager::getLogger()->warn('mailbox != trash folder but connection is not a valid resource for checkEmailOneMailbox()');
                     $searchResults = null;
                 } else {
@@ -2152,7 +2156,7 @@ class InboundEmail extends SugarBean
             } // if
         } // if
         if (!$cacheDataExists) {
-            if (!is_resource($this->conn)) {
+            if (!$this->getImap()->isValidStream($this->conn)) {
                 LoggerManager::getLogger()->fatal('Inbound Email Connection is not a valid resource.');
             } else {
                 $searchResults = $this->getImap()->search($criteria, SE_UID);
@@ -2271,7 +2275,7 @@ class InboundEmail extends SugarBean
         }
 
         $GLOBALS['log']->info("INBOUNDEMAIL: using [ {$criteria} ]");
-        if (!is_resource($this->conn)) {
+        if (!$this->getImap()->isValidStream($this->conn)) {
             LoggerManager::getLogger()->warn('connection is not a valid resource for getMailboxProcessCount()');
             $searchResults = null;
         } else {
@@ -2591,7 +2595,7 @@ class InboundEmail extends SugarBean
             return false;
         }
 
-        if (!is_resource($this->conn)) {
+        if (!$this->getImap()->isValidStream($this->conn)) {
             LoggerManager::getLogger()->fatal('Inbound Email connection is not a valid resource for marking Emails');
 
             return false;
@@ -2656,7 +2660,7 @@ class InboundEmail extends SugarBean
             unlink($file);
         }
 
-        if (!is_resource($this->conn)) {
+        if (!$this->getImap()->isValidStream($this->conn)) {
             LoggerManager::getLogger()->fatal('Inboun Email Connenction is not a valid resource for deleting Folder');
         } elseif ($this->getImap()->unsubscribe($this->getImap()->utf7Encode($connectString))) {
             if ($this->getImap()->deleteMailbox($connectString)) {
@@ -2719,7 +2723,7 @@ class InboundEmail extends SugarBean
         $mbox .= $delimiter . str_replace($delimiter, "_", $name);
         $connectString = $this->getConnectString('', $mbox);
 
-        if (!is_resource($this->conn)) {
+        if (!$this->getImap()->isValidStream($this->conn)) {
             LoggerManager::getLogger()->fatal('Inboun Email Connectrion is not a valid resource for saving new folder');
         } elseif ($this->getImap()->createMailbox($this->getImap()->utf7Encode($connectString))) {
             $this->getImap()->subscribe($this->getImap()->utf7Encode($connectString));
@@ -3482,7 +3486,7 @@ class InboundEmail extends SugarBean
                 $foundGoodConnection = true;
             }
 
-            if (is_resource($this->getImap()->getConnection())) {
+            if ($this->getImap()->isValidStream($this->getImap()->getConnection())) {
                 if (!$this->isPop3Protocol()) {
                     $serviceTest = str_replace("INBOX", "", $serviceTest);
                     $boxes = $this->getImap()->getMailboxes($serviceTest, "*");
@@ -4155,7 +4159,7 @@ class InboundEmail extends SugarBean
      */
     public function getMessageTextFromSingleMimePart($msgNo, $section, $structure)
     {
-        if (!is_resource($this->conn)) {
+        if (!$this->getImap()->isValidStream($this->conn)) {
             LoggerManager::getLogger()->fatal('Inbound Email Connection in not a valid resource for getting message text from a single mime part.');
 
             return false;
@@ -4820,7 +4824,7 @@ class InboundEmail extends SugarBean
 
         // download the attachment if we didn't do it yet
         if (!file_exists($uploadDir . $fileName)) {
-            if (!is_resource($this->conn)) {
+            if (!$this->getImap()->isValidStream($this->conn)) {
                 LoggerManager::getLogger()->fatal('Inbounc Email Connection is not valid resource for saving attachment binaries.');
 
                 return false;
@@ -5124,7 +5128,7 @@ class InboundEmail extends SugarBean
         global $sugar_config;
         global $current_user;
 
-        if (!is_resource($this->conn)) {
+        if (!$this->getImap()->isValidStream($this->conn)) {
             LoggerManager::getLogger()->fatal('Inbounc Email Connection is not valid resource for getting duplicate email id.');
 
             return false;
@@ -5189,7 +5193,7 @@ class InboundEmail extends SugarBean
         // UNCOMMENT THIS IF YOU HAVE THIS PROBLEM!  See notes on Bug # 45477
         // $this->markEmails($uid, "read");
 
-        if (!is_resource($this->conn)) {
+        if (!$this->getImap()->isValidStream($this->conn)) {
             LoggerManager::getLogger()->warn('Connection is not a valid resource for importOneEmail()');
             $header = null;
             $fullHeader = null;
@@ -6403,7 +6407,7 @@ class InboundEmail extends SugarBean
             $this->stored_options = base64_encode(serialize($storedOptions));
             $this->save();
         } else {
-            if (!is_resource($this->conn)) {
+            if (!$this->getImap()->isValidStream($this->conn)) {
                 LoggerManager::getLogger()->fatal('Inbound Email Connection is not valid resource for getting New Message Ids.');
 
                 return false;
@@ -6438,7 +6442,7 @@ class InboundEmail extends SugarBean
      */
     public function disconnectMailserver()
     {
-        if (is_resource($this->conn)) {
+        if ($this->getImap()->isValidStream($this->conn)) {
             $this->getImap()->close();
         }
     }
@@ -6524,7 +6528,7 @@ class InboundEmail extends SugarBean
         /*
          * Try to recycle the current connection to reduce response times
          */
-        if (is_resource($this->getImap()->getConnection())) {
+        if ($this->getImap()->isValidStream($this->getImap()->getConnection())) {
             if ($force) {
                 // force disconnect
                 $this->getImap()->close();
@@ -6584,7 +6588,7 @@ class InboundEmail extends SugarBean
 
             $this->getImap()->getErrors(); // collapse error stack
 
-            if (is_resource($this->getImap()->getConnection())) {
+            if ($this->getImap()->isValidStream($this->getImap()->getConnection())) {
                 $this->getImap()->close();
             } else {
                 LoggerManager::getLogger()->warn('Connection is not a valid resource.');
@@ -6592,8 +6596,8 @@ class InboundEmail extends SugarBean
 
 
             return $msg;
-        } elseif (!is_resource($this->getImap()->getConnection())) {
-            $GLOBALS['log']->info('Couldn\'t connect to mail server id: ' . $this->id);
+        } elseif (!$this->getImap()->isValidStream($this->getImap()->getConnection())) {
+            $GLOBALS['log']->fatal('Couldn\'t connect to mail server id: ' . $this->id);
 
             return "false";
         }
@@ -7347,9 +7351,9 @@ class InboundEmail extends SugarBean
             }
             $uidsToMove = implode('::;::', $uids);
             if ($this->moveEmails($this->id, $this->mailbox, $this->id, $trashFolder, $uidsToMove)) {
-                $GLOBALS['log']->debug("INBOUNDEMAIL: MoveEmail to {$trashFolder} successful.");
+                $GLOBALS['log']->fatal("INBOUNDEMAIL: MoveEmail to {$trashFolder} successful.");
             } else {
-                $GLOBALS['log']->debug("INBOUNDEMAIL: MoveEmail to {$trashFolder} FAILED - trying hard delete for message: $uid");
+                $GLOBALS['log']->fatal("INBOUNDEMAIL: MoveEmail to {$trashFolder} FAILED - trying hard delete for message: $uid");
                 $uidsToDelete = implode(',', $uids);
                 $this->getImap()->delete($uidsToDelete, FT_UID);
                 $return = true;
@@ -7379,7 +7383,7 @@ class InboundEmail extends SugarBean
      */
     public function deleteMessageOnMailServerForPop3($uid)
     {
-        if (!is_resource($this->conn)) {
+        if (!$this->getImap()->isValidStream($this->conn)) {
             LoggerManager::getLogger()->fatal('Inbound Email connection is not a resource for deleting Message On Mail Server For Pop3');
 
             return false;
@@ -8311,7 +8315,7 @@ eoq;
         // ids's count limit for batch processing
         $limit = 20;
 
-        if (!is_resource($this->conn)) {
+        if (!$this->getImap()->isValidStream($this->conn)) {
             LoggerManager::getLogger()->fatal('Inbound Email connection is not a resource for getting New Emails For Synced Mailbox');
 
             return false;
