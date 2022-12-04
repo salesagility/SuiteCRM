@@ -644,160 +644,18 @@ class InboundEmail extends SugarBean
             return false;
         }
 
+        [$sortCriteria, $sortCRM, $sortOrder] = $this->getSortCriteria($order);
+        $filterCriteria = $this->getFilterCriteria($filter);
 
-        // handle sorting
-        // Default: to sort the date in descending order
-        $sortCriteria = SORTDATE;
-        $sortCRM = 'udate';
-        $sortOrder = 1;
-        if ($order['sortOrder'] == 'ASC') {
-            $sortOrder = 0;
-        }
-
-        if (stristr($order['orderBy'], 'date') !== false) {
-            $sortCriteria = SORTDATE;
-            $sortCRM = 'udate';
-        } elseif (stristr($order['orderBy'], 'to') !== false) {
-            $sortCriteria = SORTTO;
-            $sortCRM = 'to';
-        } elseif (stristr($order['orderBy'], 'from') !== false) {
-            $sortCriteria = SORTFROM;
-            $sortCRM = 'from';
-        } elseif (stristr($order['orderBy'], 'cc') !== false) {
-            $sortCriteria = SORTCC;
-        } elseif (stristr($order['orderBy'], 'name') !== false) {
-            $sortCriteria = SORTSUBJECT;
-            $sortCRM = 'subject';
-        } elseif (stristr($order['orderBy'], 'subject') !== false) {
-            $sortCriteria = SORTSUBJECT;
-            $sortCRM = 'subject';
-        }
-
-        // handle filtering
-        $filterCriteria = null;
-
-
-        if (!empty($filter)) {
-            foreach ($filter as $filterField => $filterFieldValue) {
-                if (empty($filterFieldValue)) {
-                    continue;
-                }
-
-                // Convert to a blank string as NULL will break the IMAP request
-                if ($filterCriteria == null) {
-                    $filterCriteria = '';
-                }
-
-                $filterCriteria .= ' ' . $filterField . ' "' . $filterFieldValue . '" ';
-            }
-        }
-
-        if (empty($filterCriteria) && $sortCriteria === SORTDATE) {
-            // Performance fix when no filters are enabled
-            $totalMsgs = $this->getImap()->getNumberOfMessages();
-            $mailboxInfo['Nmsgs'] = $totalMsgs;
-
-            if ($sortOrder === 0) {
-                // Ascending order
-                if ($offset === "end") {
-                    $firstMsg = $totalMsgs - (int)$pageSize;
-                    $lastMsg = $totalMsgs;
-                } elseif ($offset <= 0) {
-                    $firstMsg = 1;
-                    $lastMsg = $firstMsg + (int)$pageSize;
-                } else {
-                    $firstMsg = (int)$offset;
-                    $lastMsg = $firstMsg + (int)$pageSize;
-                }
-            } else {
-                // Descending order
-                if ($offset === "end") {
-                    $firstMsg = 1;
-                    $lastMsg = $firstMsg + (int)$pageSize;
-                } elseif ($offset <= 0) {
-                    $firstMsg = $totalMsgs - (int)$pageSize;
-                    $lastMsg = $totalMsgs;
-                } else {
-                    $offset = ($totalMsgs - (int)$offset) - (int)$pageSize;
-                    $firstMsg = $offset;
-                    $lastMsg = $firstMsg + (int)$pageSize;
-                }
-            }
-            $firstMsg = $firstMsg < 1 ? 1 : $firstMsg;
-            $firstMsg = $firstMsg > $totalMsgs ? $totalMsgs : $firstMsg;
-            $lastMsg = $lastMsg < $firstMsg ? $firstMsg : $lastMsg;
-            $lastMsg = $lastMsg > $totalMsgs ? $totalMsgs : $lastMsg;
-
-            $sequence = $firstMsg . ':' . $lastMsg;
-            $emailSortedHeaders = $this->getImap()->fetchOverview($sequence);
-
-            $uids = array_map(
-                function ($x) {
-                    return $x->uid;
-                },
-                $emailSortedHeaders // TODO: this should be an array!
-            );
-        } else {
-            // Filtered case and other sorting cases
-            // Returns an array of msgno's which are sorted and filtered
-            $emailSortedHeaders = $this->getImap()->sort(
-                $sortCriteria,
-                $sortOrder,
-                SE_UID,
-                $filterCriteria
-            );
-
-            $uids = array_slice($emailSortedHeaders, $offset, $pageSize);
-
-            $lastSequenceNumber = $mailboxInfo['Nmsgs'] = count($emailSortedHeaders);
-
-            // paginate
-            if ($offset === "end") {
-                $offset = $lastSequenceNumber - $pageSize;
-            } elseif ($offset <= 0) {
-                $offset = 0;
-            }
-        }
-
-
-        // TODO: uids could be invalid for implode!
-        $uids = implode(',', $uids);
-
-        // Get result
-        $emailHeaders = $this->getImap()->fetchOverview(
-            $uids,
-            FT_UID
+        $emailHeaders = $this->getImap()->getMessageList(
+            $filterCriteria,
+            $sortCriteria,
+            $sortOrder,
+            $offset,
+            $pageSize,
+            $mailboxInfo,
+            $columns
         );
-        $emailHeaders = json_decode(json_encode($emailHeaders), true);
-        if (isset($columns['has_attachment'])) {
-            // get attachment status
-            foreach ($emailHeaders as $i => $emailHeader) {
-                $structure = $this->getImap()->fetchStructure($emailHeader['uid'], FT_UID);
-
-                $emailHeaders[$i]['has_attachment'] = $this->messageStructureHasAttachment($structure);
-            }
-        }
-
-
-        // TODO: parameter 1 could be a bool but it should be an array!
-        usort(
-            $emailHeaders,
-            function ($a, $b) use ($sortCRM) {  // defaults to DESC order
-                if ($a[$sortCRM] === $b[$sortCRM]) {
-                    return 0;
-                } elseif ($a[$sortCRM] < $b[$sortCRM]) {
-                    return 1;
-                }
-
-                return -1;
-            }
-        );
-
-        // Make it ASC order
-        if (!$sortOrder) {
-            array_reverse($emailHeaders);
-        };
-
 
         return array(
             "data" => $emailHeaders,
@@ -8535,5 +8393,80 @@ eoq;
         $notAllowed = ['export', 'import', 'massupdate', 'duplicate'];
         return in_array(strtolower($view), $notAllowed);
     }
+
+
+    /**
+     * @param array $order
+     * @return array
+     */
+    protected function getSortCriteria(array $order): array
+    {
+        // handle sorting
+        // Default: to sort the date in descending order
+        $sortCriteria = SORTARRIVAL;
+        $sortCRM = 'udate';
+        $sortOrder = 1;
+
+        return [$sortCriteria, $sortCRM, $sortOrder];
+    }
+
+    /**
+     * @param array $filter
+     * @return string|null
+     */
+    protected function getFilterCriteria(array $filter): ?string
+    {
+// handle filtering
+        $filterCriteria = null;
+
+
+        if (!empty($filter)) {
+            foreach ($filter as $filterField => $filterFieldValue) {
+                if (empty($filterFieldValue)) {
+                    continue;
+                }
+
+                // Convert to a blank string as NULL will break the IMAP request
+                if ($filterCriteria == null) {
+                    $filterCriteria = '';
+                }
+
+                $filterCriteria .= ' ' . $filterField . ' "' . $filterFieldValue . '" ';
+            }
+        }
+
+        return $filterCriteria;
+    }
+
+    /**
+     * @param $emailHeaders
+     * @param $sortCRM
+     * @param $sortOrder
+     * @return mixed
+     */
+    protected function sortMessageList($emailHeaders, $sortCRM, $sortOrder)
+    {
+        // TODO: parameter 1 could be a bool but it should be an array!
+        usort(
+            $emailHeaders,
+            function ($a, $b) use ($sortCRM) {  // defaults to DESC order
+                if ($a[$sortCRM] === $b[$sortCRM]) {
+                    return 0;
+                } elseif ($a[$sortCRM] < $b[$sortCRM]) {
+                    return 1;
+                }
+
+                return -1;
+            }
+        );
+
+        // Make it ASC order
+        if (!$sortOrder) {
+            array_reverse($emailHeaders);
+        };
+
+        return $emailHeaders;
+    }
+
 
 } // end class definition
