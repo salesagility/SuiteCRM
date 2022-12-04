@@ -2586,7 +2586,6 @@ class InboundEmail extends SugarBean
             }
         }
 
-
         // validate for IMAP flag type
 
         if (!$type) {
@@ -4247,13 +4246,13 @@ class InboundEmail extends SugarBean
         $emailBody = $this->imap->fetchBody($uid, '', FT_UID);
 
         if (!empty($type) && strtolower($type) === 'text/plain') {
-            $emailMessage = $this->mailParser->parse($emailBody)->getTextContent();
+            $emailMessage = $this->mailParser->parse($emailBody, false)->getTextContent();
             $emailMessage = $this->handleInlineImages($emailBody, $emailMessage);
             $emailMessage = $this->customGetMessageText($emailMessage);
             return SugarCleaner::cleanHtml($emailMessage, false);
         }
 
-        $emailMessage = $this->mailParser->parse($emailBody)->getHtmlContent();
+        $emailMessage = $this->mailParser->parse($emailBody, false)->getHtmlContent();
         $emailMessage = $this->handleInlineImages($emailBody, $emailMessage);
         $emailMessage = $this->customGetMessageText($emailMessage);
 
@@ -4268,7 +4267,7 @@ class InboundEmail extends SugarBean
      */
     protected function handleInlineImages($email, $emailHTML)
     {
-        foreach ($this->mailParser->parse($email)->getAllAttachmentParts() as $attachment) {
+        foreach ($this->mailParser->parse($email, false)->getAllAttachmentParts() as $attachment) {
             $disposition = $attachment->getContentDisposition();
             if ($disposition === 'inline') {
                 $fileName = $attachment->getFilename();
@@ -5622,7 +5621,7 @@ class InboundEmail extends SugarBean
             }
 
             $emailBody = $this->imap->fetchBody($uid, '', FT_UID);
-            $contentType = $this->mailParser->parse($emailBody)->getHeaderValue('Content-Type');
+            $contentType = $this->mailParser->parse($emailBody, false)->getHeaderValue('Content-Type');
 
             if (!empty($contentType) && strtolower($contentType) === 'text/plain') {
                 $email->description = $this->getMessageTextWithUid(
@@ -5892,7 +5891,7 @@ class InboundEmail extends SugarBean
                 $oldPrefix = $this->imagePrefix;
 
                 $emailBody = $this->imap->fetchBody($uid, '', FT_UID);
-                $contentType = $this->mailParser->parse($emailBody)->getHeaderValue('Content-Type');
+                $contentType = $this->mailParser->parse($emailBody, false)->getHeaderValue('Content-Type');
 
                 if (!empty($contentType) && strtolower($contentType) === 'text/plain') {
                     $email->description = $this->getMessageTextWithUid(
