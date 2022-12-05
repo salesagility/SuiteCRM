@@ -290,8 +290,8 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
 
         if (!isset($pageData['ordering'])) {
             $pageData['ordering'] = array(
-                'orderBy' => 'date_entered',
-                'sortOrder'=> 'ASC'
+                'orderBy' => 'date_sent_received',
+                'sortOrder'=> 'DESC'
             );
         }
 

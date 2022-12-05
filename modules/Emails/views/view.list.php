@@ -57,6 +57,13 @@ class EmailsViewList extends ViewList
      */
     public function preDisplay()
     {
+        $_REQUEST['orderBy'] = 'date_sent_received';
+        $_REQUEST['sortOrder'] = 'DESC';
+        $this->params['orderBy'] = 'date_sent_received';
+        $this->params['sortOrder'] = 'DESC';
+        $this->params['overrideOrder'] = true;
+
         $this->lv = new ListViewSmartyEmails();
+        $this->lv->displayEmptyDataMessages = false;
     }
 }
