@@ -287,6 +287,11 @@ class InboundEmail extends SugarBean
     public $external_oauth_connection_id;
 
     /**
+     * @var string|null
+     */
+    public $auth_type;
+
+    /**
      * Email constructor
      * @param ImapHandlerInterface|null $imapHandler
      * @param MailMimeParser|null $mailParser
@@ -302,29 +307,13 @@ class InboundEmail extends SugarBean
 
         $this->mailParser = $mailParser;
 
-        // using ImapHandlerInterface as dependency
-        if (null === $imapHandler) {
-            LoggerManager::getLogger()->debug('Using system default ImapHandler. Hint: Use any ImapHandlerInterface as dependency of InboundEmail');
-            $imapHandlerFactory = new ImapHandlerFactory();
-            $imapHandler = $imapHandlerFactory->getImapHandler();
+        if (!empty($imapHandler)) {
+            $this->imap = $imapHandler;
         }
-        $this->imap = $imapHandler;
 
         $this->InboundEmailCachePath = sugar_cached('modules/InboundEmail');
         $this->EmailCachePath = sugar_cached('modules/Emails');
         parent::__construct();
-
-        if ($this->getImap()->isAvailable()) {
-            /*
-             * 1: Open
-             * 2: Read
-             * 3: Write
-             * 4: Close
-             */
-            $this->getImap()->setTimeout(1, 60);
-            $this->getImap()->setTimeout(2, 60);
-            $this->getImap()->setTimeout(3, 60);
-        }
 
         $this->smarty = new Sugar_Smarty();
         $this->overview = new Overview();
@@ -345,7 +334,21 @@ class InboundEmail extends SugarBean
         if (null === $this->imap) {
             if (null === $imap) {
                 $imapFactory = new ImapHandlerFactory();
-                $imap = $imapFactory->getImapHandler();
+
+                $handlerType = $this->getImapHandlerType();
+
+                $imap = $imapFactory->getImapHandler(null, $handlerType);
+                if ($imap->isAvailable()) {
+                    /*
+                     * 1: Open
+                     * 2: Read
+                     * 3: Write
+                     * 4: Close
+                     */
+                    $imap->setTimeout(1, 5);
+                    $imap->setTimeout(2, 5);
+                    $imap->setTimeout(3, 5);
+                }
             }
             $this->imap = $imap;
         }
@@ -679,7 +682,15 @@ class InboundEmail extends SugarBean
 
         $attachments = [];
 
+        if(empty($imapStructure->parts)){
+            return false;
+        }
+
         foreach ($imapStructure->parts as $i => $part) {
+            if(empty($part->dparameters)){
+                continue;
+            }
+
             if (is_string($part->dparameters[0]->value)) {
                 $attachments[] = $part->dparameters[0]->value;
             }
@@ -3303,15 +3314,22 @@ class InboundEmail extends SugarBean
             "Mailbox is empty"
         );
         $login = $this->email_user;
-        $passw = $this->email_password;
+        $imapConnectionOptions = 0;
+        [$passw, $imapConnectionOptions, $imapConnectionString] = $this->getOAuthCredentials($this->email_password, $imapConnectionOptions, '');
+
         $foundGoodConnection = false;
         foreach ($serviceArr as $k => $serviceTest) {
             $errors = '';
             $alerts = '';
+
+            if ($this->isOAuth()) {
+                $serviceTest = $imapConnectionString;
+            }
+
             $GLOBALS['log']->debug($l . ': I-E testing string: ' . $serviceTest);
 
             // Open the connection and try the test string
-            $this->conn = $this->getImapConnection($serviceTest, $login, $passw);
+            $this->conn = $this->getImapConnection($serviceTest, $login, $passw, $imapConnectionOptions);
 
             if (($errors = $this->getImap()->getLastError()) || ($alerts = $this->getImap()->getAlerts())) {
                 // login failure means don't bother trying the rest
@@ -3421,6 +3439,9 @@ class InboundEmail extends SugarBean
             $testConnectString = str_replace('foo', '', $good);
             $testConnectString = '{' . $this->server_url . ':' . $this->port . '/service=' . $this->protocol .
                 $testConnectString . '}';
+            if ($this->isOAuth()) {
+                $testConnectString = $imapConnectionString;
+            }
             $this->setSessionConnectionString(
                 $this->server_url,
                 $this->email_user,
@@ -6398,22 +6419,30 @@ class InboundEmail extends SugarBean
         }
 
         // final test
-        if (!is_resource($this->getImap()->getConnection()) && !$test) {
+        if (!$this->getImap()->isValidStream($this->getImap()->getConnection()) && !$test) {
+
+            $imapUser = $this->email_user;
+            [$imapPassword, $imapOAuthConnectionOptions, $imapOAuthConnectionString] = $this->getOAuthCredentials($this->email_password, CL_EXPUNGE,  $connectString);
+
             $this->conn = $this->getImapConnection(
-                $connectString,
-                $this->email_user,
-                $this->email_password,
-                CL_EXPUNGE
+                $imapOAuthConnectionString,
+                $imapUser,
+                $imapPassword,
+                $imapOAuthConnectionOptions
             );
         }
 
         if ($test) {
-            if ($opts === false && !is_resource($this->getImap()->getConnection())) {
+            if ($opts === false && !$this->getImap()->isValidStream($this->getImap()->getConnection())) {
+
+                $imapUser = $this->email_user;
+                [$imapPassword, $imapOAuthConnectionOptions, $imapOAuthConnectionString] = $this->getOAuthCredentials($this->email_password, CL_EXPUNGE,  $connectString);
+
                 $this->conn = $this->getImapConnection(
-                    $connectString,
-                    $this->email_user,
-                    $this->email_password,
-                    CL_EXPUNGE
+                    $imapOAuthConnectionString,
+                    $imapUser,
+                    $imapPassword,
+                    $imapOAuthConnectionOptions
                 );
             }
             $errors = '';
@@ -6497,6 +6526,17 @@ class InboundEmail extends SugarBean
         $connection = null;
         $authenticators = ['', 'GSSAPI', 'NTLM'];
 
+        $isOAuth = $this->isOAuth();
+        if ($isOAuth === true) {
+            $token = $this->getOAuthToken($this->external_oauth_connection_id ?? '');
+
+            if ($token === null) {
+                return false;
+            }
+
+            $password = $token;
+        }
+
         while (!$connection && ($authenticator = array_shift($authenticators)) !== null) {
             if ($authenticator) {
                 $params = [
@@ -6507,6 +6547,7 @@ class InboundEmail extends SugarBean
             }
 
             $connection = $this->getImap()->open($mailbox, $username, $password, $options, 0, $params);
+
         }
 
         return $connection;
@@ -8466,6 +8507,123 @@ eoq;
         };
 
         return $emailHeaders;
+    }
+
+    /**
+     * @param $password
+     * @param int $imapConnectionOptions
+     * @param string $connectString
+     * @return array
+     */
+    protected function getOAuthCredentials($password, int $imapConnectionOptions, string $connectString): array
+    {
+        $imapOAuthConnectionString = $connectString;
+        if ($this->isOAuth()) {
+            /** @var ExternalOAuthConnection $oAuthConnection */
+            $oAuthConnection = BeanFactory::getBean('ExternalOAuthConnection', $this->external_oauth_connection_id);
+            $password = $oAuthConnection->access_token;
+            $imapConnectionOptions = OP_XOAUTH2;
+            $imapOAuthConnectionString = '{' . $this->server_url . ':' . $this->port . '/imap/ssl' . '}';
+        }
+
+        return [$password, $imapConnectionOptions, $imapOAuthConnectionString];
+    }
+
+    /**
+     * Get Imap handler type
+     * @return string
+     */
+    protected function getImapHandlerType(): string
+    {
+        global $log;
+        $handlerType = 'native';
+
+        if (!empty($this->auth_type) && $this->auth_type === 'oauth') {
+            $handlerType = 'imap2';
+        }
+
+        $log->debug('Using imap handler type: ' . $handlerType);
+
+        return $handlerType;
+    }
+
+    /**
+     * Get refersh token error messages
+     * @param $reLogin
+     * @param ExternalOAuthConnection $oauthConnection
+     * @param string $oAuthConnectionId
+     * @return string
+     */
+    protected function getOAuthRefreshTokenErrorMessage(
+        $reLogin,
+        ExternalOAuthConnection $oauthConnection,
+        string $oAuthConnectionId
+    ): string {
+        $message = translate('ERR_IMAP_OAUTH_CONNECTION_ERROR', 'InboundEmail');
+        $linkAction = 'DetailView';
+
+        if ($reLogin === true) {
+            $linkAction = 'EditView';
+            $message = translate('WARN_OAUTH_TOKEN_SESSION_EXPIRED', 'InboundEmail');
+        }
+
+        $oauthConnectionName = $oauthConnection->name;
+
+        $hasAccess = $oauthConnection->ACLAccess('edit') ?? false;
+        if ($hasAccess === true) {
+            $message .= " <a href=\"index.php?module=ExternalOAuthConnection&action=$linkAction&record=$oAuthConnectionId\">$oauthConnectionName</a>.";
+        } else {
+            $message .= $oauthConnectionName . '.';
+        }
+
+        return $message;
+    }
+
+    /**
+     * Get OAuthToken. Refresh if needed
+     * @param string $oAuthConnectionId
+     * @return string|null
+     */
+    protected function getOAuthToken(string $oAuthConnectionId): ?string
+    {
+        require_once __DIR__ . '/../ExternalOAuthConnection/services/OAuthAuthorizationService.php';
+        $oAuth = new OAuthAuthorizationService();
+
+        /** @var ExternalOAuthConnection $oauthConnection */
+        $oauthConnection = BeanFactory::getBean('ExternalOAuthConnection', $oAuthConnectionId);
+        $password = $oauthConnection->access_token;
+
+        $hasExpiredFeedback = $oAuth->hasConnectionTokenExpired($oauthConnection);
+        $refreshToken = $hasExpiredFeedback['refreshToken'] ?? false;
+        if ($refreshToken === true) {
+            $refreshTokenFeedback = $oAuth->refreshConnectionToken($oauthConnection);
+
+            if ($refreshTokenFeedback['success'] === false) {
+                $message = $this->getOAuthRefreshTokenErrorMessage(
+                    $refreshTokenFeedback['reLogin'],
+                    $oauthConnection,
+                    $oAuthConnectionId
+                );
+                displayAdminError($message);
+                return null;
+            }
+
+            return $oauthConnection->access_token;
+        }
+
+        return $password;
+    }
+
+    /**
+     * Check if is using oauth authentication
+     * @return bool
+     */
+    protected function isOAuth(): bool
+    {
+        $authType = $this->auth_type ?? '';
+        $oAuthConnectionId = $this->external_oauth_connection_id ?? '';
+
+        return $authType === 'oauth' && $oAuthConnectionId !== '';
     }
 
 

@@ -71,9 +71,8 @@ class SyncInboundEmailAccountsPage
      * The class handle a sub-action called method, use $_REQUEST['method']
      *
      * @param array $includeData
-     * @param ImapHandlerInterface $imap
      */
-    public function __construct($includeData, ImapHandlerInterface $imap)
+    public function __construct($includeData)
     {
 
         // create object state
@@ -84,7 +83,7 @@ class SyncInboundEmailAccountsPage
 
         // handle the sub-action
 
-        new SyncInboundEmailAccountsSubActionHandler($this, $imap);
+        new SyncInboundEmailAccountsSubActionHandler($this);
     }
 
     /**

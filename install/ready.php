@@ -170,8 +170,7 @@ $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_PCRE'].'</b> '.$pcreStatus.'</p
 
 // imap
 $imapFactory = new ImapHandlerFactory();
-$imap = $imapFactory->getImapHandler();
-if ($imap->isAvailable()) {
+if ($imapFactory->areAllHandlersAvailable()) {
     $imapStatus = (string)($mod_strings['LBL_CHECKSYS_OK']);
 } else {
     $imapStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_IMAP']}</b></span>";
