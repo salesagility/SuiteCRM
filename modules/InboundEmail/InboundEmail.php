@@ -3168,35 +3168,22 @@ class InboundEmail extends SugarBean
 
     public function getFoldersListForMailBox()
     {
-        $return = array();
-        $foldersList = $this->getSessionInboundFoldersString(
-            $this->server_url,
-            $this->email_user,
-            $this->port,
-            $this->protocol
-        );
-        if (empty($foldersList)) {
-            global $mod_strings;
-            $msg = $this->connectMailserver(true);
-            if (strpos($msg, "successfully")) {
-                $foldersList = $this->getSessionInboundFoldersString(
-                    $this->server_url,
-                    $this->email_user,
-                    $this->port,
-                    $this->protocol
-                );
-                $return['status'] = true;
-                $return['foldersList'] = $foldersList;
-                $return['statusMessage'] = "";
-            } else {
-                $return['status'] = false;
-                $return['statusMessage'] = $msg;
-            } // else
-        } else {
+        global $mod_strings;
+        $msg = $this->connectMailserver(true);
+        if (strpos($msg, "successfully")) {
+            $foldersList = $this->getSessionInboundFoldersString(
+                $this->server_url,
+                $this->email_user,
+                $this->port,
+                $this->protocol
+            );
             $return['status'] = true;
             $return['foldersList'] = $foldersList;
             $return['statusMessage'] = "";
-        }
+        } else {
+            $return['status'] = false;
+            $return['statusMessage'] = $msg;
+        } // else
 
         return $return;
     } // fn
