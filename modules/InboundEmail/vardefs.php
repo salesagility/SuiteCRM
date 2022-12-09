@@ -46,6 +46,7 @@ $dictionary['InboundEmail'] = [
     'inline_edit' => false,
     'duplicate_merge' => false,
     'comment' => 'Inbound email parameters',
+    'audited'=> false,
     'fields' => [
         'id' => [
             'name' => 'id',
