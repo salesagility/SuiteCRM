@@ -3542,6 +3542,7 @@ $app_strings['LBL_RESCHEDULE_COUNT'] = 'Call Attempts';
 //SecurityGroups
 $app_list_strings['moduleList']['SecurityGroups'] = 'Security Suite Management';
 $app_strings['LBL_SECURITYGROUP'] = 'Security Group';
+$app_strings['LBL_ROLE'] = 'Role';
 
 $app_list_strings['moduleList']['OutboundEmailAccounts'] = 'Outbound Email Accounts';
 $app_list_strings['moduleList']['ExternalOAuthConnection'] = 'External OAuth Connection';
