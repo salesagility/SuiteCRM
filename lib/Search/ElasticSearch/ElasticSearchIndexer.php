@@ -500,16 +500,18 @@ class ElasticSearchIndexer extends AbstractIndexer
             // logs the errors
             foreach ($responses['items'] as $item) {
                 $action = array_keys($item)[0];
-                $type = $item[$action]['error']['type'];
-                $reason = $item[$action]['error']['reason'];
-                $this->logger->error("[$action] [$type] $reason");
+                if(isset($item[$action]['error'])) {
+                    $type = $item[$action]['error']['type'];
+                    $reason = $item[$action]['error']['reason'];
+                    $this->logger->error("[$action] [$type] $reason");
+                    
+                    if ($action === 'index') {
+                        $this->indexedRecordsCount--;
+                    }
 
-                if ($action === 'index') {
-                    $this->indexedRecordsCount--;
-                }
-
-                if ($action === 'delete') {
-                    $this->removedRecordsCount--;
+                    if ($action === 'delete') {
+                        $this->removedRecordsCount--;
+                    }
                 }
             }
         }
