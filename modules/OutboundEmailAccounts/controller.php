@@ -83,6 +83,11 @@ class OutboundEmailAccountsController extends SugarController
 
         if ($isNewRecord && empty($this->bean->user_id)) {
             $this->bean->user_id = $current_user->id;
+            $this->bean->assigned_user_id = $current_user->id;
+        }
+
+        if (!$isNewRecord && !empty($this->bean->user_id) && empty($this->bean->assigned_user_id)) {
+            $this->bean->assigned_user_id = $this->bean->user_id;
         }
 
         parent::action_save();
