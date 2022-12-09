@@ -49,21 +49,21 @@ require_once 'modules/AOP_Case_Updates/util.php';
  * @param string $field
  * @param string $value
  * @param string $view
- * @return string
+ * @return mixed
  */
 function getInboundEmailDistributionOptions(
     ?InboundEmail $focus,
     string $field = 'distribution_options',
     $value = '',
     string $view = 'DetailView'
-): string {
+) {
     if ($view === 'EditView' || $view === 'MassUpdate' || $view === 'QuickCreate' || $view === 'ConvertLead') {
         $html = getAOPAssignField('distribution_options', [$value]);
 
         return $html;
     }
 
-    return $focus->distribution_options ?? '';
+    return getAOPAssignFieldDetailView($focus->distribution_options) ?? '';
 }
 
 /**
