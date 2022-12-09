@@ -37,7 +37,7 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-$module_name = 'InboundEmails';
+$module_name = 'InboundEmail';
 $searchdefs [$module_name] = [
     'layout' => [
         'basic_search' => [
