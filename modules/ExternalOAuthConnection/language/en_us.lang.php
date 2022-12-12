@@ -92,7 +92,7 @@ $mod_strings = [
 
     'LNK_LIST_CREATE_NEW_PERSONAL' => 'New Personal OAuth Connection',
     'LNK_LIST_CREATE_NEW_GROUP' => 'New Group OAuth Connection',
-    'LNK_LIST_INBOUND_EMAILS' => 'Inbound Emails Accounts',
+    'LNK_LIST_INBOUND_EMAILS' => 'Inbound Email Accounts',
     'LNK_LIST_OUTBOUND_EMAILS' => 'Outbound Email Accounts',
     'LNK_LIST_EXTERNAL_OAUTH_PROVIDERS' => 'External OAuth Providers',
 
