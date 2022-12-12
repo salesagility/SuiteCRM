@@ -89,21 +89,10 @@ class OAuthAuthorizationService
         $providerType = $providerConfig['type'];
 
 
-        $external_oauth_providers = [
-            'Microsoft' => [
-                'class' => 'MicrosoftOAuthProviderConnector'
-            ],
-            'Generic' => [
-                'class' => 'GenericOAuthProviderConnector'
-            ],
-        ];
+        $external_oauth_providers_connectors = $this->getExternalOauthProvidersConnectors();
 
-        if (file_exists('custom/application/Ext/ExternalOAuthProviders/externaloauthproviders.ext.php')) {
-            include('custom/application/Ext/ExternalOAuthProviders/externaloauthproviders.ext.php');
-        }
-
-        if (!empty($external_oauth_providers[$providerType]['class']) && class_exists($external_oauth_providers[$providerType]['class'])) {
-            $providerClass = $external_oauth_providers[$providerType]['class'];
+        if (!empty($external_oauth_providers_connectors[$providerType]['class']) && class_exists($external_oauth_providers_connectors[$providerType]['class'])) {
+            $providerClass = $external_oauth_providers_connectors[$providerType]['class'];
             $provider = new $providerClass($providerId);
         }
 
@@ -172,7 +161,7 @@ class OAuthAuthorizationService
     public function refreshConnectionToken(ExternalOAuthConnection $connection): array {
 
 
-        $providerId = $connection->provider ?? '';
+        $providerId = $connection->external_oauth_provider_id ?? '';
 
         if (!$this->hasProvider($providerId)) {
             $this->log('fatal', 'OAuthAuthorizationService::refreshConnectionToken::provider', "The specified OAuth2 provider '$providerId' is not supported or not properly configured");
@@ -302,9 +291,18 @@ class OAuthAuthorizationService
      */
     public function getProviderConfig(string $providerId): ?array
     {
-        global $sugar_config;
+        if (empty($providerId)) {
+            return null;
+        }
 
-        return $sugar_config['external_oauth_providers'][$providerId] ?? null;
+        /** @var ExternalOAuthProvider $providerBean */
+        $providerBean = BeanFactory::getBean('ExternalOAuthProvider', $providerId);
+
+        if (empty($providerBean)) {
+            return null;
+        }
+
+        return $providerBean->getConfigArray();
     }
 
     /**
@@ -353,6 +351,28 @@ class OAuthAuthorizationService
         $_SESSION['external_oauth_client_secret'] = '';
         $_SESSION['provider'] = '';
         $_SESSION['oauth2state'] = '';
+    }
+
+    /**
+     * Get External OAuth Provider Connectors
+     * @return string[][]
+     */
+    public function getExternalOauthProvidersConnectors(): array
+    {
+        $external_oauth_providers = [
+            'Microsoft' => [
+                'class' => 'MicrosoftOAuthProviderConnector'
+            ],
+            'Generic' => [
+                'class' => 'GenericOAuthProviderConnector'
+            ],
+        ];
+
+        if (file_exists('custom/application/Ext/ExternalOAuthProviders/externaloauthproviders.ext.php')) {
+            include('custom/application/Ext/ExternalOAuthProviders/externaloauthproviders.ext.php');
+        }
+
+        return $external_oauth_providers;
     }
 
 }

@@ -38,7 +38,7 @@
  */
 
 function doOAuthAuthentication() {
-  var provider = externalOAuthConnectionFields.getValue('provider');
+  var provider = externalOAuthConnectionFields.getValue('external_oauth_provider_id');
   var clientId = externalOAuthConnectionFields.getValue('client_id');
   var clientSecret = externalOAuthConnectionFields.getValue('client_secret');
 

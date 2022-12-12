@@ -85,6 +85,11 @@ $mod_strings = [
 
     'LBL_AUTHENTICATE' => 'Authenticate',
 
+
+    'LBL_EXTERNAL_OAUTH_PROVIDER' => 'Provider',
+    'LBL_EXTERNAL_OAUTH_PROVIDER_NAME' => 'Provider',
+    'LBL_EXTERNAL_OAUTH_PROVIDER_ID' => 'Provider Id',
+
     'LNK_LIST_CREATE_NEW_PERSONAL' => 'New Personal OAuth Connection',
     'LNK_LIST_CREATE_NEW_GROUP' => 'New Group OAuth Connection',
     'LNK_LIST_INBOUND_EMAILS' => 'Inbound Emails Accounts',

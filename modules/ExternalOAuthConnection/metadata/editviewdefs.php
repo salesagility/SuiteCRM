@@ -87,7 +87,7 @@ $viewdefs['ExternalOAuthConnection'] = [
                 ],
                 [
                     'name',
-                    'provider'
+                    'external_oauth_provider_name'
                 ],
                 [
                     'token_type',
