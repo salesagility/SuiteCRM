@@ -53,9 +53,9 @@ $listViewDefs[$module_name] = [
         'default' => true,
         'label' => 'LBL_TYPE',
     ],
-    'PROVIDER' => [
+    'EXTERNAL_OAUTH_PROVIDER_NAME' => [
         'default' => true,
-        'label' => 'LBL_PROVIDER',
+        'label' => 'LBL_EXTERNAL_OAUTH_PROVIDER_NAME',
     ],
     'CREATED_BY_NAME' => [
         'default' => true,

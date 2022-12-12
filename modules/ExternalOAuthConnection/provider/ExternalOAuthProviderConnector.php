@@ -179,11 +179,20 @@ abstract class ExternalOAuthProviderConnector implements ExternalOAuthProviderCo
      */
     public function getProviderConfig(): array
     {
-        global $sugar_config;
-
         $providerId = $this->getProviderID();
 
-        return $sugar_config['external_oauth_providers'][$providerId];
+        if (empty($providerId)) {
+            return [];
+        }
+
+        /** @var ExternalOAuthProvider $providerBean */
+        $providerBean = BeanFactory::getBean('ExternalOAuthProvider', $providerId);
+
+        if (empty($providerBean)) {
+            return [];
+        }
+
+        return $providerBean->getConfigArray();
     }
 
     /**
