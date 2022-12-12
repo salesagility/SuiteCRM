@@ -51,3 +51,4 @@ if (is_admin($GLOBALS['current_user'])) {
 $module_menu[]= array("index.php?module=InboundEmail&action=index", $mod_strings['LNK_LIST_INBOUND_EMAILS'],"List");
 $module_menu[]= array("index.php?module=OutboundEmailAccounts&action=index", $mod_strings['LNK_LIST_OUTBOUND_EMAILS'],"List");
 $module_menu[]= array("index.php?module=ExternalOAuthConnection&action=index", $mod_strings['LNK_LIST'],"List");
+$module_menu[]= array("index.php?module=ExternalOAuthProvider&action=index", $mod_strings['LNK_LIST_EXTERNAL_OAUTH_PROVIDERS'],"List");
