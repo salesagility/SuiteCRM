@@ -96,11 +96,11 @@ function getUserSignature(
 
     $inboundEmailId = $focus->id ?? '';
 
-    if ($inboundEmailId === '' && $isEditView === true) {
+    if ($isEditView === true) {
         return getInboundEmailSignatures($owner, $defaultSignatureId, 'account_signature_id');
     }
 
-    if ($inboundEmailId === '' && $isEditView !== true) {
+    if ($inboundEmailId === '') {
         return '';
     }
 
