@@ -946,10 +946,10 @@ $dictionary['InboundEmail'] = [
         ],
         'inbound_emails_external_oauth_connections' => [
             'lhs_module' => 'ExternalOAuthConnection',
-            'lhs_table' => 'email_templates',
+            'lhs_table' => 'external_oauth_connections',
             'lhs_key' => 'id',
             'rhs_module' => 'InboundEmail',
-            'rhs_table' => 'external_oauth_connections',
+            'rhs_table' => 'inbound_email',
             'rhs_key' => 'external_oauth_connection_id',
             'relationship_type' => 'one-to-many'
         ],
