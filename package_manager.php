@@ -6,6 +6,26 @@ function usage($error = "") {
     exit(1);
 }
 
+// Create Patch file with the current changes of the packages
+function create_backup(){
+    $folder_path = dirname(__FILE__)."/custom/";
+    exec("git -C $folder_path diff --no-color -G. > tempchanges.patch");
+}
+
+// Restore the files to their previous state
+function restore_files(){
+    $script_path = dirname(__FILE__);
+    $folder_path = $script_path."/custom/";
+    exec("git -C $folder_path reset --hard");
+
+    // Apply changes only if they exist
+    if (filesize("$script_path/tempchanges.patch")) {
+        exec("git -C $folder_path apply --ignore-space-change --ignore-whitespace $script_path/tempchanges.patch");
+    }
+    
+    shell_exec("rm $script_path/tempchanges.patch");
+}
+
 // only allow CLI
 $sapi_type = php_sapi_name();
 if (substr($sapi_type, 0, 3) != "cli") {
@@ -51,6 +71,7 @@ $mb = new ModuleBuilder();
 if (!empty($option["install"])) {
     $load = $option["install"];
     if (in_array($load, $mb->getPackageList())) {
+        create_backup();
         $zip = $mb->getPackage($load);
         $pm = new PackageManager();
         $info = $mb->packages [ $load ]->build(false);
@@ -88,6 +109,7 @@ if (!empty($option["install"])) {
 
         // recreate acl cache
         $actions = ACLAction::getUserActions($current_user->id, true);
+        restore_files();
         echo "Package installed\n";
     } else {
         echo "Package don't exist!\n";
@@ -108,6 +130,7 @@ if (!empty($option["remove"])) {
         }
 
         if ($package_deployed) {
+            create_backup();
             $pm = new PackageManager();
             # Uninstall previous installed packages
             $pm->performUninstall($uninstall_package);
@@ -115,7 +138,7 @@ if (!empty($option["remove"])) {
             $cache_key = "app_list_strings.".$current_language;
             sugar_cache_clear($cache_key);
             sugar_cache_reset();
-
+            restore_files();
             echo "\nPackage Uninstalled\n";
 
         } else {
