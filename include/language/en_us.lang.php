@@ -716,6 +716,11 @@ $app_list_strings = array(
         'group' => 'Group',
     ],
 
+    'dom_external_oauth_provider_types' => [
+        'personal' => 'Personal',
+        'group' => 'Group',
+    ],
+
     'dom_outbound_email_account_types' => [
         'user' => 'Personal',
         'group' => 'Group',
@@ -3547,6 +3552,7 @@ $app_strings['LBL_ROLE'] = 'Role';
 
 $app_list_strings['moduleList']['OutboundEmailAccounts'] = 'Outbound Email Accounts';
 $app_list_strings['moduleList']['ExternalOAuthConnection'] = 'External OAuth Connection';
+$app_list_strings['moduleList']['ExternalOAuthProvider'] = 'External OAuth Provider';
 
 //social
 $app_strings['FACEBOOK_USER_C'] = 'Facebook';
