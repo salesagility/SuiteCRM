@@ -45,9 +45,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 
-require_once __DIR__ . '/../provider/ExternalOAuthProviderInterface.php';
-require_once __DIR__ . '/../provider/Generic/GenericOAuthProvider.php';
-require_once __DIR__ . '/../provider/Microsoft/MicrosoftOAuthProvider.php';
+require_once __DIR__ . '/../provider/ExternalOAuthProviderConnectorInterface.php';
+require_once __DIR__ . '/../provider/Generic/GenericOAuthProviderConnector.php';
+require_once __DIR__ . '/../provider/Microsoft/MicrosoftOAuthProviderConnector.php';
 
 class OAuthAuthorizationService
 {
@@ -74,9 +74,9 @@ class OAuthAuthorizationService
     /**
      * Get provider
      * @param string $providerId
-     * @return ExternalOAuthProviderInterface|null
+     * @return ExternalOAuthProviderConnectorInterface|null
      */
-    public function getProvider(string $providerId): ?ExternalOAuthProviderInterface
+    public function getProvider(string $providerId): ?ExternalOAuthProviderConnectorInterface
     {
         $provider = null;
 
@@ -91,10 +91,10 @@ class OAuthAuthorizationService
 
         $external_oauth_providers = [
             'Microsoft' => [
-                'class' => 'MicrosoftOAuthProvider'
+                'class' => 'MicrosoftOAuthProviderConnector'
             ],
             'Generic' => [
-                'class' => 'GenericOAuthProvider'
+                'class' => 'GenericOAuthProviderConnector'
             ],
         ];
 

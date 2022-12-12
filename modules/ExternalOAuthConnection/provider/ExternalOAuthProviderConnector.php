@@ -47,9 +47,9 @@ use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\GenericProvider;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 
-require_once __DIR__ . '/ExternalOAuthProviderInterface.php';
+require_once __DIR__ . '/ExternalOAuthProviderConnectorInterface.php';
 
-abstract class ExternalOAuthProvider implements ExternalOAuthProviderInterface
+abstract class ExternalOAuthProviderConnector implements ExternalOAuthProviderConnectorInterface
 {
     /**
      * @var string

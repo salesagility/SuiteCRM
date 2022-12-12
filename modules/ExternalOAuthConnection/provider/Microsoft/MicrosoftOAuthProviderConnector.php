@@ -44,9 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 use League\OAuth2\Client\Token\AccessTokenInterface;
 
-require_once __DIR__ . '/../ExternalOAuthProvider.php';
+require_once __DIR__ . '/../ExternalOAuthProviderConnector.php';
 
-class MicrosoftOAuthProvider extends ExternalOAuthProvider
+class MicrosoftOAuthProviderConnector extends ExternalOAuthProviderConnector
 {
     /**
      * @inheritDoc
@@ -59,6 +59,24 @@ class MicrosoftOAuthProvider extends ExternalOAuthProvider
     /**
      * @inheritDoc
      */
+    public function getExtraProviderParams(array $providerConfig): array
+    {
+        $defaults = [
+            'urlResourceOwnerDetails' => '',
+        ];
+
+        $extraProviderParams = parent::getExtraProviderParams($providerConfig);
+
+        if (empty($extraProviderParams)) {
+            $extraProviderParams = [];
+        }
+
+        return array_merge($defaults, $extraProviderParams);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function mapAccessToken(?AccessTokenInterface $token): array
     {
 
@@ -66,19 +84,25 @@ class MicrosoftOAuthProvider extends ExternalOAuthProvider
             return [];
         }
 
+        $defaults = [
+            'access_token' => 'access_token',
+            'expires_in' => 'expires_in',
+            'refresh_token' => 'refresh_token',
+            'token_type' => 'values.token_type'
+        ];
+
         $tokenMapping = $this->getTokenMapping();
 
-        if (!empty($tokenMapping)) {
-
-            return $this->mapTokenDynamically($token, $tokenMapping);
+        if (empty($tokenMapping) || !is_array($tokenMapping)) {
+            $tokenMapping = [];
         }
 
+        foreach ($defaults as $key => $default) {
+            if (empty($tokenMapping[$key])){
+                $tokenMapping[$key] = $default;
+            }
+        }
 
-        return [
-            'access_token' => $token->getToken(),
-            'expires_in' => $token->getExpires(),
-            'refresh_token' => $token->getRefreshToken(),
-            'token_type' => $token->getValues()['token_type'] ?? [],
-        ];
+        return $this->mapTokenDynamically($token, $tokenMapping);
     }
 }
