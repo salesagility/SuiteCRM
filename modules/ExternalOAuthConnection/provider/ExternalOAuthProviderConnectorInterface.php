@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 use League\OAuth2\Client\Token\AccessTokenInterface;
 
-interface ExternalOAuthProviderInterface
+interface ExternalOAuthProviderConnectorInterface
 {
     /**
      * Get the provider id
