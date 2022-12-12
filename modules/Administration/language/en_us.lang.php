@@ -330,6 +330,9 @@ $mod_strings = array(
     'LBL_MANAGE_EXTERNAL_OAUTH_CONNECTIONS' => 'External OAuth Connections',
     'LBL_MANAGE_EXTERNAL_OAUTH_CONNECTIONS_DESC' => 'Setup external OAuth connections',
 
+    'LBL_MANAGE_EXTERNAL_OAUTH_PROVIDERS' => 'External OAuth Providers',
+    'LBL_MANAGE_EXTERNAL_OAUTH_PROVIDERS_DESC' => 'Setup external OAuth providers',
+
     'LBL_MANAGE_CURRENCIES' => 'Currencies',
     'LBL_MANAGE_LANGUAGES' => 'Languages',
     'LBL_MANAGE_LICENSE_TITLE' => 'License Management',
