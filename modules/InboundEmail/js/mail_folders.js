@@ -66,6 +66,7 @@ function getExtraMailboxListParams() {
   var authType = inboundEmailFields.getValue('auth_type');
   var recordId = inboundEmailFields.getValue('record');
   var oauthConnectionId = inboundEmailFields.getValue('external_oauth_connection_id');
+  var connectionString = inboundEmailFields.getValue('connection_string');
 
   var extraParams = {};
 
@@ -79,6 +80,10 @@ function getExtraMailboxListParams() {
 
   if (recordId) {
     extraParams.ie_id = recordId;
+  }
+
+  if (connectionString) {
+    extraParams.connection_string = connectionString;
   }
 
   return extraParams;

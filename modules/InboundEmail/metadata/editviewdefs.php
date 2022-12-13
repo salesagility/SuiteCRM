@@ -1,4 +1,4 @@
-<?php
+    <?php
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -159,14 +159,13 @@ $viewdefs ['InboundEmail'] = [
                     ]
                 ],
                 [
-                    '',
+                    'connection_string',
                     [
                         'name' => 'sentFolder',
 
                         'customCode' => '<div style="display: flex; align-items:baseline;"><input id="sentFolder" name="sentFolder" tabindex="95" size="30" maxlength="100" type="text" value="{$fields.sentFolder.value}"/> <input type="button" id="sentFolderButton" class="button" onclick="openSentMailboxPopup()" value="{$MOD.LBL_SELECT}"/></div>',
                     ]
                 ],
-
             ],
             'lbl_outbound_configuration' => [
                 [

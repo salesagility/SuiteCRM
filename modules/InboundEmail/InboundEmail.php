@@ -292,6 +292,11 @@ class InboundEmail extends SugarBean
     public $auth_type;
 
     /**
+     * @var string|null
+     */
+    public $connection_string;
+
+    /**
      * Email constructor
      * @param ImapHandlerInterface|null $imapHandler
      * @param MailMimeParser|null $mailParser
@@ -3302,16 +3307,17 @@ class InboundEmail extends SugarBean
         );
         $login = $this->email_user;
         $imapConnectionOptions = 0;
-        [$passw, $imapConnectionOptions, $imapConnectionString] = $this->getOAuthCredentials($this->email_password, $imapConnectionOptions, '');
+        [$passw, $imapConnectionOptions] = $this->getOAuthCredentials($this->email_password, $imapConnectionOptions);
+        if (!empty($this->connection_string)) {
+            $returnService = [];
+            $serviceArr = [];
+            $this->overrideConnectionConfigs($returnService, $serviceArr, $tmpMailbox);
+        }
 
         $foundGoodConnection = false;
         foreach ($serviceArr as $k => $serviceTest) {
             $errors = '';
             $alerts = '';
-
-            if ($this->isOAuth()) {
-                $serviceTest = $imapConnectionString;
-            }
 
             $GLOBALS['log']->debug($l . ': I-E testing string: ' . $serviceTest);
 
@@ -3426,8 +3432,8 @@ class InboundEmail extends SugarBean
             $testConnectString = str_replace('foo', '', $good);
             $testConnectString = '{' . $this->server_url . ':' . $this->port . '/service=' . $this->protocol .
                 $testConnectString . '}';
-            if ($this->isOAuth()) {
-                $testConnectString = $imapConnectionString;
+            if (!empty($this->connection_string)) {
+                $testConnectString = '{' . $this->connection_string . '}';
             }
             $this->setSessionConnectionString(
                 $this->server_url,
@@ -6297,6 +6303,11 @@ class InboundEmail extends SugarBean
         $mbox = empty($mbox) ? $this->mailbox : $mbox;
 
         $connectString = '{' . $this->server_url . ':' . $this->port . '/service=' . $this->protocol . $service . '}';
+
+        if (!empty($this->connection_string)){
+            $connectString = '{' . $this->connection_string . '}';
+        }
+
         $connectString .= ($includeMbox) ? $mbox : "";
 
         return $connectString;
@@ -6409,10 +6420,10 @@ class InboundEmail extends SugarBean
         if (!$this->getImap()->isValidStream($this->getImap()->getConnection()) && !$test) {
 
             $imapUser = $this->email_user;
-            [$imapPassword, $imapOAuthConnectionOptions, $imapOAuthConnectionString] = $this->getOAuthCredentials($this->email_password, CL_EXPUNGE,  $connectString);
+            [$imapPassword, $imapOAuthConnectionOptions] = $this->getOAuthCredentials($this->email_password, CL_EXPUNGE);
 
             $this->conn = $this->getImapConnection(
-                $imapOAuthConnectionString,
+                $connectString,
                 $imapUser,
                 $imapPassword,
                 $imapOAuthConnectionOptions
@@ -6423,10 +6434,10 @@ class InboundEmail extends SugarBean
             if ($opts === false && !$this->getImap()->isValidStream($this->getImap()->getConnection())) {
 
                 $imapUser = $this->email_user;
-                [$imapPassword, $imapOAuthConnectionOptions, $imapOAuthConnectionString] = $this->getOAuthCredentials($this->email_password, CL_EXPUNGE,  $connectString);
+                [$imapPassword, $imapOAuthConnectionOptions] = $this->getOAuthCredentials($this->email_password, CL_EXPUNGE);
 
                 $this->conn = $this->getImapConnection(
-                    $imapOAuthConnectionString,
+                    $connectString,
                     $imapUser,
                     $imapPassword,
                     $imapOAuthConnectionOptions
@@ -8467,6 +8478,25 @@ eoq;
     }
 
     /**
+     * @param array $returnService
+     * @param array $serviceArr
+     * @param $tmpMailbox
+     * @return void
+     */
+    protected function overrideConnectionConfigs(array &$returnService, array &$serviceArr, $tmpMailbox): void
+    {
+        $connectionString = (string) str_replace('//', '', $this->connection_string ?? '');
+
+        $parts = explode('/', $connectionString) ?? [];
+        array_shift($parts);
+        $servicesString = implode('/', $parts);
+        $serviceKey = implode('-', $parts);
+
+        $returnService[$serviceKey] = 'foo' . $servicesString;
+        $serviceArr[$serviceKey] = '{' . $this->connection_string . '}' . $tmpMailbox;
+    }
+
+    /**
      * @param $emailHeaders
      * @param $sortCRM
      * @param $sortOrder
@@ -8499,21 +8529,18 @@ eoq;
     /**
      * @param $password
      * @param int $imapConnectionOptions
-     * @param string $connectString
      * @return array
      */
-    protected function getOAuthCredentials($password, int $imapConnectionOptions, string $connectString): array
+    protected function getOAuthCredentials($password, int $imapConnectionOptions): array
     {
-        $imapOAuthConnectionString = $connectString;
         if ($this->isOAuth()) {
             /** @var ExternalOAuthConnection $oAuthConnection */
             $oAuthConnection = BeanFactory::getBean('ExternalOAuthConnection', $this->external_oauth_connection_id);
             $password = $oAuthConnection->access_token;
             $imapConnectionOptions = OP_XOAUTH2;
-            $imapOAuthConnectionString = '{' . $this->server_url . ':' . $this->port . '/imap/ssl' . '}';
         }
 
-        return [$password, $imapConnectionOptions, $imapOAuthConnectionString];
+        return [$password, $imapConnectionOptions];
     }
 
     /**

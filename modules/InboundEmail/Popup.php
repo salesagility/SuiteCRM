@@ -104,7 +104,7 @@ if (isset($_REQUEST['ssl']) && ($_REQUEST['ssl'] == "true" || $_REQUEST['ssl'] =
     $msg .= $mod_strings['LBL_FIND_SSL_WARN'];
     $useSsl = true;
 }
-        
+
 $ie                 = BeanFactory::newBean('InboundEmail');
 if (!empty($_REQUEST['ie_id'])) {
     $ie->retrieve($_REQUEST['ie_id']);
@@ -119,6 +119,10 @@ if (!empty($_REQUEST['email_password'])) {
     $ie->email_password = str_rot13($ie->email_password);
 }
 $ie->mailbox        = 'INBOX';
+
+if (!empty($_REQUEST['connection_string'])) {
+    $ie->connection_string = urldecode($_REQUEST['connection_string'] ?? '');
+}
 
 if ($popupBoolean) {
     $msg = $ie->connectMailserver(true);

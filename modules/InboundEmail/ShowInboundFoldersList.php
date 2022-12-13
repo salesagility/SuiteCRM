@@ -135,6 +135,10 @@ if (!empty($_REQUEST['auth_type'])) {
     $ie->auth_type = $_REQUEST['auth_type'];
 }
 
+if (!empty($_REQUEST['connection_string'])) {
+    $ie->connection_string = $_REQUEST['connection_string'];
+}
+
 $ie->mailbox        = 'INBOX';
 
 if ($popupBoolean) {

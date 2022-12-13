@@ -48,6 +48,7 @@ function testInboundConfiguration() {
   var isPersonal = inboundEmailFields.getValue('type') === 'personal';
   var originId = inboundEmailFields.getValue('origin_id');
   var record = inboundEmailFields.getValue('record');
+  var connectionString = inboundEmailFields.getValue('connection_string');
 
   ie_test_open_popup_with_submit(
     "InboundEmail",
@@ -64,6 +65,7 @@ function testInboundConfiguration() {
     useSSL,
     isPersonal,
     "EditView",
-    originId ? originId : record
+    originId ? originId : record,
+    connectionString || ''
   );
 }
