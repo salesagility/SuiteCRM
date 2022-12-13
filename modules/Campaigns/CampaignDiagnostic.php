@@ -59,7 +59,7 @@ if (!isset($_REQUEST['inline']) || $_REQUEST['inline'] != 'inline') {
     $params = array();
     $params[] = "<a href='index.php?module=Campaigns&action=index'>{$mod_strings['LBL_MODULE_NAME']}</a>";
     $params[] = $mod_strings['LBL_CAMPAIGN_DIAGNOSTICS'];
-    
+
     echo getClassicModuleTitle('Campaigns', $params, true);
 }
 
@@ -136,7 +136,7 @@ if (isset($mbox) && count($mbox)>0) {
 $mboxTable.= '</table>' ;
 
 
-    
+
 $ss->assign("MAILBOXES_DETECTED_MESSAGE", $mboxTable);
 
 //email settings configured
@@ -150,26 +150,26 @@ if (strstr($focus->settings['notify_fromaddress'], 'example.com')) {
     $conf_msg .= "<tr><th scope='col' width='20%'><b>".$mod_strings['LBL_WIZ_FROM_NAME']."</b></th>"
                .  " <th scope='col' width='20%'><b>".$mod_strings['LBL_WIZ_FROM_ADDRESS']."</b></th>"
                .  " <th scope='col' width='20%'><b>".$mod_strings['LBL_MAIL_SENDTYPE']."</b></th>";
-    if ($focus->settings['mail_sendtype']=='SMTP') {
+    if (strtolower(isSmtp($focus->settings['mail_sendtype'] ?? '')) {
         $conf_msg .= " <th scope='col' width='20%'><b>".$mod_strings['LBL_MAIL_SMTPSERVER']."</b></th>"
                .  " <th scope='col' width='20%'><b>".$mod_strings['LBL_MAIL_SMTPUSER']."</b></th></tr>";
     } else {
         $conf_msg .= "</tr>";
     }
-                   
-    
+
+
 
     $conf_msg .= "<tr><td>".$focus->settings['notify_fromname']."</td>";
     $conf_msg .= "<td>".$focus->settings['notify_fromaddress']."</td>";
     $conf_msg .= "<td>".$focus->settings['mail_sendtype']."</td>";
-    if ($focus->settings['mail_sendtype']=='SMTP') {
+    if (isSmtp($focus->settings['mail_sendtype'] ?? '')) {
         $conf_msg .= "<td>".$focus->settings['mail_smtpserver']."</td>";
         $conf_msg .= "<td>".$focus->settings['mail_smtpuser']."</td></tr>";
     } else {
         $conf_msg .= "</tr>";
     }
 }
-          
+
 $conf_msg .= '</table>';
 $ss->assign("EMAIL_SETTINGS_CONFIGURED_MESSAGE", $conf_msg);
 $email_setup_wiz_link='';

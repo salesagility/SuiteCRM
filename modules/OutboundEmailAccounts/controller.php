@@ -64,6 +64,8 @@ class OutboundEmailAccountsController extends SugarController
         global $current_user;
         $isNewRecord = (empty($this->bean->id) || $this->bean->new_with_id);
 
+        $this->bean->mail_sendtype = 'SMTP';
+
         if (!empty($_REQUEST['user_id']) && is_admin($current_user)) {
             $this->bean->assigned_user_id = $_REQUEST['user_id'];
             $this->bean->user_id = $_REQUEST['user_id'];
