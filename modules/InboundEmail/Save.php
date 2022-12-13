@@ -131,10 +131,10 @@ if ((empty($focus->is_personal) || isFalse($focus->is_personal)) && !is_admin($c
 }
 
 if (isTrue($focus->is_personal)) {
-    $this->mailbox_type = 'pick';
+    $focus->mailbox_type = 'pick';
 
-    if (empty($this->group_id) ) {
-        $this->group_id = $owner->id;
+    if (empty($focus->group_id) ) {
+        $focus->group_id = $owner->id;
     }
 }
 
