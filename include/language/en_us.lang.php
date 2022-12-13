@@ -3778,3 +3778,5 @@ $app_strings['WARN_OAUTH_TOKEN_SESSION_EXPIRED'] = 'Your IMAP OAuth session has 
 
 $app_strings['LBL_KEY'] = 'Key';
 $app_strings['LBL_VALUE'] = 'Value';
+$app_strings['LBL_OPTIONAL'] = 'Optional';
+$app_strings['LBL_OPTIONAL_CONNECTION_STRING'] = 'Optional. Set to use a specific connection string';

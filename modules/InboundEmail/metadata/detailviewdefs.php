@@ -149,7 +149,7 @@ $viewdefs ['InboundEmail'] = [
                     'trashFolder',
                 ],
                 [
-                    '',
+                    'connection_string',
                     'sentFolder'
                 ],
 

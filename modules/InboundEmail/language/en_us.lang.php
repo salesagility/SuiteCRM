@@ -195,6 +195,7 @@ $mod_strings = array(
     'LBL_CASE_EMAIL_TEMPLATE_NAME' => 'Case Email Template',
 
     'LBL_PROTOCOL' => 'Protocol',
+    'LBL_CONNECTION_STRING' => 'Connection String',
     'LBL_DISTRIB_METHOD' => 'Distribution Method',
     'LBL_DISTRIB_OPTIONS' => 'Distribution Options',
 
