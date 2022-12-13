@@ -6065,3 +6065,16 @@ function has_group_action_acls_defined(string $module, string $action): bool
 
     return $hasGroupActionAcls;
 }
+
+/**
+ * Check if is value is smtp in a case-insensitive way
+ * @param $value
+ * @return bool
+ */
+function isSmtp($value): bool {
+    if (empty($value) || !is_string($value)) {
+        return false;
+    }
+
+    return strtolower($value)  === 'smtp';
+}

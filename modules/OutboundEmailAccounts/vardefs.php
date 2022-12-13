@@ -136,7 +136,7 @@ $dictionary["OutboundEmailAccounts"] = [
             'type' => 'varchar',
             'len' => 8,
             'required' => true,
-            'default' => 'smtp',
+            'default' => 'SMTP',
             'reportable' => false,
             'inline_edit' => false,
         ],

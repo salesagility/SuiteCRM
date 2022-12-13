@@ -2065,7 +2065,7 @@ class Email extends Basic
         }
 
         $send_type = $current_user->getPreference('mail_sendtype');
-        if (!empty($send_type) && $send_type == "SMTP") {
+        if (isSmtp($send_type ?? '')) {
             $mail_smtpserver = $current_user->getPreference('mail_smtpserver');
             $mail_smtpport = $current_user->getPreference('mail_smtpport');
             $mail_smtpauth_req = $current_user->getPreference('mail_smtpauth_req');
@@ -2781,7 +2781,7 @@ class Email extends Basic
 
         // ssl or tcp - keeping outside isSMTP b/c a default may inadvertantly set ssl://
         $mail->protocol = ($oe->mail_smtpssl) ? "ssl://" : "tcp://";
-        if ($oe->mail_sendtype == "SMTP") {
+        if (isSmtp($oe->mail_sendtype ?? '')) {
             //Set mail send type information
             $mail->Mailer = "smtp";
             $mail->Host = $oe->mail_smtpserver;
