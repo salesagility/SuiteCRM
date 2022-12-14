@@ -138,6 +138,11 @@ if (isTrue($focus->is_personal)) {
     }
 }
 
+if ($type === 'bounce') {
+    $focus->mailbox_type = 'bounce';
+}
+
+
 
 /////////////////////////////////////////////////////////
 ////	SERVICE STRING CONCATENATION
