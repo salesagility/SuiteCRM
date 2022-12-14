@@ -710,7 +710,7 @@ class SugarFolder
             $GLOBALS['log']->debug("*** FOLDERS: addBean() is trying to create an already existing relationship");
             return false;
         }
-        
+
         $guid = create_guid();
 
         $query = "INSERT INTO folders_rel " .
@@ -851,7 +851,7 @@ class SugarFolder
         );
 
         try {
-            $folders = $this->retrieveFoldersForProcessing($focusUser);
+            $folders = $this->retrieveFoldersForProcessing($focusUser, false);
             $subscriptions = $this->getSubscriptions($focusUser);
 
             foreach ($folders as $a) {
