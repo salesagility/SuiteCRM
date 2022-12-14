@@ -37,8 +37,22 @@ function restore_files($patch_list){
     $script_path = dirname(__FILE__);
     foreach ($patch_list as $patch) {
         if (filesize("$script_path/$patch->name")) {
-            exec("git -C $patch->fpath reset --hard");
-            exec("git -C $patch->fpath apply --ignore-space-change --ignore-whitespace $script_path/$patch->name");
+
+            // If is the root folder, we avoid git reset --hard
+            // to avoid breaking symlinks
+            if ($patch->fpath == ".") {
+                exec("find . -type l", $links);
+                foreach ($links as $link) {
+                    exec("git add $link");
+                }
+                exec("git -C $patch->fpath apply --ignore-space-change --ignore-whitespace $script_path/$patch->name");
+                foreach ($links as $link) {
+                    exec("git restore --staged $link");
+                }
+            } else {
+                exec("git -C $patch->fpath reset --hard");
+                exec("git -C $patch->fpath apply --ignore-space-change --ignore-whitespace $script_path/$patch->name");
+            }
         }
         shell_exec("rm $script_path/$patch->name");
     }
