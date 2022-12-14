@@ -35,9 +35,9 @@ function create_backup($git_patch_name){
 // Restore the files to their previous state
 function restore_files($patch_list){
     $script_path = dirname(__FILE__);
-
     foreach ($patch_list as $patch) {
         if (filesize("$script_path/$patch->name")) {
+            exec("git -C $patch->fpath reset --hard");
             exec("git -C $patch->fpath apply --ignore-space-change --ignore-whitespace $script_path/$patch->name");
         }
         shell_exec("rm $script_path/$patch->name");
