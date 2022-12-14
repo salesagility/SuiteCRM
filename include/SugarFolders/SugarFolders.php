@@ -858,6 +858,10 @@ class SugarFolder
                 $a['selected'] = (in_array($a['id'], $subscriptions)) ? true : false;
                 $a['origName'] = $a['name'];
 
+                if (isTrue($a['deleted'] ?? false)) {
+                    continue;
+                }
+
                 if (isset($a['dynamic_query'])) {
                     unset($a['dynamic_query']);
                 }
@@ -1008,7 +1012,17 @@ class SugarFolder
             $folderStates = array();
         }
 
-        foreach ($folders as $a) {
+        $settingsFolders = $this->getFoldersForSettings($user);
+
+        $selectedFolders = [];
+
+        foreach ($folders as $folder) {
+            if ($this->isToDisplay($folder['id'] ?? '', $settingsFolders)){
+                $selectedFolders[] = $folder;
+            }
+        }
+
+        foreach ($selectedFolders as $a) {
             if ($a['deleted'] == 1) {
                 continue;
             }
@@ -1437,6 +1451,90 @@ class SugarFolder
 
             $new_with_id  = false;
             return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Get first display folder
+     * @return mixed|null
+     */
+    public function getFirstDisplayFolders(): ?array {
+        global $current_user;
+
+        $settingsFolders = $this->getFoldersForSettings($current_user);
+
+        foreach ($settingsFolders['userFolders'] as $folder) {
+            $isSelected = $folder['selected'] ?? false;
+            if (isFalse($isSelected)) {
+                continue;
+            }
+
+            return $folder;
+        }
+
+        foreach ($settingsFolders['groupFolders'] as $folder) {
+            $isSelected = $folder['selected'] ?? false;
+            if (isFalse($isSelected)) {
+                continue;
+            }
+
+            return $folder;
+        }
+
+        return null;
+    }
+
+    /**
+     * Check if it subscribed
+     * @param string|null $folderId
+     * @param array|null $folders
+     * @return bool
+     */
+    public function isToDisplay(?string $folderId, array $folders = null): bool {
+        global $current_user;
+
+        if (empty($folderId)){
+            return false;
+        }
+
+        if ($folders === null){
+            $folders = $this->getFoldersForSettings($current_user);
+        }
+
+        if ($this->shouldFolderDisplay($folders['userFolders'] ?? [], $folderId)) {
+            return true;
+        }
+
+        if ($this->shouldFolderDisplay($folders['groupFolders'] ?? [], $folderId)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array $folders
+     * @param string $folderId
+     * @return bool
+     */
+    protected function shouldFolderDisplay(array $folders, string $folderId): bool
+    {
+        if (empty($folders)) {
+            return false;
+        }
+
+        foreach ($folders as $folder) {
+            $isSelected = $folder['selected'] ?? false;
+            if (isFalse($isSelected)) {
+                continue;
+            }
+            $id = $folder['id'] ?? '';
+
+            if ($id === $folderId) {
+                return true;
+            }
         }
 
         return false;

@@ -710,7 +710,13 @@ class ListViewDataEmails extends ListViewData
 
         try {
             $folderObj = new Folder();
-            $folderObj->retrieveFromRequest($request);
+
+            $folderObj->loadMailboxFolder($request ?? []);
+
+            if (empty($folderObj->getId())) {
+                LoggerManager::getLogger()->warn('Unable get Inbound Email for List View. Please check your settings and try again.');
+                return false;
+            }
 
             $inboundEmail = $this->getInboundEmail($current_user, $folderObj);
             if (!$inboundEmail || $inboundEmail && !$inboundEmail->id) {
