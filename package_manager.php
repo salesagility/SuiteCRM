@@ -1,5 +1,15 @@
 <?php
 
+class GitPatch {
+    public $name;
+    public $fpath;
+
+    public function __construct($name, $fpath){
+        $this->name = $name;
+        $this->fpath = $fpath;
+    }
+}
+
 function usage($error = "") {
     if (!empty($error)) print(PHP_EOL . "Error: " . $error . PHP_EOL);
     print("  php " . __FILE__ . " --install package_name --remove package_name" . PHP_EOL);
@@ -7,23 +17,42 @@ function usage($error = "") {
 }
 
 // Create Patch file with the current changes of the packages
-function create_backup(){
-    $folder_path = dirname(__FILE__)."/custom/";
-    exec("git -C $folder_path diff --no-color -G. > tempchanges.patch");
+function create_backup($git_patch_name){
+    exec("find . -type d -name '.git'", $folders);
+    $patch_array = array();
+
+    foreach ($folders as $key=>$folder) {
+        $folder_path = dirname($folder);
+        $patch_name = $git_patch_name.$key.".patch";
+        $pt = new GitPatch($patch_name, $folder_path);
+        exec("git -C $pt->fpath diff --no-color -G. > $pt->name");
+        array_push($patch_array, $pt);
+    }
+
+    return $patch_array;
 }
 
 // Restore the files to their previous state
-function restore_files(){
+function restore_files($patch_list){
     $script_path = dirname(__FILE__);
-    $folder_path = $script_path."/custom/";
-    exec("git -C $folder_path reset --hard");
 
-    // Apply changes only if they exist
-    if (filesize("$script_path/tempchanges.patch")) {
-        exec("git -C $folder_path apply --ignore-space-change --ignore-whitespace $script_path/tempchanges.patch");
+    foreach ($patch_list as $patch) {
+        if (filesize("$script_path/$patch->name")) {
+            exec("git -C $patch->fpath apply --ignore-space-change --ignore-whitespace $script_path/$patch->name");
+        }
+        shell_exec("rm $script_path/$patch->name");
     }
-    
-    shell_exec("rm $script_path/tempchanges.patch");
+
+}
+
+function uninstall_package($package_name, $language){
+    $pm = new PackageManager();
+    # Uninstall previous installed packages
+    $pm->performUninstall($package_name);
+    clearAllJsAndJsLangFilesWithoutOutput();
+    $cache_key = "app_list_strings.".$language;
+    sugar_cache_clear($cache_key);
+    sugar_cache_reset();
 }
 
 // only allow CLI
@@ -67,14 +96,15 @@ require_once("ModuleInstall/PackageManager/PackageManager.php");
 $current_user->incrementETag("mainMenuETag");
 
 $mb = new ModuleBuilder();
+$patch_name = "tempchanges";
 
 if (!empty($option["install"])) {
-    $load = $option["install"];
-    if (in_array($load, $mb->getPackageList())) {
-        create_backup();
-        $zip = $mb->getPackage($load);
+    $ipackage_name = $option["install"];
+    if (in_array($ipackage_name, $mb->getPackageList())) {
+        $patch_list = create_backup($patch_name);
+        $zip = $mb->getPackage($ipackage_name);
         $pm = new PackageManager();
-        $info = $mb->packages [ $load ]->build(false);
+        $info = $mb->packages [ $ipackage_name ]->build(false);
         $uploadDir = $pm->upload_dir."/upgrades/module/";
         mkdir_recursive($uploadDir);
         rename($info [ "zip" ], $uploadDir . $info [ "name" ] . ".zip");
@@ -82,11 +112,8 @@ if (!empty($option["install"])) {
         $_REQUEST['install_file'] =  $uploadDir. $info [ "name" ] . ".zip";
 
         # Uninstall previous installed packages
-        $pm->performUninstall($load);
-        clearAllJsAndJsLangFilesWithoutOutput();
-        $cache_key = "app_list_strings.".$current_language;
-        sugar_cache_clear($cache_key);
-        sugar_cache_reset();
+        uninstall_package($ipackage_name, $current_language);
+
         //clear end
         $pm->performInstall($_REQUEST['install_file'], true);
 
@@ -109,19 +136,22 @@ if (!empty($option["install"])) {
 
         // recreate acl cache
         $actions = ACLAction::getUserActions($current_user->id, true);
-        restore_files();
+        restore_files($patch_list);
         echo "Package installed\n";
     } else {
-        echo "Package don't exist!\n";
+        echo "Package don't exist, available packages:\n";
+        foreach($mb->getPackageList() as $available_package) {
+            echo $available_package."\n";
+        }
     }
 
 }
 
 if (!empty($option["remove"])) {
-    $uninstall_package = $option["remove"];
+    $rpackage_name = $option["remove"];
     $package_deployed = false;
-    if (in_array($uninstall_package, $mb->getPackageList())) {
-        $mbpackage = $mb->getPackage($uninstall_package);
+    if (in_array($rpackage_name, $mb->getPackageList())) {
+        $mbpackage = $mb->getPackage($rpackage_name);
         foreach ($mbpackage->modules as $a_module) {
             if (in_array($a_module->key_name, $GLOBALS['moduleList'])) {
                 $package_deployed = true;
@@ -130,22 +160,21 @@ if (!empty($option["remove"])) {
         }
 
         if ($package_deployed) {
-            create_backup();
-            $pm = new PackageManager();
-            # Uninstall previous installed packages
-            $pm->performUninstall($uninstall_package);
-            clearAllJsAndJsLangFilesWithoutOutput();
-            $cache_key = "app_list_strings.".$current_language;
-            sugar_cache_clear($cache_key);
-            sugar_cache_reset();
-            restore_files();
+            $patch_list = create_backup($patch_name);
+
+            uninstall_package($rpackage_name, $current_language);
+
+            restore_files($patch_list);
             echo "\nPackage Uninstalled\n";
 
         } else {
             echo "Package not installed\n";
         }
     } else {
-        echo "Package don't exist\n";
+        echo "Package don't exist, available packages:\n";
+        foreach($mb->getPackageList() as $available_package) {
+            echo $available_package."\n";
+        }
     }
 }
 
