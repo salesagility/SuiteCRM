@@ -176,6 +176,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
             'EmailTemplates' => 'EmailTemplates',
             'EmailText' => 'EmailText',
             'Employees' => 'Employees',
+            'ExternalOAuthConnection' => 'ExternalOAuthConnection',
             'Favorites' => 'Favorites',
             'FP_events' => 'FP_events',
             'FP_Event_Locations' => 'FP_Event_Locations',

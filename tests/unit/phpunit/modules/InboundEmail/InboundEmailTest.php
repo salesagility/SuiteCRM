@@ -136,7 +136,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('setTimeout', [1, 15], [true]);
         $fake->add('setTimeout', [2, 15], [true]);
         $fake->add('setTimeout', [3, 15], [true]);
-        $fake->add('open', ["{:/service=/ssl/tls/validate-cert/secure}", null, null, 0, 0, []], [function () {
+        $fake->add('open', ["{:143/service=imap/ssl/tls/validate-cert/secure}", null, null, 0, 0, []], [function () {
             return tempFileWithMode('wb+');
         }]);
         $fake->add('getLastError', null, ['Too many login failures']);
@@ -194,7 +194,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('setTimeout', [2, 60], [true]);
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
-        $fake->add('open', ["{:/service=/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
+        $fake->add('open', ["{:143/service=imap/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
             return tempFileWithMode('wb+');
         }]);
         $fake->add('getLastError', null, ["SECURITY PROBLEM: insecure server advertised AUTH=PLAIN"]);
@@ -230,7 +230,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('setTimeout', [2, 60], [true]);
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
-        $fake->add('open', ["{:/service=/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
+        $fake->add('open', ["{:143/service=imap/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
             return tempFileWithMode('wb+');
         }]);
         $fake->add('getLastError', null, ['Too many login failures']);
@@ -238,12 +238,12 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('getConnection', null, [function () {
             return tempFileWithMode('wb+');
         }]);
-        $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
+        $fake->add('getMailboxes', ['{:143/service=imap/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
 
         $exp = [
             'good' => [],
-            'bad' => ['both-secure' => '{:/service=/notls/novalidate-cert/secure}'],
+            'bad' => ['both-secure' => '{:143/service=imap/notls/novalidate-cert/secure}'],
             'err' => ['both-secure' => 'Login or Password Incorrect'],
         ];
 
@@ -275,7 +275,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('setTimeout', [2, 60], [true]);
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
-        $fake->add('open', ["{:/service=/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
+        $fake->add('open', ["{:143/service=imap/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
             return tempFileWithMode('wb+');
         }]);
         $fake->add('getLastError', null, [false]);
@@ -316,7 +316,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('setTimeout', [2, 60], [true]);
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
-        $fake->add('open', ["{:/service=/ssl/tls/validate-cert/secure}", null, null, 0, 0, []], [function () {
+        $fake->add('open', ["{:143/service=imap/ssl/tls/validate-cert/secure}", null, null, 0, 0, []], [function () {
             return tempFileWithMode('wb+');
         }]);
         $fake->add('getLastError', null, [false]);
@@ -2185,9 +2185,9 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     {
         $inboundEmail = BeanFactory::newBean('InboundEmail');
 
-        self::assertEquals('{:/service=}', $inboundEmail->getConnectString()); //test with default options
-        self::assertEquals('{:/service=mail.google.com}INBOX', $inboundEmail->getConnectString('mail.google.com', 'INBOX'));//test with includeMbox true
-        self::assertEquals('{:/service=mail.google.com}', $inboundEmail->getConnectString('mail.google.com', 'INBOX', false));//test with includeMbox false
+        self::assertEquals('{:143/service=imap}', $inboundEmail->getConnectString()); //test with default options
+        self::assertEquals('{:143/service=imapmail.google.com}INBOX', $inboundEmail->getConnectString('mail.google.com', 'INBOX'));//test with includeMbox true
+        self::assertEquals('{:143/service=imapmail.google.com}', $inboundEmail->getConnectString('mail.google.com', 'INBOX', false));//test with includeMbox false
     }
 
     public function testdisconnectMailserver(): void
@@ -2213,7 +2213,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         //test with test and force true
         $result = $inboundEmail->connectMailserver(true, true);
-        self::assertEquals("Can't open mailbox {:/service=}: invalid remote specification<p><p><p>Please check your settings and try again.", $result);
+        self::assertEquals("Can't open mailbox {:143/service=imap}: invalid remote specification<p><p><p>Please check your settings and try again.", $result);
     }
 
     public function testcheckImap(): void
@@ -2266,14 +2266,22 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $result = $inboundEmail->get_list_view_data();
 
         $expected = array(
-                        'DELETED' => '0',
-                        'STATUS' => 'Active',
-                        'DELETE_SEEN' => '0',
-                        'MAILBOX_TYPE' => 'INBOX',
-                        'IS_PERSONAL' => '0',
-                        'MAILBOX_TYPE_NAME' => null,
-                        'GLOBAL_PERSONAL_STRING' => 'group',
-                    );
+            'DELETED' => '0',
+            'STATUS' => 'Active',
+            'DELETE_SEEN' => '0',
+            'MAILBOX_TYPE' => 'INBOX',
+            'IS_PERSONAL' => '0',
+            'MAILBOX_TYPE_NAME' => null,
+            'GLOBAL_PERSONAL_STRING' => 'group',
+            'PORT' => '143',
+            'AUTH_TYPE' => 'Basic Auth',
+            'PROTOCOL' => 'imap',
+            'IS_SSL' => '0',
+            'IS_DEFAULT' => '0',
+            'IS_AUTO_IMPORT' => '0',
+            'IS_CREATE_CASE' => '0',
+            'ALLOW_OUTBOUND_GROUP_USAGE' => '0',
+        );
 
         self::assertIsArray($result);
         self::assertEquals($expected, $result);

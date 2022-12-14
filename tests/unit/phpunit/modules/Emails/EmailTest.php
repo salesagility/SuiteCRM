@@ -65,7 +65,8 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         // handle non-gmail sent folder (mailbox is set)
         $mailer = new SugarPHPMailerMock();
         $ie = BeanFactory::newBean('InboundEmail');
-        $ieId = $ie->save();
+        $ie->save();
+        $ieId = $ie->id;
         self::assertTrue((bool)$ieId);
         $_REQUEST['inbound_email_id'] = $ieId;
         $email = new EmailMock();

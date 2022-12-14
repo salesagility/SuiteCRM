@@ -54,7 +54,7 @@ include_once __DIR__ . '/ImapHandlerFakeData.php';
 class ImapHandlerFake implements ImapHandlerInterface
 {
     protected $fakes;
-    
+
     /**
      *
      * @param ImapHandlerFakeData $fakeData
@@ -63,7 +63,7 @@ class ImapHandlerFake implements ImapHandlerInterface
     {
         $this->fakes = $fakeData;
     }
-    
+
     /**
      *
      * @return boolean
@@ -90,7 +90,7 @@ class ImapHandlerFake implements ImapHandlerInterface
     {
         return $this->fakes->call('getConnection');
     }
-    
+
     /**
      *
      * @return array
@@ -99,7 +99,7 @@ class ImapHandlerFake implements ImapHandlerInterface
     {
         return $this->fakes->call('getErrors');
     }
-    
+
     /**
      *
      * @return string|boolean
@@ -108,7 +108,7 @@ class ImapHandlerFake implements ImapHandlerInterface
     {
         return $this->fakes->call('getLastError');
     }
-    
+
     /**
      *
      * @param string $ref
@@ -128,7 +128,7 @@ class ImapHandlerFake implements ImapHandlerInterface
     {
         return $this->fakes->call('isAvailable');
     }
-    
+
     /**
      *
      * @param string $mailbox
@@ -143,7 +143,7 @@ class ImapHandlerFake implements ImapHandlerInterface
     {
         return $this->fakes->call('open', [$mailbox, $username, $password, $options, $n_retries, $params]);
     }
-    
+
     /**
      *
      * @return boolean
@@ -152,7 +152,7 @@ class ImapHandlerFake implements ImapHandlerInterface
     {
         return $this->fakes->call('ping');
     }
-    
+
     /**
      *
      * @param string $mailbox
@@ -164,7 +164,7 @@ class ImapHandlerFake implements ImapHandlerInterface
     {
         return $this->fakes->call('reopen', [$mailbox, $options, $n_retries]);
     }
-    
+
     /**
      *
      * @param int $timeout_type
@@ -175,7 +175,7 @@ class ImapHandlerFake implements ImapHandlerInterface
     {
         return $this->fakes->call('setTimeout', [$timeout_type, $timeout]);
     }
-    
+
     /**
      *
      * @param int $criteria
@@ -199,7 +199,7 @@ class ImapHandlerFake implements ImapHandlerInterface
     {
         return $this->fakes->call('getMessageNo', [$uid]);
     }
-    
+
     /**
      *
      * @param int $msg_number
@@ -212,7 +212,7 @@ class ImapHandlerFake implements ImapHandlerInterface
     {
         return $this->fakes->call('getHeaderInfo', [$msg_number, $fromlength, $subjectlength, $defaulthost]);
     }
-    
+
     /**
      *
      * @param type $msg_number
@@ -235,7 +235,7 @@ class ImapHandlerFake implements ImapHandlerInterface
     {
         return $this->fakes->call('append', [$mailbox, $message, $options, $internal_date]);
     }
-    
+
     /**
      *
      * @param int $msg_number
@@ -245,7 +245,7 @@ class ImapHandlerFake implements ImapHandlerInterface
     {
         return $this->fakes->call('getUid', [$msg_number]);
     }
-    
+
     /**
      * @return bool
      */
@@ -254,7 +254,7 @@ class ImapHandlerFake implements ImapHandlerInterface
         return $this->fakes->call('expunge', []);
     }
 
-    
+
     /**
      * @return object|bool Returns FALSE on failure.
      */
@@ -274,7 +274,7 @@ class ImapHandlerFake implements ImapHandlerInterface
     {
         return $this->fakes->call('clearFlagFull', [$sequence, $flag, $options]);
     }
-    
+
     /**
      *
      * @param string $mailbox
@@ -488,5 +488,31 @@ class ImapHandlerFake implements ImapHandlerInterface
     public function utf8($mime_encoded_text)
     {
         return $this->fakes->call('utf8', [$mime_encoded_text]);
+    }
+
+    /**
+     * @param $stream
+     * @return bool
+     * @throws Exception
+     */
+    public function isValidStream($stream): bool
+    {
+        return $this->fakes->call('isValidStream', [$stream]);
+    }
+
+    /**
+     * @param string|null $filterCriteria
+     * @param $sortCriteria
+     * @param $sortOrder
+     * @param int $offset
+     * @param int $pageSize
+     * @param array $mailboxInfo
+     * @param array $columns
+     * @return array
+     * @throws Exception
+     */
+    public function getMessageList(?string $filterCriteria, $sortCriteria, $sortOrder, int $offset, int $pageSize, array &$mailboxInfo, array $columns): array
+    {
+        return $this->fakes->call('getMessageList', [$filterCriteria, $sortCriteria, $sortOrder, $offset, $pageSize, $mailboxInfo, $columns]);
     }
 }
