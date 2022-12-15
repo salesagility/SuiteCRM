@@ -19,7 +19,7 @@
   "config": {
     "vendor-dir": "vendor",
     "platform": {
-      "php": "7.3.0"
+      "php": "7.4.0"
     },
     "optimize-autoloader": true,
     "sort-packages": true,
@@ -33,7 +33,7 @@
     "ext-imap": "Needed for emails module"
   },
   "require": {
-    "php": ">=7.3.0",
+    "php": ">=7.4.0",
     "ext-curl": "*",
     "ext-gd": "*",
     "ext-json": "*",
