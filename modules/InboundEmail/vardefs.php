@@ -969,7 +969,7 @@ $dictionary['InboundEmail'] = [
         ],
         'inbound_outbound_email_accounts' => [
             'lhs_module' => 'OutboundEmailAccounts',
-            'lhs_table' => 'outbound_emails',
+            'lhs_table' => 'outbound_email',
             'lhs_key' => 'id',
             'rhs_module' => 'InboundEmail',
             'rhs_table' => 'inbound_email',
