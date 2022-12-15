@@ -786,8 +786,18 @@ class SugarFolder
 
         $secureReturn = [];
 
+        $userAccessibleInboundIds = $this->getUserAccessibleInboundIds($user);
+
         foreach ($return as $item) {
-            if ($item->isgroup === 1 || $item['created_by'] === $user->id || is_admin($user)) {
+            if (empty($item) || empty($item['id'])) {
+                continue;
+            }
+
+            if ($item->isgroup === 1) {
+                $secureReturn[] = $item;
+            }
+
+            if (!empty($userAccessibleInboundIds[$item['id']])) {
                 $secureReturn[] = $item;
             }
         }
@@ -1538,5 +1548,32 @@ class SugarFolder
         }
 
         return false;
+    }
+
+    /**
+     * @param User|null $user
+     * @return array
+     */
+    protected function getUserAccessibleInboundIds(?User $user): array
+    {
+        $userAccessibleInboundAccountIds = [];
+        /** @var InboundEmail $inboundEmail */
+        $inboundEmail = BeanFactory::newBean('InboundEmail');
+        $accessibleInboundEmails = $inboundEmail->getUserInboundAccounts();
+
+        if (!empty($accessibleInboundEmails)) {
+            foreach ($accessibleInboundEmails as $accessibleInboundEmail) {
+                if (empty($accessibleInboundEmail)) {
+                    continue;
+                }
+                $id = $accessibleInboundEmail->id ?? '';
+
+                if (!empty($id)) {
+                    $userAccessibleInboundAccountIds[$id] = true;
+                }
+            }
+        }
+
+        return $userAccessibleInboundAccountIds;
     }
 } // end class def
