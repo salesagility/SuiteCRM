@@ -6712,6 +6712,22 @@ class InboundEmail extends SugarBean
     }
 
     /**
+     * @return array
+     */
+    public function getUserInboundAccounts(): array {
+        global $current_user, $db;
+
+        $where = '';
+        if (is_admin($current_user)) {
+            $currentUserId = $db->quote($current_user->id);
+            $tableName = $db->quote($this->table_name);
+            $where = "(($tableName.is_personal IS NULL) OR ($tableName.is_personal = 0 ) OR ($tableName.is_personal = 1 AND $tableName.created_by = '$currentUserId'))";
+        }
+
+        return $this->get_list('', $where)['list'] ?? [];
+    }
+
+    /**
      * @inheritDoc
      */
     public function create_new_list_query(
