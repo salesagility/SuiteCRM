@@ -53,7 +53,37 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
     /**
      * @var string
      */
+    public $smtp_from_addr;
+
+    /**
+     * @var string
+     */
+    public $smtp_from_name;
+
+    /**
+     * @var string
+     */
+    public $mail_smtpuser;
+
+    /**
+     * @var string
+     */
     public $type;
+
+    /**
+     * @var string
+     */
+    public $signature;
+
+    /**
+     * @var string
+     */
+    public $reply_to_addr;
+
+    /**
+     * @var string
+     */
+    public $reply_to_name;
 
     public function __construct()
     {
@@ -86,7 +116,7 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
         $this->smtp_from_addr = trim($this->smtp_from_addr);
         $this->mail_smtpserver = trim($this->mail_smtpserver);
         $this->mail_smtpuser = trim($this->mail_smtpuser);
-		
+
         $results = parent::save($check_notify);
         return $results;
     }
@@ -105,6 +135,22 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
 
         $this->mail_smtppass = $this->mail_smtppass ? blowfishDecode(blowfishGetKey('OutBoundEmail'), $this->mail_smtppass) : null;
         return $results;
+    }
+
+    /**
+     * @return array
+     */
+    public function getUserOutboundAccounts(): array {
+        global $current_user, $db;
+
+        $where = '';
+        if (is_admin($current_user)) {
+            $currentUserId = $db->quote($current_user->id);
+            $tableName = $db->quote($this->table_name);
+            $where = "(($tableName.type IS NULL) OR ($tableName.type != 'user' ) OR ($tableName.type = 'user' AND $tableName.user_id = '$currentUserId'))";
+        }
+
+        return $this->get_list('', $where)['list'] ?? [];
     }
 
     /**
@@ -245,6 +291,48 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
         }
 
         return parent::ACLAccess($view, $is_owner, $in_group);
+    }
+
+    /**
+     * Get from address
+     * @return string
+     */
+    public function getFromAddress(): string {
+        $fromAddress = $this->smtp_from_addr ?? '';
+        if (empty($fromAddress) || isValidEmailAddress($this->mail_smtpuser, '', false, '')) {
+            $fromAddress = $this->mail_smtpuser;
+        }
+
+        return $fromAddress;
+    }
+
+    /**
+     * Get from name
+     * @return string
+     */
+    public function getFromName(): string {
+        return $this->smtp_from_name ?? '';
+    }
+
+    /**
+     * Get reply to address
+     * @return string
+     */
+    public function getReplyToAddress(): string {
+        $address = $this->reply_to_addr ?? '';
+        if (empty($address) && isValidEmailAddress($this->reply_to_addr, '', false, '')) {
+            return $this->getFromAddress();
+        }
+
+        return $address;
+    }
+
+    /**
+     * Get reply to name
+     * @return string
+     */
+    public function getReplyToName(): string {
+        return $this->reply_to_name ?? '';
     }
 
     /**
