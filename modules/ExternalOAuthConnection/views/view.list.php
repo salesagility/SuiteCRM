@@ -51,7 +51,6 @@ class ExternalOAuthConnectionViewList extends ViewList
     public function listViewPrepare()
     {
         parent::listViewPrepare();
-        $this->params['massupdate'] = false;
         $this->params['export'] = false;
         $this->lv->displayEmptyDataMessages = false;
     }
