@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $dictionary['InboundEmail'] = [
     'table' => 'inbound_email',
     'inline_edit' => false,
+    'massupdate' => false,
     'duplicate_merge' => false,
     'comment' => 'Inbound email parameters',
     'audited'=> false,
