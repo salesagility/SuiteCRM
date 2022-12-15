@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class EmailsDataAddress
 {
-    
+
     /**
      *
      * @param string $type
@@ -77,19 +77,23 @@ class EmailsDataAddress
         $isGroupEmailAccount,
         $outboundEmailId,
         $outboundEmailName,
-        $emailSignaturesArray
+        $emailSignaturesArray,
+        $accountName = '',
+        $attributesReplyToName = ''
     ) {
         $signatureResolver = new EmailsSignatureResolver();
         $signatureResolver->setSignatureArray($emailSignaturesArray);
-        
+
         $dataArray = [
             'type' => $type,
             'id' => $id,
+            'name' => $accountName,
             'attributes' => $this->getDataArrayAttributes(
                 $attributesReplyTo,
                 $attributesFrom,
                 $attributesName,
-                $attributesOe
+                $attributesOe,
+                $attributesReplyToName
             ),
             'prepend' => $prepend,
             'isPersonalEmailAccount' => $isPersonalEmailAccount,
@@ -99,27 +103,29 @@ class EmailsDataAddress
                 'name' => $outboundEmailName,
             ],
             'emailSignatures' => [
-                'html' => $signatureResolver->getHtml(),
+                'html' => utf8_encode(html_entity_decode($signatureResolver->getHtml())),
                 'plain' => $signatureResolver->getPlaintext(),
                 'no_default_available' => $signatureResolver->isNoDefaultAvailable(),
             ],
         ];
-        
+
         return $dataArray;
     }
-    
+
     /**
      *
      * @param string $attributesReplyTo
      * @param string $attributesFrom
      * @param string $attributesName
      * @param string $attributesOe
+     * @param string $attributesReplyToName
      * @return array
      */
-    protected function getDataArrayAttributes($attributesReplyTo, $attributesFrom, $attributesName, $attributesOe)
+    protected function getDataArrayAttributes($attributesReplyTo, $attributesFrom, $attributesName, $attributesOe, $attributesReplyToName = '')
     {
         return [
             'reply_to' => utf8_encode($attributesReplyTo),
+            'reply_to_name' => utf8_encode($attributesReplyToName),
             'from' => utf8_encode($attributesFrom),
             'name' => utf8_encode($attributesName),
             'oe' => utf8_encode($attributesOe),

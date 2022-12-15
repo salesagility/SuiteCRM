@@ -243,7 +243,30 @@ class EmailsController extends SugarController
         $inboundEmailAccount = BeanFactory::newBean('InboundEmail');
         $inboundEmailAccount->retrieve($_REQUEST['inbound_email_id']);
 
-        if ($this->userIsAllowedToSendEmail($current_user, $inboundEmailAccount, $this->bean)) {
+        if (isset($_REQUEST['from_addr_name']) && !empty($_REQUEST['from_addr_name'])) {
+            $this->bean->from_name = $_REQUEST['from_addr_name'];
+            $this->bean->from_addr_name = $_REQUEST['from_addr_name'];
+        }
+
+        $outboundEmailAccount = null;
+        $useOutbound = false;
+        if (!empty($_REQUEST['outbound_email_id'])) {
+            /** @var OutboundEmailAccounts $outboundEmailAccount */
+            $outboundEmailAccount = BeanFactory::getBean('OutboundEmailAccounts', $_REQUEST['outbound_email_id']);
+
+            $outboundType = $outboundEmailAccount->type ?? '';
+
+            if ($outboundType === 'system' || $outboundType === 'system-override') {
+                $useOutbound = (new OutboundEmail())->isAllowUserAccessToSystemDefaultOutbound();
+            } else {
+                $useOutbound = $outboundEmailAccount->ACLAccess('view');
+            }
+
+            $this->bean->from_name = $_REQUEST['from_addr_name'];
+            $this->bean->from_addr_name = $_REQUEST['from_addr_name'];
+        }
+
+        if ($useOutbound || $this->userIsAllowedToSendEmail($current_user, $inboundEmailAccount, $this->bean)) {
             $this->bean->save();
 
             $this->bean->handleMultipleFileAttachments();
@@ -251,7 +274,13 @@ class EmailsController extends SugarController
             // parse and replace bean variables
             $this->bean = $this->replaceEmailVariables($this->bean, $request);
 
-            if ($this->bean->send()) {
+            if ($useOutbound) {
+                $sendResult = $this->bean->sendFromOutbound($outboundEmailAccount);
+            } else {
+                $sendResult = $this->bean->send();
+            }
+
+            if ($sendResult) {
                 $this->bean->status = 'sent';
                 $this->bean->save();
             } else {
@@ -436,6 +465,7 @@ class EmailsController extends SugarController
         $collector = new EmailsDataAddressCollector($current_user, $sugar_config);
         $handler = new EmailsControllerActionGetFromFields($current_user, $collector);
         $results = $handler->handleActionGetFromFields($email, $ie);
+
         echo $results;
         $this->view = 'ajax';
     }
@@ -505,6 +535,7 @@ class EmailsController extends SugarController
                 $current_user,
                 true
             );
+
             $out = json_encode(array('response' => $ret));
         } catch (SugarFolderEmptyException $e) {
             $GLOBALS['log']->warn($e->getMessage());

@@ -433,7 +433,9 @@ class EmailsDataAddressCollector
             $isGroupEmailAccount,
             $this->getOeId(),
             $this->getOeName(),
-            []
+            [],
+            $inboundEmail->name,
+            $storedOptions['reply_to_name'] ?? ''
         );
     }
 
@@ -649,7 +651,8 @@ class EmailsDataAddressCollector
             [
                 'html' => utf8_encode(html_entity_decode($signatureHtml)),
                 'plain' => $signatureTxt,
-            ]
+            ],
+            $userAddress['email_address']
         );
     }
 
@@ -693,7 +696,8 @@ class EmailsDataAddressCollector
                     'from' => $fromString,
                     'name' => $userAddress['attributes']['name'],
                     'oe' => $userAddress['attributes']['oe'],
-                    'reply_to' => $replyString
+                    'reply_to' => $replyString,
+                    'reply_to_name' => $emailInfo['reply_to_name'] ?? ''
                 ];
             }
         }
@@ -734,8 +738,8 @@ class EmailsDataAddressCollector
         return $dataAddress->getDataArray(
             'system',
             $id,
-            "$fromName &lt;$fromAddr&gt;",
-            "$fromName &lt;$fromAddr&gt;",
+            $fromAddr,
+            $fromAddr,
             $fromName,
             false,
             false,
@@ -743,7 +747,9 @@ class EmailsDataAddressCollector
             $id,
             $name,
             $mailUser,
-            $defaultEmailSignature
+            $defaultEmailSignature,
+            'System',
+            $fromName
         );
     }
 

@@ -36,6 +36,7 @@ $viewdefs ['OutboundEmailAccounts'] = [
                     {suite_combinescripts
                         files="modules/OutboundEmailAccounts/js/fields.js,
                                modules/OutboundEmailAccounts/js/owner_toggle.js,
+                               modules/OutboundEmailAccounts/js/panel_toggle.js,
                                modules/OutboundEmailAccounts/js/smtp_auth_toggle.js"}
                 </script>
             ',
@@ -71,10 +72,16 @@ $viewdefs ['OutboundEmailAccounts'] = [
             'lbl_outbound_configuration' => [
                 [
                     'smtp_from_name',
+                    'reply_to_name'
                 ],
                 [
                     'smtp_from_addr',
+                    'reply_to_addr'
                 ],
+                [
+                    'signature',
+                    ''
+                ]
             ],
         ],
     ],
