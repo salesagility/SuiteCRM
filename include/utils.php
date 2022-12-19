@@ -277,8 +277,6 @@ function make_sugar_config(&$sugar_config)
             'min_cron_interval' => 30, // minimal interval between cron jobs
         ),
         'strict_id_validation' => false,
-        'external_oauth_providers' => [
-        ]
     );
 }
 
@@ -572,8 +570,6 @@ function get_sugar_config_defaults(): array
             'gc_probability' => 1,
             'gc_divisor' => 100,
         ],
-        'external_oauth_providers' => [
-        ]
     ];
 
     if (!is_object($locale)) {
@@ -3136,12 +3132,12 @@ function get_bean_select_array(
         }
 
         $query .= " {$focus->table_name}.deleted=0";
-        
+
         $accessWhere = $focus->buildAccessWhere('list');
         if (!empty($accessWhere)) {
             $query .= ' AND ' . $accessWhere;
         }
-        
+
         if ($order_by != '') {
             $query .= " order by {$focus->table_name}.{$order_by}";
         }
