@@ -197,7 +197,7 @@ $viewdefs ['InboundEmail'] = [
             'lbl_group_configuration' => [
                 [
                     'is_auto_import',
-                    ''
+                    'move_messages_to_trash_after_import'
                 ],
             ],
             'lbl_case_configuration' => [
