@@ -248,10 +248,10 @@ if (!empty($type) && $type !== 'personal') {
 }
 
 if (!empty($focus->groupfolder_id)) {
-    if (isTrue($_REQUEST['leaveMessagesOnMailServer'] ?? false)) {
-        $stored_options['leaveMessagesOnMailServer'] = 1;
-    } else {
+    if (isTrue($_REQUEST['move_messages_to_trash_after_import'] ?? false)) {
         $stored_options['leaveMessagesOnMailServer'] = 0;
+    } else {
+        $stored_options['leaveMessagesOnMailServer'] = 1;
     }
 }
 

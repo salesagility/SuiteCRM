@@ -297,6 +297,11 @@ class InboundEmail extends SugarBean
     public $connection_string;
 
     /**
+     * @var bool|null
+     */
+    public $move_messages_to_trash_after_import;
+
+    /**
      * Email constructor
      * @param ImapHandlerInterface|null $imapHandler
      * @param MailMimeParser|null $mailParser
@@ -6930,6 +6935,7 @@ class InboundEmail extends SugarBean
         $this->mailbox = $storedOptions['mailbox'] ?? '';
 
         $this->leave_messages_on_mail_server = isTrue($storedOptions['leaveMessagesOnMailServer'] ?? false);
+        $this->move_messages_to_trash_after_import = !isTrue($storedOptions['leaveMessagesOnMailServer'] ?? true);
 
         $this->distrib_method = $storedOptions['distrib_method'] ?? '';
         $this->distribution_user_id = $storedOptions['distribution_user_id'] ?? '';

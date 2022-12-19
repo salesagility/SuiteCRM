@@ -359,6 +359,18 @@ $dictionary['InboundEmail'] = [
             'unified_search' => false,
             'comment' => 'Delete email from server once read (seen)'
         ],
+        'move_messages_to_trash_after_import' => [
+            'name' => 'move_messages_to_trash_after_import',
+            'vname' => 'LBL_MOVE_MESSAGES_TO_TRASH_AFTER_IMPORT',
+            'type' => 'bool',
+            'default' => '0',
+            'reportable' => false,
+            'massupdate' => false,
+            'inline_edit' => false,
+            'importable' => false,
+            'exportable' => false,
+            'unified_search' => false,
+        ],
         'mailbox_type' => [
             'name' => 'mailbox_type',
             'vname' => 'LBL_MAILBOX_TYPE',

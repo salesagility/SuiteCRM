@@ -44,25 +44,29 @@ function toggleFields(type) {
       'outbound_email_name': true,
       'allow_outbound_group_usage': false,
       'is_default': true,
-      'account_signature_id': true
+      'account_signature_id': true,
+      'move_messages_to_trash_after_import': false
     },
     'group': {
       'outbound_email_name': false,
       'allow_outbound_group_usage': true,
       'is_default': false,
-      'account_signature_id': false
+      'account_signature_id': false,
+      'move_messages_to_trash_after_import': true
     },
     'cases': {
       'outbound_email_name': false,
       'allow_outbound_group_usage': true,
       'is_default': false,
-      'account_signature_id': false
+      'account_signature_id': false,
+      'move_messages_to_trash_after_import': true
     },
     'bounce': {
       'outbound_email_name': false,
       'allow_outbound_group_usage': false,
       'is_default': false,
-      'account_signature_id': false
+      'account_signature_id': false,
+      'move_messages_to_trash_after_import': true
     }
   };
 
