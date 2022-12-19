@@ -192,14 +192,6 @@ class ExternalOAuthProvider extends Basic
             return false;
         }
 
-        $hasActionAclsDefined = has_group_action_acls_defined('ExternalOAuthProvider', 'view');
-        $isSecurityGroupBasedAction = $this->isSecurityGroupBasedAction($view);
-
-        if (!$isPersonal && !$isAdmin && !$hasActionAclsDefined && $isSecurityGroupBasedAction === true) {
-            return false;
-        }
-
-
         return parent::ACLAccess($view, $is_owner, $in_group);
     }
 
@@ -246,12 +238,6 @@ class ExternalOAuthProvider extends Basic
             $currentUserId = $db->quote($current_user->id);
 
             $showGroupRecords = "($tableName.type IS NULL) OR ($tableName.type != 'personal' ) OR ";
-
-            $hasActionAclsDefined = has_group_action_acls_defined('ExternalOAuthProvider', 'list');
-
-            if ($hasActionAclsDefined === false && !is_admin($current_user)) {
-                $showGroupRecords = '';
-            }
 
             $ret_array['where'] = $ret_array['where'] . " AND ( $showGroupRecords ($tableName.type = 'personal' AND $tableName.created_by = '$currentUserId') )";
         }
