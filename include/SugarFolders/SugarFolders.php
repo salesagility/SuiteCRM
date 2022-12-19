@@ -793,7 +793,8 @@ class SugarFolder
                 continue;
             }
 
-            if ($item->isgroup === 1) {
+            $isGroup = $item->isgroup ?? '';
+            if ($isGroup === 1) {
                 $secureReturn[] = $item;
             }
 
