@@ -2542,7 +2542,7 @@ eoq;
             $clause = $current_user->db->quote($clause);
             $whereAdd .= "{$column} LIKE '{$clause}%'";
         }
-        
+
         foreach ($peopleTables as $tableName) {
             $module = ucfirst($tableName);
             $personBean = BeanFactory::getBean($module);
@@ -2571,7 +2571,7 @@ eoq;
             $t .= "JOIN email_addr_bean_rel eabr ON ({$table}.id = eabr.bean_id and eabr.deleted=0) ";
             $t .= "JOIN email_addresses ea ON (eabr.email_address_id = ea.id) ";
             $t .= " WHERE {$where}";
-            
+
             if (!empty($q)) {
                 $q .= "\n UNION ALL \n";
             }
@@ -2663,7 +2663,7 @@ eoq;
             }
             $relatedIDs = implode(',', $beanIds);
         }
-        
+
         $module = ucfirst($beanType);
         $personBean = BeanFactory::getBean($module);
         if ($personBean !== false  && $personBean->ACLAccess('list')) {
@@ -2683,8 +2683,8 @@ eoq;
                 $clause = $current_user->db->quote($clause);
                 $whereAdd .= "{$column} LIKE '{$clause}%'";
             }
-            
-            
+
+
             $table = $personBean->getTableName();
             if ($relatedIDs !== '') {
                 $where = "({$table}.deleted = 0 AND eabr.primary_address = 1 AND {$table}.id in ($relatedIDs))";
@@ -2696,7 +2696,7 @@ eoq;
             if (!empty($accessWhere)) {
                 $where .= ' AND '. $accessWhere;
             }
-            
+
             if (!empty($whereAdd)) {
                 $where .= " AND ({$whereAdd})";
             }
@@ -2993,7 +2993,7 @@ eoq;
         foreach ($ieAccountsFull as $k => $v) {
             $personalSelected = (!empty($showFolders) && in_array($v->id, $showFolders));
 
-            $allowOutboundGroupUsage = $v->get_stored_options('allow_outbound_group_usage', false);
+            $allowOutboundGroupUsage = isTrue($v->get_stored_options('allow_outbound_group_usage', false) ?? false);
             $groupSelected = (in_array($v->groupfolder_id, $groupSubs) && $allowOutboundGroupUsage);
             $selected = ($personalSelected || $groupSelected);
 
@@ -3213,7 +3213,7 @@ eoq;
             $type = $v->is_personal ? $mod_strings['LBL_MAILBOX_TYPE_PERSONAL'] : $mod_strings['LBL_MAILBOX_TYPE_GROUP'];
 
             $personalSelected = (!empty($showFolders) && in_array($v->id, $showFolders, true));
-            $allowOutboundGroupUsage = $v->get_stored_options('allow_outbound_group_usage', false);
+            $allowOutboundGroupUsage = isTrue($v->get_stored_options('allow_outbound_group_usage', false) ?? false);
             $selected = $personalSelected || $allowOutboundGroupUsage  || is_admin($current_user);
 
             if (!$selected) {

@@ -152,6 +152,12 @@ class EmailsDataAddressCollector
                 $isGroupEmailAccount = $inboundEmail->isGroupEmailAccount();
                 $isPersonalEmailAccount = $inboundEmail->isPersonalEmailAccount();
 
+                // if group email account, check that user is allowed to use group email account
+                $inboundEmailStoredOptions = $inboundEmail->getStoredOptions();
+                if ($isGroupEmailAccount && !isTrue($inboundEmailStoredOptions['allow_outbound_group_usage'] ?? false)) {
+                    continue;
+                }
+
                 $this->getOutboundEmailOrError($storedOptions, $inboundEmail);
                 $this->retrieveFromDataStruct($storedOptions);
 

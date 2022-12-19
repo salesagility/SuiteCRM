@@ -183,7 +183,7 @@ $stored_options['reply_to_addr'] = trim($_REQUEST['reply_to_addr'] ?? '');
 $stored_options['only_since'] = $onlySince;
 $stored_options['filter_domain'] = $_REQUEST['filter_domain'] ?? '';
 $stored_options['email_num_autoreplies_24_hours'] = $_REQUEST['email_num_autoreplies_24_hours'] ?? '';
-$stored_options['allow_outbound_group_usage'] = isTrue($_REQUEST['only_since'] ?? false);
+$stored_options['allow_outbound_group_usage'] = isTrue($_REQUEST['allow_outbound_group_usage'] ?? false);
 $stored_options['outbound_email'] = $_REQUEST['outbound_email_id'] ?? null;
 
 if (!$focus->isPop3Protocol()) {
