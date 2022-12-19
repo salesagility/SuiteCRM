@@ -181,22 +181,6 @@ $dictionary['ExternalOAuthConnection'] = [
             'api-visible' => false,
             'db_encrypted' => true,
         ],
-        'provider' => [
-            'name' => 'provider',
-            'vname' => 'LBL_PROVIDER',
-            'function' => [
-                'name' => 'getExternalOAuthProviders',
-                'returns' => 'html',
-                'include' => 'modules/ExternalOAuthConnection/utils.php',
-            ],
-            'type' => 'varchar',
-            'reportable' => false,
-            'massupdate' => false,
-            'inline_edit' => false,
-            'importable' => false,
-            'exportable' => false,
-            'unified_search' => false,
-        ],
         'external_oauth_provider' => [
             'name' => 'external_oauth_provider',
             'type' => 'link',

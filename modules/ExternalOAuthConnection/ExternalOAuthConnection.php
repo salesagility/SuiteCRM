@@ -58,7 +58,6 @@ class ExternalOAuthConnection extends Basic
     public $expires_in;
     public $access_token;
     public $refresh_token;
-    public $provider;
     public $type;
 
 
