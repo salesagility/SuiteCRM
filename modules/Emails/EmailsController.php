@@ -937,7 +937,7 @@ class EmailsController extends SugarController
 
         // if group email account, check that user is allowed to use group email account
         if ($requestedInboundEmail->isGroupEmailAccount()) {
-            if ($inboundEmailStoredOptions['allow_outbound_group_usage'] === true) {
+            if (isTrue($inboundEmailStoredOptions['allow_outbound_group_usage'] ?? false)) {
                 $hasAccessToInboundEmailAccount = true;
             } else {
                 $hasAccessToInboundEmailAccount = false;
