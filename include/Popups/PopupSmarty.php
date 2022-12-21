@@ -249,6 +249,7 @@ class PopupSmarty extends ListViewSmarty
         $this->th->ss->assign('footerTpl', $this->footerTpl);
         $this->th->ss->assign('ASSOCIATED_JAVASCRIPT_DATA', 'var associated_javascript_data = '.$json->encode($associated_row_data). '; var is_show_fullname = '.$is_show_fullname.';');
         $this->th->ss->assign('module', $this->seed->module_dir);
+        $this->th->ss->assign('metadata', empty($_REQUEST['metadata']) ? '' : $_REQUEST['metadata']);
         $request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
 
         $this->th->ss->assign('request_data', $request_data);

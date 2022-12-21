@@ -215,7 +215,16 @@ function make_sugar_config(&$sugar_config)
             'vbs',
             'html',
             'htm',
+            'phtml',
+            'phar',
         ) : $upload_badext,
+        'valid_image_ext' => [
+            'gif',
+            'png',
+            'jpg',
+            'jpeg',
+            'svg'
+        ],
         'upload_dir' => $upload_dir, // this must be set!!
         'upload_maxsize' => empty($upload_maxsize) ? 30000000 : $upload_maxsize,
         'allowed_preview' => [
@@ -425,6 +434,9 @@ function get_sugar_config_defaults(): array
         'log_memory_usage' => false,
         'oauth2_encryption_key' => base64_encode(random_bytes(32)),
         'portal_view' => 'single_user',
+        'pdf' => [
+            'defaultEngine' => 'TCPDFEngine'
+        ],
         'resource_management' => [
             'special_query_limit' => 50000,
             'special_query_modules' => ['AOR_Reports', 'Export', 'Import', 'Administration', 'Sync'],
@@ -466,8 +478,30 @@ function get_sugar_config_defaults(): array
             'html',
             'htm',
             'phtml',
+            'phar',
+        ],
+        'valid_image_ext' => [
+            'gif',
+            'png',
+            'jpg',
+            'jpeg',
+            'svg'
+        ],
+        'allowed_preview' => [
+            'pdf',
+            'gif',
+            'png',
+            'jpeg',
+            'jpg'
         ],
         'upload_maxsize' => 30000000,
+        'allowed_preview' => [
+            'pdf',
+            'gif',
+            'png',
+            'jpeg',
+            'jpg'
+        ],
         'import_max_execution_time' => 3600,
 //	'use_php_code_json' => returnPhpJsonStatus(),
         'verify_client_ip' => true,
@@ -530,12 +564,18 @@ function get_sugar_config_defaults(): array
             'min_cron_interval' => 30, // minimal interval between cron jobs
         ],
         'strict_id_validation' => false,
+        'id_validation_pattern' => '/^[a-zA-Z0-9_-]*$/i',
+        'session_gc' => [
+            'enable' => true,
+            'gc_probability' => 1,
+            'gc_divisor' => 100,
+        ]
     ];
 
     if (!is_object($locale)) {
         $locale = new Localization();
     }
-    
+
     $sugar_config_defaults = sugarArrayMerge($locale->getLocaleConfigDefaults(), $sugar_config_defaults);
 
     return $sugar_config_defaults;
@@ -830,6 +870,27 @@ function get_user_name($id)
     $a = $db->fetchByAssoc($r);
 
     return (empty($a)) ? '' : $a['user_name'];
+}
+
+/**
+ * Get currently authenticated user
+ * @return User
+ */
+function get_authenticated_user(): ?User {
+    $authenticatedUserId = $_SESSION['authenticated_user_id'] ?? '';
+
+    if (empty($authenticatedUserId)){
+        return null;
+    }
+
+    /** @var User $authenticatedUser */
+    $authenticatedUser = BeanFactory::getBean('Users', $authenticatedUserId);
+
+    if (empty($authenticatedUser)) {
+        return null;
+    }
+
+    return $authenticatedUser;
 }
 
 //TODO Update to use global cache
@@ -5867,4 +5928,100 @@ function getAppString($key)
     }
 
     return $app_strings[$key];
+}
+
+/**
+ * Check if has valid image extension
+ * @param string $fieldName
+ * @param string $value
+ * @return bool
+ */
+function has_valid_image_extension($fieldName, $name)
+{
+    global $sugar_config;
+
+    $validExtensions = [
+        'gif',
+        'png',
+        'jpg',
+        'jpeg',
+        'svg'
+    ];
+
+    if (isset($sugar_config['valid_image_ext']) && is_array($sugar_config['valid_image_ext'])){
+        $validExtensions = $sugar_config['valid_image_ext'];
+    }
+
+    return has_valid_extension($fieldName, $name, $validExtensions);
+}
+
+/**
+ * Check if has valid extension
+ * @param string $fieldName
+ * @param string $name
+ * @param array $validExtensions
+ * @return bool
+ */
+function has_valid_extension($fieldName, $name, $validExtensions)
+{
+
+    if ($name === '.' || empty($name)) {
+        LoggerManager::getLogger()->security("Invalid ext  $fieldName : '$name'.");
+
+        return false;
+    }
+
+    $validExtensions = array_map('strtolower', $validExtensions);
+
+    $parts = explode('.', $name);
+
+    if (empty($parts)) {
+        LoggerManager::getLogger()->security("Invalid ext  $fieldName : '$name'.");
+
+        return false;
+    }
+
+    $ext = array_pop($parts);
+    $trimmedValue = preg_replace('/.*\.([^\.]+)$/', '\1', $ext);
+
+    if (!in_array(strtolower($trimmedValue), $validExtensions, true)) {
+        LoggerManager::getLogger()->security("Invalid $fieldName: '$name'.");
+
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Check if value is one of the accepted true representations
+ * @param $value
+ * @return bool
+ */
+function isTrue($value): bool {
+    return $value === true || $value === 'true' || $value === 1;
+}
+
+/**
+ * Check if value is one of the accepted false representations
+ * @param $value
+ * @return bool
+ */
+function isFalse($value): bool {
+    return $value === false || $value === 'false' || $value === 0;
+}
+
+/**
+ * Get validation pattern
+ * @return string
+ */
+function get_id_validation_pattern(): string {
+    global $sugar_config;
+
+    $pattern = '/^[a-zA-Z0-9_-]*$/i';
+    if (!empty($sugar_config['id_validation_pattern'])){
+        $pattern = $sugar_config['id_validation_pattern'];
+    }
+
+    return $pattern;
 }

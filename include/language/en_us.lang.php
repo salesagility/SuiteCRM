@@ -906,6 +906,7 @@ $app_list_strings = array(
         'lead' => 'Leads Created',
         'contact' => 'Contacts Created',
         'blocked' => 'Suppressed by address or domain',
+        'Survey' => 'Survey answered',
     ),
 
     'campainglog_target_type_dom' => array(
@@ -930,6 +931,9 @@ $app_list_strings = array(
     'custom_fields_merge_dup_dom' => array(
         0 => 'Disabled',
         1 => 'Enabled',
+        2 => 'Filter',
+        3 => 'Default selected filter',
+        4 => 'Only filter',
     ),
 
     'projects_priority_options' => array(
@@ -3184,6 +3188,7 @@ $app_list_strings['aow_date_type_list']['hour'] = 'Hours';
 $app_list_strings['aow_date_type_list']['day'] = 'Days';
 $app_list_strings['aow_date_type_list']['week'] = 'Weeks';
 $app_list_strings['aow_date_type_list']['month'] = 'Months';
+$app_list_strings['aow_date_type_list']['year'] = 'Years';
 $app_list_strings['aow_date_type_list']['business_hours'] = 'Business Hours';
 $app_list_strings['aow_date_options']['now'] = 'Now';
 $app_list_strings['aow_date_options']['today'] = 'Today';
@@ -3722,3 +3727,9 @@ $app_strings['LBL_USE_BASIC_SEARCH'] = 'Use Basic Search';
 // PDF Engines
 $app_strings['LBL_LEGACY_MPDF_ENGINE'] = 'Legacy MPDF Engine';
 $app_strings['LBL_TCPDF_ENGINE'] = 'TCPDF Engine';
+
+
+$app_strings['ERR_INVALID_FILE_NAME'] = 'Invalid file name:';
+$app_strings['LBL_LOGGER_VALID_FILENAME_CHARACTERS'] = 'This can only be alphanumeric characters, plus \'.\' , \'-\' and \'_\'';
+$app_strings['LBL_LOGGER_INVALID_FILENAME'] = 'Invalid import file name';
+

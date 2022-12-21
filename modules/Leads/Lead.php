@@ -396,7 +396,7 @@ class Lead extends Person implements EmailInterface
         $xtpl->assign("LEAD_NAME", $locale->getLocaleFormattedName($lead->first_name, $lead->last_name, $lead->salutation));
         $xtpl->assign("LEAD_SOURCE", (isset($lead->lead_source) ? $app_list_strings['lead_source_dom'][$lead->lead_source] : ""));
         $xtpl->assign("LEAD_STATUS", (isset($lead->status)? $app_list_strings['lead_status_dom'][$lead->status]:""));
-        $xtpl->assign("LEAD_DESCRIPTION", $lead->description);
+        $xtpl->assign("LEAD_DESCRIPTION", nl2br($lead->description));
 
         return $xtpl;
     }

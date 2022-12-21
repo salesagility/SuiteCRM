@@ -99,7 +99,7 @@ class ElasticSearchIndexer extends AbstractIndexer
         global $sugar_config;
 
         try {
-            return $sugar_config['search']['ElasticSearch']['enabled'];
+            return !empty($sugar_config['search']['ElasticSearch']['enabled']);
         } catch (Exception $exception) {
             LoggerManager::getLogger()->fatal("Failed to retrieve ElasticSearch options");
 
@@ -500,16 +500,18 @@ class ElasticSearchIndexer extends AbstractIndexer
             // logs the errors
             foreach ($responses['items'] as $item) {
                 $action = array_keys($item)[0];
-                $type = $item[$action]['error']['type'];
-                $reason = $item[$action]['error']['reason'];
-                $this->logger->error("[$action] [$type] $reason");
+                if(isset($item[$action]['error'])) {
+                    $type = $item[$action]['error']['type'];
+                    $reason = $item[$action]['error']['reason'];
+                    $this->logger->error("[$action] [$type] $reason");
+                    
+                    if ($action === 'index') {
+                        $this->indexedRecordsCount--;
+                    }
 
-                if ($action === 'index') {
-                    $this->indexedRecordsCount--;
-                }
-
-                if ($action === 'delete') {
-                    $this->removedRecordsCount--;
+                    if ($action === 'delete') {
+                        $this->removedRecordsCount--;
+                    }
                 }
             }
         }
@@ -546,7 +548,7 @@ class ElasticSearchIndexer extends AbstractIndexer
     private function makeParamsHeaderFromBean(SugarBean $bean): array
     {
         return [
-            'index' => $bean->module_name,
+            'index' => strtolower($bean->module_name),
             'id' => $bean->id,
         ];
     }

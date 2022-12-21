@@ -217,13 +217,14 @@ class AOW_WorkFlow extends Basic
      */
     public function run_bean_flows(SugarBean $bean)
     {
-        if (!defined('SUGARCRM_IS_INSTALLING') && (!isset($_REQUEST['module']) || $_REQUEST['module'] != 'Import')) {
-            $query = "SELECT id FROM aow_workflow WHERE aow_workflow.flow_module = '" . $bean->module_dir . "' AND aow_workflow.status = 'Active' AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'On_Save' OR aow_workflow.run_when = 'Create') AND aow_workflow.deleted = 0 ";
+        $query = "SELECT id FROM aow_workflow WHERE aow_workflow.flow_module = '" . $bean->module_dir . "' AND aow_workflow.status = 'Active' AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'On_Save' OR aow_workflow.run_when = 'Create') AND aow_workflow.deleted = 0 ";
 
-            $result = $this->db->query($query, false);
-            $flow = BeanFactory::newBean('AOW_WorkFlow');
-            while (($row = $bean->db->fetchByAssoc($result)) != null) {
-                $flow->retrieve($row['id']);
+        $result = $this->db->query($query, false);
+        $flow = BeanFactory::newBean('AOW_WorkFlow');
+        while (($row = $bean->db->fetchByAssoc($result)) != null) {
+            $flow->retrieve($row['id']);
+
+            if ((!defined('SUGARCRM_IS_INSTALLING') && (!isset($_REQUEST['module'])) || $_REQUEST['module'] != 'Import') || $flow->run_on_import) {
                 if ($flow->check_valid_bean($bean)) {
                     $flow->run_actions($bean, true);
                 }
@@ -299,10 +300,11 @@ class AOW_WorkFlow extends Basic
         SugarBean $module,
         $query = array()
     ) {
+	    global $db;
         if (!isset($query['join'][$name])) {
             if ($module->load_relationship($name)) {
                 $params['join_type'] = 'LEFT JOIN';
-                $params['join_table_alias'] = $name;
+                $params['join_table_alias'] = $db->quoteIdentifier($name);
                 $join = $module->$name->getJoin($params, true);
 
                 $query['join'][$name] = $join['join'];
@@ -863,9 +865,9 @@ class AOW_WorkFlow extends Basic
             case "Less_Than":  return $var1 <  $var2;
             case "Greater_Than_or_Equal_To": return $var1 >= $var2;
             case "Less_Than_or_Equal_To": return $var1 <= $var2;
-            case "Contains": return strpos($var1, $var2);
-            case "Starts_With": return strrpos($var1, $var2, -strlen($var1));
-            case "Ends_With": return strpos($var1, $var2, strlen($var1) - strlen($var2));
+            case "Contains": return strpos(strtolower($var1), strtolower($var2)) !== false;
+            case "Starts_With": return substr(strtolower($var1), 0, strlen($var2) ) === strtolower($var2);
+            case "Ends_With": return substr(strtolower($var1), -strlen($var2) ) === strtolower($var2);
             case "is_null": return $var1 == '';
             case "One_of":
                 if (is_array($var1)) {

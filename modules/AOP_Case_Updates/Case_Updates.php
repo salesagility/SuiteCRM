@@ -224,7 +224,7 @@ function getUpdateDisplayHead(SugarBean $update)
     } elseif ($update->assigned_user_id) {
         $name = $update->getUpdateUser()->name;
     } else {
-        $name = 'Unknown';
+        $name = $mod_strings['LBL_UNKNOWN_CONTACT'];
     }
     $html = "<a href='' onclick='toggleCaseUpdate(\"" . $update->id . "\");return false;'>";
     $html .= "<img  id='caseUpdate" .
@@ -281,14 +281,12 @@ function display_single_update(AOP_Case_Updates $update)
     }
 
     /*if contact user*/
-    if ($update->contact_id) {
-        $html = "<div id='extramargin'><div id='caseStyleContact'>" . getUpdateDisplayHead($update);
-        $html .= "<div id='caseUpdate" . $update->id . "' class='caseUpdate'>";
-        $html .= nl2br(html_entity_decode($update->description));
-        $html .= '</div></div></div>';
+    $html = "<div id='extramargin'><div id='caseStyleContact'>" . getUpdateDisplayHead($update);
+    $html .= "<div id='caseUpdate" . $update->id . "' class='caseUpdate'>";
+    $html .= html_entity_decode($update->description);
+    $html .= '</div></div></div>';
 
-        return $html;
-    }
+    return $html;
 }
 
 /**

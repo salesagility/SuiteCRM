@@ -82,7 +82,7 @@ class ElasticSearchEngineTest extends SearchTestAbstract
                     'query_string' => [
                         'query' => $searchString,
                         'analyzer' => 'standard',
-                        'fields' => ['name.*^5', '_all'],
+                        'fields' => ['name.*^5', '*'],
                         'default_operator' => 'OR',
                         'minimum_should_match' => '66%'
                     ]
@@ -113,7 +113,7 @@ class ElasticSearchEngineTest extends SearchTestAbstract
                     'query_string' => [
                         'query' => $searchString,
                         'analyzer' => 'standard',
-                        'fields' => ['name.*^5', '_all'],
+                        'fields' => ['name.*^5', '*'],
                         'default_operator' => 'OR',
                         'minimum_should_match' => '66%'
                     ]

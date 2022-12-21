@@ -128,6 +128,8 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
     {
         $employee = BeanFactory::newBean('Employees');
 
+        global $current_user;
+        $current_user->is_admin = '1';
         //test with empty string params
         $expected = "SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE  users.deleted = 0 ORDER BY users.user_name";
         $actual = $employee->create_export_query('', '');
@@ -137,6 +139,11 @@ class EmployeeTest extends SuitePHPUnitFrameworkTestCase
         $expected = "SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE users.user_name=\"\" AND  users.deleted = 0 ORDER BY users.id";
         $actual = $employee->create_export_query('users.id', 'users.user_name=""');
         self::assertSame($expected, $actual);
+
+        $current_user->is_admin = '0';
+        $this->expectException(RuntimeException::class);
+        $employee->create_export_query('', '');
+
     }
 
     public function testpreprocess_fields_on_save(): void

@@ -287,7 +287,7 @@ class Campaign extends SugarBean
         $xtpl->assign("CAMPAIGN_AMOUNT", $camp->budget);
         $xtpl->assign("CAMPAIGN_CLOSEDATE", $camp->end_date);
         $xtpl->assign("CAMPAIGN_STATUS", $camp->status);
-        $xtpl->assign("CAMPAIGN_DESCRIPTION", $camp->content);
+        $xtpl->assign("CAMPAIGN_DESCRIPTION", nl2br($camp->content));
 
         return $xtpl;
     }

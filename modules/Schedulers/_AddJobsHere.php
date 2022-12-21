@@ -45,6 +45,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+require_once 'include/Services/NormalizeRecords/NormalizeRecords.php';
+
 /**
  * Set up an array of Jobs with the appropriate metadata
  * 'jobName' => array (
@@ -662,6 +664,9 @@ function pollMonitoredInboxesAOP()
                                         if (!$aopInboundEmailX->email->retrieve($emailId)) {
                                             throw new Exception('Email retrieving error to handle case create, email id was: ' . $emailId);
                                         }
+                                    }
+                                    if (empty($aopInboundEmailX->email)) {
+                                        throw new Exception('Invalid type for email id ' . $emailId);
                                     }
                                     $aopInboundEmailX->handleCreateCase($aopInboundEmailX->email, $userId);
                                 } // if

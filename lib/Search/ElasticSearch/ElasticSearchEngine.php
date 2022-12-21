@@ -125,7 +125,7 @@ class ElasticSearchEngine extends SearchEngine
         }
 
         // Add wildcard at the end of search string
-        if ((!substr_compare($searchStr, $wildcardBe, -strlen($wildcardBe))) === 0) {
+        if ((substr_compare($searchStr, $wildcardBe, -strlen($wildcardBe))) !== 0) {
             $searchStr .= $wildcardBe;
         }
 
@@ -138,7 +138,7 @@ class ElasticSearchEngine extends SearchEngine
                 'query' => [
                     'query_string' => [
                         'query' => $searchStr,
-                        'fields' => ['name.*^5', '_all'],
+                        'fields' => ['name.*^5', '*'],
                         'analyzer' => 'standard',
                         'default_operator' => 'OR',
                         'minimum_should_match' => '66%',

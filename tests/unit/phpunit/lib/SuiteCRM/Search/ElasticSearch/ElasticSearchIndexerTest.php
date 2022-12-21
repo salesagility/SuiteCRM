@@ -221,7 +221,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
     private function getExpectedHeader(): array
     {
         return [
-            'index' => 'Contacts',
+            'index' => 'contacts',
             'id' => '00000000-0000-0000-0000-000000000000',
         ];
     }
@@ -367,13 +367,13 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
             'body' => [
                 [
                     'delete' => [
-                        'index' => 'Contacts',
+                        'index' => 'contacts',
                         'id' => '00000000-0000-0000-0000-000000000000',
                     ]
                 ],
                 [
                     'delete' => [
-                        'index' => 'Contacts',
+                        'index' => 'contacts',
                         'id' => '00000000-0000-0000-0000-000000000000',
                     ]
                 ],
@@ -401,7 +401,7 @@ class ElasticSearchIndexerTest extends SearchTestAbstract
         $bean = $this->getTestBean();
 
         $params = [
-            'index' => 'Contacts',
+            'index' => 'contacts',
             'id' => '00000000-0000-0000-0000-000000000000',
         ];
 

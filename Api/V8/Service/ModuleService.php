@@ -146,12 +146,12 @@ class ModuleService
                 = 'FROM email_addresses JOIN email_addr_bean_rel ON email_addresses.id = email_addr_bean_rel.email_address_id JOIN '
                 . $selectedModule . ' ON ' . $selectedModule
                 . '.id = email_addr_bean_rel.bean_id ';
-            $modifiedWhere = str_replace('accounts.email1',
+            $modifiedWhere = str_replace($selectedModule.'.email1',
                 'email_addresses.email_address', $where);
             $where = $modifiedWhere;
 
             // Sets and adds deleted to the query
-            if ($deleted === 0) {
+            if ($deleted === false) {
                 $whereAuto = '' . $bean->table_name . ' .deleted=0';
             } else {
                 $whereAuto = '' . $bean->table_name . ' .deleted=1';

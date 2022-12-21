@@ -52,11 +52,6 @@ class ListViewDisplay
     public $show_mass_update_form = false;
     public $show_action_dropdown = true;
 
-    /**
-     * @var bool Show Bulk Action button as Delete link
-     */
-    public $show_action_dropdown_as_delete = false;
-
     public $rowCount;
     public $mass = null;
     public $seed;
@@ -341,17 +336,8 @@ class ListViewDisplay
                 }
             }
         } else {
-            // delete
-            if (
-                ACLController::checkAccess($this->seed->module_dir, 'delete', true)
-                && $this->delete
-            ) {
-                if ($this->show_action_dropdown_as_delete) {
-                    $menuItems[] = $this->buildDeleteLink($location);
-                } else {
-                    $menuItems[] = $this->buildBulkActionButton($location);
-                }
-            }
+            // Bulk Action label
+            $menuItems[] = $this->buildBulkActionButton($location);
 
             // Compose email
             if (isset($this->email) && $this->email === true) {
@@ -402,10 +388,12 @@ class ListViewDisplay
 
 
             if (
-                $this->delete
-                && !$this->show_action_dropdown_as_delete
+                $this->delete &&
+                ACLController::checkAccess($this->seed->module_dir, 'delete', true)
             ) {
                 $menuItems[] = $this->buildDeleteLink($location);
+            } else {
+                $menuItems[] = "<a style='display:none'></a>";
             }
         }
         $link = array(

@@ -3607,7 +3607,7 @@ class InboundEmail extends SugarBean
         return ($this->mailbox_type == 'createcase' && !empty($this->groupfolder_id));
     } // fn
 
-    public function handleCreateCase($email, $userId)
+    public function handleCreateCase(Email $email, $userId)
     {
         global $current_user, $mod_strings, $current_language;
         $mod_strings = return_module_language($current_language, "Emails");
@@ -6173,7 +6173,8 @@ class InboundEmail extends SugarBean
             $ret = $this->getImap()->search('UNDELETED UNSEEN');
         }
 
-        LoggerManager::getLogger()->debug('-----> getNewMessageIds() got ' . count($ret) . ' new Messages');
+        $nmessages = is_countable($ret)? count($ret) : 0;
+        LoggerManager::getLogger()->debug('-----> getNewMessageIds() got ' . $nmessages . ' new Messages');
 
         return $ret;
     }

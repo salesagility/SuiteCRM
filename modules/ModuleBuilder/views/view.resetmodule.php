@@ -180,7 +180,7 @@ class ViewResetmodule extends SugarView
 
         $out = "";
         foreach ($sources as $view) {
-            $deployedMetaDataImplementation = new DeployedMetaDataImplementation($view, $this->module);
+            $deployedMetaDataImplementation = new DeployedMetaDataImplementation($view['type'], $this->module);
             $file = $deployedMetaDataImplementation->getFileName($view['type'], $this->module, null);
             if (file_exists($file)) {
                 unlink($file);

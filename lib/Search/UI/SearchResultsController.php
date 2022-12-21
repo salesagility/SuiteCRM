@@ -86,6 +86,16 @@ class SearchResultsController extends Controller
         $this->results = $results;
     }
 
+    public function getQuery(): SearchQuery
+    {
+        return $this->query;
+    }
+
+    public function getResults(): SearchResults
+    {
+        return $this->results;
+    }
+
     public function display(): void
     {
         $headers = [];
@@ -96,12 +106,13 @@ class SearchResultsController extends Controller
             LoggerManager::getLogger()->warn('Failed to fetch list-view headers: ' . $e->getMessage());
         }
 
-        $total = count($this->results->getHits());
+        $total = $this->results->getTotal();
         if ($total > 1) {
             $size = $this->query->getSize();
             if ($size) {
                 $from = $this->query->getFrom();
-                $string = $this->query->getSearchString();
+                $queryString = $_REQUEST['query_string'] ?? '';
+                $string = !empty($_REQUEST['search-query-string']) ? $_REQUEST['search-query-string'] : $queryString;
 
                 $page = (int)($from / $size) + 1;
                 $prev = $page > 1;
@@ -122,10 +133,9 @@ class SearchResultsController extends Controller
                 throw new SearchException('Search Size can not be Zero.', SearchException::ZERO_SIZE);
             }
         }
-        $totalResults = $this->results->getTotal();
 
         $smarty = $this->view->getTemplate();
-        $smarty->assign('total', $totalResults);
+        $smarty->assign('total', $total);
         $smarty->assign('headers', $headers);
         $smarty->assign('results', $this->results);
         try {
@@ -181,6 +191,10 @@ class SearchResultsController extends Controller
                 $viewList->module = $module;
 
                 $metaDataFile = $viewList->getMetaDataFile();
+                if(empty($metaDataFile)) {
+                    $GLOBALS['log']->error('getListViewDefs error: No listviewdefs file found for '.$module);
+                    continue;
+                }
                 /** @noinspection PhpIncludeInspection */
                 require($metaDataFile);
             }

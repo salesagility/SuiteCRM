@@ -147,4 +147,44 @@ EOHTML;
             echo $this->lv->display();
         }
     }
+    /**
+     * Process Search Form
+     */
+    public function processSearchForm()
+    {
+        if (isset($_REQUEST['query'])) {
+            // we have a query
+            if (!empty($_SERVER['HTTP_REFERER']) && preg_match('/action=EditView/', $_SERVER['HTTP_REFERER'])) { // from EditView cancel
+                $this->searchForm->populateFromArray($this->storeQuery->query);
+            } else {
+                $this->searchForm->populateFromRequest();
+            }
+        }
+        $where_clauses = $this->searchForm->generateSearchWhere(true, $this->seed->module_dir);
+
+        if (count($where_clauses) > 0) {
+            $this->where = '(' . implode(' ) AND ( ', $where_clauses) . ')';
+        }
+        $GLOBALS['log']->info("List View Where Clause: $this->where");
+        
+        if ($this->use_old_search) {
+            switch (isset($view) ? $view : null) {
+                case 'basic_search':
+                    $this->searchForm->setup();
+                    $this->searchForm->displayBasic($this->headers);
+                    break;
+                case 'advanced_search':
+                    $this->searchForm->setup();
+                    $this->searchForm->displayAdvanced($this->headers);
+                    break;
+                case 'saved_views':
+                    echo $this->searchForm->displaySavedViews($this->listViewDefs, $this->lv, $this->headers);
+                    break;
+            }
+        } else {
+            $output = $this->searchForm->display($this->headers);
+            $this->savedSearchData = $this->searchForm->getSavedSearchData();
+            echo $output;
+        }
+    }
 }
