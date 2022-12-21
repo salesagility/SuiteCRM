@@ -53,7 +53,6 @@ global $beanList;
 global $log;
 global $db;
 
-
 $the_module = clean_string($_REQUEST['module']);
 
 if (empty($current_user) || empty($current_user->id)) {
