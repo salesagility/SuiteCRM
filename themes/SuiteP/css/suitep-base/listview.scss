@@ -884,6 +884,7 @@ a.listViewTdToolsS1 {
 }
 
 .list .SugarActionMenu .sugar_action_button > .subnav a {
+  color: $btn-primary-color;
   border-bottom: 1px solid $list-view-action-menu-separator;
 }
 
@@ -957,7 +958,7 @@ a.listViewTdToolsS1 {
 
 .action-link-top .clickMenu li .subnav {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $text-label-color;
   line-height: 24px;
   width: 100%;
 
@@ -972,7 +973,7 @@ a.listViewTdToolsS1 {
 
 .action-link-top > .sugar_action_button > .subnav {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $text-label-color;
   line-height: 24px;
   width: auto;
 }
@@ -1003,7 +1004,7 @@ a.listViewTdToolsS1 {
 
 .action-link-top > .sugar_action_button > .subnav a {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $text-label-color;
   line-height: 24px;
   width: 100%;
 
@@ -1035,7 +1036,7 @@ a.listViewTdToolsS1 {
 
 .action-link-bottom .clickMenu li .subnav {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $text-label-color;
   line-height: 24px;
   width: 100%;
 
@@ -1050,7 +1051,7 @@ a.listViewTdToolsS1 {
 
 .action-link-bottom > .sugar_action_button > .subnav {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $text-label-color;
   line-height: 24px;
   width: auto;
 }
@@ -1065,7 +1066,7 @@ a.listViewTdToolsS1 {
 
 .action-link-bottom > .sugar_action_button > .subnav li {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $text-label-color;
   line-height: 24px;
   width: 100%;
 
@@ -1080,14 +1081,14 @@ a.listViewTdToolsS1 {
 
 .action-link-bottom > .sugar_action_button > .subnav a {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $text-label-color;
   line-height: 24px;
   width: 100%;
 }
 
 #actionLinkTop .menuItem {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $text-label-color;
   line-height: 24px;
   width: 100%;
   padding: 0;
@@ -1095,7 +1096,7 @@ a.listViewTdToolsS1 {
 
 .action-link-top .menuItem {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $text-label-color;
   line-height: 24px;
   width: 100%;
   padding: 0;
@@ -1111,7 +1112,7 @@ a.listViewTdToolsS1 {
 
 .action-link-bottom .menuItem {
   background-color: $list-view-action-menu-bg;
-  color: $default-btn-color;
+  color: $text-label-color;
   line-height: 24px;
   width: 100%;
   padding: 0;
@@ -1125,7 +1126,7 @@ a.listViewTdToolsS1 {
 
 .action-link-top .sugar_action_button .subnav.ddopen a {
   display: block;
-  color: $default-btn-color;
+  color: $text-label-color;
   float: none;
 }
 
@@ -1308,10 +1309,12 @@ a.listViewTdToolsS1 {
 }
 
 #selectLinkTop > .sugar_action_button > .subnav a:hover {
+  color: $navbar-link-color-hover;
   background-color: $list-view-action-menu-link-bg;
 }
 
 #selectLinkBottom > .sugar_action_button > .subnav a:hover {
+  color: $navbar-link-color-hover;
   background-color: $list-view-action-menu-link-bg;
 }
 
@@ -2136,6 +2139,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
   font-size: $page-font-size;
   font-weight: normal;
   width: 100%;
+  color: $text-hover-listview;
 }
 
 .popupBody .list .pagination a:hover {
@@ -2420,7 +2424,7 @@ ul.clickMenu.selectmenu.SugarActionMenu.listViewLinkButton > li.desktopOnly > a.
 }
 
 .inbound-email #selectLink.clickMenu {
-  background-color: $list-view-action-menu-bg;
+  background-color: $sidebar-bg;
 }
 
 .inbound-email .subnav {
@@ -3075,7 +3079,7 @@ table.subpanel-table li.sugar_action_button:hover {
 }
 
 .listViewLinkButton li.sugar_action_button:hover {
-  background-color: $list-view-header-bg;
+  background-color: $text-hover-listview;
 }
 
 #selectLinkTop li.sugar_action_button:hover {
@@ -3174,6 +3178,7 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button {
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button:hover {
   background-color: $list-view-header-bg;
+  color: $default-tab-color;
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button.hover {
@@ -3215,7 +3220,7 @@ ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.sub
 }
 
 ul#selectLink.clickMenu.selectmenu.SugarActionMenu li.sugar_action_button ul.subnav li a.menuItem {
-  color: $list-view-button-color;
+  color: $navbar-menu-link-color;
   width: 100%;
   background-color: $list-view-action-menu-bg;
   line-height: 24px;
