@@ -61,6 +61,8 @@ require_once('include/utils/progress_bar_utils.php');
 require_once('ModuleInstall/ModuleScanner.php');
 define('DISABLED_PATH', 'Disabled');
 
+require_once 'include/SugarCache/SugarCache.php';
+
 class ModuleInstaller
 {
     public $modules = array();
@@ -2026,6 +2028,9 @@ class ModuleInstaller
                     if (is_writable($dest)) {
                         sugar_touch($dest, filemtime($source));
                     }
+                    if ((new SplFileInfo($dest))->getExtension() == 'php') {
+                        SugarCache::cleanFile($dest);
+                    }
                     return(unlink($source));
                 } else {
                     $GLOBALS['log']->debug("Can't restore file: " . $source);
@@ -2043,11 +2048,18 @@ class ModuleInstaller
                         if (is_writable($rest)) {
                             sugar_touch($rest, filemtime($dest));
                         }
+                        if ((new SplFileInfo($rest))->getExtension() == 'php') {
+                            SugarCache::cleanFile($rest);
+                        }
                     } else {
                         $GLOBALS['log']->debug("Can't backup file: " . $dest);
                     }
                 }
-                return(copy($source, $dest));
+                $result = copy($source, $dest);
+                if ((new SplFileInfo($dest))->getExtension() == 'php') {
+                    SugarCache::cleanFile($dest);
+                }
+                return $result;
             }
         } elseif (!is_dir($source)) {
             if ($uninstall) {
