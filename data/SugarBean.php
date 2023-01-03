@@ -2371,6 +2371,12 @@ class SugarBean
 
 
         $this->call_custom_logic("before_save", $custom_logic_arguments);
+
+        if(isset($this->abort_save)) {
+            unset($this->abort_save);
+            return;
+        }
+
         unset($custom_logic_arguments);
 
         // If we're importing back semi-colon separated non-primary emails
@@ -5020,12 +5026,12 @@ class SugarBean
         foreach ($this->field_defs as $field) {
             if (0 == strcmp($field['type'], 'relate') && !empty($field['module'])) {
                 $name = $field['name'];
-                if (empty($this->$name)) {
+                if (empty($this->$name) && key_exists('id_name',$field)) {
                     // set the value of this relate field in this bean ($this->$field['name']) to the value of the
                     // 'name' field in the related module for the record identified
                     // by the value of $this->$field['id_name']
                     $related_module = $field['module'];
-                    $id_name = $field['id_name'];
+		    $id_name = $field['id_name'];
 
                     if (empty($this->$id_name)) {
                         $this->fill_in_link_field($id_name, $field);

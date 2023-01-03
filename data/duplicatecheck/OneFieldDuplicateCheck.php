@@ -20,7 +20,14 @@ class OneFieldDuplicateCheck extends DuplicateCheckStrategy
             return null;
         }
 
-        $arr = array( $this->field => $this->bean->{$this->field});
+        if(is_array($this->field)){
+            $arr = [];
+            foreach($this->field as $key){
+                $arr[$key] = $this->bean->{$key};
+            }
+        } else {
+            $arr = array( $this->field => $this->bean->{$this->field});
+        }
 
         //Clone record before find duplicates
         $cloneCpy = clone $this->bean;
