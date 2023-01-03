@@ -85,23 +85,45 @@ foreach ($focus->column_fields as $field) {
     if ($field === 'email_password' && empty($_REQUEST['email_password']) && !empty($_REQUEST['email_user'])) {
         continue;
     }
-    if (isset($_REQUEST[$field])) {
-        if ($field !== "group_id") {
+
+    if (!isset($_REQUEST[$field])) {
+        continue;
+    }
+
+    if ($field !== "group_id") {
+        if (is_string($_REQUEST[$field])) {
             $focus->$field = trim($_REQUEST[$field]);
+        } else {
+            $focus->$field = $_REQUEST[$field];
         }
     }
 }
+
 foreach ($focus->additional_column_fields as $field) {
-    if (isset($_REQUEST[$field])) {
-        $value = trim($_REQUEST[$field]);
-        $focus->$field = $value;
+    if (!isset($_REQUEST[$field])) {
+        continue;
     }
+    if (is_string($_REQUEST[$field])) {
+        $value = trim($_REQUEST[$field]);
+    } else {
+        $value = $_REQUEST[$field];
+    }
+
+    $focus->$field = $value;
 }
+
 foreach ($focus->required_fields as $field) {
-    if (isset($_REQUEST[$field])) {
-        $value = trim($_REQUEST[$field]);
-        $focus->$field = $value;
+    if (!isset($_REQUEST[$field])) {
+        continue;
     }
+
+    if (is_string($_REQUEST[$field])) {
+        $value = trim($_REQUEST[$field]);
+    } else {
+        $value = $_REQUEST[$field];
+    }
+
+    $focus->$field = $value;
 }
 
 $type = $_REQUEST['type'] ?? '';
