@@ -668,7 +668,7 @@ $dictionary['InboundEmail'] = [
                 'returns' => 'html',
                 'include' => 'modules/InboundEmail/utils.php',
             ],
-            'type' => 'varchar',
+            'type' => 'function',
             'reportable' => false,
             'massupdate' => false,
             'inline_edit' => false,
