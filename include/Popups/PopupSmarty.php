@@ -130,7 +130,10 @@ class PopupSmarty extends ListViewSmarty
 
         $contextMenuObjectsTypes = array();
         foreach ($this->displayColumns as $name => $params) {
-            $this->displayColumns[$name]['width'] = round($this->displayColumns[$name]['width'] / $adjustment, 2);
+            if (!empty($adjustment)) {
+                $this->displayColumns[$name]['width'] = round($this->displayColumns[$name]['width'] / $adjustment, 2);
+            }
+
             // figure out which contextMenu objectsTypes are required
             if (!empty($params['contextMenu']['objectType'])) {
                 $contextMenuObjectsTypes[$params['contextMenu']['objectType']] = true;
