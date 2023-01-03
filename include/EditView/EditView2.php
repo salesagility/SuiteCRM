@@ -933,11 +933,11 @@ class EditView
             $ajaxSave,
             $this->defs
         );
-        /* BEGIN - SECURITY GROUPS */ 
+        /* BEGIN - SECURITY GROUPS */
         //if popup select add panel if user is a member of multiple groups to metadataFile
         global $sugar_config;
         if(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true
-            && (empty($this->focus->fetched_row['id']) || $_REQUEST['isDuplicate'] == true) && $this->focus->module_dir != "Users" && $this->focus->module_dir != "SugarFeed") {
+            && (empty($this->focus->fetched_row['id']) || ($_REQUEST['isDuplicate'] ?? false) === true) && $this->focus->module_dir != "Users" && $this->focus->module_dir != "SugarFeed") {
 
             //there are cases such as uploading an attachment to an email template where the request module may
             //not be the same as the current bean module. If that happens we can just skip it
@@ -964,8 +964,8 @@ class EditView
                     }
                     //multilingual support
                     global $current_language;
-                    $ss_mod_strings = return_module_language($current_language, 'SecurityGroups');  
-                    
+                    $ss_mod_strings = return_module_language($current_language, 'SecurityGroups');
+
                     $lbl_securitygroups_select = $ss_mod_strings['LBL_GROUP_SELECT'];
                     $lbl_securitygroups = $ss_mod_strings['LBL_LIST_FORM_TITLE'];
 
