@@ -210,7 +210,8 @@ class ImapHandlerFactory
             }
 
             $interfaceClass = $this->getHandlerClass($handlerType);
-            $log->fatal('Using imap handler class: ' . $interfaceClass);
+            $log->debug('Using imap handler class: ' . $interfaceClass);
+
             if ($test) {
                 $this->loadTestSettings($testSettings);
             } else {
