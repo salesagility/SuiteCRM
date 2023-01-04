@@ -349,9 +349,12 @@
     };
 
 
-    $.fn.EmailsComposeView.updateSignature = self.updateSignature = function () {
+    $.fn.EmailsComposeView.updateSignature = self.updateSignature = function ($selected) {
+      if(!$selected) {
+        $selected = $('#from_addr_name').find('option:selected');
+      }
 
-      var signatureId = $('#from_addr_name').find('option:selected').attr('data-email-signature-id');
+      var signatureId = $selected.attr('data-email-signature-id');
       if (signatureId === undefined) {
         console.warn('Unable to retrieve signature id');
         return false;
@@ -424,8 +427,11 @@
       }
     };
 
-    self.updateFromInfos = function () {
-      var infos = $('#from_addr_name').find('option:selected').attr('infos');
+    self.updateFromInfos = function ($selected) {
+      if (!$selected) {
+        $selected = $('#from_addr_name').find('option:selected');
+      }
+      var infos = $selected.attr('infos');
       if(infos === undefined) {
         console.warn('Unable to retrieve selected infos in the "From" field.');
         return false;
@@ -445,8 +451,11 @@
       $('#from_addr_name_hidden').val(newlySelectedFromName);
     };
 
-    self.updateOutboundEmailId = function (selectFrom) {
-      var newlySelected = selectFrom.find('option:selected');
+    self.updateOutboundEmailId = function (selectFrom, newlySelected) {
+      if(!newlySelected) {
+        newlySelected = selectFrom.find('option:selected');
+      }
+
       var entryType = newlySelected.attr('data-type') || '';
       $('#outbound_email_id').val('');
 
@@ -455,15 +464,42 @@
         $('#outbound_email_id').val(outboundId);
       }
     };
+
+    self.onFromSelect = function (selectFrom, ui) {
+      var newlySelected = ui.item.element;
+      var entryType = newlySelected.attr('data-type') || '';
+
+      $('#outbound_email_id').val('');
+      if (entryType === 'OutboundEmailAccount' || entryType === 'system') {
+        self.updateOutboundEmailId(selectFrom, newlySelected);
+      } else {
+        $(self).find('[name=inbound_email_id]').val(newlySelected.attr('inboundId'));
+      }
+
+      self.updateSignature(newlySelected);
+    };
+
     self.getFromEntryLabel = function (entry) {
       if (!entry) {
         return '';
       }
 
-      var entryLabel = '';
-      if(entry.name && (typeof entry.name === 'string' || entry.name instanceof String)) {
-        entryLabel = entry.name;
+      var entryValue = '';
+      if(entry.attributes.from && (typeof entry.attributes.from === 'string' || entry.attributes.from instanceof String)) {
+        entryValue = entry.attributes.from;
       }
+
+      var entryLabel = '';
+      if(entry.attributes.name && (typeof entry.attributes.name === 'string' || entry.attributes.name instanceof String)) {
+        entryLabel = entry.attributes.name;
+        if (entryValue && entryValue !== entryLabel) {
+          entryLabel = entryLabel + ' (' + entryValue + ')';
+        }
+      } else if (entryValue) {
+        entryLabel = entryValue;
+      }
+
+
 
       if (entryLabel.length > 40) {
         entryLabel = entryLabel.substring(0, 40) + '...';
@@ -1153,7 +1189,16 @@
                 selectOption.attr('inboundId', v.id);
               }
 
+              var fromName = v.attributes.name;
+              if (!fromName) {
+                fromName = v.attributes.from;
+              }
+
               selectOption.attr('infos', '(<b>Reply-to:</b> ' + v.attributes.reply_to + ' , <b>Reply-to Name:</b> ' + v.attributes.reply_to_name + ' , <b>From:</b> ' + v.attributes.from + ', <b>From Name:</b> ' + v.attributes.name + ')');
+              selectOption.attr('data-from-name', fromName);
+              selectOption.attr('data-from-address', v.attributes.from);
+              selectOption.attr('data-reply-to-name', v.attributes.reply_to_name);
+              selectOption.attr('data-reply-to-address', v.attributes.reply_to);
               selectOption.attr('data-type', v.type);
               selectOption.attr('label', entryLabel);
               selectOption.html(entryLabel);
@@ -1195,10 +1240,8 @@
               });
 
               optionGroup.options.forEach(function (option) {
-                $optionGroup.append(option);
+                selectFrom.append(option);
               });
-
-              selectFrom.append($optionGroup);
             });
 
             self.updateOutboundEmailId(selectFrom);
@@ -1208,6 +1251,37 @@
             if (selectInboundEmailOption.val()) {
               $(selectFrom).val(selectInboundEmailOption.val());
             }
+
+
+            $.widget( "custom.emailselectmenu", $.ui.selectmenu, {
+              _renderItem: function( ul, item ) {
+
+                var $option = item.element;
+                var fromName = $option.attr('data-from-name');
+                var fromAddress = $option.attr('data-from-address');
+
+                var $info = $('<div>', {
+                  class: 'compose-from-email-account'
+                });
+                $info.append("<div class='compose-from-email-address-name'><span>" + fromName + "</span></div>");
+                $info.append("<div class='compose-from-email-address-from'><span class='small'>&lt;" + fromAddress + "&gt;</span></div>");
+
+                return $( "<li>" )
+                  .append($info)
+                  .appendTo( ul );
+              }
+            });
+
+            $( selectFrom ).emailselectmenu({
+              change: function( event, ui ) {
+                self.onFromSelect(selectFrom, ui);
+              },
+              select: function( event, ui ) {
+                self.onFromSelect(selectFrom, ui);
+              },
+              appendTo: selectFrom.parent(),
+              'max-width': '200px'
+            });
 
             $(selectFrom).change(function (e) {
 
@@ -1222,16 +1296,14 @@
               }
 
               self.updateSignature();
-              self.updateFromInfos();
             });
 
             $(self).trigger('emailComposeViewGetFromFields');
 
-            self.updateFromInfos();
 
             if (tinymce.initialized === true) {
               self.updateSignature();
-            } else {
+            } else if(tinymce.EditorManager && tinymce.EditorManager.activeEditor) {
               tinymce.EditorManager.activeEditor.on('init', function(e) {
                 self.updateSignature();
               });
