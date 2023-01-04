@@ -110,6 +110,33 @@ class EmailsControllerActionGetFromFields
     }
 
     /**
+     * Get Outbound from fields
+     * @param Email $email
+     * @return string JSON
+     * @throws JsonException
+     */
+    public function getOutboundFromFields(Email $email)
+    {
+        global $log;
+        $email->email2init();
+
+        $dataAddresses = [];
+
+        $this->addOutboundEmailAccounts($dataAddresses);
+
+        $this->collector->addSystemEmailAddress($dataAddresses);
+
+        $dataEncoded = [];
+        try {
+            $dataEncoded = json_encode(array('data' => $dataAddresses), JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+        } catch (Exception $e) {
+            $log->fatal('getOutboundFromFields | unable to json encode the addresses for from fields | message: ' . $e->getMessage() ?? '');
+        }
+
+        return utf8_decode($dataEncoded);
+    }
+
+    /**
      *
      * @param string|null $accountSignatures
      * @return array|null
