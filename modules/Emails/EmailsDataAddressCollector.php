@@ -681,6 +681,26 @@ class EmailsDataAddressCollector
     }
 
     /**
+     * Add system email address
+     * @param array $dataAddresses
+     */
+    public function addSystemEmailAddress(array &$dataAddresses): void
+    {
+        $this->setOe(new OutboundEmail());
+        if ($this->getOe()->isAllowUserAccessToSystemDefaultOutbound()) {
+            $system = $this->getOe()->getSystemMailerSettings();
+            $dataAddresses[] = $this->getFillDataAddressArray(
+                $system->id,
+                $system->name,
+                $system->smtp_from_name,
+                $system->smtp_from_addr,
+                $system->mail_smtpuser,
+                []
+            );
+        }
+    }
+
+    /**
      * @param $dataAddresses
      * @return mixed
      */

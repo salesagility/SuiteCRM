@@ -461,10 +461,9 @@ class EmailsController extends SugarController
         global $current_user;
         global $sugar_config;
         $email = BeanFactory::newBean('Emails');
-        $ie = BeanFactory::newBean('InboundEmail');
         $collector = new EmailsDataAddressCollector($current_user, $sugar_config);
         $handler = new EmailsControllerActionGetFromFields($current_user, $collector);
-        $results = $handler->handleActionGetFromFields($email, $ie);
+        $results = $handler->getOutboundFromFields($email);
 
         echo $results;
         $this->view = 'ajax';
