@@ -183,8 +183,8 @@ class actionComputeField extends actionBase
 
         array_walk(
             $displayFieldValues,
-            function ($val) use ($bean, $fieldName) {
-                $val = $GLOBALS['app_list_strings'][$bean->field_defs[$fieldName]['options'][$bean->$fieldName]];
+            function (&$val) use ($bean, $fieldName) {
+                $val = $GLOBALS['app_list_strings'][$bean->field_defs[$fieldName]['options']][$val];
             }
         );
 
