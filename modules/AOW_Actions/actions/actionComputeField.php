@@ -120,7 +120,7 @@ class actionComputeField extends actionBase
                         case 'short':
                         case 'tinyint':
                         case 'int':
-                            $bean->{$formulas[$i]} = format_number($calculator->calculateFormula($formulaContents[$i]));
+                            $bean->{$formulas[$i]} = format_number($calculator->calculateFormula($formulaContents[$i]), $fieldDef['precision'], $fieldDef['precision']);
                             break;
                         default:
                             $bean->{$formulas[$i]} = $calculator->calculateFormula($formulaContents[$i]);

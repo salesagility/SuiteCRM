@@ -232,7 +232,7 @@ class actionCreateRecord extends actionBase
                             case 'short':
                             case 'tinyint':
                             case 'int':
-                                $value = format_number($bean->$fieldName);
+                                $value = format_number($bean->$fieldName, $data['precision'], $data['precision']);
                                 break;
                 case 'relate':
                     if (isset($data['id_name']) && $record_vardefs[$field]['type'] === 'relate') {
