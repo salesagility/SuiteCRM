@@ -463,7 +463,14 @@ class EmailsController extends SugarController
         $email = BeanFactory::newBean('Emails');
         $collector = new EmailsDataAddressCollector($current_user, $sugar_config);
         $handler = new EmailsControllerActionGetFromFields($current_user, $collector);
-        $results = $handler->getOutboundFromFields($email);
+
+        $useLegacyEmailConfig = $sugar_config['legacy_email_behaviour'] ?? false;
+        if (isTrue($useLegacyEmailConfig)) {
+            $ie = BeanFactory::newBean('InboundEmail');
+            $results = $handler->handleActionGetFromFields($email, $ie);
+        } else {
+            $results = $handler->getOutboundFromFields($email);
+        }
 
         echo $results;
         $this->view = 'ajax';
