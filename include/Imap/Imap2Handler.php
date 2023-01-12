@@ -181,7 +181,13 @@ class Imap2Handler implements ImapHandlerInterface
     public function close()
     {
         $this->logCall(__FUNCTION__, func_get_args());
-        if (!$ret = imap2_close($this->getStream())) {
+        try {
+            $ret = imap2_close($this->getStream());
+        } catch (Throwable $e) {
+            $ret = false;
+        }
+
+        if (!$ret) {
             $this->log('IMAP close error');
         }
         $this->logReturn(__FUNCTION__, $ret);
