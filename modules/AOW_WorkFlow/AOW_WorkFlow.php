@@ -823,6 +823,10 @@ class AOW_WorkFlow extends Basic
                         } elseif ($data['type'] == 'bool' && (!(bool)$value || strtolower($value) == 'false')) {
                             $value = 0;
                         }
+                        $type = $data['dbType'] ?? $data['type'];
+                        if ((strpos($type, 'char') !== false || strpos($type, 'text') !== false) && !empty($field)) {
+                            $field = from_html($field);
+                        }
                         break;
                 }
 
