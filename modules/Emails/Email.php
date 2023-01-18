@@ -3017,8 +3017,10 @@ class Email extends Basic
 
         $mail->Subject = html_entity_decode($this->name, ENT_QUOTES, 'UTF-8');
 
+        $attachmentLabel = $mod_strings['LBL_EMAIL_ATTACHMENT'] ?? '';
+
         $this->setupAttachments(
-            $mod_strings['LBL_EMAIL_ATTACHMENT'],
+            $attachmentLabel,
             $sugar_config['upload_badext'],
             $mail,
             $locale,

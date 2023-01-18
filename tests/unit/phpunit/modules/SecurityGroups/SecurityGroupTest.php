@@ -301,6 +301,7 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
             'Emails',
             'ExternalOAuthConnection',
             'ProjectTask',
+            'ExternalOAuthProvider',
             'Project',
             'FP_events',
             'AOR_Reports',

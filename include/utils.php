@@ -1884,8 +1884,8 @@ function get_select_options_with_id_separate_key($label_list, $key_list, $select
         // the system is evaluating $selected_key == 0 || '' to true.  Be very careful when changing this.  Test all cases.
         // The bug was only happening with one of the users in the drop down.  It was being replaced by none.
         if (
-                ($option_key != '' && $selected_key == $option_key) || (
-                    $option_key == '' && (($selected_key == '' && !$massupdate) || $selected_key == '__SugarMassUpdateClearField__')
+                ($option_key !== '' && $selected_key === $option_key) || (
+                    $option_key === '' && (($selected_key === '' && !$massupdate) || $selected_key === '__SugarMassUpdateClearField__')
                 ) || (is_array($selected_key) && in_array($option_key, $selected_key))
         ) {
             $selected_string = 'selected ';

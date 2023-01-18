@@ -2281,6 +2281,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
             'IS_AUTO_IMPORT' => '0',
             'IS_CREATE_CASE' => '0',
             'ALLOW_OUTBOUND_GROUP_USAGE' => '0',
+            'MOVE_MESSAGES_TO_TRASH_AFTER_IMPORT' => '0'
         );
 
         self::assertIsArray($result);

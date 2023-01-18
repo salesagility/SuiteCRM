@@ -116,7 +116,6 @@ class AOD_IndexTest extends SuitePHPUnitFrameworkTestCase
             'Meetings' => 'Meeting',
             'Notes' => 'Note',
             'Opportunities' => 'Opportunity',
-            'OutboundEmailAccounts' => 'OutboundEmailAccounts',
             'Project' => 'Project',
             'ProjectTask' => 'ProjectTask',
             'ProspectLists' => 'ProspectList',

@@ -223,6 +223,7 @@ class file_utilsTest extends SuitePHPUnitFrameworkTestCase
             'Spots' => 'Spots',
             'Studio' => 'Studio',
             'SugarFeed' => 'SugarFeed',
+            'ExternalOAuthProvider' => 'ExternalOAuthProvider',
             'SurveyQuestionOptions' => 'SurveyQuestionOptions',
             'SurveyQuestionResponses' => 'SurveyQuestionResponses',
             'SurveyQuestions' => 'SurveyQuestions',
