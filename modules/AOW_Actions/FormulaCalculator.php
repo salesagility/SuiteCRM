@@ -403,9 +403,9 @@ class FormulaCalculator
             return date($params[0], strtotime($params[1]));
         }
 
-        if (($params = $this->evaluateFunctionParams("datediff", $text, $childItems)) != null) {
-            $d1 = new DateTime($params[0]);
-            $d2 = new DateTime($params[1]);
+        if (($params = $this->evaluateFunctionParams("datediff", $text, $childItems)) != null) { 
+            $d1 = new DateTime($this->getDBFormat($params[0]));
+            $d2 = new DateTime($this->getDBFormat($params[1]));
             $diff = $d1->diff($d2);
 
             switch ($params[2]) {
@@ -660,7 +660,7 @@ class FormulaCalculator
     {
         $prefix = $isTime ? 'PT' : 'P';
 
-        $datetime = new DateTime($datestring);
+        $datetime = new DateTime($this->getDBFormat($datestring));
 
         if ($isAdd) {
             $datetime->add(new DateInterval($prefix . $ammount . $type));
@@ -849,4 +849,43 @@ class FormulaCalculator
     {
         return sprintf("%0" . $digits . "d", $value);
     }
+
+    /**
+     * Outputs date and datetime values in DB format
+     *
+     * @param String $date
+     * @return String
+     */
+    private function getDBFormat($date) {
+        // 1) If WF is thrown by the after_save LH, the bean is already loaded and the date/datetime value 
+        // is properly formatted, so will only change the timezone value from UTC to user's one.
+        // 2) If WF is run by the scheduler task, will change date/datetime value to DB format.
+        $formatDate = 'Y-m-d';
+        $validDate = DateTime::createFromFormat($formatDate, $date);
+        $formatDateTime = 'Y-m-d H:i:s';
+        $validDateTime = DateTime::createFromFormat($formatDateTime, $date);
+        if ($validDate && $validDate->format($formatDate) === $date) {
+            // Nothing to do
+            return $date;
+        } else if ($validDateTime && $validDateTime->format($formatDateTime) === $date) {
+            // Set TZ to user's TZ
+            global $timedate, $current_user;
+            $date = $timedate->fromDb($date);
+            $date = $timedate->tzUser($date, $current_user);
+            return $date->format('Y-m-d H:i:s');
+        } else { // In this case the WF is run by the cron
+            global $current_user, $timedate;
+            if(strpos($date, " ") !== false){
+                $type = 'datetime';
+            } else{
+                $type = 'date';
+            }
+            $date = $timedate->fromUserType($date, $type, $current_user);
+            if ($date) {
+                return $date->asDb(false);
+            }
+            return null;
+        }
+    }
+
 }
