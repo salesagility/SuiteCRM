@@ -127,6 +127,7 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
           'EmailMarketing',
           'Emails',
           'FP_events',
+          'InboundEmail',
           'AOD_Index',
           'AOD_IndexEvent',
           'AOS_Invoices',

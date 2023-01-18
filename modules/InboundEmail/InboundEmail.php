@@ -6189,7 +6189,10 @@ class InboundEmail extends SugarBean
         $service = empty($service) ? $this->getServiceString() : $service;
         $mbox = empty($mbox) ? $this->mailbox : $mbox;
 
-        $connectString = '{' . $this->server_url . ':' . $this->port . '/service=' . $this->protocol . $service . '}';
+        $protocol = $this->protocol ?? 'imap';
+        $port = $this->port ?? '143';
+
+        $connectString = '{' . $this->server_url . ':' . $port . '/service=' . $protocol . $service . '}';
         $connectString .= ($includeMbox) ? $mbox : "";
 
         return $connectString;
@@ -6245,7 +6248,7 @@ class InboundEmail extends SugarBean
             $this->getImap()->setTimeout(3, 15);
 
             $opts = $this->findOptimumSettings($useSsl);
-            if (!empty($opts) && isset($opts['good']) && empty($opts['good'])) {
+            if (!empty($opts) && isset($opts['good']) && empty($opts['bad'])) {
                 $ret = array_pop($opts['err']); // TODO: lost error info?
 
                 return $ret;

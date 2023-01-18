@@ -51,7 +51,7 @@
 <script type='text/javascript'>
     if (SUGAR.ajaxUI && !SUGAR.ajaxUI.hist_loaded) {
         YAHOO.util.History.register('ajaxUILoc', "", SUGAR.ajaxUI.go);
-        {/literal}{if $smarty.request.module != "ModuleBuilder"}{* Module builder will init YUI history on its own *}
+        {/literal}{if isset($smarty.request.module) && $smarty.request.module != "ModuleBuilder"}{* Module builder will init YUI history on its own *}
         YAHOO.util.History.initialize("ajaxUI-history-field", "ajaxUI-history-iframe");
         {/if}{literal}
     }
