@@ -115,6 +115,17 @@ class templateParser
                         ENT_COMPAT, 'UTF-8');
                     $repl_arr[$key . "_" . $fieldName] = html_entity_decode($focus->{$fieldName},
                         ENT_COMPAT, 'UTF-8');
+                } elseif ($field_def['dbType'] == 'date' || $field_def['dbType'] == 'datetime' || (!isset($field_def['dbType']) && ($field_def['type'] == 'date' || $field_def['type'] == 'datetime') )) {
+                    global $disable_date_format;
+                    if($focus->$fieldName && ($focus->fetched_row || $disable_date_format)) {
+                        $oldValueDisableDateFormat = $disable_date_format;
+                        $disable_date_format = false;
+                        $value = self::getUserDateDatetimeFormat($focus->$fieldName);
+                        $repl_arr[$key . "_" . $fieldName] = $value; 
+                        $disable_date_format = $oldValueDisableDateFormat;
+                    } else {
+                        $repl_arr[$key . "_" . $fieldName] = $focus->{$fieldName};
+                    }
                 } else {
                     $repl_arr[$key . "_" . $fieldName] = $focus->{$fieldName};
                 }
@@ -178,5 +189,31 @@ class templateParser
         }
 
         return $string;
+    }
+
+    /**
+     * Function use to format the date/datetime field into user format
+     *
+     * @param String $date
+     * @return String
+     */
+    private static function getUserDateDatetimeFormat($date) {
+        $formatDate = 'Y-m-d';
+        $validDate = DateTime::createFromFormat($formatDate, $date);
+        $formatDateTime = 'Y-m-d H:i:s';
+        $validDateTime = DateTime::createFromFormat($formatDateTime, $date);
+        if ($validDate && $validDate->format($formatDate) === $date) {
+            // Date field
+            global $current_user, $timedate;
+            $date = $timedate->fromDbDate($date);
+            return $timedate->asUserDate($date, true, $current_user);
+        } elseif ($validDateTime && $validDateTime->format($formatDateTime) === $date) {
+            // Datetime field
+            global $current_user, $timedate;
+            $date = $timedate->fromDB($date);
+            return $timedate->asUser($date, $current_user);
+        } else { 
+            return $date;
+        }
     }
 }
