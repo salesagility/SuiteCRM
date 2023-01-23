@@ -61,6 +61,13 @@ $ret = array();
 
 foreach ($_FILES as $k => $file) {
     if (in_array(strtolower($_FILES[$k]['type']), $imgType) && $_FILES[$k]['size'] > 0) {
+        $fileName = $_FILES[$k]['name'] ?? '';
+
+        if (!has_valid_image_extension('Attach Files Uploaded file: ' . $fileName , $fileName)) {
+            LoggerManager::getLogger()->fatal("EmailTemplates AttachFiles - Invalid file ext : '$fileName'.");
+            throw new RuntimeException('Invalid request');
+        }
+
         $upload_file = new UploadFile($k);
         // check the file
         if ($upload_file->confirm_upload()) {

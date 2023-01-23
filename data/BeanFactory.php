@@ -152,6 +152,51 @@ class BeanFactory
     }
 
     /**
+     * Returns a SugarBean object by id.
+     *
+     * @static
+     *
+     * @param string $module
+     * @param string $id
+     * @param array $params
+     *        A name/value array of parameters. Names: encode, deleted.
+     *        If $params is boolean we revert to the old arguments (encode, deleted), and use $params as $encode.
+     *        This will be changed to using only $params in later versions.
+     * @param bool $deleted
+     *        @see SugarBean::retrieve
+     *
+     * @return SugarBean|bool
+     */
+    public static function getReloadedBean($module, $id = null, $params = [], $deleted = true)
+    {
+        $params = self::convertParams($params);
+        $encode = self::hasEncodeFlag($params);
+        $deleted = self::hasDeletedFlag($params, $deleted);
+
+        $beanClass = self::getBeanClass($module);
+
+        if (!self::loadBeanFile($module)) {
+            return false;
+        }
+
+        if (empty($id)) {
+            return new $beanClass();
+        }
+
+        /* @var SugarBean $bean */
+        $bean = new $beanClass();
+
+        $result = $bean->retrieve($id, $encode, $deleted);
+
+        if ($result === null) {
+            return false;
+        }
+
+        return $bean;
+    }
+
+
+    /**
      * Shallow beans are created by SugarBean during the fill_in_relationship_fields method, and they differ from
      * 'complete' bean in that they do not have their own relate fields completed.
      *

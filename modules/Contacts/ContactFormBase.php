@@ -73,15 +73,21 @@ class ContactFormBase extends PersonFormBase
         // Bug #46427 : Records from other Teams shown on Potential Duplicate Contacts screen during Lead Conversion
         // add team security
 
+        $dbManager = DBManagerFactory::getInstance();
+
         $query .= ' where contacts.deleted = 0 AND ';
         if (isset($_POST[$prefix.'first_name']) && strlen($_POST[$prefix.'first_name']) != 0 && isset($_POST[$prefix.'last_name']) && strlen($_POST[$prefix.'last_name']) != 0) {
-            $query .= " contacts.first_name LIKE '". $_POST[$prefix.'first_name'] . "%' AND contacts.last_name = '". $_POST[$prefix.'last_name'] ."'";
+            $firstName = $dbManager->quote($_POST[$prefix.'first_name' ?? '']);
+            $lastName = $dbManager->quote($_POST[$prefix.'last_name' ?? '']);
+            $query .= " contacts.first_name LIKE '". $firstName . "%' AND contacts.last_name = '". $lastName ."'";
         } else {
-            $query .= " contacts.last_name = '". $_POST[$prefix.'last_name'] ."'";
+            $lastName = $dbManager->quote($_POST[$prefix.'last_name' ?? '']);
+            $query .= " contacts.last_name = '". $lastName ."'";
         }
 
         if (!empty($_POST[$prefix.'record'])) {
-            $query .= " AND  contacts.id != '". $_POST[$prefix.'record'] ."'";
+            $record = $dbManager->quote($_POST[$prefix.'record' ?? '']);
+            $query .= " AND  contacts.id != '". $record ."'";
         }
         return $query;
     }

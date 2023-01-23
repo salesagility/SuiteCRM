@@ -994,7 +994,7 @@ EOQ;
     $restrict_str .= <<<EOQ
 RedirectMatch 403 {$ignoreCase}.*\.log$
 RedirectMatch 403 {$ignoreCase}/+not_imported_.*\.txt
-RedirectMatch 403 {$ignoreCase}/+(soap|cache|xtemplate|data|examples|include|log4php|metadata|modules|vendor)/+.*\.(php|tpl)
+RedirectMatch 403 {$ignoreCase}/+(soap|cache|xtemplate|data|examples|include|log4php|metadata|modules|vendor)/+.*\.(php|tpl|phar)
 RedirectMatch 403 {$ignoreCase}/+emailmandelivery\.php
 RedirectMatch 403 {$ignoreCase}/+.git
 RedirectMatch 403 {$ignoreCase}/+.{$cacheDir}
@@ -1043,7 +1043,7 @@ EOQ;
 
  # CSS
  ExpiresByType text/css "access plus 1 year"
- 
+
  # Data
  ExpiresByType application/atom+xml "access plus 1 hour"
  ExpiresByType application/rdf+xml "access plus 1 hour"
@@ -1296,7 +1296,7 @@ function create_default_users()
     global $sugar_config;
 
     require_once('install/UserDemoData.php');
-    
+
     //Create default admin user
     $user = BeanFactory::newBean('Users');
     $user->id = 1;
