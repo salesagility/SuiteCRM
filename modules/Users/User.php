@@ -612,7 +612,7 @@ class User extends Person implements EmailInterface
 
         $msg = '';
 
-        $isUpdate = !empty($this->id) && !$this->new_with_id;
+        $isUpdate = $this->isUpdate();
 
         //No SMTP server is set up Error.
         $admin = BeanFactory::newBean('Administration');
@@ -664,15 +664,14 @@ class User extends Person implements EmailInterface
         // wp: do not save user_preferences in this table, see user_preferences module
         $this->user_preferences = '';
 
+
+        // If the current user is not an admin, reset the admin flag to the original value.
+        $this->setIsAdmin();
+
         // if this is an admin user, do not allow is_group or portal_only flag to be set.
         if ($this->is_admin) {
             $this->is_group = 0;
             $this->portal_only = 0;
-        }
-
-        // If the current user is not an admin, do not allow them to set the admin flag to true.
-        if (!is_admin($current_user)) {
-            $this->is_admin = 0;
         }
 
         // set some default preferences when creating a new user
@@ -2466,5 +2465,37 @@ EOQ;
         $sameUser = $current_user->id === $this->id;
 
         return $sameUser || is_admin($current_user);
+    }
+
+    /**
+     * Reset is_admin if current user is not an admin user
+     * @return void
+     */
+    protected function setIsAdmin(): void
+    {
+        global $current_user;
+        if (!isset($this->is_admin)) {
+            return;
+        }
+
+
+        $originalIsAdminValue = $this->is_admin ?? false;
+        if ($this->isUpdate() && isset($this->fetched_row['is_admin'])) {
+            $originalIsAdminValue = isTrue($this->fetched_row['is_admin'] ?? false);
+        }
+
+        $currentUserReloaded = BeanFactory::getReloadedBean('Users', $current_user->id);
+        if (!is_admin($currentUserReloaded)) {
+            $this->is_admin = $originalIsAdminValue;
+        }
+
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isUpdate(): bool
+    {
+        return !empty($this->id) && !$this->new_with_id;
     }
 }

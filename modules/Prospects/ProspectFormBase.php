@@ -55,36 +55,44 @@ class ProspectFormBase
     {
         global $local_log;
         require_once('include/formbase.php');
-    
+
         $focus = BeanFactory::newBean('Prospects');
         if (!checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
         }
+
+        $dbManager = DBManagerFactory::getInstance();
+
         $query = '';
         $baseQuery = 'select id,first_name, last_name, title, email1, email2  from prospects where deleted!=1 and (';
         if (!empty($_POST[$prefix.'first_name']) && !empty($_POST[$prefix.'last_name'])) {
-            $query = $baseQuery ."  (first_name like '". $_POST[$prefix.'first_name'] . "%' and last_name = '". $_POST[$prefix.'last_name'] ."')";
+            $firstName = $dbManager->quote($_POST[$prefix.'first_name' ?? '']);
+            $lastName = $dbManager->quote($_POST[$prefix.'last_name' ?? '']);
+            $query = $baseQuery ."  (first_name like '". $firstName . "%' and last_name = '". $lastName ."')";
         } else {
-            $query = $baseQuery ."  last_name = '". $_POST[$prefix.'last_name'] ."'";
+            $lastName = $dbManager->quote($_POST[$prefix.'last_name' ?? '']);
+            $query = $baseQuery ."  last_name = '". $lastName ."'";
         }
         if (!empty($_POST[$prefix.'email1'])) {
+            $email1 = $dbManager->quote($_POST[$prefix.'email1' ?? '']);
             if (empty($query)) {
-                $query = $baseQuery. "  email1='". $_POST[$prefix.'email1'] . "' or email2 = '". $_POST[$prefix.'email1'] ."'";
+                $query = $baseQuery. "  email1='". $email1 . "' or email2 = '". $email1 ."'";
             } else {
-                $query .= "or email1='". $_POST[$prefix.'email1'] . "' or email2 = '". $_POST[$prefix.'email1'] ."'";
+                $query .= "or email1='". $email1 . "' or email2 = '". $email1 ."'";
             }
         }
         if (!empty($_POST[$prefix.'email2'])) {
+            $email2 = $dbManager->quote($_POST[$prefix.'email2' ?? '']);
             if (empty($query)) {
-                $query = $baseQuery. "  email1='". $_POST[$prefix.'email2'] . "' or email2 = '". $_POST[$prefix.'email2'] ."'";
+                $query = $baseQuery. "  email1='". $email2 . "' or email2 = '". $email2 ."'";
             } else {
-                $query .= "or email1='". $_POST[$prefix.'email2'] . "' or email2 = '". $_POST[$prefix.'email2'] ."'";
+                $query .= "or email1='". $email2 . "' or email2 = '". $email2 ."'";
             }
         }
 
         if (!empty($query)) {
             $rows = array();
-        
+
             $db = DBManagerFactory::getInstance();
             $result = $db->query($query.');');
             while ($row = $db->fetchByAssoc($result)) {
@@ -138,7 +146,7 @@ class ProspectFormBase
             if ($action != 'ShowDuplicates') {
                 $form .= "<td width='1%' nowrap='nowrap' ><a href='#' onClick=\"document.dupProspects.selectedProspect.value='${row['id']}';document.dupProspects.submit() \">[${app_strings['LBL_SELECT_BUTTON_LABEL']}]</a>&nbsp;&nbsp;</td>\n";
             }
-        
+
             $wasSet = false;
 
             foreach ($row as $key=>$value) {
@@ -172,7 +180,7 @@ class ProspectFormBase
         if (!ACLController::checkAccess('Prospects', 'edit', true)) {
             return '';
         }
-    
+
         if (empty($prospect)) {
             $prospect = BeanFactory::newBean('Prospects');
         }
@@ -401,15 +409,15 @@ EOQ;
     public function handleSave($prefix, $redirect=true, $useRequired=false)
     {
         global $theme;
-    
-    
-    
-    
+
+
+
+
         require_once('include/formbase.php');
-    
+
         global $timedate;
-    
-    
+
+
         $focus = BeanFactory::newBean('Prospects');
         if ($useRequired &&  !checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
@@ -421,14 +429,14 @@ EOQ;
         if (!isset($GLOBALS['check_notify'])) {
             $GLOBALS['check_notify']=false;
         }
-    
+
         if (!isset($_POST[$prefix.'email_opt_out'])) {
             $focus->email_opt_out = 0;
         }
         if (!isset($_POST[$prefix.'do_not_call'])) {
             $focus->do_not_call = 0;
         }
-    
+
         if (empty($_POST['record']) && empty($_POST['dup_checked'])) {
             /*
             // we don't check dupes on Prospects - this is the dirtiest data in the system
@@ -479,7 +487,7 @@ EOQ;
 
         $focus->save($GLOBALS['check_notify']);
         $return_id = $focus->id;
-    
+
         $GLOBALS['log']->debug("Saved record with id of ".$return_id);
         if (isset($_POST['popup']) && $_POST['popup'] == 'true') {
             $get = '&module=';

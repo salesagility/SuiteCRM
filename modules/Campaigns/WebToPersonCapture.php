@@ -54,6 +54,11 @@ if (isset($_REQUEST['moduleDir']) && $_REQUEST['moduleDir'] != null) {
     die('Not a valid module directory');
 }
 
+if (!isValidWebToPersonModule($moduleDir)) {
+    LoggerManager::getLogger()->fatal('Trying to run WepToPersonCapture for invalid module: ' . $moduleDir);
+    throw new RuntimeException('Not a valid module');
+}
+
 global $app_strings, $sugar_config, $timedate, $current_user;
 
 $mod_strings = return_module_language($sugar_config['default_language'], $moduleDir);
@@ -120,7 +125,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
         //As form base items are not necessarily in place for the custom classes that extend Person, cannot use
         //the hendleSave method of the formbase
-        
+
         $optInEmailFields = array();
         $optInPrefix = 'opt_in_';
 
@@ -209,8 +214,8 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 $sea->AddUpdateEmailAddress($person->email2, 0, 1);
             }
         }
-        
-        
+
+
         if (!empty($optInEmailFields)) {
             // Look for opted out
             $optedOut = array();
@@ -342,7 +347,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                     $log = LoggerManager::getLogger();
                     $log->error('Success but some error occurred: ' . implode(', ', $errors));
                 }
-                
+
                 //If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one
                 echo $app_strings['LBL_THANKS_FOR_SUBMITTING'];
             }

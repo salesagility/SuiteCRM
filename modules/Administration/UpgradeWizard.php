@@ -106,9 +106,15 @@ if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
             $perform = true;
             $base_filename = urldecode($tempFile);
         } elseif (!empty($_REQUEST['load_module_from_dir'])) {
-            $moduleDir = $_REQUEST['load_module_from_dir'];
-            if (strpos($moduleDir, 'phar://') !== false) {
-                die();
+            $moduleDir = $_REQUEST['load_module_from_dir'] ?? '';
+            if (stripos($moduleDir, 'phar://') !== false) {
+                LoggerManager::getLogger()->fatal("UpgradeWizard - invalid load_module_from_dir: " . $moduleDir);
+                throw new RuntimeException('Invalid request');
+            }
+
+            if (strtolower(pathinfo(urldecode($_REQUEST['upgrade_zip_escaped'] ?? ''), PATHINFO_EXTENSION)) !== 'zip'){
+                LoggerManager::getLogger()->fatal("UpgradeWizard - invalid upgrade_zip_escaped: " . $_REQUEST['upgrade_zip_escaped'] ?? '');
+                throw new RuntimeException("Invalid request");
             }
             //copy file to proper location then call performSetup
             copy($moduleDir . '/' . $_REQUEST['upgrade_zip_escaped'], "upload://" . $_REQUEST['upgrade_zip_escaped']);

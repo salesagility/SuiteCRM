@@ -206,6 +206,9 @@ function make_sugar_config(&$sugar_config)
             'php3',
             'php4',
             'php5',
+            'php6',
+            'php7',
+            'php8',
             'pl',
             'cgi',
             'py',
@@ -469,6 +472,9 @@ function get_sugar_config_defaults(): array
             'php3',
             'php4',
             'php5',
+            'php6',
+            'php7',
+            'php8',
             'pl',
             'cgi',
             'py',
@@ -486,7 +492,8 @@ function get_sugar_config_defaults(): array
             'png',
             'jpg',
             'jpeg',
-            'svg'
+            'svg',
+            'bmp'
         ],
         'allowed_preview' => [
             'pdf',
@@ -1353,7 +1360,7 @@ function return_module_language($language, $module, $refresh = false)
     global $currentModule;
 
     // Jenny - Bug 8119: Need to check if $module is not empty
-    if (empty($module)) {
+    if (empty($module) || !isAllowedModuleName($module)) {
         $GLOBALS['log']->warn('Variable module is not in return_module_language, see more info: debug_backtrace()');
 
         return array();
@@ -6075,4 +6082,23 @@ function isSmtp($value): bool {
     }
 
     return strtolower($value)  === 'smtp';
+}
+
+/**
+ * Check if is string is an allowed module name
+ * @param string $value
+ * @return bool
+ */
+function isAllowedModuleName(string $value): bool {
+    if (empty($value)) {
+        return false;
+    }
+
+    $result = preg_match("/^[\w\-\_\.]+$/", $value);
+
+    if (!empty($result)) {
+        return true;
+    }
+
+    return false;
 }

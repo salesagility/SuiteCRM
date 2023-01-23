@@ -115,6 +115,13 @@ class SuiteBeanResource extends Resource
                 throw $exception;
             }
 
+            $isSensitive = isTrue($definition['sensitive'] ?? false);
+            $notApiVisible = isFalse($definition['api-visible'] ?? true);
+
+            if ($isSensitive || $notApiVisible){
+                continue;
+            }
+
             if ($definition['type'] === 'datetime' && isset($sugarBean->$fieldName)) {
                 // Convert to DB date
                 $datetime = $dateTimeConverter->fromUser($sugarBean->$fieldName);

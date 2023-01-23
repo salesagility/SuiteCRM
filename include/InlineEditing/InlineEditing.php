@@ -52,6 +52,11 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         return false;
     }
 
+    $vardef = $bean->getFieldDefinition($fieldname);
+
+    if (isTrue($vardef['sensitive'] ?? false) || isFalse($vardef['api-visible'] ?? true)){
+        return false;
+    }
 
     $value = getFieldValueFromModule($fieldname, $module, $id);
     // use the mod_strings for this module
@@ -126,7 +131,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         if (isset($vardef['name']) && ($vardef['name'] == 'date_modified')) {
             $vardef['name'] = 'aow_temp_date';
         }
-        
+
         if (isset($vardef['help'])) {
             $vardef['help'] = htmlspecialchars($vardef['help'],ENT_QUOTES);
         }

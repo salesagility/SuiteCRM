@@ -67,11 +67,15 @@ class LeadFormBase extends PersonFormBase
 
         $query .= " WHERE deleted != 1 AND (status <> 'Converted' OR status IS NULL) AND ";
 
+        $dbManager = DBManagerFactory::getInstance();
         //Use the first and last name from the $_POST to filter.  If only last name supplied use that
         if (isset($_POST[$prefix.'first_name']) && strlen($_POST[$prefix.'first_name']) != 0 && isset($_POST[$prefix.'last_name']) && strlen($_POST[$prefix.'last_name']) != 0) {
-            $query .= " (first_name='". $_POST[$prefix.'first_name'] . "' AND last_name = '". $_POST[$prefix.'last_name'] ."')";
+            $firstName = $dbManager->quote($_POST[$prefix.'first_name' ?? '']);
+            $lastName = $dbManager->quote($_POST[$prefix.'last_name' ?? '']);
+            $query .= " (first_name='". $firstName . "' AND last_name = '". $lastName ."')";
         } else {
-            $query .= " last_name = '". $_POST[$prefix.'last_name'] ."'";
+            $lastName = $dbManager->quote($_POST[$prefix.'last_name' ?? '']);
+            $query .= " last_name = '". $lastName ."'";
         }
         return $query;
     }
