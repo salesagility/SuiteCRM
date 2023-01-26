@@ -150,7 +150,7 @@ if (strstr($focus->settings['notify_fromaddress'], 'example.com')) {
     $conf_msg .= "<tr><th scope='col' width='20%'><b>".$mod_strings['LBL_WIZ_FROM_NAME']."</b></th>"
                .  " <th scope='col' width='20%'><b>".$mod_strings['LBL_WIZ_FROM_ADDRESS']."</b></th>"
                .  " <th scope='col' width='20%'><b>".$mod_strings['LBL_MAIL_SENDTYPE']."</b></th>";
-    if (strtolower(isSmtp($focus->settings['mail_sendtype'] ?? '')) {
+    if (strtolower(isSmtp($focus->settings['mail_sendtype'] ?? ''))) {
         $conf_msg .= " <th scope='col' width='20%'><b>".$mod_strings['LBL_MAIL_SMTPSERVER']."</b></th>"
                .  " <th scope='col' width='20%'><b>".$mod_strings['LBL_MAIL_SMTPUSER']."</b></th></tr>";
     } else {
