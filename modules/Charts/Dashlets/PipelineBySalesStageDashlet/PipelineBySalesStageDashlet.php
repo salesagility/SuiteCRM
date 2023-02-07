@@ -269,7 +269,7 @@ EOD;
         $tempx = $user_sales_stage;
 
         //set $datax using selected sales stage keys
-        if (count($tempx) > 0) {
+        if (isset($tempx) && count($tempx) > 0) {
             foreach ($tempx as $key) {
                 $datax[$key] = $app_list_strings['sales_stage_dom'][$key];
                 $selected_datax[] = $key;

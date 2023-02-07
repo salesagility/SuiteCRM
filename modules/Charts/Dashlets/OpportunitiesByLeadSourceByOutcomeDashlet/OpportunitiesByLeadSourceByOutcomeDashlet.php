@@ -136,7 +136,7 @@ class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
 
 
         $url_params = array();
-        if (count($this->lsbo_ids) > 0) {
+        if (isset($this->lsbo_ids) && count($this->lsbo_ids) > 0) {
             $url_params['assigned_user_id'] = array_values($this->lsbo_ids);
         }
 
@@ -255,10 +255,10 @@ EOD;
         $query = "SELECT lead_source,sales_stage,sum(amount_usdollar/1000) as total, ".
             "count(*) as opp_count FROM opportunities ";
         $query .= " WHERE opportunities.deleted=0 ";
-        if (count($this->lsbo_ids) > 0) {
+        if (isset($this->lsbo_ids) && count($this->lsbo_ids) > 0) {
             $query .= "AND opportunities.assigned_user_id IN ('".implode("','", $this->lsbo_ids)."') ";
         }
-        if (count($this->lsbo_lead_sources) > 0) {
+        if (isset($this->lsbo_lead_sources) && count($this->lsbo_lead_sources) > 0) {
             $query .= "AND opportunities.lead_source IN ('".implode("','", $this->lsbo_lead_sources)."') ";
         } else {
             $query .= "AND opportunities.lead_source IN ('".implode("','", array_keys($GLOBALS['app_list_strings']['lead_source_dom']))."') ";
