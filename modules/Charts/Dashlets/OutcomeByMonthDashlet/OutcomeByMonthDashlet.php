@@ -249,7 +249,7 @@ EOD;
         $query .= " WHERE opportunities.date_closed >= ".DBManagerFactory::getInstance()->convert("'".$this->obm_date_start."'", 'date') .
             " AND opportunities.date_closed <= ".DBManagerFactory::getInstance()->convert("'".$this->obm_date_end."'", 'date') .
             " AND opportunities.deleted=0";
-        if (count($this->obm_ids) > 0) {
+        if (isset($this->obm_ids) && count($this->obm_ids) > 0) {
             $query .= " AND opportunities.assigned_user_id IN ('" . implode("','", $this->obm_ids) . "')";
         }
         $query .= " GROUP BY sales_stage,".
