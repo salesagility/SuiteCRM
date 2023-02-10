@@ -476,9 +476,26 @@ class SugarFeed extends Basic
 
         $timedate->getInstance()->userTimezone();
         $currentTime = $timedate->now();
-
-        $first = strtotime($currentTime);
-        $second = strtotime($startDate);
+        //Fix #9875 SugarFeed shows 0 seconds ago and negative interval for certain datetime formats
+        //Use proper user datetime format to convert datetime string to timestamp
+        $user_format=$timedate->get_date_time_format();
+		$first=date_create_from_format($user_format,$currentTime);
+        if(empty($first)){
+            LoggerManager::getLogger()->warn('SugarFeed getTimeLapse: Could not fetch currentTime ');
+            $first=0;
+        }
+        else{
+            $first=$first->getTimestamp();
+        }
+		
+        $second=date_create_from_format($user_format,$startDate);
+        if(empty($second)){
+            LoggerManager::getLogger()->warn('SugarFeed getTimeLapse: Could not fetch startDate ');
+            $second=0;
+        }
+        else{
+            $second=$second->getTimestamp();
+        }
 
         $seconds = $first - $second;
         $minutes = $seconds / 60;
