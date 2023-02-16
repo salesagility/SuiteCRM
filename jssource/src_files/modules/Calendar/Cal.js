@@ -288,6 +288,8 @@ CAL.repeat_type_selected = function () {
 }
 CAL.load_form = function (module_name, record, edit_all_recurrences, cal_event) {
   CAL.disable_creating = true;
+  CAL.reset_edit_dialog();
+  CAL.disable_buttons();
   var e;
   var to_open = true;
 
