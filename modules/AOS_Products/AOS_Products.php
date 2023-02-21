@@ -64,10 +64,12 @@ class AOS_Products extends AOS_Products_sugar
         require_once('include/upload_file.php');
         $GLOBALS['log']->debug('UPLOADING PRODUCT IMAGE');
 
-        $imageFileName = $_FILES['uploadimage']['name'] ?? '';
-        if (!has_valid_image_extension('AOS_Products Uploaded image file: ' . $imageFileName , $imageFileName)) {
-            LoggerManager::getLogger()->fatal("AOS_Products save - Invalid image file ext : '$imageFileName'.");
-            throw new RuntimeException('Invalid request');
+        if(!empty($_FILES['uploadimage']['name'])){
+            $imageFileName = $_FILES['uploadimage']['name'] ?? '';
+            if (!has_valid_image_extension('AOS_Products Uploaded image file: ' . $imageFileName , $imageFileName)) {
+                LoggerManager::getLogger()->fatal("AOS_Products save - Invalid image file ext : '$imageFileName'.");
+                throw new RuntimeException('Invalid request');
+            }
         }
 
         if (!empty($_FILES['uploadimage']['tmp_name']) && verify_uploaded_image($_FILES['uploadimage']['tmp_name'])) {
