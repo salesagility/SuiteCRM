@@ -745,19 +745,19 @@ version: 2.9.1
         * @description String used for close button title
         * @type {String}
         */
-        STR_CLOSE: 'Click to close this pane.',
+        STR_CLOSE: 'Click to close this panel.',
         /**
         * @property STR_COLLAPSE
         * @description String used for collapse button title
         * @type {String}
         */
-        STR_COLLAPSE: 'Click to collapse this pane.',
+        STR_COLLAPSE: 'Click to collapse this panel.',
         /**
         * @property STR_EXPAND
         * @description String used for expand button title
         * @type {String}
         */
-        STR_EXPAND: 'Click to expand this pane.',
+        STR_EXPAND: 'Click to expand this panel.',
         /**
 	    * The class name applied to dynamic tabs while loading.
 	    * @property LOADING_CLASSNAME
