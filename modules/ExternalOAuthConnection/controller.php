@@ -45,11 +45,16 @@ class ExternalOAuthConnectionController extends SugarController
 {
     public function action_EditView() {
         $this->view = 'edit';
-        if (!empty($this->bean) && !empty($_REQUEST['type'])) {
+
+        if (empty($_REQUEST['type'])){
+            $_REQUEST['type'] = 'personal';
+        }
+
+        if (!empty($this->bean)) {
             $this->bean->type = $_REQUEST['type'];
         }
 
-        if (empty($_REQUEST['record']) && !empty($_REQUEST['type']) && $_REQUEST['type'] === 'personal') {
+        if (empty($_REQUEST['record']) && $_REQUEST['type'] === 'personal') {
             $this->hasAccess = true;
             return;
         }
