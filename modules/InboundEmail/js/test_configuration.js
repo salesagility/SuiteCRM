@@ -49,6 +49,9 @@ function testInboundConfiguration() {
   var originId = inboundEmailFields.getValue('origin_id');
   var record = inboundEmailFields.getValue('record');
   var connectionString = inboundEmailFields.getValue('connection_string');
+  var auth_type = inboundEmailFields.getValue('auth_type');
+  var externalOauthConnectionName = inboundEmailFields.getValue('external_oauth_connection_name');
+  var externalOauthConnectionId = inboundEmailFields.getValue('external_oauth_connection_id');
 
   ie_test_open_popup_with_submit(
     "InboundEmail",
@@ -66,6 +69,9 @@ function testInboundConfiguration() {
     isPersonal,
     "EditView",
     originId ? originId : record,
-    connectionString || ''
+    connectionString || '',
+    auth_type,
+    externalOauthConnectionName ?? '',
+    externalOauthConnectionId ?? '',
   );
 }
