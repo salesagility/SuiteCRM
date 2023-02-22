@@ -3334,7 +3334,7 @@ class InboundEmail extends SugarBean
             // Open the connection and try the test string
             $this->conn = $this->getImapConnection($serviceTest, $login, $passw, $imapConnectionOptions);
 
-            if (($errors = $this->getImap()->getLastError()) || ($alerts = $this->getImap()->getAlerts())) {
+            if (($errors = $this->getImap()->getLastError()) || ($alerts = $this->getImap()->getAlerts()) || !$this->conn) {
                 // login failure means don't bother trying the rest
                 if ($errors == 'Too many login failures'
                     || $errors == '[CLOSED] IMAP connection broken (server response)'
@@ -6469,7 +6469,7 @@ class InboundEmail extends SugarBean
             $errors = '';
             $alerts = '';
             $successful = false;
-            if (($errors = $this->getImap()->getLastError()) || ($alerts = $this->getImap()->getAlerts())) {
+            if (($errors = $this->getImap()->getLastError()) || ($alerts = $this->getImap()->getAlerts()) || !$this->conn) {
                 if ($errors === 'Mailbox is empty') { // false positive
                     $successful = true;
                 } else {
