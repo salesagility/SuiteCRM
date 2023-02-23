@@ -2273,15 +2273,6 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
             'IS_PERSONAL' => '0',
             'MAILBOX_TYPE_NAME' => null,
             'GLOBAL_PERSONAL_STRING' => 'group',
-            'PORT' => '143',
-            'AUTH_TYPE' => 'Basic Auth',
-            'PROTOCOL' => 'imap',
-            'IS_SSL' => '0',
-            'IS_DEFAULT' => '0',
-            'IS_AUTO_IMPORT' => '0',
-            'IS_CREATE_CASE' => '0',
-            'ALLOW_OUTBOUND_GROUP_USAGE' => '0',
-            'MOVE_MESSAGES_TO_TRASH_AFTER_IMPORT' => '0'
         );
 
         self::assertIsArray($result);
