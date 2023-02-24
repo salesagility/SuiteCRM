@@ -101,8 +101,5 @@ $mod_strings = array(
     'LBL_SURVEY_DISTINCT' => 'Distinct Surveys Sent:',
     'LBL_DRAFT' => 'Draft',
     'LBL_SUBMIT' => 'Submit',
-    'LBL_SATISFIED_RESPONSE' => 'Satisfied',
-    'LBL_NOT_SATISFIED_NOR_DISSATISFIED' => 'Neither Satisfied nor Dissatisfied',
-    'LBL_DISSATISFIED' => 'Dissatisfied',
     'LBL_STARS' => 'Stars'
 );
