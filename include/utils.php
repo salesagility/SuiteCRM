@@ -2656,6 +2656,27 @@ function securexsskey($value, $die = true)
     }
 }
 
+/**
+ * @param string|null $value
+ * @return string
+ */
+function purify_html(?string $value): string {
+
+    if (($value ?? '') === '') {
+        return '';
+    }
+
+    $cleanedValue = htmlentities(SugarCleaner::cleanHtml($value, true));
+    $decoded = html_entity_decode($cleanedValue);
+    $doubleDecoded = html_entity_decode($decoded);
+
+    if (stripos($decoded, '<script>') !== false || stripos($doubleDecoded, '<script>') !== false){
+        $cleanedValue = '';
+    }
+
+    return $cleanedValue;
+}
+
 function preprocess_param($value)
 {
     if (is_string($value)) {
@@ -6101,4 +6122,22 @@ function isAllowedModuleName(string $value): bool {
     }
 
     return false;
+}
+
+/**
+ * @param $endpoint
+ * @return bool
+ */
+function isSelfRequest($endpoint) : bool {
+    $domain = 'localhost';
+    if (isset($_SERVER["HTTP_HOST"])) {
+        $domain = $_SERVER["HTTP_HOST"];
+    }
+
+    $siteUrl = SugarConfig::getInstance()->get('site_url');
+    if (empty($siteUrl)){
+        $siteUrl = '';
+    }
+
+    return stripos($endpoint, $domain) !== false || stripos($endpoint, $siteUrl) !== false;
 }

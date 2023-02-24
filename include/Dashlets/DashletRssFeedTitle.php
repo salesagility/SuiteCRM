@@ -98,9 +98,13 @@ class DashletRssFeedTitle
     public function getTitle()
     {
         $matches = array();
-        preg_match("/<title>.*?<\/title>/i", $this->contents, $matches);
+        preg_match("/<title>(.*?)<\/title>/i", $this->contents, $matches);
         if (isset($matches[0])) {
-            $this->title = str_replace(array('<![CDATA[', '<title>', '</title>', ']]>'), '', $matches[0]);
+            $match = $matches[0];
+            if (isset($matches[1])) {
+                $match = '<title>' . htmlentities($matches[1] ?? '') . '</title>';
+            }
+            $this->title = str_replace(array('<![CDATA[', '<title>', '</title>', ']]>'), '', $match);
         }
     }
 
