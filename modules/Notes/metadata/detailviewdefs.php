@@ -45,6 +45,15 @@ array(
     'templateMeta' =>
     array(
       'maxColumns' => '2',
+      'form' => 
+      array(
+        'buttons' => 
+        array(
+          0 => 'EDIT',
+          1 => 'DUPLICATE',
+          2 => 'DELETE',
+        ),
+      ),            
       'widths' =>
       array(
         0 =>

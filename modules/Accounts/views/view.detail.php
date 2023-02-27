@@ -64,9 +64,6 @@ class AccountsViewDetail extends ViewDetail
             sugar_die($app_strings['ERROR_NO_RECORD']);
         }
 
-        require_once('modules/AOS_PDF_Templates/formLetter.php');
-        formLetter::DVPopupHtml('Accounts');
-
         $this->dv->process();
         
         if (ACLController::checkAccess('Contacts', 'edit', true)) {

@@ -9,8 +9,6 @@ class AccountsViewList extends ViewList
      */
     public function preDisplay()
     {
-        require_once('modules/AOS_PDF_Templates/formLetter.php');
-        formLetter::LVPopupHtml('Accounts');
         parent::preDisplay();
 
         $this->lv = new AccountsListViewSmarty();

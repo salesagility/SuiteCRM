@@ -60,9 +60,6 @@ class ContactsViewDetail extends ViewDetail
 
         $this->ss->assign("AOP_PORTAL_ENABLED", $aop_portal_enabled);
 
-        require_once('modules/AOS_PDF_Templates/formLetter.php');
-        formLetter::DVPopupHtml('Contacts');
-
         $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();
         if (isset($admin->settings['portal_on']) && $admin->settings['portal_on']) {

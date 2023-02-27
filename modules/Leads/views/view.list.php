@@ -9,8 +9,6 @@ class LeadsViewList extends ViewList
      */
     public function preDisplay()
     {
-        require_once('modules/AOS_PDF_Templates/formLetter.php');
-        formLetter::LVPopupHtml('Leads');
         parent::preDisplay();
 
         $this->lv = new LeadsListViewSmarty();
