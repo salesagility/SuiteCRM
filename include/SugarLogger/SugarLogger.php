@@ -205,7 +205,8 @@ class SugarLogger implements LoggerTemplate
                 foreach ($ref->getProperties() as $property) {
                     $property->setAccessible(true);
                     $pType = $property->getName();
-                    $elements[$pType] = $property->getValue($data);
+                    // the @ operator is to ignore all notices in getValue:
+                    @$elements[$pType] = $property->getValue($data);
                 }
             }
             elseif ($type === 'array') {
@@ -289,6 +290,7 @@ class SugarLogger implements LoggerTemplate
                 continue; // skip repetitive entries common to everything logged
             }
             try {
+                // since PHP 7.4, args will only be available if php.ini includes: zend.exception_ignore_args = Off
                 if (isset($frame['args'])) {
                     $args = array();
                     $argNames = $this->getArguments(isset($frame['class']) ? $frame['class'] : null, $frame['function']);
