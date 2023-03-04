@@ -390,6 +390,21 @@ function getModuleField(
 
         //$vardef['precision'] = $locale->getPrecedentPreference('default_currency_significant_digits', $current_user);
 
+        switch ($vardef['type']) {
+            case 'double':
+            case 'decimal':
+            case 'currency':
+            case 'float':
+            case 'uint':
+            case 'ulong':
+            case 'long':
+            case 'short':
+            case 'tinyint':
+            case 'int':
+                $vardef['precision'] = (int) strpos(strrev($value), ".");
+                break;
+        }
+
         if ($vardef['type'] == 'datetime') {
             $vardef['type'] = 'datetimecombo';
         }
