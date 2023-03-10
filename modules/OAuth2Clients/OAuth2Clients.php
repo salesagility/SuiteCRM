@@ -60,6 +60,11 @@ class OAuth2Clients extends SugarBean
     /**
      * @var string
      */
+    public $allowed_grant_type;
+
+    /**
+     * @var string
+     */
     public $table_name = 'oauth2clients';
 
     /**
