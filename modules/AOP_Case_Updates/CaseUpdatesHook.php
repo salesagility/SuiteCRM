@@ -385,41 +385,43 @@ class CaseUpdatesHook
             return false;
         }
 
-        $contact = $case->get_linked_beans('contacts', 'Contact');
-        if ($contact) {
-            $contact = $contact[0];
-        } else {
-            return false;
+        $contacts = $case->get_linked_beans('contacts', 'Contact');
+
+        if(!$contacts) {
+            return;
         }
 
         $emailSettings = getPortalEmailSettings();
 
-        $text = $this->populateTemplate($emailTemplate, $case, $contact);
-        $mailer->Subject = $text['subject'];
-        $mailer->Body = $text['body'];
-        $mailer->isHTML(true);
-        $mailer->AltBody = $text['body_alt'];
         $mailer->From = $emailSettings['from_address'];
         isValidEmailAddress($mailer->From);
         $mailer->FromName = $emailSettings['from_name'];
 
-        $email = $contact->emailAddress->getPrimaryAddress($contact);
+        $sentAllOK = true;
+        foreach ($contacts as $contact) {
 
-        $mailer->addAddress($email);
+            $text = $this->populateTemplate($emailTemplate, $case, $contact);
+            $mailer->Subject = $text['subject'];
+            $mailer->Body = $text['body'];
+            $mailer->isHTML(true);
+            $mailer->AltBody = $text['body_alt'];
 
-        try {
-            if ($mailer->send()) {
-                $this->logEmail($email, $mailer, $case->id);
+            $email = $contact->emailAddress->getPrimaryAddress($contact);
 
-                return true;
+            $mailer->addAddress($email);
+
+            try {
+                if ($mailer->send()) {
+                    $this->logEmail($email, $mailer, $case->id);
+                }
+            } catch (phpmailerException $exception) {
+                $GLOBALS['log']->fatal('CaseUpdatesHook: sending email Failed:  ' . $exception->getMessage());
+                $GLOBALS['log']->info('CaseUpdatesHook: Could not send email:  ' . $mailer->ErrorInfo);
+                $sentAllOK = false;
             }
-        } catch (phpmailerException $exception) {
-            $GLOBALS['log']->fatal('CaseUpdatesHook: sending email Failed:  ' . $exception->getMessage());
         }
 
-        $GLOBALS['log']->info('CaseUpdatesHook: Could not send email:  ' . $mailer->ErrorInfo);
-
-        return false;
+        return $sentAllOK;
     }
 
     /**
