@@ -224,6 +224,9 @@ class SearchResults
             LoggerManager::getLogger()->warn('Unresolved related ID for field: ' . $relField);
         }
 
+        if (!$relId) {
+            $relId = '';
+        }
         return $relId;
     }
 
