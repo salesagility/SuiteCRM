@@ -1723,7 +1723,7 @@ class AOR_Report extends Basic
                             } else {
                                 $params = base64_decode($condition->value);
                             }
-                            $value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
+                            $value = '"' . getPeriodDate($params, $data['type'])->format('Y-m-d H:i:s') . '"';
                             break;
                         case "CurrentUserID":
                             global $current_user;
@@ -1879,8 +1879,8 @@ class AOR_Report extends Basic
                             } else {
                                 $params = base64_decode($condition->value);
                             }
-                            $date = getPeriodEndDate($params)->format('Y-m-d H:i:s');
-                            $value = "'" . $this->db->quote(getPeriodDate($params)->format('Y-m-d H:i:s')) . "'";
+                            $date = getPeriodEndDate($params, $data['type'])->format('Y-m-d H:i:s');
+                            $value = "'" . $this->db->quote(getPeriodDate($params, $data['type'])->format('Y-m-d H:i:s')) . "'";
 
                             $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND '));
                             $tiltLogicOp = false;
