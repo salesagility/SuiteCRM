@@ -226,7 +226,7 @@ function getConditionsAsParameters($report, $override = array())
  * @param $date_time_period_list_selected
  * @return DateTime
  */
-function getPeriodDate($date_time_period_list_selected)
+function getPeriodDate($date_time_period_list_selected, $type = '')
 {
     global $sugar_config, $timedate;
     $datetime_period = new DateTime();
@@ -324,7 +324,9 @@ function getPeriodDate($date_time_period_list_selected)
     // set time to 00:00:00
     $datetime_period = $datetime_period->setTime(0, 0, 0);
 
-    $datetime_period->sub(DateInterval::createFromDateString($timedate->getUserUTCOffset().' minutes'));
+    if($type === 'datetime') {
+        $datetime_period->sub(DateInterval::createFromDateString($timedate->getUserUTCOffset() . ' minutes'));
+    }
 
     return $datetime_period;
 }
@@ -334,7 +336,7 @@ function getPeriodDate($date_time_period_list_selected)
  * @param $date_time_period_list_selected
  * @return DateTime
  */
-function getPeriodEndDate($dateTimePeriodListSelected)
+function getPeriodEndDate($dateTimePeriodListSelected, $type = '')
 {
     global $timedate;
     switch ($dateTimePeriodListSelected) {
@@ -412,7 +414,11 @@ function getPeriodEndDate($dateTimePeriodListSelected)
             $datetimePeriod->setTime(0, 0, 0);
             break;
     }
-    $datetimePeriod->sub(DateInterval::createFromDateString($timedate->getUserUTCOffset().' minutes'));
+
+    if($type === 'datetime') {
+        $datetimePeriod->sub(DateInterval::createFromDateString($timedate->getUserUTCOffset() . ' minutes'));
+    }
+
     return $datetimePeriod;
 }
 
