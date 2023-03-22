@@ -48,7 +48,6 @@
 </style>
 
 {JAVASCRIPT}
-<script type="text/javascript" language="Javascript" src="include/javascript/tiny_mce/tiny_mce.js"></script>
 <script type="text/javascript">
 	function checkSignatureForm() {
 		if(document.getElementById('name').value == "") {
@@ -121,7 +120,8 @@
 						
 					</td>
 			        <td >
-		        		<textarea id="sigText" cols="100" rows="10" name="description">{SIGNATURE_TEXT}</textarea></div>
+						{BODY_EDITOR}
+		        		<textarea style="display: none;" id="sigText" cols="100" rows="10" name="description">{SIGNATURE_TEXT}</textarea></div>
 					</td>
 				</tr>
 			</table>
