@@ -341,6 +341,12 @@ eoq;
                             }
                         }
 
+                        // In mass duplicate and update the parent_type value might be stored for later use
+                        if($_REQUEST['mass_duplicate'] == 1 && !empty($newbean->parent_type))
+                        {
+                            $currentParentType = $newbean->parent_type;
+                        }
+
                         //Call include/formbase.php, but do not call retrieve again
                         populateFromPost('', $newbean, true, true);
                         $newbean->save_from_post = false;
@@ -410,6 +416,35 @@ eoq;
                                     }
                                 }
                             }
+                        }
+
+                        // Add mass duplicate & update logic
+                        if($_REQUEST['mass_duplicate'] == 1){
+
+                            // Set new record id
+                            $newbean->id = create_guid();
+                            $newbean->new_with_id = true;
+
+                            // Empty dates. They will be set by the system when saving the record
+                            $newbean->date_entered = '';
+                            $newbean->date_modified = '';
+
+                            // Inherit parent record (for flex relate fields)
+                            if(empty($_REQUEST['parent_id'])){
+                                $newbean->parent_type = $currentParentType;
+                            }
+
+                            // Ensure proper format in field types with decimal values
+                            $decimalFields = array_filter($newbean->field_name_map, function ($k) {
+                                return in_array($k['type'], ['decimal', 'currency', 'float']);
+                            }, ARRAY_FILTER_USE_BOTH);
+                            foreach ($decimalFields as $key => $value) {
+                               $newbean->$key = (float) number_format($newbean->$key, $value['precision'], '.', '');
+                            }
+
+                            // A new record shouldn't have a fetched row
+                            unset($newbean->fetched_row);
+
                         }
 
                         $newbean->save($check_notify);

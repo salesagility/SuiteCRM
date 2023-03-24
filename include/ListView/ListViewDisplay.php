@@ -355,6 +355,13 @@ class ListViewDisplay
                 && $this->showMassupdateFields && $mass->doMassUpdateFieldsExistForFocus()
             ) {
                 $menuItems[] = $this->buildMassUpdateLink($location);
+                
+                // Add list view menu link for "Mass Duplicate & Update" action
+                $massDuplicateUpdateExcludedModules = ['Users'];
+                if(!in_array($this->seed->module_dir, $massDuplicateUpdateExcludedModules))
+                { 
+                    $menuItems[] = $this->buildMassDuplicateUpdateLink($location);
+                }
             }
 
             // merge
@@ -425,8 +432,41 @@ class ListViewDisplay
     {
         global $app_strings;
 
-        $onClick = "document.getElementById('massupdate_form').style.display = ''; var yLoc = YAHOO.util.Dom.getY('massupdate_form'); scroll(0,yLoc);";
+        $onClick = "
+        // ensure standard mass update view is properly shown 
+        // after having displayed the mass duplicate and update view.
+        if($('#massupdate_form #mass_duplicate').length == 1){
+            $('#massupdate_form #mass_duplicate, #remove_name_container').remove()
+            $('#massupdate_form input#update_button').val('{$app_strings['LBL_UPDATE']}');
+            $('#massupdate_form > table.h3Row  h3').text(SUGAR.language.languages.app_strings.LBL_UPDATE)
+        }
+        document.getElementById('massupdate_form').style.display = ''; var yLoc = YAHOO.util.Dom.getY('massupdate_form'); scroll(0,yLoc);";
         return "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id=\"massupdate_listview_". $loc ."\" onclick=\"$onClick\">{$app_strings['LBL_MASS_UPDATE']}</a>";
+    }
+
+    /**
+     * Builds the mass duplicate & update link
+     *
+     * @return string HTML
+     */
+    protected function buildMassDuplicateUpdateLink($loc = 'top')
+    {
+        global $app_strings;
+
+        $onClick = "
+        if($('#massupdate_form #mass_duplicate').length == 0){
+            $('<input>', {
+                'type': 'hidden',
+                'name': 'mass_duplicate',
+                'id': 'mass_duplicate',
+                'value': 1
+            }).prependTo('#massupdate_form');
+            $('#massupdate_form input#update_button').val('{$app_strings['LBL_MASS_DUPLICATE_UPDATE_BTN']}');
+            $('#massupdate_form > table.h3Row  h3').text(SUGAR.language.languages.app_strings.LBL_MASS_DUPLICATE_UPDATE)
+        }
+        document.getElementById('massupdate_form').style.display = ''; 
+        document.getElementById('massupdate_form').scrollIntoView();";
+        return "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id=\"massupdate_listview_". $loc ."\" onclick=\"$onClick\">{$app_strings['LBL_MASS_DUPLICATE_UPDATE']}</a>";
     }
 
     /**
