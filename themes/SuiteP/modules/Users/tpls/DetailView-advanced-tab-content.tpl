@@ -181,7 +181,7 @@ advanced tab content goes here
             <!-- DIV inside - colspan != 3 -->
             <div class="col-xs-12 col-sm-4 label col-1-label">
                 <!-- LABEL -->
-                {$MOD.LBL_TIME_FORMAT|strip_semicolon}
+                {$MOD.LBL_TIMEZONE|strip_semicolon}
             </div>
             <!-- /DIV inside  -->
             <!-- phone (version 1) -->
