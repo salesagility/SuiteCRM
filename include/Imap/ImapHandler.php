@@ -916,7 +916,7 @@ class ImapHandler implements ImapHandlerInterface
         array $columns
     ): array {
 
-        if (empty($filterCriteria) && $sortCriteria === SORTDATE) {
+        if (empty($filterCriteria) && ($sortCriteria === SORTDATE || $sortCriteria === SORTARRIVAL)) {
             // Performance fix when no filters are enabled
             $totalMsgs = $this->getNumberOfMessages();
             $mailboxInfo['Nmsgs'] = $totalMsgs;

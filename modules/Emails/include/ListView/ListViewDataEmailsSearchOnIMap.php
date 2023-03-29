@@ -110,9 +110,20 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
 
         $page = 0;
         $offset = 0;
+
+        if($inboundEmail->connectMailserver()) {
+            $total = $inboundEmail->getImap()->getNumberOfMessages();
+        } else {
+            LoggerManager::getLogger()->fatal('Unable to connect to IMAP server.');
+            return false;
+        }
+
         if (isset($request['Emails2_EMAIL_offset'])) {
             if ($request['Emails2_EMAIL_offset'] !== "end") {
                 $offset = $request['Emails2_EMAIL_offset'];
+                $page = $offset / $limitPerPage;
+            } else {
+                $offset = $total - $limitPerPage;
                 $page = $offset / $limitPerPage;
             }
         }
@@ -120,12 +131,6 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         // Get emails from email server
         // TODO: PHP Warning:  imap_fetchbody(): Bad message number
         $emailServerEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter, $filter_fields);
-
-        $total = $emailServerEmails['mailbox_info']['Nmsgs']; // + count($importedEmails['data']);
-        if ($request['Emails2_EMAIL_offset'] === "end") {
-            $offset = $total - $limitPerPage;
-        }
-
 
         /// Populate the data and its fields from the email server
         $request['uids'] = array();
