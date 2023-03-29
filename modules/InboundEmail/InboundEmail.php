@@ -670,6 +670,8 @@ class InboundEmail extends SugarBean
             $columns
         );
 
+        $emailHeaders = $this->sortMessageList($emailHeaders, $sortCRM, $sortOrder);
+
         return array(
             "data" => $emailHeaders,
             "mailbox_info" => json_decode(json_encode($mailboxInfo), true),
@@ -8570,7 +8572,7 @@ eoq;
         // Make it ASC order
         if (!$sortOrder) {
             array_reverse($emailHeaders);
-        };
+        }
 
         return $emailHeaders;
     }
