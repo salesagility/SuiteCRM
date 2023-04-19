@@ -346,12 +346,14 @@ class actionSendEmail extends actionBase
         } else {
             $this->parse_template($bean, $emailTemp);
             if ($emailTemp->text_only == '1') {
-                $email_body_html = $emailTemp->body;
+                $email_body = $emailTemp->body;
+                $email_body_alt = null;
             } else {
-                $email_body_html = $emailTemp->body_html;
+                $email_body = $emailTemp->body_html;
+                $email_body_alt = $emailTemp->body;
             }
 
-            if (!$this->sendEmail($emails['to'], $emailTemp->subject, $email_body_html, $emailTemp->body, $bean, $emailCC, $emailBCC, $attachments)) {
+            if (!$this->sendEmail($emails['to'], $emailTemp->subject, $email_body, $email_body_alt, $bean, $emailCC, $emailBCC, $attachments)) {
                 $ret = false;
                 $this->lastEmailsFailed++;
             } else {
@@ -486,7 +488,9 @@ class actionSendEmail extends actionBase
         $mail->ClearReplyTos();
         $mail->Subject=from_html($emailSubject);
         $mail->Body=$emailBody;
-        $mail->AltBody = $altemailBody;
+        if($altemailBody){
+            $mail->AltBody = $altemailBody;
+        }
         $mail->handleAttachments($attachments);
         $mail->prepForOutbound();
 
