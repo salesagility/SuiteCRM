@@ -109,6 +109,7 @@ class MBLanguage
     {
         $this->strings = array();
         $this->loadTemplates();
+        $current_mod_strings = $GLOBALS['mod_strings'];
 
         foreach ($this->iTemplates as $template=>$val) {
             $file = MB_IMPLEMENTS . '/' . $template . '/language';
@@ -119,6 +120,9 @@ class MBLanguage
             $this->loadStrings($file);
         }
         $this->loadStrings($this->path . '/language');
+
+        //reset global mod_string to prevent conflicts with Module Builder modules 
+        $GLOBALS['mod_strings'] = $current_mod_strings;
     }
 
     public function getModStrings($language='en_us')

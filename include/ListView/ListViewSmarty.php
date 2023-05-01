@@ -248,8 +248,13 @@ class ListViewSmarty extends ListViewDisplay
             $this->ss->assign('contextMenuScript', $script);
         }
 
-        $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
-        $this->ss->assign('showFilterIcon', !in_array($module, isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array()));
+        $module = $_REQUEST['module'] ?? null;
+
+        if (isset($sugar_config['hideColumnFilter'][$module]) && $sugar_config['hideColumnFilter'][$module]) {
+            $this->ss->assign('hideColumnFilter', true);
+        }
+        
+        $this->ss->assign('showFilterIcon', !in_array($module, $sugar_config['enable_legacy_search'] ?? array()));
     }
 
     /**
