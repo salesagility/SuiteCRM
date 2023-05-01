@@ -48,7 +48,7 @@ onchange='document.{{$form_name}}.{{sugarvar key='name'}}.value="";document.{{$f
 {if empty({{sugarvar key='options' string=true}}[$fields.{{$vardef.type_name}}.value])}
 	{assign var="keepParent" value = 0}
 {else}
-	{assign var="keepParent value = 1}
+	{assign var="keepParent" value = 1}
 {/if}
 <input type="text" name="{{sugarvar key='name'}}" id="{{sugarvar key='name'}}" class="sqsEnabled" {{if !empty($tabindex)}} tabindex="{{$tabindex}}" {{/if}}  size="{{$displayParams.size}}" value="{{sugarvar key='value'}}" autocomplete="off"><input type="hidden" name="{{$vardef.id_name}}" id="{{$vardef.id_name}}"  {if $keepParent}value="{{sugarvar memberName='vardef.id_name' key='value'}}"{/if}>
 <span class="id-ff multiple">

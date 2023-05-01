@@ -1015,6 +1015,7 @@ EOHTML;
 
         $ss = new Sugar_Smarty();
         $ss->assign("AUTHENTICATED", isset($_SESSION["authenticated_user_id"]));
+        $ss->assign("APP", $app_strings);
         $ss->assign('MOD', return_module_language($GLOBALS['current_language'], 'Users'));
 
         $bottomLinkList = array();
