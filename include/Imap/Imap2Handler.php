@@ -1204,7 +1204,7 @@ class Imap2Handler implements ImapHandlerInterface
             $pageLast = $pageOffSet + $pageSize;
             $sequence = "$pageOffSet:$pageLast";
 
-            $sorteUids = $this->getSortedMessageIds('ARRIVAL', $pageOffSet, $pageLast);
+            $sorteUids = $this->getSortedMessageIds('ARRIVAL', $pageOffSet, $pageLast, '');
             $sequence = implode(',', $sorteUids);
 
             $mailList = $this->$fetchMethod($sequence, FT_UID);

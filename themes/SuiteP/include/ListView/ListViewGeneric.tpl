@@ -70,7 +70,7 @@
     {sugar_include type="smarty" file=$form.headerTpl}
 {/if}
 
-{if count($data) == 0}
+{if !isset($data) || (count($data) == 0)}
 	{assign var="hideTable" value=true}
 	<div class="list view listViewEmpty">
         {if $showFilterIcon}
