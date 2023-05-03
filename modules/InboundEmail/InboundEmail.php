@@ -8598,16 +8598,7 @@ eoq;
      */
     protected function getImapHandlerType(): string
     {
-        global $log;
-        $handlerType = 'native';
-
-        if (!empty($this->auth_type) && $this->auth_type === 'oauth') {
-            $handlerType = 'imap2';
-        }
-
-        $log->debug('Using imap handler type: ' . $handlerType);
-
-        return $handlerType;
+        return 'imap2';
     }
 
     /**
