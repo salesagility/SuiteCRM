@@ -672,7 +672,7 @@ class SugarBean
                     $GLOBALS['log']->fatal('Relationship definitions should be an array');
                     $RelationshipDefs = (array)$RelationshipDefs;
                 }
-                foreach ($RelationshipDefs as $rel_name) {
+                foreach ($RelationshipDefs as $rel_name => $rel_def) {
                     Relationship::delete($rel_name, $db);
                 }
             }
