@@ -384,10 +384,6 @@ function getModuleField(
             $vardef['type'] = 'varchar';
         }
 
-        if (isset($vardef['precision'])) {
-            unset($vardef['precision']);
-        }
-
         //$vardef['precision'] = $locale->getPrecedentPreference('default_currency_significant_digits', $current_user);
 
         if ($vardef['type'] == 'datetime') {
