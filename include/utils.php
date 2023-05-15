@@ -6029,7 +6029,7 @@ function isTrue($value): bool {
  * @return bool
  */
 function isFalse($value): bool {
-    return $value === false || $value === 'false' || $value === 0;
+    return $value === false || $value === 'false' || $value === 0 || $value === "0";
 }
 
 /**
