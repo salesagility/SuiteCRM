@@ -6020,7 +6020,7 @@ function has_valid_extension($fieldName, $name, $validExtensions)
  * @return bool
  */
 function isTrue($value): bool {
-    return $value === true || $value === 'true' || $value === 1;
+    return $value === true || $value === 'true' || $value === 1 || $value === "1";
 }
 
 /**
