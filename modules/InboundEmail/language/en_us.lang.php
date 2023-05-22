@@ -128,6 +128,7 @@ $mod_strings = array(
     'LBL_ASSIGN_TO_TEAM_DESC' => 'The selected team has access to the mail account.',
     'LBL_SSL' => 'Use SSL',
     'LBL_STATUS' => 'Status',
+    'LBL_EMAIL_BODY_FILTERING' => 'Email Body Filter Type',
     'LBL_SYSTEM_DEFAULT' => 'System Default',
     'LBL_TEST_BUTTON_TITLE' => 'Test',
     'LBL_TEST_SETTINGS' => 'Test Settings',

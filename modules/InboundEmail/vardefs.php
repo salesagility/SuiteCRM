@@ -221,6 +221,17 @@ $dictionary['InboundEmail'] = [
             'unified_search' => false,
             'comment' => 'Status of the inbound email mailbox (ex: Active or Inactive)'
         ],
+        'email_body_filtering' => [
+            'name' => 'email_body_filtering',
+            'vname' => 'LBL_EMAIL_BODY_FILTERING',
+            'type' => 'enum',
+            'default' => 'multi',
+            'options' => 'dom_email_body_filtering_option',
+            'reportable' => false,
+            'inline_edit' => false,
+            'unified_search' => false,
+            'comment' => 'Set the filtering type for the emails body on listview'
+        ],
         'server_url' => [
             'name' => 'server_url',
             'vname' => 'LBL_SERVER_URL',
