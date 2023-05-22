@@ -733,6 +733,11 @@ $app_list_strings = array(
         'Inactive' => 'Inactive',
     ],
 
+    'dom_email_body_filtering_option' => [
+      'multi' => 'Multi Word Search',
+      'single' => 'Single Word Search',
+    ],
+
     'dom_email_types' => array(
         'out' => 'Sent',
         'archived' => 'Archived',
