@@ -79,6 +79,7 @@ class InboundEmail extends SugarBean
     public $mailbox_type;
     public $template_id;
     public $stored_options;
+    public $email_body_filtering;
     public $group_id;
     public $is_personal;
     public $groupfolder_id;
@@ -301,6 +302,7 @@ class InboundEmail extends SugarBean
      * @var bool|null
      */
     public $move_messages_to_trash_after_import;
+
 
     /**
      * Email constructor
@@ -8531,12 +8533,17 @@ eoq;
      */
     protected function getFilterCriteria(array $filter): ?string
     {
-// handle filtering
+        // handle filtering
         $filterCriteria = null;
+        $emailFilteringOption = 'multi';
 
+        if ($this->email_body_filtering) {
+            $emailFilteringOption = $this->email_body_filtering;
+        }
 
         if (!empty($filter)) {
             foreach ($filter as $filterField => $filterFieldValue) {
+
                 if (empty($filterFieldValue)) {
                     continue;
                 }
@@ -8546,7 +8553,14 @@ eoq;
                     $filterCriteria = '';
                 }
 
-                $filterCriteria .= ' ' . $filterField . ' "' . $filterFieldValue . '" ';
+                if ($filterField === 'BODY' && $emailFilteringOption !== 'multi') {
+                    $word = strtok($filterFieldValue, ' ') ?? '';
+                    if (!empty($word)){
+                        $filterCriteria .= ' ' . $filterField . ' "' . $word . '" ';
+                    }
+                } else {
+                    $filterCriteria .= ' ' . $filterField . ' "' . $filterFieldValue . '" ';
+                }
             }
         }
 
