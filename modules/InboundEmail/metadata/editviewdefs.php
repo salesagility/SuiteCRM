@@ -166,6 +166,9 @@ $viewdefs ['InboundEmail'] = [
                         'customCode' => '<div style="display: flex; align-items:baseline;"><input id="sentFolder" name="sentFolder" tabindex="95" size="30" maxlength="100" type="text" value="{$fields.sentFolder.value}"/> <input type="button" id="sentFolderButton" class="button" onclick="openSentMailboxPopup()" value="{$MOD.LBL_SELECT}"/></div>',
                     ]
                 ],
+                [
+                    'email_body_filtering',
+                ],
             ],
             'lbl_outbound_configuration' => [
                 [

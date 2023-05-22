@@ -152,7 +152,9 @@ $viewdefs ['InboundEmail'] = [
                     'connection_string',
                     'sentFolder'
                 ],
-
+                [
+                    'email_body_filtering',
+                ],
             ],
             'lbl_outbound_configuration' => [
                 [
