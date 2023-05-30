@@ -2252,7 +2252,7 @@ class Email extends Basic
 
             //// get the email to see if we're dealing with a dupe
             //// what crappy coding
-            preg_match("/[A-Z0-9._%-\']+@[A-Z0-9.-]+\.[A-Z]{2,}/i", $v, $match);
+            preg_match("/[A-Z0-9._%-\-\']+@[A-Z0-9.-]+\.[A-Z]{2,}/i", $v, $match);
 
 
             if (!empty($match[0]) && !in_array(trim($match[0]), $knownEmails)) {
