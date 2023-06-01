@@ -42,7 +42,7 @@ class TaskTest extends SuitePHPUnitFrameworkTestCase
 
         //test for record ID to verify that record is saved
         self::assertTrue(isset($task->id));
-        self::assertEquals(36, strlen($task->id));
+        self::assertEquals(36, strlen((string) $task->id));
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $task->mark_deleted($task->id);

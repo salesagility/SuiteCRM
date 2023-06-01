@@ -201,7 +201,7 @@ class BugTest extends SuitePHPUnitFrameworkTestCase
 
         //test for record ID to verify that record is saved
         self::assertTrue(isset($bug->id));
-        self::assertEquals(36, strlen($bug->id));
+        self::assertEquals(36, strlen((string) $bug->id));
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $bug->mark_deleted($bug->id);

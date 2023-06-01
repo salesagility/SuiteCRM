@@ -181,7 +181,7 @@ class OpportunityTest extends SuitePHPUnitFrameworkTestCase
 
         //test for record ID to verify that record is saved
         self::assertTrue(isset($opportunity->id));
-        self::assertEquals(36, strlen($opportunity->id));
+        self::assertEquals(36, strlen((string) $opportunity->id));
         self::assertEquals(-99, $opportunity->currency_id);
         self::assertEquals(30, $opportunity->probability);
 

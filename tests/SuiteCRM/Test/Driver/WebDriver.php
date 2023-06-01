@@ -45,6 +45,7 @@ use Exception;
  * Class WebDriver
  * @package SuiteCRM\Test\Driver
  */
+#[\AllowDynamicProperties]
 class WebDriver extends \Codeception\Module\WebDriver
 {
     protected function initialWindowSize()

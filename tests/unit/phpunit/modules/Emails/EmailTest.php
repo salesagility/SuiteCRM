@@ -370,7 +370,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     public function testgetNamePlusEmailAddressesForCompose(): void
     {
         $result = BeanFactory::newBean('Emails')->getNamePlusEmailAddressesForCompose('Users', array(1));
-        self::assertGreaterThanOrEqual(0, strlen($result));
+        self::assertGreaterThanOrEqual(0, strlen((string) $result));
     }
 
     public function test_arrayToDelimitedString(): void
@@ -409,7 +409,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 
         //test for record ID to verify that record is saved
         self::assertTrue(isset($email->id));
-        self::assertEquals(36, strlen($email->id));
+        self::assertEquals(36, strlen((string) $email->id));
 
         //test retrieve method
         $this->retrieve($email->id);
@@ -438,7 +438,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $result = BeanFactory::newBean('Emails')->retrieve($id);
 
         self::assertTrue(isset($result->id));
-        self::assertEquals(36, strlen($result->id));
+        self::assertEquals(36, strlen((string) $result->id));
 
         self::assertTrue(isset($result->from_addr_name));
         self::assertTrue(isset($result->to_addrs_names));
@@ -492,7 +492,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
         $result = $email->linkEmailToAddress(1, 'from');
 
         self::assertTrue(isset($result));
-        self::assertEquals(36, strlen($result));
+        self::assertEquals(36, strlen((string) $result));
     }
 
     public function retrieveEmailText($id): void
@@ -689,7 +689,7 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
     public function testjs_set_archived(): void
     {
         $actual = BeanFactory::newBean('Emails')->js_set_archived();
-        self::assertGreaterThan(0, strlen($actual));
+        self::assertGreaterThan(0, strlen((string) $actual));
     }
 
     public function testu_get_clear_form_js(): void
@@ -1106,17 +1106,17 @@ class EmailTest extends SuitePHPUnitFrameworkTestCase
 
         //test with empty string
         $result = $email->distributionForm('');
-        self::assertGreaterThan(0, strlen($result));
+        self::assertGreaterThan(0, strlen((string) $result));
 
         //test with valid string
         $result = $email->distributionForm('test');
-        self::assertGreaterThan(0, strlen($result));
+        self::assertGreaterThan(0, strlen((string) $result));
     }
 
     public function testuserSelectTable(): void
     {
         $result = BeanFactory::newBean('Emails')->userSelectTable();
-        self::assertGreaterThan(0, strlen($result));
+        self::assertGreaterThan(0, strlen((string) $result));
     }
 
     public function testcheckInbox(): void

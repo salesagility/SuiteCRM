@@ -128,7 +128,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
 
         $subscriptions = $sugarfolder->getSubscriptions($user);
 
-        self::assertTrue((count($subscriptions) > 0));
+        self::assertTrue(((is_countable($subscriptions) ? count($subscriptions) : 0) > 0));
 
         // Access clear with user
         $sugarfolder->clearSubscriptions($user);
@@ -346,7 +346,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         $saved = $parentFolderTwo->setFolder($fields);
 
         self::assertTrue($saved);
-        
+
         $childFolder = new SugarFolder($user);
 
         $fields = array(
@@ -375,6 +375,7 @@ class SugarFolderTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue($saved);
         $saved = false;
 
+        $arrayOfEmailBeans = [];
         for ($i = 0; $i < 10; $i++) {
             $arrayOfEmailBeans[$i] = BeanFactory::newBean('Emails');
             $arrayOfEmailBeans[$i]->save();

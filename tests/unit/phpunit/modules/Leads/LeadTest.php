@@ -130,7 +130,7 @@ class LeadTest extends SuitePHPUnitFrameworkTestCase
 
         //test for record ID to verify that record is saved
         self::assertTrue(isset($lead->id));
-        self::assertEquals(36, strlen($lead->id));
+        self::assertEquals(36, strlen((string) $lead->id));
         self::assertEquals("New", $lead->status);
 
 

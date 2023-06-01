@@ -405,7 +405,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         //test for record ID to verify that record is saved
         self::assertTrue(isset($inboundEmail->id));
-        self::assertEquals(36, strlen($inboundEmail->id));
+        self::assertEquals(36, strlen((string) $inboundEmail->id));
 
         //test getCorrectMessageNoForPop3 method
         $this->getCorrectMessageNoForPop3($inboundEmail->id);
@@ -664,7 +664,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         //test getCacheTimestamp method
         $result = $inboundEmail->getCacheTimestamp('INBOX');
-        self::assertGreaterThan(0, strlen($result));
+        self::assertGreaterThan(0, strlen((string) $result));
     }
 
     private function setDummyCacheValue()
@@ -1429,7 +1429,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $result = $inboundEmail->savePersonalEmailAccount(1, 'admin', true);
 
         self::assertTrue(isset($inboundEmail->id));
-        self::assertEquals(36, strlen($inboundEmail->id));
+        self::assertEquals(36, strlen((string) $inboundEmail->id));
 
         //test handleIsPersonal method
         $this->handleIsPersonal($inboundEmail->id);
@@ -1684,6 +1684,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testhandleMailboxType(): void
     {
+        $header = null;
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
         unset($db->database);
@@ -2502,7 +2503,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         //test for record ID to verify that record is saved
         self::assertTrue(isset($result));
-        self::assertEquals(36, strlen($result));
+        self::assertEquals(36, strlen((string) $result));
     }
 
     public function testgetMailboxes(): void

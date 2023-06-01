@@ -8,6 +8,7 @@ use Step\Acceptance\EditView;
 use Step\Acceptance\ListView;
 use Step\Acceptance\UsersTester;
 
+#[\AllowDynamicProperties]
 class UsersCest
 {
     /**
@@ -32,7 +33,7 @@ class UsersCest
         $this->fakeDataSeed = mt_rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
-    
+
     public function testEmailSettingsMailAccountAdd(AcceptanceTester $I, UsersTester $Users)
     {
         $I->loginAsAdmin();

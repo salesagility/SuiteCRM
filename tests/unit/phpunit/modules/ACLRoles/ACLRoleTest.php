@@ -44,9 +44,11 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         $aclRole = BeanFactory::newBean('ACLRoles');
 
         //take count of relationship initially and then after method execution and test if relationship count increases
-        $initial_count = count($aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id'));
+        $roleActions = $aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id');
+        $initial_count = is_countable($roleActions) ? count($roleActions) : 0;
         $aclRole->setAction('1', '1', '90');
-        $final_count = count($aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id'));
+        $roleActions = $aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id');
+        $final_count = is_countable($roleActions) ? count($roleActions) : 0;
 
         self::assertGreaterThanOrEqual($initial_count, $final_count, "values were: [$initial_count], [$final_count]");
     }
@@ -56,9 +58,11 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
         $aclRole = BeanFactory::newBean('ACLRoles');
 
         //take count of relationship initially and then after method execution and test if relationship count decreases
-        $initial_count = count($aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id'));
+        $roleActions = $aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id');
+        $initial_count = is_countable($roleActions) ? count($roleActions) : 0;
         $aclRole->mark_relationships_deleted('1');
-        $final_count = count($aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id'));
+        $roleActions = $aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id');
+        $final_count = is_countable($roleActions) ? count($roleActions) : 0;
 
         self::assertLessThanOrEqual($initial_count, $final_count, "values were: [$initial_count], [$final_count]");
     }

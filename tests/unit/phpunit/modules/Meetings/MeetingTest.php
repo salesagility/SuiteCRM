@@ -79,7 +79,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
 
         //test for record ID to verify that record is saved
         self::assertTrue(isset($meeting->id));
-        self::assertEquals(36, strlen($meeting->id));
+        self::assertEquals(36, strlen((string) $meeting->id));
 
         /* Test set_accept_status method */
 
@@ -238,7 +238,7 @@ class MeetingTest extends SuitePHPUnitFrameworkTestCase
     public function testsend_assignment_notifications(): void
     {
         $notify_user = new User(1);
-        
+
         $meeting = BeanFactory::newBean('Meetings');
 
         $meeting->date_start = '2016-02-11 17:30:00';

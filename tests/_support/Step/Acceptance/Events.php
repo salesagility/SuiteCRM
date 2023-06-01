@@ -2,6 +2,7 @@
 
 namespace Step\Acceptance;
 
+#[\AllowDynamicProperties]
 class Events extends \AcceptanceTester
 {
     /**

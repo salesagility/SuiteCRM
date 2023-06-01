@@ -51,6 +51,7 @@ require_once __DIR__ . '/../../../../../include/utils/file_utils.php';
  */
 class file_utilsTest extends SuitePHPUnitFrameworkTestCase
 {
+    public $rootFs;
     protected function setUp(): void
     {
         parent::setUp();

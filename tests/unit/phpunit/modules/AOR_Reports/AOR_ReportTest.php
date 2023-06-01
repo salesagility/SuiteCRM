@@ -61,7 +61,7 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
         //test for record ID to verify that record is saved
         self::assertTrue(isset($aor_Report->id));
-        self::assertEquals(36, strlen($aor_Report->id));
+        self::assertEquals(36, strlen((string) $aor_Report->id));
 
         //mark the record as deleted for cleanup
         $aor_Report->mark_deleted($aor_Report->id);
@@ -124,15 +124,15 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method without any parameters and verify it returns html string
         $html1 = $aor_Report->build_group_report();
-        self::assertGreaterThan(0, strlen($html1));
+        self::assertGreaterThan(0, strlen((string) $html1));
 
         //execute the method wit offset parameter and verify it returns html string
         $html2 = $aor_Report->build_group_report(1);
-        self::assertGreaterThan(0, strlen($html2));
+        self::assertGreaterThan(0, strlen((string) $html2));
 
         //execute the method with both parameters and verify it returns html string
         $html3 = $aor_Report->build_group_report(0, false);
-        self::assertGreaterThan(0, strlen($html3));
+        self::assertGreaterThan(0, strlen((string) $html3));
 
         //verify that all three html strings are different.
         self::assertNotEquals($html1, $html2);
@@ -147,15 +147,15 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method without any parameters and verify it returns html string
         $html1 = $aor_Report->build_report_html();
-        self::assertGreaterThan(0, strlen($html1));
+        self::assertGreaterThan(0, strlen((string) $html1));
 
         //execute the method with both parameters and verify it returns html string
         $html2 = $aor_Report->build_report_html(0, false);
-        self::assertGreaterThan(0, strlen($html2));
+        self::assertGreaterThan(0, strlen((string) $html2));
 
         //execute the method with group and identifier parameters and verify it returns html string
         $html3 = $aor_Report->build_report_html(1, false, 'grouptest', 'testidentifier');
-        self::assertGreaterThan(0, strlen($html3));
+        self::assertGreaterThan(0, strlen((string) $html3));
 
         //verify that group and identifier exist in the strings
         self::assertStringContainsString('grouptest', $html3);
@@ -205,11 +205,11 @@ class AOR_ReportTest extends SuitePHPUnitFrameworkTestCase
 
         //execute the method without any parameters and verify that it returns a non empty string
         $actual = $aor_Report->build_report_query();
-        self::assertGreaterThanOrEqual(0, strlen($actual));
+        self::assertGreaterThanOrEqual(0, strlen((string) $actual));
 
         //execute the method with parameter and verify that it returns a non empty string
         $actual = $aor_Report->build_report_query('name');
-        self::assertGreaterThanOrEqual(0, strlen($actual));
+        self::assertGreaterThanOrEqual(0, strlen((string) $actual));
     }
 
     public function testbuild_report_query_select(): void

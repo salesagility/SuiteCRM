@@ -7,6 +7,7 @@ use Step\Acceptance\Emails;
 use Step\Acceptance\EmailsTester;
 use Step\Acceptance\ListView;
 
+#[\AllowDynamicProperties]
 class EmailsCest
 {
     /**
@@ -46,7 +47,7 @@ class EmailsCest
 
         // Navigate to emails list-view
         $I->loginAsAdmin();
-        
+
         $I->visitPage('Emails', 'index');
         $listView->waitForListViewVisible();
 

@@ -158,7 +158,7 @@ class CurrencyTest extends SuitePHPUnitFrameworkTestCase
 
         //test for record ID to verify that record is saved
         self::assertTrue(isset($currency->id));
-        self::assertEquals(36, strlen($currency->id));
+        self::assertEquals(36, strlen((string) $currency->id));
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $currency->mark_deleted($currency->id);

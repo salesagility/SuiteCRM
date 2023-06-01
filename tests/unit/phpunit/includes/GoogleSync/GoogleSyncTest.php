@@ -43,6 +43,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
     public function test__construct(): void
     {
 
+        $sugar_config = [];
         // Set up object for testing
 
         // base64 encoded of {"web":"test"}
@@ -80,12 +81,14 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testGetAuthJson(): void
     {
+        global $sugar_config;
+        $sugar_config = $sugar_config ?? [];
         // base64 encoded of {"web":"test"}
         $sugar_config['google_auth_json'] = 'eyJ3ZWIiOiJ0ZXN0In0=';
 
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
 
-        $expectedAuthJson = json_decode(base64_decode('eyJ3ZWIiOiJ0ZXN0In0'), true);
+        $expectedAuthJson = json_decode(base64_decode('eyJ3ZWIiOiJ0ZXN0In0'), true, 512, JSON_THROW_ON_ERROR);
         $actualAuthJson = $object->callMethod('getAuthJson', [$this->getFakeSugarConfig('{"web":"test"}')]);
 
         self::assertEquals($expectedAuthJson, $actualAuthJson);
@@ -934,6 +937,7 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
      */
     public function testSetSyncUsers(): void
     {
+        $cnt = 0;
         // base64 encoded of {"web":"test"}
         $json = 'eyJ3ZWIiOiJ0ZXN0In0=';
         $query = "SELECT COUNT(*) AS cnt FROM users";

@@ -266,7 +266,7 @@ class aCaseTest extends SuitePHPUnitFrameworkTestCase
 
         //test for record ID to verify that record is saved
         self::assertTrue(isset($aCase->id));
-        self::assertEquals(36, strlen($aCase->id));
+        self::assertEquals(36, strlen((string) $aCase->id));
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $aCase->mark_deleted($aCase->id);
