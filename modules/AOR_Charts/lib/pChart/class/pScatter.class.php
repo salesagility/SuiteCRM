@@ -17,10 +17,11 @@
  define("SCATTER_MISSING_Y_SERIE"	, 190002);
 
  /* pScatter class definition */
+ #[\AllowDynamicProperties]
  class pScatter
   {
-   var $pChartObject;
-   var $pDataObject;
+   public $pChartObject;
+   public $pDataObject;
 
      /* Class creator */
      public function __construct($pChartObject, $pDataObject)
@@ -30,8 +31,9 @@
      }
 
    /* Prepare the scale */
-   function drawScatterScale($Format="")
+   public function drawScatterScale($Format="")
     {
+     $AxisPos = [];
      $Mode		= isset($Format["Mode"]) ? $Format["Mode"] : SCALE_MODE_FLOATING;
      $Floating		= isset($Format["Floating"]) ? $Format["Floating"] : FALSE;
      $XLabelsRotation	= isset($Format["XLabelsRotation"]) ? $Format["XLabelsRotation"] : 90;
@@ -377,7 +379,7 @@
     }
 
    /* Draw a scatter plot chart */
-   function drawScatterPlotChart($Format=NULL)
+   public function drawScatterPlotChart($Format=NULL)
     {
      $PlotSize		= isset($Format["PlotSize"]) ? $Format["PlotSize"] : 3;
      $PlotBorder	= isset($Format["PlotBorder"]) ? $Format["PlotBorder"] : FALSE;
@@ -442,7 +444,7 @@
     }
 
    /* Draw a scatter line chart */
-   function drawScatterLineChart($Format=NULL)
+   public function drawScatterLineChart($Format=NULL)
     {
      $Data		= $this->pDataObject->getData();
      $Palette		= $this->pDataObject->getPalette();
@@ -493,7 +495,7 @@
     }
 
    /* Draw a scatter spline chart */
-   function drawScatterSplineChart($Format=NULL)
+   public function drawScatterSplineChart($Format=NULL)
     {
      $Data		= $this->pDataObject->getData();
      $Palette		= $this->pDataObject->getPalette();
@@ -522,7 +524,7 @@
          if ( $Ticks != 0 )  { $SplineSettings["Ticks"]  = $Ticks; }
          if ( $Weight != 0 ) { $SplineSettings["Weight"] = $Weight; }
 
-         $LastX = VOID; $LastY = VOID; $WayPoints = ""; $Forces = "";
+         $LastX = VOID; $LastY = VOID; $WayPoints = []; $Forces = [];
          foreach($PosArrayX as $Key => $Value)
           {
            $X = $Value; $Y = $PosArrayY[$Key];
@@ -538,7 +540,7 @@
             { $WayPoints[] = array($X,$Y); $Forces[] = $Force; }
 
            if ( $Y == VOID || $X == VOID )
-            { $SplineSettings["Forces"] = $Forces; $this->pChartObject->drawSpline($WayPoints,$SplineSettings); $WayPoints = ""; $Forces = "";}
+            { $SplineSettings["Forces"] = $Forces; $this->pChartObject->drawSpline($WayPoints,$SplineSettings); $WayPoints = []; $Forces = [];}
 
            $LastX = $X; $LastY = $Y;
           }
@@ -549,7 +551,7 @@
     }
 
    /* Return the scaled plot position */
-   function getPosArray($Values,$AxisID)
+   public function getPosArray($Values,$AxisID)
     {
      $Data = $this->pDataObject->getData();
 
@@ -561,7 +563,7 @@
        $ScaleHeight = $Data["Axis"][$AxisID]["ScaleMax"] - $Data["Axis"][$AxisID]["ScaleMin"];
        $Step        = $Height / $ScaleHeight;
 
-       $Result = "";
+       $Result = [];
        foreach($Values as $Key => $Value)
         {
          if ( $Value == VOID ) 
@@ -570,7 +572,7 @@
           $Result[] = $this->pChartObject->GraphAreaX1 + $Data["Axis"][$AxisID]["Margin"] + ($Step * ($Value-$Data["Axis"][$AxisID]["ScaleMin"]));
         }
 
-       if ( count($Result) == 1 ) { return($Result[0]); } else { return($Result); }
+       if ( (is_countable($Result) ? count($Result) : 0) == 1 ) { return($Result[0]); } else { return($Result); }
       }
      else
       {
@@ -578,7 +580,7 @@
        $ScaleHeight = $Data["Axis"][$AxisID]["ScaleMax"] - $Data["Axis"][$AxisID]["ScaleMin"];
        $Step        = $Height / $ScaleHeight;
 
-       $Result = "";
+       $Result = [];
        foreach($Values as $Key => $Value)
         {
          if ( $Value == VOID ) 
@@ -587,12 +589,12 @@
           $Result[] = $this->pChartObject->GraphAreaY2 - $Data["Axis"][$AxisID]["Margin"] - ($Step * ($Value-$Data["Axis"][$AxisID]["ScaleMin"]));
         }
 
-       if ( count($Result) == 1 ) { return($Result[0]); } else { return($Result); }
+       if ( (is_countable($Result) ? count($Result) : 0) == 1 ) { return($Result[0]); } else { return($Result); }
       }
     }
 
    /* Draw the legend of the active series */
-   function drawScatterLegend($X,$Y,$Format="")
+   public function drawScatterLegend($X,$Y,$Format="")
     {
      $Family		= isset($Format["Family"]) ? $Format["Family"] : LEGEND_FAMILY_BOX;
      $FontName		= isset($Format["FontName"]) ? $Format["FontName"] : $this->pChartObject->FontName;
@@ -648,13 +650,13 @@
            if ( $Boundaries["R"] < $BoxArray[1]["X"]+2 ) { $Boundaries["R"] = $BoxArray[1]["X"]+2; }
            if ( $Boundaries["B"] < $BoxArray[1]["Y"]+2+$IconAreaHeight/2 ) { $Boundaries["B"] = $BoxArray[1]["Y"]+2+$IconAreaHeight/2; }
 
-           $Lines = preg_split("/\n/",$Series["Description"]);
-           $vY = $vY + max($this->pChartObject->FontSize*count($Lines),$IconAreaHeight) + 5;
+           $Lines = preg_split("/\n/",(string) $Series["Description"]);
+           $vY = $vY + max($this->pChartObject->FontSize*(is_countable($Lines) ? count($Lines) : 0),$IconAreaHeight) + 5;
           }
          elseif ( $Mode == LEGEND_HORIZONTAL )
           {
-           $Lines = preg_split("/\n/",$Series["Description"]);
-           $Width = "";
+           $Lines = preg_split("/\n/",(string) $Series["Description"]);
+           $Width = [];
            foreach($Lines as $Key => $Value)
             {
              $BoxArray = $this->pChartObject->getTextBox($vX+$IconAreaWidth+6,$Y+$IconAreaHeight/2+(($this->pChartObject->FontSize+3)*$Key),$FontName,$FontSize,0,$Value);
@@ -720,16 +722,16 @@
 
          if ( $Mode == LEGEND_VERTICAL )
           {
-           $Lines = preg_split("/\n/",$Series["Description"]);
+           $Lines = preg_split("/\n/",(string) $Series["Description"]);
            foreach($Lines as $Key => $Value)
             $this->pChartObject->drawText($X+$IconAreaWidth+4,$Y+$IconAreaHeight/2+(($this->pChartObject->FontSize+3)*$Key),$Value,array("R"=>$FontR,"G"=>$FontG,"B"=>$FontB,"Align"=>TEXT_ALIGN_MIDDLELEFT));
 
-           $Y=$Y+max($this->pChartObject->FontSize*count($Lines),$IconAreaHeight) + 5;
+           $Y=$Y+max($this->pChartObject->FontSize*(is_countable($Lines) ? count($Lines) : 0),$IconAreaHeight) + 5;
           }
          elseif ( $Mode == LEGEND_HORIZONTAL )
           {
-           $Lines = preg_split("/\n/",$Series["Description"]);
-           $Width = "";
+           $Lines = preg_split("/\n/",(string) $Series["Description"]);
+           $Width = [];
            foreach($Lines as $Key => $Value)
             {
              $BoxArray = $this->pChartObject->drawText($X+$IconAreaWidth+4,$Y+$IconAreaHeight/2+(($this->pChartObject->FontSize+3)*$Key),$Value,array("R"=>$FontR,"G"=>$FontG,"B"=>$FontB,"Align"=>TEXT_ALIGN_MIDDLELEFT));
@@ -744,8 +746,10 @@
     }
 
    /* Get the legend box size */
-   function getScatterLegendSize($Format="")
+   public function getScatterLegendSize($Format="")
     {
+     $IconAreaHeight = null;
+     $IconAreaWidth = null;
      $FontName	= isset($Format["FontName"]) ? $Format["FontName"] : $this->pChartObject->FontName;
      $FontSize	= isset($Format["FontSize"]) ? $Format["FontSize"] : $this->pChartObject->FontSize;
      $BoxSize	= isset($Format["BoxSize"]) ? $Format["BoxSize"] : 5;
@@ -787,13 +791,13 @@
            if ( $Boundaries["R"] < $BoxArray[1]["X"]+2 ) { $Boundaries["R"] = $BoxArray[1]["X"]+2; }
            if ( $Boundaries["B"] < $BoxArray[1]["Y"]+2+$IconAreaHeight/2 ) { $Boundaries["B"] = $BoxArray[1]["Y"]+2+$IconAreaHeight/2; }
 
-           $Lines = preg_split("/\n/",$Series["Description"]);
-           $vY = $vY + max($this->pChartObject->FontSize*count($Lines),$IconAreaHeight) + 5;
+           $Lines = preg_split("/\n/",(string) $Series["Description"]);
+           $vY = $vY + max($this->pChartObject->FontSize*(is_countable($Lines) ? count($Lines) : 0),$IconAreaHeight) + 5;
           }
          elseif ( $Mode == LEGEND_HORIZONTAL )
           {
-           $Lines = preg_split("/\n/",$Series["Description"]);
-           $Width = "";
+           $Lines = preg_split("/\n/",(string) $Series["Description"]);
+           $Width = [];
            foreach($Lines as $Key => $Value)
             {
              $BoxArray = $this->pChartObject->getTextBox($vX+$IconAreaWidth+6,$Y+$IconAreaHeight/2+(($this->pChartObject->FontSize+3)*$Key),$FontName,$FontSize,0,$Value);
@@ -821,7 +825,7 @@
     }
 
    /* Draw the line of best fit */
-   function drawScatterBestFit($Format="")
+   public function drawScatterBestFit($Format="")
     {
      $Ticks	= isset($Format["Ticks"]) ? $Format["Ticks"] : 0;
 
@@ -851,9 +855,9 @@
            $Sxx = $Sxx + $X*$X;
           }
 
-         $n = count($PosArrayX);
+         $n = is_countable($PosArrayX) ? count($PosArrayX) : 0;
 
-         if ((($n*$Sxx) == ($Sx*$Sx)))
+         if (($n*$Sxx === $Sx*$Sx))
           {
            $X1 = $this->getPosArray($Data["Axis"][$SerieXAxis]["ScaleMin"],$SerieXAxis);
            $X2 = $X1;
@@ -883,7 +887,7 @@
       }
     }
 
-   function writeScatterLabel($ScatterSerieID,$Points,$Format="")
+   public function writeScatterLabel($ScatterSerieID,$Points,$Format="")
     {
      $OverrideTitle	= isset($Format["OverrideTitle"]) ? $Format["OverrideTitle"] : NULL;
      $DrawPoint		= isset($Format["DrawPoint"]) ? $Format["DrawPoint"] : LABEL_POINT_BOX;
@@ -943,7 +947,7 @@
          else
           $Description = "No description";
 
-         $Series = "";
+         $Series = [];
          $Series[] = array("Format"=>$Serie,"Caption"=>$Caption);
 
          $this->pChartObject->drawLabelBox($X,$Y-3,$Description,$Series,$Format);
@@ -952,7 +956,7 @@
     }
 
    /* Draw a Scatter threshold */
-   function drawScatterThreshold($Value,$Format="")
+   public function drawScatterThreshold($Value,$Format="")
     {
      $AxisID		= isset($Format["AxisID"]) ? $Format["AxisID"] : 0;
      $R			= isset($Format["R"]) ? $Format["R"] : 255;
@@ -1053,7 +1057,7 @@
     }
 
    /* Draw a Scatter threshold area */
-   function drawScatterThresholdArea($Value1,$Value2,$Format="")
+   public function drawScatterThresholdArea($Value1,$Value2,$Format="")
     {
      $AxisID	= isset($Format["AxisID"]) ? $Format["AxisID"] : 0;
      $R		= isset($Format["R"]) ? $Format["R"] : 255;

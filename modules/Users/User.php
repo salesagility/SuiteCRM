@@ -632,7 +632,7 @@ class User extends Person implements EmailInterface
                     SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED']);
                 }
             } else {
-                if (($tmpUser instanceof User) && ($this->factor_auth != $tmpUser->factor_auth || $this->factor_auth_interface != $tmpUser->factor_auth_interface)) {
+                if (($tmpUser instanceof User) && ($this->factor_auth !== $tmpUser->factor_auth || $this->factor_auth_interface !== $tmpUser->factor_auth_interface)) {
                     $msg .= 'Current user is not able to change two factor authentication settings.';
                     $GLOBALS['log']->warn($msg);
                     SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_CHANGE_DISABLED']);
@@ -654,10 +654,10 @@ class User extends Person implements EmailInterface
         }
 
         // is_group & portal should be set to 0 by default
-        if (!isset($this->is_group)) {
+        if (!($this->is_group !== null)) {
             $this->is_group = 0;
         }
-        if (!isset($this->portal_only)) {
+        if (!($this->portal_only !== null)) {
             $this->portal_only = 0;
         }
 
@@ -1056,7 +1056,7 @@ class User extends Person implements EmailInterface
     public function encrypt_password($username_password)
     {
         // encrypt the password.
-        $salt = substr($this->user_name, 0, 2);
+        $salt = substr((string) $this->user_name, 0, 2);
         $encrypted_password = crypt($username_password, $salt);
 
         return $encrypted_password;
@@ -1157,7 +1157,7 @@ EOQ;
 
         $GLOBALS['log']->debug("Starting user load for $this->user_name");
 
-        if (!isset($this->user_name) || $this->user_name == "" || !isset($username_password) || $username_password == "") {
+        if (!($this->user_name !== null) || $this->user_name == "" || !isset($username_password) || $username_password == "") {
             return null;
         }
 
@@ -1376,7 +1376,7 @@ EOQ;
         $onespecial = $sugar_config['passwordsetting']['onespecial'];
 
 
-        if ($minpwdlength && strlen($newPassword) < $minpwdlength) {
+        if ($minpwdlength && strlen((string) $newPassword) < $minpwdlength) {
             $messages[] = sprintf($mod_strings['ERR_PASSWORD_MINPWDLENGTH'], $minpwdlength);
         }
 
@@ -1388,7 +1388,7 @@ EOQ;
             $messages[] = $mod_strings['ERR_PASSWORD_ONELOWER'];
         }
 
-        if ($onenumber && !preg_match('/[0-9]/', $newPassword)) {
+        if ($onenumber && !preg_match('/[0-9]/', (string) $newPassword)) {
             $messages[] = $mod_strings['ERR_PASSWORD_ONENUMBER'];
         }
 
@@ -1788,6 +1788,7 @@ EOQ;
      */
     public function getEmailInfo($id = '')
     {
+        $ret = [];
         $user = $this;
         if (!empty($id)) {
             $user = BeanFactory::newBean('Users');
@@ -1845,8 +1846,9 @@ EOQ;
         $emailLink = '';
 
         $emailUI = new EmailUI();
-        for ($i = 0; $i < count($focus->emailAddress->addresses); $i++) {
-            $emailField = 'email' . (string) ($i + 1);
+        $addressesCount = is_countable($focus->emailAddress->addresses) ? count($focus->emailAddress->addresses) : 0;
+        for ($i = 0; $i < $addressesCount; $i++) {
+            $emailField = 'email' . ($i + 1);
             $optOut = (bool)$focus->emailAddress->addresses[$i]['opt_out'];
             if (!$optOut && $focus->emailAddress->addresses[$i]['email_address'] === $emailAddress) {
                 $focus->$emailField = $emailAddress;
@@ -1917,6 +1919,8 @@ EOQ;
      */
     public function getLocaleFormatDesc()
     {
+        $format = [];
+        $name = [];
         global $locale;
         global $mod_strings;
         global $app_strings;
@@ -1935,7 +1939,7 @@ EOQ;
 
         $ret1 = '';
         $ret2 = '';
-        for ($i = 0, $iMax = strlen($macro); $i < $iMax; $i++) {
+        for ($i = 0, $iMax = strlen((string) $macro); $i < $iMax; $i++) {
             if (array_key_exists($macro[$i], $format)) {
                 $ret1 .= "<i>" . $format[$macro[$i]] . "</i>";
                 $ret2 .= "<i>" . $name[$macro[$i]] . "</i>";
@@ -1964,7 +1968,7 @@ EOQ;
         if ($module == 'ContractTypes') {
             $module = 'Contracts';
         }
-        if (preg_match('/Product[a-zA-Z]*/', $module)) {
+        if (preg_match('/Product[a-zA-Z]*/', (string) $module)) {
             $module = 'Products';
         }
 
@@ -2040,7 +2044,7 @@ EOQ;
      */
     public function isAdmin()
     {
-        if (isset($this->is_admin) && ($this->is_admin == '1' || $this->is_admin === 'on')
+        if ($this->is_admin !== null && ($this->is_admin == '1' || $this->is_admin === 'on')
         ) {
             return true;
         }
@@ -2156,7 +2160,7 @@ EOQ;
     {
         global $locale;
         $localeFormat = $locale->getLocaleFormatMacro($this);
-        if (strpos($localeFormat, 'l') > strpos($localeFormat, 'f')) {
+        if (strpos((string) $localeFormat, 'l') > strpos((string) $localeFormat, 'f')) {
             return false;
         }
         return true;
@@ -2294,11 +2298,11 @@ EOQ;
         $htmlBody = $emailTemp->body_html;
         $body = $emailTemp->body;
         if (isset($additionalData['link']) && $additionalData['link'] == true) {
-            $htmlBody = str_replace('$contact_user_link_guid', $additionalData['url'], $htmlBody);
-            $body = str_replace('$contact_user_link_guid', $additionalData['url'], $body);
+            $htmlBody = str_replace('$contact_user_link_guid', $additionalData['url'], (string) $htmlBody);
+            $body = str_replace('$contact_user_link_guid', $additionalData['url'], (string) $body);
         } else {
-            $htmlBody = str_replace('$contact_user_user_hash', $additionalData['password'], $htmlBody);
-            $body = str_replace('$contact_user_user_hash', $additionalData['password'], $body);
+            $htmlBody = str_replace('$contact_user_user_hash', $additionalData['password'], (string) $htmlBody);
+            $body = str_replace('$contact_user_user_hash', $additionalData['password'], (string) $body);
         }
         // Bug 36833 - Add replacing of special value $instance_url
         $htmlBody = str_replace('$config_site_url', $sugar_config['site_url'], $htmlBody);
@@ -2474,7 +2478,7 @@ EOQ;
     protected function setIsAdmin(): void
     {
         global $current_user;
-        if (!isset($this->is_admin)) {
+        if (!($this->is_admin !== null)) {
             return;
         }
 

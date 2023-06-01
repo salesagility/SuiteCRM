@@ -43,6 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/SugarObjects/forms/PersonFormBase.php');
 
+#[\AllowDynamicProperties]
 class LeadFormBase extends PersonFormBase
 {
     public $moduleName = 'Leads';
@@ -69,7 +70,7 @@ class LeadFormBase extends PersonFormBase
 
         $dbManager = DBManagerFactory::getInstance();
         //Use the first and last name from the $_POST to filter.  If only last name supplied use that
-        if (isset($_POST[$prefix.'first_name']) && strlen($_POST[$prefix.'first_name']) != 0 && isset($_POST[$prefix.'last_name']) && strlen($_POST[$prefix.'last_name']) != 0) {
+        if (isset($_POST[$prefix.'first_name']) && strlen((string) $_POST[$prefix.'first_name']) != 0 && isset($_POST[$prefix.'last_name']) && strlen((string) $_POST[$prefix.'last_name']) != 0) {
             $firstName = $dbManager->quote($_POST[$prefix.'first_name' ?? '']);
             $lastName = $dbManager->quote($_POST[$prefix.'last_name' ?? '']);
             $query .= " (first_name='". $firstName . "' AND last_name = '". $lastName ."')";
@@ -372,7 +373,7 @@ EOQ;
             $focus->do_not_call = 0;
         }
 
-        $this->handleLeadAccountName($focus);
+        static::handleLeadAccountName($focus);
 
         if ($do_save) {
             if (!empty($GLOBALS['check_notify'])) {

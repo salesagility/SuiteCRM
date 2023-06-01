@@ -51,6 +51,7 @@ if (file_exists(__DIR__ . '/../../modules/ACLActions/actiondefs.override.php')) 
 
 /* END - SECURITY GROUPS */
 
+#[\AllowDynamicProperties]
 class ACLAction extends SugarBean
 {
     public $module_dir = 'ACLActions';
@@ -200,7 +201,7 @@ class ACLAction extends SugarBean
     {
         global $ACLActionAccessLevels;
         if (isset($ACLActionAccessLevels[$access])) {
-            $label = preg_replace('/(LBL_ACCESS_)(.*)/', '$2', $ACLActionAccessLevels[$access]['label']);
+            $label = preg_replace('/(LBL_ACCESS_)(.*)/', '$2', (string) $ACLActionAccessLevels[$access]['label']);
 
             return strtolower($label);
         }
@@ -472,7 +473,7 @@ class ACLAction extends SugarBean
             )) {
             return true;
         }
-        if (!is_null($action) && isset($action->aclaccess)) {
+        if (!is_null($action) && (property_exists($action, 'aclaccess') && $action->aclaccess !== null)) {
             if ($action->aclaccess == ACL_ALLOW_ALL
                 || ($is_owner && $action->aclaccess == ($access == ACL_ALLOW_OWNER || $access == ACL_ALLOW_GROUP))
                 || ($in_group && $access == ACL_ALLOW_GROUP) //need to pass if in group with access somehow

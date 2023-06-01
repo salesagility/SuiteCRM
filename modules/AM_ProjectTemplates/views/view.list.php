@@ -53,6 +53,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('modules/AM_ProjectTemplates/AM_ProjectTemplatesListViewSmarty.php');
 
+#[\AllowDynamicProperties]
 class AM_ProjectTemplatesViewList extends ViewList
 {
     public function __construct()

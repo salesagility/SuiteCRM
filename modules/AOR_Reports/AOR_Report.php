@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+#[\AllowDynamicProperties]
 class AOR_Report extends Basic
 {
     public $new_schema = true;
@@ -156,7 +157,7 @@ class AOR_Report extends Basic
         }
 
         $app_list_strings['aor_moduleList'] = array_merge(
-            (array)array('' => ''),
+            array('' => ''),
             (array)$app_list_strings['aor_moduleList']
         );
 
@@ -177,13 +178,14 @@ class AOR_Report extends Basic
         return $fields;
     }
 
-    const CHART_TYPE_PCHART = 'pchart';
-    const CHART_TYPE_CHARTJS = 'chartjs';
-    const CHART_TYPE_RGRAPH = 'rgraph';
+    public const CHART_TYPE_PCHART = 'pchart';
+    public const CHART_TYPE_CHARTJS = 'chartjs';
+    public const CHART_TYPE_RGRAPH = 'rgraph';
 
 
     public function build_report_chart($chartIds = null, $chartType = self::CHART_TYPE_PCHART)
     {
+        $html = null;
         global $beanList;
         $linkedCharts = $this->get_linked_beans('aor_charts', 'AOR_Charts');
         if (!$linkedCharts) {
@@ -219,7 +221,7 @@ class AOR_Report extends Basic
                     $field_alias = $field_alias . ':' . $rel;
                 }
             }
-            $label = str_replace(' ', '_', $field->label) . $i;
+            $label = str_replace(' ', '_', (string) $field->label) . $i;
             $fields[$label]['field'] = $field->field;
             $fields[$label]['label'] = $field->label;
             $fields[$label]['display'] = $field->display;
@@ -304,10 +306,10 @@ class AOR_Report extends Basic
 
         $rows = $this->getGroupDisplayFieldByReportId($this->id, $level);
 
-        if (count($rows) > 1) {
+        if ((is_countable($rows) ? count($rows) : 0) > 1) {
             $GLOBALS['log']->fatal('ambiguous group display for report ' . $this->id);
         } else {
-            if (count($rows) == 1) {
+            if ((is_countable($rows) ? count($rows) : 0) == 1) {
                 $rows[0]['module_path'] = unserialize(base64_decode($rows[0]['module_path']));
                 if (!$rows[0]['module_path'][0]) {
                     $module = new $beanList[$this->report_module]();
@@ -408,8 +410,8 @@ class AOR_Report extends Basic
 
     private function addDataIdValueToInnertext($html)
     {
-        preg_match('/\sdata-id-value\s*=\s*"([^"]*)"/', $html, $match);
-        $html = preg_replace('/(>)([^<]*)(<\/\w+>$)/', '$1$2' . $match[1] . '$3', $html);
+        preg_match('/\sdata-id-value\s*=\s*"([^"]*)"/', (string) $html, $match);
+        $html = preg_replace('/(>)([^<]*)(<\/\w+>$)/', '$1$2' . $match[1] . '$3', (string) $html);
 
         return $html;
     }
@@ -435,7 +437,7 @@ class AOR_Report extends Basic
             $field = BeanFactory::newBean('AOR_Fields');
             $field->retrieve($field_id);
 
-            $field_label = str_replace(' ', '_', $field->label);
+            $field_label = str_replace(' ', '_', (string) $field->label);
 
             $path = unserialize(base64_decode($field->module_path));
 
@@ -467,7 +469,7 @@ class AOR_Report extends Basic
             }
 
             if ($data['type'] == 'currency' && !stripos(
-                $field->field,
+                (string) $field->field,
                 '_USD'
             ) && isset($field_module->field_defs['currency_id'])
             ) {
@@ -634,7 +636,7 @@ class AOR_Report extends Basic
         }
 
         // See if the report actually has any fields, if not we don't want to run any queries since we can't show anything
-        $fieldCount = count($this->getReportFields());
+        $fieldCount = is_countable($this->getReportFields()) ? count($this->getReportFields()) : 0;
         if (!$fieldCount) {
             $GLOBALS['log']->info('Running report "' . $this->name . '" with 0 fields');
         }
@@ -682,7 +684,7 @@ class AOR_Report extends Basic
                     $field_alias = $field_alias . ':' . $rel;
                 }
             }
-            $label = str_replace(' ', '_', $field->label) . $i;
+            $label = str_replace(' ', '_', (string) $field->label) . $i;
             $fields[$label]['field'] = $field->field;
             $fields[$label]['label'] = $field->label;
             $fields[$label]['display'] = $field->display;
@@ -997,9 +999,9 @@ class AOR_Report extends Basic
             case 'SUM':
                 return array_sum($totals);
             case 'COUNT':
-                return count($totals);
+                return is_countable($totals) ? count($totals) : 0;
             case 'AVG':
-                return array_sum($totals) / count($totals);
+                return array_sum($totals) / (is_countable($totals) ? count($totals) : 0);
             default:
                 return '';
         }
@@ -1018,6 +1020,7 @@ class AOR_Report extends Basic
 
     public function build_report_csv()
     {
+        $field = null;
         global $beanList;
         ini_set('zlib.output_compression', 'Off');
 
@@ -1051,7 +1054,7 @@ class AOR_Report extends Basic
                     $field_alias = $field_alias . ':' . $rel;
                 }
             }
-            $label = str_replace(' ', '_', $field->label) . $i;
+            $label = str_replace(' ', '_', (string) $field->label) . $i;
             $fields[$label]['field'] = $field->field;
             $fields[$label]['display'] = $field->display;
             $fields[$label]['function'] = $field->field_function;
@@ -1068,7 +1071,7 @@ class AOR_Report extends Basic
 
         // Remove last delimiter of the line
         if ($field->display) {
-            $csv = substr($csv, 0, strlen($csv) - strlen($delimiter));
+            $csv = substr($csv, 0, strlen($csv) - strlen((string) $delimiter));
         }
 
         $sql = $this->build_report_query();
@@ -1091,7 +1094,7 @@ class AOR_Report extends Basic
                             '',
                             $currency_id
                         );
-                        if (false !== strpos($t, 'checkbox')) {
+                        if (false !== strpos((string) $t, 'checkbox')) {
                             $csv .= $row[$name];
                         } else {
                             $csv .= $this->encloseForCSV(trim(strip_tags($t)));
@@ -1101,7 +1104,7 @@ class AOR_Report extends Basic
                 }
             }
             // Remove last delimiter of the line
-            $csv = substr($csv, 0, strlen($csv) - strlen($delimiter));
+            $csv = substr($csv, 0, strlen($csv) - strlen((string) $delimiter));
         }
 
         ob_clean();
@@ -1199,7 +1202,7 @@ class AOR_Report extends Basic
         $query_where_clean = '';
         while ($query_where_clean != $query_where) {
             $query_where_clean = $query_where;
-            $query_where = preg_replace('/\b(AND|OR)\s*\(\s*\)|[^\w+\s*]\(\s*\)/i', '', $query_where_clean);
+            $query_where = preg_replace('/\b(AND|OR)\s*\(\s*\)|[^\w+\s*]\(\s*\)/i', '', (string) $query_where_clean);
             $safe++;
             if ($safe > 100) {
                 $GLOBALS['log']->fatal('Invalid report query conditions');
@@ -1228,7 +1231,7 @@ class AOR_Report extends Basic
                 $field = BeanFactory::newBean('AOR_Fields');
                 $field->retrieve($row['id']);
 
-                $field->label = str_replace(' ', '_', $field->label) . $i;
+                $field->label = str_replace(' ', '_', (string) $field->label) . $i;
 
                 $path = unserialize(base64_decode($field->module_path));
 
@@ -1284,7 +1287,7 @@ class AOR_Report extends Basic
                     $field->field = 'id';
                 }
 
-                if ($data['type'] == 'currency' && isset($field_module->field_defs['currency_id']) && !stripos($field->field,'_USD')) {
+                if ($data['type'] == 'currency' && isset($field_module->field_defs['currency_id']) && !stripos((string) $field->field,'_USD')) {
                     if ((isset($field_module->field_defs['currency_id']['source']) && $field_module->field_defs['currency_id']['source'] == 'custom_fields')) {
                         $query['select'][$table_alias . '_currency_id'] = $this->db->quoteIdentifier($table_alias . '_cstm') . ".currency_id AS '" . $table_alias . "_currency_id'";
                         $query['second_group_by'][] = $this->db->quoteIdentifier($table_alias . '_cstm') . ".currency_id";
@@ -1369,6 +1372,7 @@ class AOR_Report extends Basic
         $query = array(),
         SugarBean $rel_module = null
     ) {
+        $params = [];
         // Alias to keep lines short
         $db = $this->db;
         if (!isset($query['join'][$alias])) {
@@ -1442,6 +1446,8 @@ class AOR_Report extends Basic
      */
     public function build_report_query_where($query = array())
     {
+        $aor_sql_operator_list = [];
+        $value = null;
         global $beanList, $app_list_strings, $sugar_config, $timedate;
 
         $aor_sql_operator_list['Equal_To'] = '=';
@@ -1535,7 +1541,7 @@ class AOR_Report extends Basic
                         $condition_module = $new_field_module;
 
                         // Debugging: security groups conditions - It's a hack to just get the query working
-                        if ($condition_module->module_dir = 'SecurityGroups' && count($path) > 1) {
+                        if ($condition_module->module_dir = 'SecurityGroups' && (is_countable($path) ? count($path) : 0) > 1) {
                             $table_alias = $oldAlias . ':' . $rel;
                         }
                         $condition->field = 'id';

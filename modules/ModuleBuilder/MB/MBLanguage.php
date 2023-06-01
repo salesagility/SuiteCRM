@@ -38,6 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+#[\AllowDynamicProperties]
 class MBLanguage
 {
     public $iTemplates = array();
@@ -58,6 +59,7 @@ class MBLanguage
 
     public function loadStrings($file)
     {
+        $mod_strings = null;
         $module = strtoupper($this->name);
         $object_name = strtoupper($this->key_name);
         $_object_name = strtolower($this->name);
@@ -80,6 +82,7 @@ class MBLanguage
 
     public function loadAppListStrings($file)
     {
+        $app_list_strings = null;
         if (!file_exists($file)) {
             return;
         }
@@ -168,7 +171,7 @@ class MBLanguage
         foreach ($this->strings as $lang=>$values) {
             //Check if the module Label has changed.
             $renameLang = $rename || empty($values) || (isset($values['LBL_MODULE_NAME']) && $this->label != $values['LBL_MODULE_NAME']);
-            $mod_strings = return_module_language(str_replace('.lang.php', '', $lang), 'ModuleBuilder');
+            $mod_strings = return_module_language(str_replace('.lang.php', '', (string) $lang), 'ModuleBuilder');
             $required = array(
                 'LBL_LIST_FORM_TITLE'=>$this->label . " " . $mod_strings['LBL_LIST'],
                 'LBL_MODULE_NAME'=>$this->label,
@@ -223,10 +226,10 @@ class MBLanguage
                 }
                 $okey = $key;
                 if ($key_changed) {
-                    $key = str_replace($this->key_name, $key_name, $key);
+                    $key = str_replace($this->key_name, $key_name, (string) $key);
                 }
                 if ($key_changed) {
-                    $key = str_replace(strtolower($this->key_name), strtolower($key_name), $key);
+                    $key = str_replace(strtolower($this->key_name), strtolower($key_name), (string) $key);
                 }
                 // if we aren't duplicating or the key has changed let's add it
                 if (!$duplicate || $okey != $key) {
@@ -265,6 +268,7 @@ class MBLanguage
 
     public function loadTemplates()
     {
+        $config = [];
         if (empty($this->templates)) {
             if (file_exists("$this->path/config.php")) {
                 include "$this->path/config.php";

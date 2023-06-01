@@ -49,6 +49,7 @@ require_once('include/utils/activity_utils.php');
 require_once('modules/Calendar/CalendarUtils.php');
 require_once('modules/Calendar/CalendarActivity.php');
 
+#[\AllowDynamicProperties]
 class Calendar
 {
     public $activityList = array("FP_events" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
@@ -355,10 +356,10 @@ class Calendar
         
         
         $user_ids = $current_user->getPreference('shared_ids');
-        if (!empty($user_ids) && count($user_ids) != 0 && !isset($_REQUEST['shared_ids'])) {
+        if (!empty($user_ids) && (is_countable($user_ids) ? count($user_ids) : 0) != 0 && !isset($_REQUEST['shared_ids'])) {
             $this->shared_ids = $user_ids;
         } else {
-            if (isset($_REQUEST['shared_ids']) && count($_REQUEST['shared_ids']) > 0) {
+            if (isset($_REQUEST['shared_ids']) && (is_countable($_REQUEST['shared_ids']) ? count($_REQUEST['shared_ids']) : 0) > 0) {
                 $this->shared_ids = $_REQUEST['shared_ids'];
                 $current_user->setPreference('shared_ids', $_REQUEST['shared_ids']);
             } else {

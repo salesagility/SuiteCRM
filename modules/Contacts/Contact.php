@@ -52,6 +52,7 @@ require_once('include/SugarObjects/templates/person/Person.php');
 require_once __DIR__ . '/../../include/EmailInterface.php';
 
 // Contact is used to store customer information.
+#[\AllowDynamicProperties]
 class Contact extends Person implements EmailInterface
 {
     public $field_name_map;
@@ -181,7 +182,7 @@ class Contact extends Person implements EmailInterface
     public function add_list_count_joins(&$query, $where)
     {
         // accounts.name
-        if (stristr($where, "accounts.name")) {
+        if (stristr((string) $where, "accounts.name")) {
             // add a join to the accounts table.
             $query .= "
 	            LEFT JOIN accounts_contacts
@@ -242,7 +243,7 @@ class Contact extends Person implements EmailInterface
             );
         }
         //any other action goes to parent function in sugarbean
-        if (strpos($order_by, 'sync_contact') !== false) {
+        if (strpos((string) $order_by, 'sync_contact') !== false) {
             //we have found that the user is ordering by the sync_contact field, it would be troublesome to sort by this field
             //and perhaps a performance issue, so just remove it
             $order_by = '';
@@ -274,6 +275,7 @@ class Contact extends Person implements EmailInterface
         $parentbean = null,
         $singleSelect = false
     ) {
+        $ret_array = [];
         //if this is any action that is not the contact address popup, then go to parent function in sugarbean
         if (isset($_REQUEST['action']) && $_REQUEST['action'] !== 'ContactAddressPopup') {
             return parent::create_new_list_query(
@@ -493,7 +495,7 @@ class Contact extends Person implements EmailInterface
 
         $this->load_relationship("user_sync");
 
-        if (!isset($this->user_sync)) {
+        if (!(property_exists($this, 'user_sync') && $this->user_sync !== null)) {
             $GLOBALS['log']->fatal('Contact::$user_sync is not set');
             $beanIDs = null;
         } elseif (!is_object($this->user_sync)) {
@@ -593,8 +595,7 @@ class Contact extends Person implements EmailInterface
 
         //if account_id was replaced unlink the previous account_id.
         //this rel_fields_before_value is populated by sugarbean during the retrieve call.
-        if (!empty($this->account_id) and !empty($this->rel_fields_before_value['account_id']) and
-            (trim($this->account_id) != trim($this->rel_fields_before_value['account_id']))
+        if (!empty($this->account_id) && !empty($this->rel_fields_before_value['account_id']) && trim($this->account_id) !== trim($this->rel_fields_before_value['account_id'])
         ) {
             //unlink the old record.
             $this->load_relationship('accounts');
@@ -640,7 +641,7 @@ class Contact extends Person implements EmailInterface
         if (empty($list_of_users)) {
             return;
         }
-        if (!isset($this->users)) {
+        if (!(property_exists($this, 'users') && $this->users !== null)) {
             $this->load_relationship('user_sync');
         }
 
@@ -649,7 +650,7 @@ class Contact extends Person implements EmailInterface
             $sql = "SELECT id FROM users WHERE deleted=0 AND is_group=0 AND portal_only=0";
             $result = $this->db->query($sql);
             while ($hash = $this->db->fetchByAssoc($result)) {
-                if (!isset($this->user_sync)) {
+                if (!(property_exists($this, 'user_sync') && $this->user_sync !== null)) {
                     $GLOBALS['log']->fatal('Contact::$user_sync is not set');
                 } elseif (!is_object($this->user_sync)) {
                     $GLOBALS['log']->fatal('Contact::$user_sync is not an object');
@@ -666,7 +667,7 @@ class Contact extends Person implements EmailInterface
                     || $focus_user->retrieve($eachItem)
                 ) {
                     // it is a user, add user
-                    if (!isset($this->user_sync)) {
+                    if (!(property_exists($this, 'user_sync') && $this->user_sync !== null)) {
                         $GLOBALS['log']->fatal('Contact::$user_sync is not set');
                     } elseif (!is_object($this->user_sync)) {
                         $GLOBALS['log']->fatal('Contact::$user_sync is not an object');

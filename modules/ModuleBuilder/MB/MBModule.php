@@ -48,6 +48,7 @@ require_once('modules/ModuleBuilder/MB/MBVardefs.php') ;
 require_once('modules/ModuleBuilder/MB/MBRelationship.php') ;
 require_once('modules/ModuleBuilder/MB/MBLanguage.php') ;
 
+#[\AllowDynamicProperties]
 class MBModule
 {
     public $name = '' ;
@@ -87,7 +88,7 @@ class MBModule
 
     public function getDBName($name)
     {
-        return preg_replace("/[^\w]+/", "_", $name) ;
+        return preg_replace("/[^\w]+/", "_", (string) $name) ;
     }
 
     public function getModuleName()
@@ -519,7 +520,7 @@ class MBModule
     {
         $smarty = new Sugar_Smarty() ;
         $smarty->assign('moduleName', $this->key_name) ;
-        $smarty->assign('showvCard', in_array('person', array_keys($this->config[ 'templates' ]))) ;
+        $smarty->assign('showvCard', array_key_exists('person', $this->config[ 'templates' ])) ;
         $smarty->assign('showimport', $this->config['importable']);
         //write sugar generated class
         sugar_file_put_contents(
@@ -756,6 +757,7 @@ class MBModule
 
     public function getAvailibleSubpanelDef($panelName)
     {
+        $subpanel_layout = null;
         $filepath = $this->getModuleDir() . "/metadata/subpanels/{$panelName}.php" ;
         if (file_exists($filepath)) {
             include($filepath) ;

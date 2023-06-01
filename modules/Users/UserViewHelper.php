@@ -46,6 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * This helper handles the rest of the fields for the Users Edit and Detail views.
  * There are a lot of fields on those views that do not map directly to being used on the metadata based UI, so they are handled here.
  */
+#[\AllowDynamicProperties]
 class UserViewHelper
 {
 
@@ -354,7 +355,7 @@ class UserViewHelper
         } else {
             $this->ss->assign("THEMES", get_select_options_with_id(SugarThemeRegistry::availableThemes(), $GLOBALS['sugar_config']['default_theme']));
         }
-        $this->ss->assign("SHOW_THEMES", count(SugarThemeRegistry::availableThemes()) > 1);
+        $this->ss->assign("SHOW_THEMES", (is_countable(SugarThemeRegistry::availableThemes()) ? count(SugarThemeRegistry::availableThemes()) : 0) > 1);
         $this->ss->assign("USER_THEME_COLOR", $this->bean->getPreference('user_theme_color'));
         $this->ss->assign("USER_THEME_FONT", $this->bean->getPreference('user_theme_font'));
         $this->ss->assign("USER_THEME", $user_theme);
@@ -381,7 +382,7 @@ class UserViewHelper
                 $themeGroupList[$themeId] = false;
             }
         }
-        $this->ss->assign("themeGroupListJSON", json_encode($themeGroupList));
+        $this->ss->assign("themeGroupListJSON", json_encode($themeGroupList, JSON_THROW_ON_ERROR));
     }
 
     /**
@@ -398,6 +399,7 @@ class UserViewHelper
 
     protected function setupAdvancedTabUserSettings()
     {
+        $admin = null;
         global $current_user, $locale, $app_strings, $app_list_strings, $sugar_config;
         // This is for the "Advanced" tab, it's not controlled by the metadata UI so we have to do more for it.
 
@@ -496,7 +498,7 @@ class UserViewHelper
         $this->ss->assign("GOOGLE_API_TOKEN_BTN", "Disabled");
         if (isset($sugar_config['google_auth_json']) && !empty($sugar_config['google_auth_json'])) {
             $json = base64_decode($sugar_config['google_auth_json']);
-            if (!$config = json_decode($json, true)) { // Check if the JSON is valid
+            if (!$config = json_decode($json, true, 512, JSON_THROW_ON_ERROR)) { // Check if the JSON is valid
                 $this->ss->assign("GOOGLE_API_TOKEN", "INVALID AUTH KEY");
                 $this->ss->assign("GOOGLE_API_TOKEN_COLOR", "red");
                 $this->ss->assign("GOOGLE_API_TOKEN_ENABLE_NEW", "inline");
@@ -519,8 +521,8 @@ class UserViewHelper
      */
     protected function setGoogleAuthAccessToken()
     {
-        $accessToken = json_decode(base64_decode($this->bean->getPreference('GoogleApiToken', 'GoogleSync')));
-        if (!empty($this->bean->getPreference('GoogleApiToken', 'GoogleSync')) && $accessToken = json_decode(base64_decode($this->bean->getPreference('GoogleApiToken', 'GoogleSync')))) { // Check if the user has a token
+        $accessToken = json_decode(base64_decode($this->bean->getPreference('GoogleApiToken', 'GoogleSync')), null, 512, JSON_THROW_ON_ERROR);
+        if (!empty($this->bean->getPreference('GoogleApiToken', 'GoogleSync')) && $accessToken = json_decode(base64_decode($this->bean->getPreference('GoogleApiToken', 'GoogleSync')), null, 512, JSON_THROW_ON_ERROR)) { // Check if the user has a token
             $this->ss->assign("GOOGLE_API_TOKEN", "CONFIGURED");
             $this->ss->assign("GOOGLE_API_TOKEN_COLOR", "green");
             $this->ss->assign("GOOGLE_API_TOKEN_BTN", "Reauthorize");
@@ -561,6 +563,7 @@ class UserViewHelper
 
     protected function setupAdvancedTabNavSettings()
     {
+        $ss = null;
         global $app_list_strings;
 
         // Grouped tabs?
@@ -709,7 +712,7 @@ class UserViewHelper
         foreach ($locale->currencies as $id => $val) {
             $currencyList[$id] = $val['symbol'];
         }
-        $currencySymbolJSON = json_encode($currencyList);
+        $currencySymbolJSON = json_encode($currencyList, JSON_THROW_ON_ERROR);
         $this->ss->assign('currencySymbolJSON', $currencySymbolJSON);
 
         $currencyDisplay = BeanFactory::newBean('Currencies');

@@ -50,6 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
+#[\AllowDynamicProperties]
 class ImportMap extends SugarBean
 {
     /**
@@ -203,7 +204,9 @@ class ImportMap extends SugarBean
     public function save($check_notify = false)
     {
         $args = func_get_args();
-        return call_user_func_array(array($this, '_save'), $args);
+        return call_user_func_array(function ($owner_id, $name, $module, $source, $has_header, $delimiter, $enclosure) {
+            return $this->_save($owner_id, $name, $module, $source, $has_header, $delimiter, $enclosure);
+        }, $args);
     }
     public function _save(
         $owner_id,
@@ -226,7 +229,7 @@ class ImportMap extends SugarBean
 
         // Bug 23354 - Make sure enclosure gets saved as an empty string if
         // it is an empty string, instead of as a null
-        if (strlen($enclosure) <= 0) {
+        if (strlen((string) $enclosure) <= 0) {
             $enclosure = ' ';
         }
 
@@ -383,7 +386,7 @@ class ImportMap extends SugarBean
 
         //retrieve user preferences and populate preference array
         $preference_values_str = $current_user->getPreference('field_values', 'import');
-        $preference_values = json_decode($preference_values_str, true);
+        $preference_values = json_decode((string) $preference_values_str, true, 512, JSON_THROW_ON_ERROR);
 
         foreach ($import_step_fields as $val) {
             //overwrite preference array with new values from request if the value is different or new
@@ -403,7 +406,7 @@ class ImportMap extends SugarBean
 
         //set preferences if any changes were made and return the new array
         if ($set) {
-            $preference_values_str =  json_encode($preference_values);
+            $preference_values_str =  json_encode($preference_values, JSON_THROW_ON_ERROR);
             $current_user->setPreference('field_values', $preference_values_str, 0, 'import');
         }
         if (empty($preference_values)) {

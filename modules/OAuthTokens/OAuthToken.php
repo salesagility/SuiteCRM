@@ -47,6 +47,7 @@ require_once 'modules/OAuthKeys/OAuthKey.php';
 /**
  * OAuth token
  */
+#[\AllowDynamicProperties]
 class OAuthToken extends SugarBean
 {
     public $module_dir = 'OAuthTokens';
@@ -67,9 +68,9 @@ class OAuthToken extends SugarBean
     // so it's an extension point for the future
     public $authdata;
 
-    const REQUEST = 1;
-    const ACCESS = 2;
-    const INVALID = 3;
+    public const REQUEST = 1;
+    public const ACCESS = 2;
+    public const INVALID = 3;
 
     public function __construct($token='', $secret='')
     {
@@ -137,7 +138,7 @@ class OAuthToken extends SugarBean
     public function save($check_notify = false)
     {
         $this->token_ts = time();
-        if (!isset($this->id)) {
+        if (!(property_exists($this, 'id') && $this->id !== null)) {
             $this->new_with_id = true;
             $this->id = $this->token;
         }

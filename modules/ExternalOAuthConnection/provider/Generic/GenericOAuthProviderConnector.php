@@ -62,7 +62,7 @@ class GenericOAuthProviderConnector extends ExternalOAuthProviderConnector
     public function mapAccessToken(?AccessTokenInterface $token): array
     {
 
-        if ($token === null) {
+        if (!$token instanceof \League\OAuth2\Client\Token\AccessTokenInterface) {
             return [];
         }
 

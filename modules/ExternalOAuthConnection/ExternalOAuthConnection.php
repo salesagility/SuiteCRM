@@ -45,6 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * OAuth connection
  */
+#[\AllowDynamicProperties]
 class ExternalOAuthConnection extends Basic
 {
     public $module_dir = 'ExternalOAuthConnection';

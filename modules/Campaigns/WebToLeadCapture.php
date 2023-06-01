@@ -183,7 +183,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             $redirect_url = $_POST['redirect_url'];
             $query_string = '';
             $first_char = '&';
-            if (strpos($redirect_url, '?') === false) {
+            if (strpos((string) $redirect_url, '?') === false) {
                 $first_char = '?';
             }
             $first_iteration = true;

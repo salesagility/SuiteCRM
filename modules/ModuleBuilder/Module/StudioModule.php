@@ -45,6 +45,7 @@ require_once 'modules/ModuleBuilder/parsers/constants.php';
 require_once 'IconRepository.php';
 
 
+#[\AllowDynamicProperties]
 class StudioModule
 {
     /**
@@ -402,10 +403,10 @@ class StudioModule
                 $title = translate($label);
                 if ($label == 'LBL_BASIC_SEARCH') {
                     $name = 'BasicSearch';
-                } elseif ($label == 'LBL_ADVANCED_SEARCH') {
+                } elseif ($label === 'LBL_ADVANCED_SEARCH') {
                     $name = 'AdvancedSearch';
                 } else {
-                    $name = str_replace(' ', '', $title);
+                    $name = str_replace(' ', '', (string) $title);
                 }
                 $nodes [$title] = array(
                     'name' => $title,
@@ -486,10 +487,10 @@ class StudioModule
             if (is_dir($dir)) {
                 foreach (scandir($dir) as $fileName) {
                     // sanity check to confirm that this is a usable subpanel...
-                    if (substr($fileName, 0, 1) !== '.' && substr(strtolower($fileName), -4) == ".php"
+                    if (substr((string) $fileName, 0, 1) !== '.' && substr(strtolower($fileName), -4) == ".php"
                         && AbstractRelationships::validSubpanel("$dir/$fileName")
                     ) {
-                        $subname = str_replace('.php', '', $fileName);
+                        $subname = str_replace('.php', '', (string) $fileName);
                         $this->providedSubpanels [$subname] = $subname;
                     }
                 }

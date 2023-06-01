@@ -5,10 +5,12 @@
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/jjwg_Maps/jjwg_Maps.php');
 
+#[\AllowDynamicProperties]
 class jjwg_MapsDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
+        $dashletData = [];
         require('modules/jjwg_Maps/metadata/dashletviewdefs.php');
 
         parent::__construct($id, $def);

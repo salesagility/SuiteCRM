@@ -38,10 +38,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates.php');
 
+#[\AllowDynamicProperties]
 class AOS_PDF_TemplatesDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
+        $dashletData = [];
         global $current_user, $app_strings;
         require('modules/AOS_PDF_Templates/metadata/dashletviewdefs.php');
 

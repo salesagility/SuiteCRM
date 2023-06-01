@@ -51,10 +51,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/SugarObjects/forms/FormBase.php');
 
+#[\AllowDynamicProperties]
 class MeetingFormBase extends FormBase
 {
     public function getFormBody($prefix, $mod='', $formname='')
     {
+        $lbl_subject = null;
         if (!ACLController::checkAccess('Meetings', 'edit', true)) {
             return '';
         }
@@ -187,14 +189,14 @@ EOQ;
             return null;
         }
 
-        if (!isset($_POST['reminder_checked']) or (isset($_POST['reminder_checked']) && $_POST['reminder_checked'] == '0')) {
+        if (!isset($_POST['reminder_checked']) || isset($_POST['reminder_checked']) && $_POST['reminder_checked'] == '0') {
             $_POST['reminder_time'] = -1;
         }
         if (!isset($_POST['reminder_time'])) {
             $_POST['reminder_time'] = $current_user->getPreference('reminder_time');
             $_POST['reminder_checked']=1;
         }
-    
+
         if (!isset($_POST['email_reminder_checked']) || (isset($_POST['email_reminder_checked']) && $_POST['email_reminder_checked'] == '0')) {
             $_POST['email_reminder_time'] = -1;
         }
@@ -202,13 +204,13 @@ EOQ;
             $_POST['email_reminder_time'] = $current_user->getPreference('email_reminder_time');
             $_POST['email_reminder_checked'] = 1;
         }
-    
+
         // don't allow to set recurring_source from a form
         unset($_POST['recurring_source']);
-    
+
         $time_format = $timedate->get_user_time_format();
         $time_separator = ":";
-        if (preg_match('/\d+([^\d])\d+([^\d]*)/s', $time_format, $match)) {
+        if (preg_match('/\d+([^\d])\d+([^\d]*)/s', (string) $time_format, $match)) {
             $time_separator = $match[1];
         }
 
@@ -220,7 +222,7 @@ EOQ;
             $_POST[$prefix.'time_start'] = $timedate->merge_time_meridiem($_POST[$prefix.'time_start'], $timedate->get_time_format(), $_POST[$prefix.'meridiem']);
         }
 
-        if (isset($_POST[$prefix.'time_start']) && strlen($_POST[$prefix.'date_start']) == 10) {
+        if (isset($_POST[$prefix.'time_start']) && strlen((string) $_POST[$prefix.'date_start']) == 10) {
             $_POST[$prefix.'date_start'] = $_POST[$prefix.'date_start'] . ' ' . $_POST[$prefix.'time_start'];
         }
 
@@ -476,7 +478,7 @@ EOQ;
 
                 // Bug #49195 : update vcal
                 vCal::cache_sugar_vcal($current_user);
-            
+
                 // CCL - Comment out call to set $current_user as invitee
                 // set organizer to auto-accept
                 if ($focus->assigned_user_id == $current_user->id && $newBean) {

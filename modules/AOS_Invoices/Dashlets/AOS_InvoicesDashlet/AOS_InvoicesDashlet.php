@@ -38,10 +38,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOS_Invoices/AOS_Invoices.php');
 
+#[\AllowDynamicProperties]
 class AOS_InvoicesDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
+        $dashletData = [];
         global $current_user, $app_strings;
         require('modules/AOS_Invoices/metadata/dashletviewdefs.php');
 

@@ -25,6 +25,7 @@
 
 function display_action_lines(SugarBean $focus, $field, $value, $view)
 {
+    $app_list_actions = [];
     global $locale, $app_list_strings, $mod_strings;
 
     $html = '';
@@ -80,7 +81,7 @@ function display_action_lines(SugarBean $focus, $field, $value, $view)
                 while ($row = $focus->db->fetchByAssoc($result)) {
                     $action_name = BeanFactory::newBean('AOW_Actions');
                     $action_name->retrieve($row['id']);
-                    $action_item = json_encode($action_name->toArray());
+                    $action_item = json_encode($action_name->toArray(), JSON_THROW_ON_ERROR);
 
                     $html .= "<script>
                             loadActionLine(".$action_item.");

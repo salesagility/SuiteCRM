@@ -43,6 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 require_once('include/utils/array_utils.php');
+#[\AllowDynamicProperties]
 class TemplateEnum extends TemplateText
 {
     public $max_size = 100;
@@ -68,7 +69,7 @@ class TemplateEnum extends TemplateText
     {
         parent::populateFromPost();
         if (!empty($this->visibility_grid) && is_string($this->visibility_grid)) {
-            $this->visibility_grid = json_decode(html_entity_decode($this->visibility_grid), true);
+            $this->visibility_grid = json_decode(html_entity_decode($this->visibility_grid), true, 512, JSON_THROW_ON_ERROR);
         }
         // now convert trigger,action pairs into a dependency array representation
         // we expect the dependencies in the following format:
@@ -85,7 +86,8 @@ class TemplateEnum extends TemplateText
             $dependencies = array() ;
 
             if (is_array($this->trigger) && is_array($this->action)) {
-                for ($i = 0 ; $i < count($this->action) ; $i++) {
+                $actionCount = count($this->action);
+                for ($i = 0 ; $i < $actionCount ; $i++) {
                     $dependencies [ $this->trigger [ $i ] ] = $this->action [ $i ] ;
                 }
                 $this->dependency = $dependencies ;
@@ -101,6 +103,7 @@ class TemplateEnum extends TemplateText
     }
     public function get_xtpl_edit()
     {
+        $returnXTPL = [];
         $name = $this->name;
         $value = '';
         if (isset($this->bean->$name)) {
@@ -149,8 +152,8 @@ class TemplateEnum extends TemplateText
         $def['len'] = $this->max_size;
         $def['studio'] = 'visible';
         // this class may be extended, so only do the unserialize for genuine TemplateEnums
-        if (get_class($this) == 'TemplateEnum' && empty($def['dependency'])) {
-            $def['dependency'] = isset($this->ext4)? unserialize(html_entity_decode($this->ext4)) : null ;
+        if ($this instanceof \TemplateEnum && empty($def['dependency'])) {
+            $def['dependency'] = $this->ext4 !== null? unserialize(html_entity_decode((string) $this->ext4)) : null ;
         }
         if (!empty($this->visibility_grid)) {
             $def['visibility_grid'] = $this->visibility_grid;
@@ -173,8 +176,8 @@ class TemplateEnum extends TemplateText
         if (isset($this->bean->$name)) {
             $key = $this->bean->$name;
             global $app_list_strings;
-            if (preg_match('/&amp;/s', $key)) {
-                $key = str_replace('&amp;', '&', $key);
+            if (preg_match('/&amp;/s', (string) $key)) {
+                $key = str_replace('&amp;', '&', (string) $key);
             }
             if (isset($app_list_strings[$this->ext1])) {
                 if (isset($app_list_strings[$this->ext1][$key])) {
@@ -198,7 +201,7 @@ class TemplateEnum extends TemplateText
             $this->default = $this->default[0];
         }
         if (!empty($this->visibility_grid) && is_string($this->visibility_grid)) {
-            $this->visibility_grid = json_decode($this->visibility_grid, true);
+            $this->visibility_grid = json_decode($this->visibility_grid, true, 512, JSON_THROW_ON_ERROR);
         }
         parent::save($df);
     }

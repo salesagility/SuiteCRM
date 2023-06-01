@@ -50,6 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 
+#[\AllowDynamicProperties]
 class ProspectListFormBase
 {
     public function getForm($prefix, $mod='', $form='')

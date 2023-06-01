@@ -45,6 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $timedate;
 
+#[\AllowDynamicProperties]
 class CalendarGrid
 {
     protected $cal; // Calendar object
@@ -191,6 +192,7 @@ class CalendarGrid
 
     public function display_mobile()
     {
+        $agenda_array = [];
         global $mod_strings;
 
         $str = "<div class='mobile_calendar_container'>";
@@ -216,7 +218,7 @@ class CalendarGrid
 
                 $i = 0;
 
-                while ($i < count($agenda_array[$day])) {
+                while ($i < (is_countable($agenda_array[$day]) ? count($agenda_array[$day]) : 0)) {
                     $day_item = $agenda_array[$day][$i];
 
                     $str .= $this->mobile_display_items($day_item);

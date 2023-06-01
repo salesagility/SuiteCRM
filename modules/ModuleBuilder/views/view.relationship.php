@@ -45,6 +45,7 @@ require_once('modules/ModuleBuilder/Module/StudioBrowser.php') ;
 require_once('modules/ModuleBuilder/parsers/constants.php') ;
 require_once 'modules/ModuleBuilder/parsers/relationships/RelationshipFactory.php' ;
 
+#[\AllowDynamicProperties]
 class ViewRelationship extends SugarView
 {
     /**
@@ -167,10 +168,10 @@ class ViewRelationship extends SugarView
 
             // fix up the available cardinality options
             $relationship_type = $relationship->getType() ;
-            if (count($lhs_subpanels) == 0 || count($rhs_subpanels) == 0) {
+            if ((is_countable($lhs_subpanels) ? count($lhs_subpanels) : 0) == 0 || (is_countable($rhs_subpanels) ? count($rhs_subpanels) : 0) == 0) {
                 unset($cardinality [ MB_MANYTOMANY ]) ;
             }
-            if (count($rhs_subpanels) == 0) {
+            if ((is_countable($rhs_subpanels) ? count($rhs_subpanels) : 0) == 0) {
                 unset($cardinality [ MB_ONETOMANY ]) ;
             }
 
@@ -188,8 +189,7 @@ class ViewRelationship extends SugarView
                 unset($cardinality [ MB_MANYTOONE ]);
             }
             if (! isset($cardinality[$relationship->getType()])) {
-                end($cardinality) ;
-                $definition [ 'relationship_type' ] = key($cardinality) ;
+                $definition [ 'relationship_type' ] = array_key_last($cardinality) ;
                 $relationship = RelationshipFactory::newRelationship($definition) ;
             }
             

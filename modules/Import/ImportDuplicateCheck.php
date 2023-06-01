@@ -49,6 +49,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  */
 
+#[\AllowDynamicProperties]
 class ImportDuplicateCheck
 {
     /**
@@ -160,11 +161,11 @@ class ImportDuplicateCheck
                         if ($tmpField == 'deleted') {
                             continue;
                         }
-                        if (strlen($this->_focus->$tmpField) > 0) {
+                        if (strlen((string) $this->_focus->$tmpField) > 0) {
                             $index_fields[$tmpField] = $this->_focus->$tmpField;
                         }
                     }
-                } elseif ($field != 'deleted' && strlen($this->_focus->$field) > 0) {
+                } elseif ($field != 'deleted' && strlen((string) $this->_focus->$field) > 0) {
                     $index_fields[$field] = $this->_focus->$field;
                 }
 
@@ -276,7 +277,7 @@ class ImportDuplicateCheck
                         continue;
                     }
                     if (!in_array($field, $index_fields)) {
-                        if (isset($this->_focus->$field) && strlen($this->_focus->$field) > 0) {
+                        if (isset($this->_focus->$field) && strlen((string) $this->_focus->$field) > 0) {
                             $index_fields[$field] = $this->_focus->$field;
                         }
                     }

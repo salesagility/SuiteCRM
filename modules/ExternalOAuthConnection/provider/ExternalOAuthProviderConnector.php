@@ -49,6 +49,7 @@ use League\OAuth2\Client\Token\AccessTokenInterface;
 
 require_once __DIR__ . '/ExternalOAuthProviderConnectorInterface.php';
 
+#[\AllowDynamicProperties]
 abstract class ExternalOAuthProviderConnector implements ExternalOAuthProviderConnectorInterface
 {
     /**
@@ -114,7 +115,7 @@ abstract class ExternalOAuthProviderConnector implements ExternalOAuthProviderCo
         $provider = $this->getProvider($requestClientId, $requestClientSecret);
         $config = $this->getProviderConfig();
 
-        if ($provider === null || empty($config)) {
+        if (!$provider instanceof \League\OAuth2\Client\Provider\AbstractProvider || empty($config)) {
             return '';
         }
 
@@ -133,7 +134,7 @@ abstract class ExternalOAuthProviderConnector implements ExternalOAuthProviderCo
         $config = $this->getProviderConfig();
         $provider = $this->getProvider('', '');
 
-        if ($provider === null || empty($config)) {
+        if (!$provider instanceof \League\OAuth2\Client\Provider\AbstractProvider || empty($config)) {
             return null;
         }
 
@@ -157,7 +158,7 @@ abstract class ExternalOAuthProviderConnector implements ExternalOAuthProviderCo
         $config = $this->getProviderConfig();
         $provider = $this->getProvider('', '');
 
-        if ($provider === null || empty($config)) {
+        if (!$provider instanceof \League\OAuth2\Client\Provider\AbstractProvider || empty($config)) {
             return null;
         }
 

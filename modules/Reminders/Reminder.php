@@ -42,9 +42,10 @@
  * Reminder class
  *
  */
+#[\AllowDynamicProperties]
 class Reminder extends Basic
 {
-    const UPGRADE_VERSION = '7.4.3';
+    public const UPGRADE_VERSION = '7.4.3';
 
     public $name;
 
@@ -458,7 +459,7 @@ class Reminder extends Basic
     private static function unQuoteTime($timestr)
     {
         $ret = '';
-        for ($i = 0; $i < strlen($timestr); $i++) {
+        for ($i = 0; $i < strlen((string) $timestr); $i++) {
             if ($timestr[$i] != "'") {
                 $ret .= $timestr[$i];
             }
@@ -478,7 +479,7 @@ class Reminder extends Basic
         if ($acceptStats = self::getEventPersonAcceptStatus($event, $person)) {
             $acceptStatusLower = strtolower($acceptStatus);
             foreach ((array)$acceptStats as $acceptStat) {
-                if (strtolower($acceptStat) == $acceptStatusLower) {
+                if (strtolower($acceptStat) === $acceptStatusLower) {
                     return true;
                 }
             }
@@ -520,7 +521,7 @@ class Reminder extends Basic
 
     private static function getEventPersonQuery(SugarBean $event, SugarBean $person)
     {
-        $eventIdField = array_search($event->table_name, $event->relationship_fields);
+        $eventIdField = array_search($event->table_name, $event->relationship_fields, true);
         if (!$eventIdField) {
             $eventIdField = strtolower($event->object_name . '_id');
         }
@@ -789,7 +790,7 @@ class Reminder extends Basic
         $tpl->assign('remindersData', Reminder::loadRemindersData($event->module_name, $event->id));
         $tpl->assign('remindersDataJson', Reminder::loadRemindersDataJson($event->module_name, $event->id));
         $tpl->assign('remindersDefaultValuesDataJson', Reminder::loadRemindersDefaultValuesDataJson());
-        $tpl->assign('remindersDisabled', json_encode(true));
+        $tpl->assign('remindersDisabled', json_encode(true, JSON_THROW_ON_ERROR));
         return $tpl->fetch('modules/Reminders/tpls/reminders.tpl');
     }
 

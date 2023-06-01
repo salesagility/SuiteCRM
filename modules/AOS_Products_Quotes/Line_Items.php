@@ -65,13 +65,13 @@ function display_lines($focus, $field, $value, $view)
             while ($row = $focus->db->fetchByAssoc($result)) {
                 $line_item = BeanFactory::newBean('AOS_Products_Quotes');
                 $line_item->retrieve($row['id'], false);
-                $line_item = json_encode($line_item->toArray());
+                $line_item = json_encode($line_item->toArray(), JSON_THROW_ON_ERROR);
 
                 $group_item = 'null';
                 if ($row['group_id'] != null) {
                     $group_item = BeanFactory::newBean('AOS_Line_Item_Groups');
                     $group_item->retrieve($row['group_id'], false);
-                    $group_item = json_encode($group_item->toArray());
+                    $group_item = json_encode($group_item->toArray(), JSON_THROW_ON_ERROR);
                 }
                 $html .= "<script>
                         insertLineItems(" . $line_item . "," . $group_item . ");
@@ -227,7 +227,7 @@ function display_lines($focus, $field, $value, $view)
 //will also be stripped off) The custom decimal separator is passed in to the function from the locale settings
 function stripDecimalPointsAndTrailingZeroes($inputString, $decimalSeparator)
 {
-    return preg_replace('/'.preg_quote($decimalSeparator).'[0]+$/', '', $inputString);
+    return preg_replace('/'.preg_quote((string) $decimalSeparator).'[0]+$/', '', (string) $inputString);
 }
 
 function get_discount_string($type, $amount, $params, $locale, $sep)

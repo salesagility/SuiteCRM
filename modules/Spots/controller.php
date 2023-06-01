@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * Class SpotsController.
  */
+#[\AllowDynamicProperties]
 class SpotsController extends SugarController
 {
     protected $nullSqlPlaceholder = '';
@@ -150,7 +151,7 @@ EOF;
             $x->{$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_BILLING_COUNTRY']} = $row['billing_address_country'];
             $returnArray[] = $x;
         }
-        file_put_contents($filepath, json_encode($returnArray));
+        file_put_contents($filepath, json_encode($returnArray, JSON_THROW_ON_ERROR));
     }
 
     /**
@@ -817,7 +818,7 @@ EOF;
 
             $returnArray[] = $x;
         }
-        file_put_contents($filepath, json_encode($returnArray));
+        file_put_contents($filepath, json_encode($returnArray, JSON_THROW_ON_ERROR));
     }
 
     /**

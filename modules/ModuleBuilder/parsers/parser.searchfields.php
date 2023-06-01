@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php') ;
 require_once('modules/ModuleBuilder/MB/MBPackage.php');
 
+#[\AllowDynamicProperties]
 class ParserSearchFields extends ModuleBuilderParser
 {
     public $searchFields;
@@ -67,13 +68,13 @@ class ParserSearchFields extends ModuleBuilderParser
             return;
         }
 
-        $key = isset($this->packageKey) ? $this->packageKey . '_' . $this->moduleName : $this->moduleName;
+        $key = $this->packageKey !== null ? $this->packageKey . '_' . $this->moduleName : $this->moduleName;
         $this->searchFields[$key][$name] = $searchField;
     }
 
     public function removeSearchField($name)
     {
-        $key = isset($this->packageKey) ? $this->packageKey . '_' . $this->moduleName : $this->moduleName;
+        $key = $this->packageKey !== null ? $this->packageKey . '_' . $this->moduleName : $this->moduleName;
 
         if (isset($this->searchFields[$key][$name])) {
             unset($this->searchFields[$key][$name]);

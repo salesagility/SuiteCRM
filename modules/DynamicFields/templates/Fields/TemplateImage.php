@@ -44,6 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/DynamicFields/templates/Fields/TemplateText.php');
 class TemplateImage extends TemplateText
 {
+    public $border;
+    public $width;
+    public $height;
     public $type = 'image';
         
     public function get_field_def()
@@ -54,22 +57,22 @@ class TemplateImage extends TemplateText
         $def['dbType'] = 'varchar';
         $def['len']= 255;
         
-        if (isset($this->ext1)) {
+        if ($this->ext1 !== null) {
             $def[ 'border' ] 	= $this->ext1 ;
         }
-        if (isset($this->ext2)) {
+        if ($this->ext2 !== null) {
             $def[ 'width' ] 	= $this->ext2 ;
         }
-        if (isset($this->ext3)) {
+        if ($this->ext3 !== null) {
             $def[ 'height' ] 	= $this->ext3 ;
         }
-        if (isset($this->border)) {
+        if (property_exists($this, 'border') && $this->border !== null) {
             $def[ 'border' ] 	= $this->border ;
         }
-        if (isset($this->width)) {
+        if (property_exists($this, 'width') && $this->width !== null) {
             $def[ 'width' ] 	= $this->width ;
         }
-        if (isset($this->height)) {
+        if (property_exists($this, 'height') && $this->height !== null) {
             $def[ 'height' ] 	= $this->height ;
         }
         

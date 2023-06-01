@@ -41,6 +41,7 @@
 require_once('include/EditView/EditView2.php');
 
 
+#[\AllowDynamicProperties]
 class CalendarViewCreateInvitee extends SugarView
 {
     public function preDisplay()
@@ -76,7 +77,7 @@ class CalendarViewCreateInvitee extends SugarView
         }
             
         ob_clean();
-        echo json_encode($sendbackArr);
+        echo json_encode($sendbackArr, JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -88,7 +89,7 @@ class CalendarViewCreateInvitee extends SugarView
         echo json_encode(array(
             'noAccess' => true,
             'module' => $module,
-        ));
+        ), JSON_THROW_ON_ERROR);
         sugar_cleanup(true);
     }
 }

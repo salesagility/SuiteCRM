@@ -49,6 +49,7 @@ require_once __DIR__ . '/../provider/ExternalOAuthProviderConnectorInterface.php
 require_once __DIR__ . '/../provider/Generic/GenericOAuthProviderConnector.php';
 require_once __DIR__ . '/../provider/Microsoft/MicrosoftOAuthProviderConnector.php';
 
+#[\AllowDynamicProperties]
 class OAuthAuthorizationService
 {
 
@@ -68,7 +69,7 @@ class OAuthAuthorizationService
 
         $provider = $this->getProvider($providerId);
 
-        return $provider !== null;
+        return $provider instanceof \ExternalOAuthProviderConnectorInterface;
     }
 
     /**
@@ -113,7 +114,7 @@ class OAuthAuthorizationService
     ): void {
         $provider = $this->getProvider($providerId);
 
-        if ($provider === null) {
+        if (!$provider instanceof \ExternalOAuthProviderConnectorInterface) {
             $this->log('fatal', 'OAuthAuthorizationService::authorizationRedirect::provider', 'provider not found');
             return;
         }
@@ -135,7 +136,7 @@ class OAuthAuthorizationService
     {
         $provider = $this->getProvider($providerId);
 
-        if ($provider === null) {
+        if (!$provider instanceof \ExternalOAuthProviderConnectorInterface) {
             $this->log('fatal', 'OAuthAuthorizationService::getAccessToken::provider', 'provider not found');
             return null;
         }
@@ -174,7 +175,7 @@ class OAuthAuthorizationService
 
         $provider = $this->getProvider($providerId);
 
-        if ($provider === null) {
+        if (!$provider instanceof \ExternalOAuthProviderConnectorInterface) {
             $this->log('fatal', 'OAuthAuthorizationService::refreshConnectionToken::provider', 'provider not found');
             return [
                 'success' => false,
@@ -196,7 +197,7 @@ class OAuthAuthorizationService
 
         $token =  $provider->refreshAccessToken($refreshToken);
 
-        if ($token === null) {
+        if (!$token instanceof \League\OAuth2\Client\Token\AccessTokenInterface) {
             $this->log('fatal', 'OAuthAuthorizationService::refreshToken::token', 'Not able to get access token. Check logs for more details');
             return [
                 'success' => false,
@@ -271,13 +272,13 @@ class OAuthAuthorizationService
      * Map token to bean fields array
      * @param string $providerId
      * @param AccessTokenInterface|null $token
-     * @return array|null
+     * @return mixed[]
      */
     public function mapToken(string $providerId, ?AccessTokenInterface $token): array
     {
         $provider = $this->getProvider($providerId);
 
-        if ($provider === null || $token === null) {
+        if (!$provider instanceof \ExternalOAuthProviderConnectorInterface || !$token instanceof \League\OAuth2\Client\Token\AccessTokenInterface) {
             return [];
         }
 

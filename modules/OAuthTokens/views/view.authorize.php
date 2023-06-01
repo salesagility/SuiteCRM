@@ -45,6 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once 'include/SugarOAuthServer.php';
 
+#[\AllowDynamicProperties]
 class OauthTokensViewAuthorize extends SugarView
 {
     public function display()
@@ -62,7 +63,7 @@ class OauthTokensViewAuthorize extends SugarView
         $sugar_smarty->assign('token', $_REQUEST['token']);
         $sugar_smarty->assign('sid', session_id());
         $token = OAuthToken::load($_REQUEST['token']);
-        if (empty($token) || empty($token->consumer) || $token->tstate != OAuthToken::REQUEST || empty($token->consumer_obj)) {
+        if (!$token instanceof \OAuthToken || empty($token->consumer) || $token->tstate != OAuthToken::REQUEST || empty($token->consumer_obj)) {
             sugar_die('Invalid token');
         }
 
@@ -86,7 +87,7 @@ class OauthTokensViewAuthorize extends SugarView
             $verify = $token->authorize(array("user" => $current_user->id));
             if (!empty($token->callback_url)) {
                 $redirect_url=$token->callback_url;
-                if (strstr($redirect_url, "?") !== false) {
+                if (strstr((string) $redirect_url, "?") !== false) {
                     $redirect_url .= '&';
                 } else {
                     $redirect_url .= '?';

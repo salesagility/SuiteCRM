@@ -80,6 +80,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
     ) {
 
 
+        $ret_array = [];
         // Create the data structure which are required to view a list view.
         require_once 'include/SearchForm/SearchForm2.php';
         $this->lvde->seed =& $seed;
@@ -103,8 +104,8 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
 
         // TODO: figure out why was it for?
         $orderby = $order['orderBy'];
-        if (strpos($order['orderBy'], '.') && ($order['orderBy'] != "report_cache.date_modified")) {
-            $orderby = substr($order['orderBy'], strpos($order['orderBy'], '.') + 1);
+        if (strpos((string) $order['orderBy'], '.') && ($order['orderBy'] != "report_cache.date_modified")) {
+            $orderby = substr((string) $order['orderBy'], strpos((string) $order['orderBy'], '.') + 1);
         }
 
 
@@ -377,7 +378,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
                         )
                     ) {
                         // Ensure the encoding is UTF-8
-                        $queryString = htmlentities($request[$field_name], null, 'UTF-8');
+                        $queryString = htmlentities((string) $request[$field_name], null, 'UTF-8');
                         break;
                     }
                 }

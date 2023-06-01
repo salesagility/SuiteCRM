@@ -49,6 +49,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  */
 
+#[\AllowDynamicProperties]
 class ImportFileSplitter
 {
     /**
@@ -148,7 +149,7 @@ class ImportFileSplitter
             $enclosure = trim($enclosure);
             if (!empty($enclosure)) {
                 foreach ($row as $key => $v) {
-                    $row[$key] = str_replace($enclosure, $enclosure.$enclosure, $v);
+                    $row[$key] = str_replace($enclosure, $enclosure.$enclosure, (string) $v);
                 }
             }
             $line = $enclosure.implode($enclosure.$delimiter.$enclosure, $row).$enclosure.PHP_EOL;
@@ -171,7 +172,7 @@ class ImportFileSplitter
      */
     public function getRecordCount()
     {
-        if (!isset($this->_recordCount)) {
+        if (!($this->_recordCount !== null)) {
             return false;
         }
 
@@ -185,7 +186,7 @@ class ImportFileSplitter
      */
     public function getFileCount()
     {
-        if (!isset($this->_fileCount)) {
+        if (!($this->_fileCount !== null)) {
             return false;
         }
 

@@ -42,6 +42,7 @@
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
 require_once('modules/OutboundEmailAccounts/OutboundEmailAccounts_sugar.php');
+#[\AllowDynamicProperties]
 class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
 {
 

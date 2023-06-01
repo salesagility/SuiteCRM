@@ -45,6 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * OAuth provider
  */
+#[\AllowDynamicProperties]
 class ExternalOAuthProvider extends Basic
 {
     public $module_dir = 'ExternalOAuthProvider';
@@ -322,7 +323,7 @@ class ExternalOAuthProvider extends Basic
 
         $siteUrl = $sugar_config['site_url'] ?? '';
 
-        $siteUrl = str_ireplace('index.php', '', $siteUrl);
+        $siteUrl = str_ireplace('index.php', '', (string) $siteUrl);
         $siteUrl = rtrim($siteUrl, " \t\n\r\0\x0B\/");
 
         return $siteUrl . '/index.php?entryPoint=setExternalOAuthToken';
@@ -377,7 +378,7 @@ class ExternalOAuthProvider extends Basic
         }
 
         try {
-            $params = json_decode(html_entity_decode($this->$field), true, 512, JSON_THROW_ON_ERROR);
+            $params = json_decode(html_entity_decode((string) $this->$field), true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
             return [];
         }

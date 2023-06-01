@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  // hack to allow "&", "%" and "+" through a $_GET var
 // set by ie_test_open_popup() javascript call
 foreach ($_REQUEST as $k => $v) {
-    $v = str_replace('::amp::', '&', $v);
+    $v = str_replace('::amp::', '&', (string) $v);
     $v = str_replace('::plus::', '+', $v);
     $v = str_replace('::percent::', '%', $v);
     $_REQUEST[$k] = $v;
@@ -122,7 +122,7 @@ $ie->port           = $_REQUEST['port'];
 $ie->protocol       = $_REQUEST['protocol'];
 //Bug 23083.Special characters in email password results in IMAP authentication failure
 if (!empty($_REQUEST['email_password'])) {
-    $ie->email_password = html_entity_decode($_REQUEST['email_password'], ENT_QUOTES);
+    $ie->email_password = html_entity_decode((string) $_REQUEST['email_password'], ENT_QUOTES);
     $ie->email_password = str_rot13($ie->email_password);
 }
 //$ie->mailbox      = $_REQUEST['mailbox'];
@@ -244,7 +244,7 @@ echo '	</table>';
 ///////////////////////////////////////////////////////////////////////////////
 ////	COMPLETE RENDERING OF THE POPUP
 echo '<input type="hidden" id="sf_returnstatus" name="returnstatus" value="'. $returnArray['status'] .'">';
-echo '<input type="hidden" id="sf_foldersList" name="foldersList" value="'. htmlspecialchars($foldersList) .'">';
+echo '<input type="hidden" id="sf_foldersList" name="foldersList" value="'. htmlspecialchars((string) $foldersList) .'">';
 echo '<input type="hidden" id="sf_selectedfoldersList" name="selectedfoldersList" value="'. implode(",", $requestMailBox) .'">';
 echo '<input type="hidden" id="sf_searchField" name="searchField" value="'. $searchField .'">';
 

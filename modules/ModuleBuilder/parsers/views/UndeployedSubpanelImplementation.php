@@ -54,10 +54,13 @@ require_once 'modules/ModuleBuilder/parsers/constants.php' ;
  * For subpanels we must make use of the SubPanelDefinitions class to do this; this also means that the history mechanism,
  * which tracks files, not objects, needs us to create an intermediate file representation of the definition that it can manage and restore
  */
+#[\AllowDynamicProperties]
+#[\AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class UndeployedSubpanelImplementation extends AbstractMetaDataImplementation implements MetaDataImplementationInterface
 {
-    const HISTORYFILENAME = 'restored.php' ;
-    const HISTORYVARIABLENAME = 'layout_defs' ;
+    public const HISTORYFILENAME = 'restored.php' ;
+    public const HISTORYVARIABLENAME = 'layout_defs' ;
 
     /**
      * Constructor
@@ -67,6 +70,7 @@ class UndeployedSubpanelImplementation extends AbstractMetaDataImplementation im
      */
     public function __construct($subpanelName, $moduleName, $packageName)
     {
+        $subpanel_layout = [];
         $this->_subpanelName = $subpanelName ;
         $this->_moduleName = $moduleName ;
 

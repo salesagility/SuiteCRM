@@ -48,6 +48,7 @@ require_once 'modules/ModuleBuilder/parsers/ModuleBuilderParser.php';
 /**
  * Class ParserLabel
  */
+#[\AllowDynamicProperties]
 class ParserLabel
 {
     /**
@@ -126,6 +127,7 @@ class ParserLabel
      */
     public static function removeLabel($language, $label, $labelvalue, $moduleName, $basepath = null, $forRelationshipLabel = false)
     {
+        $deployedModule = null;
         static::setLogger();
 
         static::$logger->debug("ParserLabel::removeLabels($language, \$label, \$labelvalue, $moduleName, $basepath );");

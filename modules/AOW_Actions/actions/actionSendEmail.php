@@ -140,7 +140,7 @@ class actionSendEmail extends actionBase
         if (isset($params['email_target_type'])) {
             foreach ($params['email_target_type'] as $key => $field) {
                 if (is_array($params['email'][$key])) {
-                    $params['email'][$key] = json_encode($params['email'][$key]);
+                    $params['email'][$key] = json_encode($params['email'][$key], JSON_THROW_ON_ERROR);
                 }
                 $html .= "load_emailline('".$line."','".$params['email_to_type'][$key]."','".$params['email_target_type'][$key]."','".$params['email'][$key]."');";
             }
@@ -386,6 +386,7 @@ class actionSendEmail extends actionBase
 
     public function parse_template(SugarBean $bean, &$template, $object_override = array())
     {
+        $object_arr = [];
         global $sugar_config;
 
         require_once __DIR__ . '/templateParser.php';
@@ -424,7 +425,7 @@ class actionSendEmail extends actionBase
 
         $object_arr = array_merge($object_arr, $object_override);
 
-        $parsedSiteUrl = parse_url($sugar_config['site_url']);
+        $parsedSiteUrl = parse_url((string) $sugar_config['site_url']);
         $host = $parsedSiteUrl['host'];
         if (!isset($parsedSiteUrl['port'])) {
             $parsedSiteUrl['port'] = 80;
@@ -436,15 +437,15 @@ class actionSendEmail extends actionBase
 
         $url =  $cleanUrl."/index.php?module={$bean->module_dir}&action=DetailView&record={$bean->id}";
 
-        $template->subject = str_replace("\$contact_user", "\$user", $template->subject);
-        $template->body_html = str_replace("\$contact_user", "\$user", $template->body_html);
-        $template->body = str_replace("\$contact_user", "\$user", $template->body);
+        $template->subject = str_replace("\$contact_user", "\$user", (string) $template->subject);
+        $template->body_html = str_replace("\$contact_user", "\$user", (string) $template->body_html);
+        $template->body = str_replace("\$contact_user", "\$user", (string) $template->body);
         $template->subject = aowTemplateParser::parse_template($template->subject, $object_arr);
         $template->body_html = aowTemplateParser::parse_template($template->body_html, $object_arr);
-        $template->body_html = str_replace("\$url", $url, $template->body_html);
+        $template->body_html = str_replace("\$url", $url, (string) $template->body_html);
         $template->body_html = str_replace('$sugarurl', $sugar_config['site_url'], $template->body_html);
         $template->body = aowTemplateParser::parse_template($template->body, $object_arr);
-        $template->body = str_replace("\$url", $url, $template->body);
+        $template->body = str_replace("\$url", $url, (string) $template->body);
         $template->body = str_replace('$sugarurl', $sugar_config['site_url'], $template->body);
     }
 

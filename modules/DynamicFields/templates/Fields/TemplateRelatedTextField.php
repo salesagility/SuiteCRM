@@ -48,6 +48,7 @@ require_once 'modules/ModuleBuilder/MB/ModuleBuilder.php';
 
 class TemplateRelatedTextField extends TemplateText
 {
+    public $id_name;
     public $type = 'relate';
     //ext1 is the name field
     //ext2 is the related module
@@ -74,7 +75,7 @@ class TemplateRelatedTextField extends TemplateText
     
     public function get_html_list()
     {
-        if (isset($this->bean)) {
+        if ($this->bean !== null) {
             $name = $this->bean->object_name . '.'. $this->ext1;
         } else {
             $name = $this->ext1;
@@ -312,7 +313,7 @@ class TemplateRelatedTextField extends TemplateText
         } else {
             $GLOBALS['log']->fatal('Unsupported DynamicField type');
         }
-        $viewPackage = isset($df->package)?$df->package:null;
+        $viewPackage = property_exists($df, 'package') && $df->package !== null?$df->package:null;
 
         $idLabelValue = string_format(
             $GLOBALS['mod_strings']['LBL_RELATED_FIELD_ID_NAME_LABEL'],

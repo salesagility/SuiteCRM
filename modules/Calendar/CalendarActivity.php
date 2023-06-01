@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once 'include/utils/activity_utils.php';
 
+#[\AllowDynamicProperties]
 class CalendarActivity
 {
     public $sugar_bean;
@@ -285,7 +286,7 @@ class CalendarActivity
                     $seen_ids[$focusBean->id] = 1;
                     $act = new CalendarActivity($focusBean);
 
-                    if (!empty($act)) {
+                    if ($act instanceof \CalendarActivity) {
                         $act_list[] = $act;
                     }
                 }

@@ -336,7 +336,7 @@ function create_marketing_summary($focus)
                  "<td colspan=2 align='right'>$new_mrkt_input</td></tr>";
     $mrkt_tbl .= "<tr  class='listViewHRS1'><td scope='col' width='15%'><b>".$mod_strings['LBL_MRKT_NAME']."</b></td><td width='15%' scope='col'><b>".$mod_strings['LBL_FROM_MAILBOX_NAME']."</b></td><td width='15%' scope='col'><b>".$mod_strings['LBL_STATUS_TEXT']."</b></td><td scope='col' colspan=2>&nbsp;</td></tr>";
     
-    if (count($mrkt_lists)>0) {
+    if ((is_countable($mrkt_lists) ? count($mrkt_lists) : 0)>0) {
         $mrkt_focus = BeanFactory::newBean('EmailMarketing');
         foreach ($mrkt_lists as $mrkt_id) {
             $mrkt_focus->retrieve($mrkt_id);
@@ -421,7 +421,7 @@ function create_target_summary($focus)
     $pl_tbl .= "<tr class='listViewHRS1'><td width='50%' scope='col'><b>".$mod_strings['LBL_LIST_NAME']."</b></td><td width='30%' scope='col'><b>".$mod_strings['LBL_LIST_TYPE']."</b></td>";
     $pl_tbl .= "<td width='15%' scope='col'><b>".$mod_strings['LBL_TOTAL_ENTRIES']."</b></td><td width='5%' scope='col'>&nbsp;</td></tr>";
    
-    if (count($pl_lists)>0) {
+    if ((is_countable($pl_lists) ? count($pl_lists) : 0)>0) {
         $pl_focus = BeanFactory::newBean('ProspectLists');
         foreach ($pl_lists as $pl_id) {
             if ($colorclass== "class='evenListRowS1'") {
@@ -481,7 +481,7 @@ function create_tracker_summary($focus)
     $trkr_tbl .= "<tr class='detail view'><td colspan='6'><h4> ".$mod_strings['LBL_NAVIGATION_MENU_TRACKERS']." </h4></td></tr>";
     $trkr_tbl .= "<tr class='listViewHRS1'><td width='15%' scope='col'><b>".$mod_strings['LBL_EDIT_TRACKER_NAME']."</b></td><td width='15%' scope='col'><b>".$mod_strings['LBL_EDIT_TRACKER_URL']."</b></td><td width='15%' scope='col'><b>".$mod_strings['LBL_EDIT_OPT_OUT']."</b></td></tr>";
     
-    if (count($trkr_lists)>0) {
+    if ((is_countable($trkr_lists) ? count($trkr_lists) : 0)>0) {
         foreach ($trkr_lists as $trkr_id) {
             if ($colorclass== "class='evenListRowS1'") {
                 $colorclass= "class='oddListRowS1'";
@@ -516,6 +516,7 @@ function create_tracker_summary($focus)
 
 function create_wiz_menu_items($type, $mrkt_string, $camp_url, $summ_url)
 {
+    $steps = [];
     global $mod_strings;
     
     $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN1']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignHeader.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignHeader.tpl' : 'modules/Campaigns/tpls/WizardCampaignHeader.tpl';

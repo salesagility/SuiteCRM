@@ -50,13 +50,14 @@ use SuiteCRM\Utility\SuiteValidator;
  * Separated methods specially for SyncInboundEmailAccounts sub-actions handling
  *
  */
+#[\AllowDynamicProperties]
 class SyncInboundEmailAccountsSubActionHandler
 {
 
     /**
      * @const string
      */
-    const PROCESS_OUTPUT_FILE = "modules/Administration/SyncInboundEmailAccounts/sync_output.html";
+    public const PROCESS_OUTPUT_FILE = "modules/Administration/SyncInboundEmailAccounts/sync_output.html";
 
     /**
      * @var SyncInboundEmailAccountsPage
@@ -445,7 +446,7 @@ class SyncInboundEmailAccountsSubActionHandler
      */
     protected function getCompoundMessageIdMD5(InboundEmail $ie, $uid, $msgNo = null)
     {
-        if (empty($msgNo) and !empty($uid)) {
+        if (empty($msgNo) && !empty($uid)) {
             $msgNo = $ie->getImap()->getMessageNo((int)$uid);
         }
 
@@ -454,7 +455,7 @@ class SyncInboundEmailAccountsSubActionHandler
         $message_id = $header->message_id;
         $deliveredTo = $ie->id;
         $matches = array();
-        preg_match('/(delivered-to:|x-real-to:){1}\s*(\S+)\s*\n{1}/im', $fullHeader, $matches);
+        preg_match('/(delivered-to:|x-real-to:){1}\s*(\S+)\s*\n{1}/im', (string) $fullHeader, $matches);
         if (count($matches)) {
             $deliveredTo = $matches[2];
         }

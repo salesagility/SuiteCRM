@@ -127,7 +127,7 @@ class TemplateHTML extends TemplateField
         }
         $def['studio'] = 'visible';
         $def['source'] = 'non-db';
-        $def['dbType'] = isset($this->ext3) ? $this->ext3 : 'text' ;
+        $def['dbType'] = $this->ext3 !== null ? $this->ext3 : 'text' ;
         return array_merge($def, $this->get_additional_defs());
     }
 }

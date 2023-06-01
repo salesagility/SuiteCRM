@@ -42,6 +42,7 @@ require_once('modules/ModuleBuilder/MB/AjaxCompose.php') ;
 require_once('modules/ModuleBuilder/Module/StudioModuleFactory.php') ;
 require_once('include/MVC/View/SugarView.php') ;
 
+#[\AllowDynamicProperties]
 class ModuleBuilderViewWizard extends SugarView
 {
     private $view = null ; // the wizard view to display
@@ -103,7 +104,7 @@ class ModuleBuilderViewWizard extends SugarView
         ) {
         $this->ajax->addCrumb(translate('LBL_STUDIO'), 'ModuleBuilder.main("studio")') ;
 
-        if (! isset($this->editModule)) {
+        if (! ($this->editModule !== null)) {
             //Studio Select Module Page
             $this->generateStudioModuleButtons() ;
             $this->question = translate('LBL_QUESTION_EDIT') ;

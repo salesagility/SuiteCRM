@@ -43,6 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
+#[\AllowDynamicProperties]
 class ViewLanguages extends SugarView
 {
     /**
@@ -111,8 +112,8 @@ class ViewLanguages extends SugarView
 
         $this->ss->assign('APP', $GLOBALS['app_strings']);
         $this->ss->assign('MOD', $GLOBALS['mod_strings']);
-        $this->ss->assign('enabled_langs', json_encode($enabled));
-        $this->ss->assign('disabled_langs', json_encode($disabled));
+        $this->ss->assign('enabled_langs', json_encode($enabled, JSON_THROW_ON_ERROR));
+        $this->ss->assign('disabled_langs', json_encode($disabled, JSON_THROW_ON_ERROR));
         $this->ss->assign('title', $this->getModuleTitle(false));
 
         echo $this->ss->fetch('modules/Administration/templates/Languages.tpl');

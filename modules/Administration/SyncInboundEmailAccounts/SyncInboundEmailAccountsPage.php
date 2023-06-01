@@ -50,6 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * - sync email-UID and orphaned field in email module
  *
  */
+#[\AllowDynamicProperties]
 class SyncInboundEmailAccountsPage
 {
 

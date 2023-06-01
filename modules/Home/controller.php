@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 include_once("include/InlineEditing/InlineEditing.php");
 
+#[\AllowDynamicProperties]
 class HomeController extends SugarController
 {
     public function action_getEditFieldHTML()
@@ -107,13 +108,14 @@ class HomeController extends SugarController
                 }
                 $validate_array = array('type' => $fielddef['type'], 'required' => $fielddef['required'],'label' => $fielddef['label']);
 
-                echo json_encode($validate_array);
+                echo json_encode($validate_array, JSON_THROW_ON_ERROR);
             }
         }
     }
     
     public function action_getRelateFieldJS()
     {
+        $vardefFields = [];
         global $beanFiles, $beanList;
         
         $fieldlist = array();
@@ -130,7 +132,7 @@ class HomeController extends SugarController
         require_once("include/TemplateHandler/TemplateHandler.php");
         $template_handler = new TemplateHandler();
         $quicksearch_js = $template_handler->createQuickSearchCode($vardefFields, $vardefFields, $view);
-        $quicksearch_js = str_replace($_REQUEST['field'], $_REQUEST['field'] . '_display', $quicksearch_js);
+        $quicksearch_js = str_replace($_REQUEST['field'], $_REQUEST['field'] . '_display', (string) $quicksearch_js);
 
         if ($_REQUEST['field'] != "parent_name") {
             $quicksearch_js = str_replace($vardefFields[$_REQUEST['field']]['id_name'], $_REQUEST['field'], $quicksearch_js);

@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once("modules/Calendar/CalendarUtils.php");
 
+#[\AllowDynamicProperties]
 class CalendarController extends SugarController
 {
 
@@ -169,7 +170,7 @@ class CalendarController extends SugarController
     protected function action_getUser()
     {
         $bean = BeanFactory::getBean("Users", $_REQUEST['record']);
-        echo json_encode(array("user_name" => $bean->user_name, "full_name" =>  $bean->full_name));
+        echo json_encode(array("user_name" => $bean->user_name, "full_name" =>  $bean->full_name), JSON_THROW_ON_ERROR);
         die();
     }
     /**

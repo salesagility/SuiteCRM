@@ -58,7 +58,7 @@ $focus = BeanFactory::newBean('EmailTemplates');
 
 $detailView = new DetailView();
 $offset=0;
-if (isset($_REQUEST['offset']) or isset($_REQUEST['record'])) {
+if (isset($_REQUEST['offset']) || isset($_REQUEST['record'])) {
     $result = $detailView->processSugarBean("EMAIL_TEMPLATE", $focus, $offset);
     if ($result == null) {
         sugar_die($app_strings['ERROR_NO_RECORD']);
@@ -146,7 +146,7 @@ $xtpl->assign("NAME", $focus->name);
 $xtpl->assign("DESCRIPTION", $focus->description);
 $xtpl->assign("SUBJECT", $focus->subject);
 $xtpl->assign("BODY", $focus->body);
-$xtpl->assign("BODY_HTML", json_encode(from_html($focus->body_html)));
+$xtpl->assign("BODY_HTML", json_encode(from_html($focus->body_html), JSON_THROW_ON_ERROR));
 $xtpl->assign("DATE_MODIFIED", $focus->date_modified);
 $xtpl->assign("DATE_ENTERED", $focus->date_entered);
 $xtpl->assign("ASSIGNED_USER_NAME", $focus->assigned_user_name);
@@ -182,7 +182,8 @@ if (! isset($notes_list)) {
 }
 
 $attachments = '';
-for ($i=0; $i<count($notes_list); $i++) {
+$notes_listCount = count($notes_list);
+for ($i=0; $i<$notes_listCount; $i++) {
     $the_note = $notes_list[$i];
     $attachments .= "<a href=\"index.php?entryPoint=download&id={$the_note->id}&type=Notes\">".$the_note->name."</a><br />";
 }

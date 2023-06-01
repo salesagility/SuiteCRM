@@ -38,6 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+#[\AllowDynamicProperties]
 class AOW_WorkFlow extends Basic
 {
     public $new_schema = true;
@@ -75,6 +76,7 @@ class AOW_WorkFlow extends Basic
      */
     private function getSQLOperator($key)
     {
+        $sqlOperatorList = [];
         $sqlOperatorList['Equal_To'] = '=';
         $sqlOperatorList['Not_Equal_To'] = '!=';
         $sqlOperatorList['Greater_Than'] = '>';
@@ -174,7 +176,7 @@ class AOW_WorkFlow extends Basic
             }
         }
 
-        $app_list_strings['aow_moduleList'] = array_merge((array)array(''=>''), (array)$app_list_strings['aow_moduleList']);
+        $app_list_strings['aow_moduleList'] = array_merge(array(''=>''), (array)$app_list_strings['aow_moduleList']);
 
         asort($app_list_strings['aow_moduleList']);
     }
@@ -300,7 +302,8 @@ class AOW_WorkFlow extends Basic
         SugarBean $module,
         $query = array()
     ) {
-	    global $db;
+	    $params = [];
+     global $db;
         if (!isset($query['join'][$name])) {
             if ($module->load_relationship($name)) {
                 $params['join_type'] = 'LEFT JOIN';
@@ -378,6 +381,7 @@ class AOW_WorkFlow extends Basic
 
     public function build_query_where(AOW_Condition $condition, $module, $query = array())
     {
+        $value = null;
         global $beanList, $app_list_strings, $sugar_config, $timedate;
         $path = unserialize(base64_decode($condition->module_path));
 
@@ -876,7 +880,7 @@ class AOW_WorkFlow extends Basic
                             $value = 0;
                         }
                         $type = $data['dbType'] ?? $data['type'];
-                        if ((strpos($type, 'char') !== false || strpos($type, 'text') !== false) && !empty($field)) {
+                        if ((strpos((string) $type, 'char') !== false || strpos((string) $type, 'text') !== false) && !empty($field)) {
                             $field = from_html($field);
                         }
                         break;
@@ -922,8 +926,8 @@ class AOW_WorkFlow extends Basic
             case "Greater_Than_or_Equal_To": return $var1 >= $var2;
             case "Less_Than_or_Equal_To": return $var1 <= $var2;
             case "Contains": return strpos(strtolower($var1), strtolower($var2)) !== false;
-            case "Starts_With": return substr(strtolower($var1), 0, strlen($var2) ) === strtolower($var2);
-            case "Ends_With": return substr(strtolower($var1), -strlen($var2) ) === strtolower($var2);
+            case "Starts_With": return substr(strtolower($var1), 0, strlen((string) $var2) ) === strtolower($var2);
+            case "Ends_With": return substr(strtolower($var1), -strlen((string) $var2) ) === strtolower($var2);
             case "is_null": return $var1 == '';
             case "One_of":
                 if (is_array($var1)) {

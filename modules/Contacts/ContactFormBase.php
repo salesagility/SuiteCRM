@@ -51,6 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/SugarObjects/forms/PersonFormBase.php');
 
+#[\AllowDynamicProperties]
 class ContactFormBase extends PersonFormBase
 {
     public $moduleName = 'Contacts';
@@ -76,7 +77,7 @@ class ContactFormBase extends PersonFormBase
         $dbManager = DBManagerFactory::getInstance();
 
         $query .= ' where contacts.deleted = 0 AND ';
-        if (isset($_POST[$prefix.'first_name']) && strlen($_POST[$prefix.'first_name']) != 0 && isset($_POST[$prefix.'last_name']) && strlen($_POST[$prefix.'last_name']) != 0) {
+        if (isset($_POST[$prefix.'first_name']) && strlen((string) $_POST[$prefix.'first_name']) != 0 && isset($_POST[$prefix.'last_name']) && strlen((string) $_POST[$prefix.'last_name']) != 0) {
             $firstName = $dbManager->quote($_POST[$prefix.'first_name' ?? '']);
             $lastName = $dbManager->quote($_POST[$prefix.'last_name' ?? '']);
             $query .= " contacts.first_name LIKE '". $firstName . "%' AND contacts.last_name = '". $lastName ."'";

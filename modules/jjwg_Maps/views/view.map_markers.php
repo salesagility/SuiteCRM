@@ -4,6 +4,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+#[\AllowDynamicProperties]
 class Jjwg_MapsViewMap_Markers extends SugarView
 {
     public function __construct()
@@ -91,13 +92,13 @@ class Jjwg_MapsViewMap_Markers extends SugarView
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.5/js/TableTools.min.js"></script>
   <script type="text/javascript">
 // Define SugarCRM App data for Javascript
-var app_strings = <?php echo (!empty($GLOBALS['app_strings'])) ? json_encode($GLOBALS['app_strings']) : '[]'; ?>;
-var app_list_strings = <?php echo (!empty($GLOBALS['app_list_strings'])) ? json_encode($GLOBALS['app_list_strings']) : '[]'; ?>;
-var mod_strings = <?php echo (!empty($GLOBALS['mod_strings'])) ? json_encode($GLOBALS['mod_strings']) : '[]'; ?>;
+var app_strings = <?php echo (!empty($GLOBALS['app_strings'])) ? json_encode($GLOBALS['app_strings'], JSON_THROW_ON_ERROR) : '[]'; ?>;
+var app_list_strings = <?php echo (!empty($GLOBALS['app_list_strings'])) ? json_encode($GLOBALS['app_list_strings'], JSON_THROW_ON_ERROR) : '[]'; ?>;
+var mod_strings = <?php echo (!empty($GLOBALS['mod_strings'])) ? json_encode($GLOBALS['mod_strings'], JSON_THROW_ON_ERROR) : '[]'; ?>;
 // Define Map Data for Javascript
-var jjwg_config_defaults = <?php echo (!empty($GLOBALS['jjwg_config_defaults'])) ? json_encode($GLOBALS['jjwg_config_defaults']) : '[]'; ?>;
-var jjwg_config = <?php echo (!empty($GLOBALS['jjwg_config'])) ? json_encode($GLOBALS['jjwg_config']) : '[]'; ?>;
-var list_array = <?php echo (!empty($this->bean->list_array)) ? json_encode($this->bean->list_array) : '[]'; ?>;
+var jjwg_config_defaults = <?php echo (!empty($GLOBALS['jjwg_config_defaults'])) ? json_encode($GLOBALS['jjwg_config_defaults'], JSON_THROW_ON_ERROR) : '[]'; ?>;
+var jjwg_config = <?php echo (!empty($GLOBALS['jjwg_config'])) ? json_encode($GLOBALS['jjwg_config'], JSON_THROW_ON_ERROR) : '[]'; ?>;
+var list_array = <?php echo (!empty($this->bean->list_array)) ? json_encode($this->bean->list_array, JSON_THROW_ON_ERROR) : '[]'; ?>;
 <?php
 // Check to see if map center is empty of lng,lat of 0,0
 if (empty($this->bean->map_center) || (empty($this->bean->map_center['lat']) && empty($this->bean->map_center['lng']))) {
@@ -114,15 +115,15 @@ if (empty($this->bean->map_center) || (empty($this->bean->map_center['lat']) && 
         }
     }
 } ?>
-var map_center = <?php echo (!empty($this->bean->map_center)) ? json_encode($this->bean->map_center) : 'null'; ?>;
-var map_markers = <?php echo (!empty($this->bean->map_markers)) ? json_encode($this->bean->map_markers) : '[]'; ?>;
-var map_markers_groups = <?php echo (!empty($this->bean->map_markers_groups)) ? json_encode($this->bean->map_markers_groups) : '[]'; ?>;
-var custom_markers = <?php echo (!empty($this->bean->custom_markers)) ? json_encode($this->bean->custom_markers) : '[]'; ?>;
-var custom_areas = <?php echo (!empty($this->bean->custom_areas)) ? json_encode($this->bean->custom_areas) : '[]'; ?>;
+var map_center = <?php echo (!empty($this->bean->map_center)) ? json_encode($this->bean->map_center, JSON_THROW_ON_ERROR) : 'null'; ?>;
+var map_markers = <?php echo (!empty($this->bean->map_markers)) ? json_encode($this->bean->map_markers, JSON_THROW_ON_ERROR) : '[]'; ?>;
+var map_markers_groups = <?php echo (!empty($this->bean->map_markers_groups)) ? json_encode($this->bean->map_markers_groups, JSON_THROW_ON_ERROR) : '[]'; ?>;
+var custom_markers = <?php echo (!empty($this->bean->custom_markers)) ? json_encode($this->bean->custom_markers, JSON_THROW_ON_ERROR) : '[]'; ?>;
+var custom_areas = <?php echo (!empty($this->bean->custom_areas)) ? json_encode($this->bean->custom_areas, JSON_THROW_ON_ERROR) : '[]'; ?>;
 <?php
     // Define Map Data
-    $num_markers = count($this->bean->map_markers);
-        $num_groups = count($this->bean->map_markers_groups);
+    $num_markers = is_countable($this->bean->map_markers) ? count($this->bean->map_markers) : 0;
+        $num_groups = is_countable($this->bean->map_markers_groups) ? count($this->bean->map_markers_groups) : 0;
         if ($num_groups > 216) {
             $num_groups = 216;
         }
@@ -155,17 +156,17 @@ var custom_areas = <?php echo (!empty($this->bean->custom_areas)) ? json_encode(
         foreach ($this->bean->custom_markers as $marker) {
             $custom_markers_icons[] = $marker['image'];
         }
-        $num_custom_markers = count($this->bean->custom_markers);
+        $num_custom_markers = is_countable($this->bean->custom_markers) ? count($this->bean->custom_markers) : 0;
         $custom_markers_icons = array_unique($custom_markers_icons); ?>
 
 // Define Map Data for Javascript
-var num_markers = <?php echo (!empty($num_markers)) ? json_encode($num_markers) : '0'; ?>;
-var num_groups = <?php echo (!empty($num_groups)) ? json_encode($num_groups) : '0'; ?>;
-var group_name_to_num = <?php echo (!empty($group_name_to_num)) ? json_encode($group_name_to_num) : '[]'; ?>;
-var icons_dir = <?php echo (!empty($icons_dir)) ? json_encode($icons_dir) : "'themes/default/images/jjwg_Maps/0-10/'"; ?>;
-var num_custom_markers = <?php echo (!empty($num_custom_markers)) ? json_encode($num_custom_markers) : '0'; ?>;
+var num_markers = <?php echo (!empty($num_markers)) ? json_encode($num_markers, JSON_THROW_ON_ERROR) : '0'; ?>;
+var num_groups = <?php echo (!empty($num_groups)) ? json_encode($num_groups, JSON_THROW_ON_ERROR) : '0'; ?>;
+var group_name_to_num = <?php echo (!empty($group_name_to_num)) ? json_encode($group_name_to_num, JSON_THROW_ON_ERROR) : '[]'; ?>;
+var icons_dir = <?php echo (!empty($icons_dir)) ? json_encode($icons_dir, JSON_THROW_ON_ERROR) : "'themes/default/images/jjwg_Maps/0-10/'"; ?>;
+var num_custom_markers = <?php echo (!empty($num_custom_markers)) ? json_encode($num_custom_markers, JSON_THROW_ON_ERROR) : '0'; ?>;
 var custom_markers_dir = <?php echo (!empty($custom_markers_dir)) ? json_encode($custom_markers_dir) : "'custom/themes/default/images/jjwg_Markers/'"; ?>;
-var custom_markers_icons = <?php echo (!empty($custom_markers_icons)) ? json_encode($custom_markers_icons) : '[]'; ?>;
+var custom_markers_icons = <?php echo (!empty($custom_markers_icons)) ? json_encode($custom_markers_icons, JSON_THROW_ON_ERROR) : '[]'; ?>;
 
 /******************************************************************************/
 
@@ -1007,9 +1008,9 @@ $(document).ready(function(){
       ?>
 <br clear="all" />
 <div>
-    <form id="tagetList" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="get">
-        <input type="hidden" name="module" value="<?php echo htmlspecialchars($GLOBALS['currentModule']); ?>">
-        <input type="hidden" name="display_module" value="<?php echo htmlspecialchars($this->bean->display_object->module_name); ?>">
+    <form id="tagetList" action="<?php echo htmlspecialchars((string) $_SERVER['PHP_SELF']); ?>" method="get">
+        <input type="hidden" name="module" value="<?php echo htmlspecialchars((string) $GLOBALS['currentModule']); ?>">
+        <input type="hidden" name="display_module" value="<?php echo htmlspecialchars((string) $this->bean->display_object->module_name); ?>">
         <input type="hidden" name="action" value="add_to_target_list" />
         <input type="hidden" name="to_pdf" value="1" />
         <?php if (array_key_exists('uid', $_GET)) {
@@ -1020,7 +1021,7 @@ $(document).ready(function(){
         <select id="list_id" tabindex="3" name="list_id" title="">
             <?php foreach ($this->bean->list_array as $key=>$value) {
           ?>
-                <option value="<?php echo htmlspecialchars($key); ?>"><?php echo htmlspecialchars($value); ?></option>
+                <option value="<?php echo htmlspecialchars((string) $key); ?>"><?php echo htmlspecialchars((string) $value); ?></option>
             <?php
       } ?>
         </select>

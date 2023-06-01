@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
+#[\AllowDynamicProperties]
 class RemindersController extends SugarController
 {
     public function action_getInviteesPersonName()
@@ -62,7 +63,7 @@ class RemindersController extends SugarController
             }
         }
 
-        $inviteeJson = json_encode($ret);
+        $inviteeJson = json_encode($ret, JSON_THROW_ON_ERROR);
         echo $inviteeJson;
         die();
     }

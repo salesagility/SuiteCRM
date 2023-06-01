@@ -4,6 +4,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
+#[\AllowDynamicProperties]
 class AssignGroups
 {
     public function popup_select(&$bean, $event, $arguments)
@@ -24,7 +25,7 @@ class AssignGroups
                 require_once('modules/SecurityGroups/SecurityGroup.php');
                 $security_modules = SecurityGroup::getSecurityModules();
                 //sanity check
-                if (in_array($bean->module_dir, array_keys($security_modules))) {
+                if (array_key_exists($bean->module_dir, $security_modules)) {
                     //add each group in securitygroup_list to new record
                     $rel_name = SecurityGroup::getLinkName($bean->module_dir, "SecurityGroups");
 
@@ -158,7 +159,7 @@ EOQ;
                 $groupFocus = BeanFactory::newBean('SecurityGroups');
                 $security_modules = SecurityGroup::getSecurityModules();
                 //if(in_array($module,$security_modules)) {
-                if (in_array($module, array_keys($security_modules))) {
+                if (array_key_exists($module, $security_modules)) {
                     global $app_strings;
 
                     global $current_language;

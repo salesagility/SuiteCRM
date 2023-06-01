@@ -43,6 +43,7 @@
 if (!class_exists('Tracker')) {
     require_once 'data/SugarBean.php';
 
+    #[\AllowDynamicProperties]
     class Tracker extends SugarBean
     {
         public $module_dir = 'Trackers';
@@ -68,7 +69,7 @@ if (!class_exists('Tracker')) {
         public function __construct()
         {
             global $dictionary;
-            if (isset($this->module_dir) && isset($this->object_name) && !isset($GLOBALS['dictionary'][$this->object_name])) {
+            if ($this->module_dir !== null && $this->object_name !== null && !isset($GLOBALS['dictionary'][$this->object_name])) {
                 $path = 'modules/Trackers/vardefs.php';
                 if (defined('TEMPLATE_URL')) {
                     $path = SugarTemplateUtilities::getFilePath($path);
@@ -114,7 +115,7 @@ if (!class_exists('Tracker')) {
             }
 
             $list = $breadCrumb->getBreadCrumbList($modules);
-            $GLOBALS['log']->info("Tracker: retrieving ".count($list)." items");
+            $GLOBALS['log']->info("Tracker: retrieving ".(is_countable($list) ? count($list) : 0)." items");
             return $list;
         }
 

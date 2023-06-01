@@ -49,6 +49,9 @@ require_once 'modules/ModuleBuilder/parsers/views/ListLayoutMetaDataParser.php' 
 require_once 'modules/ModuleBuilder/parsers/views/GridLayoutMetaDataParser.php' ;
 require_once 'modules/ModuleBuilder/parsers/constants.php' ;
 
+#[\AllowDynamicProperties]
+#[\AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation implements MetaDataImplementationInterface
 {
     protected $_packageName ;
@@ -149,7 +152,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
     public function deploy($defs)
     {
         //If we are pulling from the History Location, that means we did a restore, and we need to save the history for the previous file.
-        if ($this->_sourceFilename == $this->getFileName($this->_view, $this->_moduleName, MB_HISTORYMETADATALOCATION)
+        if ($this->_sourceFilename === $this->getFileName($this->_view, $this->_moduleName, MB_HISTORYMETADATALOCATION)
         && file_exists($this->getFileName($this->_view, $this->_moduleName, MB_BASEMETADATALOCATION))) {
             $this->_history->append($this->getFileName($this->_view, $this->_moduleName, MB_BASEMETADATALOCATION));
         } else {

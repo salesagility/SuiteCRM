@@ -49,6 +49,9 @@ if (! defined('sugarEntry') || ! sugarEntry) {
  * Relationships defined here are implemented by the build() method to become a relationship that the application can use
  * Note that the modules/Relationships/Relationship.php contains some methods that look similar; remember though that the methods in that file are acting on implemented relationships, not the metadata that we deal with here
  */
+#[\AllowDynamicProperties]
+#[\AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class AbstractRelationships
 {
     public static $methods = array(
@@ -253,6 +256,7 @@ class AbstractRelationships
      */
     protected function getDeployedRelationships()
     {
+        $relationships = [];
         $db = DBManagerFactory::getInstance() ;
         $query = "SELECT * FROM relationships WHERE deleted = 0" ;
         $result = $db->query($query) ;
@@ -293,16 +297,16 @@ class AbstractRelationships
         }
         
         while (isset($allRelationships [ $name ])) {
-            $name = $basename . "_" . ( string ) ($suffix ++) ;
+            $name = $basename . "_" . $suffix ++ ;
         }
 
         // bug33522 - if our relationship basename is in the special cases
         if (in_array($name, $this->specialCaseBaseNames)) {
             //add a _1 (or _suffix#) and check to see if it already exists
-            $name = $name . "_" . ( string ) ($suffix ++);
+            $name = $name . "_" . $suffix ++;
             while (isset($allRelationships [ $name ])) {
                 // if it does exist, strip off the _1 previously added and try again
-                $name = substr($name, 0, -2) . "_" . ( string ) ($suffix ++);
+                $name = substr($name, 0, -2) . "_" . $suffix ++;
             }
         }
 
@@ -332,7 +336,7 @@ class AbstractRelationships
                     if (method_exists($relationship, $buildMethod) && method_exists($this, $saveMethod)) {
                         $metadata = $relationship->$buildMethod() ;
                         
-                        if (count($metadata) > 0) { // don't clutter up the filesystem with empty files...
+                        if ((is_countable($metadata) ? count($metadata) : 0) > 0) { // don't clutter up the filesystem with empty files...
                             $GLOBALS [ 'log' ]->debug(get_class($this) . ": BUILD is running METHOD $saveMethod") ;
                             $installDef = $this->$saveMethod($basepath, $installDefPrefix, $name, $metadata) ;
                             
@@ -377,16 +381,16 @@ class AbstractRelationships
         foreach ($labelDefinitions as $definition) {
             $mod_strings = array();
             $app_list_strings = array();
-            
+
             $out = $headerString;
-            
+
             $filename = "{$basepath}/language/{$definition['module']}.php" ;
-        
+
             if (file_exists($filename)) {
                 include($filename);
             }
-                
-            
+
+
             //Check for app strings
             $GLOBALS [ 'log' ]->debug(get_class($this) . "->saveLabels(): saving the following to {$filename}"
                                       . print_r($definition, true)) ;
@@ -401,12 +405,12 @@ class AbstractRelationships
                     $out .= override_value_to_string_recursive2('mod_strings', $key, $val);
                 }
             }
-            
+
             $fh = fopen($filename, 'wb') ;
             fwrite($fh, $out, strlen($out)) ;
             fclose($fh) ;
-            
-            
+
+
             foreach ($sugar_config['languages'] as $lk => $lv) {
                 $installDefs [ $definition [ 'module' ] . "_$lk" ] = array(
                     'from' => "{$installDefPrefix}/relationships/language/{$definition [ 'module' ]}.php" ,
@@ -414,7 +418,7 @@ class AbstractRelationships
                     'language' => $lk
                 ) ;
             }
-            
+
             /* do not use the following write_array_to_file method to write the label file -
              * module installer appends each of the label files together (as it does for all files)
              * into a combined label file and so the last $mod_strings is the only one received by the application */
@@ -442,7 +446,7 @@ class AbstractRelationships
 
         $filename = "$basepath/relationships/{$relationshipName}MetaData.php" ;
         $GLOBALS [ 'log' ]->debug(get_class($this) . "->saveRelationshipMetaData(): saving the following to {$filename}" . print_r($properties, true)) ;
-        write_array_to_file('dictionary["' . $relationshipName . '"]', $properties, (string)($filename), 'w') ;
+        write_array_to_file('dictionary["' . $relationshipName . '"]', $properties, $filename, 'w') ;
         $installDefs [ $relationshipName ] = array( /*'module' => $rhs_module , 'module_vardefs' => "<basepath>/Vardefs/{$relationshipName}.php" ,*/ 'meta_data' => "{$installDefPrefix}/relationships/relationships/{$relationshipName}MetaData.php" ) ;
         
         return $installDefs ;
@@ -457,6 +461,7 @@ class AbstractRelationships
      */
     protected function saveSubpanelDefinitions($basepath, $installDefPrefix, $relationshipName, $subpanelDefinitions)
     {
+        $installDefs = [];
         mkdir_recursive("$basepath/layoutdefs/") ;
         
         foreach ($subpanelDefinitions as $moduleName => $definitions) {
@@ -494,6 +499,7 @@ class AbstractRelationships
      */
     protected function saveVardefs($basepath, $installDefPrefix, $relationshipName, $vardefs)
     {
+        $installDefs = [];
         mkdir_recursive("$basepath/vardefs/") ;
         $GLOBALS [ 'log' ]->debug(get_class($this) . "->saveVardefs(): vardefs =" . print_r($vardefs, true)) ;
         
@@ -554,9 +560,9 @@ class AbstractRelationships
             // convert the keyName into a packageName, needed for checking to see if this is really an undeployed module, or just a module with a _ in the name...
             $package = $mb->getPackage($name) ; // seem to need to call getPackage twice to get the key correctly... TODO: figure out why...
             $key = $mb->getPackage($name)->key ;
-            if (strlen($key) < strlen($deployedName)) {
-                $position = stripos($deployedName, $key) ;
-                $moduleName = trim(substr($deployedName, strlen($key)), '_'); //use trim rather than just assuming that _ is between packageName and moduleName in the deployedName
+            if (strlen((string) $key) < strlen((string) $deployedName)) {
+                $position = stripos((string) $deployedName, (string) $key) ;
+                $moduleName = trim(substr((string) $deployedName, strlen((string) $key)), '_'); //use trim rather than just assuming that _ is between packageName and moduleName in the deployedName
                 if ($position !== false && $position == 0 && (isset($mb->packages [ $name ]->modules [ $moduleName ]))) {
                     $packageName = $name ;
                     break ;

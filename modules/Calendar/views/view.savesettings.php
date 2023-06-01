@@ -40,6 +40,7 @@
 
 require_once('include/MVC/View/SugarView.php');
 
+#[\AllowDynamicProperties]
 class CalendarViewSaveSettings extends SugarView
 {
     public function CalendarViewSettings()

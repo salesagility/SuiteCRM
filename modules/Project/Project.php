@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
+#[\AllowDynamicProperties]
 class Project extends SugarBean
 {
     // database table columns
@@ -277,7 +278,7 @@ class Project extends SugarBean
 
         if (!empty($order_by)) {
             //check to see if order by variable already has table name by looking for dot "."
-            $table_defined_already = strpos($order_by, ".");
+            $table_defined_already = strpos((string) $order_by, ".");
 
             if ($table_defined_already === false) {
                 //table not defined yet, define accounts to avoid "ambigous column" SQL error
@@ -326,6 +327,7 @@ class Project extends SugarBean
 
     public function save($check_notify = false)
     {
+        $enddate_array = [];
         global $current_user;
         $db = DBManagerFactory::getInstance();
         $focus = $this;

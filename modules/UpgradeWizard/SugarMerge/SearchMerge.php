@@ -70,7 +70,7 @@ class SearchMerge extends ListViewMerge
      */
     protected function loadData($module, $original_file, $new_file, $custom_file)
     {
-        EditViewMerge::loadData($module, $original_file, $new_file, $custom_file);
+        (new EditViewMerge())->loadData($module, $original_file, $new_file, $custom_file);
         $this->originalData = array($module=>array( $this->viewDefs=>$this->originalData[$module]));
         $this->customData = array($module=>array( $this->viewDefs=>$this->customData[$module]));
         $this->newData = array($module=>array( $this->viewDefs=>$this->newData[$module]));

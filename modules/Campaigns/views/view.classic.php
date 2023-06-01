@@ -41,6 +41,7 @@
 require_once('include/MVC/View/SugarView.php');
 require_once('include/MVC/Controller/SugarController.php');
 
+#[\AllowDynamicProperties]
 class CampaignsViewClassic extends SugarView
 {
     public function __construct()
@@ -76,7 +77,7 @@ class CampaignsViewClassic extends SugarView
     {
         $params = array();
         $params[] = $this->_getModuleTitleListParam($browserTitle);
-        if (isset($this->action)) {
+        if (property_exists($this, 'action') && $this->action !== null) {
             switch ($_REQUEST['action']) {
                     case 'WizardHome':
                         if (!empty($this->bean->id)) {

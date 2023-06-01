@@ -50,6 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 function getEmployeeStatusOptions($focus, $name = 'employee_status', $value = null, $view = 'DetailView')
 {
+    $sugar_config = [];
     global $current_user, $app_list_strings;
     if (($view == 'EditView' || $view == 'MassUpdate') && is_admin($current_user)) {
         $employee_status  = "<select name='$name'";

@@ -47,6 +47,7 @@ require_once('modules/Administration/Forms.php');
 require_once('include/SubPanel/SubPanelDefinitions.php');
 require_once('modules/MySettings/TabController.php');
 
+#[\AllowDynamicProperties]
 class ViewConfiguretabs extends SugarView
 {
     /**
@@ -98,8 +99,8 @@ class ViewConfiguretabs extends SugarView
         $this->ss->assign('APP', $GLOBALS['app_strings']);
         $this->ss->assign('MOD', $GLOBALS['mod_strings']);
         $this->ss->assign('user_can_edit', $user_can_edit);
-        $this->ss->assign('enabled_tabs', json_encode($enabled));
-        $this->ss->assign('disabled_tabs', json_encode($disabled));
+        $this->ss->assign('enabled_tabs', json_encode($enabled, JSON_THROW_ON_ERROR));
+        $this->ss->assign('disabled_tabs', json_encode($disabled, JSON_THROW_ON_ERROR));
         $this->ss->assign('title', $this->getModuleTitle(false));
         
         //get list of all subpanels and panels to hide
@@ -132,8 +133,8 @@ class ViewConfiguretabs extends SugarView
             $disabled[] =  array("module" => $key, "label" => $mod_list_strings_key_to_lower[$key]);
         }
         
-        $this->ss->assign('enabled_panels', json_encode($enabled));
-        $this->ss->assign('disabled_panels', json_encode($disabled));
+        $this->ss->assign('enabled_panels', json_encode($enabled, JSON_THROW_ON_ERROR));
+        $this->ss->assign('disabled_panels', json_encode($disabled, JSON_THROW_ON_ERROR));
         
         echo $this->ss->fetch('modules/Administration/templates/ConfigureTabs.tpl');
     }

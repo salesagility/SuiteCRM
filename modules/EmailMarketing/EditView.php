@@ -230,6 +230,7 @@ $xtpl->assign("IEStoredOptions", $IEStoredOptionsJSON);
 
 function getOutboundEmailAccountOptions()
 {
+    $ret = [];
     global $mod_strings;
     //	$ret = array(
     //		0 => $mod_strings['LBL_OUTBOUND_EMAIL_ACCOUNT_DEFAULT'],

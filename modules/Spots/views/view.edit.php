@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+#[\AllowDynamicProperties]
 class SpotsViewEdit extends ViewEdit
 {
     public function __construct()
@@ -67,7 +68,7 @@ class SpotsViewEdit extends ViewEdit
 
         $theTitle = "<div class='moduleTitle'>\n";
 
-        $module = preg_replace("/ /", "", $this->module);
+        $module = preg_replace("/ /", "", (string) $this->module);
 
         $params = $this->_getModuleTitleParams();
         $index = 0;
@@ -75,10 +76,10 @@ class SpotsViewEdit extends ViewEdit
         if (SugarThemeRegistry::current()->directionality == "rtl") {
             $params = array_reverse($params);
         }
-        if (count($params) > 1) {
+        if ((is_countable($params) ? count($params) : 0) > 1) {
             array_shift($params);
         }
-        $count = count($params);
+        $count = is_countable($params) ? count($params) : 0;
         $paramString = '';
         foreach ($params as $parm) {
             $index++;

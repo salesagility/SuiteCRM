@@ -52,10 +52,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AM_TaskTemplates/AM_TaskTemplates.php');
 
+#[\AllowDynamicProperties]
 class AM_TaskTemplatesDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
+        $dashletData = [];
         global $current_user, $app_strings;
         require('modules/AM_TaskTemplates/metadata/dashletviewdefs.php');
 

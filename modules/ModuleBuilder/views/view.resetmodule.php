@@ -46,6 +46,7 @@ require_once('modules/DynamicFields/DynamicField.php') ;
 require_once 'modules/ModuleBuilder/Module/StudioModuleFactory.php' ;
 require_once 'modules/ModuleBuilder/parsers/views/DeployedMetaDataImplementation.php';
 
+#[\AllowDynamicProperties]
 class ViewResetmodule extends SugarView
 {
     /**
@@ -228,10 +229,10 @@ class ViewResetmodule extends SugarView
         if (is_dir($languageDir)) {
             $files = scandir($languageDir);
             foreach ($files as $langFile) {
-                if (substr($langFile, 0, 1) == '.') {
+                if (substr((string) $langFile, 0, 1) == '.') {
                     continue;
                 }
-                $language = substr($langFile, 0, strlen($langFile) - 9);
+                $language = substr((string) $langFile, 0, strlen((string) $langFile) - 9);
                 unlink($languageDir . "/" . $langFile);
                 
                 LanguageManager::clearLanguageCache($this->module, $language) ;

@@ -39,6 +39,7 @@
  */
 
 
+#[\AllowDynamicProperties]
 class EmailManController extends SugarController
 {
     public function action_Save()

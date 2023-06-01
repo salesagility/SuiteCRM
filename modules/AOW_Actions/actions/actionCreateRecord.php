@@ -116,7 +116,7 @@ class actionCreateRecord extends actionBase
             $html .= 'cr_fields[' . $line . '] = "' . trim(preg_replace(
                 '/\s+/',
                 ' ',
-                getModuleFields(
+                (string) getModuleFields(
                         $params['record_type'],
                         'EditView',
                         '',
@@ -127,22 +127,22 @@ class actionCreateRecord extends actionBase
             $html .= 'cr_relationships[' . $line . '] = "' . trim(preg_replace(
                 '/\s+/',
                 ' ',
-                getModuleRelationships($params['record_type'])
+                (string) getModuleRelationships($params['record_type'])
             )) . '";';
             $html .= 'cr_module[' .$line. '] = "' .$params['record_type']. '";';
             if (isset($params['field'])) {
                 foreach ($params['field'] as $key => $field) {
                     if (is_array($params['value'][$key])) {
-                        $params['value'][$key] = json_encode($params['value'][$key]);
+                        $params['value'][$key] = json_encode($params['value'][$key], JSON_THROW_ON_ERROR);
                     }
 
-                    $html .= "load_crline('".$line."','".$field."','".str_replace(array("\r\n","\r","\n"), ' ', $params['value'][$key])."','".$params['value_type'][$key]."');";
+                    $html .= "load_crline('".$line."','".$field."','".str_replace(array("\r\n","\r","\n"), ' ', (string) $params['value'][$key])."','".$params['value_type'][$key]."');";
                 }
             }
             if (isset($params['rel'])) {
                 foreach ($params['rel'] as $key => $field) {
                     if (is_array($params['rel_value'][$key])) {
-                        $params['rel_value'][$key] = json_encode($params['rel_value'][$key]);
+                        $params['rel_value'][$key] = json_encode($params['rel_value'][$key], JSON_THROW_ON_ERROR);
                     }
 
                     $html .= "load_crrelline('".$line."','".$field."','".$params['rel_value'][$key]."','".$params['rel_value_type'][$key]."');";

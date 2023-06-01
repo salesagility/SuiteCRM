@@ -169,12 +169,12 @@ if ($focus->type == 'archived') {
     $new = array('<','>');
 
     if ($_REQUEST['from_addr'] != $_REQUEST['from_addr_name'].' &lt;'.$_REQUEST['from_addr_email'].'&gt;') {
-        if (false === strpos($_REQUEST['from_addr'], '&lt;')) { // we have an email only?
+        if (false === strpos((string) $_REQUEST['from_addr'], '&lt;')) { // we have an email only?
             $focus->from_addr = $_REQUEST['from_addr'];
             isValidEmailAddress($focus->from_addr);
             $focus->from_name = '';
         } else { // we have a compound string
-            $newFromAddr =  str_replace($old, $new, $_REQUEST['from_addr']);
+            $newFromAddr =  str_replace($old, $new, (string) $_REQUEST['from_addr']);
             $focus->from_addr = substr($newFromAddr, (1 + strpos($newFromAddr, '<')), (strpos($newFromAddr, '>') - strpos($newFromAddr, '<')) -1);
             isValidEmailAddress($focus->from_addr);
             $focus->from_name = substr($newFromAddr, 0, (strpos($newFromAddr, '<') -1));

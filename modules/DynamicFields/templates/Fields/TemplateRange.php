@@ -45,6 +45,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class TemplateRange extends TemplateText
 {
 
+    public $enable_range_search;
+    /**
+     * @var string
+     */
+    public $options;
     /**
      * __construct
      *
@@ -67,6 +72,7 @@ class TemplateRange extends TemplateText
      */
     public function populateFromPost()
     {
+        $searchFields = [];
         parent::populateFromPost();
         //If we are enabling range search, make sure we add the start and end range fields
         if (!empty($this->enable_range_search)) {

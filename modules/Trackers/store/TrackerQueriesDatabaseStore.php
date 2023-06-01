@@ -50,10 +50,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('modules/Trackers/store/Store.php');
 
+#[\AllowDynamicProperties]
 class TrackerQueriesDatabaseStore implements Store
 {
     public function flush($monitor)
     {
+        $fields = [];
         if ($monitor->run_count > 1) {
             $query = "UPDATE $monitor->table_name set run_count={$monitor->run_count}, sec_avg={$monitor->sec_avg}, sec_total={$monitor->sec_total}, date_modified='{$monitor->date_modified}' where query_hash = '{$monitor->query_hash}'";
             DBManagerFactory::getInstance()->query($query);

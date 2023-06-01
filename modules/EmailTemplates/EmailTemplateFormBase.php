@@ -50,6 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 
+#[\AllowDynamicProperties]
 class EmailTemplateFormBase
 {
     public function __construct()
@@ -182,14 +183,14 @@ EOQ;
         global $sugar_config;
         $preProcessedImages = array();
         $emailTemplateBodyHtml = from_html($focus->body_html);
-        if (strpos($emailTemplateBodyHtml, '"cache/images/')) {
+        if (strpos((string) $emailTemplateBodyHtml, '"cache/images/')) {
             $matches = array();
-            preg_match_all('#<img[^>]*[\s]+src[^=]*=[\s]*["\']cache/images/(.+?)["\']#si', $emailTemplateBodyHtml, $matches);
+            preg_match_all('#<img[^>]*[\s]+src[^=]*=[\s]*["\']cache/images/(.+?)["\']#si', (string) $emailTemplateBodyHtml, $matches);
             foreach ($matches[1] as $match) {
                 $filename = urldecode($match);
-                if ($filename != pathinfo($filename, PATHINFO_BASENAME)) {
+                if ($filename !== pathinfo($filename, PATHINFO_BASENAME)) {
                     // don't allow paths there
-                    $emailTemplateBodyHtml = str_replace("cache/images/$match", "", $emailTemplateBodyHtml);
+                    $emailTemplateBodyHtml = str_replace("cache/images/$match", "", (string) $emailTemplateBodyHtml);
                     continue;
                 }
                 $file_location = sugar_cached("images/{$filename}");
@@ -219,7 +220,7 @@ EOQ;
                             $secureLink = ($useSiteURL ? $sugar_config['site_url'] . '/' : '') . "index.php?entryPoint=" . $entryPoint . "&type=Notes&id={$id}&filename=" . $match;
                         }
 
-                        $emailTemplateBodyHtml = str_replace("cache/images/$match", $secureLink, $emailTemplateBodyHtml);
+                        $emailTemplateBodyHtml = str_replace("cache/images/$match", $secureLink, (string) $emailTemplateBodyHtml);
                         //unlink($file_location);
                         $preProcessedImages[$filename] = $id;
                     }
@@ -254,7 +255,7 @@ EOQ;
             $note = BeanFactory::newBean('Notes');
             $where = "notes.parent_id='{$focus->id}'";
             if (!empty($_REQUEST['old_id'])) { // to support duplication of email templates
-                $where .= " OR notes.parent_id='".htmlspecialchars($_REQUEST['old_id'], ENT_QUOTES)."'";
+                $where .= " OR notes.parent_id='".htmlspecialchars((string) $_REQUEST['old_id'], ENT_QUOTES)."'";
             }
             $notes_list = $note->get_full_list("", $where, true);
         }
@@ -354,7 +355,7 @@ EOQ;
         ////	ATTACHMENTS FROM DOCUMENTS
         $count = '';
         if (!empty($_REQUEST['document'])) {
-            $count = count($_REQUEST['document']);
+            $count = is_countable($_REQUEST['document']) ? count($_REQUEST['document']) : 0;
         } else {
             $count = 10;
         }

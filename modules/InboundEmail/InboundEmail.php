@@ -50,6 +50,7 @@ require_once __DIR__ . '/../../include/OutboundEmail/OutboundEmail.php';
 require_once __DIR__ . '/../../modules/InboundEmail/Overview.php';
 require_once __DIR__ . '/../../modules/InboundEmail/temp.php';
 
+#[\AllowDynamicProperties]
 class InboundEmail extends SugarBean
 {
     // Module specific
@@ -311,7 +312,7 @@ class InboundEmail extends SugarBean
     {
         global $sugar_config;
 
-        if (null === $mailParser) {
+        if (!$mailParser instanceof \ZBateson\MailMimeParser\MailMimeParser) {
             $mailParser = new MailMimeParser();
         }
 
@@ -341,8 +342,8 @@ class InboundEmail extends SugarBean
      */
     public function getImap(ImapHandlerInterface $imap = null)
     {
-        if (null === $this->imap) {
-            if (null === $imap) {
+        if (!$this->imap instanceof \ImapHandlerInterface) {
+            if (!$imap instanceof \ImapHandlerInterface) {
                 $imapFactory = new ImapHandlerFactory();
 
                 $handlerType = $this->getImapHandlerType();
@@ -596,7 +597,7 @@ class InboundEmail extends SugarBean
         if (!$imapRenameMailbox) {
             $GLOBALS['log']->debug("***INBOUNDEMAIL: failed to rename mailbox [ {$oldConnect} ] to [ {$newConnect} ]");
         } else {
-            $this->mailbox = str_replace($oldName, $newName, $this->mailbox);
+            $this->mailbox = str_replace($oldName, $newName, (string) $this->mailbox);
             $this->save();
             $sessionFoldersString = $this->getSessionInboundFoldersString(
                 $this->server_url,
@@ -604,7 +605,7 @@ class InboundEmail extends SugarBean
                 $this->port,
                 $this->protocol
             );
-            $sessionFoldersString = str_replace($oldName, $newName, $sessionFoldersString);
+            $sessionFoldersString = str_replace($oldName, $newName, (string) $sessionFoldersString);
             $this->setSessionInboundFoldersString(
                 $this->server_url,
                 $this->email_user,
@@ -672,7 +673,7 @@ class InboundEmail extends SugarBean
 
         return array(
             "data" => $emailHeaders,
-            "mailbox_info" => json_decode(json_encode($mailboxInfo), true),
+            "mailbox_info" => json_decode(json_encode($mailboxInfo), true, 512, JSON_THROW_ON_ERROR),
         );
     }
 
@@ -1269,7 +1270,7 @@ class InboundEmail extends SugarBean
                         $colDef['type'] == 'varchar'
                     ) {
                         if (isset($overview->$fieldName)) {
-                            $overview->$fieldName = substr($overview->$fieldName, 0, $colDef['len']);
+                            $overview->$fieldName = substr((string) $overview->$fieldName, 0, $colDef['len']);
                         }
                     }
 
@@ -1278,7 +1279,7 @@ class InboundEmail extends SugarBean
                             if (isset($overview->uid) && !empty($overview->uid)) {
                                 $this->imap_uid = $overview->uid;
                             }
-                            if (!isset($this->imap_uid)) {
+                            if (!(property_exists($this, 'imap_uid') && $this->imap_uid !== null)) {
                                 LoggerManager::getLogger()->warn('Inbound email has not imap uid for setting cache value.');
                                 $values .= "''";
                             } else {
@@ -1570,8 +1571,8 @@ class InboundEmail extends SugarBean
                 fclose($fh);
                 $diff = unserialize($data);
                 if (!empty($diff)) {
-                    if (count($diff) > 50) {
-                        $newDiff = array_slice($diff, 50, count($diff), true);
+                    if ((is_countable($diff) ? count($diff) : 0) > 50) {
+                        $newDiff = array_slice($diff, 50, is_countable($diff) ? count($diff) : 0, true);
                     } else {
                         $newDiff = array();
                     }
@@ -1599,8 +1600,8 @@ class InboundEmail extends SugarBean
                 require_once('modules/Emails/EmailUI.php');
                 EmailUI::preflightEmailCache("{$this->EmailCachePath}/{$this->id}");
 
-                if (count($diff) > 50) {
-                    $newDiff = array_slice($diff, 50, count($diff), true);
+                if ((is_countable($diff) ? count($diff) : 0) > 50) {
+                    $newDiff = array_slice($diff, 50, is_countable($diff) ? count($diff) : 0, true);
                 } else {
                     $newDiff = array();
                 }
@@ -1619,7 +1620,7 @@ class InboundEmail extends SugarBean
         } // if
 
         // build up msgNo request
-        if (count($diff) > 0) {
+        if ((is_countable($diff) ? count($diff) : 0) > 0) {
             // remove dirty cache entries
             $startingNo = 0;
             if (isset($_REQUEST['currentCount']) && $_REQUEST['currentCount'] > -1) {
@@ -1636,7 +1637,7 @@ class InboundEmail extends SugarBean
             $GLOBALS['log']->info("[EMAIL] Start POP3 fetch overview on mailbox [{$this->mailbox}] for user [{$current_user->user_name}] on 50 data");
             $fetchedOverviews = $this->getImap()->fetchOverview($concatResults);
             $GLOBALS['log']->info("[EMAIL] End POP3 fetch overview on mailbox [{$this->mailbox}] for user [{$current_user->user_name}] on "
-                . count($fetchedOverviews) . " data");
+                . (is_countable($fetchedOverviews) ? count($fetchedOverviews) : 0) . " data");
 
             // clean up cache entry
             foreach ($fetchedOverviews as $k => $overview) {
@@ -1652,7 +1653,7 @@ class InboundEmail extends SugarBean
                 'status' => "In Progress",
                 'mbox' => $this->mailbox,
                 'count' => (count($results) + $startingNo),
-                'totalcount' => count($diff),
+                'totalcount' => is_countable($diff) ? count($diff) : 0,
                 'ieid' => $this->id
             );
         } // if
@@ -1842,7 +1843,7 @@ class InboundEmail extends SugarBean
         } else {
             $searchResults = $this->getImap()->search($criteria, SE_UID);
         }
-        $GLOBALS['log']->info("[EMAIL] Done IMAP search on mailbox [{$mailbox}] for user [{$current_user->user_name}]. Result count = " . count($searchResults));
+        $GLOBALS['log']->info("[EMAIL] Done IMAP search on mailbox [{$mailbox}] for user [{$current_user->user_name}]. Result count = " . (is_countable($searchResults) ? count($searchResults) : 0));
 
         if (!empty($searchResults)) {
             $concatResults = implode(",", $searchResults);
@@ -1936,7 +1937,7 @@ class InboundEmail extends SugarBean
         $searchResults = $this->getCachedIMAPSearch($criteria);
 
         if (!empty($searchResults)) {
-            $total = count($searchResults);
+            $total = is_countable($searchResults) ? count($searchResults) : 0;
             $searchResults = array_slice($searchResults, $start, $max);
 
             $GLOBALS['log']->info("INBOUNDEMAIL: there are  $total messages in [{$mailbox}], we are on $start");
@@ -2039,7 +2040,7 @@ class InboundEmail extends SugarBean
                 LoggerManager::getLogger()->fatal('Inbound Email Connection is not a valid resource.');
             } else {
                 $searchResults = $this->getImap()->search($criteria, SE_UID);
-                if (count($searchResults) > 0) {
+                if ((is_countable($searchResults) ? count($searchResults) : 0) > 0) {
                     $results = $searchResults;
                     $data = serialize($searchResults);
                     if ($fh = @fopen($cacheFilePath, 'wb')) {
@@ -2082,7 +2083,7 @@ class InboundEmail extends SugarBean
             $count = 0;
         }
         $GLOBALS['log']->info("INBOUNDEMAIL:found " . count($mailboxes) . " Mailboxes");
-        $index = array_search($mbox, $mailboxes) + 1;
+        $index = array_search($mbox, $mailboxes, true) + 1;
         $ret = $this->checkEmailOneMailboxPartial($mbox, $prefetch, $synch, $count, 100);
         while ($ret['status'] == 'done' && $index < count($mailboxes)) {
             if ($ret['count'] > 100) {
@@ -2172,7 +2173,7 @@ class InboundEmail extends SugarBean
             return 0;
         }
 
-        return count($searchResults);
+        return is_countable($searchResults) ? count($searchResults) : 0;
     }
 
     /**
@@ -2279,7 +2280,7 @@ class InboundEmail extends SugarBean
     {
         global $sugar_config;
 
-        if (!isset($this->email) && !isset($this->email->et)) {
+        if (!($this->email !== null) && !isset($this->email->et)) {
             $this->email = BeanFactory::newBean('Emails');
             $this->email->email2init();
         }
@@ -2308,7 +2309,7 @@ class InboundEmail extends SugarBean
     public function getOverviewsFromCacheFile($uids, $mailbox = '', $remove = false)
     {
         global $app_strings;
-        if (!isset($this->email) && !isset($this->email->et)) {
+        if (!($this->email !== null) && !isset($this->email->et)) {
             $this->email = BeanFactory::newBean('Emails');
             $this->email->email2init();
         }
@@ -2542,7 +2543,7 @@ class InboundEmail extends SugarBean
             LoggerManager::getLogger()->fatal('Inboun Email Connenction is not a valid resource for deleting Folder');
         } elseif ($this->getImap()->unsubscribe($this->getImap()->utf7Encode($connectString))) {
             if ($this->getImap()->deleteMailbox($connectString)) {
-                $this->mailbox = str_replace(("," . $mbox), "", $this->mailbox);
+                $this->mailbox = str_replace(("," . $mbox), "", (string) $this->mailbox);
                 $this->save();
                 $sessionFoldersString = $this->getSessionInboundFoldersString(
                     $this->server_url,
@@ -2550,7 +2551,7 @@ class InboundEmail extends SugarBean
                     $this->port,
                     $this->protocol
                 );
-                $sessionFoldersString = str_replace(("," . $mbox), "", $sessionFoldersString);
+                $sessionFoldersString = str_replace(("," . $mbox), "", (string) $sessionFoldersString);
                 $this->setSessionInboundFoldersString(
                     $this->server_url,
                     $this->email_user,
@@ -2623,7 +2624,7 @@ class InboundEmail extends SugarBean
                 $sessionFoldersString
             );
 
-            echo json_encode($status);
+            echo json_encode($status, JSON_THROW_ON_ERROR);
 
             return true;
         }
@@ -2643,8 +2644,9 @@ class InboundEmail extends SugarBean
         $exMbox = explode("::", $mbox);
 
         $mboxImap = '';
+        $exMboxCount = count($exMbox);
 
-        for ($i = 2; $i < count($exMbox); $i++) {
+        for ($i = 2; $i < $exMboxCount; $i++) {
             if (!empty($mboxImap)) {
                 $mboxImap .= ".";
             }
@@ -2755,7 +2757,7 @@ class InboundEmail extends SugarBean
                             $searchOverviews = $bean->imap->fetchOverview(implode(',', $searchResult), FT_UID);
                         } // if
                     } // else
-                    $numHits = count($searchOverviews);
+                    $numHits = is_countable($searchOverviews) ? count($searchOverviews) : 0;
 
                     if ($numHits > 0) {
                         $totalHits = $totalHits + $numHits;
@@ -2846,7 +2848,7 @@ class InboundEmail extends SugarBean
      */
     public function generateDynamicFolderQuery($type, $userId)
     {
-        if (!isset($this->coreDynamicFolderQuery)) {
+        if (!(property_exists($this, 'coreDynamicFolderQuery') && $this->coreDynamicFolderQuery !== null)) {
             $this->coreDynamicFolderQuery = null;
             LoggerManager::getLogger()->warn('Attempt to generate dynamic folder query with an unset core dynamic folder query?!');
         }
@@ -2861,7 +2863,7 @@ class InboundEmail extends SugarBean
         $replacee = array("::TYPE::", "::STATUS::", "::USER_ID::");
         $replacer = array($type, $status, $userId);
 
-        $ret = str_replace($replacee, $replacer, $q);
+        $ret = str_replace($replacee, $replacer, (string) $q);
 
         if ($type == 'inbound') {
             $ret .= " AND status NOT IN ('sent', 'archived', 'draft') AND type NOT IN ('out', 'archived', 'draft')";
@@ -2901,7 +2903,7 @@ class InboundEmail extends SugarBean
         $this->server_url = trim($_REQUEST['server_url']);
         $this->email_user = trim($_REQUEST['email_user']);
         if (!empty($_REQUEST['email_password'])) {
-            $this->email_password = html_entity_decode($_REQUEST['email_password'], ENT_QUOTES);
+            $this->email_password = html_entity_decode((string) $_REQUEST['email_password'], ENT_QUOTES);
         }
         $this->port = trim(isset($_REQUEST['port']) ? $_REQUEST['port'] : '');
         $this->protocol = isset($_REQUEST['protocol']) ? $_REQUEST['protocol'] : null;
@@ -3054,7 +3056,7 @@ class InboundEmail extends SugarBean
                             if (!$row['has_child']) {
                                 if (in_array($row['name'], $inboxNames)) {
                                     // We have the folder, all is good
-                                    unset($inboxNames[array_search($row['name'], $inboxNames)]);
+                                    unset($inboxNames[array_search($row['name'], $inboxNames, true)]);
                                 } else {
                                     // We have a folder we shouldn't have
                                     $folder->id = $row['id'];
@@ -3178,6 +3180,7 @@ class InboundEmail extends SugarBean
 
     public function getFoldersListForMailBox()
     {
+        $return = [];
         global $mod_strings;
         $msg = $this->connectMailserver(true);
         if (strpos($msg, "successfully")) {
@@ -3210,6 +3213,7 @@ class InboundEmail extends SugarBean
         $prot = '',
         $mailbox = ''
     ) {
+        $goodStr = [];
         global $mod_strings;
         $serviceArr = array();
         $returnService = array();
@@ -3334,9 +3338,9 @@ class InboundEmail extends SugarBean
                 if ($errors == 'Too many login failures'
                     || $errors == '[CLOSED] IMAP connection broken (server response)'
                     // @link http://tools.ietf.org/html/rfc5530#section-3
-                    || strpos($errors, '[AUTHENTICATIONFAILED]') !== false
+                    || strpos((string) $errors, '[AUTHENTICATIONFAILED]') !== false
                     // MS Exchange 2010
-                    || (strpos($errors, 'AUTHENTICATE') !== false && strpos($errors, 'failed') !== false)
+                    || (strpos((string) $errors, 'AUTHENTICATE') !== false && strpos((string) $errors, 'failed') !== false)
                 ) {
                     $GLOBALS['log']->debug($l . ': I-E failed using [' . $serviceTest . ']');
                     $retArray['err'][$k] = $mod_strings['ERR_BAD_LOGIN_PASSWORD'];
@@ -3361,7 +3365,7 @@ class InboundEmail extends SugarBean
 
             if ($this->getImap()->isValidStream($this->getImap()->getConnection())) {
                 if (!$this->isPop3Protocol()) {
-                    $serviceTest = str_replace("INBOX", "", $serviceTest);
+                    $serviceTest = str_replace("INBOX", "", (string) $serviceTest);
                     $boxes = $this->getImap()->getMailboxes($serviceTest, "*");
                     $delimiter = '.';
                     // clean MBOX path names
@@ -3434,7 +3438,7 @@ class InboundEmail extends SugarBean
             $goodStr['serial'] = $newTls . '::' . $newCert . '::' . $newSsl . '::' . $this->protocol . '::' .
                 $newNovalidate_cert . '::' . $newNotls . '::' . $secure;
             $goodStr['service'] = $good;
-            $testConnectString = str_replace('foo', '', $good);
+            $testConnectString = str_replace('foo', '', (string) $good);
             $testConnectString = '{' . $this->server_url . ':' . $this->port . '/service=' . $this->protocol .
                 $testConnectString . '}';
             if (!empty($this->connection_string)) {
@@ -3453,7 +3457,7 @@ class InboundEmail extends SugarBean
                 $raw[$i] = str_replace(
                     $testConnectString,
                     "",
-                    $GLOBALS['locale']->translateCharset($mbox, "UTF7-IMAP", "UTF8")
+                    (string) $GLOBALS['locale']->translateCharset($mbox, "UTF7-IMAP", "UTF8")
                 );
                 $i++;
             } // foreach
@@ -3526,7 +3530,7 @@ class InboundEmail extends SugarBean
             $uid = $a['id'];
         }
 
-        if (strlen($uid) > 0) {
+        if (strlen((string) $uid) > 0) {
             return $uid;
         }
 
@@ -3559,6 +3563,10 @@ class InboundEmail extends SugarBean
      */
     public function handleAutoresponse(&$email, &$contactAddr)
     {
+        $storedOptions = [];
+        $aName = [];
+        $aAddr = [];
+        $to = [];
         if ($this->template_id) {
             $GLOBALS['log']->debug('found auto-reply template id - prefilling and mailing response');
 
@@ -3727,6 +3735,7 @@ class InboundEmail extends SugarBean
 
     public function handleCreateCase(Email $email, $userId)
     {
+        $to = [];
         global $current_user, $mod_strings, $current_language;
         $mod_strings = return_module_language($current_language, "Emails");
         $GLOBALS['log']->debug('In handleCreateCase');
@@ -3752,7 +3761,7 @@ class InboundEmail extends SugarBean
 
             $GLOBALS['log']->debug('finding related accounts with address ' . $contactAddr);
             if ($accountIds = $this->getRelatedId($contactAddr, 'accounts')) {
-                if (count($accountIds) == 1) {
+                if ((is_countable($accountIds) ? count($accountIds) : 0) == 1) {
                     $c->account_id = $accountIds[0];
 
                     $acct = BeanFactory::newBean('Accounts');
@@ -3767,7 +3776,7 @@ class InboundEmail extends SugarBean
             } // if
             if ($contactIds = $this->getRelatedId($contactAddr, 'contacts')) {
                 if (!empty($contactIds) && $c->load_relationship('contacts')) {
-                    if (!$accountIds && count($contactIds) == 1) {
+                    if (!$accountIds && (is_countable($contactIds) ? count($contactIds) : 0) == 1) {
                         $contact = BeanFactory::getBean('Contacts', $contactIds[0]);
                         if ($contact->load_relationship('accounts')) {
                             $acct = $contact->accounts->get();
@@ -3784,7 +3793,7 @@ class InboundEmail extends SugarBean
             $email->parent_id = $c->id;
             // assign the email to the case owner
             $email->assigned_user_id = $c->assigned_user_id;
-            $email->name = str_replace('%1', $c->case_number, $c->getEmailSubjectMacro()) . " " . $email->name;
+            $email->name = str_replace('%1', $c->case_number, (string) $c->getEmailSubjectMacro()) . " " . $email->name;
             $email->save();
             $GLOBALS['log']->debug('InboundEmail created one case with number: ' . $c->case_number);
             $createCaseTemplateId = $this->get_stored_options('create_case_email_template', "");
@@ -3847,7 +3856,7 @@ class InboundEmail extends SugarBean
                 $ret['description'] = empty($email->description_html) ? str_replace(
                     "\n",
                     "\n<BR/>",
-                    $email->description
+                    (string) $email->description
                 ) : $email->description_html;
 
                 $reply = BeanFactory::newBean('Emails');
@@ -3983,7 +3992,9 @@ class InboundEmail extends SugarBean
      */
     public function getEncodingFromBreadCrumb($bc, $parts)
     {
-        if (strstr($bc, '.')) {
+        $exBc = [];
+        $tempObj = [];
+        if (strstr((string) $bc, '.')) {
             $exBc = explode('.', $bc);
         } else {
             $exBc[0] = $bc;
@@ -4078,7 +4089,8 @@ class InboundEmail extends SugarBean
         }
 
         $results = array();
-        for ($i = 0; $i < count($a_bc); $i++) {
+        $a_bcCount = count($a_bc);
+        for ($i = 0; $i < $a_bcCount; $i++) {
             if (isset($a_offset[$i])) {
                 if (!is_numeric($a_bc[$i])) {
                     $aBcI = 0;
@@ -4181,6 +4193,7 @@ class InboundEmail extends SugarBean
      */
     public function getMessageText($uid, $type, $structure, $fullHeader, $clean_email = true, $bcOffset = "")
     {
+        $msgNo = null;
         if (!$structure) {
             LoggerManager::getLogger()->fatal('Trying to get message text with no structure.');
 
@@ -4215,7 +4228,7 @@ class InboundEmail extends SugarBean
                             if (empty($part) || empty($part->id)) {
                                 continue;
                             }
-                            $partid = substr($part->id, 1, -1); // strip <> around
+                            $partid = substr((string) $part->id, 1, -1); // strip <> around
                             if (isset($this->inlineImages[$partid])) {
                                 $imageName = $this->inlineImages[$partid];
                                 $newImagePath = "class=\"image\" src=\"{$this->imagePrefix}{$imageName}\"";
@@ -4304,8 +4317,9 @@ class InboundEmail extends SugarBean
                 $newValue = array();
                 $exValue = explode(';', $value);
                 $newValue['type'] = $exValue[0];
+                $exValueCount = count($exValue);
 
-                for ($i = 1; $i < count($exValue); $i++) {
+                for ($i = 1; $i < $exValueCount; $i++) {
                     $exContent = explode('=', $exValue[$i]);
                     $newValue[trim($exContent[0])] = trim($exContent[1], "\t \"");
                 }
@@ -4369,7 +4383,7 @@ class InboundEmail extends SugarBean
                 $thisBc = $this->buildBreadCrumbs($part->parts, $subtype, $thisBc);
 
                 return $thisBc;
-            } elseif (strtolower($part->subtype) == strtolower($subtype)) { // found the subtype we want, return the breadcrumb value
+            } elseif (strtolower($part->subtype) === strtolower($subtype)) { // found the subtype we want, return the breadcrumb value
                 return $thisBc;
             }
         }
@@ -4464,11 +4478,11 @@ class InboundEmail extends SugarBean
             $name = $imapDecode[0]->text; // encoded in that charset
         } else {
             /* encoded filenames are formatted as [encoding]''[filename] */
-            if (strpos($name, "''") !== false) {
-                $encoding = substr($name, 0, strpos($name, "'"));
+            if (strpos((string) $name, "''") !== false) {
+                $encoding = substr((string) $name, 0, strpos((string) $name, "'"));
 
-                while (strpos($name, "'") !== false) {
-                    $name = trim(substr($name, (strpos($name, "'") + 1), strlen($name)));
+                while (strpos((string) $name, "'") !== false) {
+                    $name = trim(substr((string) $name, (strpos((string) $name, "'") + 1), strlen((string) $name)));
                 }
             }
             $name = urldecode($name);
@@ -4686,9 +4700,9 @@ class InboundEmail extends SugarBean
         $cacheDir = $GLOBALS['sugar_config']['cache_dir'] . 'images/';
 
         if (isset($attach->id) &&
-            strpos($attach->id, "..") !== false &&
-            isset($this->id) &&
-            strpos($this->id, "..") !== false
+            strpos((string) $attach->id, "..") !== false &&
+            $this->id !== null &&
+            strpos((string) $this->id, "..") !== false
         ) {
             die("Directory navigation attack denied.");
         }
@@ -4696,7 +4710,7 @@ class InboundEmail extends SugarBean
         $uploadDir = ($forDisplay) ? "{$this->EmailCachePath}/{$this->id}/attachments/" : "upload://";
 
         // decide what name to save file as
-        $fileName = htmlspecialchars($attach->id);
+        $fileName = htmlspecialchars((string) $attach->id);
 
         // download the attachment if we didn't do it yet
         if (!file_exists($uploadDir . $fileName)) {
@@ -4729,7 +4743,7 @@ class InboundEmail extends SugarBean
             }
 
             if (copy($uploadDir . $fileName, sugar_cached("images/{$fileName}.") . strtolower($part->subtype))) {
-                $id = substr($part->id, 1, -1); //strip <> around
+                $id = substr((string) $part->id, 1, -1); //strip <> around
                 $this->inlineImages[$id] = $attach->id . "." . strtolower($part->subtype);
             } else {
                 $GLOBALS['log']->debug('InboundEmail could not copy ' . $uploadDir . $fileName . ' to cache');
@@ -5018,7 +5032,7 @@ class InboundEmail extends SugarBean
 
         // handle messages deleted on server
         if (empty($header)) {
-            if (!isset($this->email) || empty($this->email)) {
+            if (!($this->email !== null) || empty($this->email)) {
                 $this->email = BeanFactory::newBean('Emails');
             } // if
 
@@ -5083,7 +5097,7 @@ class InboundEmail extends SugarBean
 
         // handle messages deleted on server
         if (empty($header)) {
-            if (!isset($this->email) || empty($this->email)) {
+            if (!($this->email !== null) || empty($this->email)) {
                 $this->email = BeanFactory::newBean('Emails');
             }
 
@@ -5374,7 +5388,7 @@ class InboundEmail extends SugarBean
         // UNCOMMENT THIS IF YOU HAVE THIS PROBLEM!  See notes on Bug # 45477
         // $this->markEmails($uid, "read");
 
-        if (empty($msgNo) and !empty($uid)) {
+        if (empty($msgNo) && !empty($uid)) {
             $msgNo = $this->getImap()->getMessageNo((int)$uid);
         }
 
@@ -5642,7 +5656,7 @@ class InboundEmail extends SugarBean
             $this->email->email2init();
         }
 
-        if (isset($email->id) and !empty($email->id)) {
+        if (isset($email->id) && !empty($email->id)) {
             return $email->id;
         }
 
@@ -5929,7 +5943,7 @@ class InboundEmail extends SugarBean
         }
         //check to see if this is a file with extension located in "badext"
         foreach ($sugar_config['upload_badext'] as $badExt) {
-            if (strtolower($file_ext) == strtolower($badExt)) {
+            if (strtolower($file_ext) === strtolower($badExt)) {
                 //if found, then append with .txt and break out of lookup
                 $attach->name = $attach->name . ".txt";
                 $attach->file_mime_type = 'text/';
@@ -5987,7 +6001,7 @@ class InboundEmail extends SugarBean
         $ooto = array("Out of the Office", "Out of Office");
 
         foreach ($ooto as $str) {
-            if (preg_match('/' . $str . '/i', $subject)) {
+            if (preg_match('/' . $str . '/i', (string) $subject)) {
                 $GLOBALS['log']->debug('Autoreply cancelled - found "Out of Office" type of subject.');
 
                 return false;
@@ -6400,7 +6414,7 @@ class InboundEmail extends SugarBean
         if ($requestFolder === 'inbound') {
             if (!empty($_REQUEST['folder_name'])) {
                 $this->mailbox = $_REQUEST['folder_name'];
-            } elseif ($this->mailboxarray && count($this->mailboxarray)) {
+            } elseif ($this->mailboxarray && (is_countable($this->mailboxarray) ? count($this->mailboxarray) : 0)) {
                 $this->mailbox = $this->mailboxarray[0];
             } else {
                 $this->mailbox = 'INBOX';
@@ -7022,7 +7036,7 @@ class InboundEmail extends SugarBean
             $GLOBALS['log']->debug("********* SUGARFOLDER - moveEmails() moving email from I-E to I-E");
             //$exDestFolder = explode("::", $toFolder);
             //preserve $this->mailbox
-            if (isset($this->mailbox)) {
+            if ($this->mailbox !== null) {
                 $oldMailbox = $this->mailbox;
             }
 
@@ -7253,10 +7267,11 @@ class InboundEmail extends SugarBean
      */
     public function deleteMessageOnMailServer($uid)
     {
+        $uids = [];
         global $app_strings;
         $this->connectMailserver();
 
-        if (strpos($uid, $app_strings['LBL_EMAIL_DELIMITER']) !== false) {
+        if (strpos($uid, (string) $app_strings['LBL_EMAIL_DELIMITER']) !== false) {
             $uids = explode($app_strings['LBL_EMAIL_DELIMITER'], $uid);
         } else {
             $uids[] = $uid;
@@ -7430,6 +7445,7 @@ class InboundEmail extends SugarBean
      */
     public function setEmailForDisplay($uid, $isMsgNo = false, $setRead = false, $forceRefresh = false)
     {
+        $cacheFile = [];
         if (empty($uid)) {
             $GLOBALS['log']->debug("*** ERROR: INBOUNDEMAIL trying to setEmailForDisplay() with no UID");
 
@@ -7795,6 +7811,7 @@ eoq;
      */
     public function sortFetchedOverview($arr, $sort = 4, $direction = 'DESC', $forceSeen = false)
     {
+        $currentNode = [];
         global $current_user;
 
         $sortPrefs = $current_user->getPreference('folderSortOrder', 'Emails');
@@ -7847,8 +7864,9 @@ eoq;
         if (strtolower($direction) == 'desc') {
             $revSorts = array();
             $keys = array_reverse(array_keys($sorts[$sort]));
+            $keysCount = count($keys);
 
-            for ($i = 0; $i < count($keys); $i++) {
+            for ($i = 0; $i < $keysCount; $i++) {
                 $v = $keys[$i];
                 $revSorts[$v] = $sorts[$sort][$v];
             }
@@ -7906,7 +7924,7 @@ eoq;
 
         $delimiter = $this->get_stored_options('folderDelimiter');
         if ($delimiter) {
-            $mbox = str_replace('.', $delimiter, $mbox);
+            $mbox = str_replace('.', $delimiter, (string) $mbox);
         }
 
         $this->mailbox = $mbox;
@@ -8215,9 +8233,9 @@ eoq;
      */
     public function sortMailboxes($mbox, $ret, $delimeter = ".")
     {
-        if (strpos($mbox, $delimeter)) {
-            $node = substr($mbox, 0, strpos($mbox, $delimeter));
-            $nodeAfter = substr($mbox, strpos($mbox, $node) + strlen($node) + 1, strlen($mbox));
+        if (strpos((string) $mbox, (string) $delimeter)) {
+            $node = substr((string) $mbox, 0, strpos((string) $mbox, (string) $delimeter));
+            $nodeAfter = substr((string) $mbox, strpos((string) $mbox, (string) $node) + strlen($node) + 1, strlen((string) $mbox));
 
             if (!isset($ret[$node])) {
                 $ret[$node] = array();
@@ -8269,7 +8287,7 @@ eoq;
         $msgIds = $this->getImap()->search('ALL UNDELETED');
         $result = array();
         try {
-            if (count($msgIds) > 0) {
+            if ((is_countable($msgIds) ? count($msgIds) : 0) > 0) {
                 /*
                  * @var collect results of queries and message headers
                  */
@@ -8279,7 +8297,7 @@ eoq;
 
                 // sort IDs to get lastest on top
                 arsort($msgIds);
-                $GLOBALS['log']->debug('-----> getNewEmailsForSyncedMailbox() got ' . count($msgIds) . ' Messages');
+                $GLOBALS['log']->debug('-----> getNewEmailsForSyncedMailbox() got ' . (is_countable($msgIds) ? count($msgIds) : 0) . ' Messages');
                 foreach ($msgIds as $k => &$msgNo) {
                     $uid = $this->getImap()->getUid($msgNo);
                     $header = $this->getImap()->headerInfo($msgNo);
@@ -8287,7 +8305,7 @@ eoq;
                     $message_id = isset($header->message_id) ? $header->message_id : '';
                     $deliveredTo = $this->id;
                     $matches = array();
-                    preg_match('/(delivered-to:|x-real-to:){1}\s*(\S+)\s*\n{1}/im', $fullHeader, $matches);
+                    preg_match('/(delivered-to:|x-real-to:){1}\s*(\S+)\s*\n{1}/im', (string) $fullHeader, $matches);
                     if (count($matches)) {
                         $deliveredTo = $matches[2];
                     }
@@ -8328,7 +8346,7 @@ eoq;
                         $r = $this->db->query($query);
                         $tmp = array();
                         while ($a = $this->db->fetchByAssoc($r)) {
-                            $tmp[html_entity_decode($a['mid'])] = $a['cnt'];
+                            $tmp[html_entity_decode((string) $a['mid'])] = $a['cnt'];
                         }
                         foreach ($tmpMsgs as $k1 => $v1) {
                             if (isset($tmp[$v1['msgId']]) && $tmp[$v1['msgId']] > 0) {
@@ -8534,7 +8552,7 @@ eoq;
      */
     protected function overrideConnectionConfigs(array &$returnService, array &$serviceArr, $tmpMailbox): void
     {
-        $connectionString = (string) str_replace('//', '', $this->connection_string ?? '');
+        $connectionString = str_replace('//', '', $this->connection_string ?? '');
 
         $parts = explode('/', $connectionString) ?? [];
         array_shift($parts);

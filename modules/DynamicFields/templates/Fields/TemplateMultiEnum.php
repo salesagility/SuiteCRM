@@ -45,6 +45,8 @@ require_once('modules/DynamicFields/templates/Fields/TemplateEnum.php');
 require_once('include/utils/array_utils.php');
 class TemplateMultiEnum extends TemplateEnum
 {
+    public $options;
+    public $no_default;
     public $type = 'text';
 
     public function get_html_edit()
@@ -57,6 +59,7 @@ class TemplateMultiEnum extends TemplateEnum
 
     public function get_xtpl_edit()
     {
+        $returnXTPL = [];
         $name = $this->name;
         $value = '';
         if (isset($this->bean->$name)) {
@@ -73,7 +76,7 @@ class TemplateMultiEnum extends TemplateEnum
         global $app_list_strings;
         $returnXTPL = array();
 
-        $returnXTPL[strtoupper($this->name)] = str_replace('^,^', ',', $value);
+        $returnXTPL[strtoupper($this->name)] = str_replace('^,^', ',', (string) $value);
         if (empty($this->ext1)) {
             $this->ext1 = $this->options;
         }
@@ -133,11 +136,11 @@ class TemplateMultiEnum extends TemplateEnum
 
             // if we have a new error, then unserialize must have failed => we don't have a packed ext4
             // safe to assume that false means the unpack failed, as ext4 will either contain an imploded string of default values, or an array, not a boolean false value
-            if ($unpacked === false && !isset($this->no_default)) {
+            if ($unpacked === false && !(property_exists($this, 'no_default') && $this->no_default !== null)) {
                 $def [ 'default' ] = $this->ext4 ;
             } else {
                 // we have a packed representation containing one or both of default and dependency
-                if (isset($unpacked [ 'default' ]) && !isset($this->no_default)) {
+                if (isset($unpacked [ 'default' ]) && !(property_exists($this, 'no_default') && $this->no_default !== null)) {
                     $def [ 'default' ] = $unpacked [ 'default' ] ;
                 }
                 if (isset($unpacked [ 'dependency' ])) {
@@ -157,14 +160,14 @@ class TemplateMultiEnum extends TemplateEnum
 
     public function save($df)
     {
-        if (isset($this->default)) {
+        if ($this->default !== null) {
             if (is_array($this->default)) {
                 $this->default = encodeMultienumValue($this->default);
             }
-            $this->ext4 = (isset($this->dependency)) ? serialize(array( 'default' => $this->default , 'dependency' => html_entity_decode($this->dependency) ))  : $this->default ;
+            $this->ext4 = ($this->dependency !== null) ? serialize(array( 'default' => $this->default , 'dependency' => html_entity_decode((string) $this->dependency) ))  : $this->default ;
         } else {
-            if (isset($this->dependency)) {
-                $this->ext4 = serialize(array( 'dependency' => html_entity_decode($this->dependency) )) ;
+            if ($this->dependency !== null) {
+                $this->ext4 = serialize(array( 'dependency' => html_entity_decode((string) $this->dependency) )) ;
             }
         }
         parent::save($df);

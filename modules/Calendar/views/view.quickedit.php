@@ -41,6 +41,7 @@
 require_once('include/EditView/EditView2.php');
 
 
+#[\AllowDynamicProperties]
 class CalendarViewQuickEdit extends SugarView
 {
     public $ev;
@@ -90,7 +91,7 @@ class CalendarViewQuickEdit extends SugarView
             $this->ev->ss->assign('remindersData', Reminder::loadRemindersData($module, $this->bean->id, false));
             $this->ev->ss->assign('remindersDataJson', Reminder::loadRemindersDataJson($module, $this->bean->id, false));
             $this->ev->ss->assign('remindersDefaultValuesDataJson', Reminder::loadRemindersDefaultValuesDataJson());
-            $this->ev->ss->assign('remindersDisabled', json_encode(false));
+            $this->ev->ss->assign('remindersDisabled', json_encode(false, JSON_THROW_ON_ERROR));
         }
         $this->ev->setup($module, $this->bean, $source, $tpl);
         $this->ev->defs['templateMeta']['form']['headerTpl'] = "modules/Calendar/tpls/editHeader.tpl";
@@ -121,6 +122,6 @@ class CalendarViewQuickEdit extends SugarView
         }
             
         ob_clean();
-        echo json_encode($json_arr);
+        echo json_encode($json_arr, JSON_THROW_ON_ERROR);
     }
 }

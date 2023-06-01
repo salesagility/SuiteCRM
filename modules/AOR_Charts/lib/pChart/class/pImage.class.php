@@ -30,6 +30,7 @@
  /* ImageMap string delimiter */
  define("IMAGE_MAP_DELIMITER", chr(1));
 
+ #[\AllowDynamicProperties]
  class pImage extends pDraw
  {
      /* Image settings, size, quality, .. */
@@ -211,6 +212,7 @@
      /* Return the surrounding box of text area */
      public function getTextBox_deprecated($X, $Y, $FontName, $FontSize, $Angle, $Text)
      {
+         $RealPos = [];
          $Size    = imagettfbbox($FontSize, $Angle, $FontName, $Text);
          $Width   = $this->getLength($Size[0], $Size[1], $Size[2], $Size[3])+1;
          $Height  = $this->getLength($Size[2], $Size[3], $Size[4], $Size[5])+1;
@@ -303,7 +305,7 @@
      /* Returns the 1st decimal values (used to correct AA bugs) */
      public function getFirstDecimal($Value)
      {
-         $Values = preg_split("/\./", $Value);
+         $Values = preg_split("/\./", (string) $Value);
          if (isset($Values[1])) {
              return(substr($Values[1], 0, 1));
          }
@@ -351,10 +353,10 @@
          }
 
          /* Encode the characters in the imagemap in HTML standards */
-         $Title   = str_replace("&#8364;", "\u20AC", $Title);
+         $Title   = str_replace("&#8364;", "\u20AC", (string) $Title);
          $Title   = htmlentities($Title, ENT_QUOTES, "ISO-8859-15");
          if ($HTMLEncode) {
-             $Message = htmlentities($Message, ENT_QUOTES, "ISO-8859-15");
+             $Message = htmlentities((string) $Message, ENT_QUOTES, "ISO-8859-15");
              $Message = str_replace("&lt;", "<", $Message);
              $Message = str_replace("&gt;", ">", $Message);
          }
@@ -378,7 +380,7 @@
              return(-1);
          }
 
-         $Result = "";
+         $Result = [];
          foreach ($this->DataSet->Data["Series"][$SerieName]["Data"] as $Key => $Value) {
              if ($Value != VOID && isset($Values[$Key])) {
                  $Result[] = $Values[$Key];
@@ -418,7 +420,7 @@
                  }
              }
          } elseif ($this->ImageMapStorageMode == IMAGE_MAP_STORAGE_FILE) {
-             $TempArray = "";
+             $TempArray = [];
              $Handle    = @fopen($this->ImageMapStorageFolder."/".$this->ImageMapFileName.".map", 'rb');
              if ($Handle) {
                  while (($Buffer = fgets($Handle, 4096)) !== false) {
@@ -474,7 +476,7 @@
                  }
              }
          } elseif ($this->ImageMapStorageMode == IMAGE_MAP_STORAGE_FILE) {
-             $TempArray = "";
+             $TempArray = [];
              $Handle    = @fopen($this->ImageMapStorageFolder."/".$this->ImageMapFileName.".map", 'rb');
              if ($Handle) {
                  while (($Buffer = fgets($Handle, 4096)) !== false) {
@@ -554,8 +556,8 @@
      /* Reverse an array of points */
      public function reversePlots($Plots)
      {
-         $Result = "";
-         for ($i=count($Plots)-2;$i>=0;$i=$i-2) {
+         $Result = [];
+         for ($i=(is_countable($Plots) ? count($Plots) : 0)-2;$i>=0;$i=$i-2) {
              $Result[] = $Plots[$i];
              $Result[] = $Plots[$i+1];
          }

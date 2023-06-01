@@ -51,6 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/SugarObjects/forms/FormBase.php');
 
+#[\AllowDynamicProperties]
 class CallFormBase extends FormBase
 {
     public function getFormBody($prefix, $mod='', $formname='', $cal_date='', $cal_time='')
@@ -206,6 +207,7 @@ EOQ;
 
     public function handleSave($prefix, $redirect=true, $useRequired=false)
     {
+        $return_id = null;
         require_once('include/formbase.php');
 
         global $current_user;
@@ -221,7 +223,7 @@ EOQ;
         if ($useRequired && !checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
         }
-        if (!isset($_POST[$prefix.'reminder_checked']) or ($_POST[$prefix.'reminder_checked'] == 0)) {
+        if (!isset($_POST[$prefix.'reminder_checked']) || $_POST[$prefix.'reminder_checked'] == 0) {
             $GLOBALS['log']->debug(__FILE__.'('.__LINE__.'): No reminder checked, resetting the reminder_time');
             $_POST[$prefix.'reminder_time'] = -1;
         }
@@ -244,7 +246,7 @@ EOQ;
 
         $time_format = $timedate->get_user_time_format();
         $time_separator = ":";
-        if (preg_match('/\d+([^\d])\d+([^\d]*)/s', $time_format, $match)) {
+        if (preg_match('/\d+([^\d])\d+([^\d]*)/s', (string) $time_format, $match)) {
             $time_separator = $match[1];
         }
 
@@ -256,7 +258,7 @@ EOQ;
             $_POST[$prefix.'time_start'] = $timedate->merge_time_meridiem($_POST[$prefix.'time_start'], $timedate->get_time_format(), $_POST[$prefix.'meridiem']);
         }
 
-        if (isset($_POST[$prefix.'time_start']) && strlen($_POST[$prefix.'date_start']) == 10) {
+        if (isset($_POST[$prefix.'time_start']) && strlen((string) $_POST[$prefix.'date_start']) == 10) {
             $_POST[$prefix.'date_start'] = $_POST[$prefix.'date_start'] . ' ' . $_POST[$prefix.'time_start'];
         }
 
@@ -500,7 +502,7 @@ EOQ;
 
                 // Bug #49195 : update vcal
                 vCal::cache_sugar_vcal($current_user);
-            
+
                 // CCL - Comment out call to set $current_user as invitee
                 //set organizer to auto-accept
                 if ($focus->assigned_user_id == $current_user->id && $newBean) {

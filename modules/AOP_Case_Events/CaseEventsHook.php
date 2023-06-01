@@ -41,6 +41,7 @@
 /**
  * Class CaseEventsHook.
  */
+#[\AllowDynamicProperties]
 class CaseEventsHook
 {
     private static $diffFields = array(

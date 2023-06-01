@@ -167,6 +167,7 @@ class DashletMetaDataParser extends ListLayoutMetaDataParser
      */
     public function handleSave($populate = true)
     {
+        $dashletData = [];
         if (empty($this->_packageName)) {
             foreach (array(MB_CUSTOMMETADATALOCATION, MB_BASEMETADATALOCATION) as $value) {
                 $file = $this->implementation->getFileName(MB_DASHLET, $this->_moduleName, null, $value);

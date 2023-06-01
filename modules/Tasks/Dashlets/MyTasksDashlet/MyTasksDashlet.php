@@ -48,10 +48,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/Dashlets/DashletGeneric.php');
 
 
+#[\AllowDynamicProperties]
 class MyTasksDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
+        $dashletData = [];
         global $current_user, $app_strings;
         require('modules/Tasks/Dashlets/MyTasksDashlet/MyTasksDashlet.data.php');
 

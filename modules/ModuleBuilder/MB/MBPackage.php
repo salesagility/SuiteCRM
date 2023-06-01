@@ -43,6 +43,7 @@ require_once 'modules/ModuleBuilder/MB/MBModule.php';
 /**
  * Class MBPackage
  */
+#[\AllowDynamicProperties]
 class MBPackage
 {
     public $name;
@@ -477,7 +478,7 @@ class MBPackage
             $relationshipsMetaFiles = $this->getCustomRelationshipsMetaFilesByModuleName($value, true, true, $modules);
             if ($relationshipsMetaFiles) {
                 foreach ($relationshipsMetaFiles as $file) {
-                    $installdefs['relationships'][] = array('meta_data' => str_replace('custom', '<basepath>', $file));
+                    $installdefs['relationships'][] = array('meta_data' => str_replace('custom', '<basepath>', (string) $file));
                 }
             }
         }//foreach
@@ -503,8 +504,8 @@ class MBPackage
             DIRECTORY_SEPARATOR .
             'language';
         foreach (scandir($lang_path) as $langFile) {
-            if (substr($langFile, 0, 1) !== '.' && is_file($lang_path . DIRECTORY_SEPARATOR . $langFile)) {
-                $lang = substr($langFile, 0, strpos($langFile, '.'));
+            if (substr((string) $langFile, 0, 1) !== '.' && is_file($lang_path . DIRECTORY_SEPARATOR . $langFile)) {
+                $lang = substr((string) $langFile, 0, strpos((string) $langFile, '.'));
                 $installdefs['language'][] = array(
                     'from' => '<basepath>/SugarModules/modules/' . $module . '/language/' . $langFile,
                     'to_module' => $module,
@@ -567,7 +568,7 @@ class MBPackage
             'quickcreatedefs.php'
         ];
         foreach (scandir($meta_path) as $meta_file) {
-            if (substr($meta_file, 0, 1) !== '.' && is_file($meta_path . '/' . $meta_file)) {
+            if (substr((string) $meta_file, 0, 1) !== '.' && is_file($meta_path . '/' . $meta_file)) {
                 $installdefs['copy'][] = array(
                     'from' => '<basepath>/SugarModules/modules/' . $module . '/metadata/' . $meta_file,
                     'to' => 'custom/modules/' . $module . '/metadata/' . $meta_file,
@@ -606,7 +607,7 @@ class MBPackage
 
         /* @var $fInfo SplFileInfo */
         foreach (new RegexIterator($recursiveIterator, "/\.php$/i") as $fInfo) {
-            $newPath = substr($fInfo->getPathname(), strrpos($fInfo->getPathname(), $generalPath));
+            $newPath = substr((string) $fInfo->getPathname(), strrpos((string) $fInfo->getPathname(), $generalPath));
 
             $installdefs['copy'][] = array(
                 'from' => '<basepath>' . $newPath,
@@ -651,7 +652,7 @@ class MBPackage
             $pathmod = "$path/SugarModules/modules/$module";
             if (mkdir_recursive($pathmod)) {
                 if (file_exists("custom/modules/$module")) {
-                    copy_recursive("custom/modules/$module", (string)$pathmod);
+                    copy_recursive("custom/modules/$module", $pathmod);
                     //Don't include cached extension files
                     if (is_dir("$pathmod/Ext")) {
                         rmdir_recursive("$pathmod/Ext");
@@ -714,7 +715,7 @@ class MBPackage
         if (is_dir($langDir)) {
             foreach (scandir($langDir) as $langFile) {
                 $mod_strings = array();
-                if (strcasecmp(substr($langFile, -4), '.php') !== 0) {
+                if (strcasecmp(substr((string) $langFile, -4), '.php') !== 0) {
                     continue;
                 }
                 include("$langDir/$langFile");
@@ -741,12 +742,12 @@ class MBPackage
                 mkdir_recursive("$path/SugarModules/include/language/");
                 foreach (scandir('custom/include/language') as $langFile) {
                     $app_list_strings = array();
-                    if (strcasecmp(substr($langFile, -4), '.php') !== 0) {
+                    if (strcasecmp(substr((string) $langFile, -4), '.php') !== 0) {
                         continue;
                     }
                     include "custom/include/language/$langFile";
                     $out = "<?php \n";
-                    $lang = substr($langFile, 0, -9);
+                    $lang = substr((string) $langFile, 0, -9);
                     $options = $this->getCustomDropDownStringsForModules($modules, $app_list_strings);
                     foreach ($options as $name => $arr) {
                         $out .= override_value_to_string('app_list_strings', $name, $arr);
@@ -1149,7 +1150,7 @@ class MBPackage
         foreach ($recursiveIterator as $fileInfo) {
             if ($fileInfo->isFile() && !in_array($fileInfo->getPathname(), $result)) {
                 foreach ($relationships as $k => $v) {
-                    if (strpos($fileInfo->getFilename(), $k) !== false) {   //filter by modules being exported
+                    if (strpos((string) $fileInfo->getFilename(), (string) $k) !== false) {   //filter by modules being exported
                         if ($this->filterExportedRelationshipFile(
                             $fileInfo->getFilename(),
                             $moduleName,

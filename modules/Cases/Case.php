@@ -43,6 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 // Case is used to store customer information.
+#[\AllowDynamicProperties]
 class aCase extends Basic
 {
     public $field_name_map = array();
@@ -334,9 +335,9 @@ class aCase extends Basic
         $xtpl->assign('CASE_SUBJECT', $case->name);
         $xtpl->assign(
             'CASE_PRIORITY',
-            (isset($case->priority) ? $app_list_strings['case_priority_dom'][$case->priority] : '')
+            ($case->priority !== null ? $app_list_strings['case_priority_dom'][$case->priority] : '')
         );
-        $xtpl->assign('CASE_STATUS', (isset($case->status) ? $app_list_strings['case_status_dom'][$case->status] : ''));
+        $xtpl->assign('CASE_STATUS', ($case->status !== null ? $app_list_strings['case_status_dom'][$case->status] : ''));
         $xtpl->assign('CASE_DESCRIPTION', nl2br($case->description));
 
         return $xtpl;

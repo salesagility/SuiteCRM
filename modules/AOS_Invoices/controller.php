@@ -26,6 +26,7 @@
 
 require_once('include/MVC/Controller/SugarController.php');
 
+#[\AllowDynamicProperties]
 class AOS_InvoicesController extends SugarController
 {
     public function action_editview()

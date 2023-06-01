@@ -22,6 +22,8 @@
  *
  * @author SalesAgility Ltd <support@salesagility.com>
  */
+#[\AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class AOD_LogicHooks
 {
     /**

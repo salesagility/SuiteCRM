@@ -46,6 +46,7 @@ require_once('modules/Administration/Forms.php');
 require_once('modules/Configurator/Configurator.php');
 require_once('include/MVC/View/SugarView.php');
         
+#[\AllowDynamicProperties]
 class AdministrationViewThemesettings extends SugarView
 {
     /**
@@ -72,7 +73,7 @@ class AdministrationViewThemesettings extends SugarView
         }
 
         // Check if default_theme is valid
-        if (isset($_REQUEST['default_theme']) && !in_array($_REQUEST['default_theme'], array_keys(SugarThemeRegistry::allThemes()))) {
+        if (isset($_REQUEST['default_theme']) && !array_key_exists($_REQUEST['default_theme'], SugarThemeRegistry::allThemes())) {
             sugar_die("Default theme is invalid.");
         }
         
@@ -108,8 +109,8 @@ class AdministrationViewThemesettings extends SugarView
         $this->ss->assign('available_themes', SugarThemeRegistry::allThemesDefs());
         $this->ss->assign('default_theme', $GLOBALS['sugar_config']['default_theme']);
         $this->ss->assign("THEMES", get_select_options_with_id(SugarThemeRegistry::allThemes(), $GLOBALS['sugar_config']['default_theme']));
-        $this->ss->assign('enabled_modules', json_encode($enabled));
-        $this->ss->assign('disabled_modules', json_encode($disabled));
+        $this->ss->assign('enabled_modules', json_encode($enabled, JSON_THROW_ON_ERROR));
+        $this->ss->assign('disabled_modules', json_encode($disabled, JSON_THROW_ON_ERROR));
         $this->ss->assign('mod', $mod_strings);
         $this->ss->assign('APP', $app_strings);
         $this->ss->assign('currentTheme', SugarThemeRegistry::current());

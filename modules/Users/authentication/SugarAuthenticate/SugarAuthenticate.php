@@ -48,6 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * based on the users validation
  *
  */
+#[\AllowDynamicProperties]
 class SugarAuthenticate
 {
     public $userAuthenticateClass = 'SugarAuthenticateUser';
@@ -379,7 +380,7 @@ class SugarAuthenticate
                 } else {
                     // match class C IP addresses
                     for ($i = 0; $i < 3; $i ++) {
-                        if ($session_parts[$i] == $client_parts[$i]) {
+                        if ($session_parts[$i] === $client_parts[$i]) {
                             $classCheck = 1;
                             continue;
                         } else {

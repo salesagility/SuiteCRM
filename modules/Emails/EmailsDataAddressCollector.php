@@ -46,17 +46,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author gyula
  */
+#[\AllowDynamicProperties]
 class EmailsDataAddressCollector
 {
-    const ERR_INVALID_INBOUND_EMAIL_TYPE = 201;
-    const ERR_STORED_OUTBOUND_EMAIL_NOT_SET = 202;
-    const ERR_STORED_OUTBOUND_EMAIL_ID_IS_INVALID = 203;
-    const ERR_REPLY_TO_ADDR_NOT_FOUND = 204;
-    const ERR_REPLY_TO_FORMAT_INVALID_SPLITS = 205;
-    const ERR_STORED_OUTBOUND_EMAIL_NOT_FOUND = 206;
-    const ERR_REPLY_TO_FORMAT_INVALID_NO_NAME = 207;
-    const ERR_REPLY_TO_FORMAT_INVALID_NO_ADDR = 208;
-    const ERR_REPLY_TO_FORMAT_INVALID_AS_FROM = 209;
+    public const ERR_INVALID_INBOUND_EMAIL_TYPE = 201;
+    public const ERR_STORED_OUTBOUND_EMAIL_NOT_SET = 202;
+    public const ERR_STORED_OUTBOUND_EMAIL_ID_IS_INVALID = 203;
+    public const ERR_REPLY_TO_ADDR_NOT_FOUND = 204;
+    public const ERR_REPLY_TO_FORMAT_INVALID_SPLITS = 205;
+    public const ERR_STORED_OUTBOUND_EMAIL_NOT_FOUND = 206;
+    public const ERR_REPLY_TO_FORMAT_INVALID_NO_NAME = 207;
+    public const ERR_REPLY_TO_FORMAT_INVALID_NO_ADDR = 208;
+    public const ERR_REPLY_TO_FORMAT_INVALID_AS_FROM = 209;
 
     /**
      *
@@ -248,9 +249,9 @@ class EmailsDataAddressCollector
             $this->oeId = null;
             $this->oeName = null;
         } else {
-            $this->replyTo = utf8_encode($storedOptions['reply_to_addr']);
-            $this->fromName = utf8_encode($storedOptions['from_name']);
-            $this->fromAddr = utf8_encode($storedOptions['from_addr']);
+            $this->replyTo = mb_convert_encoding($storedOptions['reply_to_addr'], 'UTF-8', 'ISO-8859-1');
+            $this->fromName = mb_convert_encoding($storedOptions['from_name'], 'UTF-8', 'ISO-8859-1');
+            $this->fromAddr = mb_convert_encoding($storedOptions['from_addr'], 'UTF-8', 'ISO-8859-1');
             $this->oeId = $this->oe->id;
             $this->oeName = $this->oe->name;
         }
@@ -388,13 +389,13 @@ class EmailsDataAddressCollector
                 $dataAddress['emailSignatures'] = $defaultEmailSignature;
             } else {
                 $dataAddress['emailSignatures'] = array(
-                    'html' => utf8_encode(html_entity_decode($defaultEmailSignature['signature_html'])),
+                    'html' => mb_convert_encoding(html_entity_decode((string) $defaultEmailSignature['signature_html']), 'UTF-8', 'ISO-8859-1'),
                     'plain' => $defaultEmailSignature['signature'],
                 );
             }
         } else {
             $dataAddress['emailSignatures'] = array(
-                'html' => utf8_encode(html_entity_decode($signature['signature_html'])),
+                'html' => mb_convert_encoding(html_entity_decode((string) $signature['signature_html']), 'UTF-8', 'ISO-8859-1'),
                 'plain' => $signature['signature'],
             );
         }
@@ -649,7 +650,7 @@ class EmailsDataAddressCollector
             null,
             null,
             [
-                'html' => utf8_encode(html_entity_decode($signatureHtml)),
+                'html' => mb_convert_encoding(html_entity_decode($signatureHtml), 'UTF-8', 'ISO-8859-1'),
                 'plain' => $signatureTxt,
             ],
             $userAddress['email_address']

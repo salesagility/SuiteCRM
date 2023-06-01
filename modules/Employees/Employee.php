@@ -46,6 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/SugarObjects/templates/person/Person.php');
 
 // Employee is used to store customer information.
+#[\AllowDynamicProperties]
 class Employee extends Person
 {
     // Stored fields
@@ -143,6 +144,7 @@ class Employee extends Person
 
     public function retrieve_employee_id($employee_name)
     {
+        $user_name = null;
         $query = "SELECT id from users where user_name='$user_name' AND deleted=0";
         $result  = $this->db->query($query, false, "Error retrieving employee ID: ");
         $row = $this->db->fetchByAssoc($result);
@@ -353,7 +355,7 @@ class Employee extends Person
     {
         global $current_user;
 
-        if (!isset($this->is_admin)) {
+        if (!($this->is_admin !== null)) {
             return;
         }
 

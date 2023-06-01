@@ -56,6 +56,7 @@ require_once('include/SugarObjects/templates/person/Person.php');
 require_once __DIR__ . '/../../include/EmailInterface.php';
 
 // Lead is used to store profile information for people who may become customers.
+#[\AllowDynamicProperties]
 class Lead extends Person implements EmailInterface
 {
     public $field_name_map;
@@ -156,7 +157,7 @@ class Lead extends Person implements EmailInterface
 
     public function get_account()
     {
-        if (isset($this->account_id) && !empty($this->account_id)) {
+        if ($this->account_id !== null && !empty($this->account_id)) {
             $query = "SELECT name , assigned_user_id account_name_owner FROM accounts WHERE id='{$this->account_id}'";
 
             //requireSingleResult has beeen deprecated.
@@ -178,7 +179,7 @@ class Lead extends Person implements EmailInterface
     }
     public function get_opportunity()
     {
-        if (isset($this->opportunity_id) && !empty($this->opportunity_id)) {
+        if ($this->opportunity_id !== null && !empty($this->opportunity_id)) {
             $query = "SELECT name, assigned_user_id opportunity_name_owner FROM opportunities WHERE id='{$this->opportunity_id}'";
 
             //requireSingleResult has beeen deprecated.
@@ -203,7 +204,7 @@ class Lead extends Person implements EmailInterface
     public function get_contact()
     {
         global $locale;
-        if (isset($this->contact_id) && !empty($this->contact_id)) {
+        if ($this->contact_id !== null && !empty($this->contact_id)) {
             $query = "SELECT first_name, last_name, assigned_user_id contact_name_owner FROM contacts WHERE id='{$this->contact_id}'";
 
             //requireSingleResult has beeen deprecated.
@@ -262,7 +263,7 @@ class Lead extends Person implements EmailInterface
     public function create_new_list_query($order_by, $where, $filter=array(), $params=array(), $show_deleted = 0, $join_type='', $return_array = false, $parentbean=null, $singleSelect = false, $ifListForExport = false)
     {
         $ret_array = parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type, true, $parentbean, $singleSelect, $ifListForExport);
-        if (strpos($ret_array['select'], "leads.account_name") == false && strpos($ret_array['select'], "leads.*") == false) {
+        if (strpos((string) $ret_array['select'], "leads.account_name") == false && strpos((string) $ret_array['select'], "leads.*") == false) {
             $ret_array['select'] .= " ,leads.account_name";
         }
         if (!$return_array) {
@@ -277,7 +278,7 @@ class Lead extends Person implements EmailInterface
         $this->db->query($query, true, "Error converting lead: ");
 
         //we must move the status out here in order to be able to capture workflow conditions
-        $leadid = str_replace("'", "", $leadid);
+        $leadid = str_replace("'", "", (string) $leadid);
         $lead = BeanFactory::newBean('Leads');
         $lead->retrieve($leadid);
         $lead->status='Converted';
@@ -346,7 +347,7 @@ class Lead extends Person implements EmailInterface
             foreach ($fieldDefs as $name=>$properties) {
                 if ($name == 'oldmeetings' || $name == 'oldcalls') {
                     continue;
-                } elseif (array_search('link', $properties) === 'type') {
+                } elseif (array_search('link', $properties, true) === 'type') {
                     $linked_fields[$name]=$properties;
                 }
             }
@@ -512,7 +513,7 @@ class Lead extends Person implements EmailInterface
 
         foreach ($this->field_defs as $field => $value) {
             if (!empty($value['source']) && $value['source'] == 'custom_fields') {
-                if (!empty($tempBean->field_defs[$field]) and isset($tempBean->field_defs[$field])) {
+                if (!empty($tempBean->field_defs[$field]) && isset($tempBean->field_defs[$field])) {
                     $label = $tempBean->field_defs[$field]['vname'];
                     if(isset($mod_strings[$label])){
                         $label = $mod_strings[$label];
@@ -521,7 +522,7 @@ class Lead extends Person implements EmailInterface
                     }
                     $form .= "<tr><td nowrap colspan='4' class='dataLabel'>".$label.":";
 
-                    if (!empty($tempBean->custom_fields->avail_fields[$field]['required']) and (($tempBean->custom_fields->avail_fields[$field]['required']== 1) or ($tempBean->custom_fields->avail_fields[$field]['required']== '1') or ($tempBean->custom_fields->avail_fields[$field]['required']== 'true') or ($tempBean->custom_fields->avail_fields[$field]['required']== true))) {
+                    if (!empty($tempBean->custom_fields->avail_fields[$field]['required']) && ($tempBean->custom_fields->avail_fields[$field]['required']== 1 || $tempBean->custom_fields->avail_fields[$field]['required']== '1' || $tempBean->custom_fields->avail_fields[$field]['required']== 'true' || $tempBean->custom_fields->avail_fields[$field]['required']== true)) {
                         $form .= "&nbsp;<span class='required'>".$lbl_required_symbol."</span>";
                     }
                     $form .= "</td></tr>";
@@ -536,12 +537,12 @@ class Lead extends Person implements EmailInterface
                         $array = null;
                     }
 
-                    if (!empty($value['options']) and isset($value['options'])) {
+                    if (!empty($value['options']) && isset($value['options'])) {
                         $form .= "<select " . $multiple . " name='".$prefix.$field.$array."'>";
                         $form .= get_select_options_with_id($app_list_strings[$value['options']], $this->$field);
                         $form .= "</select";
                     } elseif ($value['type'] == 'bool') {
-                        if (($this->$field == 1) or ($this->$field == '1')) {
+                        if ($this->$field == 1 || $this->$field == '1') {
                             $checked = 'checked';
                         } else {
                             $checked = '';
@@ -572,7 +573,7 @@ class Lead extends Person implements EmailInterface
                         }
                     }
 
-                    if (!empty($tempBean->custom_fields->avail_fields[$field]['required']) and (($tempBean->custom_fields->avail_fields[$field]['required']== 1) or ($tempBean->custom_fields->avail_fields[$field]['required']== '1') or ($tempBean->custom_fields->avail_fields[$field]['required']== 'true') or ($tempBean->custom_fields->avail_fields[$field]['required']== true))) {
+                    if (!empty($tempBean->custom_fields->avail_fields[$field]['required']) && ($tempBean->custom_fields->avail_fields[$field]['required']== 1 || $tempBean->custom_fields->avail_fields[$field]['required']== '1' || $tempBean->custom_fields->avail_fields[$field]['required']== 'true' || $tempBean->custom_fields->avail_fields[$field]['required']== true)) {
                         $form .= "<script>addToValidate('ConvertLead', '".$prefix.$field."', 'relate', true,'".$prefix.":".$mod_strings[$tempBean->field_defs[$field]['vname']]."' );</script>";
                     }
 
@@ -605,6 +606,7 @@ class Lead extends Person implements EmailInterface
      */
     public function get_old_related_calls()
     {
+        $return_array = [];
         $return_array['select']='SELECT calls.id ';
         $return_array['from']='FROM calls ';
         $return_array['where']=" WHERE calls.parent_id = '$this->id'
@@ -635,6 +637,7 @@ class Lead extends Person implements EmailInterface
      */
     public function get_old_related_meetings()
     {
+        $return_array = [];
         $return_array['select']='SELECT meetings.id ';
         $return_array['from']='FROM meetings ';
         $return_array['where']=" WHERE meetings.parent_id = '$this->id'

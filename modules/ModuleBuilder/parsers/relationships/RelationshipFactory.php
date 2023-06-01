@@ -44,6 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once 'modules/ModuleBuilder/parsers/constants.php' ;
 
+#[\AllowDynamicProperties]
+#[\AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class RelationshipFactory
 {
 

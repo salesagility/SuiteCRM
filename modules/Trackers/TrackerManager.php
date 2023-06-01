@@ -45,6 +45,7 @@ require_once('modules/Trackers/monitor/Monitor.php');
 
 
 
+#[\AllowDynamicProperties]
 class TrackerManager
 {
     private static $instance;
@@ -135,7 +136,7 @@ class TrackerManager
             return $this->monitors[$name];
         }
 
-        if (isset($this->metadata) && isset($this->metadata[$name])) {
+        if ($this->metadata !== null && isset($this->metadata[$name])) {
             try {
                 $instance = $this->_getMonitor(
                     $this->metadata[$name]['name'], //name

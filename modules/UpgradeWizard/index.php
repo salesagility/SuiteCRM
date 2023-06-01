@@ -254,7 +254,9 @@ if (isset($_REQUEST['step']) && $_REQUEST['step'] !=null) {
         //echo 'Previous run '.$previouUpgradeRun.'</br>';
         $upgradeStepFile = $previouUpgradeRun;
         //reset REQUEST
-        for ($i=0; $i<count($steps['files']); $i++) {
+        $itemsCount = count($steps['files']);
+        //reset REQUEST
+        for ($i=0; $i<$itemsCount; $i++) {
             if ($steps['files'][$i]== $previouUpgradeRun) {
                 $_REQUEST['step']=$i;
                 break;
@@ -364,7 +366,7 @@ foreach ($installeds as $installed) {
                 $manifest_copy_files_to_dir = isset($manifest['copy_files']['to_dir']) ? clean_path($manifest['copy_files']['to_dir']) : "";
                 $manifest_copy_files_from_dir = isset($manifest['copy_files']['from_dir']) ? clean_path($manifest['copy_files']['from_dir']) : "";
                 $manifest_icon = clean_path($manifest['icon']);
-                $icon = "<!--not_in_theme!--><img src=\"" . $manifest_copy_files_to_dir . ($manifest_copy_files_from_dir != "" ? substr($manifest_icon, strlen($manifest_copy_files_from_dir)+1) : $manifest_icon) . "\">";
+                $icon = "<!--not_in_theme!--><img src=\"" . $manifest_copy_files_to_dir . ($manifest_copy_files_from_dir != "" ? substr((string) $manifest_icon, strlen((string) $manifest_copy_files_from_dir)+1) : $manifest_icon) . "\">";
             } else {
                 $icon = getImageForType($manifest['type']);
             }
@@ -524,7 +526,7 @@ if ($_REQUEST['step'] === '4' && !$_REQUEST['additional_step']) {
     if (isset($stop) && $stop === true) {
         $frozen = (isset($frozen)) ? '<br />' . $frozen : '';
         $_SESSION['frozen'] = $frozen;
-        if ($step === 'upload') {
+        if ($step === 0) {
             $u_allow = 'false';
         }
     }

@@ -54,6 +54,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * class GoogleApiKeySaverEntryPoint
  */
+#[\AllowDynamicProperties]
 class GoogleApiKeySaverEntryPoint
 {
 
@@ -110,7 +111,7 @@ class GoogleApiKeySaverEntryPoint
             throw new Exception('google_auth_json requested variable is missing', 1);
         }
         $json = base64_decode($this->sugarConfig['google_auth_json']);
-        $config = json_decode($json, true);
+        $config = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
         if (!$config) {
             throw new Exception('Invalid json for auth config', 2);
         }
@@ -186,7 +187,7 @@ class GoogleApiKeySaverEntryPoint
         if (array_key_exists('error', $accessToken)) {
             throw new Exception('Unable to fetch access token: ' . $accessToken['error'] . '|' . $accessToken['error_description'], 10);
         }
-        $user->setPreference('GoogleApiToken', base64_encode(json_encode($accessToken)), false, 'GoogleSync');
+        $user->setPreference('GoogleApiToken', base64_encode(json_encode($accessToken, JSON_THROW_ON_ERROR)), false, 'GoogleSync');
         $accessRefreshToken = $accessToken['refresh_token'];
         if (isset($accessRefreshToken)) {
             $user->setPreference('GoogleApiRefreshToken', base64_encode($accessRefreshToken), false, 'GoogleSync');

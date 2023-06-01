@@ -46,6 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/DetailView/DetailView2.php');
 
+#[\AllowDynamicProperties]
 class EmailsDetailView extends DetailView2
 {
     /**

@@ -47,6 +47,7 @@ require_once('modules/Contacts/Contact.php');
  * TODO: Move to emails module. This class violates single responsibility principle. In that the emails
  * module should handle the email
  */
+#[\AllowDynamicProperties]
 class sendEmail
 {
     /**
@@ -60,6 +61,8 @@ class sendEmail
      */
     public function send_email($module, $module_type, $printable, $file_name, $attach)
     {
+        $contact_id = null;
+        $noteID = null;
         global $current_user, $mod_strings, $sugar_config;
         // First Create e-mail draft
         $email = BeanFactory::newBean('Emails');

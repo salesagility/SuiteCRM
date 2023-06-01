@@ -47,8 +47,14 @@ require_once 'modules/ModuleBuilder/parsers/relationships/RelationshipsInterface
 require_once 'modules/ModuleBuilder/parsers/relationships/RelationshipFactory.php' ;
 
 
+#[\AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class DeployedRelationships extends AbstractRelationships implements RelationshipsInterface
 {
+    /**
+     * @var bool
+     */
+    public $activitiesToAdd;
     public function __construct($moduleName)
     {
         $this->moduleName = $moduleName ;
@@ -75,17 +81,17 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
     public function load()
     {
         $relationships = $this->getDeployedRelationships() ;
-        
+
         if (! empty($relationships)) {
             // load the relationship definitions for all installed custom relationships into $dictionary
             $dictionary = array( ) ;
             if (file_exists('custom/application/Ext/TableDictionary/tabledictionary.ext.php')) {
                 include('custom/application/Ext/TableDictionary/tabledictionary.ext.php') ;
             }
-            
+
             $invalidModules = array();
             $validModules = array_keys(self::findRelatableModules()) ;
-            
+
             // now convert the relationships array into an array of AbstractRelationship objects
             foreach ($relationships as $name => $definition) {
                 if (($definition [ 'lhs_module' ] == $this->moduleName) || ($definition [ 'rhs_module' ] == $this->moduleName)) {
@@ -94,9 +100,9 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
                         // identify the subpanels for this relationship - TODO: optimize this - currently does m x n scans through the subpanel list...
                         $definition [ 'rhs_subpanel' ] = self::identifySubpanel($definition [ 'lhs_module' ], $definition [ 'rhs_module' ]) ;
                         $definition [ 'lhs_subpanel' ] = self::identifySubpanel($definition [ 'rhs_module' ], $definition [ 'lhs_module' ]) ;
-                        
+
                         // now adjust the cardinality with the true cardinality found in the relationships metadata (see method comment above)
-                        
+
 
                         if (! empty($dictionary) && ! empty($dictionary [ $name ])) {
                             if (! empty($dictionary [ $name ] [ 'true_relationship_type' ])) {
@@ -107,14 +113,14 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
                             }
                             $definition [ 'is_custom' ] = true;
                         }
-                            
-                        
+
+
                         $this->relationships [ $name ] = RelationshipFactory::newRelationship($definition) ;
                     }
                 }
             }
         }
-        
+
         /*        // Now override with any definitions from the working directory
             // must do this to capture one-to-ones that we have created as these don't show up in the relationship table that is the source for getDeployedRelationships()
             $overrides = parent::_load ( "custom/working/modules/{$this->moduleName}" ) ;
@@ -250,7 +256,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
         // if the lhs_module already has a subpanel or relate field sourced from the rhs_module,
     // or the rhs_module already has a subpanel or relate field sourced from the lhs_module,
     // then set "relationship_only" in the relationship
-    
+
 
     //        if (($relationship->getType() != MB_ONETOONE && ! is_null ( self::identifySubpanel ( $lhs, $rhs ) )) || ($relationship->getType() == MB_MANYTOMANY && ! is_null ( self::identifySubpanel ( $rhs, $lhs ) )) || ($relationship->getType() == MB_ONETOONE && ! is_null ( self::identifyRelateField ( $rhs, $lhs ) )) || ($relationship->getType() != MB_MANYTOMANY && ! is_null ( self::identifyRelateField ( $lhs, $rhs ) )))
     //            $relationship->setRelationship_only () ;

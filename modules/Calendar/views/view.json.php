@@ -40,6 +40,7 @@
 
 require_once('include/MVC/View/SugarView.php');
 
+#[\AllowDynamicProperties]
 class CalendarViewJson extends SugarView
 {
     public function display()
@@ -52,6 +53,6 @@ class CalendarViewJson extends SugarView
         $jsonData = $this->view_object_map['jsonData'];
         
         ob_clean();
-        echo json_encode($jsonData);
+        echo json_encode($jsonData, JSON_THROW_ON_ERROR);
     }
 }

@@ -48,6 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/ModuleBuilder/views/view.listview.php') ;
 require_once 'modules/ModuleBuilder/parsers/constants.php' ;
 
+#[\AllowDynamicProperties]
 class ViewDashlet extends ViewListView
 {
     public function __construct()
@@ -156,8 +157,8 @@ class ViewDashlet extends ViewListView
         foreach ($groups as $groupKey => $group) {
             foreach ($group as $fieldKey => $field) {
                 if (isset($field [ 'width' ])) {
-                    if (substr($field [ 'width' ], - 1, 1) == '%') {
-                        $groups [ $groupKey ] [ $fieldKey ] [ 'width' ] = substr($field [ 'width' ], 0, strlen($field [ 'width' ]) - 1) ;
+                    if (substr((string) $field [ 'width' ], - 1, 1) == '%') {
+                        $groups [ $groupKey ] [ $fieldKey ] [ 'width' ] = substr((string) $field [ 'width' ], 0, strlen((string) $field [ 'width' ]) - 1) ;
                     }
                 }
             }
@@ -172,7 +173,7 @@ class ViewDashlet extends ViewListView
 
 
         $histaction = "ModuleBuilder.history.browse(\"{$this->editModule}\", \"{$this->editLayout}\")" ;
-        if (isset($this->searchlayout)) {
+        if (property_exists($this, 'searchlayout') && $this->searchlayout !== null) {
             $histaction = "ModuleBuilder.history.browse(\"{$this->editModule}\", \"{$this->editLayout}\", \"{$this->searchlayout}\")" ;
         }
 

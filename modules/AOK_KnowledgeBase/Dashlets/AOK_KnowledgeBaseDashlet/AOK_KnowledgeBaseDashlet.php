@@ -52,10 +52,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOK_KnowledgeBase/AOK_KnowledgeBase.php');
 
+#[\AllowDynamicProperties]
 class AOK_KnowledgeBaseDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
+        $dashletData = [];
         global $current_user, $app_strings;
         require('modules/AOK_KnowledgeBase/metadata/dashletviewdefs.php');
 

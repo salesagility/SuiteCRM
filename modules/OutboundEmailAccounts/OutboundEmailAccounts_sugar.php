@@ -45,6 +45,7 @@
  */
 
 
+#[\AllowDynamicProperties]
 class OutboundEmailAccounts_sugar extends Basic
 {
     public $new_schema = true;

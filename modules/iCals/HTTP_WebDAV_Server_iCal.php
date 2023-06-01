@@ -52,6 +52,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
  *
  * @access public
  */
+#[\AllowDynamicProperties]
 class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
 {
     public $cal_encoding = "";
@@ -125,7 +126,7 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
         } else {
             $this->path = $this->_urldecode($_SERVER["PATH_INFO"]);
 
-            $query_str = preg_replace('/^\//', '', $this->path);
+            $query_str = preg_replace('/^\//', '', (string) $this->path);
             $query_arr = array();
             parse_str($query_str, $query_arr);
         }
@@ -210,13 +211,13 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
         } else {
             if ($this->vcal_type == 'ics') {
                 // DO HTTP AUTHORIZATION for iCal:
-                if (isset($this->publish_key)
+                if (property_exists($this, 'publish_key') && $this->publish_key !== null
                     && $this->publish_key === $this->user_focus->getPreference('calendar_publish_key')
                     || $this->user_focus->is_authenticated()
                 ) {
                     $this->http_status("200 OK");
                     header('Content-Type: text/calendar; charset="' . $this->cal_charset . '"');
-                    $result = mb_convert_encoding(html_entity_decode($this->vcal_focus->getVcalIcal(
+                    $result = mb_convert_encoding(html_entity_decode((string) $this->vcal_focus->getVcalIcal(
                         $this->user_focus,
                         $_REQUEST['num_months']
                     ), ENT_QUOTES, $this->cal_charset), $this->cal_encoding);

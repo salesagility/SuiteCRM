@@ -45,6 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/json_config.php');
 
+#[\AllowDynamicProperties]
 class MeetingsViewEdit extends ViewEdit
 {
     /**
@@ -84,7 +85,7 @@ class MeetingsViewEdit extends ViewEdit
         $this->ss->assign('remindersData', Reminder::loadRemindersData('Meetings', $this->bean->id, $this->ev->isDuplicate));
         $this->ss->assign('remindersDataJson', Reminder::loadRemindersDataJson('Meetings', $this->bean->id, $this->ev->isDuplicate));
         $this->ss->assign('remindersDefaultValuesDataJson', Reminder::loadRemindersDefaultValuesDataJson());
-        $this->ss->assign('remindersDisabled', json_encode(false));
+        $this->ss->assign('remindersDisabled', json_encode(false, JSON_THROW_ON_ERROR));
 
         parent::display();
     }

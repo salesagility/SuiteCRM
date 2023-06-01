@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
+#[\AllowDynamicProperties]
 class OpportunityFormBase
 {
     public function checkForDuplicates($prefix)
@@ -87,7 +88,7 @@ class OpportunityFormBase
             global $mod_strings;
         }
         global $app_strings;
-        $cols = count($rows[0]) * 2 + 1;
+        $cols = (is_countable($rows[0]) ? count($rows[0]) : 0) * 2 + 1;
         $form = '<table width="100%"><tr><td>'.$mod_strings['MSG_DUPLICATE']. '</td></tr><tr><td height="20"></td></tr></table>';
 
         $form .= "<form action='index.php' method='post' name='dupOpps'><input type='hidden' name='selectedOpportunity' value=''>";
@@ -326,6 +327,7 @@ EOQ;
 
     public function getFormBody($prefix, $mod='Opportunities', $formname='')
     {
+        $json = null;
         if (!ACLController::checkAccess('Opportunities', 'edit', true)) {
             return '';
         }

@@ -53,6 +53,7 @@ include_once 'modules/Emails/include/ListView/ListViewDataEmailsSearchOnIMap.php
 
 
 
+#[\AllowDynamicProperties]
 class ListViewDataEmails extends ListViewData
 {
 
@@ -322,7 +323,7 @@ class ListViewDataEmails extends ListViewData
     {
         // Fix fields in filter fields
         foreach (self::$mapEmailFieldsToEmailTextFields as $EmailSearchField => $EmailTextSearchField) {
-            if (array_search($EmailSearchField, self::$alwaysIncludeSearchFields) !== false) {
+            if (array_search($EmailSearchField, self::$alwaysIncludeSearchFields, true) !== false) {
                 $filterFields[$EmailSearchField] = true;
                 continue;
             } else {
@@ -330,7 +331,7 @@ class ListViewDataEmails extends ListViewData
                 array_key_exists($EmailSearchField . '_advanced', $request) &&
                 empty($request[$EmailSearchField . '_advanced'])
             ) {
-                    $pos = array_search($EmailSearchField, $filterFields);
+                    $pos = array_search($EmailSearchField, $filterFields, true);
                     unset($filterFields[$pos]);
                     continue;
                 } else {
@@ -338,7 +339,7 @@ class ListViewDataEmails extends ListViewData
                 array_key_exists($EmailSearchField . '_basic', $request) &&
                 empty($request[$EmailSearchField . '_basic'])
             ) {
-                        $pos = array_search($EmailSearchField, $filterFields);
+                        $pos = array_search($EmailSearchField, $filterFields, true);
                         unset($filterFields[$pos]);
                         continue;
                     }
@@ -348,7 +349,7 @@ class ListViewDataEmails extends ListViewData
             if (!array_key_exists($EmailSearchField, $filterFields)) {
                 $filterFields[$EmailTextSearchField] = true;
             } else {
-                $pos = array_search($EmailSearchField, $filterFields);
+                $pos = array_search($EmailSearchField, $filterFields, true);
                 if ($pos !== false) {
                     unset($filterFields[$pos]);
                     $filterFields[$EmailTextSearchField] = true;
@@ -485,10 +486,10 @@ class ListViewDataEmails extends ListViewData
     {
         switch ($field) {
             case 'from_addr_name':
-                $ret = html_entity_decode($inboundEmail->handleMimeHeaderDecode($emailHeader['from']));
+                $ret = html_entity_decode((string) $inboundEmail->handleMimeHeaderDecode($emailHeader['from']));
                 break;
             case 'to_addrs_names':
-                $ret = mb_decode_mimeheader($emailHeader['to']);
+                $ret = mb_decode_mimeheader((string) $emailHeader['to']);
                 break;
             case 'has_attachments':
                 $ret = false;
@@ -497,7 +498,7 @@ class ListViewDataEmails extends ListViewData
                 $ret = $emailHeader['flagged'];
                 break;
             case 'name':
-                $ret = html_entity_decode($inboundEmail->handleMimeHeaderDecode($emailHeader['subject']));
+                $ret = html_entity_decode((string) $inboundEmail->handleMimeHeaderDecode($emailHeader['subject']));
                 break;
             case 'date_entered':
                 $db = DBManagerFactory::getInstance();
@@ -513,7 +514,7 @@ class ListViewDataEmails extends ListViewData
                 );
 
                 if (!empty($emails) && !empty($emails[0]->date_entered)) {
-                    $date = preg_replace('/(\ \([A-Z]+\))/', '', $emails[0]->date_entered);
+                    $date = preg_replace('/(\ \([A-Z]+\))/', '', (string) $emails[0]->date_entered);
 
                     $dateTime = DateTime::createFromFormat(
                         'Y-m-d H:i:s',
@@ -534,7 +535,7 @@ class ListViewDataEmails extends ListViewData
                     $ret = '';
                     $dateTime = false;
 
-                    $date = preg_replace('/(\ \([A-Z]+\))/', '', $emailHeader['date']);
+                    $date = preg_replace('/(\ \([A-Z]+\))/', '', (string) $emailHeader['date']);
 
                     $formats = array(
                         'D, d M Y H:i:s O',
@@ -570,7 +571,7 @@ class ListViewDataEmails extends ListViewData
                     $is_imported = [];
                 }
 
-                if (is_array($is_imported) || $is_imported instanceof Countable) {
+                if (is_countable($is_imported)) {
                     $count = count($is_imported);
                 } else {
                     LoggerManager::getLogger()->warn('ListViewDataEmails::getEmailRecordFieldValue: email list should be a Countable');
@@ -646,7 +647,7 @@ class ListViewDataEmails extends ListViewData
         return
             (isset($request["searchFormTab"]) && $request["searchFormTab"] == "advanced_search") ||
             (
-                isset($request["type_basic"]) && (count($request["type_basic"]) > 1 ||
+                isset($request["type_basic"]) && ((is_countable($request["type_basic"]) ? count($request["type_basic"]) : 0) > 1 ||
                 $request["type_basic"][0] != "")
             ) ||
             (isset($request["module"]) && $request["module"] == "MergeRecords");
@@ -719,7 +720,7 @@ class ListViewDataEmails extends ListViewData
             }
 
             $inboundEmail = $this->getInboundEmail($current_user, $folderObj);
-            if (!$inboundEmail || $inboundEmail && !$inboundEmail->id) {
+            if (!$inboundEmail instanceof \InboundEmail || $inboundEmail instanceof \InboundEmail && !$inboundEmail->id) {
                 LoggerManager::getLogger()->warn('Unable get Inbound Email for List View. Please check your settings and try again.');
                 return false;
             }

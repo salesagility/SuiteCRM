@@ -54,6 +54,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * formatting in the SugarCRM application.
  *
  */
+#[\AllowDynamicProperties]
 class Currency extends SugarBean
 {
     // Stored fields
@@ -217,7 +218,7 @@ class Currency extends SugarBean
         } else {
             parent::retrieve($id, $encode, $deleted);
         }
-        if (!isset($this->name) || $this->deleted == 1) {
+        if (!($this->name !== null) || $this->deleted == 1) {
             $this->name = 	$this->getDefaultCurrencyName();
             $this->symbol = $this->getDefaultCurrencySymbol();
             $this->conversion_rate = 1;
@@ -335,6 +336,7 @@ function currency_format_number($amount, $params = array())
  */
 function format_number($amount, $round = null, $decimals = null, $params = array())
 {
+    $checkAmount = null;
     global $app_strings, $current_user, $sugar_config, $locale;
     static $current_users_currency = null;
     static $last_override_currency = null;
@@ -410,8 +412,8 @@ function format_number($amount, $round = null, $decimals = null, $params = array
         $amount = format_place_symbol($amount, $symbol, (empty($params['symbol_space']) ? false : true));
     } else {
         // If amount is more greater than a thousand(positive or negative)
-        if (strpos($amount, '.') > 0) {
-            $checkAmount = strlen(substr($amount, 0, strpos($amount, '.')));
+        if (strpos((string) $amount, '.') > 0) {
+            $checkAmount = strlen(substr((string) $amount, 0, strpos((string) $amount, '.')));
         }
 
         if ($checkAmount >= 1000 || $checkAmount <= -1000) {

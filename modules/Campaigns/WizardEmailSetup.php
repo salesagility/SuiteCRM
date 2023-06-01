@@ -104,7 +104,7 @@ if (isset($focus->settings['massemailer_campaign_emails_per_run']) && !empty($fo
     $ss->assign("EMAILS_PER_RUN", 500);
 }
 
-if (!isset($focus->settings['massemailer_tracking_entities_location_type']) or empty($focus->settings['massemailer_tracking_entities_location_type']) or $focus->settings['massemailer_tracking_entities_location_type']=='1') {
+if (!isset($focus->settings['massemailer_tracking_entities_location_type']) || empty($focus->settings['massemailer_tracking_entities_location_type']) || $focus->settings['massemailer_tracking_entities_location_type']=='1') {
     $ss->assign("DEFAULT_CHECKED", "checked");
     $ss->assign("TRACKING_ENTRIES_LOCATION_STATE", "disabled");
     $ss->assign("TRACKING_ENTRIES_LOCATION", $mod_strings['TRACKING_ENTRIES_LOCATION_DEFAULT_VALUE']);
@@ -116,7 +116,7 @@ if (!isset($focus->settings['massemailer_tracking_entities_location_type']) or e
 $ss->assign("SITEURL", $sugar_config['site_url']);
 
 // Change the default campaign to not store a copy of each message.
-if (!empty($focus->settings['massemailer_email_copy']) and $focus->settings['massemailer_email_copy']=='1') {
+if (!empty($focus->settings['massemailer_email_copy']) && $focus->settings['massemailer_email_copy']=='1') {
     $ss->assign("YES_CHECKED", "checked='checked'");
 } else {
     $ss->assign("NO_CHECKED", "checked='checked'");
@@ -135,8 +135,8 @@ $mbox_msg = ' ';
 $need_mbox = '';
 
 $mboxTable = "<table class='list view' width='100%' border='0' cellspacing='1' cellpadding='1'>";
-if (isset($mbox) && count($mbox)>0) {
-    $mboxTable .= "<tr><td colspan='5'><b>" .count($mbox) ." ". $mod_strings['LBL_MAILBOX_CHECK_WIZ_GOOD']." </b>.</td></tr>";
+if (isset($mbox) && (is_countable($mbox) ? count($mbox) : 0)>0) {
+    $mboxTable .= "<tr><td colspan='5'><b>" .(is_countable($mbox) ? count($mbox) : 0) ." ". $mod_strings['LBL_MAILBOX_CHECK_WIZ_GOOD']." </b>.</td></tr>";
     $mboxTable .= "<tr class='listViewHRS1'><td width='20%'><b>".$mod_strings['LBL_MAILBOX_NAME']."</b></td>"
                    .  " <td width='20%'><b>".$mod_strings['LBL_LOGIN']."</b></td>"
                    .  " <td width='20%'><b>".$mod_strings['LBL_MAILBOX']."</b></td>"

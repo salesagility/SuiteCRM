@@ -46,8 +46,12 @@ require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationships.
 require_once 'modules/ModuleBuilder/parsers/relationships/RelationshipsInterface.php' ;
 require_once 'modules/ModuleBuilder/parsers/relationships/RelationshipFactory.php' ;
 
+#[\AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class UndeployedRelationships extends AbstractRelationships implements RelationshipsInterface
 {
+    public $packageKey;
+    public $installDefs;
     protected $basepath ; // Base directory for the lhs_module
     protected $packageName ;
     private $activitiesToAdd ; // if we need to add in the composite Activities and History subpanels to the module during the build
@@ -62,8 +66,8 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
     {
         $this->basepath = $path ;
         // pull the module and package names out of the path
-        $this->moduleName = basename($path, "/") ; // just in case there are any trailing /
-        $this->packageName = basename(dirname(dirname($path))) ; // simpler than explode :)
+        $this->moduleName = basename((string) $path, "/") ; // just in case there are any trailing /
+        $this->packageName = basename(dirname((string) $path, 2)) ; // simpler than explode :)
         require_once 'modules/ModuleBuilder/MB/ModuleBuilder.php' ;
         $mb = new ModuleBuilder() ;
         $this->packageKey = $mb->getPackageKey($this->packageName) ;

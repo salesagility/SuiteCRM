@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 // Opportunity is used to store customer information.
+#[\AllowDynamicProperties]
 class Opportunity extends SugarBean
 {
     public $field_name_map;
@@ -230,7 +231,7 @@ class Opportunity extends SugarBean
         $this->account_name = '';
         $this->account_id = '';
         if (!empty($this->id)) {
-            $ret_values=Opportunity::get_account_detail($this->id);
+            $ret_values=(new Opportunity())->get_account_detail($this->id);
             if (!empty($ret_values)) {
                 $this->account_name=$ret_values['name'];
                 $this->account_id=$ret_values['id'];
@@ -308,7 +309,7 @@ class Opportunity extends SugarBean
 
     public function get_currency_symbol()
     {
-        if (isset($this->currency_id)) {
+        if ($this->currency_id !== null) {
             $cur_qry = "select * from currencies where id ='".$this->currency_id."'";
             $cur_res = $this->db->query($cur_qry);
             if (!empty($cur_res)) {
@@ -358,7 +359,7 @@ class Opportunity extends SugarBean
         }
 
         //if probablity isn't set, set it based on the sales stage
-        if (!isset($this->probability) && !empty($this->sales_stage)) {
+        if (!($this->probability !== null) && !empty($this->sales_stage)) {
             $prob_arr = $app_list_strings['sales_probability_dom'];
             if (isset($prob_arr[$this->sales_stage])) {
                 $this->probability = $prob_arr[$this->sales_stage];
@@ -375,8 +376,7 @@ class Opportunity extends SugarBean
     {
         //if account_id was replaced unlink the previous account_id.
         //this rel_fields_before_value is populated by sugarbean during the retrieve call.
-        if (!empty($this->account_id) and !empty($this->rel_fields_before_value['account_id']) and
-                (trim($this->account_id) != trim($this->rel_fields_before_value['account_id']))) {
+        if (!empty($this->account_id) && !empty($this->rel_fields_before_value['account_id']) && trim($this->account_id) !== trim($this->rel_fields_before_value['account_id'])) {
             //unlink the old record.
             $this->load_relationship('accounts');
             $this->accounts->delete($this->id, $this->rel_fields_before_value['account_id']);

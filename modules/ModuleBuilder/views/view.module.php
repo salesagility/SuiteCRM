@@ -40,6 +40,7 @@
 
 require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
 
+#[\AllowDynamicProperties]
 class ViewModule extends SugarView
 {
     public $mbModule;
@@ -59,6 +60,7 @@ class ViewModule extends SugarView
 
     public function display()
     {
+        $translated_type = [];
         global $mod_strings;
         $smarty = new Sugar_Smarty();
 

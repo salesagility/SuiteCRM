@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('modules/Trackers/monitor/Monitor.php');
 
+#[\AllowDynamicProperties]
 class tracker_monitor extends Monitor
 {
 
@@ -68,7 +69,7 @@ class tracker_monitor extends Monitor
             return false;
         }
 
-        if (!$this->isEnabled() && (isset($this->visible) && !$this->getValue('visible'))) {
+        if (!$this->isEnabled() && (property_exists($this, 'visible') && $this->visible !== null && !$this->getValue('visible'))) {
             return false;
         }
 

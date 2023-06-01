@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
+#[\AllowDynamicProperties]
 class EmailsViewCompose extends ViewEdit
 {
 
@@ -80,7 +81,7 @@ class EmailsViewCompose extends ViewEdit
         $this->ev = $this->getEditView();
         $this->ev->ss =& $this->ss;
 
-        if (!isset($this->bean->mailbox_id) || empty($this->bean->mailbox_id)) {
+        if (!($this->bean->mailbox_id !== null) || empty($this->bean->mailbox_id)) {
             $inboundEmailID = $current_user->getPreference('defaultIEAccount', 'Emails');
             $this->ev->ss->assign('INBOUND_ID', $inboundEmailID);
         } else {
@@ -133,7 +134,7 @@ class EmailsViewCompose extends ViewEdit
      */
     public function getEditView()
     {
-        $a = dirname(dirname(__FILE__)) . '/include/ComposeView/ComposeView.php';
+        $a = dirname(__FILE__, 2) . '/include/ComposeView/ComposeView.php';
         require_once 'modules/Emails/include/ComposeView/ComposeView.php';
         return new ComposeView();
     }
@@ -147,6 +148,7 @@ class EmailsViewCompose extends ViewEdit
      */
     public function getSignatures(User $user)
     {
+        $email = null;
         if (empty($user->id) || $user->new_with_id === true) {
             throw new \SugarControllerException(
                 'EmailsController::composeSignature() requires an existing User and not a new User object. '.
@@ -164,7 +166,7 @@ class EmailsViewCompose extends ViewEdit
         if (gettype($emailSignatureId) === 'string') {
             $emailSignatures = $user->getSignature($emailSignatureId);
             $email->description .= $emailSignatures['signature'];
-            $email->description_html .= html_entity_decode($emailSignatures['signature_html']);
+            $email->description_html .= html_entity_decode((string) $emailSignatures['signature_html']);
             return $email;
         }
         $GLOBALS['log']->warn(

@@ -29,10 +29,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOW_Processed/AOW_Processed.php');
 
+#[\AllowDynamicProperties]
 class AOW_ProcessedDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
+        $dashletData = [];
         global $current_user, $app_strings;
         require('modules/AOW_Processed/metadata/dashletviewdefs.php');
 

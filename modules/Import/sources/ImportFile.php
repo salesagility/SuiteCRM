@@ -52,6 +52,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/Import/CsvAutoDetect.php');
 require_once('modules/Import/sources/ImportDataSource.php');
 
+#[\AllowDynamicProperties]
 class ImportFile extends ImportDataSource
 {
     /**
@@ -236,7 +237,7 @@ class ImportFile extends ImportDataSource
             
             // Convert all line endings to the same style as PHP_EOL
             // Use preg_replace instead of str_replace as str_replace may cause extra lines on Windows
-            $this->_currentRow[$key] = preg_replace("[\r\n|\n|\r]", PHP_EOL, $this->_currentRow[$key]);
+            $this->_currentRow[$key] = preg_replace("[\r\n|\n|\r]", PHP_EOL, (string) $this->_currentRow[$key]);
         }
         
         $this->_rowsCount++;
@@ -251,7 +252,7 @@ class ImportFile extends ImportDataSource
      */
     public function getFieldCount()
     {
-        return count($this->_currentRow);
+        return is_countable($this->_currentRow) ? count($this->_currentRow) : 0;
     }
 
     /**
@@ -459,7 +460,7 @@ class ImportFile extends ImportDataSource
             $this->next();
         }
 
-        while ($this->valid() &&  $totalItems > count($this->_dataSet)) {
+        while ($this->valid() &&  $totalItems > (is_countable($this->_dataSet) ? count($this->_dataSet) : 0)) {
             if ($currentLine >= $this->_offset) {
                 $this->_dataSet[] = $this->_currentRow;
             }

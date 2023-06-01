@@ -72,6 +72,7 @@ require_once 'modules/ModuleBuilder/parsers/relationships/OneToManyRelationship.
  * A link field which references the shared Relationship
  */
 
+#[\AllowDynamicProperties]
 class ActivitiesRelationship extends OneToManyRelationship
 {
     protected static $subpanelsAdded = array();
@@ -187,7 +188,7 @@ class ActivitiesRelationship extends OneToManyRelationship
         }
 
         ActivitiesRelationship::$subpanelsAdded[$this->lhs_module] = true;
-        $relationshipName = substr($this->relationship_name, 0, strrpos($this->relationship_name, '_'));
+        $relationshipName = substr((string) $this->relationship_name, 0, strrpos((string) $this->relationship_name, '_'));
         return array( $this->lhs_module => array(
                       'activities' => $this->buildActivitiesSubpanelDefinition($relationshipName),
                       'history' => $this->buildHistorySubpanelDefinition($relationshipName) ,

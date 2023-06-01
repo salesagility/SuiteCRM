@@ -111,7 +111,7 @@ function getControl(
         $contents = $sfh->displaySmarty('fields', $vardef, 'ImportView', $displayParams);
         
         // Remove all the copyright comments
-        $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', $contents);
+        $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', (string) $contents);
         
         // hack to disable one of the js calls in this control
         if (isset($vardef['function'])
@@ -138,10 +138,10 @@ function getControl(
     $ss->assign('TIME_FORMAT', $time_format);
     $time_separator = ":";
     $match = array();
-    if (preg_match('/\d+([^\d])\d+([^\d]*)/s', $time_format, $match)) {
+    if (preg_match('/\d+([^\d])\d+([^\d]*)/s', (string) $time_format, $match)) {
         $time_separator = $match[1];
     }
-    $t23 = strpos($time_format, '23') !== false ? '%H' : '%I';
+    $t23 = strpos((string) $time_format, '23') !== false ? '%H' : '%I';
     if (!isset($match[2]) || $match[2] == '') {
         $ss->assign('CALENDAR_FORMAT', $date_format . ' ' . $t23 . $time_separator . "%M");
     } else {
@@ -186,8 +186,8 @@ function getControl(
             }
             $value = $function($focus, $fieldname, $value, 'EditView');
             // Bug 22730 - add a hack for the currency type dropdown, since it's built by a function.
-            if (preg_match('/getCurrency.*DropDown/s', $function)) {
-                $value = str_ireplace('</select>', '<option value="">'.$app_strings['LBL_NONE'].'</option></select>', $value);
+            if (preg_match('/getCurrency.*DropDown/s', (string) $function)) {
+                $value = str_ireplace('</select>', '<option value="">'.$app_strings['LBL_NONE'].'</option></select>', (string) $value);
             }
         } elseif ($fieldname == 'assigned_user_name' && empty($value)) {
             $fieldlist['assigned_user_id']['value'] = $GLOBALS['current_user']->id;

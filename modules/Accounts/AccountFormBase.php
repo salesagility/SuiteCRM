@@ -50,6 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+#[\AllowDynamicProperties]
 class AccountFormBase
 {
     protected $db = null;
@@ -129,7 +130,7 @@ class AccountFormBase
             global $mod_strings;
         }
         global $app_strings;
-        $cols = count($rows[0]) * 2 + 1;
+        $cols = (is_countable($rows[0]) ? count($rows[0]) : 0) * 2 + 1;
         if ($action != 'ShowDuplicates') {
             $form = "<form action='index.php' method='post' id='dupAccounts'  name='dupAccounts'><input type='hidden' name='selectedAccount' value=''>";
             $form .= '<table width="100%"><tr><td>'.$mod_strings['MSG_DUPLICATE']. '</td></tr><tr><td height="20"></td></tr></table>';

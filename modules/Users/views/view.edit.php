@@ -45,6 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/Users/UserViewHelper.php');
 
 
+#[\AllowDynamicProperties]
 class UsersViewEdit extends ViewEdit
 {
     public $useForSubpanel = true;
@@ -85,6 +86,8 @@ class UsersViewEdit extends ViewEdit
 
     public function display()
     {
+        $action_button_header = [];
+        $action_button_footer = [];
         global $current_user, $app_list_strings, $mod_strings;
 
 
@@ -96,7 +99,7 @@ class UsersViewEdit extends ViewEdit
         $this->ss->assign('IS_ADMIN', $current_user->is_admin ? true : false);
 
         //make sure we can populate user type dropdown.  This usually gets populated in predisplay unless this is a quickeditform
-        if (!isset($this->fieldHelper)) {
+        if (!(property_exists($this, 'fieldHelper') && $this->fieldHelper !== null)) {
             $this->fieldHelper = new UserViewHelper($this->ss, $this->bean, 'EditView');
             $this->fieldHelper->setupAdditionalFields();
         }

@@ -43,6 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+#[\AllowDynamicProperties]
 class EmailsViewSaveDraftEmail extends ViewAjax
 {
     /**
@@ -91,6 +92,6 @@ class EmailsViewSaveDraftEmail extends ViewAjax
                 break;
         }
 
-        echo json_encode($response);
+        echo json_encode($response, JSON_THROW_ON_ERROR);
     }
 }

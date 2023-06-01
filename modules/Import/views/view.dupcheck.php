@@ -55,6 +55,7 @@ require_once('modules/Import/ImportDuplicateCheck.php');
 
 require_once('include/upload_file.php');
 
+#[\AllowDynamicProperties]
 class ImportViewDupcheck extends ImportView
 {
     protected $pageTitleKey = 'LBL_STEP_DUP_TITLE';
@@ -105,9 +106,9 @@ class ImportViewDupcheck extends ImportView
         global $mod_strings, $sugar_config;
 
         $has_header = $_REQUEST['has_header'] == 'on' ? true : false;
-        $uploadFileName = "upload://".basename($_REQUEST['tmp_file']);
+        $uploadFileName = "upload://".basename((string) $_REQUEST['tmp_file']);
         $splitter = new ImportFileSplitter($uploadFileName, $sugar_config['import_max_records_per_file']);
-        $splitter->splitSourceFile($_REQUEST['custom_delimiter'], html_entity_decode($_REQUEST['custom_enclosure'], ENT_QUOTES), $has_header);
+        $splitter->splitSourceFile($_REQUEST['custom_delimiter'], html_entity_decode((string) $_REQUEST['custom_enclosure'], ENT_QUOTES), $has_header);
         $count = $splitter->getFileCount()-1;
         $recCount = $splitter->getRecordCount();
 
@@ -153,15 +154,15 @@ class ImportViewDupcheck extends ImportView
             }
         }
 
-        $enabled_dupes = json_encode($dupe_enabled);
-        $disabled_dupes = json_encode($dupe_disabled);
+        $enabled_dupes = json_encode($dupe_enabled, JSON_THROW_ON_ERROR);
+        $disabled_dupes = json_encode($dupe_disabled, JSON_THROW_ON_ERROR);
 
         $stepTitle4 = $mod_strings['LBL_IMPORT_RECORDS'];
 
         $dateTimeFormat = $GLOBALS['timedate']->get_cal_date_time_format();
         $type = (isset($_REQUEST['type'])) ? $_REQUEST['type'] : '';
-        $lblUsed = str_replace(":", "", $mod_strings['LBL_INDEX_USED']);
-        $lblNotUsed = str_replace(":", "", $mod_strings['LBL_INDEX_NOT_USED']);
+        $lblUsed = str_replace(":", "", (string) $mod_strings['LBL_INDEX_USED']);
+        $lblNotUsed = str_replace(":", "", (string) $mod_strings['LBL_INDEX_NOT_USED']);
         return <<<EOJAVASCRIPT
 
 

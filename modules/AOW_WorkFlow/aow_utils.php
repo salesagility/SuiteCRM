@@ -117,7 +117,7 @@ function getModuleFields(
     }
     asort($fields);
     if ($view == 'JSON') {
-        return json_encode($fields);
+        return json_encode($fields, JSON_THROW_ON_ERROR);
     }
     if ($view == 'EditView') {
         return get_select_options_with_id($fields, $value);
@@ -216,11 +216,11 @@ function getModuleTreeData($module)
                 return strcmp($a['label'], $b['label']);
             });
 
-            $fields = array_merge((array)$fields, (array)$sort_fields);
+            $fields = array_merge($fields, $sort_fields);
         }
     }
 
-    return json_encode($fields);
+    return json_encode($fields, JSON_THROW_ON_ERROR);
 }
 
 function getModuleRelationships($module, $view='EditView', $value = '')
@@ -259,7 +259,7 @@ function getModuleRelationships($module, $view='EditView', $value = '')
                 }
             } //End loop.
             array_multisort($sort_fields, SORT_ASC, $sort_fields);
-            $fields = array_merge((array)$fields, (array)$sort_fields);
+            $fields = array_merge($fields, $sort_fields);
         }
     }
     if ($view == 'EditView') {
@@ -321,6 +321,7 @@ function getModuleField(
     $currency_id = '',
     $params= array()
 ) {
+    $parentfieldlist = [];
     global $current_language;
     global $app_strings;
     global $app_list_strings;
@@ -332,9 +333,9 @@ function getModuleField(
     $mod_strings = return_module_language($current_language, $module);
 
     // if aor condition
-    if (strstr($aow_field, 'aor_conditions_value') !== false) {
+    if (strstr((string) $aow_field, 'aor_conditions_value') !== false) {
         // get aor condition row
-        $aor_row = str_replace('aor_conditions_value', '', $aow_field);
+        $aor_row = str_replace('aor_conditions_value', '', (string) $aow_field);
         $aor_row = str_replace('[', '', $aor_row);
         $aor_row = str_replace(']', '', $aor_row);
         // set the filename for this control
@@ -369,7 +370,7 @@ function getModuleField(
         }
 
         // Bug: check for AOR value SecurityGroups value missing
-        if (stristr($fieldname, 'securitygroups') != false && empty($vardef)) {
+        if (stristr((string) $fieldname, 'securitygroups') != false && empty($vardef)) {
             require_once($beanFiles[$beanList['SecurityGroups']]);
             $module = 'SecurityGroups';
             $focus = new $beanList[$module];
@@ -443,7 +444,7 @@ function getModuleField(
         $contents = $sfh->displaySmarty('fields', $vardef, $view, $displayParams);
 
         // Remove all the copyright comments
-        $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', $contents);
+        $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', (string) $contents);
 
         if ($view == 'EditView' && ($vardef['type'] == 'relate' || $vardef['type'] == 'parent')) {
             $contents = str_replace(
@@ -490,10 +491,10 @@ function getModuleField(
     $ss->assign('TIME_FORMAT', $time_format);
     $time_separator = ":";
     $match = array();
-    if (preg_match('/\d+([^\d])\d+([^\d]*)/s', $time_format, $match)) {
+    if (preg_match('/\d+([^\d])\d+([^\d]*)/s', (string) $time_format, $match)) {
         $time_separator = $match[1];
     }
-    $t23 = strpos($time_format, '23') !== false ? '%H' : '%I';
+    $t23 = strpos((string) $time_format, '23') !== false ? '%H' : '%I';
     if (!isset($match[2]) || $match[2] == '') {
         $ss->assign('CALENDAR_FORMAT', $date_format . ' ' . $t23 . $time_separator . "%M");
     } else {
@@ -547,7 +548,7 @@ function getModuleField(
             $_REQUEST[$fieldname] = $value;
             $value = $function($focus, $fieldname, $value, $view);
 
-            $value = str_ireplace($fieldname, $aow_field, $value);
+            $value = str_ireplace((string) $fieldname, (string) $aow_field, (string) $value);
         }
     }
 
@@ -576,7 +577,7 @@ function getModuleField(
             require_once("include/TemplateHandler/TemplateHandler.php");
             $template_handler = new TemplateHandler();
             $quicksearch_js = $template_handler->createQuickSearchCode($fieldlist, $fieldlist, $view);
-            $quicksearch_js = str_replace($fieldname, $aow_field.'_display', $quicksearch_js);
+            $quicksearch_js = str_replace($fieldname, $aow_field.'_display', (string) $quicksearch_js);
             $quicksearch_js = str_replace($fieldlist[$fieldname]['id_name'], $aow_field, $quicksearch_js);
 
         	echo $quicksearch_js;
@@ -644,7 +645,7 @@ function getModuleField(
             $sfh = new SugarFieldHandler();
         }
 
-        if ($currency_id != '' && !stripos($fieldname, '_USD')) {
+        if ($currency_id != '' && !stripos((string) $fieldname, '_USD')) {
             $userCurrencyId = $current_user->getPreference('currency');
             if ($currency_id != $userCurrencyId) {
                 $currency = BeanFactory::newBean('Currencies');
@@ -706,7 +707,7 @@ function getDateField($module, $aow_field, $view, $value = null, $field_option =
         $view = 'EditView';
     }
 
-    $value = json_decode(html_entity_decode_utf8($value), true);
+    $value = json_decode((string) html_entity_decode_utf8($value), true, 512, JSON_THROW_ON_ERROR);
 
     if (!file_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php')) {
         unset($app_list_strings['aow_date_type_list']['business_hours']);
@@ -764,9 +765,10 @@ function getDateFields($module, $view='EditView', $value = '', $field_option = t
 
 function getAssignField($aow_field, $view, $value)
 {
+    $securityGroups = null;
     global $app_list_strings;
 
-    $value = json_decode(html_entity_decode_utf8($value), true);
+    $value = json_decode((string) html_entity_decode_utf8($value), true, 512, JSON_THROW_ON_ERROR);
 
     $roles = get_bean_select_array(true, 'ACLRole', 'name', '', 'name', true);
 
@@ -829,6 +831,7 @@ function getLeastBusyUser($users, $field, SugarBean $bean)
 
 function getRoundRobinUser($users, $id)
 {
+    $lastUser = [];
     $file = create_cache_directory('modules/AOW_WorkFlow/Users/') . $id . 'lastUser.cache.php';
 
     if (isset($_SESSION['lastuser'][$id]) && $_SESSION['lastuser'][$id] != '') {
@@ -955,7 +958,7 @@ function fixUpFormatting($module, $field, $value)
                 $value = '';
                 break;
             }
-            if (! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/', $value)) {
+            if (! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/', (string) $value)) {
                 // This appears to be formatted in user date/time
                 $value = $timedate->to_db($value);
             }
@@ -969,7 +972,7 @@ function fixUpFormatting($module, $field, $value)
                 $value = '';
                 break;
             }
-            if (! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $value)) {
+            if (! preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', (string) $value)) {
                 // This date appears to be formatted in the user's format
                 $value = $timedate->to_db_date($value, false);
             }
@@ -982,7 +985,7 @@ function fixUpFormatting($module, $field, $value)
                 $value = '';
                 break;
             }
-            if (preg_match('/(am|pm)/i', $value)) {
+            if (preg_match('/(am|pm)/i', (string) $value)) {
                 // This time appears to be formatted in the user's format
                 $value = $timedate->fromUserTime($value)->format(TimeDate::DB_TIME_FORMAT);
             }

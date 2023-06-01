@@ -52,6 +52,7 @@ require_once('modules/Import/ImportDuplicateCheck.php');
 
 require_once('include/upload_file.php');
 
+#[\AllowDynamicProperties]
 class ImportViewExtdupcheck extends ImportView
 {
     protected $pageTitleKey = 'LBL_STEP_DUP_TITLE';
@@ -85,7 +86,7 @@ class ImportViewExtdupcheck extends ImportView
 
         //set dragdrop value
         $this->ss->assign('enabled_dupes', json_encode(array()));
-        $this->ss->assign('disabled_dupes', json_encode($dupe_disabled));
+        $this->ss->assign('disabled_dupes', json_encode($dupe_disabled, JSON_THROW_ON_ERROR));
         //END DRAG DROP WIDGET
 
         $this->ss->assign("RECORDTHRESHOLD", $sugar_config['import_max_records_per_file']);

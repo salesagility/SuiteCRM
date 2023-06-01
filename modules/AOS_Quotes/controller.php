@@ -24,6 +24,7 @@
 
 require_once('include/MVC/Controller/SugarController.php');
 
+#[\AllowDynamicProperties]
 class AOS_QuotesController extends SugarController
 {
     public function action_editview()

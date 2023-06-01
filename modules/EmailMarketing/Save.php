@@ -130,14 +130,14 @@ if ($marketing->all_prospect_lists==1) {
 } else {
     if (is_array($_REQUEST['message_for'])) {
         foreach ($_REQUEST['message_for'] as $prospect_list_id) {
-            $key=array_search($prospect_list_id, $prospectlists);
-            if ($key === null or $key === false) {
+            $key=array_search($prospect_list_id, $prospectlists, true);
+            if ($key === null || $key === false) {
                 $marketing->prospectlists->add($prospect_list_id);
             } else {
                 unset($prospectlists[$key]);
             }
         }
-        if (count($prospectlists) != 0) {
+        if ((is_countable($prospectlists) ? count($prospectlists) : 0) != 0) {
             foreach ($prospectlists as $key=>$list_id) {
                 $marketing->prospectlists->delete($marketing->id, $list_id);
             }
@@ -153,7 +153,7 @@ if ($_REQUEST['action'] != 'WizardMarketingSave' && (!isset($_REQUEST['func']) |
 if (isset($_REQUEST['func']) && $_REQUEST['func'] == 'wizardUpdate') {
     $resp = array();
     $resp['error'] = false;
-    $resp['data'] = json_encode(array('id' => $marketing->id));
-    $resp = json_encode($resp);
+    $resp['data'] = json_encode(array('id' => $marketing->id), JSON_THROW_ON_ERROR);
+    $resp = json_encode($resp, JSON_THROW_ON_ERROR);
     echo $resp;
 }

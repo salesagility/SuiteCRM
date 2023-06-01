@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 $GLOBALS['studioReadOnlyFields'] = array('date_entered'=>1, 'date_modified'=>1, 'created_by'=>1, 'id'=>1, 'modified_user_id'=>1);
+#[\AllowDynamicProperties]
 class TemplateField
 {
     /*
@@ -171,7 +172,7 @@ class TemplateField
             $label .= '<span class="required">*</span>';
         }
         if ($this->view == 'list') {
-            if (isset($this->bean)) {
+            if ($this->bean !== null) {
                 if (!empty($this->id)) {
                     $name = $this->bean->table_name . '_cstm.'. $this->name;
                     $arrow = $this->bean->table_name . '_cstm_'. $this->name;
@@ -260,7 +261,7 @@ class TemplateField
     public function get_db_default($modify=false)
     {
         $GLOBALS['log']->debug('get_db_default(): default_value='.$this->default_value);
-        if (!$modify or empty($this->new_field_definition['default_value']) or $this->new_field_definition['default_value'] != $this->default_value) {
+        if (!$modify || empty($this->new_field_definition['default_value']) || $this->new_field_definition['default_value'] != $this->default_value) {
             if (!is_null($this->default_value)) { // add a default value if it is not null - we want to set a default even if default_value is '0', which is not null, but which is empty()
                 if (null == trim($this->default_value)) {
                     return " DEFAULT NULL";
@@ -288,14 +289,14 @@ class TemplateField
 
         if ($modify) {
             if (!empty($this->new_field_definition['required'])) {
-                if ($this->required and $this->new_field_definition['required'] != $this->required) {
+                if ($this->required && $this->new_field_definition['required'] != $this->required) {
                     $req = " NULL ";
                 }
             } else {
                 $req = ($this->required) ? " NOT NULL " : ''; // bug 17184 tyoung - set required correctly when modifying custom field in Studio
             }
         } else {
-            if (empty($this->new_field_definition['required']) or $this->new_field_definition['required'] != $this->required) {
+            if (empty($this->new_field_definition['required']) || $this->new_field_definition['required'] != $this->required) {
                 if (!empty($this->required) && $this->required) {
                     $req = " NOT NULL";
                 }
@@ -364,8 +365,8 @@ class TemplateField
             'massupdate'=>$this->massupdate,
             'default'=>$this->default,
             'no_default'=> !empty($this->no_default),
-            'comments'=> (isset($this->comments)) ? $this->comments : '',
-            'help'=> (isset($this->help)) ?  $this->help : '',
+            'comments'=> (property_exists($this, 'comments') && $this->comments !== null) ? $this->comments : '',
+            'help'=> ($this->help !== null) ?  $this->help : '',
             'importable'=>$this->importable,
             'duplicate_merge'=>$this->duplicate_merge,
             'duplicate_merge_dom_value'=> $this->getDupMergeDomValue(),
@@ -375,7 +376,7 @@ class TemplateField
             'unified_search'=>$this->convertBooleanValue($this->unified_search),
             'merge_filter' => empty($this->merge_filter) ? "disabled" : $this->merge_filter
         );
-        if (isset($this->full_text_search)) {
+        if (property_exists($this, 'full_text_search') && $this->full_text_search !== null) {
             $array['full_text_search'] = $this->full_text_search;
         }
         if (!empty($this->len)) {
@@ -442,7 +443,7 @@ class TemplateField
      */
     public function getDupMergeDomValue()
     {
-        if (isset($this->duplicate_merge_dom_value)) {
+        if (property_exists($this, 'duplicate_merge_dom_value') && $this->duplicate_merge_dom_value !== null) {
             return $this->duplicate_merge_dom_value;
         }
 
@@ -527,11 +528,11 @@ class TemplateField
 
                 //Remove potential xss code from help field
                 if ($field == 'help' && !empty($this->$vardef)) {
-                    $help = htmlspecialchars_decode($this->$vardef, ENT_QUOTES);
+                    $help = htmlspecialchars_decode((string) $this->$vardef, ENT_QUOTES);
 
                     // Fix for issue #1170 - text in studio can't accept the special language characters.
                     //$this->$vardef = htmlentities(remove_xss($help));
-                    $this->$vardef = htmlspecialchars(remove_xss($help));
+                    $this->$vardef = htmlspecialchars((string) remove_xss($help));
                 }
 
 

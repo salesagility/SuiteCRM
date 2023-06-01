@@ -4,6 +4,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+#[\AllowDynamicProperties]
 class Jjwg_MapsViewGeocoded_Counts extends SugarView
 {
     public function __construct()
@@ -22,7 +23,7 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView
         echo '<br /><br />';
 
         // Display last status code, if set.
-        if (!empty($_REQUEST['last_status']) && preg_match('/[A-Z\_]/', $_REQUEST['last_status'])) {
+        if (!empty($_REQUEST['last_status']) && preg_match('/[A-Z\_]/', (string) $_REQUEST['last_status'])) {
             echo '<div><b>'.$GLOBALS['mod_strings']['LBL_MAP_LAST_STATUS'].': '.$_REQUEST['last_status'].'</b></div>';
             echo '<br /><br />';
         }

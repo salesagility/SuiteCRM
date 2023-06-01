@@ -3,6 +3,7 @@ require_once('include/ListView/ListViewSmarty.php');
 require_once('modules/AOS_PDF_Templates/formLetter.php');
 
 
+#[\AllowDynamicProperties]
 class AccountsListViewSmarty extends ListViewSmarty
 {
     public function __construct()
@@ -16,7 +17,7 @@ class AccountsListViewSmarty extends ListViewSmarty
         global $app_strings;
         unset($_REQUEST[session_name()]);
         unset($_REQUEST['PHPSESSID']);
-        $current_query_by_page = htmlentities(json_encode($_REQUEST));
+        $current_query_by_page = htmlentities(json_encode($_REQUEST, JSON_THROW_ON_ERROR));
 
         $js = <<<EOF
              if(sugarListView.get_checks_count() < 1) {

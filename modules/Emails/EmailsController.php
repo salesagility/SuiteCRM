@@ -49,17 +49,18 @@ include_once 'include/Exceptions/SugarControllerException.php';
 include_once __DIR__ . '/EmailsDataAddressCollector.php';
 include_once __DIR__ . '/EmailsControllerActionGetFromFields.php';
 
+#[\AllowDynamicProperties]
 class EmailsController extends SugarController
 {
-    const ERR_INVALID_INBOUND_EMAIL_TYPE = 100;
-    const ERR_STORED_OUTBOUND_EMAIL_NOT_SET = 101;
-    const ERR_STORED_OUTBOUND_EMAIL_ID_IS_INVALID = 102;
-    const ERR_STORED_OUTBOUND_EMAIL_NOT_FOUND = 103;
-    const ERR_REPLY_TO_ADDR_NOT_FOUND = 110;
-    const ERR_REPLY_TO_FROMAT_INVALID_SPLITS = 111;
-    const ERR_REPLY_TO_FROMAT_INVALID_NO_NAME = 112;
-    const ERR_REPLY_TO_FROMAT_INVALID_NO_ADDR = 113;
-    const ERR_REPLY_TO_FROMAT_INVALID_AS_FROM = 114;
+    public const ERR_INVALID_INBOUND_EMAIL_TYPE = 100;
+    public const ERR_STORED_OUTBOUND_EMAIL_NOT_SET = 101;
+    public const ERR_STORED_OUTBOUND_EMAIL_ID_IS_INVALID = 102;
+    public const ERR_STORED_OUTBOUND_EMAIL_NOT_FOUND = 103;
+    public const ERR_REPLY_TO_ADDR_NOT_FOUND = 110;
+    public const ERR_REPLY_TO_FROMAT_INVALID_SPLITS = 111;
+    public const ERR_REPLY_TO_FROMAT_INVALID_NO_NAME = 112;
+    public const ERR_REPLY_TO_FROMAT_INVALID_NO_ADDR = 113;
+    public const ERR_REPLY_TO_FROMAT_INVALID_AS_FROM = 114;
 
     /**
      * @var Email $bean ;
@@ -69,27 +70,27 @@ class EmailsController extends SugarController
     /**
      * @see EmailsController::composeBean()
      */
-    const COMPOSE_BEAN_MODE_UNDEFINED = 0;
+    public const COMPOSE_BEAN_MODE_UNDEFINED = 0;
 
     /**
      * @see EmailsController::composeBean()
      */
-    const COMPOSE_BEAN_MODE_REPLY_TO = 1;
+    public const COMPOSE_BEAN_MODE_REPLY_TO = 1;
 
     /**
      * @see EmailsController::composeBean()
      */
-    const COMPOSE_BEAN_MODE_REPLY_TO_ALL = 2;
+    public const COMPOSE_BEAN_MODE_REPLY_TO_ALL = 2;
 
     /**
      * @see EmailsController::composeBean()
      */
-    const COMPOSE_BEAN_MODE_FORWARD = 3;
+    public const COMPOSE_BEAN_MODE_FORWARD = 3;
 
     /**
      * @see EmailsController::composeBean()
      */
-    const COMPOSE_BEAN_WITH_PDF_TEMPLATE = 4;
+    public const COMPOSE_BEAN_WITH_PDF_TEMPLATE = 4;
 
     protected static $doNotImportFields = array(
         'action',
@@ -208,7 +209,7 @@ class EmailsController extends SugarController
             'id' => $bean->id,
             'module' => $bean->module_name,
         ];
-        echo json_encode($result);
+        echo json_encode($result, JSON_THROW_ON_ERROR);
 
         if (empty($_REQUEST['parentEmailRecordId'])) {
             return;
@@ -234,6 +235,7 @@ class EmailsController extends SugarController
      */
     public function action_send()
     {
+        $response = [];
         global $current_user;
         global $app_strings;
 
@@ -481,6 +483,7 @@ class EmailsController extends SugarController
      */
     public function action_GetDraftAttachmentData()
     {
+        $data = [];
         $data['attachments'] = array();
 
         if (!empty($_REQUEST['id'])) {
@@ -505,7 +508,7 @@ class EmailsController extends SugarController
         }
 
         $dataEncoded = json_encode(array('data' => $data), JSON_UNESCAPED_UNICODE);
-        echo utf8_decode($dataEncoded);
+        echo mb_convert_encoding($dataEncoded, 'ISO-8859-1');
         $this->view = 'ajax';
     }
 
@@ -542,7 +545,7 @@ class EmailsController extends SugarController
                 true
             );
 
-            $out = json_encode(array('response' => $ret));
+            $out = json_encode(array('response' => $ret), JSON_THROW_ON_ERROR);
         } catch (SugarFolderEmptyException $e) {
             $GLOBALS['log']->warn($e->getMessage());
             $out = json_encode(array('errors' => array($mod_strings['LBL_ERROR_NO_FOLDERS'])));
@@ -615,7 +618,7 @@ class EmailsController extends SugarController
     public function action_GetCurrentUserID()
     {
         global $current_user;
-        echo json_encode(array("response" => $current_user->id));
+        echo json_encode(array("response" => $current_user->id), JSON_THROW_ON_ERROR);
         $this->view = 'ajax';
     }
 

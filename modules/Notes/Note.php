@@ -46,6 +46,7 @@ require_once __DIR__ . '/../../include/upload_file.php';
 require_once __DIR__ . '/../../include/SugarObjects/templates/file/File.php';
 
 // Note is used to store customer information.
+#[\AllowDynamicProperties]
 class Note extends File
 {
     public $field_name_map;
@@ -106,17 +107,17 @@ class Note extends File
         global $sugar_config;
 
         //get position of last "." in file name
-        $file_ext_beg = strrpos($this->filename, ".");
+        $file_ext_beg = strrpos((string) $this->filename, ".");
         $file_ext = "";
 
         //get file extension
         if ($file_ext_beg !== false) {
-            $file_ext = substr($this->filename, $file_ext_beg + 1);
+            $file_ext = substr((string) $this->filename, $file_ext_beg + 1);
         }
 
         //check to see if this is a file with extension located in "badext"
         foreach ($sugar_config['upload_badext'] as $badExt) {
-            if (strtolower($file_ext) == strtolower($badExt)) {
+            if (strtolower($file_ext) === strtolower($badExt)) {
                 //if found, then append with .txt and break out of lookup
                 $this->name = $this->name . ".txt";
                 $this->file_mime_type = 'text/';
@@ -260,7 +261,7 @@ class Note extends File
             $this->contact_email = $emailAddress->getPrimaryAddress(false, $this->contact_id, 'Contacts');
         }
 
-        if (isset($this->contact_id) && $this->contact_id != '') {
+        if ($this->contact_id !== null && $this->contact_id != '') {
             $contact = BeanFactory::newBean('Contacts');
             $contact->retrieve($this->contact_id);
             if (isset($contact->id)) {
@@ -275,7 +276,7 @@ class Note extends File
         $note_fields = $this->get_list_view_array();
         global $app_list_strings, $focus, $action, $currentModule, $mod_strings, $sugar_config;
 
-        if (isset($this->parent_type)) {
+        if ($this->parent_type !== null) {
             $note_fields['PARENT_MODULE'] = $this->parent_type;
         }
 
@@ -285,14 +286,14 @@ class Note extends File
                 $note_fields['FILE_URL'] = UploadFile::get_upload_url($this);
             }
         }
-        if (isset($this->contact_id) && $this->contact_id != '') {
+        if ($this->contact_id !== null && $this->contact_id != '') {
             $contact = BeanFactory::newBean('Contacts');
             $contact->retrieve($this->contact_id);
             if (isset($contact->id)) {
                 $this->contact_name = $contact->full_name;
             }
         }
-        if (isset($this->contact_name)) {
+        if ($this->contact_name !== null) {
             $note_fields['CONTACT_NAME'] = $this->contact_name;
         }
 

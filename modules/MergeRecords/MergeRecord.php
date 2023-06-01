@@ -45,6 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * Class MergeRecord
  */
+#[\AllowDynamicProperties]
 class MergeRecord extends SugarBean
 {
     public $object_name = 'MergeRecord';

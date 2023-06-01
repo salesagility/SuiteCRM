@@ -41,6 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+#[\AllowDynamicProperties]
 class OutboundEmailAccountsController extends SugarController
 {
     public function action_EditView() {

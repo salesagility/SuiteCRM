@@ -13,6 +13,8 @@
  * - http://framework.zend.com/issues/secure/attachment/12512/Pdf.php
  * - http://www.php.net/manual/en/ref.pdf.php#74211
  */
+#[\AllowDynamicProperties]
+#[\AllowDynamicProperties]
 class PdfParser
 {
     /**
@@ -71,7 +73,7 @@ class PdfParser
                 $a_data = self::getDataArray($obj, 'stream', 'endstream');
 
                 if (is_array($a_data) && isset($a_data[0])) {
-                    $a_chunks[$j]['data'] = trim(substr($a_data[0], strlen('stream'), strlen($a_data[0]) - strlen('stream') - strlen('endstream')));
+                    $a_chunks[$j]['data'] = trim(substr((string) $a_data[0], strlen('stream'), strlen((string) $a_data[0]) - strlen('stream') - strlen('endstream')));
                 }
 
                 $j++;
@@ -86,7 +88,7 @@ class PdfParser
             if (isset($chunk['data'])) {
 
         // look at the filter to find out which encoding has been used
-                if (strpos($chunk['filter'], 'FlateDecode') !== false) {
+                if (strpos((string) $chunk['filter'], 'FlateDecode') !== false) {
                     // Use gzuncompress but suppress error messages.
                     $data =@ gzuncompress($chunk['data']);
                 } else {
@@ -123,7 +125,7 @@ class PdfParser
      */
     protected static function extractTextElements($content)
     {
-        if (strpos($content, '/CIDInit') === 0) {
+        if (strpos((string) $content, '/CIDInit') === 0) {
             return '';
         }
 
@@ -143,7 +145,7 @@ class PdfParser
                 preg_match_all('/\\\\([0-9]{3})/', $command, $found_octal_values);
 
                 foreach ($found_octal_values[0] as $value) {
-                    $octal = substr($value, 1);
+                    $octal = substr((string) $value, 1);
 
                     if ((int)$octal < 40) {
                         // Skips non printable chars

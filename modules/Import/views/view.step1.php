@@ -52,6 +52,7 @@ require_once('include/externalAPI/ExternalAPIFactory.php');
 require_once('modules/Import/Importer.php');
 
 
+#[\AllowDynamicProperties]
 class ImportViewStep1 extends ImportView
 {
     protected $pageTitleKey = 'LBL_STEP_1_TITLE';
@@ -114,12 +115,12 @@ class ImportViewStep1 extends ImportView
             $this->ss->assign('INSTRUCTION', $this->getInstruction());
         }
         $this->ss->assign("FROM_ADMIN", $showModuleSelection);
-        $this->ss->assign("PERSON_MODULE_LIST", json_encode($importablePersonModules));
+        $this->ss->assign("PERSON_MODULE_LIST", json_encode($importablePersonModules, JSON_THROW_ON_ERROR));
         $this->ss->assign("showModuleSelection", $showModuleSelection);
         $this->ss->assign("IMPORTABLE_MODULES_OPTIONS", $importableModulesOptions);
 
         $this->ss->assign("EXTERNAL_SOURCES", $this->getAllImportableExternalEAPMs());
-        $this->ss->assign("EXTERNAL_AUTHENTICATED_SOURCES", json_encode($this->getAuthenticatedImportableExternalEAPMs()));
+        $this->ss->assign("EXTERNAL_AUTHENTICATED_SOURCES", json_encode($this->getAuthenticatedImportableExternalEAPMs(), JSON_THROW_ON_ERROR));
         $selectExternal = !empty($_REQUEST['application']) ? $_REQUEST['application'] : '';
         $this->ss->assign("selectExternalSource", $selectExternal);
 
@@ -166,7 +167,7 @@ class ImportViewStep1 extends ImportView
     private function _getJS($sourceType = false)
     {
         global $mod_strings;
-        $EXTERNAL_AUTHENTICATED_SOURCES = json_encode($this->getAuthenticatedImportableExternalEAPMs());
+        $EXTERNAL_AUTHENTICATED_SOURCES = json_encode($this->getAuthenticatedImportableExternalEAPMs(), JSON_THROW_ON_ERROR);
         $selectExternalSource = !empty($_REQUEST['application']) ? $_REQUEST['application'] : '';
         
         $showModuleSelection = ($this->importModule == 'Administration');
@@ -178,7 +179,7 @@ class ImportViewStep1 extends ImportView
         }
 
 
-        $PERSON_MODULE_LIST = json_encode($importablePersonModules);
+        $PERSON_MODULE_LIST = json_encode($importablePersonModules, JSON_THROW_ON_ERROR);
         
         return <<<EOJAVASCRIPT
 

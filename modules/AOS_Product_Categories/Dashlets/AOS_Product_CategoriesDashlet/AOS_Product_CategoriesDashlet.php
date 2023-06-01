@@ -52,10 +52,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOS_Product_Categories/AOS_Product_Categories.php');
 
+#[\AllowDynamicProperties]
 class AOS_Product_CategoriesDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
+        $dashletData = [];
         global $current_user, $app_strings;
         require('modules/AOS_Product_Categories/metadata/dashletviewdefs.php');
 

@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+#[\AllowDynamicProperties]
 class Meeting extends SugarBean
 {
     // Stored fields
@@ -176,17 +177,17 @@ class Meeting extends SugarBean
 
         global $disable_date_format;
 
-        if (isset($this->date_start)) {
+        if ($this->date_start !== null) {
             $td = $timedate->fromDb($this->date_start);
             if (!$td) {
                 $this->date_start = $timedate->to_db($this->date_start);
                 $td = $timedate->fromDb($this->date_start);
             }
             if ($td) {
-                if (isset($this->duration_hours) && $this->duration_hours != '') {
+                if ($this->duration_hours !== null && $this->duration_hours != '') {
                     $td->modify("+{$this->duration_hours} hours");
                 }
-                if (isset($this->duration_minutes) && $this->duration_minutes != '') {
+                if ($this->duration_minutes !== null && $this->duration_minutes != '') {
                     $td->modify("+{$this->duration_minutes} mins");
                 }
                 $this->date_end = $td->asDb();
@@ -225,7 +226,7 @@ class Meeting extends SugarBean
 
         // Do any external API saving
         // Clear out the old external API stuff if we have changed types
-        if (isset($this->fetched_row) && !is_bool($this->fetched_row) && $this->fetched_row['type'] != $this->type) {
+        if (property_exists($this, 'fetched_row') && $this->fetched_row !== null && !is_bool($this->fetched_row) && $this->fetched_row['type'] != $this->type) {
             $this->join_url = '';
             $this->host_url = '';
             $this->external_id = '';
@@ -244,7 +245,7 @@ class Meeting extends SugarBean
         if (isset($api) && is_a($api, 'WebMeeting') && empty($this->in_relationship_update)) {
             // Make sure the API initialized and it supports Web Meetings
             // Also make suer we have an ID, the external site needs something to reference
-            if (!isset($this->id) || empty($this->id)) {
+            if (!($this->id !== null) || empty($this->id)) {
                 $this->id = create_guid();
                 $this->new_with_id = true;
             }
@@ -278,7 +279,7 @@ class Meeting extends SugarBean
             $this->saving_reminders_data = true;
 
             $reminderData = json_encode(
-                $this->removeUnInvitedFromReminders(json_decode(html_entity_decode($_REQUEST['reminders_data']), true))
+                $this->removeUnInvitedFromReminders(json_decode(html_entity_decode((string) $_REQUEST['reminders_data']), true, 512, JSON_THROW_ON_ERROR)), JSON_THROW_ON_ERROR
             );
             Reminder::saveRemindersDataJson('Meetings', $return_id, $reminderData);
 
@@ -355,7 +356,7 @@ class Meeting extends SugarBean
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
-        $contact_required = stristr($where, "contacts");
+        $contact_required = stristr((string) $where, "contacts");
 
         if ($contact_required) {
             $query = "SELECT meetings.*, contacts.first_name, contacts.last_name, contacts.assigned_user_id contact_name_owner, users.user_name as assigned_user_name   ";
@@ -415,14 +416,14 @@ class Meeting extends SugarBean
         $this->modified_by_name = get_assigned_user_name($this->modified_user_id);
         $this->fill_in_additional_parent_fields();
 
-        if (!isset($this->time_hour_start)) {
-            $this->time_start_hour = (int)substr($this->time_start, 0, 2);
+        if (!(property_exists($this, 'time_hour_start') && $this->time_hour_start !== null)) {
+            $this->time_start_hour = (int)substr((string) $this->time_start, 0, 2);
         } //if-else
 
-        if (isset($this->time_minute_start)) {
+        if (property_exists($this, 'time_minute_start') && $this->time_minute_start !== null) {
             $time_start_minutes = $this->time_minute_start;
         } else {
-            $time_start_minutes = substr($this->time_start, 3, 5);
+            $time_start_minutes = substr((string) $this->time_start, 3, 5);
             if ($time_start_minutes > 0 && $time_start_minutes < 15) {
                 $time_start_minutes = "15";
             } elseif ($time_start_minutes > 15 && $time_start_minutes < 30) {
@@ -436,10 +437,10 @@ class Meeting extends SugarBean
         } //if-else
 
 
-        if (isset($this->time_hour_start)) {
+        if (property_exists($this, 'time_hour_start') && $this->time_hour_start !== null) {
             $time_start_hour = $this->time_hour_start;
         } else {
-            $time_start_hour = (int)substr($this->time_start, 0, 2);
+            $time_start_hour = (int)substr((string) $this->time_start, 0, 2);
         }
 
         global $timedate;
@@ -461,7 +462,7 @@ class Meeting extends SugarBean
             $hours_arr[$i] = $i;
         } //for
 
-        if (!isset($this->duration_minutes)) {
+        if (!($this->duration_minutes !== null)) {
             $this->duration_minutes = $this->minutes_value_default;
         }
 
@@ -542,7 +543,7 @@ class Meeting extends SugarBean
         $meeting_fields = $this->get_list_view_array();
 
         global $app_list_strings, $focus, $action, $currentModule;
-        if (isset($this->parent_type)) {
+        if ($this->parent_type !== null) {
             $meeting_fields['PARENT_MODULE'] = $this->parent_type;
         }
         if ($this->status == "Planned") {
@@ -605,6 +606,7 @@ class Meeting extends SugarBean
 
     public function set_notification_body($xtpl, &$meeting)
     {
+        $typestring = null;
         global $sugar_config;
         global $app_list_strings;
         global $current_user;
@@ -825,7 +827,7 @@ class Meeting extends SugarBean
             $this->users_arr =    array();
         }
 
-        if (!isset($this->leads_arr) || !is_array($this->leads_arr)) {
+        if (!(property_exists($this, 'leads_arr') && $this->leads_arr !== null) || !is_array($this->leads_arr)) {
             $this->leads_arr =    array();
         }
 

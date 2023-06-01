@@ -80,4 +80,4 @@ if (isset($_REQUEST['func']) && $_REQUEST['func'] == 'createEmailMarketing') {
     $results['selectedId'] = null;
 }
 
-echo json_encode($results);
+echo json_encode($results, JSON_THROW_ON_ERROR);

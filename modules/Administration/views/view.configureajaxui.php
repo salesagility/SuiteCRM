@@ -43,6 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
+#[\AllowDynamicProperties]
 class ViewConfigureAjaxUI extends SugarView
 {
     /**
@@ -90,8 +91,8 @@ class ViewConfigureAjaxUI extends SugarView
             }
         }
 
-        $this->ss->assign('enabled_mods', json_encode($enabled));
-        $this->ss->assign('disabled_mods', json_encode($disabled));
+        $this->ss->assign('enabled_mods', json_encode($enabled, JSON_THROW_ON_ERROR));
+        $this->ss->assign('disabled_mods', json_encode($disabled, JSON_THROW_ON_ERROR));
         $this->ss->assign('title', $this->getModuleTitle(false));
 
         echo $this->ss->fetch('modules/Administration/templates/ConfigureAjaxUI.tpl');

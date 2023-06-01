@@ -56,6 +56,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
      *
      * @access public
      */
+    #[\AllowDynamicProperties]
     class HTTP_WebDAV_Server_vCal extends HTTP_WebDAV_Server
     {
         /**
@@ -128,7 +129,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
             } else {
                 $this->path = $this->_urldecode($_SERVER["PATH_INFO"]);
 
-                $query_str = preg_replace('/^\//', '', $this->path);
+                $query_str = preg_replace('/^\//', '', (string) $this->path);
                 $query_arr =  array();
                 parse_str($query_str, $query_arr);
             }
@@ -267,6 +268,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
         */
         public function http_PUT()
         {
+            $focus = null;
             $options = array();
             $options["path"] = $this->path;
             $options["content_length"] = $_SERVER["CONTENT_LENGTH"];

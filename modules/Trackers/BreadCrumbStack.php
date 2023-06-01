@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
+#[\AllowDynamicProperties]
 class BreadCrumbStack
 {
 
@@ -113,7 +114,7 @@ class BreadCrumbStack
     public function contains($item_id)
     {
         if (!empty($this->stackMap)) {
-            return array_key_exists($item_id, $this->stackMap);
+            return property_exists($this->stackMap, $item_id);
         } else {
             return false;
         }
@@ -227,7 +228,7 @@ class BreadCrumbStack
      */
     public function length()
     {
-        return count($this->stack);
+        return is_countable($this->stack) ? count($this->stack) : 0;
     }
 
     /**

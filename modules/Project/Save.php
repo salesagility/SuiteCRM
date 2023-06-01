@@ -113,7 +113,8 @@ $sugarbean->save($check_notify);
 $return_id = $sugarbean->id;
 
 if (isset($_REQUEST['save_type']) || isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true") {
-    for ($i = 0; $i < count($projectTasks); $i++) {
+    $projectTasksCount = count($projectTasks);
+    for ($i = 0; $i < $projectTasksCount; $i++) {
         if (isset($_REQUEST['save_type']) || (isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true")) {
             $projectTasks[$i]->id = '';
             $projectTasks[$i]->project_id = $sugarbean->id;

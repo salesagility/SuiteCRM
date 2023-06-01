@@ -31,6 +31,7 @@ require_once __DIR__ . '/../../modules/AOR_Reports/aor_utils.php';
 /**
  * Class AOR_ReportsController
  */
+#[\AllowDynamicProperties]
 class AOR_ReportsController extends SugarController
 {
     protected function action_getModuleFields()
@@ -51,7 +52,7 @@ class AOR_ReportsController extends SugarController
     {
         if ($_REQUEST['aor_module']) {
             $bean = BeanFactory::getBean($_REQUEST['aor_module']);
-            echo json_encode((array)$bean->field_defs[$_REQUEST['aor_request']]);
+            echo json_encode((array)$bean->field_defs[$_REQUEST['aor_request']], JSON_THROW_ON_ERROR);
             die();
         }
     }
@@ -106,7 +107,7 @@ class AOR_ReportsController extends SugarController
             return;
         }
         $conditions = getConditionsAsParameters($report);
-        echo json_encode($conditions);
+        echo json_encode($conditions, JSON_THROW_ON_ERROR);
     }
 
     protected function action_getChartsForReport()
@@ -126,7 +127,7 @@ class AOR_ReportsController extends SugarController
         foreach ($report->get_linked_beans('aor_charts', 'AOR_Charts') as $chart) {
             $charts[$chart->id] = $chart->name;
         }
-        echo json_encode($charts);
+        echo json_encode($charts, JSON_THROW_ON_ERROR);
     }
 
     protected function action_addToProspectList()

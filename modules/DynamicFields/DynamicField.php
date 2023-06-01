@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+#[\AllowDynamicProperties]
 class DynamicField
 {
     public $use_existing_labels = false; // this value is set to true by install_custom_fields() in ModuleInstaller.php; everything else expects it to be false
@@ -118,6 +119,7 @@ class DynamicField
      */
     public function setLabel($language, $key = null, $value = null)
     {
+        $params = [];
         // set $language = 'en_us' as default
         if (!$language) {
             $language = 'en_us';
@@ -358,6 +360,7 @@ class DynamicField
      */
     public function getRelateJoin($field_def, $joinTableAlias, $withIdName = true)
     {
+        $ret_array = [];
         if (empty($field_def['type']) || $field_def['type'] != 'relate') {
             return false;
         }
@@ -479,14 +482,14 @@ class DynamicField
                     }
                     if ($isUpdate) {
                         if ($first) {
-                            $query .= " $name=$quote" . $this->db->quote($val) . (string)$quote;
+                            $query .= " $name=$quote" . $this->db->quote($val) . $quote;
                         } else {
-                            $query .= " ,$name=$quote" . $this->db->quote($val) . (string)$quote;
+                            $query .= " ,$name=$quote" . $this->db->quote($val) . $quote;
                         }
                     }
                     $first = false;
                     $queryInsert .= " ,$name";
-                    $values .= " ,$quote" . $this->db->quote($val) . (string)$quote;
+                    $values .= " ,$quote" . $this->db->quote($val) . $quote;
                 }
             }
             if ($isUpdate) {
@@ -618,10 +621,10 @@ class DynamicField
         $fmd->ext1 = $field->ext1;
         $fmd->ext2 = $field->ext2;
         $fmd->ext3 = $field->ext3;
-        $fmd->ext4 = (isset($field->ext4) ? $field->ext4 : '');
+        $fmd->ext4 = ($field->ext4 !== null ? $field->ext4 : '');
         $fmd->comments = $field->comment;
         $fmd->massupdate = $field->massupdate;
-        $fmd->importable = (isset($field->importable)) ? $field->importable : null;
+        $fmd->importable = ($field->importable !== null) ? $field->importable : null;
         $fmd->duplicate_merge = $field->duplicate_merge;
         $fmd->audited = $field->audited;
         $fmd->inline_edit = $field->inline_edit;
@@ -687,7 +690,7 @@ class DynamicField
             if (!isset($field->$property) || in_array($fmd_col, $column_fields) || in_array($property, $column_fields)
                 || $this->isDefaultValue($property, $field->$property, $base_field)
                 || $property == 'action' || $property == 'label_value' || $property == 'label'
-                || (substr($property, 0, 3) == 'ext' && strlen($property) == 4)
+                || (substr((string) $property, 0, 3) == 'ext' && strlen((string) $property) == 4)
             ) {
                 continue;
             }
@@ -1022,7 +1025,7 @@ class DynamicField
      */
     public function setWhereClauses(&$where_clauses)
     {
-        if (isset($this->avail_fields)) {
+        if (property_exists($this, 'avail_fields') && $this->avail_fields !== null) {
             foreach ($this->avail_fields as $name => $value) {
                 if (!empty($_REQUEST[$name])) {
                     $where_clauses[] = $this->bean->table_name . "_cstm.$name LIKE '" . $this->db->quote($_REQUEST[$name]) . "%'";
@@ -1039,7 +1042,7 @@ class DynamicField
      */
     public function retrieve()
     {
-        if (!isset($this->bean)) {
+        if (!$this->bean instanceof \SugarBean) {
             $GLOBALS['log']->fatal('DynamicField retrieve, bean not instantiated');
 
             return false;
