@@ -58,6 +58,7 @@ require_once "data/Relationships/RelationshipFactory.php";
  * a bean should be plural (e.g. contacts).
  * @api
  */
+#[\AllowDynamicProperties]
 class SugarBean
 {
     /**
@@ -581,7 +582,7 @@ class SugarBean
                     // no break
                     default:
                         if (isset($value['default']) && $value['default'] !== '') {
-                            $this->$field = htmlentities($value['default'], ENT_QUOTES, 'UTF-8');
+                            $this->$field = htmlentities((string) $value['default'], ENT_QUOTES, 'UTF-8');
                         } else {
                             $this->$field = '';
                         }
@@ -604,6 +605,7 @@ class SugarBean
      */
     protected function parseDateDefault($value, $time = false)
     {
+        $results = false;
         global $timedate;
         if ($time) {
             $dtAry = explode('&', $value, 2);
@@ -906,8 +908,8 @@ class SugarBean
 
                 // Find related email address for sub panel ordering
                 if ($order_by && isset($subpanel_def->panel_definition['list_fields'][$order_by]['widget_class']) &&
-                    $subpanel_def->panel_definition['list_fields'][$order_by]['widget_class'] == 'SubPanelEmailLink' &&
-                    !in_array($order_by, array_keys($subquery['query_fields']))) {
+                    $subpanel_def->panel_definition['list_fields'][$order_by]['widget_class'] === 'SubPanelEmailLink' &&
+                    !array_key_exists($order_by, $subquery['query_fields'])) {
                     $relatedBeanTable = $subpanel_def->table_name;
                     $relatedBeanModule = $subpanel_def->get_module_name();
                     $subquery['select'] .= ",
@@ -931,8 +933,8 @@ class SugarBean
                     $first = false;
                 }
                 $query_array = $subquery['query_array'];
-                $select_position = strpos($query_array['select'], "SELECT");
-                $distinct_position = strpos($query_array['select'], "DISTINCT");
+                $select_position = strpos((string) $query_array['select'], "SELECT");
+                $distinct_position = strpos((string) $query_array['select'], "DISTINCT");
                 if (!empty($subquery['params']['distinct']) && !empty($subpanel_def->table_name)) {
                     $query_rows = "( SELECT count(DISTINCT " . $subpanel_def->table_name . ".id)"
                         . $subquery['from_min'] . $query_array['join'] . $subquery['where'] . ' )';
@@ -1031,7 +1033,7 @@ class SugarBean
         global $beanList;
         $subqueries = array();
 
-        if (!is_array($subpanel_list) or is_object($subpanel_list)) {
+        if (!is_array($subpanel_list) || is_object($subpanel_list)) {
             $GLOBALS['log']->fatal('Invalid Argument: Subpanel list should be an array.');
             $subpanel_list = (array) $subpanel_list;
         }
@@ -1079,14 +1081,14 @@ class SugarBean
                             $query_array = $parentbean->$related_field_name->getSubpanelQuery(array(), true);
                         }
                     }
-                    $table_where = preg_replace('/^\s*WHERE/i', '', $this_subpanel->get_where());
+                    $table_where = preg_replace('/^\s*WHERE/i', '', (string) $this_subpanel->get_where());
                     $queryArrayWhere = '';
                     if (isset($query_array)) {
                         $queryArrayWhere = $query_array['where'];
                     } else {
                         $GLOBALS['log']->fatal('Undefined variable: query_array');
                     }
-                    $where_definition = preg_replace('/^\s*WHERE/i', '', $queryArrayWhere);
+                    $where_definition = preg_replace('/^\s*WHERE/i', '', (string) $queryArrayWhere);
 
                     if (!empty($table_where)) {
                         if (empty($where_definition)) {
@@ -1216,6 +1218,7 @@ class SugarBean
         $query_row_count = '',
         $secondary_queries = array()
     ) {
+        $current_bean = null;
         if (is_null($subpanel_def)) {
             $GLOBALS['log']->fatal('subpanel_def is null');
         }
@@ -1492,7 +1495,7 @@ class SugarBean
     {
         $num_rows_in_query = 0;
         if (!$is_count_query) {
-            $count_query = SugarBean::create_list_count_query($query);
+            $count_query = $this->create_list_count_query($query);
         } else {
             $count_query = $query;
         }
@@ -1671,7 +1674,7 @@ class SugarBean
     public function isOwner($user_id)
     {
         //if we don't have an id we must be the owner as we are creating it
-        if (!isset($this->id) || $this->id == "[SELECT_ID_LIST]") {
+        if (!isset($this->id)  || $this->id == "[SELECT_ID_LIST]") {
             return true;
         }
         //if there is an assigned_user that is the owner
@@ -1931,7 +1934,7 @@ class SugarBean
                 if (!is_array($properties)) {
                     $GLOBALS['log']->fatal('array_search() expects parameter 2 to be array, ' .
                         gettype($properties) . ' given');
-                } elseif (array_search('link', $properties) === 'type') {
+                } elseif (array_search('link', $properties, true) === 'type') {
                     $linked_fields[$name] = $properties;
                 }
             }
@@ -2368,6 +2371,7 @@ class SugarBean
             unset($this->date_entered);
         }
         // call the custom business logic
+        $custom_logic_arguments = [];
         $custom_logic_arguments['check_notify'] = $check_notify;
 
 
@@ -2515,12 +2519,12 @@ class SugarBean
                 }
 
                 if (isset($def['type']) && ($def['type'] == 'html' || $def['type'] == 'longhtml')) {
-                    $this->$key = htmlentities(SugarCleaner::cleanHtml($this->$key, true));
+                    $this->$key = htmlentities((string) SugarCleaner::cleanHtml($this->$key, true));
                 } elseif (
-                    (strpos($type, 'char') !== false || strpos($type, 'text') !== false || $type == 'enum') &&
+                    (strpos((string) $type, 'char') !== false || strpos((string) $type, 'text') !== false || $type == 'enum') &&
                     !empty($this->$key)
                 ) {
-                    $this->$key = htmlentities(SugarCleaner::cleanHtml($this->$key, true));
+                    $this->$key = htmlentities((string) SugarCleaner::cleanHtml($this->$key, true));
                 }
             }
         }
@@ -2562,7 +2566,7 @@ class SugarBean
                                 break;
                             }
                             if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/',
-                                $this->$field)) {
+                                (string) $this->$field)) {
                                 $this->$field = $timedate->to_db($this->$field);
                                 $reformatted = true;
                             }
@@ -2572,7 +2576,7 @@ class SugarBean
                                 $this->$field = '';
                                 break;
                             }
-                            if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $this->$field)) {
+                            if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', (string) $this->$field)) {
                                 $this->$field = $timedate->to_db_date($this->$field, false);
                                 $reformatted = true;
                             }
@@ -2582,7 +2586,7 @@ class SugarBean
                                 $this->$field = '';
                                 break;
                             }
-                            if (preg_match('/(am|pm)/i', $this->$field)) {
+                            if (preg_match('/(am|pm)/i', (string) $this->$field)) {
                                 $fromUserTime = $timedate->fromUserTime($this->$field);
                                 if (is_object($fromUserTime) && method_exists($fromUserTime, 'format')) {
                                     $this->$field = $fromUserTime->format(TimeDate::DB_TIME_FORMAT);
@@ -2939,7 +2943,7 @@ class SugarBean
                                 //if before value is not empty then attempt to delete relationship
                                 $GLOBALS['log']->debug("save_relationship_changes(): From field_defs - attempting to " .
                                     "remove the relationship record: {$linkField} = " .
-                                    (string)($this->rel_fields_before_value[$idName]));
+                                    $this->rel_fields_before_value[$idName]);
                                 $success = $this->$linkField->delete(
                                     $this->id,
                                     $this->rel_fields_before_value[$idName]
@@ -3393,7 +3397,7 @@ class SugarBean
         $xtpl->assign("ASSIGNED_USER", $this->new_assigned_user_name);
         $xtpl->assign("ASSIGNER", $current_user->name);
 
-        $parsedSiteUrl = parse_url($sugar_config['site_url']);
+        $parsedSiteUrl = parse_url((string) $sugar_config['site_url']);
         $host = $parsedSiteUrl['host'];
         if (!isset($parsedSiteUrl['port'])) {
             $parsedSiteUrl['port'] = 80;
@@ -3416,7 +3420,7 @@ class SugarBean
 
         // Improve the text version of the email with some "reverse linkification",
         // making "<a href=link>text</a>" links readable as "text [link]"
-        $tempBody = preg_replace('/<a href=([\"\']?)(.*?)\1>(.*?)<\/a>/', "\\3 [\\2]", $tempBody);
+        $tempBody = preg_replace('/<a href=([\"\']?)(.*?)\1>(.*?)<\/a>/', "\\3 [\\2]", (string) $tempBody);
 
         // all the other HTML tags get removed from the text version:
         $notify_mail->AltBody = strip_tags($tempBody);
@@ -3511,7 +3515,7 @@ class SugarBean
         if (isset($_SESSION['show_deleted'])) {
             $show_deleted = 1;
         }
-        
+
         $query = $this->create_new_list_query(
             $order_by,
             $where,
@@ -3767,7 +3771,7 @@ class SugarBean
             } elseif ((!isset($data['source']) || $data['source'] == 'custom_fields')
                 && (!empty($alias) || !empty($filter))) {
                 //add this column only if it has NOT already been added to select statement string
-                $colPos = strpos($ret_array['select'], (string)$this->table_name . "_cstm" . ".$field");
+                $colPos = strpos($ret_array['select'], $this->table_name . "_cstm" . ".$field");
                 if (!$colPos || $colPos < 0) {
                     $ret_array['select'] .= ", $this->table_name" . "_cstm" . ".$field $alias";
                 }
@@ -4241,6 +4245,7 @@ class SugarBean
      */
     public function process_list_query($query, $row_offset, $limit = -1, $max_per_page = -1, $where = '')
     {
+        $rows_found = 0;
         global $sugar_config;
         $db = DBManagerFactory::getInstance('listviews');
         /**
@@ -4472,7 +4477,7 @@ class SugarBean
         if (isset($_SESSION['show_deleted'])) {
             $show_deleted = 1;
         }
-        
+
         $query = $this->create_new_list_query($order_by, $where, array(), array(), $show_deleted, $offset);
 
         return $this->process_detail_query($query, $row_offset, $limit, $max, $where, $offset);
@@ -4554,6 +4559,7 @@ class SugarBean
      */
     public function retrieve($id = -1, $encode = true, $deleted = true)
     {
+        $custom_logic_arguments = [];
         $custom_logic_arguments['id'] = $id;
         $this->call_custom_logic('before_retrieve', $custom_logic_arguments);
 
@@ -5195,6 +5201,7 @@ class SugarBean
         $isFirstTime = true;
         $bean = new $class();
 
+        $list = [];
         // We have some data.
         while (($row = $bean->db->fetchByAssoc($result)) != null) {
             $row = $this->convertRow($row);
@@ -5254,6 +5261,7 @@ class SugarBean
             $this->mark_undeleted($id);
         } else {
             // call the custom business logic
+            $custom_logic_arguments = [];
             $custom_logic_arguments['id'] = $id;
             $this->call_custom_logic("before_delete", $custom_logic_arguments);
             $this->deleted = 1;
@@ -5293,6 +5301,7 @@ class SugarBean
      */
     public function mark_undeleted($id)
     {
+        $custom_logic_arguments = [];
         // call the custom business logic
         $custom_logic_arguments['id'] = $id;
         $this->call_custom_logic("before_restore", $custom_logic_arguments);
@@ -6159,10 +6168,10 @@ class SugarBean
 
         return $args->access
             && ACLController::checkAccess(
-                $this->module_dir, 
-                $args->view, 
-                $args->is_owner, 
-                $this->acltype, 
+                $this->module_dir,
+                $args->view,
+                $args->is_owner,
+                $this->acltype,
                 $args->in_group
             );
     }
