@@ -48,6 +48,7 @@ use Elasticsearch\ClientBuilder;
 /**
  * Class ElasticSearchClientBuilder generates a configured Elasticsearch client.
  */
+#[\AllowDynamicProperties]
 class ElasticSearchClientBuilder
 {
     private static $hosts;
@@ -134,7 +135,7 @@ class ElasticSearchClientBuilder
             return self::loadDefaultConfig();
         }
 
-        $hosts = json_decode($results, true);
+        $hosts = json_decode($results, true, 512, JSON_THROW_ON_ERROR);
 
         return self::loadFromArray($hosts);
     }
