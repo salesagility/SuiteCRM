@@ -5,6 +5,7 @@ use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\OAuth2\Entity\ClientEntity;
 use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
 
+#[\AllowDynamicProperties]
 class ClientRepository implements ClientRepositoryInterface
 {
     /**

@@ -4,11 +4,12 @@ namespace Api\V8\BeanDecorator;
 use \SugarBean;
 use \Person;
 
+#[\AllowDynamicProperties]
 class BeanManager
 {
-    const DEFAULT_OFFSET = 0;
-    const DEFAULT_LIMIT = -1;
-    const DEFAULT_ALL_RECORDS = -99;
+    public const DEFAULT_OFFSET = 0;
+    public const DEFAULT_LIMIT = -1;
+    public const DEFAULT_ALL_RECORDS = -99;
 
     /**
      * @var \DBManager
