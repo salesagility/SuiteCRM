@@ -44,6 +44,7 @@ use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\Traits\ClientTrait;
 use League\OAuth2\Server\Entities\Traits\EntityTrait;
 
+#[\AllowDynamicProperties]
 class ClientEntity implements ClientEntityInterface
 {
     use EntityTrait, ClientTrait;
