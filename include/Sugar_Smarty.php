@@ -50,6 +50,7 @@ if (!defined('SUGAR_SMARTY_DIR')) {
  * Smarty wrapper for Sugar
  * @api
  */
+#[\AllowDynamicProperties]
 class Sugar_Smarty extends Smarty
 {
     /**
@@ -57,6 +58,7 @@ class Sugar_Smarty extends Smarty
      */
     public function __construct()
     {
+        $plugins_dir = [];
         parent::__construct();
         if (!file_exists(SUGAR_SMARTY_DIR)) {
             mkdir_recursive(SUGAR_SMARTY_DIR, true);
@@ -162,7 +164,7 @@ class Sugar_Smarty extends Smarty
      * @param string $_smarty_include_tpl_file
      * @param string $_smarty_include_vars
      */
-    function _smarty_include($params)
+    public function _smarty_include($params)
     {
         $params['smarty_include_tpl_file'] = get_custom_file_if_exists($params['smarty_include_tpl_file']);
         parent::_smarty_include($params);
@@ -175,7 +177,7 @@ class Sugar_Smarty extends Smarty
      * @param string $compile_path
      * @return boolean
      */
-    function _compile_resource($resource_name, $compile_path)
+    public function _compile_resource($resource_name, $compile_path)
     {
         if(parent::_compile_resource($resource_name, $compile_path)) {
             SugarCache::cleanFile($compile_path);

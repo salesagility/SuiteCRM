@@ -876,7 +876,7 @@ function get_user_name($id)
 
 /**
  * Get currently authenticated user
- * @return User
+ * @return User|null
  */
 function get_authenticated_user(): ?User {
     $authenticatedUserId = $_SESSION['authenticated_user_id'] ?? '';
@@ -960,8 +960,8 @@ function get_user_array($add_blank = true, $status = 'Active', $user_id = '', $u
 
             //create the order by string based on position of first and last name in format string
             $order_by_string = ' user_name ASC ';
-            $firstNamePos = strpos($formatString, 'f');
-            $lastNamePos = strpos($formatString, 'l');
+            $firstNamePos = strpos((string) $formatString, 'f');
+            $lastNamePos = strpos((string) $formatString, 'l');
             if ($firstNamePos !== false || $lastNamePos !== false) {
                 //its possible for first name to be skipped, check for this
                 if ($firstNamePos === false) {
@@ -1093,7 +1093,7 @@ function showFullName()
 
 function clean($string, $maxLength)
 {
-    $string = substr($string, 0, $maxLength);
+    $string = substr((string) $string, 0, $maxLength);
 
     return escapeshellcmd($string);
 }
@@ -1663,11 +1663,11 @@ function create_guid_section($characters)
 
 function ensure_length(&$string, $length)
 {
-    $strlen = strlen($string);
+    $strlen = strlen((string) $string);
     if ($strlen < $length) {
         $string = str_pad($string, $length, '0');
     } elseif ($strlen > $length) {
-        $string = substr($string, 0, $length);
+        $string = substr((string) $string, 0, $length);
     }
 }
 
@@ -2089,7 +2089,7 @@ function array_csort()
  */
 function parse_calendardate($local_format)
 {
-    preg_match('/\(?([^-]{1})[^-]*-([^-]{1})[^-]*-([^-]{1})[^-]*\)/', $local_format, $matches);
+    preg_match('/\(?([^-]{1})[^-]*-([^-]{1})[^-]*-([^-]{1})[^-]*\)/', (string) $local_format, $matches);
     $calendar_format = '%' . $matches[1] . '-%' . $matches[2] . '-%' . $matches[3];
 
     return str_replace(array('y', 'ￄ1�7', 'a', 'j'), array('Y', 'Y', 'Y', 'd'), $calendar_format);
@@ -2174,8 +2174,8 @@ function unTranslateNum($num)
         $num_grp_sep = (empty($user_num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $user_num_grp_sep);
     }
 
-    $num = preg_replace("'" . preg_quote($num_grp_sep) . "'", '', $num);
-    $num = preg_replace("'" . preg_quote($dec_sep) . "'", '.', $num);
+    $num = preg_replace("'" . preg_quote((string) $num_grp_sep) . "'", '', (string) $num);
+    $num = preg_replace("'" . preg_quote((string) $dec_sep) . "'", '.', $num);
 
     return $num;
 }
@@ -2200,7 +2200,7 @@ function isSSL()
  */
 function add_http($url)
 {
-    if (!preg_match('@://@i', $url)) {
+    if (!preg_match('@://@i', (string) $url)) {
         $scheme = 'http';
         if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
             $scheme = 'https';
@@ -2288,7 +2288,7 @@ function clean_xss($str, $cleanImg = true)
 
     $tagmatches = array();
     $matches = array();
-    preg_match_all($tagsrex, $str, $tagmatches, PREG_PATTERN_ORDER);
+    preg_match_all($tagsrex, (string) $str, $tagmatches, PREG_PATTERN_ORDER);
     foreach ($tagmatches[1] as $no => $tag) {
         if (in_array($tag, $xsstags)) {
             // dangerous tag - take out whole
@@ -2312,7 +2312,7 @@ function clean_xss($str, $cleanImg = true)
     }
 
     // cn: bug 13498 - custom white-list of allowed domains that vet remote images
-    preg_match_all($css_url, $str, $cssUrlMatches, PREG_PATTERN_ORDER);
+    preg_match_all($css_url, (string) $str, $cssUrlMatches, PREG_PATTERN_ORDER);
 
     if (isset($sugar_config['security_trusted_domains']) && !empty($sugar_config['security_trusted_domains']) && is_array($sugar_config['security_trusted_domains'])) {
         if (is_array($cssUrlMatches) && count($cssUrlMatches) > 0) {
@@ -2347,7 +2347,7 @@ function clean_xss($str, $cleanImg = true)
  */
 function xss_check_pattern($pattern, $str)
 {
-    preg_match_all($pattern, $str, $matches, PREG_PATTERN_ORDER);
+    preg_match_all($pattern, (string) $str, $matches, PREG_PATTERN_ORDER);
 
     return $matches[1];
 }
@@ -2407,7 +2407,7 @@ function clean_file_output($string, $mine_type)
         $patterns[] = "/onload=\"window.location='(.*?)'\"/";
     }
 
-    $string = preg_replace($patterns, '', $string);
+    $string = preg_replace($patterns, '', (string) $string);
 
     return $string;
 }
@@ -2590,13 +2590,13 @@ function clean_incoming_data()
 // Returns TRUE if $str begins with $begin
 function str_begin($str, $begin)
 {
-    return substr($str, 0, strlen($begin)) == $begin;
+    return substr((string) $str, 0, strlen((string) $begin)) == $begin;
 }
 
 // Returns TRUE if $str ends with $end
 function str_end($str, $end)
 {
-    return substr($str, strlen($str) - strlen($end)) == $end;
+    return substr((string) $str, strlen((string) $str) - strlen((string) $end)) == $end;
 }
 
 /**
@@ -2624,7 +2624,7 @@ function securexss($uncleanString)
     ];
 
     $uncleanString = preg_replace(array('/javascript:/i', '/\0/', '/javascript:/i'),
-        array('java script:', '', 'java script:'), $uncleanString);
+        array('java script:', '', 'java script:'), (string) $uncleanString);
 
     $partialString = str_replace(array_keys($xss_cleanup), $xss_cleanup, $uncleanString);
 
@@ -2638,7 +2638,7 @@ function securexsskey($value, $die = true)
 {
     global $sugar_config;
     $matches = array();
-    preg_match('/[\'"<>]/', $value, $matches);
+    preg_match('/[\'"<>]/', (string) $value, $matches);
     if (!empty($matches)) {
         if ($die) {
             die("Bad data passed in; <a href=\"{$sugar_config['site_url']}\">Return to Home</a>");
@@ -2659,7 +2659,7 @@ function purify_html(?string $value): string {
         return '';
     }
 
-    $cleanedValue = htmlentities(SugarCleaner::cleanHtml($value, true));
+    $cleanedValue = htmlentities((string) SugarCleaner::cleanHtml($value, true));
     $decoded = html_entity_decode($cleanedValue);
     $doubleDecoded = html_entity_decode($decoded);
 
@@ -2723,7 +2723,7 @@ function convert_id($string)
 
     error_reporting($errorLevelStored);
 
-    return preg_replace_callback('|[^A-Za-z0-9\-]|', $function, $string);
+    return preg_replace_callback('|[^A-Za-z0-9\-]|', $function, (string) $string);
 }
 
 /**
@@ -2731,7 +2731,7 @@ function convert_id($string)
  */
 function get_image($image, $other_attributes, $width = '', $height = '', $ext = '.gif', $alt = '')
 {
-    return SugarThemeRegistry::current()->getImage(basename($image), $other_attributes, empty($width) ? null : $width, empty($height) ? null : $height, $ext, $alt);
+    return SugarThemeRegistry::current()->getImage(basename((string) $image), $other_attributes, empty($width) ? null : $width, empty($height) ? null : $height, $ext, $alt);
 }
 
 /**
@@ -2746,14 +2746,14 @@ function getWebPath($relative_path)
 {
     $current_theme = SugarThemeRegistry::current();
     $theme_directory = $current_theme->dirName;
-    if (strpos($relative_path, "themes" . DIRECTORY_SEPARATOR . $theme_directory) === false) {
+    if (strpos((string) $relative_path, "themes" . DIRECTORY_SEPARATOR . $theme_directory) === false) {
         $test_path = SUGAR_PATH . DIRECTORY_SEPARATOR . "themes" . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $relative_path;
         if (file_exists($test_path)) {
             $resource_name = "themes" . DIRECTORY_SEPARATOR . $theme_directory . DIRECTORY_SEPARATOR . $relative_path;
         }
     }
     //if it has  a :// then it isn't a relative path
-    if (substr_count($relative_path, '://') > 0) {
+    if (substr_count((string) $relative_path, '://') > 0) {
         return $relative_path;
     }
     if (defined('TEMPLATE_URL')) {
@@ -2827,7 +2827,7 @@ function getSWFPath($relative_path, $additional_params = '')
  */
 function getSQLDate($date_str)
 {
-    if (preg_match('/^(\d{1,2})-(\d{1,2})-(\d{4})$/', $date_str, $match)) {
+    if (preg_match('/^(\d{1,2})-(\d{1,2})-(\d{4})$/', (string) $date_str, $match)) {
         if (strlen($match[2]) == 1) {
             $match[2] = '0' . $match[2];
         }
@@ -2836,7 +2836,7 @@ function getSQLDate($date_str)
         }
 
         return "{$match[3]}-{$match[1]}-{$match[2]}";
-    } elseif (preg_match('/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/', $date_str, $match)) {
+    } elseif (preg_match('/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/', (string) $date_str, $match)) {
         if (strlen($match[2]) == 1) {
             $match[2] = '0' . $match[2];
         }
@@ -2890,7 +2890,7 @@ function clone_history(&$db, $from_id, $to_id, $to_type)
             $bean->id = null;
             $bean->parent_id = $to_id;
             $bean->parent_type = $to_type;
-            if ($to_type == 'Contacts' and in_array('contact_id', $bean->column_fields)) {
+            if ($to_type == 'Contacts' && in_array('contact_id', $bean->column_fields)) {
                 $bean->contact_id = $to_id;
             }
             $bean->update_date_modified = false;
@@ -2976,6 +2976,7 @@ function get_unlinked_email_query($type, $bean)
 {
     global $current_user;
 
+    $return_array = [];
     $return_array['select'] = 'SELECT emails.id ';
     $return_array['from'] = 'FROM emails ';
     $return_array['where'] = '';
@@ -2988,7 +2989,7 @@ function get_unlinked_email_query($type, $bean)
 	) derivedemails on derivedemails.email_id = emails.id";
     $return_array['join_tables'][0] = '';
 
-    if (isset($type) and ! empty($type['return_as_array'])) {
+    if (isset($type) && ! empty($type['return_as_array'])) {
         return $return_array;
     }
 
@@ -3014,7 +3015,8 @@ function get_emails_by_assign_or_link($params)
         'join_table_alias' => 'link_bean',
         'join_table_link_alias' => 'linkt',
     ));
-    $rel_join = str_replace("{$bean->table_name}.id", "'{$bean->id}'", $rel_join);
+    $rel_join = str_replace("{$bean->table_name}.id", "'{$bean->id}'", (string) $rel_join);
+    $return_array = [];
     $return_array['select'] = 'SELECT DISTINCT emails.id ';
     $return_array['from'] = 'FROM emails ';
 
@@ -3095,7 +3097,7 @@ function get_emails_by_assign_or_link($params)
     $return_array['join_tables'][0] = '';
 
     if ($bean->object_name == 'Case' && !empty($bean->case_number)) {
-        $where = str_replace('%1', $bean->case_number, $bean->getEmailSubjectMacro());
+        $where = str_replace('%1', $bean->case_number, (string) $bean->getEmailSubjectMacro());
         $return_array['where'] .= "\n AND (email_ids.source = 'direct' OR emails.name LIKE '%$where%')";
     }
 
@@ -3241,7 +3243,7 @@ function skype_formatted($number)
     if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'Popup') {
         return false;
     }
-    return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 3) == '011';
+    return substr((string) $number, 0, 1) == '+' || substr((string) $number, 0, 2) == '00' || substr((string) $number, 0, 3) == '011';
 
     //	return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 2) == '011';
 }
@@ -3251,7 +3253,7 @@ function skype_formatted($number)
  */
 function format_skype($number)
 {
-    return preg_replace('/[^\+0-9]/', '', $number);
+    return preg_replace('/[^\+0-9]/', '', (string) $number);
 }
 
 function insert_charset_header()
@@ -3278,10 +3280,10 @@ function javascript_escape($str)
 {
     $new_str = '';
 
-    for ($i = 0; $i < strlen($str); ++$i) {
-        if (ord(substr($str, $i, 1)) == 10) {
+    for ($i = 0; $i < strlen((string) $str); ++$i) {
+        if (ord(substr((string) $str, $i, 1)) == 10) {
             $new_str .= '\n';
-        } elseif (ord(substr($str, $i, 1)) == 13) {
+        } elseif (ord(substr((string) $str, $i, 1)) == 13) {
             $new_str .= '\r';
         } else {
             $new_str .= $str[$i];
@@ -3295,7 +3297,7 @@ function javascript_escape($str)
 
 function js_escape($str, $keep = true)
 {
-    $str = html_entity_decode(str_replace('\\', '', $str), ENT_QUOTES);
+    $str = html_entity_decode(str_replace('\\', '', (string) $str), ENT_QUOTES);
 
     if ($keep) {
         $str = javascript_escape($str);
@@ -3312,14 +3314,14 @@ function js_escape($str, $keep = true)
 function br2nl($str)
 {
     $regex = '#<[^>]+br.+?>#i';
-    preg_match_all($regex, $str, $matches);
+    preg_match_all($regex, (string) $str, $matches);
 
     foreach ($matches[0] as $match) {
-        $str = str_replace($match, '<br>', $str);
+        $str = str_replace($match, '<br>', (string) $str);
     }
 
     $brs = array('<br>', '<br/>', '<br />');
-    $str = str_replace("\r\n", "\n", $str); // make from windows-returns, *nix-returns
+    $str = str_replace("\r\n", "\n", (string) $str); // make from windows-returns, *nix-returns
     $str = str_replace("\n\r", "\n", $str); // make from windows-returns, *nix-returns
     $str = str_replace("\r", "\n", $str); // make from windows-returns, *nix-returns
     $str = str_ireplace($brs, "\n", $str); // to retrieve it
@@ -3482,7 +3484,7 @@ function check_iis_version($sys_iis_version = '')
 {
     $server_software = $_SERVER['SERVER_SOFTWARE'];
     $iis_version = '';
-    if (strpos($server_software, 'Microsoft-IIS') !== false && preg_match_all("/^.*\/(\d+\.?\d*)$/", $server_software, $out)) {
+    if (strpos((string) $server_software, 'Microsoft-IIS') !== false && preg_match_all("/^.*\/(\d+\.?\d*)$/", (string) $server_software, $out)) {
         $iis_version = $out[1][0];
     }
 
@@ -3509,7 +3511,7 @@ function check_iis_version($sys_iis_version = '')
 
     // supported version check overrides default unsupported
     foreach ($supported_iis_versions as $ver) {
-        if (1 == version_compare($sys_iis_version, $ver, 'eq') || strpos($sys_iis_version, $ver) !== false) {
+        if (1 == version_compare($sys_iis_version, $ver, 'eq') || strpos((string) $sys_iis_version, $ver) !== false) {
             $retval = 1;
             break;
         }
@@ -3517,7 +3519,7 @@ function check_iis_version($sys_iis_version = '')
 
     // unsupported version check overrides default unsupported
     foreach ($unsupported_iis_versions as $ver) {
-        if (1 == version_compare($sys_iis_version, $ver, 'eq') && strpos($sys_iis_version, $ver) !== false) {
+        if (1 == version_compare($sys_iis_version, $ver, 'eq') && strpos((string) $sys_iis_version, (string) $ver) !== false) {
             $retval = 0;
             break;
         }
@@ -3525,7 +3527,7 @@ function check_iis_version($sys_iis_version = '')
 
     // invalid version check overrides default unsupported
     foreach ($invalid_iis_versions as $ver) {
-        if (1 == version_compare($sys_iis_version, $ver, 'eq') && strpos($sys_iis_version, $ver) !== false) {
+        if (1 == version_compare($sys_iis_version, $ver, 'eq') && strpos((string) $sys_iis_version, $ver) !== false) {
             $retval = -1;
             break;
         }
@@ -3539,7 +3541,7 @@ function pre_login_check()
     global $action, $login_error;
     if (!empty($action) && $action == 'Login') {
         if (!empty($login_error)) {
-            $login_error = htmlentities($login_error);
+            $login_error = htmlentities((string) $login_error);
             $login_error = str_replace(array('&lt;pre&gt;', '&lt;/pre&gt;', "\r\n", "\n"), '<br>', $login_error);
             $_SESSION['login_error'] = $login_error;
             echo '<script>
@@ -3578,8 +3580,8 @@ function sugar_cleanup($exit = false)
         return;
     }
     $called = true;
-    set_include_path(realpath(dirname(__FILE__) . '/..') . PATH_SEPARATOR . get_include_path());
-    chdir(realpath(dirname(__FILE__) . '/..'));
+    set_include_path(realpath(__DIR__ . '/..') . PATH_SEPARATOR . get_include_path());
+    chdir(realpath(__DIR__ . '/..'));
     global $sugar_config;
     require_once 'include/utils/LogicHook.php';
     LogicHook::initialize();
@@ -3651,7 +3653,7 @@ function check_logic_hook_file($module_name, $event, $action_array)
 
             $logic_count = 0;
             if (!empty($hook_array[$event])) {
-                $logic_count = count($hook_array[$event]);
+                $logic_count = is_countable($hook_array[$event]) ? count($hook_array[$event]) : 0;
             }
 
             if ($action_array[0] == '') {
@@ -3916,7 +3918,7 @@ function return_bytes($val)
  */
 function url2html($string)
 {
-    $return_string = preg_replace('/(\w+:\/\/)(\S+)/', ' <a href="\\1\\2" target="_new"  style="font-weight: normal;">\\1\\2</a>', $string);
+    $return_string = preg_replace('/(\w+:\/\/)(\S+)/', ' <a href="\\1\\2" target="_new"  style="font-weight: normal;">\\1\\2</a>', (string) $string);
 
     return $return_string;
 }
@@ -3943,7 +3945,7 @@ function is_windows()
  */
 function is_writable_windows($file)
 {
-    if ($file[strlen($file) - 1] == '/') {
+    if ($file[strlen((string) $file) - 1] == '/') {
         return is_writable_windows($file . uniqid(mt_rand()) . '.tmp');
     }
 
@@ -3954,7 +3956,7 @@ function is_writable_windows($file)
         return true;
     }
 
-    $file = str_replace('/', '\\', $file);
+    $file = str_replace('/', '\\', (string) $file);
 
     if (file_exists($file)) {
         if (!($f = @sugar_fopen($file, 'r+'))) {
@@ -4032,7 +4034,7 @@ function get_module_from_singular($singular)
         $singular_modules = $GLOBALS['app_list_strings']['moduleListSingular'];
 
         foreach ($singular_modules as $mod_name => $sin_name) {
-            if ($singular == $sin_name and $mod_name != $sin_name) {
+            if ($singular == $sin_name && $mod_name != $sin_name) {
                 return $mod_name;
             }
         }
@@ -4043,7 +4045,7 @@ function get_module_from_singular($singular)
         $moduleList = $GLOBALS['app_list_strings']['moduleList'];
 
         foreach ($moduleList as $mod_name => $name) {
-            if ($singular == $name and $mod_name != $name) {
+            if ($singular == $name && $mod_name != $name) {
                 return $mod_name;
             }
         }
@@ -4195,8 +4197,9 @@ function getPhpInfo($level = -1)
     if (preg_match('/<h1 class\=\"p\">PHP Version ([^<]+)<\/h1>/', $phpinfo, $version)) {
         $returnInfo['PHP Version'] = $version[1];
     }
+    $parsedInfoCount = count($parsedInfo);
 
-    for ($i = 1; $i < count($parsedInfo); ++$i) {
+    for ($i = 1; $i < $parsedInfoCount; ++$i) {
         if (preg_match('/<h.>([^<]+)<\/h.>/', $parsedInfo[$i], $match)) {
             $vName = trim($match[1]);
             $parsedInfo2 = explode("\n", $parsedInfo[$i + 1]);
@@ -4236,11 +4239,11 @@ function string_format($format, $args, $escape = true)
      * If args array has only one argument, and it's empty, so empty single quotes are used '' . That's because
      * IN () fails and IN ('') works.
      */
-    if (count($args) == 1) {
+    if ((is_countable($args) ? count($args) : 0) == 1) {
         reset($args);
         $singleArgument = current($args);
         if (empty($singleArgument)) {
-            return str_replace('{0}', "''", $result);
+            return str_replace('{0}', "''", (string) $result);
         }
     }
     /* End of fix */
@@ -4248,8 +4251,9 @@ function string_format($format, $args, $escape = true)
     if ($escape) {
         $db = DBManagerFactory::getInstance();
     }
-    for ($i = 0; $i < count($args); ++$i) {
-        if (strpos($args[$i], ',') !== false) {
+    $argsCount = count($args);
+    for ($i = 0; $i < $argsCount; ++$i) {
+        if (strpos((string) $args[$i], ',') !== false) {
             $values = explode(',', $args[$i]);
             if ($escape) {
                 foreach ($values as &$value) {
@@ -4257,13 +4261,13 @@ function string_format($format, $args, $escape = true)
                 }
             }
             $args[$i] = implode("','", $values);
-            $result = str_replace('{'.$i.'}', $args[$i], $result);
+            $result = str_replace('{'.$i.'}', $args[$i], (string) $result);
        }
         else if ($escape){
-            $result = str_replace('{'.$i.'}', $db->quote($args[$i]), $result);
+            $result = str_replace('{'.$i.'}', $db->quote($args[$i]), (string) $result);
         }
         else{
-            $result = str_replace('{'.$i.'}', $args[$i], $result);
+            $result = str_replace('{'.$i.'}', $args[$i], (string) $result);
         }
     }
 
@@ -4530,7 +4534,7 @@ function getTrackerSubstring($name)
     static $max_tracker_item_length;
 
     //Trim the name
-    $name = html_entity_decode($name, ENT_QUOTES, 'UTF-8');
+    $name = html_entity_decode((string) $name, ENT_QUOTES, 'UTF-8');
     $strlen = function_exists('mb_strlen') ? mb_strlen($name) : strlen($name);
 
     global $sugar_config;
@@ -4581,7 +4585,7 @@ function generate_search_where(
                 $operator = 'in';
                 $field_value = '';
                 foreach ($values[$field] as $key => $val) {
-                    if ($val != ' ' and $val != '') {
+                    if ($val != ' ' && $val != '') {
                         if (!empty($field_value)) {
                             $field_value .= ',';
                         }
@@ -4595,7 +4599,7 @@ function generate_search_where(
             if (!isset($parms['db_field'])) {
                 $parms['db_field'] = array($field);
             }
-            if (isset($parms['my_items']) and $parms['my_items'] == true) {
+            if (isset($parms['my_items']) && $parms['my_items'] == true) {
                 global $current_user;
                 $field_value = DBManagerFactory::getInstance()->quote($current_user->id);
                 $operator = '=';
@@ -4605,7 +4609,7 @@ function generate_search_where(
             $itr = 0;
             if ($field_value != '') {
                 foreach ($parms['db_field'] as $db_field) {
-                    if (strstr($db_field, '.') === false) {
+                    if (strstr((string) $db_field, '.') === false) {
                         $db_field = $bean->table_name . '.' . $db_field;
                     }
                     if (DBManagerFactory::getInstance()->supports('case_sensitive') && isset($parms['query_type']) && $parms['query_type'] == 'case_insensitive') {
@@ -4708,14 +4712,14 @@ function getJavascriptSiteURL()
 {
     global $sugar_config;
     if (!empty($_SERVER['HTTP_REFERER'])) {
-        $url = parse_url($_SERVER['HTTP_REFERER']);
+        $url = parse_url((string) $_SERVER['HTTP_REFERER']);
         $replacement_url = $url['scheme'] . '://' . $url['host'];
         if (!empty($url['port'])) {
             $replacement_url .= ':' . $url['port'];
         }
-        $site_url = preg_replace('/^http[s]?\:\/\/[^\/]+/', $replacement_url, $sugar_config['site_url']);
+        $site_url = preg_replace('/^http[s]?\:\/\/[^\/]+/', $replacement_url, (string) $sugar_config['site_url']);
     } else {
-        $site_url = preg_replace('/^http(s)?\:\/\/[^\/]+/', 'http$1://' . $_SERVER['HTTP_HOST'], $sugar_config['site_url']);
+        $site_url = preg_replace('/^http(s)?\:\/\/[^\/]+/', 'http$1://' . $_SERVER['HTTP_HOST'], (string) $sugar_config['site_url']);
         if (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443') {
             $site_url = preg_replace('/^http\:/', 'https:', $site_url);
         }
@@ -4801,7 +4805,7 @@ function _getIcon($iconFileName)
 
     //First try un-ucfirst-ing the icon name
     if (empty($iconFound)) {
-        $iconName = 'icon_' . strtolower(substr($iconFileName, 0, 1)) . substr($iconFileName, 1) . '.gif';
+        $iconName = 'icon_' . strtolower(substr((string) $iconFileName, 0, 1)) . substr((string) $iconFileName, 1) . '.gif';
     }
     $iconFound = SugarThemeRegistry::current()->getImageURL($iconName, false);
 
@@ -4880,7 +4884,7 @@ function html_entity_decode_utf8($string)
 
     $string = preg_replace_callback('~&#x0*([0-9a-f]+);~i', function ($matches) {
         return code2utf(hexdec($matches[1]));
-    }, $string);
+    }, (string) $string);
     $string = preg_replace_callback('~&#0*([0-9]+);~', function ($matches) {
         return code2utf($matches[1]);
     }, $string);
@@ -4889,7 +4893,7 @@ function html_entity_decode_utf8($string)
     if (!isset($trans_tbl)) {
         $trans_tbl = array();
         foreach (get_html_translation_table(HTML_ENTITIES) as $val => $key) {
-            $trans_tbl[$key] = utf8_encode($val);
+            $trans_tbl[$key] = mb_convert_encoding($val, 'UTF-8', 'ISO-8859-1');
         }
     }
 
@@ -5191,6 +5195,8 @@ function encodeMultienumValue($arr)
  */
 function create_export_query_relate_link_patch($module, $searchFields, $where)
 {
+    $ret_array = [];
+    $join = [];
     if (file_exists('modules/' . $module . '/SearchForm.html')) {
         $ret_array['where'] = $where;
 
@@ -5221,9 +5227,9 @@ function create_export_query_relate_link_patch($module, $searchFields, $where)
             $join_table_alias = 'join_' . $field['name'];
             if (isset($field['db_concat_fields'])) {
                 $db_field = DBManager::concat($join_table_alias, $field['db_concat_fields']);
-                $where = preg_replace('/' . $field['name'] . '/', $db_field, $where);
+                $where = preg_replace('/' . $field['name'] . '/', $db_field, (string) $where);
             } else {
-                $where = preg_replace('/(^|[\s(])' . $field['name'] . '/', '${1}' . $join_table_alias . '.' . $field['rname'], $where);
+                $where = preg_replace('/(^|[\s(])' . $field['name'] . '/', '${1}' . $join_table_alias . '.' . $field['rname'], (string) $where);
             }
         }
     }
@@ -5258,7 +5264,7 @@ function clearAllJsAndJsLangFilesWithoutOutput()
 function getVariableFromQueryString($variable, $string)
 {
     $matches = array();
-    $number = preg_match("/{$variable}=([a-zA-Z0-9_-]+)[&]?/", $string, $matches);
+    $number = preg_match("/{$variable}=([a-zA-Z0-9_-]+)[&]?/", (string) $string, $matches);
     if ($number) {
         return $matches[1];
     }
@@ -5496,7 +5502,7 @@ function sql_like_string($str, $like_char, $wildcard = '%', $appendWildcard = tr
 
     // override default wildcard character
     if (isset($GLOBALS['sugar_config']['search_wildcard_char']) &&
-            strlen($GLOBALS['sugar_config']['search_wildcard_char']) == 1
+            strlen((string) $GLOBALS['sugar_config']['search_wildcard_char']) == 1
     ) {
         $wildcard = $GLOBALS['sugar_config']['search_wildcard_char'];
     }
@@ -5540,7 +5546,7 @@ if (file_exists('custom/application/Ext/Utils/custom_utils.ext.php')) {
  */
 function sanitize($input, $quotes = ENT_QUOTES, $charset = 'UTF-8', $remove = false)
 {
-    return htmlentities($input, $quotes, $charset);
+    return htmlentities((string) $input, $quotes, $charset);
 }
 
 /**
@@ -5590,7 +5596,7 @@ function utf8_recursive_encode($data)
         if (is_array($val)) {
             $result[$key] = utf8_recursive_encode($val);
         } else {
-            $result[$key] = utf8_encode($val);
+            $result[$key] = mb_convert_encoding($val, 'UTF-8', 'ISO-8859-1');
         }
     }
 
@@ -5710,7 +5716,7 @@ function getReportNameTranslation($reportName)
     $mod_strings = return_module_language($current_language, 'Reports');
 
     // Search for the report name in the default language and get the key
-    $key = array_search($reportName, return_module_language('', 'Reports'));
+    $key = array_search($reportName, return_module_language('', 'Reports'), true);
 
     // If the key was found, use it to get a translation, otherwise just use report name
     if (!empty($key)) {
@@ -5755,7 +5761,7 @@ function getDuplicateRelationListWithTitle($def, $var_def, $module)
 {
     global $current_language;
     $select_array = array_unique($def);
-    if (count($select_array) < count($def)) {
+    if (count($select_array) < (is_countable($def) ? count($def) : 0)) {
         $temp_module_strings = return_module_language($current_language, $module);
         $temp_duplicate_array = array_diff_assoc($def, $select_array);
         $temp_duplicate_array = array_merge($temp_duplicate_array, array_intersect($select_array, $temp_duplicate_array));
@@ -5800,9 +5806,10 @@ function getTypeDisplayList()
  */
 function assignConcatenatedValue(SugarBean $bean, $fieldDef, $value)
 {
+    $fieldName = '';
     $valueParts = explode(' ', $value);
     $valueParts = array_filter($valueParts);
-    $fieldNum = count($fieldDef['db_concat_fields']);
+    $fieldNum = is_countable($fieldDef['db_concat_fields']) ? count($fieldDef['db_concat_fields']) : 0;
 
     if (count($valueParts) == 1 && $fieldDef['db_concat_fields'] == array('first_name', 'last_name')) {
         $bean->last_name = $value;
@@ -5848,7 +5855,7 @@ function suite_strlen($input, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
     if (function_exists('mb_strlen')) {
         return mb_strlen($input, $encoding);
     }
-    return strlen($input);
+    return strlen((string) $input);
 }
 
 /**
@@ -5859,7 +5866,7 @@ function suite_substr($input, $start, $length = null, $encoding = DEFAULT_UTIL_S
     if (function_exists('mb_substr')) {
         return mb_substr($input, $start, $length, $encoding);
     }
-    return substr($input, $start, $length);
+    return substr((string) $input, $start, $length);
 }
 
 /**
@@ -5890,9 +5897,9 @@ function suite_strtolower($input, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 function suite_strpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_strpos')) {
-        return mb_strpos($haystack, $needle, $offset, $encoding);
+        return mb_strpos((string) $haystack, (string) $needle, $offset, $encoding);
     }
-    return strpos($haystack, $needle, $offset);
+    return strpos((string) $haystack, (string) $needle, $offset);
 }
 
 /**
@@ -5901,9 +5908,9 @@ function suite_strpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL_
 function suite_strrpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
 {
     if (function_exists('mb_strrpos')) {
-        return mb_strrpos($haystack, $needle, $offset, $encoding);
+        return mb_strrpos((string) $haystack, (string) $needle, $offset, $encoding);
     }
-    return strrpos($haystack, $needle, $offset);
+    return strrpos((string) $haystack, (string) $needle, $offset);
 }
 
 /**
@@ -6132,5 +6139,5 @@ function isSelfRequest($endpoint) : bool {
         $siteUrl = '';
     }
 
-    return stripos($endpoint, $domain) !== false || stripos($endpoint, $siteUrl) !== false;
+    return stripos((string) $endpoint, (string) $domain) !== false || stripos((string) $endpoint, (string) $siteUrl) !== false;
 }

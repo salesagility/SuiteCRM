@@ -53,10 +53,11 @@ require_once __DIR__ . '/ImapHandlerException.php';
  *
  * @author gyula
  */
+#[\AllowDynamicProperties]
 class ImapHandlerFactory
 {
-    const SETTINGS_KEY_FILE = '/ImapTestSettings.txt';
-    const DEFAULT_SETTINGS_KEY = 'testSettingsOk';
+    public const SETTINGS_KEY_FILE = '/ImapTestSettings.txt';
+    public const DEFAULT_SETTINGS_KEY = 'testSettingsOk';
 
     /**
      *

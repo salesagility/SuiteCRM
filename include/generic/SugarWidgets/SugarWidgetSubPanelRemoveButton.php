@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+#[\AllowDynamicProperties]
 class SugarWidgetSubPanelRemoveButton extends SugarWidgetField
 {
     public function displayHeaderCell($layout_def)

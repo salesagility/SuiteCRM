@@ -123,6 +123,7 @@ class MysqliManager extends MysqlManager
      */
     public function query($sql, $dieOnError = false, $msg = '', $suppress = false, $keepResult = false)
     {
+        $result = null;
         if (is_array($sql)) {
             return $this->queryArray($sql, $dieOnError, $msg, $suppress);
         }
@@ -307,10 +308,10 @@ class MysqliManager extends MysqlManager
             $dbhost = $configOptions['db_host_name'];
             $dbport = isset($configOptions['db_port']) ? ($configOptions['db_port'] == '' ? null : $configOptions['db_port']) : null;
 
-            $pos = strpos($configOptions['db_host_name'], ':');
+            $pos = strpos((string) $configOptions['db_host_name'], ':');
             if ($pos !== false) {
-                $dbhost = substr($configOptions['db_host_name'], 0, $pos);
-                $dbport = substr($configOptions['db_host_name'], $pos + 1);
+                $dbhost = substr((string) $configOptions['db_host_name'], 0, $pos);
+                $dbport = substr((string) $configOptions['db_host_name'], $pos + 1);
             }
 
             $this->database = @mysqli_connect(

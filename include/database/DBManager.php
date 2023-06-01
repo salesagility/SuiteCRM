@@ -98,6 +98,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Base database driver implementation
  * @api
  */
+#[\AllowDynamicProperties]
 abstract class DBManager
 {
     /**
@@ -546,7 +547,7 @@ abstract class DBManager
                     // clean the incoming value..
                     $val = from_html($data[$field]);
                 } else {
-                    if (isset($fieldDef['default']) && strlen($fieldDef['default']) > 0) {
+                    if (isset($fieldDef['default']) && strlen((string) $fieldDef['default']) > 0) {
                         $val = $fieldDef['default'];
                     } else {
                         $val = null;
@@ -713,14 +714,14 @@ abstract class DBManager
             $res = true;
             if ($sql) {
                 $msg = "Error creating table: $tablename";
-                $res = ($res and $this->query($sql, true, $msg));
+                $res = ($res && $this->query($sql, true, $msg));
             }
             if (!$this->supports("inline_keys")) {
                 // handle constraints and indices
                 $indicesArr = $this->getConstraintSql($indices, $tablename);
                 if (count($indicesArr) > 0) {
                     foreach ($indicesArr as $indexSql) {
-                        $res = ($res and $this->query($indexSql, true, "Error creating indexes"));
+                        $res = ($res && $this->query($indexSql, true, "Error creating indexes"));
                     }
                 }
             }
@@ -1038,13 +1039,13 @@ abstract class DBManager
             }
             if (isset($fielddef2[$key])) {
                 if (!is_array($fielddef1[$key]) && !is_array($fielddef2[$key])) {
-                    if (strtolower($fielddef1[$key]) == strtolower($fielddef2[$key])) {
+                    if (strtolower($fielddef1[$key]) === strtolower($fielddef2[$key])) {
                         continue;
                     }
                 } else {
                     $f1 = fixIndexArrayFormat($fielddef1[$key]);
                     $f2 = fixIndexArrayFormat($fielddef2[$key]);
-                    if (array_map('strtolower', $f1) == array_map('strtolower', $f2)) {
+                    if (array_map('strtolower', $f1) === array_map('strtolower', $f2)) {
                         continue;
                     }
                 }
@@ -1088,7 +1089,7 @@ abstract class DBManager
                 // Exists on table1 but not table2
                 $returnArray['msg'] = 'not_exists_table2';
             } else {
-                if (count($row1) != count($row2)) {
+                if (count($row1) !== count($row2)) {
                     $returnArray['msg'] = 'no_match';
                 } else {
                     $returnArray['msg'] = 'match';
@@ -1467,7 +1468,8 @@ abstract class DBManager
         // get the entire sql
         $sql .= "(" . implode(",", $columns) . ") ";
         $sql .= "VALUES";
-        for ($i = 0; $i < count($row_array); $i++) {
+        $row_arrayCount = count($row_array);
+        for ($i = 0; $i < $row_arrayCount; $i++) {
             $sql .= " (" . implode(",", $row_array[$i]) . ")";
             if ($i < (count($row_array) - 1)) {
                 $sql .= ", ";
@@ -1477,8 +1479,9 @@ abstract class DBManager
         // get the entire sql
         $custom_sql .= "(" . implode(",", $cstm_columns) . ") ";
         $custom_sql .= "VALUES";
+        $cstm_row_arrayCount = count($cstm_row_array);
 
-        for ($i = 0; $i < count($cstm_row_array); $i++) {
+        for ($i = 0; $i < $cstm_row_arrayCount; $i++) {
             $custom_sql .= " (" . implode(",", $cstm_row_array[$i]) . ")";
             if ($i < (count($cstm_row_array) - 1)) {
                 $custom_sql .= ", ";
@@ -1864,16 +1867,15 @@ abstract class DBManager
 
                 default:
                     //escape any special characters
-                    $tokens[$key] = preg_replace('/\\\([&?!])/', "\\1", $val);
+                    $tokens[$key] = preg_replace('/\\\([&?!])/', "\\1", (string) $val);
                     $sqlStr .= $tokens[$key];
                     break;
             } // switch
         } // foreach
 
         $this->preparedTokens[] = array('tokens' => $tokens, 'tokenCount' => $count, 'sqlString' => $sqlStr);
-        end($this->preparedTokens);
 
-        return key($this->preparedTokens);
+        return array_key_last($this->preparedTokens);
     }
 
     /**
@@ -2079,15 +2081,15 @@ abstract class DBManager
                     $val = $bean->getFieldValue($field);
                 }
 
-                if (strlen($val) == 0) {
-                    if (isset($fieldDef['default']) && strlen($fieldDef['default']) > 0) {
+                if (strlen((string) $val) == 0) {
+                    if (isset($fieldDef['default']) && strlen((string) $fieldDef['default']) > 0) {
                         $val = $fieldDef['default'];
                     } else {
                         $val = null;
                     }
                 }
 
-                if (!empty($val) && !empty($fieldDef['len']) && strlen($val) > $fieldDef['len']) {
+                if (!empty($val) && !empty($fieldDef['len']) && strlen((string) $val) > $fieldDef['len']) {
                     $val = $this->truncate($val, $fieldDef['len']);
                 }
 
@@ -2257,7 +2259,7 @@ abstract class DBManager
                     break;
             }
         } else {
-            if (!empty($val) && !empty($fieldDef['len']) && strlen($val) > $fieldDef['len']) {
+            if (!empty($val) && !empty($fieldDef['len']) && strlen((string) $val) > $fieldDef['len']) {
                 $val = $this->truncate($val, $fieldDef['len']);
             }
         }
@@ -2305,7 +2307,7 @@ abstract class DBManager
         if (isset($matches[2][0]) && empty($fieldDef['len'])) {
             $fieldDef['len'] = $matches[2][0];
         }
-        if (!empty($fieldDef['precision']) && is_numeric($fieldDef['precision']) && !strstr($fieldDef['len'], ',')) {
+        if (!empty($fieldDef['precision']) && is_numeric($fieldDef['precision']) && !strstr((string) $fieldDef['len'], ',')) {
             $fieldDef['len'] .= ",{$fieldDef['precision']}";
         }
         if (!empty($fieldDef['required']) || ($fieldDef['name'] == 'id' && !isset($fieldDef['required']))) {
@@ -2603,6 +2605,8 @@ abstract class DBManager
      */
     protected function oneColumnSQLRep($fieldDef, $ignoreRequired = false, $table = '', $return_as_array = false)
     {
+        $colBaseType = '';
+        $defLen = '255';
         if (!isset($fieldDef['name'])) {
             $GLOBALS['log']->fatal('"name" field does not exists in field definition.');
             $name = null;
@@ -2628,10 +2632,10 @@ abstract class DBManager
                 'blob',
                 'text'
             ))) {
-                $colType = "$colBaseType(${fieldDef['len']})";
+                $colType = "$colBaseType({$fieldDef['len']})";
             } elseif (($colBaseType == 'decimal' || $colBaseType == 'float')) {
                 if (!empty($fieldDef['precision']) && is_numeric($fieldDef['precision'])) {
-                    if (strpos($fieldDef['len'], ',') === false) {
+                    if (strpos((string) $fieldDef['len'], ',') === false) {
                         $colType = $colBaseType . "(" . $fieldDef['len'] . "," . $fieldDef['precision'] . ")";
                     } else {
                         $colType = $colBaseType . "(" . $fieldDef['len'] . ")";
@@ -2651,7 +2655,7 @@ abstract class DBManager
         // Bug #52610 We should have ability don't add DEFAULT part to query for boolean fields
         if (!empty($fieldDef['no_default'])) {
             // nothing to do
-        } elseif (isset($fieldDef['default']) && strlen($fieldDef['default']) > 0) {
+        } elseif (isset($fieldDef['default']) && strlen((string) $fieldDef['default']) > 0) {
             $default = " DEFAULT " . $this->quoted($fieldDef['default']);
         } elseif (!isset($default) && $type == 'bool') {
             $default = " DEFAULT 0 ";
@@ -2979,6 +2983,7 @@ abstract class DBManager
         global $current_user;
         $sql = "INSERT INTO " . $bean->get_audit_table_name();
         //get field defs for the audit table.
+        $dictionary = [];
         require('metadata/audit_templateMetaData.php');
         $fieldDefs = $dictionary['audit']['fields'];
 
@@ -3080,9 +3085,9 @@ abstract class DBManager
                     if (trim($before_value) !== trim($after_value)) {
                         // decode value for field type of 'text' or 'varchar' to check before audit if the value contain trip tags or special character
                         if ($field_type == 'varchar' || $field_type == 'name' || $field_type == 'text') {
-                            $decode_before_value = strip_tags(html_entity_decode($before_value));
-                            $decode_after_value = strip_tags(html_entity_decode($after_value));
-                            if ($decode_before_value == $decode_after_value) {
+                            $decode_before_value = strip_tags(html_entity_decode((string) $before_value));
+                            $decode_after_value = strip_tags(html_entity_decode((string) $after_value));
+                            if ($decode_before_value === $decode_after_value) {
                                 continue;
                             }
                             $change = true;
@@ -3100,7 +3105,7 @@ abstract class DBManager
                             }
                         } else {
                             if ($this->isBooleanType($field_type)) {
-                                if ($this->_getBooleanValue($before_value) != $this->_getBooleanValue($after_value)) {
+                                if ($this->_getBooleanValue($before_value) !== $this->_getBooleanValue($after_value)) {
                                     $change = true;
                                 }
                             } else {
@@ -3209,7 +3214,7 @@ abstract class DBManager
     protected function _getBooleanValue($val)
     {
         //need to put the === sign here otherwise true == 'non empty string'
-        if (empty($val) or $val === 'off') {
+        if (empty($val) || $val === 'off') {
             return false;
         }
 
@@ -3485,14 +3490,14 @@ abstract class DBManager
                 $item = trim($item, '"');
             }
             if ($item[0] == '+') {
-                if (strlen($item) > 1) {
-                    $must_terms[] = substr($item, 1);
+                if (strlen((string) $item) > 1) {
+                    $must_terms[] = substr((string) $item, 1);
                 }
                 continue;
             }
             if ($item[0] == '-') {
-                if (strlen($item) > 1) {
-                    $not_terms[] = substr($item, 1);
+                if (strlen((string) $item) > 1) {
+                    $not_terms[] = substr((string) $item, 1);
                 }
                 continue;
             }
@@ -3541,7 +3546,7 @@ abstract class DBManager
     {
         $query = trim($query);
         foreach ($this->standardQueries as $qstart => $check) {
-            if (strncasecmp($qstart, $query, strlen($qstart)) == 0) {
+            if (strncasecmp($qstart, $query, strlen((string) $qstart)) == 0) {
                 if (is_callable(array($this, $check))) {
                     $table = $this->extractTableName($query);
                     if (!in_array($table, $skipTables)) {
@@ -3973,7 +3978,7 @@ abstract class DBManager
      * db_user_name - database user name
      * db_password - database password
      *
-     * @param array $configOptions
+     * @param mixed[]|null $configOptions
      * @param boolean $dieOnError
      */
     abstract public function connect(array $configOptions = null, $dieOnError = false);

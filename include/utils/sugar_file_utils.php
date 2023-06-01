@@ -357,7 +357,7 @@ function sugar_chown($filename, $user = '')
         if (strlen($user)) {
             return chown($filename, $user);
         } else {
-            if (strlen($GLOBALS['sugar_config']['default_permissions']['user'])) {
+            if (strlen((string) $GLOBALS['sugar_config']['default_permissions']['user'])) {
                 $user = $GLOBALS['sugar_config']['default_permissions']['user'];
 
                 return chown($filename, $user);

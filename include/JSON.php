@@ -57,6 +57,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * has been left for backwards compatibility.
  * @api
  */
+#[\AllowDynamicProperties]
 class JSON
 {
 
@@ -70,7 +71,7 @@ class JSON
      */
     public static function encode($array, $addSecurityEnvelope = false, $encodeSpecial = false)
     {
-        $encodedString = json_encode($array);
+        $encodedString = json_encode($array, JSON_THROW_ON_ERROR);
 
         if ($encodeSpecial) {
             $charMap = array('<' => '\u003C', '>' => '\u003E', "'" => '\u0027', '&' => '\u0026');
@@ -92,7 +93,7 @@ class JSON
      */
     public static function decode($string, $examineEnvelope=false, $assoc = true)
     {
-        return json_decode($string, $assoc);
+        return json_decode($string, $assoc, 512, JSON_THROW_ON_ERROR);
     }
 
     /**

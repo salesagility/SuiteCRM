@@ -54,6 +54,7 @@ require_once __DIR__ . '/ImapHandlerInterface.php';
  * ImapHandler
  * Wrapper class for functions of imap2 lib
  */
+#[\AllowDynamicProperties]
 class Imap2Handler implements ImapHandlerInterface
 {
 
@@ -158,7 +159,7 @@ class Imap2Handler implements ImapHandlerInterface
     protected function logCall($func, $args)
     {
         if ($this->logCalls) {
-            $this->logger->debug('IMAP wrapper called: ' . __CLASS__ . "::$func(" . json_encode($args) . ')');
+            $this->logger->debug('IMAP wrapper called: ' . self::class . "::$func(" . json_encode($args) . ')');
         }
     }
 
@@ -170,7 +171,7 @@ class Imap2Handler implements ImapHandlerInterface
     protected function logReturn($func, $ret)
     {
         if ($this->logCalls) {
-            $this->logger->debug('IMAP wrapper return: ' . __CLASS__ . "::$func(...) => " . json_encode($ret));
+            $this->logger->debug('IMAP wrapper return: ' . self::class . "::$func(...) => " . json_encode($ret));
         }
     }
 
@@ -386,7 +387,7 @@ class Imap2Handler implements ImapHandlerInterface
             // catch if we have BADCHARSET as exception is not thrown
             if (empty($ret) || $ret === false) {
                 $err = imap2_last_error();
-                if (strpos($err, 'BADCHARSET')) {
+                if (strpos((string) $err, 'BADCHARSET')) {
                     imap2_errors();
                     throw new Exception($err);
                 }
@@ -1160,7 +1161,7 @@ class Imap2Handler implements ImapHandlerInterface
                 return [];
             }
 
-            $lastSequenceNumber = $mailboxInfo['Nmsgs'] = count($emailSortedHeaders);
+            $lastSequenceNumber = $mailboxInfo['Nmsgs'] = is_countable($emailSortedHeaders) ? count($emailSortedHeaders) : 0;
 
             // paginate
             if ($offset === "end") {

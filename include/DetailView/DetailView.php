@@ -46,6 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * DetailView - display single record
  * @api
  */
+#[\AllowDynamicProperties]
 class DetailView extends ListView
 {
     public $list_row_count = null;
@@ -116,7 +117,7 @@ class DetailView extends ListView
             if ($nav_history_set) {
                 //try to locate the ID in the nav_history array.
 
-                $key = array_search($_REQUEST['record'], $nav_ids_visited);
+                $key = array_search($_REQUEST['record'], $nav_ids_visited, true);
                 if ($key === false) {
                     //do not show the VCR buttons.
 
@@ -188,10 +189,10 @@ class DetailView extends ListView
         if (empty($object->id)) {
             $this->no_record_found=true;
         }
-        if (empty($_REQUEST['InDetailNav']) and strcmp($_REQUEST['record'], $object->id)!=0) {
+        if (empty($_REQUEST['InDetailNav']) && strcmp($_REQUEST['record'], $object->id)!=0) {
             $this->offset_key_mismatch=true;
         }
-        if ($this->no_record_found or $this->offset_key_mismatch) {
+        if ($this->no_record_found || $this->offset_key_mismatch) {
             if ($nav_history_set) {
                 $this->return_to_list_only=true;
             }
@@ -378,7 +379,7 @@ class DetailView extends ListView
                                 $this->base_URL	.= "&{$name}[]=".$valuevalue;
                             }
                         } else {
-                            if (substr_count($this->base_URL, '?') > 0) {
+                            if (substr_count((string) $this->base_URL, '?') > 0) {
                                 $this->base_URL	.= "&$name=$value";
                             } else {
                                 $this->base_URL	.= "?$name=$value";

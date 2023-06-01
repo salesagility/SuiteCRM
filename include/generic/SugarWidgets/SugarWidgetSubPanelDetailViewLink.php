@@ -46,6 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
+#[\AllowDynamicProperties]
 class SugarWidgetSubPanelDetailViewLink extends SugarWidgetField
 {
     public function displayList(&$layout_def)
