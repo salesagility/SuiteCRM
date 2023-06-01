@@ -51,7 +51,6 @@ require_once('modules/AOD_Index/LuceneUtils.php');
 #[\AllowDynamicProperties]
 class AOD_Index extends AOD_Index_sugar
 {
-    public $index;
     /**
      * @deprecated since v7.12.0
      * AOD_Index constructor.

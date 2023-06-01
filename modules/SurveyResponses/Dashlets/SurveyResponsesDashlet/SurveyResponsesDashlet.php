@@ -49,8 +49,10 @@ class SurveyResponsesDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
-        $dashletData = [];
-        global $current_user, $app_strings;
+        global $current_user, $app_strings, $dashletData;
+
+        $dashletData = $dashletData ?? [];
+
         require('modules/SurveyResponses/metadata/dashletviewdefs.php');
 
         parent::__construct($id, $def);

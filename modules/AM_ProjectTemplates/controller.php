@@ -36,7 +36,6 @@ class AM_ProjectTemplatesController extends SugarController
 
     public function action_create_project()
     {
-        $enddate_array = [];
         global $current_user, $db, $mod_strings;
 
         $project_name = $_POST['p_name'];
@@ -155,6 +154,7 @@ class AM_ProjectTemplatesController extends SugarController
                         ORDER BY am_tasktemplates.order_number ASC";
         $tasks = $db->query($get_tasks);
         //Create new project tasks from the template tasks
+        $enddate_array = [];
         $count=1;
         while ($row = $db->fetchByAssoc($tasks)) {
             $project_task = BeanFactory::newBean('ProjectTask');
@@ -169,7 +169,7 @@ class AM_ProjectTemplatesController extends SugarController
             $project_task->order_number = $row['order_number'];
             $project_task->estimated_effort = $row['estimated_effort'];
             $project_task->utilization = $row['utilization'];
-            
+
             if ($copy_all == 0 && !in_array($row['id'], $copy_tasks)) {
                 $project_task->assigned_user_id = null;
             } else {
@@ -316,7 +316,7 @@ class AM_ProjectTemplatesController extends SugarController
     //Create new project task
     public function action_update_GanttChart()
     {
-        $milestone_flag = null;
+
         global $current_user, $db;
 
         $task_name = $_POST['task_name'];
@@ -328,6 +328,8 @@ class AM_ProjectTemplatesController extends SugarController
         $resource = $_POST['resource'];
         $percent = $_POST['percent'];
         $note = $_POST['note'];
+        $milestone_flag = '';
+
         //$actual_duration = $_POST['actual_duration'];
 
         if ($_POST['milestone'] == 'Milestone') {
@@ -428,7 +430,7 @@ class AM_ProjectTemplatesController extends SugarController
         $jArray = htmlspecialchars_decode((string) $_POST['orderArray']);
 
         //create object/array from json data
-        $orderArray = json_decode($jArray, true, 512, JSON_THROW_ON_ERROR);
+        $orderArray = json_decode($jArray);
 
         foreach ($orderArray as $id => $order_number) {
             $task = BeanFactory::newBean('AM_TaskTemplates');

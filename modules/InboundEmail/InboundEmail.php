@@ -312,7 +312,7 @@ class InboundEmail extends SugarBean
     {
         global $sugar_config;
 
-        if (!$mailParser instanceof \ZBateson\MailMimeParser\MailMimeParser) {
+        if (null === $mailParser) {
             $mailParser = new MailMimeParser();
         }
 
@@ -342,8 +342,8 @@ class InboundEmail extends SugarBean
      */
     public function getImap(ImapHandlerInterface $imap = null)
     {
-        if (!$this->imap instanceof \ImapHandlerInterface) {
-            if (!$imap instanceof \ImapHandlerInterface) {
+        if (null === $this->imap) {
+            if (null === $imap) {
                 $imapFactory = new ImapHandlerFactory();
 
                 $handlerType = $this->getImapHandlerType();
@@ -673,7 +673,7 @@ class InboundEmail extends SugarBean
 
         return array(
             "data" => $emailHeaders,
-            "mailbox_info" => json_decode(json_encode($mailboxInfo), true, 512, JSON_THROW_ON_ERROR),
+            "mailbox_info" => json_decode(json_encode($mailboxInfo), true),
         );
     }
 
@@ -1279,7 +1279,7 @@ class InboundEmail extends SugarBean
                             if (isset($overview->uid) && !empty($overview->uid)) {
                                 $this->imap_uid = $overview->uid;
                             }
-                            if (!(property_exists($this, 'imap_uid') && $this->imap_uid !== null)) {
+                            if (!isset($this->imap_uid)) {
                                 LoggerManager::getLogger()->warn('Inbound email has not imap uid for setting cache value.');
                                 $values .= "''";
                             } else {
@@ -2280,7 +2280,7 @@ class InboundEmail extends SugarBean
     {
         global $sugar_config;
 
-        if (!($this->email !== null) && !isset($this->email->et)) {
+        if (!isset($this->email) && !isset($this->email->et)) {
             $this->email = BeanFactory::newBean('Emails');
             $this->email->email2init();
         }
@@ -2309,7 +2309,7 @@ class InboundEmail extends SugarBean
     public function getOverviewsFromCacheFile($uids, $mailbox = '', $remove = false)
     {
         global $app_strings;
-        if (!($this->email !== null) && !isset($this->email->et)) {
+        if (!isset($this->email) && !isset($this->email->et)) {
             $this->email = BeanFactory::newBean('Emails');
             $this->email->email2init();
         }
@@ -2624,7 +2624,7 @@ class InboundEmail extends SugarBean
                 $sessionFoldersString
             );
 
-            echo json_encode($status, JSON_THROW_ON_ERROR);
+            echo json_encode($status);
 
             return true;
         }
@@ -2848,7 +2848,7 @@ class InboundEmail extends SugarBean
      */
     public function generateDynamicFolderQuery($type, $userId)
     {
-        if (!(property_exists($this, 'coreDynamicFolderQuery') && $this->coreDynamicFolderQuery !== null)) {
+        if (!isset($this->coreDynamicFolderQuery)) {
             $this->coreDynamicFolderQuery = null;
             LoggerManager::getLogger()->warn('Attempt to generate dynamic folder query with an unset core dynamic folder query?!');
         }
@@ -3180,9 +3180,9 @@ class InboundEmail extends SugarBean
 
     public function getFoldersListForMailBox()
     {
-        $return = [];
         global $mod_strings;
         $msg = $this->connectMailserver(true);
+        $return = [];
         if (strpos($msg, "successfully")) {
             $foldersList = $this->getSessionInboundFoldersString(
                 $this->server_url,
@@ -3213,13 +3213,13 @@ class InboundEmail extends SugarBean
         $prot = '',
         $mailbox = ''
     ) {
-        $goodStr = [];
         global $mod_strings;
         $serviceArr = array();
         $returnService = array();
         $badService = array();
         $goodService = array();
         $errorArr = array();
+        $goodStr = [];
         $raw = array();
         $retArray = array(
             'good' => $goodService,
@@ -3735,8 +3735,8 @@ class InboundEmail extends SugarBean
 
     public function handleCreateCase(Email $email, $userId)
     {
-        $to = [];
         global $current_user, $mod_strings, $current_language;
+        $to = [];
         $mod_strings = return_module_language($current_language, "Emails");
         $GLOBALS['log']->debug('In handleCreateCase');
         $c = BeanFactory::newBean('Cases');
@@ -3993,7 +3993,6 @@ class InboundEmail extends SugarBean
     public function getEncodingFromBreadCrumb($bc, $parts)
     {
         $exBc = [];
-        $tempObj = [];
         if (strstr((string) $bc, '.')) {
             $exBc = explode('.', $bc);
         } else {
@@ -4001,6 +4000,8 @@ class InboundEmail extends SugarBean
         }
 
         $depth = count($exBc);
+
+        $tempObj = [];
 
         for ($i = 0; $i < $depth; $i++) {
             $tempObj[$i] = $parts[($exBc[$i] - 1)];
@@ -4193,7 +4194,6 @@ class InboundEmail extends SugarBean
      */
     public function getMessageText($uid, $type, $structure, $fullHeader, $clean_email = true, $bcOffset = "")
     {
-        $msgNo = null;
         if (!$structure) {
             LoggerManager::getLogger()->fatal('Trying to get message text with no structure.');
 
@@ -4212,7 +4212,7 @@ class InboundEmail extends SugarBean
         if (!empty($bc)) { // multi-part
             // HUGE difference between PLAIN and HTML
             if ($type == 'PLAIN') {
-                $msgPart = $this->getMessageTextFromSingleMimePart($msgNo, $bc, $structure);
+                $msgPart = $this->getMessageTextFromSingleMimePart($uid, $bc, $structure);
             } else {
                 // get part of structure that will
                 $msgPartRaw = '';
@@ -4221,7 +4221,7 @@ class InboundEmail extends SugarBean
                 foreach ($bcArray as $bcArryKey => $bcArr) {
                     foreach ($bcArr as $type => $bcTrail) {
                         if ($type == 'html') {
-                            $msgPartRaw .= $this->getMessageTextFromSingleMimePart($msgNo, $bcTrail, $structure);
+                            $msgPartRaw .= $this->getMessageTextFromSingleMimePart($uid, $bcTrail, $structure);
                         } else {
                             // deal with inline image
                             $part = $this->getPartByPath($bcTrail, $structure->parts);
@@ -4249,7 +4249,7 @@ class InboundEmail extends SugarBean
             $decodedHeader = $this->decodeHeader($fullHeader);
 
             // now get actual body contents
-            $text = $this->getImap()->getBody($msgNo);
+            $text = $this->getImap()->getBody($uid);
 
             $upperCaseKeyDecodeHeader = array();
             if (is_array($decodedHeader)) {
@@ -5032,7 +5032,7 @@ class InboundEmail extends SugarBean
 
         // handle messages deleted on server
         if (empty($header)) {
-            if (!($this->email !== null) || empty($this->email)) {
+            if (!isset($this->email) || empty($this->email)) {
                 $this->email = BeanFactory::newBean('Emails');
             } // if
 
@@ -5097,7 +5097,7 @@ class InboundEmail extends SugarBean
 
         // handle messages deleted on server
         if (empty($header)) {
-            if (!($this->email !== null) || empty($this->email)) {
+            if (!isset($this->email) || empty($this->email)) {
                 $this->email = BeanFactory::newBean('Emails');
             }
 
@@ -7267,10 +7267,10 @@ class InboundEmail extends SugarBean
      */
     public function deleteMessageOnMailServer($uid)
     {
-        $uids = [];
         global $app_strings;
         $this->connectMailserver();
 
+        $uids = [];
         if (strpos($uid, (string) $app_strings['LBL_EMAIL_DELIMITER']) !== false) {
             $uids = explode($app_strings['LBL_EMAIL_DELIMITER'], $uid);
         } else {
@@ -7445,7 +7445,7 @@ class InboundEmail extends SugarBean
      */
     public function setEmailForDisplay($uid, $isMsgNo = false, $setRead = false, $forceRefresh = false)
     {
-        $cacheFile = [];
+
         if (empty($uid)) {
             $GLOBALS['log']->debug("*** ERROR: INBOUNDEMAIL trying to setEmailForDisplay() with no UID");
 
@@ -7455,6 +7455,7 @@ class InboundEmail extends SugarBean
         global $sugar_config;
         global $app_strings;
 
+        $cacheFile = [];
         // if its a pop3 then get the UIDL and see if this file name exist or not
         if ($this->isPop3Protocol()) {
             // get the UIDL from database;
@@ -7811,8 +7812,9 @@ eoq;
      */
     public function sortFetchedOverview($arr, $sort = 4, $direction = 'DESC', $forceSeen = false)
     {
-        $currentNode = [];
         global $current_user;
+
+        $currentNode = [];
 
         $sortPrefs = $current_user->getPreference('folderSortOrder', 'Emails');
         if (!empty($sortPrefs)) {

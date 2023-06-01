@@ -94,7 +94,7 @@ class AOR_ReportsViewDetail extends ViewDetail
         echo '<script src="cache/jsLanguage/AOR_Conditions/'. $GLOBALS['current_language'] . '.js"></script>';
 
         $params = $this->getReportParameters();
-        echo "<script>var reportParameters = ".json_encode($params, JSON_THROW_ON_ERROR).";</script>";
+        echo "<script>var reportParameters = ".json_encode($params).";</script>";
 
         $resizeGraphsPerRow = <<<EOD
 

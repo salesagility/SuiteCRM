@@ -61,15 +61,16 @@ class ImportViewConfirm extends ImportView
     public const SAMPLE_ROW_SIZE = 3;
     protected $pageTitleKey = 'LBL_CONFIRM_TITLE';
     protected $errorScript = "";
-    
+
     /**
      * @see SugarView::display()
      */
     public function display()
     {
-        $error_msgs = [];
         global $mod_strings, $app_strings, $current_user;
         global $sugar_config, $locale;
+
+        $error_msgs = [];
 
         if (isset($_FILES['userfile']['name']) && !hasValidFileName('import_upload_file_name', $_FILES['userfile']['name'])) {
             LoggerManager::getLogger()->fatal('Invalid import file name');
@@ -437,7 +438,7 @@ eoq;
         if (! $importFile->hasHeaderRow(false)) {
             array_unshift($rows, array_fill(0, 1, ''));
         }
-        
+
         foreach ($rows as &$row) {
             if (is_array($row)) {
                 foreach ($row as &$val) {
@@ -455,12 +456,12 @@ eoq;
     {
         global $mod_strings, $locale;
         $maxRecordsExceededJS = $maxRecordsExceeded?"true":"false";
-        $importMappingJS = json_encode($importMappingJS, JSON_THROW_ON_ERROR);
-        
+        $importMappingJS = json_encode($importMappingJS);
+
         $currencySymbolJs = $this->setCurrencyOptions($importFileMap);
         $getNumberJs = $locale->getNumberJs();
         $getNameJs = $locale->getNameJs();
-        
+
         return <<<EOJAVASCRIPT
 
 

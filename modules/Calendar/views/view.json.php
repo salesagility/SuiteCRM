@@ -49,10 +49,10 @@ class CalendarViewJson extends SugarView
             $GLOBALS['log']->fatal("JSON data has not been passed from Calendar controller");
             sugar_cleanup(true);
         }
-        
+
         $jsonData = $this->view_object_map['jsonData'];
-        
+
         ob_clean();
-        echo json_encode($jsonData, JSON_THROW_ON_ERROR);
+        echo json_encode($jsonData);
     }
 }

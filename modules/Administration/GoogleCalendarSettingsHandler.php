@@ -163,7 +163,7 @@ class GoogleCalendarSettingsHandler extends BaseHandler
 
         // Check for Google Sync JSON
         $json = base64_decode($this->configurator->config['google_auth_json']);
-        $gcConfig = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+        $gcConfig = json_decode($json);
 
         $googleJsonConfState = array(
             'status' => 'UNCONFIGURED',

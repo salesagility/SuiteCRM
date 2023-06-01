@@ -154,7 +154,7 @@ class DocumentRevision extends SugarBean
 
     public function is_authenticated()
     {
-        if (!($this->authenticated !== null)) {
+        if (!isset($this->authenticated)) {
             LoggerManager::getLogger()->warn('DocumentRevision::$authenticated is not defined');
             return null;
         }
@@ -278,10 +278,12 @@ class DocumentRevision extends SugarBean
 
     public function get_list_view_data()
     {
-        $forecast_fields = [];
+
         $revision_fields = $this->get_list_view_array();
 
+        $forecast_fields = [];
         $forecast_fields['FILE_URL'] = $this->file_url;
+
         return $revision_fields;
     }
 

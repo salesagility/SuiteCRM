@@ -330,14 +330,14 @@ class aCase extends Basic
     public function set_notification_body($xtpl, $case)
     {
         global $app_list_strings;
-        
+
         $xtpl->assign('CASE_NUMBER', $case->case_number);
         $xtpl->assign('CASE_SUBJECT', $case->name);
         $xtpl->assign(
             'CASE_PRIORITY',
-            ($case->priority !== null ? $app_list_strings['case_priority_dom'][$case->priority] : '')
+            (isset($case->priority)  ? $app_list_strings['case_priority_dom'][$case->priority] : '')
         );
-        $xtpl->assign('CASE_STATUS', ($case->status !== null ? $app_list_strings['case_status_dom'][$case->status] : ''));
+        $xtpl->assign('CASE_STATUS', (isset($case->status) ? $app_list_strings['case_status_dom'][$case->status] : ''));
         $xtpl->assign('CASE_DESCRIPTION', nl2br($case->description));
 
         return $xtpl;

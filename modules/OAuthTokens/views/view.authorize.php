@@ -63,7 +63,7 @@ class OauthTokensViewAuthorize extends SugarView
         $sugar_smarty->assign('token', $_REQUEST['token']);
         $sugar_smarty->assign('sid', session_id());
         $token = OAuthToken::load($_REQUEST['token']);
-        if (!$token instanceof \OAuthToken || empty($token->consumer) || $token->tstate != OAuthToken::REQUEST || empty($token->consumer_obj)) {
+        if (empty($token) || empty($token->consumer) || $token->tstate != OAuthToken::REQUEST || empty($token->consumer_obj)) {
             sugar_die('Invalid token');
         }
 

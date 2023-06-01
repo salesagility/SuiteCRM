@@ -107,13 +107,13 @@ class CampaignROIChartDashlet extends DashletGenericChart
         $chartReadyData = $this->prepareChartData($rawData, $currency_symbol, $thousands_symbol);
 
         //$chartReadyData['data'] = [[1.1,2.2],[3.3,4.4]];
-        $jsonData = json_encode($chartReadyData['data'], JSON_THROW_ON_ERROR);
-        $jsonLabels = json_encode($chartReadyData['labels'], JSON_THROW_ON_ERROR);
-        $jsonLabelsAndValues = json_encode($chartReadyData['labelsAndValues'], JSON_THROW_ON_ERROR);
+        $jsonData = json_encode($chartReadyData['data']);
+        $jsonLabels = json_encode($chartReadyData['labels']);
+        $jsonLabelsAndValues = json_encode($chartReadyData['labelsAndValues']);
 
 
-        $jsonKey = json_encode($chartReadyData['key'], JSON_THROW_ON_ERROR);
-        $jsonTooltips = json_encode($chartReadyData['tooltips'], JSON_THROW_ON_ERROR);
+        $jsonKey = json_encode($chartReadyData['key']);
+        $jsonTooltips = json_encode($chartReadyData['tooltips']);
 
         //$colours = "['red','blue','green','orange','yellow','pink']";
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";

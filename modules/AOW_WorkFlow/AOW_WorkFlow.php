@@ -302,8 +302,8 @@ class AOW_WorkFlow extends Basic
         SugarBean $module,
         $query = array()
     ) {
-	    $params = [];
      global $db;
+     $params = [];
         if (!isset($query['join'][$name])) {
             if ($module->load_relationship($name)) {
                 $params['join_type'] = 'LEFT JOIN';
@@ -381,7 +381,6 @@ class AOW_WorkFlow extends Basic
 
     public function build_query_where(AOW_Condition $condition, $module, $query = array())
     {
-        $value = null;
         global $beanList, $app_list_strings, $sugar_config, $timedate;
         $path = unserialize(base64_decode($condition->module_path));
 
@@ -398,6 +397,8 @@ class AOW_WorkFlow extends Basic
                 $table_alias = $rel;
             }
         }
+
+        $value = '';
 
         if ($this->isSQLOperator($condition->operator)) {
             $where_set = false;

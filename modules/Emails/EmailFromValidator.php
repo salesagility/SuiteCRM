@@ -421,22 +421,22 @@ class EmailFromValidator
 
             $emailObj = $this->getEmail();
 
-            if ($emailObj->From !== null && $emailAddress !== $emailObj->From) {
+            if (isset($emailObj->From) && $emailAddress !== $emailObj->From) {
                 $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM);
                 $ok = false;
             }
 
-            if ($emailObj->from_addr !== null && $emailAddress !== $emailObj->from_addr) {
+            if (isset($emailObj->from_addr) && $emailAddress !== $emailObj->from_addr) {
                 $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_ADDR);
                 $ok = false;
             }
 
-            if ($emailObj->FromName !== null && $name !== $emailObj->FromName) {
+            if (isset($emailObj->FromName) && $name !== $emailObj->FromName) {
                 $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROMNAME);
                 $ok = false;
             }
 
-            if ($emailObj->from_name !== null && $name !== $emailObj->from_name) {
+            if (isset($emailObj->from_name) && $name !== $emailObj->from_name) {
                 $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_INVALID_EMAIL_PART_TO_FIELD_FROM_NAME);
                 $ok = false;
             }
@@ -459,7 +459,7 @@ class EmailFromValidator
     protected function validateFrom()
     {
         $emailAddress = $this->getEmail();
-        if (!($emailAddress->From !== null)) {
+        if (!isset($emailAddress->From)) {
             $this->addError(self::ERR_FIELD_FROM_IS_NOT_SET);
         } elseif (!$emailAddress->From) {
             $this->addError(self::ERR_FIELD_FROM_IS_EMPTY);
@@ -480,7 +480,7 @@ class EmailFromValidator
     protected function validateFromAddr()
     {
         $emailAddress = $this->getEmail();
-        if (!($emailAddress->from_addr !== null)) {
+        if (!isset($emailAddress->from_addr)) {
             $this->addError(self::ERR_FIELD_FROM_ADDR_IS_NOT_SET);
         } elseif (!$emailAddress->from_addr) {
             $this->addError(self::ERR_FIELD_FROM_ADDR_IS_EMPTY);
@@ -500,7 +500,7 @@ class EmailFromValidator
     protected function validateFromName()
     {
         $emailAddress = $this->getEmail();
-        if (!($emailAddress->FromName !== null)) {
+        if (!isset($emailAddress->FromName)) {
             $this->addError(self::ERR_FIELD_FROMNAME_IS_NOT_SET);
         } elseif (!$emailAddress->FromName) {
             $this->addError(self::ERR_FIELD_FROMNAME_IS_EMPTY);
@@ -520,7 +520,7 @@ class EmailFromValidator
     protected function validateFrom_Name()
     {
         $emailAddress = $this->getEmail();
-        if (!($emailAddress->from_name !== null)) {
+        if (!isset($emailAddress->from_name)) {
             $this->addError(self::ERR_FIELD_FROM_NAME_IS_NOT_SET);
         } elseif (!$emailAddress->from_name) {
             $this->addError(self::ERR_FIELD_FROM_NAME_IS_EMPTY);
@@ -541,7 +541,7 @@ class EmailFromValidator
     protected function validateFromAddrName()
     {
         $emailAddress = $this->getEmail();
-        if (!($emailAddress->from_addr_name !== null)) {
+        if (!isset($emailAddress->from_addr_name)) {
             $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_IS_NOT_SET);
         } elseif (!$emailAddress->from_addr_name) {
             $this->addError(self::ERR_FIELD_FROM_ADDR_NAME_IS_EMPTY);

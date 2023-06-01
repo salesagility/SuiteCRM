@@ -308,7 +308,6 @@ class AOW_WorkFlowController extends SugarController
 
     protected function action_getModuleFieldType()
     {
-        $params = [];
         if (isset($_REQUEST['rel_field']) &&  $_REQUEST['rel_field'] != '') {
             $rel_module = getRelatedModule($_REQUEST['aow_module'], $_REQUEST['rel_field']);
         } else {
@@ -329,6 +328,8 @@ class AOW_WorkFlowController extends SugarController
         } else {
             $value = '';
         }
+
+        $params = [];
 
         if ($_REQUEST['is_value_set'] === 'false'){
             $params['value_set'] = false;

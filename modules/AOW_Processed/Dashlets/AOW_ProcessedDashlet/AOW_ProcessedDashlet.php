@@ -34,8 +34,10 @@ class AOW_ProcessedDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
-        $dashletData = [];
-        global $current_user, $app_strings;
+        global $current_user, $app_strings, $dashletData;
+
+        $dashletData = $dashletData ?? [];
+
         require('modules/AOW_Processed/metadata/dashletviewdefs.php');
 
         parent::__construct($id, $def);

@@ -69,7 +69,6 @@ class ImportViewStep3 extends ImportView
      */
     public function display()
     {
-        $fields = [];
         global $mod_strings, $app_strings, $current_user, $sugar_config, $app_list_strings, $locale;
 
         $this->ss->assign("IMPORT_MODULE", $_REQUEST['import_module']);
@@ -82,6 +81,7 @@ class ImportViewStep3 extends ImportView
         $field_map = $mapping_file->set_get_import_wizard_fields();
         $default_values = array();
         $ignored_fields = array();
+        $fields = [];
 
         if (!empty($_REQUEST['source_id'])) {
             $GLOBALS['log']->fatal("Loading import map properties.");
@@ -181,7 +181,7 @@ class ImportViewStep3 extends ImportView
         }
 
         // save first row to send to step 4
-        $this->ss->assign("FIRSTROW", htmlentities(json_encode($rows[0], JSON_THROW_ON_ERROR)));
+        $this->ss->assign("FIRSTROW", htmlentities(json_encode($rows[0])));
 
         // Now build template
         $this->ss->assign("TMP_FILE", $uploadFileName);

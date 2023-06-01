@@ -275,7 +275,6 @@ class Contact extends Person implements EmailInterface
         $parentbean = null,
         $singleSelect = false
     ) {
-        $ret_array = [];
         //if this is any action that is not the contact address popup, then go to parent function in sugarbean
         if (isset($_REQUEST['action']) && $_REQUEST['action'] !== 'ContactAddressPopup') {
             return parent::create_new_list_query(
@@ -302,6 +301,7 @@ class Contact extends Person implements EmailInterface
                 accounts.assigned_user_id account_id_owner,
                 users.user_name as assigned_user_name ";
         $select_query .= $custom_join['select'];
+        $ret_array = [];
         $ret_array['select'] = $select_query;
 
         $from_query = "
@@ -495,7 +495,7 @@ class Contact extends Person implements EmailInterface
 
         $this->load_relationship("user_sync");
 
-        if (!(property_exists($this, 'user_sync') && $this->user_sync !== null)) {
+        if (!isset($this->user_sync)) {
             $GLOBALS['log']->fatal('Contact::$user_sync is not set');
             $beanIDs = null;
         } elseif (!is_object($this->user_sync)) {
@@ -641,7 +641,7 @@ class Contact extends Person implements EmailInterface
         if (empty($list_of_users)) {
             return;
         }
-        if (!(property_exists($this, 'users') && $this->users !== null)) {
+        if (!isset($this->users)) {
             $this->load_relationship('user_sync');
         }
 
@@ -650,7 +650,7 @@ class Contact extends Person implements EmailInterface
             $sql = "SELECT id FROM users WHERE deleted=0 AND is_group=0 AND portal_only=0";
             $result = $this->db->query($sql);
             while ($hash = $this->db->fetchByAssoc($result)) {
-                if (!(property_exists($this, 'user_sync') && $this->user_sync !== null)) {
+                if (!isset($this->user_sync)) {
                     $GLOBALS['log']->fatal('Contact::$user_sync is not set');
                 } elseif (!is_object($this->user_sync)) {
                     $GLOBALS['log']->fatal('Contact::$user_sync is not an object');
@@ -667,7 +667,7 @@ class Contact extends Person implements EmailInterface
                     || $focus_user->retrieve($eachItem)
                 ) {
                     // it is a user, add user
-                    if (!(property_exists($this, 'user_sync') && $this->user_sync !== null)) {
+                    if (!isset($this->user_sync)) {
                         $GLOBALS['log']->fatal('Contact::$user_sync is not set');
                     } elseif (!is_object($this->user_sync)) {
                         $GLOBALS['log']->fatal('Contact::$user_sync is not an object');

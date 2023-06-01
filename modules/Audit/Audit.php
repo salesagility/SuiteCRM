@@ -108,8 +108,10 @@ class Audit extends SugarBean
 
     public function get_audit_list()
     {
-        $dictionary = [];
-        global $focus, $genericAssocFieldsArray, $moduleAssocFieldsArray, $current_user, $timedate, $app_strings;
+        global $focus, $genericAssocFieldsArray, $moduleAssocFieldsArray, $current_user, $timedate, $app_strings, $dictionary;
+
+        $dictionary = $dictionary ?? [];
+
         $audit_list = array();
         if (!empty($_REQUEST['record'])) {
             $result = $focus->retrieve($_REQUEST['record']);

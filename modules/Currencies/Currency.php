@@ -218,7 +218,7 @@ class Currency extends SugarBean
         } else {
             parent::retrieve($id, $encode, $deleted);
         }
-        if (!($this->name !== null) || $this->deleted == 1) {
+        if (!isset($this->name) || $this->deleted == 1) {
             $this->name = 	$this->getDefaultCurrencyName();
             $this->symbol = $this->getDefaultCurrencySymbol();
             $this->conversion_rate = 1;
@@ -336,7 +336,6 @@ function currency_format_number($amount, $params = array())
  */
 function format_number($amount, $round = null, $decimals = null, $params = array())
 {
-    $checkAmount = null;
     global $app_strings, $current_user, $sugar_config, $locale;
     static $current_users_currency = null;
     static $last_override_currency = null;
@@ -406,6 +405,8 @@ function format_number($amount, $round = null, $decimals = null, $params = array
     if (isset($params['charset_convert'])) {
         $symbol = $locale->translateCharset($symbol, 'UTF-8', $locale->getExportCharset());
     }
+
+    $checkAmount = 0;
 
     if (empty($params['human'])) {
         $amount = number_format(round($amount, $round), $decimals, $dec_sep, $num_grp_sep);

@@ -65,7 +65,7 @@ function display_condition_lines($focus, $field, $value, $view)
                     if ($condition_name->value_type == 'Date') {
                         $condition_name->value = unserialize(base64_decode($condition_name->value));
                     }
-                    $condition_item = json_encode($condition_name->toArray(), JSON_THROW_ON_ERROR);
+                    $condition_item = json_encode($condition_name->toArray());
                     $html .= "loadConditionLine(".$condition_item.");";
                 }
             }
@@ -96,7 +96,7 @@ function display_condition_lines($focus, $field, $value, $view)
                 if ($condition_name->value_type == 'Date') {
                     $condition_name->value = unserialize(base64_decode($condition_name->value));
                 }
-                $condition_item = json_encode($condition_name->toArray(), JSON_THROW_ON_ERROR);
+                $condition_item = json_encode($condition_name->toArray());
                 $html .= "loadConditionLine(".$condition_item.");";
             }
             $html .= "</script>";

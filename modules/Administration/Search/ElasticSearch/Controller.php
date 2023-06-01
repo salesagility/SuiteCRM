@@ -145,7 +145,7 @@ class Controller extends AbstractController
             $return['info'] = $info;
         } /** @noinspection PhpRedundantCatchClauseInspection */
         catch (BadRequest400Exception $exception) {
-            $error = json_decode($exception->getMessage(), null, 512, JSON_THROW_ON_ERROR);
+            $error = json_decode($exception->getMessage());
             $return['error'] = $error->error->reason;
             $return['errorDetails'] = $error;
         } catch (Exception $exception) {
@@ -200,7 +200,7 @@ class Controller extends AbstractController
 
         $job->name = 'Index requested by an administrator';
         $job->target = 'function::runElasticSearchIndexerScheduler';
-        $job->data = json_encode(['partial' => $partial], JSON_THROW_ON_ERROR);
+        $job->data = json_encode(['partial' => $partial]);
         $job->assigned_user_id = 1;
 
         $queue = new SugarJobQueue();

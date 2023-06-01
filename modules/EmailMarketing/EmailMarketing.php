@@ -150,7 +150,7 @@ class EmailMarketing extends SugarBean
 
 
         //mode is set by schedule.php from campaigns module.
-        if (!(property_exists($this, 'mode') && $this->mode !== null) || empty($this->mode) || $this->mode!='test') {
+        if (!isset($this->mode) || empty($this->mode) || $this->mode!='test') {
             $this->mode='rest';
         }
 

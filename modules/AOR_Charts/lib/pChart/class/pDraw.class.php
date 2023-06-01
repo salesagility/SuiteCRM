@@ -101,7 +101,6 @@
  define("OUT_OF_SIGHT", -10000000000000);
 
  #[\AllowDynamicProperties]
- #[\AllowDynamicProperties]
  class pDraw
  {
      /* Returns the number of drawable series */
@@ -133,7 +132,6 @@
      /* Draw a polygon */
      public function drawPolygon($Points, $Format="")
      {
-         $Shadow = [];
          $R			= isset($Format["R"]) ? $Format["R"] : 0;
          $G			= isset($Format["G"]) ? $Format["G"] : 0;
          $B			= isset($Format["B"]) ? $Format["B"] : 0;
@@ -164,11 +162,12 @@
              $SkipY = floor($SkipY);
          }
 
+         $PointsCount = is_countable($Points) ? count($Points) : 0;
+         $Shadow = [];
          $RestoreShadow = $this->Shadow;
          if (!$NoFill) {
              if ($this->Shadow && $this->ShadowX != 0 && $this->ShadowY != 0) {
                  $this->Shadow = false;
-                 $PointsCount = is_countable($Points) ? count($Points) : 0;
                  for ($i=0;$i<=$PointsCount-1;$i=$i+2) {
                      $Shadow[] = $Points[$i] + $this->ShadowX;
                      $Shadow[] = $Points[$i+1] + $this->ShadowY;
@@ -178,8 +177,8 @@
 
              $FillColor = $this->allocateColor($this->Picture, $R, $G, $B, $Alpha);
 
-             if ((is_countable($Points) ? count($Points) : 0) >= 6) {
-                 ImageFilledPolygon($this->Picture, $Points, (is_countable($Points) ? count($Points) : 0)/2, $FillColor);
+             if ($PointsCount >= 6) {
+                 ImageFilledPolygon($this->Picture, $Points, $PointsCount/2, $FillColor);
              }
          }
 
@@ -191,7 +190,6 @@
              } else {
                  $BorderSettings = array("R"=>$BorderR,"G"=>$BorderG,"B"=>$BorderB,"Alpha"=>$BorderAlpha);
              }
-             $PointsCount = is_countable($Points) ? count($Points) : 0;
 
              for ($i=0;$i<=$PointsCount-1;$i=$i+2) {
                  if (isset($Points[$i+2])) {
@@ -610,7 +608,7 @@
          if ($Alpha < 100) {
              $Drawn[$YBottom] = true;
          }
-     
+
          for ($i=0;$i<=90;$i=$i+$Step) {
              $Xp1 = cos(($i+180)*PI/180) * $Radius + $X1 + $Radius;
              $Xp2 = cos(((90-$i)+270)*PI/180) * $Radius + $X2 - $Radius;
@@ -874,7 +872,7 @@
              }
 
              /* Last segment */
-             if ($i == (is_countable($Coordinates) ? count($Coordinates) : 0)-1) {
+             if ($i == $CoordinatesCount-1) {
                  $Xv2 = $X2;
                  $Yv2 = $Y2;
              } else {
@@ -902,7 +900,6 @@
      /* Draw a bezier curve with two controls points */
      public function drawBezier($X1, $Y1, $X2, $Y2, $Xv1, $Yv1, $Xv2, $Yv2, $Format="")
      {
-         $P = [];
          $R		= isset($Format["R"]) ? $Format["R"] : 0;
          $G		= isset($Format["G"]) ? $Format["G"] : 0;
          $B		= isset($Format["B"]) ? $Format["B"] : 0;
@@ -925,6 +922,7 @@
              $Precision = $Segments;
          }
 
+         $P = [];
          $P[0]["X"] = $X1;
          $P[0]["Y"] = $Y1;
          $P[1]["X"] = $Xv1;
@@ -1297,7 +1295,7 @@
      /* Write text */
      public function drawText($X, $Y, $Text, $Format="")
      {
-         $T = [];
+
          $R			= isset($Format["R"]) ? $Format["R"] : $this->FontColorR;
          $G			= isset($Format["G"]) ? $Format["G"] : $this->FontColorG;
          $B			= isset($Format["B"]) ? $Format["B"] : $this->FontColorB;
@@ -1342,6 +1340,8 @@
          }
 
          $TxtPos = $this->getTextBox($X, $Y, $FontName, $FontSize, $Angle, $Text);
+
+         $T = [];
 
          if ($DrawBox && ($Angle == 0 || $Angle == 90 || $Angle == 180 || $Angle == 270)) {
              $T[0]["X"]=0;
@@ -1401,7 +1401,7 @@
      /* Draw a gradient within a defined area */
      public function drawGradientArea($X1, $Y1, $X2, $Y2, $Direction, $Format="")
      {
-         $Width = null;
+         $Width = 0;
          $StartR	= isset($Format["StartR"]) ? $Format["StartR"] : 90;
          $StartG	= isset($Format["StartG"]) ? $Format["StartG"] : 90;
          $StartB	= isset($Format["StartB"]) ? $Format["StartB"] : 90;
@@ -1991,7 +1991,7 @@
              } else {
                  $this->drawFilledRectangle($X+1, $Y+1, $X+$InnerWidth, $Y+$Height-1, array("R"=>$R,"G"=>$G,"B"=>$B,"BorderR"=>$BorderR,"BorderG"=>$BorderG,"BorderB"=>$BorderB));
              }
- 
+
              $this->Shadow = $RestoreShadow;
 
              if ($ShowLabel && $LabelPos == LABEL_POS_LEFT) {
@@ -2283,8 +2283,6 @@
 
      public function drawScale($Format="")
      {
-         $AxisID = null;
-         $AxisPos = [];
          $Pos		= isset($Format["Pos"]) ? $Format["Pos"] : SCALE_POS_LEFTRIGHT;
          $Floating		= isset($Format["Floating"]) ? $Format["Floating"] : false;
          $Mode		= isset($Format["Mode"]) ? $Format["Mode"] : SCALE_MODE_FLOATING;
@@ -2380,6 +2378,7 @@
 
          /* Build the scale settings */
          $GotXAxis = false;
+         $AxisID = [];
          foreach ($Data["Axis"] as $AxisID => $AxisParameter) {
              if ($AxisParameter["Identity"] == AXIS_X) {
                  $GotXAxis = true;
@@ -2551,6 +2550,7 @@
          $FontColorGo = $this->FontColorG;
          $FontColorBo = $this->FontColorB;
 
+         $AxisPos = [];
          $AxisPos["L"] = $this->GraphAreaX1;
          $AxisPos["R"] = $this->GraphAreaX2;
          $AxisPos["T"] = $this->GraphAreaY1;
@@ -2617,7 +2617,7 @@
                          } else {
                              $Step  = $Width / ($Parameters["Rows"]);
                          }
-             
+
                          $MaxBottom = $AxisPos["B"];
                          for ($i=0;$i<=$Parameters["Rows"];$i++) {
                              $XPos  = $this->GraphAreaX1 + $Parameters["Margin"] + $Step*$i;
@@ -2717,7 +2717,7 @@
                          } else {
                              $Step  = $Width / $Parameters["Rows"];
                          }
-             
+
                          $MinTop = $AxisPos["T"];
                          for ($i=0;$i<=$Parameters["Rows"];$i++) {
                              $XPos  = $this->GraphAreaX1 + $Parameters["Margin"] + $Step*$i;
@@ -2918,7 +2918,7 @@
                          } else {
                              $Step   = $Height / $Parameters["Rows"];
                          }
-             
+
                          $MaxRight = $AxisPos["R"];
                          for ($i=0;$i<=$Parameters["Rows"];$i++) {
                              $YPos  = $this->GraphAreaY1 + $Parameters["Margin"] + $Step*$i;
@@ -3506,7 +3506,7 @@
                          $Y = $YPos2 - $CaptionOffset;
                          $CaptionSettings["Align"] = TEXT_ALIGN_BOTTOMMIDDLE;
                      }
-           
+
                      $this->drawText($XPos, $Y, $Caption, $CaptionSettings);
                  }
 
@@ -3534,7 +3534,7 @@
                          $Y = $YPos2 - $CaptionOffset;
                          $CaptionSettings["Align"] = TEXT_ALIGN_MIDDLERIGHT;
                      }
-           
+
                      $this->drawText($Y, $XPos, $Caption, $CaptionSettings);
                  }
 
@@ -3751,7 +3751,7 @@
                          $X = $X2 - $CaptionOffset;
                          $CaptionSettings["Align"] = TEXT_ALIGN_MIDDLERIGHT;
                      }
-           
+
                      $this->drawText($X, $YPos, $Caption, $CaptionSettings);
                  }
              }
@@ -4534,7 +4534,7 @@
                          if ($DisplayValues) {
                              $this->drawText($X, $Y-$DisplayOffset, $this->scaleFormat($Serie["Data"][$Key], $Mode, $Format, $Unit), array("R"=>$DisplayR,"G"=>$DisplayG,"B"=>$DisplayB,"Align"=>TEXT_ALIGN_BOTTOMMIDDLE));
                          }
-    
+
                          if ($RecordImageMap && $Y != VOID) {
                              $this->addToImageMap("CIRCLE", floor($X).",".floor($Y).",".$ImageMapPlotSize, $this->toHTMLColor($R, $G, $B), $SerieDescription, $this->scaleFormat($Serie["Data"][$Key], $Mode, $Format, $Unit));
                          }
@@ -5051,7 +5051,7 @@
 
          $PosArrayA = $this->scaleComputeY($SerieAData, array("AxisID"=>$AxisID));
          $PosArrayB = $this->scaleComputeY($SerieBData, array("AxisID"=>$AxisID));
-         if ((is_countable($PosArrayA) ? count($PosArrayA) : 0) !== count($PosArrayB)) {
+         if ((is_countable($PosArrayA) ? count($PosArrayA) : 0) !== (is_countable($PosArrayB) ? count($PosArrayB) : 0)) {
              return(0);
          }
 
@@ -5086,7 +5086,7 @@
              }
              $Bounds = array_merge($BoundsA, $this->reversePlots($BoundsB));
              $this->drawPolygonChart($Bounds, array("R"=>$AreaR,"G"=>$AreaG,"B"=>$AreaB,"Alpha"=>$AreaAlpha));
-             $BoundsACount = count($BoundsA);
+             $BoundsACount = is_countable($BoundsA) ? count($BoundsA) : 0;
 
              for ($i=0;$i<=$BoundsACount-4;$i=$i+2) {
                  $this->drawLine($BoundsA[$i], $BoundsA[$i+1], $BoundsA[$i+2], $BoundsA[$i+3], array("R"=>$LineR,"G"=>$LineG,"B"=>$LineB,"Alpha"=>$LineAlpha,"Ticks"=>$LineTicks));
@@ -5123,7 +5123,7 @@
              }
              $Bounds = array_merge($BoundsA, $this->reversePlots($BoundsB));
              $this->drawPolygonChart($Bounds, array("R"=>$AreaR,"G"=>$AreaG,"B"=>$AreaB,"Alpha"=>$AreaAlpha));
-             $BoundsACount = count($BoundsA);
+             $BoundsACount = is_countable($BoundsA) ? count($BoundsA) : 0;
 
              for ($i=0;$i<=$BoundsACount-4;$i=$i+2) {
                  $this->drawLine($BoundsA[$i], $BoundsA[$i+1], $BoundsA[$i+2], $BoundsA[$i+3], array("R"=>$LineR,"G"=>$LineG,"B"=>$LineB,"Alpha"=>$LineAlpha,"Ticks"=>$LineTicks));
@@ -6144,7 +6144,7 @@
                      } else {
                          $YStep = ($this->GraphAreaY2-$this->GraphAreaY1-$XMargin*2)/$XDivs;
                      }
-           
+
                      $Y = $this->GraphAreaY1 + $XMargin;
 
                      if ($AroundZero) {
@@ -6157,7 +6157,7 @@
                      } else {
                          $YSize   = ($YStep / ($SeriesCount+$Interleave));
                      }
-           
+
                      $YOffset = -($YSize*$SeriesCount)/2 + $CurrentSerie * $YSize;
                      if ($Y + $YOffset <= $this->GraphAreaY1) {
                          $YOffset = $this->GraphAreaY1 - $Y + 1 ;
@@ -6774,14 +6774,13 @@
                      $this->drawPolygon($Plots, $Color);
 
                      $this->Shadow = $RestoreShadow;
+                     $PlotsCount = is_countable($Plots) ? count($Plots) : 0;
                      if ($DrawLine) {
-                         $PlotsCount = count($Plots);
                          for ($i=2; $i<=$PlotsCount-6; $i=$i+2) {
                              $this->drawLine($Plots[$i], $Plots[$i+1], $Plots[$i+2], $Plots[$i+3], $LineColor);
                          }
                      }
                      if ($DrawPlot) {
-                         $PlotsCount = count($Plots);
                          for ($i=2; $i<=$PlotsCount-4; $i=$i+2) {
                              if ($PlotBorder != 0) {
                                  $this->drawFilledCircle($Plots[$i], $Plots[$i+1], $PlotRadius+$PlotBorder, $PlotBorderColor);
@@ -6826,16 +6825,14 @@
                      $Plots[] = $Y-$YStep;
 
                      $this->drawPolygon($Plots, $Color);
-
+                     $PlotsCount = is_countable($Plots) ? count($Plots) : 0;
                      $this->Shadow = $RestoreShadow;
                      if ($DrawLine) {
-                         $PlotsCount = count($Plots);
                          for ($i=2; $i<=$PlotsCount-6; $i=$i+2) {
                              $this->drawLine($Plots[$i], $Plots[$i+1], $Plots[$i+2], $Plots[$i+3], $LineColor);
                          }
                      }
                      if ($DrawPlot) {
-                         $PlotsCount = count($Plots);
                          for ($i=2; $i<=$PlotsCount-4; $i=$i+2) {
                              if ($PlotBorder != 0) {
                                  $this->drawFilledCircle($Plots[$i], $Plots[$i+1], $PlotRadius+$PlotBorder, $PlotBorderColor);
@@ -6856,7 +6853,7 @@
      {
          return(array("R"=>mt_rand(0, 255),"G"=>mt_rand(0, 255),"B"=>mt_rand(0, 255),"Alpha"=>$Alpha));
      }
- 
+
      /* Validate a palette */
      public function validatePalette($Colors, $Surrounding=null)
      {
@@ -7430,21 +7427,23 @@
                              $XLabel = "";
                          }
 
+                         $serieCount = is_countable($SeriesName) ? count($SeriesName) : 0;
+
                          if ($OverrideTitle != null) {
                              $Description = $OverrideTitle;
-                         } elseif ((is_countable($SeriesName) ? count($SeriesName) : 0) == 1) {
+                         } elseif ($serieCount == 1) {
                              $Description = $Data["Series"][$SerieName]["Description"]." - ".$XLabel;
                          } elseif (isset($Data["Abscissa"]) && isset($Data["Series"][$Data["Abscissa"]]["Data"][$Index])) {
                              $Description = $XLabel;
                          }
 
-                         $Serie = "";
+                         $Serie = [];
                          $Serie["R"] = $Data["Series"][$SerieName]["Color"]["R"];
                          $Serie["G"] = $Data["Series"][$SerieName]["Color"]["G"];
                          $Serie["B"] = $Data["Series"][$SerieName]["Color"]["B"];
                          $Serie["Alpha"] = $Data["Series"][$SerieName]["Color"]["Alpha"];
 
-                         if ((is_countable($SeriesName) ? count($SeriesName) : 0) == 1 && isset($Data["Series"][$SerieName]["XOffset"])) {
+                         if ($serieCount == 1 && isset($Data["Series"][$SerieName]["XOffset"])) {
                              $SerieOffset = $Data["Series"][$SerieName]["XOffset"];
                          } else {
                              $SerieOffset = 0;
@@ -7535,7 +7534,7 @@
 
                          if ($OverrideTitle != null) {
                              $Description = $OverrideTitle;
-                         } elseif ((is_countable($SeriesName) ? count($SeriesName) : 0) == 1) {
+                         } elseif ($serieCount == 1) {
                              if (isset($Data["Abscissa"]) && isset($Data["Series"][$Data["Abscissa"]]["Data"][$Index])) {
                                  $Description = $Data["Series"][$SerieName]["Description"]." - ".$XLabel;
                              }
@@ -7556,7 +7555,7 @@
                              $Serie["Alpha"] = $Data["Series"][$SerieName]["Color"]["Alpha"];
                          }
 
-                         if ((is_countable($SeriesName) ? count($SeriesName) : 0) == 1 && isset($Data["Series"][$SerieName]["XOffset"])) {
+                         if ($serieCount == 1 && isset($Data["Series"][$SerieName]["XOffset"])) {
                              $SerieOffset = $Data["Series"][$SerieName]["XOffset"];
                          } else {
                              $SerieOffset = 0;

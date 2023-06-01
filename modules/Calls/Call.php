@@ -233,7 +233,7 @@ class Call extends SugarBean
         if (isset($_REQUEST['reminders_data']) && !self::$remindersInSaving) {
             self::$remindersInSaving = true;
             $reminderData = json_encode(
-                $this->removeUnInvitedFromReminders(json_decode(html_entity_decode((string) $_REQUEST['reminders_data']), true, 512, JSON_THROW_ON_ERROR)), JSON_THROW_ON_ERROR
+                $this->removeUnInvitedFromReminders(json_decode(html_entity_decode((string) $_REQUEST['reminders_data']), true))
             );
             Reminder::saveRemindersDataJson('Calls', $return_id, $reminderData);
             self::$remindersInSaving = false;
@@ -294,7 +294,7 @@ class Call extends SugarBean
         $query = "SELECT contact_id as id from calls_contacts where call_id='$this->id' AND deleted=0";
 
         $contact = BeanFactory::newBean('Contacts');
-        return $this->build_related_list($query, $contact);
+        return $this->build_related_list($contact, $query);
     }
 
 
@@ -423,7 +423,7 @@ class Call extends SugarBean
                 $GLOBALS['log']->debug("Call($this->id): contact_id = $this->contact_id");
             }
         }
-        if (!($this->duration_minutes !== null)) {
+        if (!isset($this->duration_minutes)) {
             $this->duration_minutes = $this->minutes_value_default;
         }
 
@@ -493,7 +493,7 @@ class Call extends SugarBean
         } else {
             $id = '';
         }
-        if ($this->parent_type !== null && $this->parent_type != null) {
+        if (isset($this->parent_type) && $this->parent_type != null) {
             $call_fields['PARENT_MODULE'] = $this->parent_type;
         }
         if ($this->status == "Planned") {

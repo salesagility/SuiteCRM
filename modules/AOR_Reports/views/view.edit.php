@@ -59,13 +59,13 @@ class AOR_ReportsViewEdit extends ViewEdit
         echo "</script>";
 
         $fields = $this->getFieldLines();
-        echo "<script>var fieldLines = ".json_encode($fields, JSON_THROW_ON_ERROR)."</script>";
+        echo "<script>var fieldLines = ".json_encode($fields)."</script>";
 
         $conditions = $this->getConditionLines();
-        echo "<script>var conditionLines = ".json_encode($conditions, JSON_THROW_ON_ERROR)."</script>";
+        echo "<script>var conditionLines = ".json_encode($conditions)."</script>";
 
         $charts = $this->getChartLines();
-        echo "<script>var chartLines = ".json_encode($charts, JSON_THROW_ON_ERROR).";</script>";
+        echo "<script>var chartLines = ".json_encode($charts).";</script>";
 
         parent::preDisplay();
     }

@@ -163,13 +163,13 @@ class UpgradeHistory extends SugarBean
 
     public function getList($query)
     {
-        return(parent::build_related_list($query, $this));
+        return(parent::build_related_list($this, $query));
     }
 
     public function findByMd5($var_md5)
     {
         $query = "SELECT id FROM " . $this->table_name . " where md5sum = '$var_md5'";
-        return(parent::build_related_list($query, $this));
+        return(parent::build_related_list($this, $query));
     }
 
     public function UninstallAvailable($patch_list, $patch_to_check)

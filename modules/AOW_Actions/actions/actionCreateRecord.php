@@ -133,7 +133,7 @@ class actionCreateRecord extends actionBase
             if (isset($params['field'])) {
                 foreach ($params['field'] as $key => $field) {
                     if (is_array($params['value'][$key])) {
-                        $params['value'][$key] = json_encode($params['value'][$key], JSON_THROW_ON_ERROR);
+                        $params['value'][$key] = json_encode($params['value'][$key]);
                     }
 
                     $html .= "load_crline('".$line."','".$field."','".str_replace(array("\r\n","\r","\n"), ' ', (string) $params['value'][$key])."','".$params['value_type'][$key]."');";
@@ -142,7 +142,7 @@ class actionCreateRecord extends actionBase
             if (isset($params['rel'])) {
                 foreach ($params['rel'] as $key => $field) {
                     if (is_array($params['rel_value'][$key])) {
-                        $params['rel_value'][$key] = json_encode($params['rel_value'][$key], JSON_THROW_ON_ERROR);
+                        $params['rel_value'][$key] = json_encode($params['rel_value'][$key]);
                     }
 
                     $html .= "load_crrelline('".$line."','".$field."','".$params['rel_value'][$key]."','".$params['rel_value_type'][$key]."');";
@@ -494,10 +494,10 @@ class actionCreateRecord extends actionBase
             LoggerManager::getLogger()->error('Given parameter should contains index "copy_email_addresses"');
             return -2;
         }
-        
+
         return $ret;
     }
-    
+
     /**
      *
      * @param arra $currentEmailAddress

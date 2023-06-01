@@ -130,10 +130,10 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
         $data = $this->getChartData($this->constructQuery());
         $chartReadyData = $this->prepareChartData($data, $currency_symbol, $thousands_symbol);
 
-        $jsonData = json_encode($chartReadyData['data'], JSON_THROW_ON_ERROR);
-        $jsonLabels = json_encode($chartReadyData['labels'], JSON_THROW_ON_ERROR);
-        $jsonKeys = json_encode($chartReadyData['keys'], JSON_THROW_ON_ERROR);
-        $jsonLabelsAndValues = json_encode($chartReadyData['labelsAndValues'], JSON_THROW_ON_ERROR);
+        $jsonData = json_encode($chartReadyData['data']);
+        $jsonLabels = json_encode($chartReadyData['labels']);
+        $jsonKeys = json_encode($chartReadyData['keys']);
+        $jsonLabelsAndValues = json_encode($chartReadyData['labelsAndValues']);
 
         $total = $chartReadyData['total'];
 

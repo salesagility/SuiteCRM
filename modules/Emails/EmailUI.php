@@ -145,9 +145,9 @@ class EmailUI
         $qsd = QuickSearchDefaults::getQuickSearchDefaults();
         $qsd->setFormName('advancedSearchForm');
         $quicksearchAssignedUser = "if(typeof sqs_objects == 'undefined'){var sqs_objects = new Array;}";
-        $quicksearchAssignedUser .= "sqs_objects['advancedSearchForm_assigned_user_name']=" . json_encode($qsd->getQSUser(), JSON_THROW_ON_ERROR) . ";";
+        $quicksearchAssignedUser .= "sqs_objects['advancedSearchForm_assigned_user_name']=" . json_encode($qsd->getQSUser()) . ";";
         $qsd->setFormName('Distribute');
-        $quicksearchAssignedUser .= "sqs_objects['Distribute_assigned_user_name']=" . json_encode($qsd->getQSUser(), JSON_THROW_ON_ERROR) . ";";
+        $quicksearchAssignedUser .= "sqs_objects['Distribute_assigned_user_name']=" . json_encode($qsd->getQSUser()) . ";";
         $this->smarty->assign('quickSearchForAssignedUser', $quicksearchAssignedUser);
 
 
@@ -166,7 +166,7 @@ class EmailUI
         $this->smarty->assign('sugar_flavor', $sugar_flavor);
         $this->smarty->assign('current_language', $current_language);
         $this->smarty->assign('server_unique_key', $server_unique_key);
-        $this->smarty->assign('qcModules', json_encode($QCAvailableModules, JSON_THROW_ON_ERROR));
+        $this->smarty->assign('qcModules', json_encode($QCAvailableModules));
         $extAllDebugValue = "ext-all.js";
         $this->smarty->assign('extFileName', $extAllDebugValue);
 
@@ -303,7 +303,7 @@ class EmailUI
         if (!empty($focusFolderSerial)) {
             $focusFolder = sugar_unserialize($focusFolderSerial);
             //$focusFolder['ieId'], $focusFolder['folder']
-            $preloadFolder .= json_encode($focusFolder, JSON_THROW_ON_ERROR) . ";";
+            $preloadFolder .= json_encode($focusFolder) . ";";
         } else {
             $preloadFolder .= "new Object();";
         }
@@ -363,7 +363,7 @@ eoq;
         $divOut .= $this->smarty->fetch("modules/Emails/templates/addressSearchContent.tpl");
 
         $outData = array('jsData' => $javascriptOut, 'divData' => $divOut);
-        $out = json_encode($outData, JSON_THROW_ON_ERROR);
+        $out = json_encode($outData);
 
         return $out;
     }
@@ -704,7 +704,7 @@ HTML;
             unset($parent_types[$disabled_parent_type]);
         }
         asort($parent_types);
-        $linkBeans = json_encode(get_select_options_with_id($parent_types, ''), JSON_THROW_ON_ERROR);
+        $linkBeans = json_encode(get_select_options_with_id($parent_types, ''));
 
         //TinyMCE Config
         require_once("include/SugarTinyMCE.php");
@@ -715,7 +715,7 @@ HTML;
         $lang = "var app_strings = new Object();\n";
         foreach ($app_strings as $k => $v) {
             if (strpos((string) $k, 'LBL_EMAIL_') !== false) {
-                $vJS = json_encode($v, JSON_THROW_ON_ERROR);
+                $vJS = json_encode($v);
                 $lang .= "app_strings.{$k} = {$vJS};\n";
             }
         }
@@ -749,11 +749,11 @@ HTML;
         //Signatures
         $defsigID = $current_user->getPreference('signature_default');
         $defaultSignature = $current_user->getDefaultSignature();
-        $sigJson = !empty($defaultSignature) ? json_encode(array($defaultSignature['id'] => from_html($defaultSignature['signature_html'])), JSON_THROW_ON_ERROR) : "new Object()";
+        $sigJson = !empty($defaultSignature) ? json_encode(array($defaultSignature['id'] => from_html($defaultSignature['signature_html']))) : "new Object()";
         $this->smarty->assign('defaultSignature', $sigJson);
         $this->smarty->assign('signatureDefaultId', (isset($defaultSignature['id'])) ? $defaultSignature['id'] : "");
         //User Preferences
-        $this->smarty->assign('userPrefs', json_encode($this->getUserPrefsJS(), JSON_THROW_ON_ERROR));
+        $this->smarty->assign('userPrefs', json_encode($this->getUserPrefsJS()));
 
         $useRequestedRecord = false;
         if (isset($_REQUEST['record']) && $_REQUEST['record'] && $_REQUEST['record'] != $current_user->id) {
@@ -767,7 +767,7 @@ HTML;
 
         $defaultSignature = $user->getDefaultSignature();
         $sigJson = !empty($defaultSignature) ?
-            json_encode(array($defaultSignature['id'] => from_html($defaultSignature['signature_html'])), JSON_THROW_ON_ERROR) :
+            json_encode(array($defaultSignature['id'] => from_html($defaultSignature['signature_html']))) :
             'new Object()';
         $this->smarty->assign('defaultSignature', $sigJson);
         $this->smarty->assign(
@@ -777,7 +777,7 @@ HTML;
         //User Preferences
         $this->smarty->assign(
             'userPrefs',
-            json_encode($this->getUserPreferencesJS($useRequestedRecord), JSON_THROW_ON_ERROR)
+            json_encode($this->getUserPreferencesJS($useRequestedRecord))
         );
 
         //Get the users default outbound id
@@ -785,7 +785,7 @@ HTML;
         $this->smarty->assign('defaultOutID', $defaultOutID);
 
         //Character Set
-        $charsets = json_encode($locale->getCharsetSelect(), JSON_THROW_ON_ERROR);
+        $charsets = json_encode($locale->getCharsetSelect());
         $this->smarty->assign('emailCharsets', $charsets);
 
         //Relateable List of People for address book search
@@ -1423,7 +1423,7 @@ HTML;
 
     public function getMailBoxesFromCacheValue($mailAccount)
     {
-        $cacheRoot = null;
+        $cacheRoot = sugar_cached("modules/Emails/{$mailAccount->id}");
         $foldersCache = $this->getCacheValue($mailAccount->id, 'folders', "folders.php", 'foldersCache');
         $mailboxes = $foldersCache['mailboxes'];
         $mailboxesArray = $mailAccount->generateFlatArrayFromMultiDimArray(
@@ -1548,8 +1548,10 @@ HTML;
 
     public function createCopyOfInboundAttachment($ie, $ret, $uid)
     {
-        $cacheFile = [];
         global $sugar_config;
+
+        $cacheFile = [];
+
         if ($ie->isPop3Protocol()) {
             // get the UIDL from database;
             $cachedUIDL = md5($uid);
@@ -1801,7 +1803,7 @@ HTML;
         $parent_types = $app_list_strings['record_type_display'];
         $smarty->assign('parentOptions', get_select_options_with_id($parent_types, $email->parent_type));
 
-        $quicksearch_js = '<script type="text/javascript" language="javascript">sqs_objects = ' . json_encode($sqs_objects, JSON_THROW_ON_ERROR) . '</script>';
+        $quicksearch_js = '<script type="text/javascript" language="javascript">sqs_objects = ' . json_encode($sqs_objects) . '</script>';
         $smarty->assign('SQS', $quicksearch_js);
 
         $meta = array();
@@ -1816,11 +1818,12 @@ HTML;
      */
     public function getDetailViewForEmail2($emailId)
     {
+        global $app_strings, $app_list_strings, $mod_strings;
+
         $detailView = null;
         $meta = [];
+
         require_once('include/DetailView/DetailView.php');
-        global $app_strings, $app_list_strings;
-        global $mod_strings;
 
         $smarty = new Sugar_Smarty();
 
@@ -2251,11 +2254,12 @@ HTML;
      */
     public function getSingleMessage($ie)
     {
-        $out = [];
         global $timedate;
         global $app_strings, $mod_strings;
+
         $ie->retrieve($_REQUEST['ieId']);
         $noCache = true;
+        $out = [];
 
         $ie->mailbox = $_REQUEST['mbox'];
         $filename = $_REQUEST['mbox'] . $_REQUEST['uid'] . ".php";
@@ -2374,8 +2378,7 @@ eoq;
      */
     public function displayComposeEmail($email)
     {
-        $toAddresses = null;
-        $ccAddresses = null;
+
         global $locale;
         global $current_user;
 
@@ -2386,6 +2389,9 @@ eoq;
             $email->cids2Links();
             $description = (empty($email->description_html)) ? $email->description : $email->description_html;
         }
+
+        $toAddresses = '';
+        $ccAddresses = '';
 
         //Get the most complete address list availible for this email
         $addresses = array('toAddresses' => 'to', 'ccAddresses' => 'cc', 'bccAddresses' => 'bcc');
@@ -2463,9 +2469,11 @@ eoq;
      */
     public function handleReplyType($email, $type)
     {
-        $header = null;
         global $mod_strings;
+
         $GLOBALS['log']->debug("****At Handle Reply Type: $type");
+
+        $header = '';
         switch ($type) {
             case "reply":
             case "replyAll":
@@ -2664,8 +2672,8 @@ eoq;
 
     public function findEmailFromBeanIds($beanIds, $beanType, $whereArr)
     {
-        $t = null;
         global $current_user;
+        $t = '';
         $q = '';
         $whereAdd = "";
         $relatedIDs = '';
@@ -2860,7 +2868,7 @@ eoq;
                 $parent_id = $folder->id;
 
                 // handle the case where inbound folder was deleted, but other folders exist
-                if (count(str_replace('%1', $myCase->case_number, (string) $myCaseMacro)) != 0) {
+                if (count($folder_types) != 0) {
                     // This update query will exclude inbound parent, and any custom created folders.
                     // For others, it will update their parent_id for the current user.
                     $q = "UPDATE folders SET parent_folder = '" . $parent_id .
@@ -3513,16 +3521,12 @@ eoq;
      */
     public function jsonOuput($data, $resultsParam, $count = 0, $fromCache = true, $unread = -1)
     {
-        $a = [];
+
         global $app_strings;
 
         $count = ($count > 0) ? $count : 0;
 
-        if (isset($a['fromCache'])) {
-            $cached = ($a['fromCache'] == 1) ? 1 : 0;
-        } else {
-            $cached = ($fromCache) ? 1 : 0;
-        }
+        $cached = ($fromCache) ? 1 : 0;
 
         if ($data['mbox'] == 'undefined' || empty($data['mbox'])) {
             $data['mbox'] = $app_strings['LBL_NONE'];
@@ -3535,7 +3539,7 @@ eoq;
             $resultsParam => $data['out']
         );
 
-        return json_encode($jsonOut, JSON_THROW_ON_ERROR);
+        return json_encode($jsonOut);
     }
 
     /**

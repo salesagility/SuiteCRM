@@ -33,8 +33,6 @@ EOF;
 
     public function display()
     {
-        $sentCount = null;
-        $distinctCount = null;
         global $mod_strings, $timedate;
         parent::display();
         $this->ss->assign('mod', $mod_strings);
@@ -42,6 +40,9 @@ EOF;
         $responses =
             $this->bean->get_linked_beans('surveys_surveyresponses', 'SurveyResponses', 'surveyresponses.date_created');
         $this->ss->assign('responsesCount', is_countable($responses) ? count($responses) : 0);
+
+        $sentCount = [];
+        $distinctCount = [];
 
         $surveysSent = $this->getSurveyStats();
         if ($surveysSent) {

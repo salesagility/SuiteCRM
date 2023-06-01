@@ -14,7 +14,6 @@
  * - http://www.php.net/manual/en/ref.pdf.php#74211
  */
 #[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
 class PdfParser
 {
     /**

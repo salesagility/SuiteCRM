@@ -151,7 +151,7 @@ EOF;
             $x->{$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_BILLING_COUNTRY']} = $row['billing_address_country'];
             $returnArray[] = $x;
         }
-        file_put_contents($filepath, json_encode($returnArray, JSON_THROW_ON_ERROR));
+        file_put_contents($filepath, json_encode($returnArray));
     }
 
     /**
@@ -818,7 +818,7 @@ EOF;
 
             $returnArray[] = $x;
         }
-        file_put_contents($filepath, json_encode($returnArray, JSON_THROW_ON_ERROR));
+        file_put_contents($filepath, json_encode($returnArray));
     }
 
     /**

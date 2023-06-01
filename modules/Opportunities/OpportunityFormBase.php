@@ -327,7 +327,6 @@ EOQ;
 
     public function getFormBody($prefix, $mod='Opportunities', $formname='')
     {
-        $json = null;
         if (!ACLController::checkAccess('Opportunities', 'edit', true)) {
             return '';
         }
@@ -347,6 +346,8 @@ EOQ;
         // global $current_language;
         // global $default_language;
         // global $cal_codes;
+
+        $json = null;
 
         $lbl_required_symbol = $app_strings['LBL_REQUIRED_SYMBOL'];
         $lbl_opportunity_name = $mod_strings['LBL_OPPORTUNITY_NAME'];

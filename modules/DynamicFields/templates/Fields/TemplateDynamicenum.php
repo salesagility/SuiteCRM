@@ -62,15 +62,18 @@ class TemplateDynamicenum extends TemplateEnum
     {
         $def = parent::get_field_def();
         $def['dbType'] = 'enum';
-        $def['parentenum'] = $this->ext2 !== null && $this->ext2 != '' ? $this->ext2 : $this->parentenum;
+        $def['parentenum'] = isset($this->ext2) && $this->ext2 != '' ? $this->ext2 : $this->parentenum;
         return $def;
     }
 
     public function get_xtpl_edit()
     {
+        global $app_list_strings;
+
         $returnXTPL = [];
         $name = $this->name;
         $value = '';
+
         if (isset($this->bean->$name)) {
             $value = $this->bean->$name;
         } else {
@@ -82,8 +85,6 @@ class TemplateDynamicenum extends TemplateEnum
             $returnXTPL[strtoupper($this->name . '_help')] = translate($this->help, $this->bean->module_dir);
         }
 
-        global $app_list_strings;
-        $returnXTPL = array();
         $returnXTPL[strtoupper($this->name)] = $value;
         if (empty($this->ext1)) {
             $this->ext1 = $this->options;

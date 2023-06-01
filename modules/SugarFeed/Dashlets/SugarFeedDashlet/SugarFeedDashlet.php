@@ -59,8 +59,9 @@ class SugarFeedDashlet extends DashletGeneric
 
     public function __construct($id, $def = null)
     {
-        $dashletData = [];
-        global $current_user, $app_strings, $app_list_strings;
+        global $current_user, $app_strings, $app_list_strings, $dashletData;
+
+        $dashletData = $dashletData ?? [];
 
         require_once('modules/SugarFeed/metadata/dashletviewdefs.php');
         $this->myItemsOnly = false;
@@ -155,7 +156,7 @@ class SugarFeedDashlet extends DashletGeneric
         $lvsParams['massupdate'] = false;
 
         // apply filters
-        if (property_exists($this, 'filters') && $this->filters !== null || $this->myItemsOnly) {
+        if (isset($this->filters) || $this->myItemsOnly) {
             $whereArray = $this->buildWhere();
         }
 
@@ -596,7 +597,7 @@ enableQS(false);
         /* BEGIN - SECURITY GROUPS */
         //hide links for those that shouldn't have one
         $listview = preg_replace('/\[(\w+)\:([\w\-\d]*)\:([^\]]*)\]\[HIDELINK\]/', '$3', $listview);
-        /* END - SECURITY GROUPS */ 
+        /* END - SECURITY GROUPS */
         $listview = preg_replace('/\[(\w+)\:([\w\-\d]*)\:([^\]]*)\]/', '<a href="index.php?module=$1&action=DetailView&record=$2"><img src="themes/default/images/$1.gif" border=0 REPLACE_ALT>$3</a>', $listview); /*SKIP_IMAGE_TAG*/
 
 
@@ -655,14 +656,14 @@ enableQS(false);
      */
     public function getPostForm()
     {
-        $html = null;
         global $current_user;
 
         if (!empty($this->selectedCategories) && !array_key_exists('UserFeed', $this->categories)) {
             // The user feed system isn't enabled, don't let them post notes
             return '';
         }
-        
+
+        $html = '';
         $user_name = ucfirst($GLOBALS['current_user']->user_name);
         $moreimg = SugarThemeRegistry::current()->getImage('advanced_search', 'onclick="toggleDisplay(\'more_' . $this->id . '\'); toggleDisplay(\'more_img_'.$this->id.'\'); toggleDisplay(\'less_img_'.$this->id.'\');"', null, null, '.gif', translate('LBL_SHOW_MORE_OPTIONS', 'SugarFeed'));
         $lessimg = SugarThemeRegistry::current()->getImage('basic_search', 'onclick="toggleDisplay(\'more_' . $this->id . '\'); toggleDisplay(\'more_img_'.$this->id.'\'); toggleDisplay(\'less_img_'.$this->id.'\');"', null, null, '.gif', translate('LBL_HIDE_OPTIONS', 'SugarFeed'));

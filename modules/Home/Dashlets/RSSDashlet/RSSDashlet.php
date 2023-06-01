@@ -176,9 +176,9 @@ class RSSDashlet extends Dashlet
         }
 
         $output = "<table class='edit view'>";
-        if (property_exists($rssdoc, 'channel') && $rssdoc->channel instanceof \SimpleXMLElement) {
+        if (isset($rssdoc->channel)) {
             foreach ($rssdoc->channel as $channel) {
-                if (property_exists($channel, 'item') && $channel->item instanceof \SimpleXMLElement) {
+                if (isset($channel->item)) {
                     foreach ($channel->item as $item) {
                         $link = htmlspecialchars($item->link, ENT_QUOTES, 'UTF-8');
                         $title = htmlspecialchars($item->title, ENT_QUOTES, 'UTF-8');

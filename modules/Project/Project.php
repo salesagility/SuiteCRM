@@ -327,7 +327,6 @@ class Project extends SugarBean
 
     public function save($check_notify = false)
     {
-        $enddate_array = [];
         global $current_user;
         $db = DBManagerFactory::getInstance();
         $focus = $this;
@@ -610,6 +609,7 @@ class Project extends SugarBean
 
                 //----------------------------------
 
+                $enddate_array = [];
 
                 if ($count == '1') {
                     $project_task->date_start = $start;

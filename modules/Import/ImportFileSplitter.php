@@ -172,7 +172,7 @@ class ImportFileSplitter
      */
     public function getRecordCount()
     {
-        if (!($this->_recordCount !== null)) {
+        if (!isset($this->_recordCount)) {
             return false;
         }
 
@@ -186,7 +186,7 @@ class ImportFileSplitter
      */
     public function getFileCount()
     {
-        if (!($this->_fileCount !== null)) {
+        if (!isset($this->_fileCount)) {
             return false;
         }
 

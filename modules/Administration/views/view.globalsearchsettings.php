@@ -83,8 +83,8 @@ class AdministrationViewGlobalsearchsettings extends SugarView
 
         $modules = $usa->retrieveEnabledAndDisabledModules();
 
-        $sugar_smarty->assign('enabled_modules', json_encode($modules['enabled'], JSON_THROW_ON_ERROR));
-        $sugar_smarty->assign('disabled_modules', json_encode($modules['disabled'], JSON_THROW_ON_ERROR));
+        $sugar_smarty->assign('enabled_modules', json_encode($modules['enabled']));
+        $sugar_smarty->assign('disabled_modules', json_encode($modules['disabled']));
         $tpl = 'modules/Administration/templates/GlobalSearchSettings.tpl';
         if (file_exists('custom/' . $tpl)) {
             $tpl = 'custom/' . $tpl;

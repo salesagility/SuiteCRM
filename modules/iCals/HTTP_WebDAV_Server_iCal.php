@@ -211,7 +211,7 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
         } else {
             if ($this->vcal_type == 'ics') {
                 // DO HTTP AUTHORIZATION for iCal:
-                if (property_exists($this, 'publish_key') && $this->publish_key !== null
+                if (isset($this->publish_key)
                     && $this->publish_key === $this->user_focus->getPreference('calendar_publish_key')
                     || $this->user_focus->is_authenticated()
                 ) {

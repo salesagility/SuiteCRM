@@ -60,7 +60,7 @@ class DeleteTestCampaigns
  */
     public function deleteTestRecords($focus)
     {
-        if (!$focus instanceof \Campaign || empty($focus->id)) {
+        if (empty($focus)  || empty($focus->id)) {
             return;
         }
 

@@ -245,8 +245,7 @@ function gen_xml_pipeline_by_sales_stage(
     $chart_size = 'hBarF',
     $current_module_strings = null
 ) {
-    $new_ids = [];
-    global $app_strings, $charset, $lang, $barChartColors, $current_user, $current_language;
+    global $app_strings, $charset, $lang, $barChartColors, $current_user, $current_language, $timedate;
 
     // set $current_module_strings to 'Charts' module strings by default
     if (empty($current_module_strings)) {
@@ -254,7 +253,7 @@ function gen_xml_pipeline_by_sales_stage(
     }
 
     $kDelim = $current_user->getPreference('num_grp_sep');
-    global $timedate;
+    $new_ids = [];
 
     if (!file_exists($cache_file_name) || $refresh == true) {
         $GLOBALS['log']->debug("starting pipeline chart");
@@ -412,7 +411,7 @@ function gen_xml_pipeline_by_sales_stage(
 
     function constructQuery()
     {
-        $datax = null;
+
         global $current_user;
         global $timedate;
 
@@ -452,6 +451,7 @@ function gen_xml_pipeline_by_sales_stage(
         }
 
         $user_id = array($current_user->id);
+        $datax = [];
 
         $opp = new Opportunity;
         $where="";
@@ -470,7 +470,8 @@ function gen_xml_pipeline_by_sales_stage(
             $where .= "opportunities.assigned_user_id IN ($ids) ";
         }
         //build the where clause for the query that matches $datax
-        $count = $datax === null ? 0 : count($datax);
+
+        $count = $datax === [] ? 0 : count($datax);
         $dataxArr = array();
         if ($count>0) {
             foreach ($datax as $key=>$value) {

@@ -91,6 +91,6 @@ class EmailsViewDeleteDraftEmail extends ViewAjax
                 break;
         }
 
-        echo json_encode($response, JSON_THROW_ON_ERROR);
+        echo json_encode($response);
     }
 }

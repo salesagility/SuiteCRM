@@ -66,14 +66,14 @@ class ImportViewStep1 extends ImportView
             $this->importModule = 'Administration';
         }
     }
-    
+
     /**
      * @see SugarView::_getModuleTitleParams()
      */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings, $app_list_strings;
-        
+
         $iconPath = $this->getModuleTitleIconPath($this->module);
         $returnArray = array();
         if (!empty($iconPath) && !$browserTitle) {
@@ -83,7 +83,7 @@ class ImportViewStep1 extends ImportView
         }
         $returnArray[] = "<a href='index.php?module=Import&action=Step1&import_module={$_REQUEST['import_module']}'>".$mod_strings['LBL_MODULE_NAME']."</a>";
         $returnArray[] = $mod_strings['LBL_STEP_1_TITLE'];
-        
+
         return $returnArray;
     }
 
@@ -115,17 +115,17 @@ class ImportViewStep1 extends ImportView
             $this->ss->assign('INSTRUCTION', $this->getInstruction());
         }
         $this->ss->assign("FROM_ADMIN", $showModuleSelection);
-        $this->ss->assign("PERSON_MODULE_LIST", json_encode($importablePersonModules, JSON_THROW_ON_ERROR));
+        $this->ss->assign("PERSON_MODULE_LIST", json_encode($importablePersonModules));
         $this->ss->assign("showModuleSelection", $showModuleSelection);
         $this->ss->assign("IMPORTABLE_MODULES_OPTIONS", $importableModulesOptions);
 
         $this->ss->assign("EXTERNAL_SOURCES", $this->getAllImportableExternalEAPMs());
-        $this->ss->assign("EXTERNAL_AUTHENTICATED_SOURCES", json_encode($this->getAuthenticatedImportableExternalEAPMs(), JSON_THROW_ON_ERROR));
+        $this->ss->assign("EXTERNAL_AUTHENTICATED_SOURCES", json_encode($this->getAuthenticatedImportableExternalEAPMs()));
         $selectExternal = !empty($_REQUEST['application']) ? $_REQUEST['application'] : '';
         $this->ss->assign("selectExternalSource", $selectExternal);
 
         $content = $this->ss->fetch('modules/Import/tpls/step1.tpl');
-        
+
         $submitContent = "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td align=\"right\">";
         $submitContent .= "<input title=\"".$mod_strings['LBL_IMPORT_COMPLETE']."\" onclick=\"SUGAR.importWizard.closeDialog();\" class=\"button\" type=\"submit\" name=\"finished\" value=\"  ".$mod_strings['LBL_IMPORT_COMPLETE']."  \" id=\"finished\">";
         $submitContent .= "<input title=\"".$mod_strings['LBL_NEXT']."\" class=\"button primary\" type=\"submit\" name=\"button\" value=\"  ".$mod_strings['LBL_NEXT']."  \"  id=\"gonext\"></td></tr></table>";
@@ -167,9 +167,9 @@ class ImportViewStep1 extends ImportView
     private function _getJS($sourceType = false)
     {
         global $mod_strings;
-        $EXTERNAL_AUTHENTICATED_SOURCES = json_encode($this->getAuthenticatedImportableExternalEAPMs(), JSON_THROW_ON_ERROR);
+        $EXTERNAL_AUTHENTICATED_SOURCES = json_encode($this->getAuthenticatedImportableExternalEAPMs());
         $selectExternalSource = !empty($_REQUEST['application']) ? $_REQUEST['application'] : '';
-        
+
         $showModuleSelection = ($this->importModule == 'Administration');
         $importableModulesOptions = array();
         $importablePersonModules = array();
@@ -179,8 +179,8 @@ class ImportViewStep1 extends ImportView
         }
 
 
-        $PERSON_MODULE_LIST = json_encode($importablePersonModules, JSON_THROW_ON_ERROR);
-        
+        $PERSON_MODULE_LIST = json_encode($importablePersonModules);
+
         return <<<EOJAVASCRIPT
 
 

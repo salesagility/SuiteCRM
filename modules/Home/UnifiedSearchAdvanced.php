@@ -153,8 +153,8 @@ class UnifiedSearchAdvanced
             }
         }
 
-        $sugar_smarty->assign('enabled_modules', json_encode($json_enabled, JSON_THROW_ON_ERROR));
-        $sugar_smarty->assign('disabled_modules', json_encode($json_disabled, JSON_THROW_ON_ERROR));
+        $sugar_smarty->assign('enabled_modules', json_encode($json_enabled));
+        $sugar_smarty->assign('disabled_modules', json_encode($json_disabled));
 
         $showDiv = $current_user->getPreference('showGSDiv', 'search');
         if (!isset($showDiv)) {
@@ -565,7 +565,7 @@ class UnifiedSearchAdvanced
      */
     public function getUnifiedSearchModules()
     {
-        $unified_search_modules = null;
+        $unified_search_modules = [];
         //Make directory if it doesn't exist
         $cachedir = sugar_cached('modules');
         if (!file_exists($cachedir)) {

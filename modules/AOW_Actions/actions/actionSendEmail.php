@@ -140,7 +140,7 @@ class actionSendEmail extends actionBase
         if (isset($params['email_target_type'])) {
             foreach ($params['email_target_type'] as $key => $field) {
                 if (is_array($params['email'][$key])) {
-                    $params['email'][$key] = json_encode($params['email'][$key], JSON_THROW_ON_ERROR);
+                    $params['email'][$key] = json_encode($params['email'][$key]);
                 }
                 $html .= "load_emailline('".$line."','".$params['email_to_type'][$key]."','".$params['email_target_type'][$key]."','".$params['email'][$key]."');";
             }
@@ -386,11 +386,12 @@ class actionSendEmail extends actionBase
 
     public function parse_template(SugarBean $bean, &$template, $object_override = array())
     {
-        $object_arr = [];
+
         global $sugar_config;
 
         require_once __DIR__ . '/templateParser.php';
 
+        $object_arr = [];
         $object_arr[$bean->module_dir] = $bean->id;
 
         foreach ($bean->field_defs as $bean_arr) {

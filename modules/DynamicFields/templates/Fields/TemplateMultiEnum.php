@@ -59,6 +59,8 @@ class TemplateMultiEnum extends TemplateEnum
 
     public function get_xtpl_edit()
     {
+        global $app_list_strings;
+
         $returnXTPL = [];
         $name = $this->name;
         $value = '';
@@ -72,9 +74,6 @@ class TemplateMultiEnum extends TemplateEnum
         if (!empty($this->help)) {
             $returnXTPL[strtoupper($this->name . '_help')] = translate($this->help, $this->bean->module_dir);
         }
-
-        global $app_list_strings;
-        $returnXTPL = array();
 
         $returnXTPL[strtoupper($this->name)] = str_replace('^,^', ',', (string) $value);
         if (empty($this->ext1)) {
@@ -136,11 +135,11 @@ class TemplateMultiEnum extends TemplateEnum
 
             // if we have a new error, then unserialize must have failed => we don't have a packed ext4
             // safe to assume that false means the unpack failed, as ext4 will either contain an imploded string of default values, or an array, not a boolean false value
-            if ($unpacked === false && !(property_exists($this, 'no_default') && $this->no_default !== null)) {
+            if ($unpacked === false && !isset($this->no_default)) {
                 $def [ 'default' ] = $this->ext4 ;
             } else {
                 // we have a packed representation containing one or both of default and dependency
-                if (isset($unpacked [ 'default' ]) && !(property_exists($this, 'no_default') && $this->no_default !== null)) {
+                if (isset($unpacked [ 'default' ]) && !isset($this->no_default)) {
                     $def [ 'default' ] = $unpacked [ 'default' ] ;
                 }
                 if (isset($unpacked [ 'dependency' ])) {
@@ -160,13 +159,13 @@ class TemplateMultiEnum extends TemplateEnum
 
     public function save($df)
     {
-        if ($this->default !== null) {
+        if (isset($this->default)) {
             if (is_array($this->default)) {
                 $this->default = encodeMultienumValue($this->default);
             }
-            $this->ext4 = ($this->dependency !== null) ? serialize(array( 'default' => $this->default , 'dependency' => html_entity_decode((string) $this->dependency) ))  : $this->default ;
+            $this->ext4 = (isset($this->dependency)) ? serialize(array( 'default' => $this->default , 'dependency' => html_entity_decode((string) $this->dependency) ))  : $this->default ;
         } else {
-            if ($this->dependency !== null) {
+            if (isset($this->dependency)) {
                 $this->ext4 = serialize(array( 'dependency' => html_entity_decode((string) $this->dependency) )) ;
             }
         }

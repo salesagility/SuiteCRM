@@ -482,8 +482,7 @@ class PredefinedChart
 
     public function myModuleUsageLast30Days()
     {
-        $timedate = null;
-        global $current_user;
+        global $current_user, $timedate;
         $dateValue = DBManagerFactory::getInstance()->convert("'".$timedate->getNow()->modify("-30 days")->asDb()."'", "datetime");
 
         $query  = "SELECT tracker.module_name as module_name ";

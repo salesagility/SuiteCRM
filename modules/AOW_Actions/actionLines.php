@@ -25,7 +25,7 @@
 
 function display_action_lines(SugarBean $focus, $field, $value, $view)
 {
-    $app_list_actions = [];
+
     global $locale, $app_list_strings, $mod_strings;
 
     $html = '';
@@ -36,6 +36,8 @@ function display_action_lines(SugarBean $focus, $field, $value, $view)
     }
     $html .= '<script src="cache/jsLanguage/AOW_Actions/'. $GLOBALS['current_language'] . '.js"></script>';
 
+    $app_list_actions = [];
+
     if ($view == 'EditView') {
         $html .= '<script src="modules/AOW_Actions/actionLines.js"></script>';
 
@@ -43,7 +45,6 @@ function display_action_lines(SugarBean $focus, $field, $value, $view)
 
         include_once('modules/AOW_Actions/actions.php');
 
-        $app_list_actions[''] = '';
         foreach ($aow_actions_list as $action_value) {
             $action_name = 'action'.$action_value;
 
@@ -81,7 +82,7 @@ function display_action_lines(SugarBean $focus, $field, $value, $view)
                 while ($row = $focus->db->fetchByAssoc($result)) {
                     $action_name = BeanFactory::newBean('AOW_Actions');
                     $action_name->retrieve($row['id']);
-                    $action_item = json_encode($action_name->toArray(), JSON_THROW_ON_ERROR);
+                    $action_item = json_encode($action_name->toArray());
 
                     $html .= "<script>
                             loadActionLine(".$action_item.");

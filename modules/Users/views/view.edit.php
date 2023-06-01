@@ -86,8 +86,6 @@ class UsersViewEdit extends ViewEdit
 
     public function display()
     {
-        $action_button_header = [];
-        $action_button_footer = [];
         global $current_user, $app_list_strings, $mod_strings;
 
 
@@ -99,7 +97,7 @@ class UsersViewEdit extends ViewEdit
         $this->ss->assign('IS_ADMIN', $current_user->is_admin ? true : false);
 
         //make sure we can populate user type dropdown.  This usually gets populated in predisplay unless this is a quickeditform
-        if (!(property_exists($this, 'fieldHelper') && $this->fieldHelper !== null)) {
+        if (!isset($this->fieldHelper)) {
             $this->fieldHelper = new UserViewHelper($this->ss, $this->bean, 'EditView');
             $this->fieldHelper->setupAdditionalFields();
         }
@@ -211,6 +209,7 @@ class UsersViewEdit extends ViewEdit
 
         $minpwdlength = !empty($PWDSETTINGS['minpwdlength']) ? $PWDSETTINGS['minpwdlength'] : '';
         $maxpwdlength =  !empty($PWDSETTINGS['maxpwdlength']) ? $PWDSETTINGS['maxpwdlength'] : '';
+        $action_button_header = [];
         $action_button_header[] = <<<EOD
                     <input type="button" id="SAVE_HEADER" title="{$APP['LBL_SAVE_BUTTON_TITLE']}" accessKey="{$APP['LBL_SAVE_BUTTON_KEY']}"
                           class="button primary" onclick="var _form = $('#EditView')[0]; if (!set_password(_form,newrules('{$minpwdlength}','{$maxpwdlength}','{$REGEX}'))) return false; if (!Admin_check()) return false; _form.action.value='Save'; {$CHOOSER_SCRIPT} {$REASSIGN_JS} if(verify_data(EditView)) _form.submit();"
@@ -242,6 +241,7 @@ EOD
         $action_button_header = array_merge($action_button_header, $this->ss->get_template_vars('BUTTONS_HEADER'));
         $this->ss->assign('ACTION_BUTTON_HEADER', $action_button_header);
 
+        $action_button_footer = [];
         $action_button_footer[] = <<<EOD
                     <input type="button" id="SAVE_FOOTER" title="{$APP['LBL_SAVE_BUTTON_TITLE']}" accessKey="{$APP['LBL_SAVE_BUTTON_KEY']}"
                           class="button primary" onclick="var _form = $('#EditView')[0]; if (!set_password(_form,newrules('{$minpwdlength}','{$maxpwdlength}','{$REGEX}'))) return false; if (!Admin_check()) return false; _form.action.value='Save'; {$CHOOSER_SCRIPT} {$REASSIGN_JS} if(verify_data(EditView)) _form.submit();"

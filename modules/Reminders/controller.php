@@ -63,7 +63,7 @@ class RemindersController extends SugarController
             }
         }
 
-        $inviteeJson = json_encode($ret, JSON_THROW_ON_ERROR);
+        $inviteeJson = json_encode($ret);
         echo $inviteeJson;
         die();
     }

@@ -80,7 +80,6 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
     ) {
 
 
-        $ret_array = [];
         // Create the data structure which are required to view a list view.
         require_once 'include/SearchForm/SearchForm2.php';
         $this->lvde->seed =& $seed;
@@ -169,6 +168,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         }
         $crmWhere = $where . " AND mailbox_id LIKE " . "'" . $inboundEmailIdQuoted . "'";
 
+        $ret_array = [];
         $ret_array['inner_join'] = '';
         if (!empty($this->lvde->seed->listview_inner_join)) {
             $ret_array['inner_join'] = ' ' . implode(' ', $this->lvde->seed->listview_inner_join) . ' ';

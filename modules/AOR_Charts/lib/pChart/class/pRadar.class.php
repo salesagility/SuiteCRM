@@ -35,9 +35,9 @@
    /* Draw a radar chart */
    public function drawRadar($Object,$Values,$Format="")
     {
-     $EdgeX1 = null;
-     $EdgeY1 = null;
-     $Axisoffset = null;
+
+
+     $Axisoffset = 0;
      $this->pChartObject = $Object;
 
      $FixedMax		= isset($Format["FixedMax"]) ? $Format["FixedMax"] : VOID;
@@ -214,6 +214,9 @@
        $Object->Shadow = $RestoreShadow;
       }
 
+     $EdgeX1 = 0;
+     $EdgeY1 = 0;
+
      /* Axis to axis lines */
      $Color = array("R"=>$AxisR,"G"=>$AxisG,"B"=>$AxisB,"Alpha"=>$AxisAlpha);
      $ColorDotted = array("R"=>$AxisR,"G"=>$AxisG,"B"=>$AxisB,"Alpha"=>$AxisAlpha*.8, "Ticks"=>2);
@@ -355,8 +358,8 @@
           $Color = array("R"=>$Palette[$ID]["R"],"G"=>$Palette[$ID]["G"],"B"=>$Palette[$ID]["B"],"Alpha"=>$PolyAlpha,"Surrounding"=>$PointSurrounding);
 
          $PointsArray = [];
-         $PointsCount = count($Points);
-         for($i=0; $i<$PointsCount;$i++) 
+         $PointsCount = is_countable($Points) ? count($Points) : 0;
+         for($i=0; $i<$PointsCount;$i++)
           { $PointsArray[] = $Points[$i][0]; $PointsArray[] = $Points[$i][1]; }
          $Object->drawPolygon($PointsArray,$Color);
         }
@@ -373,14 +376,12 @@
 
        /* Loop to the starting points if asked */
        if ( $LineLoopStart && $DrawLines )
-        $Object->drawLine($Points[(is_countable($Points) ? count($Points) : 0)-1][0],$Points[(is_countable($Points) ? count($Points) : 0)-1][1],$Points[0][0],$Points[0][1],$Color);
-       /* Draw the lines & points */
-       $PointsCount = count($Points);
+        $Object->drawLine($Points[$PointsCount-1][0],$Points[$PointsCount-1][1],$Points[0][0],$Points[0][1],$Color);
 
        /* Draw the lines & points */
-       for($i=0; $i<$PointsCount;$i++) 
+       for($i=0; $i<$PointsCount;$i++)
         {
-         if ( $DrawLines && $i < (is_countable($Points) ? count($Points) : 0)-1)
+         if ( $DrawLines && $i < $PointsCount-1)
           $Object->drawLine($Points[$i][0],$Points[$i][1],$Points[$i+1][0],$Points[$i+1][1],$Color);
 
          if ( $DrawPoints )
@@ -642,8 +643,8 @@
           $Color = array("R"=>$Palette[$ID]["R"],"G"=>$Palette[$ID]["G"],"B"=>$Palette[$ID]["B"],"Alpha"=>$PolyAlpha,"Surrounding"=>$PointSurrounding);
 
          $PointsArray = [];
-         $PointsCount = count($Points);
-         for($i=0; $i<$PointsCount;$i++) 
+         $PointsCount = is_countable($Points) ? count($Points): 0;
+         for($i=0; $i<$PointsCount;$i++)
           { $PointsArray[] = $Points[$i][0]; $PointsArray[] = $Points[$i][1]; }
 
          $Object->drawPolygon($PointsArray,$Color);
@@ -661,14 +662,13 @@
 
        /* Loop to the starting points if asked */
        if ( $LineLoopStart && $DrawLines )
-        $Object->drawLine($Points[(is_countable($Points) ? count($Points) : 0)-1][0],$Points[(is_countable($Points) ? count($Points) : 0)-1][1],$Points[0][0],$Points[0][1],$Color);
+        $Object->drawLine($Points[$PointsCount-1][0],$Points[$PointsCount-1][1],$Points[0][0],$Points[0][1],$Color);
        /* Draw the lines & points */
-       $PointsCount = count($Points);
-       
+
        /* Draw the lines & points */
-       for($i=0; $i<$PointsCount;$i++) 
+       for($i=0; $i<$PointsCount;$i++)
         {
-         if ( $DrawLines && $i < (is_countable($Points) ? count($Points) : 0)-1)
+         if ( $DrawLines && $i < $PointsCount-1)
           $Object->drawLine($Points[$i][0],$Points[$i][1],$Points[$i+1][0],$Points[$i+1][1],$Color);
 
          if ( $DrawPoints )

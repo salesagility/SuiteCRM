@@ -253,7 +253,7 @@ class Campaign extends SugarBean
     {
 
             //US DOLLAR
-        if (property_exists($this, 'amount') && $this->amount !== null && !empty($this->amount)) {
+        if (isset($this->amount) && !empty($this->amount)) {
             $currency = BeanFactory::newBean('Currencies');
             $currency->retrieve($this->currency_id);
             $this->amount_usdollar = $currency->convertToDollar($this->amount);

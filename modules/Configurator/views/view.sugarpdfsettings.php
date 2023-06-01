@@ -73,8 +73,10 @@ class ConfiguratorViewSugarpdfsettings extends SugarView
      */
     public function display()
     {
-        $SugarpdfSettings = null;
+
         global $mod_strings, $app_strings, $app_list_strings;
+
+        $SugarpdfSettings = [];
 
         require_once("modules/Configurator/metadata/SugarpdfSettingsdefs.php");
         if (file_exists('custom/modules/Configurator/metadata/SugarpdfSettingsdefs.php')) {

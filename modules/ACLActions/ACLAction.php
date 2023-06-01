@@ -473,7 +473,7 @@ class ACLAction extends SugarBean
             )) {
             return true;
         }
-        if (!is_null($action) && (property_exists($action, 'aclaccess') && $action->aclaccess !== null)) {
+        if (!is_null($action) && isset($action->aclaccess)) {
             if ($action->aclaccess == ACL_ALLOW_ALL
                 || ($is_owner && $action->aclaccess == ($access == ACL_ALLOW_OWNER || $access == ACL_ALLOW_GROUP))
                 || ($in_group && $access == ACL_ALLOW_GROUP) //need to pass if in group with access somehow

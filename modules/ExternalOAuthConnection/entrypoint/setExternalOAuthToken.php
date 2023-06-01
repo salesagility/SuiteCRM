@@ -71,7 +71,7 @@ $oAuth->log('debug', 'setExternalOAuthToken::request', $request);
 
 $token = $oAuth->getAccessToken($providerId, $code);
 
-if (!$token instanceof \League\OAuth2\Client\Token\AccessTokenInterface) {
+if ($token === null) {
     exit('Not able to get access token. Check logs for more details');
 }
 

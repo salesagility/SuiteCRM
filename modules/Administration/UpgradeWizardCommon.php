@@ -117,7 +117,10 @@ function getInstallType($type_string)
 
 function getImageForType($type)
 {
-    $mod_strings = [];
+    global $mod_strings;
+
+    $mod_strings = $mod_strings ?? [];
+
     $icon = "";
     switch ($type) {
         case "full":

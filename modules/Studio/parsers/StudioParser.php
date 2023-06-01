@@ -443,7 +443,7 @@ EOQ;
 
     public function populateRequestFromBuffer($file)
     {
-        $buffer = null;
+        $buffer = '';
         $results = array();
         $temp = sugar_file_get_contents($file);
         preg_match_all("'name[\ ]*=[\ ]*[\']([^\']*)\''si", (string) $buffer, $results);
@@ -628,8 +628,10 @@ EOQ;
 
     public function parseOldestFile($file)
     {
-        $slotLookup = [];
         ob_clean();
+
+        $slotLookup = [];
+
         require_once('modules/Studio/SugarBackup.php');
         $file = str_replace('custom/working/', '', (string) $file);
 

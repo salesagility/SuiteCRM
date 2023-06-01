@@ -89,7 +89,7 @@ class Spots extends Basic
         $type = $_REQUEST['type'];
         $name = $_REQUEST['name'];
         $config = htmlspecialchars_decode((string) $_REQUEST['config']);
-        $jsonConfig = json_decode($config, true, 512, JSON_THROW_ON_ERROR);
+        $jsonConfig = json_decode($config, true);
 
         $colsLabels = array();
         $rowsLabels = array();
@@ -141,7 +141,7 @@ class Spots extends Basic
                 }
             }
         }
-        $this->config = json_encode($jsonConfig, JSON_THROW_ON_ERROR);
+        $this->config = json_encode($jsonConfig);
 
         return parent::save($check_notify);
     }
@@ -158,7 +158,7 @@ class Spots extends Basic
         //Strings are loaded this way as the dashlet mod_strings was set to Home
         $spotStrings = return_module_language($GLOBALS['current_language'], 'Spots');
 
-        $jsonConfig = json_decode($config, true, 512, JSON_THROW_ON_ERROR);
+        $jsonConfig = json_decode($config, true);
         if (isset($jsonConfig['cols']) && (is_countable($jsonConfig['cols']) ? count($jsonConfig['cols']) : 0) > 0) {
             foreach ($jsonConfig['cols'] as $k => $v) {
                 $jsonConfig['cols'][$k] = $spotStrings[$v];

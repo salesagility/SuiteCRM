@@ -61,8 +61,6 @@ class sendEmail
      */
     public function send_email($module, $module_type, $printable, $file_name, $attach)
     {
-        $contact_id = null;
-        $noteID = null;
         global $current_user, $mod_strings, $sugar_config;
         // First Create e-mail draft
         $email = BeanFactory::newBean('Emails');
@@ -77,6 +75,8 @@ class sendEmail
         // type is draft
         $email->type = "draft";
         $email->status = "draft";
+
+        $contact_id = '';
 
         if (!empty($module->billing_contact_id)) {
             $contact_id = $module->billing_contact_id;
@@ -125,7 +125,7 @@ class sendEmail
             $note->filename = $file_name;
             $noteId = $note->save();
 
-            if ($noteID !== false && !empty($noteId)) {
+            if (!empty($noteId)) {
                 rename($sugar_config['upload_dir'] . 'attachfile.pdf', $sugar_config['upload_dir'] . $note->id);
                 $email->attachNote($note);
             } else {

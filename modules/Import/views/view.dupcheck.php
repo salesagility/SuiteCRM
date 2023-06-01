@@ -154,8 +154,8 @@ class ImportViewDupcheck extends ImportView
             }
         }
 
-        $enabled_dupes = json_encode($dupe_enabled, JSON_THROW_ON_ERROR);
-        $disabled_dupes = json_encode($dupe_disabled, JSON_THROW_ON_ERROR);
+        $enabled_dupes = json_encode($dupe_enabled);
+        $disabled_dupes = json_encode($dupe_disabled);
 
         $stepTitle4 = $mod_strings['LBL_IMPORT_RECORDS'];
 

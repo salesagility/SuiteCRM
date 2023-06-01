@@ -209,7 +209,7 @@ class EmailsController extends SugarController
             'id' => $bean->id,
             'module' => $bean->module_name,
         ];
-        echo json_encode($result, JSON_THROW_ON_ERROR);
+        echo json_encode($result);
 
         if (empty($_REQUEST['parentEmailRecordId'])) {
             return;
@@ -235,11 +235,11 @@ class EmailsController extends SugarController
      */
     public function action_send()
     {
-        $response = [];
         global $current_user;
         global $app_strings;
 
         $request = $_REQUEST;
+        $response = [];
 
         $this->bean = $this->bean->populateBeanFromRequest($this->bean, $request);
         $inboundEmailAccount = BeanFactory::newBean('InboundEmail');
@@ -545,7 +545,7 @@ class EmailsController extends SugarController
                 true
             );
 
-            $out = json_encode(array('response' => $ret), JSON_THROW_ON_ERROR);
+            $out = json_encode(array('response' => $ret));
         } catch (SugarFolderEmptyException $e) {
             $GLOBALS['log']->warn($e->getMessage());
             $out = json_encode(array('errors' => array($mod_strings['LBL_ERROR_NO_FOLDERS'])));
@@ -618,7 +618,7 @@ class EmailsController extends SugarController
     public function action_GetCurrentUserID()
     {
         global $current_user;
-        echo json_encode(array("response" => $current_user->id), JSON_THROW_ON_ERROR);
+        echo json_encode(array("response" => $current_user->id));
         $this->view = 'ajax';
     }
 

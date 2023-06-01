@@ -755,7 +755,6 @@ class ConnectorsController extends SugarController
 
     public function add_social_field($module, $field_name)
     {
-        $layout = [];
         $field = array(
                 array(
                         'name' => $field_name,
@@ -773,6 +772,7 @@ class ConnectorsController extends SugarController
                 )
         );
 
+        $layout = [];
         $layout[$module] = $field_name;
 
         require_once('ModuleInstall/ModuleInstaller.php');

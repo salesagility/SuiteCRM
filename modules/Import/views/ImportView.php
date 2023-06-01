@@ -141,7 +141,7 @@ class ImportView extends SugarView
 
             array_walk($out, $function);
         }
-        echo json_encode($out, JSON_THROW_ON_ERROR);
+        echo json_encode($out);
     }
 
     /**
@@ -160,7 +160,7 @@ class ImportView extends SugarView
         global $mod_strings;
 
         $ins = '';
-        
+
         if ($this->instruction) {
             $ins_string = $mod_strings[$this->instruction];
             $ins = '<div class="import_instruction">' . $ins_string . '</div>';

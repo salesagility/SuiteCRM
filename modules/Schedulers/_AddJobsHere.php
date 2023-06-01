@@ -907,7 +907,7 @@ EOF;
 
 function runElasticSearchIndexerScheduler($data)
 {
-    return \SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer::schedulerJob(json_decode((string) $data, null, 512, JSON_THROW_ON_ERROR));
+    return \SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer::schedulerJob(json_decode((string) $data));
 }
 
 if (file_exists('custom/modules/Schedulers/_AddJobsHere.php')) {

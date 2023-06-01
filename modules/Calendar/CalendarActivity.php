@@ -286,7 +286,7 @@ class CalendarActivity
                     $seen_ids[$focusBean->id] = 1;
                     $act = new CalendarActivity($focusBean);
 
-                    if ($act instanceof \CalendarActivity) {
+                    if (!empty($act)) {
                         $act_list[] = $act;
                     }
                 }

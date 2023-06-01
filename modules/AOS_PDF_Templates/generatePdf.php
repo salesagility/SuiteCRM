@@ -354,7 +354,7 @@ function populate_product_lines($text, $lineItems, $element = 'tr')
                 }
             }
         }
-        $partsCount = count($parts);
+        $partsCount = is_countable($parts) ? count($parts) : 0;
 
         for ($i = 1; $i < $partsCount; $i++) {
             $text .= $parts[$i];
@@ -432,7 +432,7 @@ function populate_service_lines($text, $lineItems, $element = 'tr')
                 }
             }
         }
-        $partsCount = count($parts);
+        $partsCount = is_countable($parts) ? count($parts) : 0;
 
         for ($i = 1; $i < $partsCount; $i++) {
             $text .= $parts[$i];

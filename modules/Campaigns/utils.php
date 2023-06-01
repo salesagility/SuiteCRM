@@ -56,7 +56,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 function get_message_scope_dom($campaign_id, $campaign_name, $db = null, $mod_strings = array())
 {
-    $return_array = [];
+
     if (empty($db)) {
         $db = DBManagerFactory::getInstance();
     }
@@ -77,6 +77,8 @@ function get_message_scope_dom($campaign_id, $campaign_name, $db = null, $mod_st
     //add campaign to the result array.
     //$return_array[$campaign_id]= $campaign_name . ' (' . $mod_strings['LBL_DEFAULT'] . ')';
 
+    $return_array = [];
+
     $result=$db->query($query);
     while (($row=$db->fetchByAssoc($result))!= null) {
         $return_array[$row['prospect_list_id']]=$row['name'];
@@ -96,13 +98,13 @@ function get_message_scope_dom($campaign_id, $campaign_name, $db = null, $mod_st
  */
 function get_campaign_mailboxes(&$emails, $get_name=true)
 {
-    $return_array = [];
     if (!class_exists('InboundEmail')) {
         require('modules/InboundEmail/InboundEmail.php');
     }
     $query =  "select id,name,stored_options from inbound_email where mailbox_type='bounce' and status='Active' and deleted='0'";
     $db = DBManagerFactory::getInstance();
     $result=$db->query($query);
+    $return_array = [];
     while (($row=$db->fetchByAssoc($result))!= null) {
         if ($get_name) {
             $return_array[$row['id']] = $row['name'];
@@ -160,9 +162,11 @@ function get_campaign_mailboxes_with_stored_options_outbound()
 
 function log_campaign_activity($identifier, $activity, $update = true, $clicked_url_key = null)
 {
-    $sugar_config = [];
+
+    global $sugar_config;
+
     $data = [];
-    $return_array = array();
+    $return_array = [];
 
     $db = DBManagerFactory::getInstance();
 
@@ -619,7 +623,7 @@ function process_subscriptions($subscription_string_to_parse)
      * */
     function subscribe($campaign, $prospect_list, $focus, $default_list = false)
     {
-        $exempt_array = [];
+
         $relationship = strtolower($focus->getObjectName()).'s';
 
         //--grab all the lists for the passed in campaign id
@@ -658,6 +662,7 @@ function process_subscriptions($subscription_string_to_parse)
             }
         }
 
+        $exempt_array = [];
         //now that we have exempt (unsubscription) list id, compare against user list id's
         if (!empty($exempt_id)) {
             $exempt_array['exempt_id'] = $exempt_id;
@@ -713,7 +718,7 @@ function process_subscriptions($subscription_string_to_parse)
      * */
     function unsubscribe($campaign, $focus)
     {
-        $exempt_list = null;
+
         $relationship = strtolower($focus->getObjectName()).'s';
         //--grab all the list for this campaign id
         $pl_qry ="select id, list_type from prospect_lists where id in (select prospect_list_id from prospect_list_campaigns ";
@@ -756,6 +761,8 @@ function process_subscriptions($subscription_string_to_parse)
                 }
             }
         }
+
+        $exempt_list = null;
 
         //unsubscribe subscripted newsletter
         foreach ($pl_arr as $subscription_list) {

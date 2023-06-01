@@ -124,10 +124,10 @@ class CalendarDisplay
         $ss->assign('items_draggable', SugarConfig::getInstance()->get('calendar.items_draggable', true));
         $ss->assign('items_resizable', SugarConfig::getInstance()->get('calendar.items_resizable', true));
         $ss->assign('cells_per_day', $cal->cells_per_day);
-        $ss->assign('activityColors', json_encode($this->checkActivity($this->activity_colors), JSON_THROW_ON_ERROR));
+        $ss->assign('activityColors', json_encode($this->checkActivity($this->activity_colors)));
         $ss->assign('dashlet', $cal->dashlet);
         $ss->assign('grid_start_ts', (int)$cal->grid_start_ts);
-        
+
         $ss->assign('year', $cal->date_time->format('Y'));
         $ss->assign('month', $cal->date_time->format('m'));
         $ss->assign('day', $cal->date_time->format('d'));
@@ -138,13 +138,15 @@ class CalendarDisplay
 
 
         $ss->assign('basic_min_height', "'auto'");
-        
+
         $ss->assign('isPrint', $this->cal->isPrint() ? 'true': 'false');
 
 
-        if (is_countable($cal->shared_ids) ? count($cal->shared_ids) : 0) {
+        $sharedIdsCount = is_countable($cal->shared_ids) ? count($cal->shared_ids) : 0;
+
+        if ($sharedIdsCount) {
             $ss->assign('shared_ids', $cal->shared_ids);
-            $ss->assign('shared_users_count', is_countable($cal->shared_ids) ? count($cal->shared_ids) : 0);
+            $ss->assign('shared_users_count', $sharedIdsCount);
         }
 
 
@@ -154,7 +156,7 @@ class CalendarDisplay
         $ss->assign('editview_width', SugarConfig::getInstance()->get('calendar.editview_width', 800));
         $ss->assign('editview_height', SugarConfig::getInstance()->get('calendar.editview_height', 600));
 
-        $ss->assign('a_str', json_encode($cal->items, JSON_THROW_ON_ERROR));
+        $ss->assign('a_str', json_encode($cal->items));
 
         $start = $current_user->getPreference('day_start_time');
         if (is_null($start)) {
@@ -259,15 +261,18 @@ class CalendarDisplay
      */
     protected function load_settings_template(&$ss)
     {
-        $match = [];
-        list($d_start_hour, $d_start_min) =  explode(":", $this->cal->day_start_time);
-        list($d_end_hour, $d_end_min) =  explode(":", $this->cal->day_end_time);
 
-        require_once("include/utils.php");
         global $app_strings,$app_list_strings,$beanList;
         global $timedate;
 
+        list($d_start_hour, $d_start_min) =  explode(":", $this->cal->day_start_time);
+        list($d_end_hour, $d_end_min) =  explode(":", $this->cal->day_end_time);
+
+        $match = [];
+
+        require_once("include/utils.php");
         $user_default_date_start  = $timedate->asUser($timedate->getNow());
+
         if (!isset($time_separator)) {
             $time_separator = ":";
         }

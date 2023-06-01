@@ -157,7 +157,7 @@ class Lead extends Person implements EmailInterface
 
     public function get_account()
     {
-        if ($this->account_id !== null && !empty($this->account_id)) {
+        if (isset($this->account_id) && !empty($this->account_id)) {
             $query = "SELECT name , assigned_user_id account_name_owner FROM accounts WHERE id='{$this->account_id}'";
 
             //requireSingleResult has beeen deprecated.
@@ -179,7 +179,7 @@ class Lead extends Person implements EmailInterface
     }
     public function get_opportunity()
     {
-        if ($this->opportunity_id !== null && !empty($this->opportunity_id)) {
+        if (isset($this->opportunity_id) && !empty($this->opportunity_id)) {
             $query = "SELECT name, assigned_user_id opportunity_name_owner FROM opportunities WHERE id='{$this->opportunity_id}'";
 
             //requireSingleResult has beeen deprecated.
@@ -204,7 +204,7 @@ class Lead extends Person implements EmailInterface
     public function get_contact()
     {
         global $locale;
-        if ($this->contact_id !== null && !empty($this->contact_id)) {
+        if (isset($this->contact_id) && !empty($this->contact_id)) {
             $query = "SELECT first_name, last_name, assigned_user_id contact_name_owner FROM contacts WHERE id='{$this->contact_id}'";
 
             //requireSingleResult has beeen deprecated.

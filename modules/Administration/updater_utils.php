@@ -142,8 +142,7 @@ function getBaseSystemInfo($send_usage_info=true)
 
 function check_now($send_usage_info=true, $get_request_data=false, $response_data = false, $from_install=false)
 {
-    $sugar_version = null;
-    global $sugar_config, $timedate;
+    global $sugar_config, $timedate, $sugar_version;
     global $license;
     $db = DBManagerFactory::getInstance();
 
@@ -360,8 +359,7 @@ function loadLicense($firstLogin=false)
 
 function loginLicense()
 {
-    $sugar_version = null;
-    global $current_user, $license;
+    global $current_user, $license, $sugar_version;
     loadLicense(true);
 
 

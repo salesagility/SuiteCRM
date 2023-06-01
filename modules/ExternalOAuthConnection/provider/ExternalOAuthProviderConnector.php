@@ -115,7 +115,7 @@ abstract class ExternalOAuthProviderConnector implements ExternalOAuthProviderCo
         $provider = $this->getProvider($requestClientId, $requestClientSecret);
         $config = $this->getProviderConfig();
 
-        if (!$provider instanceof \League\OAuth2\Client\Provider\AbstractProvider || empty($config)) {
+        if ($provider === null || empty($config)) {
             return '';
         }
 
@@ -134,7 +134,7 @@ abstract class ExternalOAuthProviderConnector implements ExternalOAuthProviderCo
         $config = $this->getProviderConfig();
         $provider = $this->getProvider('', '');
 
-        if (!$provider instanceof \League\OAuth2\Client\Provider\AbstractProvider || empty($config)) {
+        if ($provider === null || empty($config)) {
             return null;
         }
 
@@ -158,7 +158,7 @@ abstract class ExternalOAuthProviderConnector implements ExternalOAuthProviderCo
         $config = $this->getProviderConfig();
         $provider = $this->getProvider('', '');
 
-        if (!$provider instanceof \League\OAuth2\Client\Provider\AbstractProvider || empty($config)) {
+        if ($provider === null || empty($config)) {
             return null;
         }
 

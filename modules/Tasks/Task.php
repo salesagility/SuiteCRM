@@ -154,7 +154,7 @@ class Task extends SugarBean
         parent::fill_in_additional_detail_fields();
         global $app_strings;
 
-        if ($this->contact_id !== null) {
+        if (isset($this->contact_id)) {
             $contact = BeanFactory::newBean('Contacts');
             $contact->retrieve($this->contact_id);
 
@@ -295,7 +295,7 @@ class Task extends SugarBean
         if (!empty($this->priority)) {
             $task_fields['PRIORITY'] = $app_list_strings['task_priority_dom'][$this->priority];
         }
-        if ($this->parent_type !== null) {
+        if (isset($this->parent_type)) {
             $task_fields['PARENT_MODULE'] = $this->parent_type;
         }
         if ($this->status != "Completed" && $this->status != "Deferred") {

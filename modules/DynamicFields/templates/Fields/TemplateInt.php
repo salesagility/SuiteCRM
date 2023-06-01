@@ -61,7 +61,7 @@ class TemplateInt extends TemplateRange
         $this->vardef_map['autoinc_next'] = 'autoinc_next';
         $this->vardef_map['autoinc_start'] = 'autoinc_start';
         $this->vardef_map['auto_increment'] = 'auto_increment';
-        
+
         $this->vardef_map['min'] = 'ext1';
         $this->vardef_map['max'] = 'ext2';
         $this->vardef_map['disable_num_format'] = 'ext3';
@@ -76,7 +76,7 @@ class TemplateInt extends TemplateRange
     public function populateFromPost()
     {
         parent::populateFromPost();
-        if (property_exists($this, 'auto_increment') && $this->auto_increment !== null) {
+        if (isset($this->auto_increment)) {
             $this->auto_increment = $this->auto_increment == "true" || $this->auto_increment === true;
         }
     }
@@ -84,10 +84,10 @@ class TemplateInt extends TemplateRange
     public function get_field_def()
     {
         $vardef = parent::get_field_def();
-        $vardef['disable_num_format'] = property_exists($this, 'disable_num_format') && $this->disable_num_format !== null ? $this->disable_num_format : $this->ext3;//40005
+        $vardef['disable_num_format'] = isset($this->disable_num_format) ? $this->disable_num_format : $this->ext3;//40005
 
-        $vardef['min'] = property_exists($this, 'min') && $this->min !== null ? $this->min : $this->ext1;
-        $vardef['max'] = property_exists($this, 'max') && $this->max !== null ? $this->max : $this->ext2;
+        $vardef['min'] = isset($this->min) ? $this->min : $this->ext1;
+        $vardef['max'] = isset($this->max) ? $this->max : $this->ext2;
         $vardef['min'] = filter_var($vardef['min'], FILTER_VALIDATE_INT);
         $vardef['max'] = filter_var($vardef['max'], FILTER_VALIDATE_INT);
         if ($vardef['min'] !== false || $vardef['max'] !== false) {

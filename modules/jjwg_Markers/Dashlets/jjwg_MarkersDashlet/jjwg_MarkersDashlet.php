@@ -11,7 +11,11 @@ class jjwg_MarkersDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
-        $dashletData = [];
+
+        global $dashletData;
+
+        $dashletData = $dashletData ?? [];
+
         require('modules/jjwg_Markers/metadata/dashletviewdefs.php');
 
         parent::__construct($id, $def);

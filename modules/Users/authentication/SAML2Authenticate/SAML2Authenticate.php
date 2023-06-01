@@ -89,7 +89,7 @@ class SAML2Authenticate extends SugarAuthenticate
      */
     public function pre_login()
     {
-        $settingsInfo = null;
+        $settingsInfo = [];
         require_once __DIR__ . '/../SAML2Authenticate/lib/onelogin/settings.php';
         $auth = new OneLogin_Saml2_Auth($settingsInfo);
 
@@ -167,7 +167,7 @@ class SAML2Authenticate extends SugarAuthenticate
      */
     public function logout()
     {
-        if ($this->samlLogoutAuth instanceof \OneLogin_Saml2_Auth && $this->samlLogoutAuth->getSLOurl()) {
+        if ($this->samlLogoutAuth && $this->samlLogoutAuth->getSLOurl()) {
             $this->samlLogoutAuth->logout(
                 $this->samlLogoutArgs['returnTo'],
                 $this->samlLogoutArgs['parameters'],
@@ -188,7 +188,7 @@ class SAML2Authenticate extends SugarAuthenticate
      */
     public function preLogout()
     {
-        $settingsInfo = null;
+        $settingsInfo = [];
         require_once dirname(__FILE__, 2) . '/SAML2Authenticate/lib/onelogin/settings.php';
         $auth = new OneLogin_Saml2_Auth($settingsInfo);
 

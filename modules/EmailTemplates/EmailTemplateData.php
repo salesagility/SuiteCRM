@@ -151,7 +151,7 @@ if (!$results) {
         $results = array(
             'error' => 'json_encode error: '.json_last_error_msg()
         );
-        $results = json_encode($results, JSON_THROW_ON_ERROR);
+        $results = json_encode($results);
     }
 }
 echo $results;

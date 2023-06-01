@@ -70,7 +70,7 @@ global $mod_strings;
             //save here so we can link relationships
             $campaign_focus->save();
             $GLOBALS['log']->debug("Saved record with id of ".$campaign_focus->id);
-            echo json_encode(array('record'=>$campaign_focus->id), JSON_THROW_ON_ERROR);
+            echo json_encode(array('record'=>$campaign_focus->id));
             break;
         case 2:
             //process subscription lists if this is a newsletter

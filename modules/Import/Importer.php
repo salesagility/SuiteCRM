@@ -329,7 +329,7 @@ class Importer
         // check to see that the indexes being entered are unique.
         if (isset($_REQUEST['enabled_dupes']) && $_REQUEST['enabled_dupes'] != "") {
             $toDecode = html_entity_decode((string) $_REQUEST['enabled_dupes'], ENT_QUOTES);
-            $enabled_dupes = json_decode($toDecode, null, 512, JSON_THROW_ON_ERROR);
+            $enabled_dupes = json_decode($toDecode);
             $idc = new ImportDuplicateCheck($focus);
 
             if ($idc->isADuplicateRecord($enabled_dupes)) {
@@ -341,7 +341,7 @@ class Importer
         //Allow fields to be passed in for dup check as well (used by external adapters)
         elseif (!empty($_REQUEST['enabled_dup_fields'])) {
             $toDecode = html_entity_decode((string) $_REQUEST['enabled_dup_fields'], ENT_QUOTES);
-            $enabled_dup_fields = json_decode($toDecode, null, 512, JSON_THROW_ON_ERROR);
+            $enabled_dup_fields = json_decode($toDecode);
             $idc = new ImportDuplicateCheck($focus);
             if ($idc->isADuplicateRecordByFields($enabled_dup_fields)) {
                 $this->importSource->markRowAsDuplicate($idc->_dupedFields);
@@ -510,7 +510,7 @@ class Importer
         if (!empty($focus->date_entered)) {
             $focus->update_date_entered = true;
         }
-            
+
         $focus->optimistic_lock = false;
         if ($focus->object_name == "Contact" && isset($focus->sync_contact)) {
             //copy the potential sync list to another varible
@@ -536,7 +536,7 @@ class Importer
         // Bug51192: check if there are any changes in the imported data
         $hasDataChanges = false;
         $dataChanges=$focus->db->getAuditDataChanges($focus);
-        
+
         if (!empty($dataChanges)) {
             foreach ($dataChanges as $field=>$fieldData) {
                 if ($fieldData['data_type'] != 'date' || strtotime($fieldData['before']) !== strtotime($fieldData['after'])) {
@@ -545,7 +545,7 @@ class Importer
                 }
             }
         }
-        
+
         // if modified_user_id is set, set the flag to false so SugarBEan will not reset it
         if (isset($focus->modified_user_id) && $focus->modified_user_id && !$hasDataChanges) {
             $focus->update_modified_by = false;
@@ -578,7 +578,7 @@ class Importer
     {
         global $current_user;
 
-        $firstrow    = json_decode(html_entity_decode((string) $_REQUEST['firstrow']), true, 512, JSON_THROW_ON_ERROR);
+        $firstrow    = json_decode(html_entity_decode((string) $_REQUEST['firstrow']), true);
         $mappingValsArr = $this->importColumns;
         $mapping_file = BeanFactory::newBean('Import_1');
         if (isset($_REQUEST['has_header']) && $_REQUEST['has_header'] == 'on') {
@@ -781,7 +781,7 @@ class Importer
         //harvest the dupe index settings
         if (isset($_REQUEST['enabled_dupes'])) {
             $toDecode = html_entity_decode((string) $_REQUEST['enabled_dupes'], ENT_QUOTES);
-            $dupe_ind = json_decode($toDecode, null, 512, JSON_THROW_ON_ERROR);
+            $dupe_ind = json_decode($toDecode);
 
             foreach ($dupe_ind as $dupe) {
                 $advancedMappingSettings['dupe_'.$dupe] = $dupe;

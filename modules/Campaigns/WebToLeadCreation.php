@@ -85,7 +85,7 @@ $subclasses = getListOfExtendingClasses("Person");
 
 $beanList = filterFieldsFromBeans($subclasses);
 
-$xtpl->assign("BEAN_LIST", json_encode($beanList, JSON_THROW_ON_ERROR));
+$xtpl->assign("BEAN_LIST", json_encode($beanList));
 
 $personTypeList = "<select id='personTypeSelect'>";
 if ((is_countable($beanList) ? count($beanList) : 0) > 0) {

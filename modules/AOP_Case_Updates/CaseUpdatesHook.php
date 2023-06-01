@@ -295,7 +295,7 @@ class CaseUpdatesHook
         if (empty($caseId) || empty($sugar_config['aop']['case_status_changes'])) {
             return;
         }
-        $statusMap = json_decode((string) $sugar_config['aop']['case_status_changes'], 1, 512, JSON_THROW_ON_ERROR);
+        $statusMap = json_decode((string) $sugar_config['aop']['case_status_changes'], 1);
         if (empty($statusMap)) {
             return;
         }

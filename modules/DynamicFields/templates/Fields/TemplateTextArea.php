@@ -81,11 +81,11 @@ class TemplateTextArea extends TemplateText
         $def = parent::get_field_def();
         $def['studio'] = 'visible';
 
-        if ($this->ext2 !== null && $this->ext3 !== null) {
+        if (isset($this->ext2) && isset($this->ext3)) {
             $def[ 'rows' ] = $this->ext2 ;
             $def[ 'cols' ] = $this->ext3 ;
         }
-        if (property_exists($this, 'rows') && $this->rows !== null && isset($this->cols)) {
+        if (isset($this->rows) && isset($this->cols)) {
             $def[ 'rows' ] = $this->rows ;
             $def[ 'cols' ] = $this->cols ;
         }

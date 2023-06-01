@@ -108,17 +108,17 @@ class HomeController extends SugarController
                 }
                 $validate_array = array('type' => $fielddef['type'], 'required' => $fielddef['required'],'label' => $fielddef['label']);
 
-                echo json_encode($validate_array, JSON_THROW_ON_ERROR);
+                echo json_encode($validate_array);
             }
         }
     }
-    
+
     public function action_getRelateFieldJS()
     {
-        $vardefFields = [];
         global $beanFiles, $beanList;
-        
+
         $fieldlist = array();
+        $vardefFields = [];
         $view = "EditView";
 
         if (!isset($focus) || !($focus instanceof SugarBean)) {

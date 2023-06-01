@@ -59,12 +59,13 @@ class AOPInboundEmail extends InboundEmail
 
     public function handleCreateCase(Email $email, $userId)
     {
-        $to = [];
         global $current_user, $mod_strings, $current_language;
         $mod_strings = return_module_language($current_language, "Emails");
         $GLOBALS['log']->debug('In handleCreateCase in AOPInboundEmail');
         $c = BeanFactory::newBean('Cases');
         $this->getCaseIdFromCaseNumber($email->name, $c);
+
+        $to = [];
 
         if (!$this->handleCaseAssignment($email) && $this->isMailBoxTypeCreateCase()) {
             // create a case

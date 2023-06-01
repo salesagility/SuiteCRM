@@ -56,7 +56,6 @@ class MeetingFormBase extends FormBase
 {
     public function getFormBody($prefix, $mod='', $formname='')
     {
-        $lbl_subject = null;
         if (!ACLController::checkAccess('Meetings', 'edit', true)) {
             return '';
         }
@@ -83,6 +82,7 @@ class MeetingFormBase extends FormBase
         $lbl_required_symbol = $app_strings['LBL_REQUIRED_SYMBOL'];
         $lbl_date = $mod_strings['LBL_DATE'];
         $lbl_time = $mod_strings['LBL_TIME'];
+        $lbl_subject = $mod_strings['LBL_SUBJECT'];
         $ntc_date_format = $timedate->get_user_date_format();
         $ntc_time_format = '('.$timedate->get_user_time_format().')';
 

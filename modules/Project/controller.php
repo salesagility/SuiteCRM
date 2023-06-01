@@ -90,7 +90,6 @@ class ProjectController extends SugarController
     //Create new project task
     public function action_update_GanttChart()
     {
-        $milestone_flag = null;
         global $current_user;
         $db = DBManagerFactory::getInstance();
 
@@ -104,6 +103,7 @@ class ProjectController extends SugarController
         $percent = $_POST['percent'];
         $note = $_POST['note'];
         $actual_duration = $_POST['actual_duration'];
+        $milestone_flag = '';
 
         if ($_POST['milestone'] == 'Milestone') {
             $milestone_flag = '1';
@@ -261,7 +261,7 @@ class ProjectController extends SugarController
         $jArray = htmlspecialchars_decode((string) $_POST['orderArray']);
 
         //create object/array from json data
-        $orderArray = json_decode($jArray, true, 512, JSON_THROW_ON_ERROR);
+        $orderArray = json_decode($jArray, true);
 
         foreach ($orderArray as $id => $order_number) {
             $task = BeanFactory::newBean('ProjectTask');

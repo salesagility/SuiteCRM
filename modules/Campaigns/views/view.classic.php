@@ -77,7 +77,7 @@ class CampaignsViewClassic extends SugarView
     {
         $params = array();
         $params[] = $this->_getModuleTitleListParam($browserTitle);
-        if (property_exists($this, 'action') && $this->action !== null) {
+        if (isset($this->action)) {
             switch ($_REQUEST['action']) {
                     case 'WizardHome':
                         if (!empty($this->bean->id)) {

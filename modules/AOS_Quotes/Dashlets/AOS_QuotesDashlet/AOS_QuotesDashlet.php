@@ -43,8 +43,10 @@ class AOS_QuotesDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
-        $dashletData = [];
-        global $current_user, $app_strings;
+        global $current_user, $app_strings, $dashletData;
+
+        $dashletData = $dashletData ?? [];
+
         require('modules/AOS_Quotes/metadata/dashletviewdefs.php');
 
         parent::__construct($id, $def);

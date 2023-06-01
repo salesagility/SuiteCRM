@@ -144,8 +144,7 @@ class Employee extends Person
 
     public function retrieve_employee_id($employee_name)
     {
-        $user_name = null;
-        $query = "SELECT id from users where user_name='$user_name' AND deleted=0";
+        $query = "SELECT id from users where user_name='$employee_name' AND deleted=0";
         $result  = $this->db->query($query, false, "Error retrieving employee ID: ");
         $row = $this->db->fetchByAssoc($result);
         return $row['id'];
@@ -355,7 +354,7 @@ class Employee extends Person
     {
         global $current_user;
 
-        if (!($this->is_admin !== null)) {
+        if (!isset($this->is_admin)) {
             return;
         }
 

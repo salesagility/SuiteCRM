@@ -75,7 +75,6 @@ class SchedulersViewEdit extends ViewEdit
 
     public function display()
     {
-        $ints = [];
         global $mod_strings;
         global $app_list_strings;
 
@@ -127,6 +126,7 @@ class SchedulersViewEdit extends ViewEdit
         }
 
         // Hours
+        $ints = [];
         for ($i=1; $i<=30; $i++) {
             $ints[$i] = $i;
         }

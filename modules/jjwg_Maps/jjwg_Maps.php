@@ -950,7 +950,7 @@ class jjwg_Maps extends jjwg_Maps_sugar
 
         curl_close($ch);
         $GLOBALS['log']->debug(__METHOD__.' $json_contents: '.$json_contents);
-        $googlemaps = json_decode($json_contents, true, 512, JSON_THROW_ON_ERROR);
+        $googlemaps = json_decode($json_contents, true);
         $GLOBALS['log']->debug(__METHOD__.' $googlemaps: '. (is_array($googlemaps) ? '[Array]' : $googlemaps));
 
         /**

@@ -91,13 +91,12 @@ class FactorAuthEmailCode implements FactorAuthInterface
      */
     public function sendToken($token)
     {
-        $msg_strings = [];
-        global $current_user, $sugar_config;
-        
+        global $current_user, $sugar_config, $mod_strings;
+
         if (!$this->validateTokenMessage()) {
             $msg = 'Factor Authentication mail is invalid';
             $GLOBALS['log']->warn($msg);
-            SugarApplication::appendErrorMessage($msg_strings['ERR_FACTOR_VALIDATION']);
+            SugarApplication::appendErrorMessage($mod_strings['ERR_FACTOR_VALIDATION']);
         }
 
         $ret = true;

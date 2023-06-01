@@ -219,9 +219,10 @@ class Relationship extends SugarBean
 
     public function build_relationship_cache()
     {
-        $relationships = [];
         $query="SELECT * from relationships where deleted=0";
         $result=$this->db->query($query);
+
+        $relationships = [];
 
         while (($row=$this->db->fetchByAssoc($result))!=null) {
             $relationships[$row['relationship_name']] = $row;

@@ -86,7 +86,7 @@ class ImportViewExtdupcheck extends ImportView
 
         //set dragdrop value
         $this->ss->assign('enabled_dupes', json_encode(array()));
-        $this->ss->assign('disabled_dupes', json_encode($dupe_disabled, JSON_THROW_ON_ERROR));
+        $this->ss->assign('disabled_dupes', json_encode($dupe_disabled));
         //END DRAG DROP WIDGET
 
         $this->ss->assign("RECORDTHRESHOLD", $sugar_config['import_max_records_per_file']);

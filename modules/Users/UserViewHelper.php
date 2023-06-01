@@ -382,7 +382,7 @@ class UserViewHelper
                 $themeGroupList[$themeId] = false;
             }
         }
-        $this->ss->assign("themeGroupListJSON", json_encode($themeGroupList, JSON_THROW_ON_ERROR));
+        $this->ss->assign("themeGroupListJSON", json_encode($themeGroupList));
     }
 
     /**
@@ -399,9 +399,11 @@ class UserViewHelper
 
     protected function setupAdvancedTabUserSettings()
     {
-        $admin = null;
         global $current_user, $locale, $app_strings, $app_list_strings, $sugar_config;
         // This is for the "Advanced" tab, it's not controlled by the metadata UI so we have to do more for it.
+
+        $admin = BeanFactory::newBean('Administration');
+        $admin->retrieveSettings();
 
         $this->ss->assign('EXPORT_DELIMITER', $this->bean->getPreference('export_delimiter'));
 
@@ -498,7 +500,7 @@ class UserViewHelper
         $this->ss->assign("GOOGLE_API_TOKEN_BTN", "Disabled");
         if (isset($sugar_config['google_auth_json']) && !empty($sugar_config['google_auth_json'])) {
             $json = base64_decode($sugar_config['google_auth_json']);
-            if (!$config = json_decode($json, true, 512, JSON_THROW_ON_ERROR)) { // Check if the JSON is valid
+            if (!$config = json_decode($json, true)) { // Check if the JSON is valid
                 $this->ss->assign("GOOGLE_API_TOKEN", "INVALID AUTH KEY");
                 $this->ss->assign("GOOGLE_API_TOKEN_COLOR", "red");
                 $this->ss->assign("GOOGLE_API_TOKEN_ENABLE_NEW", "inline");
@@ -521,8 +523,8 @@ class UserViewHelper
      */
     protected function setGoogleAuthAccessToken()
     {
-        $accessToken = json_decode(base64_decode($this->bean->getPreference('GoogleApiToken', 'GoogleSync')), null, 512, JSON_THROW_ON_ERROR);
-        if (!empty($this->bean->getPreference('GoogleApiToken', 'GoogleSync')) && $accessToken = json_decode(base64_decode($this->bean->getPreference('GoogleApiToken', 'GoogleSync')), null, 512, JSON_THROW_ON_ERROR)) { // Check if the user has a token
+        $accessToken = json_decode(base64_decode($this->bean->getPreference('GoogleApiToken', 'GoogleSync')));
+        if (!empty($this->bean->getPreference('GoogleApiToken', 'GoogleSync')) && $accessToken = json_decode(base64_decode($this->bean->getPreference('GoogleApiToken', 'GoogleSync')))) { // Check if the user has a token
             $this->ss->assign("GOOGLE_API_TOKEN", "CONFIGURED");
             $this->ss->assign("GOOGLE_API_TOKEN_COLOR", "green");
             $this->ss->assign("GOOGLE_API_TOKEN_BTN", "Reauthorize");
@@ -563,8 +565,9 @@ class UserViewHelper
 
     protected function setupAdvancedTabNavSettings()
     {
-        $ss = null;
         global $app_list_strings;
+
+        $ss = null;
 
         // Grouped tabs?
         $useGroupTabs = $this->bean->getPreference('navigation_paradigm');
@@ -712,7 +715,7 @@ class UserViewHelper
         foreach ($locale->currencies as $id => $val) {
             $currencyList[$id] = $val['symbol'];
         }
-        $currencySymbolJSON = json_encode($currencyList, JSON_THROW_ON_ERROR);
+        $currencySymbolJSON = json_encode($currencyList);
         $this->ss->assign('currencySymbolJSON', $currencySymbolJSON);
 
         $currencyDisplay = BeanFactory::newBean('Currencies');

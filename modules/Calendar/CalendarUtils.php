@@ -265,7 +265,7 @@ class CalendarUtils
      */
     public static function build_repeat_sequence($date_start, $params)
     {
-        $dow = null;
+        $dow = '';
         $arr = array();
 
         $type = $params['type'];

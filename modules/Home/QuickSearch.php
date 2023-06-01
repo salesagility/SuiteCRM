@@ -262,10 +262,10 @@ class quicksearchQuery
      */
     protected function formatResults($results, $args)
     {
-        $data = [];
         global $sugar_config;
 
         $app_list_strings = null;
+        $data = [];
         $data['totalCount'] = count($results);
         $data['fields']     = array();
         $resultsCount = count($results);

@@ -84,7 +84,6 @@ class SurveyResponses extends Basic
 
     public function save($check_notify = false)
     {
-        $case = null;
         global $sugar_config;
         $res = parent::save($check_notify);
 
@@ -105,6 +104,8 @@ class SurveyResponses extends Basic
         if (!$email) {
             return $res;
         }
+
+        $case = null;
 
         if ($this->happiness > 7 || $this->happiness == -1) {
             $templateId = $sugar_config['survey_positive_confirmation_email'];

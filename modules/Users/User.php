@@ -654,10 +654,10 @@ class User extends Person implements EmailInterface
         }
 
         // is_group & portal should be set to 0 by default
-        if (!($this->is_group !== null)) {
+        if (!isset($this->is_group)) {
             $this->is_group = 0;
         }
-        if (!($this->portal_only !== null)) {
+        if (!isset($this->portal_only)) {
             $this->portal_only = 0;
         }
 
@@ -1157,7 +1157,7 @@ EOQ;
 
         $GLOBALS['log']->debug("Starting user load for $this->user_name");
 
-        if (!($this->user_name !== null) || $this->user_name == "" || !isset($username_password) || $username_password == "") {
+        if (!isset($this->user_name) || $this->user_name == "" || !isset($username_password) || $username_password == "") {
             return null;
         }
 
@@ -1643,7 +1643,7 @@ EOQ;
         $query = "SELECT meeting_id as id from meetings_users where user_id='$this->id' AND deleted=0";
 
         $meeting = BeanFactory::newBean('Meetings');
-        return $this->build_related_list($query, $meeting);
+        return $this->build_related_list($meeting, $query);
     }
 
     public function get_calls()
@@ -1651,7 +1651,7 @@ EOQ;
         // First, get the list of IDs.
         $query = "SELECT call_id as id from calls_users where user_id='$this->id' AND deleted=0";
 
-        return $this->build_related_list($query, BeanFactory::newBean('Calls'));
+        return $this->build_related_list(BeanFactory::newBean('Calls'), $query);
     }
 
     /**
@@ -1788,7 +1788,6 @@ EOQ;
      */
     public function getEmailInfo($id = '')
     {
-        $ret = [];
         $user = $this;
         if (!empty($id)) {
             $user = BeanFactory::newBean('Users');
@@ -1816,6 +1815,7 @@ EOQ;
             }
         }
 
+        $ret = [];
         $ret['name'] = $fromName;
         $ret['email'] = $fromaddr;
 
@@ -1919,17 +1919,17 @@ EOQ;
      */
     public function getLocaleFormatDesc()
     {
-        $format = [];
-        $name = [];
         global $locale;
         global $mod_strings;
         global $app_strings;
 
+        $format = [];
         $format['f'] = $mod_strings['LBL_LOCALE_DESC_FIRST'];
         $format['l'] = $mod_strings['LBL_LOCALE_DESC_LAST'];
         $format['s'] = $mod_strings['LBL_LOCALE_DESC_SALUTATION'];
         $format['t'] = $mod_strings['LBL_LOCALE_DESC_TITLE'];
 
+        $name = [];
         $name['f'] = $app_strings['LBL_LOCALE_NAME_EXAMPLE_FIRST'];
         $name['l'] = $app_strings['LBL_LOCALE_NAME_EXAMPLE_LAST'];
         $name['s'] = $app_strings['LBL_LOCALE_NAME_EXAMPLE_SALUTATION'];
@@ -2044,7 +2044,7 @@ EOQ;
      */
     public function isAdmin()
     {
-        if ($this->is_admin !== null && ($this->is_admin == '1' || $this->is_admin === 'on')
+        if (isset($this->is_admin) && ($this->is_admin == '1' || $this->is_admin === 'on')
         ) {
             return true;
         }
@@ -2478,7 +2478,7 @@ EOQ;
     protected function setIsAdmin(): void
     {
         global $current_user;
-        if (!($this->is_admin !== null)) {
+        if (!isset($this->is_admin)) {
             return;
         }
 

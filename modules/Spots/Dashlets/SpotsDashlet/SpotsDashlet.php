@@ -183,7 +183,7 @@ class SpotsDashlet extends Dashlet
             }
         }
 
-        return json_encode($returnArray, JSON_THROW_ON_ERROR);
+        return json_encode($returnArray);
     }
 
     /**

@@ -136,7 +136,7 @@ class TrackerManager
             return $this->monitors[$name];
         }
 
-        if ($this->metadata !== null && isset($this->metadata[$name])) {
+        if (isset($this->metadata) && isset($this->metadata[$name])) {
             try {
                 $instance = $this->_getMonitor(
                     $this->metadata[$name]['name'], //name

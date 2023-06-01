@@ -153,7 +153,7 @@ if ($_REQUEST['action'] != 'WizardMarketingSave' && (!isset($_REQUEST['func']) |
 if (isset($_REQUEST['func']) && $_REQUEST['func'] == 'wizardUpdate') {
     $resp = array();
     $resp['error'] = false;
-    $resp['data'] = json_encode(array('id' => $marketing->id), JSON_THROW_ON_ERROR);
-    $resp = json_encode($resp, JSON_THROW_ON_ERROR);
+    $resp['data'] = json_encode(array('id' => $marketing->id));
+    $resp = json_encode($resp);
     echo $resp;
 }

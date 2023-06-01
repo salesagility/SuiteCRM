@@ -69,7 +69,7 @@ if (!class_exists('Tracker')) {
         public function __construct()
         {
             global $dictionary;
-            if ($this->module_dir !== null && $this->object_name !== null && !isset($GLOBALS['dictionary'][$this->object_name])) {
+            if (isset($this->module_dir) && isset($this->object_name) && !isset($GLOBALS['dictionary'][$this->object_name])) {
                 $path = 'modules/Trackers/vardefs.php';
                 if (defined('TEMPLATE_URL')) {
                     $path = SugarTemplateUtilities::getFilePath($path);

@@ -57,8 +57,10 @@ class FP_Event_LocationsDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
-        $dashletData = [];
-        global $current_user, $app_strings;
+        global $current_user, $app_strings, $dashletData;
+
+        $dashletData = $dashletData ?? [];
+
         require('modules/FP_Event_Locations/metadata/dashletviewdefs.php');
 
         parent::__construct($id, $def);

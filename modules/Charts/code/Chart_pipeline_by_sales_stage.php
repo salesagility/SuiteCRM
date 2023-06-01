@@ -291,8 +291,8 @@ echo get_validate_chart_js();
         $chart_size = 'hBarF',
         $current_module_strings = null
     ) {
-        $new_ids = [];
-        global $app_strings, $charset, $lang, $barChartColors, $current_user, $current_language;
+
+        global $app_strings, $charset, $lang, $barChartColors, $current_user, $current_language, $timedate;
 
         // set $current_module_strings to 'Charts' module strings by default
         if (empty($current_module_strings)) {
@@ -300,8 +300,7 @@ echo get_validate_chart_js();
         }
 
         $kDelim = $current_user->getPreference('num_grp_sep');
-
-        global $timedate;
+        $new_ids = [];
 
         if (!file_exists($cache_file_name) || $refresh == true) {
             $GLOBALS['log']->debug("starting pipeline chart");

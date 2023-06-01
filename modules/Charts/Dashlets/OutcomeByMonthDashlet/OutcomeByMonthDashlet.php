@@ -85,7 +85,7 @@ class OutcomeByMonthDashlet extends DashletGenericChart
      */
     public function displayOptions()
     {
-        if (!($this->obm_ids !== null) || count($this->obm_ids) == 0) {
+        if (!isset($this->obm_ids) || count($this->obm_ids) == 0) {
             $this->_searchFields['obm_ids']['input_name0'] = array_keys(get_user_array(false));
         }
 
@@ -123,13 +123,13 @@ class OutcomeByMonthDashlet extends DashletGenericChart
         $autoRefresh = $this->processAutoRefresh();
 
         //$chartReadyData['data'] = [[1.1,2.2],[3.3,4.4]];
-        $jsonData = json_encode($chartReadyData['data'], JSON_THROW_ON_ERROR);
-        $jsonLabels = json_encode($chartReadyData['labels'], JSON_THROW_ON_ERROR);
-        $jsonLabelsAndValues = json_encode($chartReadyData['labelsAndValues'], JSON_THROW_ON_ERROR);
+        $jsonData = json_encode($chartReadyData['data']);
+        $jsonLabels = json_encode($chartReadyData['labels']);
+        $jsonLabelsAndValues = json_encode($chartReadyData['labelsAndValues']);
 
 
-        $jsonKey = json_encode($chartReadyData['key'], JSON_THROW_ON_ERROR);
-        $jsonTooltips = json_encode($chartReadyData['tooltips'], JSON_THROW_ON_ERROR);
+        $jsonKey = json_encode($chartReadyData['key']);
+        $jsonTooltips = json_encode($chartReadyData['tooltips']);
 
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
 
@@ -250,7 +250,7 @@ EOD;
         $query .= " WHERE opportunities.date_closed >= ".DBManagerFactory::getInstance()->convert("'".$this->obm_date_start."'", 'date') .
             " AND opportunities.date_closed <= ".DBManagerFactory::getInstance()->convert("'".$this->obm_date_end."'", 'date') .
             " AND opportunities.deleted=0";
-        if ($this->obm_ids !== null && count($this->obm_ids) > 0) {
+        if (isset($this->obm_ids) && count($this->obm_ids) > 0) {
             $query .= " AND opportunities.assigned_user_id IN ('" . implode("','", $this->obm_ids) . "')";
         }
         $query .= " GROUP BY sales_stage,".

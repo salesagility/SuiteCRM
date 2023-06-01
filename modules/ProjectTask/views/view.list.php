@@ -66,9 +66,10 @@ class ProjectTaskViewList extends ViewList
     public function display()
     {
         $metafiles = [];
-        $searchdefs = null;
-        $searchFields = null;
+        $searchdefs = [];
+        $searchFields = [];
         $listViewDefs = [];
+
         if (!$this->bean->ACLAccess('list')) {
             ACLController::displayNoAccess();
             return;

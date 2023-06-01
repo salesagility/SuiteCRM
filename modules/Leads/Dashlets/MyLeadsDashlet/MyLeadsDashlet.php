@@ -53,8 +53,10 @@ class MyLeadsDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
-        $dashletData = [];
-        global $current_user, $app_strings;
+        global $current_user, $app_strings, $dashletData;
+
+        $dashletData = $dashletData ?? [];
+
         require('modules/Leads/Dashlets/MyLeadsDashlet/MyLeadsDashlet.data.php');
 
         parent::__construct($id, $def);

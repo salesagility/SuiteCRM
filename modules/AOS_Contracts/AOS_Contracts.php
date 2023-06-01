@@ -103,7 +103,7 @@ class AOS_Contracts extends AOS_Contracts_sugar
         $call = new call();
 
         if ($this->renewal_reminder_date != 0) {
-            if (!(property_exists($this, 'call_id') && $this->call_id !== null)) {
+            if (!isset($this->call_id)) {
                 LoggerManager::getLogger()->warn('Call is not set for reminder creation.');
                 $call->id = null;
             } else {
@@ -133,7 +133,7 @@ class AOS_Contracts extends AOS_Contracts_sugar
         if ($this->renewal_reminder_date != 0) {
             $call->id = $this->call_id;
 
-            if (!(property_exists($this, 'contract_account_id') && $this->contract_account_id !== null)) {
+            if (!isset($this->contract_account_id)) {
                 LoggerManager::getLogger()->warn('Contract Account ID not defined for AOS Contracts / create link.');
                 $contractAccountId = null;
             } else {
@@ -151,7 +151,7 @@ class AOS_Contracts extends AOS_Contracts_sugar
         require_once('modules/Calls/Call.php');
         $call = new call();
 
-        if (!(property_exists($this, 'call_id') && $this->call_id !== null)) {
+        if (!isset($this->call_id)) {
             LoggerManager::getLogger()->warn('Call ID not found for AOS Contract / delete call.');
             $callId = null;
         } else {

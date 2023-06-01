@@ -52,7 +52,7 @@ class AOR_ReportsController extends SugarController
     {
         if ($_REQUEST['aor_module']) {
             $bean = BeanFactory::getBean($_REQUEST['aor_module']);
-            echo json_encode((array)$bean->field_defs[$_REQUEST['aor_request']], JSON_THROW_ON_ERROR);
+            echo json_encode((array)$bean->field_defs[$_REQUEST['aor_request']]);
             die();
         }
     }
@@ -107,7 +107,7 @@ class AOR_ReportsController extends SugarController
             return;
         }
         $conditions = getConditionsAsParameters($report);
-        echo json_encode($conditions, JSON_THROW_ON_ERROR);
+        echo json_encode($conditions);
     }
 
     protected function action_getChartsForReport()
@@ -127,7 +127,7 @@ class AOR_ReportsController extends SugarController
         foreach ($report->get_linked_beans('aor_charts', 'AOR_Charts') as $chart) {
             $charts[$chart->id] = $chart->name;
         }
-        echo json_encode($charts, JSON_THROW_ON_ERROR);
+        echo json_encode($charts);
     }
 
     protected function action_addToProspectList()
@@ -208,7 +208,7 @@ class AOR_ReportsController extends SugarController
         }
         if (!empty($countOfCharts) && $countOfCharts > 0) {
             $graphHtml = "<div class='reportGraphs' style='width:100%; text-align:center;'>";
-            
+
             $width = (100 / $chartsPerRow);
 
             $modulusRemainder = $countOfCharts % $chartsPerRow;
@@ -245,15 +245,15 @@ class AOR_ReportsController extends SugarController
                 </tr>
                 </tbody>
                 </table>';
-        
-        
+
+
         if (!empty($graphHtml)) {
             $head .= '<br />' . $graphHtml;
         }
 
         $this->bean->user_parameters = requestToUserParameters($this->bean);
         $report = $this->bean->build_group_report(-1, false);
-        
+
         ob_clean();
         try {
             $pdf = PDFWrapper::getPDFEngine();

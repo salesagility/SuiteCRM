@@ -141,7 +141,7 @@ class ConfiguratorController extends SugarController
     }
     public function action_saveadminwizard()
     {
-        $defaultDashlets = [];
+
         global $current_user;
         if (!is_admin($current_user)) {
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
@@ -171,6 +171,8 @@ class ConfiguratorController extends SugarController
             $currency->deleted = 1;
             $currency->save();
         }
+
+        $defaultDashlets = [];
 
         //Only process the scenario item for admin users!
         if ($current_user->isAdmin()) {

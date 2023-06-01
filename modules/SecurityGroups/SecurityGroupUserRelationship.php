@@ -57,7 +57,7 @@ class SecurityGroupUserRelationship extends SugarBean
 
     public function fill_in_additional_detail_fields()
     {
-        if ($this->securitygroup_id !== null && $this->securitygroup_id != "") {
+        if (isset($this->securitygroup_id) && $this->securitygroup_id != "") {
             $query = "SELECT name from securitygroups where id='$this->securitygroup_id' AND deleted=0";
             $result =$this->db->query($query, true, " Error filling in additional detail fields: ");
             // Get the id and the name.
@@ -68,7 +68,7 @@ class SecurityGroupUserRelationship extends SugarBean
             }
         }
 
-        if ($this->user_id !== null && $this->user_id != "") {
+        if (isset($this->user_id) && $this->user_id != "") {
             $query = "SELECT user_name from users where id='$this->user_id' AND deleted=0";
             $result =$this->db->query($query, true, " Error filling in additional detail fields: ");
             // Get the id and the name.

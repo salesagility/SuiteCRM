@@ -77,7 +77,7 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
         $this->_searchFields['pbls_lead_sources']['options'] = array_filter($app_list_strings['lead_source_dom']);
         $this->_searchFields['pbls_lead_sources']['input_name0'] = $selected_datax;
 
-        if (!($this->pbls_ids !== null) || count($this->pbls_ids) == 0) {
+        if (!isset($this->pbls_ids) || count($this->pbls_ids) == 0) {
             $this->_searchFields['pbls_ids']['input_name0'] = array_keys(get_user_array(false));
         }
 
@@ -104,10 +104,10 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
         $chartWidth     = 900;
         $chartHeight    = 500;
 
-        $jsonData = json_encode($chartReadyData['data'], JSON_THROW_ON_ERROR);
-        $jsonKeys = json_encode($chartReadyData['keys'], JSON_THROW_ON_ERROR);
-        $jsonLabels = json_encode($chartReadyData['labels'], JSON_THROW_ON_ERROR);
-        $jsonLabelsAndValues = json_encode($chartReadyData['labelsAndValues'], JSON_THROW_ON_ERROR);
+        $jsonData = json_encode($chartReadyData['data']);
+        $jsonKeys = json_encode($chartReadyData['keys']);
+        $jsonLabels = json_encode($chartReadyData['labels']);
+        $jsonLabelsAndValues = json_encode($chartReadyData['labelsAndValues']);
 
         $autoRefresh = $this->processAutoRefresh();
 
@@ -253,10 +253,10 @@ EOD;
         $query = "SELECT lead_source,sum(amount_usdollar/1000) as total,count(*) as opp_count ".
             "FROM opportunities ";
         $query .= "WHERE opportunities.deleted=0 ";
-        if ($this->pbls_ids !== null && count($this->pbls_ids) > 0) {
+        if (isset($this->pbls_ids) && count($this->pbls_ids) > 0) {
             $query .= "AND opportunities.assigned_user_id IN ('".implode("','", $this->pbls_ids)."') ";
         }
-        if ($this->pbls_lead_sources !== null && count($this->pbls_lead_sources) > 0) {
+        if (isset($this->pbls_lead_sources) && count($this->pbls_lead_sources) > 0) {
             $query .= "AND opportunities.lead_source IN ('".implode("','", $this->pbls_lead_sources)."') ";
         } else {
             $query .= "AND opportunities.lead_source IN ('".implode("','", array_keys($GLOBALS['app_list_strings']['lead_source_dom']))."') ";

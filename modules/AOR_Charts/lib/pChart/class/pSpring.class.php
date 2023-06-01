@@ -287,7 +287,7 @@
      /* Set color attribute for a list of nodes */
      public function setNodesColor($Nodes, $Settings="")
      {
-         $NodeID = null;
+         $NodeID = [];
          if (is_array($Nodes)) {
              foreach ($Nodes as $Key => $NodeID) {
                  if (isset($this->Data[$NodeID])) {
@@ -430,8 +430,9 @@
          $MaxConnections = 0;
          foreach ($this->Data as $Key => $Settings) {
              if (isset($Settings["Connections"])) {
-                 if ($MaxConnections < (is_countable($Settings["Connections"]) ? count($Settings["Connections"]) : 0)) {
-                     $MaxConnections = is_countable($Settings["Connections"]) ? count($Settings["Connections"]) : 0;
+                 $connectionCount = is_countable($Settings["Connections"]) ? count($Settings["Connections"]) : 0;
+                 if ($MaxConnections < $connectionCount) {
+                     $MaxConnections = $connectionCount;
                  }
              }
          }
@@ -838,7 +839,7 @@
                          $this->pChartObject->drawLine($X, $Y, $X2, $Y2, $Color);
                          $Drawn[$Key][$NodeID] = true;
 
-                         if ($this->Links !== null && $this->Links != "") {
+                         if (isset($this->Links) && $this->Links != "") {
                              if (isset($this->Links[$Key][$NodeID]["Name"]) || isset($this->Links[$NodeID][$Key]["Name"])) {
                                  $Name  = isset($this->Links[$Key][$NodeID]["Name"]) ? $this->Links[$Key][$NodeID]["Name"] : $this->Links[$NodeID][$Key]["Name"];
                                  $TxtX  = ($X2 - $X)/2 + $X;

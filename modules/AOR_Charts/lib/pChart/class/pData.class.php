@@ -821,8 +821,10 @@
                  if ($Serie["Axis"] == $AxisID && $Serie["isDrawable"] == true && $SerieName != $Abscissa) {
                      $SelectedSeries[$SerieName] = $SerieName;
 
-                     if ((is_countable($Serie["Data"]) ? count($Serie["Data"]) : 0) > $MaxVal) {
-                         $MaxVal = is_countable($Serie["Data"]) ? count($Serie["Data"]) : 0;
+                     $count = is_countable($Serie["Data"]) ? count($Serie["Data"]) : 0;
+
+                     if ($count > $MaxVal) {
+                         $MaxVal = $count;
                      }
                  }
              }
@@ -909,7 +911,7 @@
      /* Create a dataset based on a formula */
      public function createFunctionSerie($SerieName, $Formula="", $Options="")
      {
-         $return = null;
+         $return = '';
          $MinX		= isset($Options["MinX"]) ? $Options["MinX"] : -10;
          $MaxX		= isset($Options["MaxX"]) ? $Options["MaxX"] : 10;
          $XStep		= isset($Options["XStep"]) ? $Options["XStep"] : 1;

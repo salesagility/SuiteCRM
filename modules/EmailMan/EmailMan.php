@@ -535,7 +535,6 @@ class EmailMan extends SugarBean
         $newmessage,
         $from_address_name
     ) {
-        $rel_name = null;
         global $mod_strings, $timedate;
         $upd_ref_email = false;
         if ($newmessage || empty($this->ref_email->id)) {
@@ -654,6 +653,8 @@ class EmailMan extends SugarBean
             $this->ref_email->load_relationship('accounts');
         }
 
+        $rel_name = '';
+
         if (!empty($this->related_id) && !empty($this->related_type)) {
 
             //save relationships.
@@ -709,7 +710,7 @@ class EmailMan extends SugarBean
         $email->type = 'archived';
         $email->deleted = '0';
 
-        if (!(property_exists($this, 'current_campaign') && $this->current_campaign !== null)) {
+        if (!isset($this->current_campaign)) {
             LoggerManager::getLogger()->warn('EmailMan has not current campaign for create individual email.');
             $currentCampaignNameMailSubject = null;
         } else {
@@ -841,23 +842,24 @@ class EmailMan extends SugarBean
      */
     public function sendEmail(SugarPHPMailer $mail, $save_emails = 1, $testmode = false)
     {
-        $tracker_url = null;
-        $tracker_text = null;
-        $email_id = null;
-        $layout_def = [];
-        $parent = null;
-        $this->test = $testmode;
-
         global $beanList;
         global $beanFiles;
         global $sugar_config;
         global $mod_strings;
         global $locale;
+        global $layout_def;
+
+        $tracker_url = '';
+        $tracker_text = '';
+
+        $parent = '';
+        $this->test = $testmode;
+
         $OBCharset = $locale->getPrecedentPreference('default_email_charset');
         $mod_strings = return_module_language($sugar_config['default_language'], 'EmailMan');
 
         //get tracking entities locations.
-        if (!(property_exists($this, 'tracking_url') && $this->tracking_url !== null)) {
+        if (!isset($this->tracking_url)) {
             $admin = BeanFactory::newBean('Administration');
             $admin->retrieveSettings('massemailer'); //retrieve all admin settings.
             if (isset($admin->settings['massemailer_tracking_entities_location_type']) && $admin->settings['massemailer_tracking_entities_location_type'] == '2' && isset($admin->settings['massemailer_tracking_entities_location'])) {
@@ -910,6 +912,8 @@ class EmailMan extends SugarBean
             $this->set_as_sent($module->email1, true, null, null, 'blocked');
             return true;
         }
+
+        $email_id = null;
 
         if (
             (
@@ -969,7 +973,7 @@ class EmailMan extends SugarBean
             if (empty($this->current_emailtemplate) || $this->current_emailtemplate->id !== $this->current_emailmarketing->template_id) {
                 $this->current_emailtemplate = BeanFactory::newBean('EmailTemplates');
 
-                if (property_exists($this, 'resend_type') && $this->resend_type !== null && $this->resend_type == 'Reminder') {
+                if (isset($this->resend_type) && $this->resend_type == 'Reminder') {
                     $this->current_emailtemplate->retrieve($sugar_config['survey_reminder_template']);
                 } else {
                     $this->current_emailtemplate->retrieve($this->current_emailmarketing->template_id);
@@ -1133,6 +1137,7 @@ class EmailMan extends SugarBean
 
             $success = $mail->Send();
             //Do not save the encoded subject.
+
             $mail->Subject = $tmp_Subject;
             if ($success) {
                 $email_id = null;

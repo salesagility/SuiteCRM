@@ -343,7 +343,6 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
                         break;
                     default:
                         break;
-                        break;
                 }
             }
         }

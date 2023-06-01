@@ -81,7 +81,7 @@ class EmailsViewImport extends ViewEdit
         // Set a distinct view name to avoid cache conflicts with regular edit view
         $this->ev->formName = 'EditNonImported';
 
-        if (!($this->bean->mailbox_id !== null) || empty($this->bean->mailbox_id)) {
+        if (!isset($this->bean->mailbox_id) || empty($this->bean->mailbox_id)) {
             $inboundEmailID = $current_user->getPreference('defaultIEAccount', 'Emails');
             $this->ev->ss->assign('INBOUND_ID', $inboundEmailID);
         } else {

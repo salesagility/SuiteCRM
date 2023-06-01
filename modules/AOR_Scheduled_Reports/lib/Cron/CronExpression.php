@@ -51,7 +51,7 @@ class CronExpression
      *      `@weekly` - Run once a week, midnight on Sun - 0 0 * * 0
      *      `@daily` - Run once a day, midnight - 0 0 * * *
      *      `@hourly` - Run once an hour, first minute - 0 * * * *
-     * @param \Cron\FieldFactory|null $fieldFactory Field factory to use
+     * @param FieldFactory $fieldFactory Field factory to use
      *
      * @return CronExpression
      */
@@ -70,7 +70,7 @@ class CronExpression
             $expression = $mappings[$expression];
         }
 
-        return new static($expression, $fieldFactory instanceof \Cron\FieldFactory ? $fieldFactory : new FieldFactory());
+        return new static($expression, $fieldFactory ?: new FieldFactory());
     }
 
     /**
@@ -271,7 +271,7 @@ class CronExpression
         if ($currentTime instanceof \DateTime) {
             $currentDate = clone $currentTime;
         } else {
-            $currentDate = new \DateTime($currentTime !== null && $currentTime !== '' ? $currentTime : 'now');
+            $currentDate = new \DateTime($currentTime ?: 'now');
             $currentDate->setTimezone(new \DateTimeZone(date_default_timezone_get()));
         }
 

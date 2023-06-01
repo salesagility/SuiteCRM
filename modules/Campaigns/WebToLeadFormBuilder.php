@@ -271,11 +271,11 @@ HTML;
         $html = self::getFieldLabelHTML($fieldLabel, $isRequired, $webRequiredSymbol);
         $_type = $fieldName == 'email1' || $fieldName == 'email2' ? 'email' : 'text';
         $html .= "<input id=\"$fieldName\" name=\"$fieldName\" type=\"$_type\"$_required>";
-        
+
         if ($_type == 'email') {
             $html .= self::getOptInCheckboxHTML($fieldName);
         }
-        
+
         return $html;
     }
 
@@ -314,12 +314,12 @@ HTML;
         $_required = $fieldRequired ? ' required' : '';
         $html = self::getFieldLabelHTML($fieldLabel, $fieldRequired, $webRequiredSymbol);
         $html .= "<input id=\"$fieldName\" name=\"$fieldName\" type=\"email\"$_required>";
-        
+
         $html .= self::getOptInCheckboxHTML($fieldName);
-        
+
         return $html;
     }
-    
+
     /**
      *
      * @param string $fieldName
@@ -334,7 +334,7 @@ HTML;
         ) {
             return '';
         }
-        
+
         $tpl = new Sugar_Smarty();
         $tpl->assign('fieldName', $fieldName);
         $html = $tpl->fetch('modules/Campaigns/WebToLeadFormBuilderOptInCheckbox.tpl');
@@ -349,19 +349,23 @@ HTML;
         $columns = null;
         $colsFirst = isset($request[$formCols[0]]) ? $request[$formCols[0]] : null;
         $colsSecond = isset($request[$formCols[1]]) ? $request[$formCols[1]] : null;
+
+        $countFirst = is_countable($colsFirst) ? count($colsFirst) : 0;
+        $countSecond = is_countable($colsSecond) ? count($colsSecond) : 0;
+
         if (!empty($colsFirst) && !empty($colsSecond)) {
-            if ((is_countable($colsFirst) ? count($colsFirst) : 0) < count($colsSecond)) {
-                $columns= is_countable($colsSecond) ? count($colsSecond) : 0;
+            if ($countFirst < $countSecond) {
+                $columns= $countSecond;
             }
-            if ((is_countable($colsFirst) ? count($colsFirst) : 0) > count($colsSecond) || count($colsFirst) === count($colsSecond)) {
-                $columns= is_countable($colsFirst) ? count($colsFirst) : 0;
+            if ($countFirst > $countSecond || $countFirst === $countSecond) {
+                $columns= $countFirst;
             }
         } else {
             if (!empty($colsFirst)) {
-                $columns= is_countable($colsFirst) ? count($colsFirst) : 0;
+                $columns= $countFirst;
             } else {
                 if (!empty($colsSecond)) {
-                    $columns= is_countable($colsSecond) ? count($colsSecond) : 0;
+                    $columns= $countSecond;
                 }
             }
         }

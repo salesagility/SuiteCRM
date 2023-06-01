@@ -57,9 +57,9 @@ class Jjwg_AreasViewArea_Detail_Map extends SugarView
   <script type="text/javascript">
 
 // Define Map Data for Javascript
-var jjwg_config_defaults = <?php echo (!empty($GLOBALS['jjwg_config_defaults'])) ? json_encode($GLOBALS['jjwg_config_defaults'], JSON_THROW_ON_ERROR) : '[]'; ?>;
-var jjwg_config = <?php echo (!empty($GLOBALS['jjwg_config'])) ? json_encode($GLOBALS['jjwg_config'], JSON_THROW_ON_ERROR) : '[]'; ?>;
-var polygonPoints = <?php echo (!empty($GLOBALS['polygon'])) ? json_encode($GLOBALS['polygon'], JSON_THROW_ON_ERROR) : '[]'; ?>;
+var jjwg_config_defaults = <?php echo (!empty($GLOBALS['jjwg_config_defaults'])) ? json_encode($GLOBALS['jjwg_config_defaults']) : '[]'; ?>;
+var jjwg_config = <?php echo (!empty($GLOBALS['jjwg_config'])) ? json_encode($GLOBALS['jjwg_config']) : '[]'; ?>;
+var polygonPoints = <?php echo (!empty($GLOBALS['polygon'])) ? json_encode($GLOBALS['polygon']) : '[]'; ?>;
 
 function initialize() {
 

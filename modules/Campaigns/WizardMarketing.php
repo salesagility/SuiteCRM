@@ -132,6 +132,8 @@ if (!empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMark
     }
 }
 
+$mrktListsCount = is_countable($mrkt_lists) ? count($mrkt_lists) : 0;
+
 //if record param exists and it is not empty, then retrieve this bean
 if (isset($_REQUEST['record']) && !empty($_REQUEST['record'])) {
     $mrkt_focus->retrieve($_REQUEST['record']);
@@ -143,7 +145,7 @@ if (isset($_REQUEST['record']) && !empty($_REQUEST['record'])) {
     } else {
         if (!isset($mrkt_lists) || !$mrkt_lists) {
             unset($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
-        } elseif ((is_countable($mrkt_lists) ? count($mrkt_lists) : 0) == 1) {
+        } elseif ($mrktListsCount == 1) {
             if (empty($_REQUEST['func']) || (isset($_REQUEST['func']) && $_REQUEST['func'] != 'createEmailMarketing')) {
                 $mrkt_focus->retrieve($mrkt_lists[0]);
                 $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'] = $mrkt_lists[0];
@@ -156,7 +158,7 @@ if (isset($_REQUEST['record']) && !empty($_REQUEST['record'])) {
                 $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'] = $mrkt_focus->id;
             }
         } else {
-            if ((is_countable($mrkt_lists) ? count($mrkt_lists) : 0) > 1) {
+            if ($mrktListsCount > 1) {
                 if (!empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']) && in_array($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'], $mrkt_lists)) {
                     if (!isset($_REQUEST['func']) || (empty($_REQUEST['func']) && $_REQUEST['func'] != 'createEmailMarketing')) {
                         $mrkt_focus->retrieve($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
@@ -747,7 +749,7 @@ if (!empty($etid)) {
     if (!isset($notes_list)) {
         $notes_list = array();
     }
-    $notes_listCount = count($notes_list);
+    $notes_listCount = is_countable($notes_list) ? count($notes_list): 0;
     for ($i = 0; $i < $notes_listCount; $i++) {
         $the_note = $notes_list[$i];
         if (empty($the_note->filename)) {

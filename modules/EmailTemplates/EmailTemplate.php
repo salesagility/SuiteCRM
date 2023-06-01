@@ -322,7 +322,7 @@ class EmailTemplate extends SugarBean
     public function parse_tracker_urls($template_text_array, $url_template, $tracked_urls, $removeme_url_template)
     {
         global $beanFiles, $beanList, $app_list_strings, $sugar_config;
-        if (!(property_exists($this, 'parsed_urls') && $this->parsed_urls !== null)) {
+        if (!isset($this->parsed_urls)) {
             $this->parsed_urls = array();
         }
 
@@ -404,7 +404,7 @@ class EmailTemplate extends SugarBean
             $user->retrieve($focus->assigned_user_id);
         }
 
-        if (!(property_exists($this, 'parsed_entities') && $this->parsed_entities !== null)) {
+        if (!isset($this->parsed_entities)) {
             $this->parsed_entities = array();
         }
 
@@ -804,7 +804,7 @@ class EmailTemplate extends SugarBean
                 $bean_name = 'Contacts';
             }
 
-            if (isset($this) && $this->module_dir !== null && $this->module_dir == 'EmailTemplates') {
+            if (isset($this) && isset($this->module_dir) && $this->module_dir == 'EmailTemplates') {
                 $string = $this->parse_template_bean($string, $bean_name, $focus);
             } else {
                 $string = (new EmailTemplate())->parse_template_bean($string, $bean_name, $focus);

@@ -111,7 +111,7 @@ class GoogleApiKeySaverEntryPoint
             throw new Exception('google_auth_json requested variable is missing', 1);
         }
         $json = base64_decode($this->sugarConfig['google_auth_json']);
-        $config = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+        $config = json_decode($json, true);
         if (!$config) {
             throw new Exception('Invalid json for auth config', 2);
         }
@@ -122,7 +122,7 @@ class GoogleApiKeySaverEntryPoint
 
         $this->handleRequest();
     }
-    
+
     /**
      *
      * @param array $config
@@ -187,7 +187,7 @@ class GoogleApiKeySaverEntryPoint
         if (array_key_exists('error', $accessToken)) {
             throw new Exception('Unable to fetch access token: ' . $accessToken['error'] . '|' . $accessToken['error_description'], 10);
         }
-        $user->setPreference('GoogleApiToken', base64_encode(json_encode($accessToken, JSON_THROW_ON_ERROR)), false, 'GoogleSync');
+        $user->setPreference('GoogleApiToken', base64_encode(json_encode($accessToken)), false, 'GoogleSync');
         $accessRefreshToken = $accessToken['refresh_token'];
         if (isset($accessRefreshToken)) {
             $user->setPreference('GoogleApiRefreshToken', base64_encode($accessRefreshToken), false, 'GoogleSync');
@@ -243,7 +243,7 @@ class GoogleApiKeySaverEntryPoint
         $url = $this->sugarConfig['site_url'] . "/index.php?module=Users&action=EditView&record=" . $this->currentUser->id;
         $this->redirect($url);
     }
-    
+
     /**
      * protected function for SugarApplication::redirect() so test mock can override it
      * @param string $url
@@ -252,7 +252,7 @@ class GoogleApiKeySaverEntryPoint
     {
         SugarApplication::redirect($url);
     }
-    
+
     /**
      * protected function for die() so test mock can override it
      * @param string $exitstring

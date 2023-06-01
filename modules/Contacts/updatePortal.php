@@ -56,7 +56,7 @@ class updatePortal
         if (!isAOPEnabled()) {
             return;
         }
-        if (property_exists($bean, 'joomla_account_access') && $bean->joomla_account_access !== null && $bean->joomla_account_access !== '') {
+        if (isset($bean->joomla_account_access) && $bean->joomla_account_access !== '') {
             global $sugar_config;
             $aop_config = $sugar_config['aop'];
 

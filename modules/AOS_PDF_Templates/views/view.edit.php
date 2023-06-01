@@ -21,14 +21,14 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit
 
     public function setFields()
     {
-        $sample_options_array = [];
         global $app_list_strings, $mod_strings, $beanList;
 
         //Loading Sample Files
         $json = getJSONobj();
         $samples = array();
+        $sample_options_array = [];
+
         if ($handle = opendir('modules/AOS_PDF_Templates/samples')) {
-            $sample_options_array[] = ' ';
             while (false !== ($file = readdir($handle))) {
                 if ($value = ltrim(rtrim($file, '.php'), 'smpl_')) {
                     require_once('modules/AOS_PDF_Templates/samples/'.$file);
@@ -77,7 +77,7 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit
                 }
             } //End loop.
 
-            $options = json_encode($options_array, JSON_THROW_ON_ERROR);
+            $options = json_encode($options_array);
             $mod_options_array[$module->module_dir] = translate('LBL_MODULE_NAME', $module->module_dir);
             $insert_fields_js2 .="'$moduleName':$options,\n";
             $firstOptions = $options;
@@ -98,7 +98,7 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit
                             }
                         } //End loop.
 
-                        $options = json_encode($options_array, JSON_THROW_ON_ERROR);
+                        $options = json_encode($options_array);
 
                         if ($module_arr['vname'] != 'LBL_DELETED') {
                             $options_array['$'.$module->table_name.'_'.$name] = translate($module_arr['vname'], $module->module_dir);
@@ -124,7 +124,7 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit
                     }
                 }
 
-                $options = json_encode($options_array, JSON_THROW_ON_ERROR);
+                $options = json_encode($options_array);
 
                 $line_module_name = $beanList['AOS_Line_Item_Groups'];
                 $fmod_options_array[$line_module_name] = translate('LBL_LINE_ITEMS', 'AOS_Quotes').' : '.translate('LBL_MODULE_NAME', 'AOS_Line_Item_Groups');
@@ -151,7 +151,7 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit
                     }
                 }
 
-                $options = json_encode($options_array, JSON_THROW_ON_ERROR);
+                $options = json_encode($options_array);
 
                 $line_module_name = $beanList['AOS_Products_Quotes'];
                 $fmod_options_array[$line_module_name] = translate('LBL_LINE_ITEMS', 'AOS_Quotes').' : '.translate('LBL_MODULE_NAME', 'AOS_Products');
@@ -168,7 +168,7 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit
                 $options_array['$aos_services_quotes_vat'] = translate('LBL_VAT', 'AOS_Quotes');
                 $options_array['$aos_services_quotes_service_total_price'] = translate('LBL_TOTAL_PRICE', 'AOS_Quotes');
 
-                $options = json_encode($options_array, JSON_THROW_ON_ERROR);
+                $options = json_encode($options_array);
 
                 $s_line_module_name = 'AOS_Service_Quotes';
                 $fmod_options_array[$s_line_module_name] = translate('LBL_LINE_ITEMS', 'AOS_Quotes').' : '.translate('LBL_SERVICE_MODULE_NAME', 'AOS_Products_Quotes');
@@ -184,7 +184,7 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit
                         }
                     }
                 }
-                $options = json_encode($options_array, JSON_THROW_ON_ERROR);
+                $options = json_encode($options_array);
 
                 $line_module_name = $beanList['Currencies'];
                 $fmod_options_array[$line_module_name] = translate('LBL_MODULE_NAME', 'Currencies').' : '.translate('LBL_MODULE_NAME', 'Currencies');
@@ -192,7 +192,7 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit
             }
             array_multisort($fmod_options_array, SORT_ASC, $fmod_options_array);
             $mod_options_array = array_merge($mod_options_array, $fmod_options_array);
-            $module_options = json_encode($mod_options_array, JSON_THROW_ON_ERROR);
+            $module_options = json_encode($mod_options_array);
 
 
             $insert_fields_js .="'$moduleName':$module_options,\n";

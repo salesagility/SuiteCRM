@@ -48,7 +48,7 @@ class TemplateImage extends TemplateText
     public $width;
     public $height;
     public $type = 'image';
-        
+
     public function get_field_def()
     {
         $def = parent::get_field_def();
@@ -56,36 +56,36 @@ class TemplateImage extends TemplateText
         $def['type'] = 'image';
         $def['dbType'] = 'varchar';
         $def['len']= 255;
-        
-        if ($this->ext1 !== null) {
+
+        if (isset($this->ext1)) {
             $def[ 'border' ] 	= $this->ext1 ;
         }
-        if ($this->ext2 !== null) {
+        if (isset($this->ext2)) {
             $def[ 'width' ] 	= $this->ext2 ;
         }
-        if ($this->ext3 !== null) {
+        if (isset($this->ext3)) {
             $def[ 'height' ] 	= $this->ext3 ;
         }
-        if (property_exists($this, 'border') && $this->border !== null) {
+        if (isset($this->border)) {
             $def[ 'border' ] 	= $this->border ;
         }
-        if (property_exists($this, 'width') && $this->width !== null) {
+        if (isset($this->width)) {
             $def[ 'width' ] 	= $this->width ;
         }
-        if (property_exists($this, 'height') && $this->height !== null) {
+        if (isset($this->height)) {
             $def[ 'height' ] 	= $this->height ;
         }
-        
+
         return $def;
     }
-    
+
     public function __construct()
     {
         $this->vardef_map['border'] = 'ext1';
         $this->vardef_map['width'] = 'ext2';
         $this->vardef_map['height'] = 'ext3';
     }
-    
+
     public function set($values)
     {
         parent::set($values);

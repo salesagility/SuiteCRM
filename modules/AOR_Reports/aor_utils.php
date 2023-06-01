@@ -336,8 +336,10 @@ function getPeriodDate($date_time_period_list_selected)
  */
 function getPeriodEndDate($dateTimePeriodListSelected)
 {
-    $datetimePeriod = null;
     global $timedate;
+
+    $datetimePeriod = null;
+
     switch ($dateTimePeriodListSelected) {
         case 'today':
             $datetimePeriod = new DateTime();
@@ -481,7 +483,7 @@ function calculateQuarters($offsetMonths = 0)
  */
 function convertToDateTime($value)
 {
-    $formattedValue = null;
+
     global $current_user, $timedate;
 
     $user_dateformat = $current_user->getPreference('datef');
@@ -490,6 +492,8 @@ function convertToDateTime($value)
     if ($timedate->check_matching_format($value, $timedate->get_db_date_format())) {
         $user_dateformat = $timedate->get_db_date_format();
     }
+
+    $formattedValue = null;
 
     switch ($user_dateformat) {
         case 'Y-m-d':

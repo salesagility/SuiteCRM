@@ -309,7 +309,7 @@ class Reminder extends Basic
         $dateTimeMax = $timedate->getNow(true)->modify("+{$app_list_strings['reminder_max_time']} seconds")->asDb(false);
 
         $dateTimeNow = $timedate->getNow(true)->asDb(false);
-        
+
 
         // Original jsAlert used to a meeting integration.
 
@@ -790,7 +790,7 @@ class Reminder extends Basic
         $tpl->assign('remindersData', Reminder::loadRemindersData($event->module_name, $event->id));
         $tpl->assign('remindersDataJson', Reminder::loadRemindersDataJson($event->module_name, $event->id));
         $tpl->assign('remindersDefaultValuesDataJson', Reminder::loadRemindersDefaultValuesDataJson());
-        $tpl->assign('remindersDisabled', json_encode(true, JSON_THROW_ON_ERROR));
+        $tpl->assign('remindersDisabled', json_encode(true));
         return $tpl->fetch('modules/Reminders/tpls/reminders.tpl');
     }
 

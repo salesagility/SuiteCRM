@@ -181,7 +181,7 @@ class FormulaCalculator
         $hasChild = false;
 
         $currentText = "";
-        $charactersCount = count($characters);
+        $charactersCount = is_countable($characters) ? count($characters) : 0;
         for ($i = 0; $i < $charactersCount; $i++) {
             $char = $characters[$i];
 
@@ -406,7 +406,7 @@ class FormulaCalculator
             return date($params[0], strtotime($params[1]));
         }
 
-        if (($params = $this->evaluateFunctionParams("datediff", $text, $childItems)) != null) { 
+        if (($params = $this->evaluateFunctionParams("datediff", $text, $childItems)) != null) {
             $d1 = new DateTime($this->getDBFormat($params[0]));
             $d2 = new DateTime($this->getDBFormat($params[1]));
             $diff = $d1->diff($d2);
@@ -591,7 +591,7 @@ class FormulaCalculator
 
         $params = array();
         $currentParam = "";
-        $charactersCount = count($characters);
+        $charactersCount = is_countable($characters) ? count($characters) : 0;
         for ($i = 0; $i < $charactersCount; $i++) {
             $char = $characters[$i];
 
@@ -863,7 +863,7 @@ class FormulaCalculator
      * @return String
      */
     private function getDBFormat($date) {
-        // 1) If WF is thrown by the after_save LH, the bean is already loaded and the date/datetime value 
+        // 1) If WF is thrown by the after_save LH, the bean is already loaded and the date/datetime value
         // is properly formatted, so will only change the timezone value from UTC to user's one.
         // 2) If WF is run by the scheduler task, will change date/datetime value to DB format.
         $formatDate = 'Y-m-d';

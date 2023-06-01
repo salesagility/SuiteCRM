@@ -33,7 +33,6 @@ require_once('include/MVC/View/SugarView.php');
  * Class AOD_IndexViewIndexData
  */
 #[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
 class AOD_IndexViewIndexData extends SugarView
 {
 
@@ -43,7 +42,7 @@ class AOD_IndexViewIndexData extends SugarView
      */
     public function display()
     {
-        $listViewDefs = [];
+
         global $timedate, $current_language;
         $db = DBManagerFactory::getInstance();
 
@@ -51,6 +50,7 @@ class AOD_IndexViewIndexData extends SugarView
 
         $index = BeanFactory::getBean("AOD_Index");
         $index = $index->getIndex();
+        $listViewDefs = [];
 
 
         $beanList = $index->getIndexableModules();

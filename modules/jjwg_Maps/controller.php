@@ -319,7 +319,6 @@ class jjwg_MapsController extends SugarController
      */
     public function action_add_to_target_list()
     {
-        $out = [];
         $result = array('post' => $_POST);
 
         // Target List
@@ -388,10 +387,11 @@ class jjwg_MapsController extends SugarController
         }
 
         // JSON Encoded $result
+        $out = [];
         $out['message'] = $result['message'];
         $out['list']['name'] = $result['object_name'];
         header('Content-Type: application/json');
-        echo @json_encode($out, JSON_THROW_ON_ERROR);
+        echo @json_encode($out);
     }
 
     /**
@@ -637,9 +637,9 @@ class jjwg_MapsController extends SugarController
      */
     public function action_map_markers()
     {
-        $map_module_type = null;
-        $map_unit_type = null;
-        $map_distance = null;
+        $map_module_type = '';
+        $map_unit_type = 'mi';
+        $map_distance = 250;
         $map = null;
         $search_array = [];
         header_remove('X-Frame-Options');

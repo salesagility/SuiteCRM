@@ -12,7 +12,11 @@ class jjwg_AreasDashlet extends DashletGeneric
 {
     public function __construct($id, $def = null)
     {
-        $dashletData = [];
+
+        global $dashletData;
+
+        $dashletData = $dashletData ?? [];
+
         require('modules/jjwg_Areas/metadata/dashletviewdefs.php');
 
         parent::__construct($id, $def);

@@ -63,7 +63,7 @@ class AORReportsDashlet extends Dashlet
             'operators' => isset($this->def['parameter_operator']) ? $this->def['parameter_operator'] : null,
             'types' => isset($this->def['parameter_type']) ? $this->def['parameter_type'] : null,
             'values' => isset($this->def['parameter_value']) ? $this->def['parameter_value'] : null
-        ), JSON_THROW_ON_ERROR));
+        )));
 
         return $dashletSmarty->fetch($dashletTemplate);
     }

@@ -130,7 +130,7 @@ class ImportController extends SugarController
             }
         }
 
-        echo json_encode($results, JSON_THROW_ON_ERROR);
+        echo json_encode($results);
         sugar_cleanup(true);
     }
 

@@ -212,11 +212,11 @@
      /* Return the surrounding box of text area */
      public function getTextBox_deprecated($X, $Y, $FontName, $FontSize, $Angle, $Text)
      {
-         $RealPos = [];
          $Size    = imagettfbbox($FontSize, $Angle, $FontName, $Text);
          $Width   = $this->getLength($Size[0], $Size[1], $Size[2], $Size[3])+1;
          $Height  = $this->getLength($Size[2], $Size[3], $Size[4], $Size[5])+1;
 
+         $RealPos = [];
          $RealPos[0]["X"] = $X;
          $RealPos[0]["Y"] = $Y;
          $RealPos[1]["X"] = cos((360-$Angle)*PI/180)*$Width + $RealPos[0]["X"];

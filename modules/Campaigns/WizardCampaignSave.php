@@ -84,7 +84,7 @@ if ($func == 'getTemplateValidation') {
     $return['templateValidationMessages'] = getTemplateValidationMessages($templateId);
     $return['marketingValidationMessages'] = $marketing->validate();
 
-    echo json_encode($return, JSON_THROW_ON_ERROR);
+    echo json_encode($return);
 } else {
     if (!$marketingId) {
         if (!empty($_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId']) && $func != 'createEmailMarketing') {
@@ -118,5 +118,5 @@ if ($func == 'getTemplateValidation') {
     $return['templateValidationMessages'] = getTemplateValidationMessages($marketing->template_id);
     $return['marketingValidationMessages'] = $marketing->validate();
 
-    echo json_encode($return, JSON_THROW_ON_ERROR);
+    echo json_encode($return);
 }

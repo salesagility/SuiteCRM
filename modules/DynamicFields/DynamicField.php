@@ -119,12 +119,12 @@ class DynamicField
      */
     public function setLabel($language, $key = null, $value = null)
     {
-        $params = [];
         // set $language = 'en_us' as default
         if (!$language) {
             $language = 'en_us';
         }
 
+        $params = [];
         $params ['label_' . $key] = $value;
         require_once 'modules/ModuleBuilder/parsers/parser.label.php';
         $parser = new ParserLabel($this->module);
@@ -360,7 +360,7 @@ class DynamicField
      */
     public function getRelateJoin($field_def, $joinTableAlias, $withIdName = true)
     {
-        $ret_array = [];
+
         if (empty($field_def['type']) || $field_def['type'] != 'relate') {
             return false;
         }
@@ -385,6 +385,7 @@ class DynamicField
         }
         $tableName = isset($field_def['custom_module']) ? "{$this->bean->table_name}_cstm" : $this->bean->table_name;
         $relID = $field_def['id_name'];
+        $ret_array = [];
         $ret_array['rel_table'] = $rel_table;
         $ret_array['name_field'] = $name_field;
         $ret_array['select'] = ($withIdName ? ", {$tableName}.{$relID}" : '') . ", {$name_field} {$field_def['name']} ";
@@ -621,10 +622,10 @@ class DynamicField
         $fmd->ext1 = $field->ext1;
         $fmd->ext2 = $field->ext2;
         $fmd->ext3 = $field->ext3;
-        $fmd->ext4 = ($field->ext4 !== null ? $field->ext4 : '');
+        $fmd->ext4 = (isset($field->ext4) ? $field->ext4 : '');
         $fmd->comments = $field->comment;
         $fmd->massupdate = $field->massupdate;
-        $fmd->importable = ($field->importable !== null) ? $field->importable : null;
+        $fmd->importable = (isset($field->importable)) ? $field->importable : null;
         $fmd->duplicate_merge = $field->duplicate_merge;
         $fmd->audited = $field->audited;
         $fmd->inline_edit = $field->inline_edit;
@@ -1025,7 +1026,7 @@ class DynamicField
      */
     public function setWhereClauses(&$where_clauses)
     {
-        if (property_exists($this, 'avail_fields') && $this->avail_fields !== null) {
+        if (isset($this->avail_fields)) {
             foreach ($this->avail_fields as $name => $value) {
                 if (!empty($_REQUEST[$name])) {
                     $where_clauses[] = $this->bean->table_name . "_cstm.$name LIKE '" . $this->db->quote($_REQUEST[$name]) . "%'";
@@ -1042,7 +1043,7 @@ class DynamicField
      */
     public function retrieve()
     {
-        if (!$this->bean instanceof \SugarBean) {
+        if (!isset($this->bean)) {
             $GLOBALS['log']->fatal('DynamicField retrieve, bean not instantiated');
 
             return false;

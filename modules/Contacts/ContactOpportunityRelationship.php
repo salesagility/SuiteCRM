@@ -96,7 +96,7 @@ class ContactOpportunityRelationship extends SugarBean
     public function fill_in_additional_detail_fields()
     {
         global $locale;
-        if ($this->contact_id !== null && $this->contact_id != "") {
+        if (isset($this->contact_id) && $this->contact_id != "") {
             $query = "SELECT first_name, last_name from contacts where id='$this->contact_id' AND deleted=0";
             $result =$this->db->query($query, true, " Error filling in additional detail fields: ");
             // Get the id and the name.
@@ -107,7 +107,7 @@ class ContactOpportunityRelationship extends SugarBean
             }
         }
 
-        if ($this->opportunity_id !== null && $this->opportunity_id != "") {
+        if (isset($this->opportunity_id) && $this->opportunity_id != "") {
             $query = "SELECT name from opportunities where id='$this->opportunity_id' AND deleted=0";
             $result =$this->db->query($query, true, " Error filling in additional detail fields: ");
             // Get the id and the name.

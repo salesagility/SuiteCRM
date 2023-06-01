@@ -266,7 +266,7 @@ class Opportunity extends SugarBean
         return $this->build_related_list2($query, $contact, $temp);
     }
 
-        
+
 
     public function update_currency_id($fromid, $toid)
     {
@@ -309,7 +309,7 @@ class Opportunity extends SugarBean
 
     public function get_currency_symbol()
     {
-        if ($this->currency_id !== null) {
+        if (isset($this->currency_id)) {
             $cur_qry = "select * from currencies where id ='".$this->currency_id."'";
             $cur_res = $this->db->query($cur_qry);
             if (!empty($cur_res)) {
@@ -359,7 +359,7 @@ class Opportunity extends SugarBean
         }
 
         //if probablity isn't set, set it based on the sales stage
-        if (!($this->probability !== null) && !empty($this->sales_stage)) {
+        if (!isset($this->probability) && !empty($this->sales_stage)) {
             $prob_arr = $app_list_strings['sales_probability_dom'];
             if (isset($prob_arr[$this->sales_stage])) {
                 $this->probability = $prob_arr[$this->sales_stage];

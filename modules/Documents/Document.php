@@ -115,7 +115,6 @@ class Document extends File
 
     public function save($check_notify = false)
     {
-        $save_revision = [];
         if (empty($this->doc_type)) {
             $this->doc_type = 'Sugar';
         }
@@ -143,19 +142,19 @@ class Document extends File
             $Revision->document_id = $this->id;
             $Revision->filename = $this->filename;
 
-            if (property_exists($this, 'file_ext') && $this->file_ext !== null) {
+            if (isset($this->file_ext)) {
                 $Revision->file_ext = $this->file_ext;
             }
 
-            if (property_exists($this, 'file_mime_type') && $this->file_mime_type !== null) {
+            if (isset($this->file_mime_type)) {
                 $Revision->file_mime_type = $this->file_mime_type;
             }
 
             $Revision->doc_type = $this->doc_type;
-            if (property_exists($this, 'doc_id') && $this->doc_id !== null) {
+            if (isset($this->doc_id)) {
                 $Revision->doc_id = $this->doc_id;
             }
-            if (property_exists($this, 'doc_url') && $this->doc_url !== null) {
+            if (isset($this->doc_url)) {
                 $Revision->doc_url = $this->doc_url;
             }
 
@@ -192,6 +191,7 @@ class Document extends File
                 $this->document_revision_id = $Revision->id;
             }
 
+            $save_revision = [];
 
             //set relationship field values if contract_id is passed (via subpanel create)
             if (!empty($_POST['contract_id'])) {
@@ -217,7 +217,7 @@ class Document extends File
 
     public function is_authenticated()
     {
-        if (!($this->authenticated !== null)) {
+        if (!isset($this->authenticated)) {
             LoggerManager::getLogger()->warn('Document::$authenticated is not set');
             return null;
         }
@@ -248,7 +248,7 @@ class Document extends File
             $row = $this->db->fetchByAssoc($result);
 
             //populate name
-            if ($this->document_name !== null) {
+            if (isset($this->document_name)) {
                 $this->name = $this->document_name;
             }
 
@@ -379,7 +379,7 @@ class Document extends File
         $document_fields['FILE_URL_NOIMAGE'] = $this->file_url_noimage;
         $document_fields['LAST_REV_CREATED_BY'] = $this->last_rev_created_name;
         if (!isset($app_list_strings['document_category_dom'][$this->category_id])) {
-            if (!($this->category_id !== null)) {
+            if (!isset($this->category_id)) {
                 LoggerManager::getLogger()->warn('Undefined category id for document list view data.');
             } else {
                 LoggerManager::getLogger()->warn('In language app strings[document_category_dom] does not found for category id for document list view data: ' . $this->category_id);

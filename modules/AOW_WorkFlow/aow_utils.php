@@ -117,7 +117,7 @@ function getModuleFields(
     }
     asort($fields);
     if ($view == 'JSON') {
-        return json_encode($fields, JSON_THROW_ON_ERROR);
+        return json_encode($fields);
     }
     if ($view == 'EditView') {
         return get_select_options_with_id($fields, $value);
@@ -220,7 +220,7 @@ function getModuleTreeData($module)
         }
     }
 
-    return json_encode($fields, JSON_THROW_ON_ERROR);
+    return json_encode($fields);
 }
 
 function getModuleRelationships($module, $view='EditView', $value = '')
@@ -321,7 +321,6 @@ function getModuleField(
     $currency_id = '',
     $params= array()
 ) {
-    $parentfieldlist = [];
     global $current_language;
     global $app_strings;
     global $app_list_strings;
@@ -637,6 +636,8 @@ function getModuleField(
         $fieldlist[$aow_field]['originalId'] = $aow_field;
     }
 
+    $parentfieldlist = [];
+
     if (isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'currency' && $view != 'EditView') {
         static $sfh;
 
@@ -707,7 +708,7 @@ function getDateField($module, $aow_field, $view, $value = null, $field_option =
         $view = 'EditView';
     }
 
-    $value = json_decode((string) html_entity_decode_utf8($value), true, 512, JSON_THROW_ON_ERROR);
+    $value = json_decode((string) html_entity_decode_utf8($value), true);
 
     if (!file_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php')) {
         unset($app_list_strings['aow_date_type_list']['business_hours']);
@@ -765,12 +766,14 @@ function getDateFields($module, $view='EditView', $value = '', $field_option = t
 
 function getAssignField($aow_field, $view, $value)
 {
-    $securityGroups = null;
+
     global $app_list_strings;
 
-    $value = json_decode((string) html_entity_decode_utf8($value), true, 512, JSON_THROW_ON_ERROR);
+    $value = json_decode((string) html_entity_decode_utf8($value), true);
 
     $roles = get_bean_select_array(true, 'ACLRole', 'name', '', 'name', true);
+
+    $securityGroups = [];
 
     if (!file_exists('modules/SecurityGroups/SecurityGroup.php')) {
         unset($app_list_strings['aow_assign_options']['security_group']);

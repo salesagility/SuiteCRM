@@ -71,12 +71,15 @@ class Popup_Picker
 
     public function process_page()
     {
-        $sugar_config = [];
+        global $sugar_config;
         global $focus;
         global $mod_strings;
         global $app_strings;
         global $app_list_strings;
         global $timedate;
+
+        $sugar_config = $sugar_config ?? [];
+
 
         $summary_list = array();
         $task_list = array();

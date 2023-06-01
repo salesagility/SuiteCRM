@@ -155,7 +155,7 @@ class Note extends File
     public function deleteAttachment($isduplicate = "false")
     {
         $removeFile = null;
-        
+
         if ($this->ACLAccess('edit')) {
             if ($isduplicate == "true") {
                 return true;
@@ -261,7 +261,7 @@ class Note extends File
             $this->contact_email = $emailAddress->getPrimaryAddress(false, $this->contact_id, 'Contacts');
         }
 
-        if ($this->contact_id !== null && $this->contact_id != '') {
+        if (isset($this->contact_id) && $this->contact_id != '') {
             $contact = BeanFactory::newBean('Contacts');
             $contact->retrieve($this->contact_id);
             if (isset($contact->id)) {
@@ -276,7 +276,7 @@ class Note extends File
         $note_fields = $this->get_list_view_array();
         global $app_list_strings, $focus, $action, $currentModule, $mod_strings, $sugar_config;
 
-        if ($this->parent_type !== null) {
+        if (isset($this->parent_type)) {
             $note_fields['PARENT_MODULE'] = $this->parent_type;
         }
 
@@ -286,14 +286,14 @@ class Note extends File
                 $note_fields['FILE_URL'] = UploadFile::get_upload_url($this);
             }
         }
-        if ($this->contact_id !== null && $this->contact_id != '') {
+        if (isset($this->contact_id) && $this->contact_id != '') {
             $contact = BeanFactory::newBean('Contacts');
             $contact->retrieve($this->contact_id);
             if (isset($contact->id)) {
                 $this->contact_name = $contact->full_name;
             }
         }
-        if ($this->contact_name !== null) {
+        if (isset($this->contact_name)) {
             $note_fields['CONTACT_NAME'] = $this->contact_name;
         }
 

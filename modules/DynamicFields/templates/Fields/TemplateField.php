@@ -172,7 +172,7 @@ class TemplateField
             $label .= '<span class="required">*</span>';
         }
         if ($this->view == 'list') {
-            if ($this->bean !== null) {
+            if (isset($this->bean)) {
                 if (!empty($this->id)) {
                     $name = $this->bean->table_name . '_cstm.'. $this->name;
                     $arrow = $this->bean->table_name . '_cstm_'. $this->name;
@@ -365,8 +365,8 @@ class TemplateField
             'massupdate'=>$this->massupdate,
             'default'=>$this->default,
             'no_default'=> !empty($this->no_default),
-            'comments'=> (property_exists($this, 'comments') && $this->comments !== null) ? $this->comments : '',
-            'help'=> ($this->help !== null) ?  $this->help : '',
+            'comments'=> (isset($this->comments)) ? $this->comments : '',
+            'help'=> (isset($this->help)) ?  $this->help : '',
             'importable'=>$this->importable,
             'duplicate_merge'=>$this->duplicate_merge,
             'duplicate_merge_dom_value'=> $this->getDupMergeDomValue(),
@@ -376,7 +376,7 @@ class TemplateField
             'unified_search'=>$this->convertBooleanValue($this->unified_search),
             'merge_filter' => empty($this->merge_filter) ? "disabled" : $this->merge_filter
         );
-        if (property_exists($this, 'full_text_search') && $this->full_text_search !== null) {
+        if (isset($this->full_text_search)) {
             $array['full_text_search'] = $this->full_text_search;
         }
         if (!empty($this->len)) {
@@ -443,7 +443,7 @@ class TemplateField
      */
     public function getDupMergeDomValue()
     {
-        if (property_exists($this, 'duplicate_merge_dom_value') && $this->duplicate_merge_dom_value !== null) {
+        if (isset($this->duplicate_merge_dom_value)) {
             return $this->duplicate_merge_dom_value;
         }
 

@@ -69,7 +69,7 @@ class OAuthAuthorizationService
 
         $provider = $this->getProvider($providerId);
 
-        return $provider instanceof \ExternalOAuthProviderConnectorInterface;
+        return $provider !== null;
     }
 
     /**
@@ -114,7 +114,7 @@ class OAuthAuthorizationService
     ): void {
         $provider = $this->getProvider($providerId);
 
-        if (!$provider instanceof \ExternalOAuthProviderConnectorInterface) {
+        if ($provider === null) {
             $this->log('fatal', 'OAuthAuthorizationService::authorizationRedirect::provider', 'provider not found');
             return;
         }
@@ -136,7 +136,7 @@ class OAuthAuthorizationService
     {
         $provider = $this->getProvider($providerId);
 
-        if (!$provider instanceof \ExternalOAuthProviderConnectorInterface) {
+        if ($provider === null) {
             $this->log('fatal', 'OAuthAuthorizationService::getAccessToken::provider', 'provider not found');
             return null;
         }
@@ -175,7 +175,7 @@ class OAuthAuthorizationService
 
         $provider = $this->getProvider($providerId);
 
-        if (!$provider instanceof \ExternalOAuthProviderConnectorInterface) {
+        if ($provider === null) {
             $this->log('fatal', 'OAuthAuthorizationService::refreshConnectionToken::provider', 'provider not found');
             return [
                 'success' => false,
@@ -197,7 +197,7 @@ class OAuthAuthorizationService
 
         $token =  $provider->refreshAccessToken($refreshToken);
 
-        if (!$token instanceof \League\OAuth2\Client\Token\AccessTokenInterface) {
+        if ($token === null) {
             $this->log('fatal', 'OAuthAuthorizationService::refreshToken::token', 'Not able to get access token. Check logs for more details');
             return [
                 'success' => false,
@@ -278,7 +278,7 @@ class OAuthAuthorizationService
     {
         $provider = $this->getProvider($providerId);
 
-        if (!$provider instanceof \ExternalOAuthProviderConnectorInterface || !$token instanceof \League\OAuth2\Client\Token\AccessTokenInterface) {
+        if ($provider === null || $token === null) {
             return [];
         }
 

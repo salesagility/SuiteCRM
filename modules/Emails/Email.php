@@ -910,7 +910,6 @@ class Email extends Basic
      */
     public function email2Send($request)
     {
-        $ie = null;
         global $mod_strings;
         global $app_strings;
         global $current_user;
@@ -921,6 +920,7 @@ class Email extends Basic
         global $beanFiles;
 
         $OBCharset = $locale->getPrecedentPreference('default_email_charset');
+        $ie = null;
 
         /**********************************************************************
          * Sugar Email PREP
@@ -1605,7 +1605,7 @@ class Email extends Basic
             }
 
 
-            if ((!($this->date_sent_received !== null) || !$this->date_sent_received) && in_array($this->status, ['sent', 'replied'])) {
+            if ((!isset($this->date_sent_received) || !$this->date_sent_received) && in_array($this->status, ['sent', 'replied'])) {
                 $this->date_sent_received = TimeDate::getInstance()->nowDb();
             }
 
@@ -1936,7 +1936,6 @@ class Email extends Basic
      */
     public function getNotes($id, $duplicate = false)
     {
-        $noteDupe = null;
         if (!class_exists('Note')) {
         }
 
@@ -1945,6 +1944,7 @@ class Email extends Basic
             $exRemoved = explode('::', $_REQUEST['removeAttachment']);
         }
 
+        $noteDupe = null;
         $noteArray = array();
         $q = "SELECT id FROM notes WHERE deleted = 0 AND parent_id = " . $this->db->quoted($id);
         $r = $this->db->query($q);
@@ -3163,7 +3163,7 @@ class Email extends Basic
                 $this->setLastSaveAndStoreInSentError(self::ERR_IE_RETRIEVE);
             }
         }
-        if ($ie instanceof \InboundEmail && $ie->id) {
+        if ($ie && $ie->id) {
             $ieMailId = $this->saveAndStoreInSent($mail, $ie, $nonGmailSentFolder, $check_notify, $options);
             if (!$ieMailId) {
                 LoggerManager::getLogger()->warn('Email save and store in sent folder error. Inbound email ID was: ' . $ieId);
@@ -3191,7 +3191,7 @@ class Email extends Basic
         if ($ieMailId) {
             // mark SEEN (STORE MAIL IN SENT BOX)
             $this->setNonGmailSentFolderHandler($nonGmailSentFolder ? $nonGmailSentFolder : new NonGmailSentFolderHandler());
-            if (!($ie instanceof \InboundEmail && $ie->id)) {
+            if (!($ie && $ie->id)) {
                 LoggerManager::getLogger()->warn('Exists and retrieved InboundEmail needed for storing email as sent.');
                 $this->setLastSaveAndStoreInSentError(self::ERR_NO_IE);
             } else {
@@ -3334,7 +3334,8 @@ class Email extends Basic
         $singleSelect = false,
         $ifListForExport = false
     ) {
-        $where_auto = null;
+        $where_auto = '';
+
         if ($return_array) {
             return parent::create_new_list_query(
                 $order_by,
@@ -3663,7 +3664,7 @@ class Email extends Basic
         $email_fields['ATTACHMENT_IMAGE'] = $this->attachment_image;
         $email_fields['LINK_ACTION'] = $this->link_action;
 
-        if (property_exists($this, 'type_name') && $this->type_name !== null) {
+        if (isset($this->type_name)) {
             $email_fields['TYPE_NAME'] = $this->type_name;
         }
 
@@ -4399,7 +4400,7 @@ eoq;
      */
     public function populateBeanFromRequest($bean, $request)
     {
-        if (!$bean instanceof \Email) {
+        if (empty($bean)) {
             $bean = BeanFactory::getBean('Emails');
         }
 
@@ -4944,7 +4945,7 @@ eoq;
     ): void {
 ///////////////////////////////////////////////////////////////////////
         ////	ATTACHMENTS
-        if (property_exists($this, 'saved_attachments') && $this->saved_attachments !== null) {
+        if (isset($this->saved_attachments)) {
             foreach ($this->saved_attachments as $note) {
                 $mime_type = 'text/plain';
                 if ($note->object_name == 'Note') {

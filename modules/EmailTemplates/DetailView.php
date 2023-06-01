@@ -146,7 +146,7 @@ $xtpl->assign("NAME", $focus->name);
 $xtpl->assign("DESCRIPTION", $focus->description);
 $xtpl->assign("SUBJECT", $focus->subject);
 $xtpl->assign("BODY", $focus->body);
-$xtpl->assign("BODY_HTML", json_encode(from_html($focus->body_html), JSON_THROW_ON_ERROR));
+$xtpl->assign("BODY_HTML", json_encode(from_html($focus->body_html)));
 $xtpl->assign("DATE_MODIFIED", $focus->date_modified);
 $xtpl->assign("DATE_ENTERED", $focus->date_entered);
 $xtpl->assign("ASSIGNED_USER_NAME", $focus->assigned_user_name);

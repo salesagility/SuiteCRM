@@ -185,7 +185,6 @@ class AOR_Report extends Basic
 
     public function build_report_chart($chartIds = null, $chartType = self::CHART_TYPE_PCHART)
     {
-        $html = null;
         global $beanList;
         $linkedCharts = $this->get_linked_beans('aor_charts', 'AOR_Charts');
         if (!$linkedCharts) {
@@ -272,7 +271,7 @@ class AOR_Report extends Basic
             $data[] = $row;
         }
         $fields = $this->getReportFields();
-
+        $html = '';
         switch ($chartType) {
             case self::CHART_TYPE_PCHART:
                 $html = '<script src="modules/AOR_Charts/lib/pChart/imagemap.js"></script>';
@@ -306,10 +305,12 @@ class AOR_Report extends Basic
 
         $rows = $this->getGroupDisplayFieldByReportId($this->id, $level);
 
-        if ((is_countable($rows) ? count($rows) : 0) > 1) {
+        $rowsCount = is_countable($rows) ? count($rows) : 0;
+
+        if ($rowsCount > 1) {
             $GLOBALS['log']->fatal('ambiguous group display for report ' . $this->id);
         } else {
-            if ((is_countable($rows) ? count($rows) : 0) == 1) {
+            if ($rowsCount == 1) {
                 $rows[0]['module_path'] = unserialize(base64_decode($rows[0]['module_path']));
                 if (!$rows[0]['module_path'][0]) {
                     $module = new $beanList[$this->report_module]();
@@ -653,7 +654,7 @@ class AOR_Report extends Basic
                 $total_rows = $assoc['c'];
             }
         }
-        
+
         $html = '<div class="list-view-rounded-corners">';
         $html.='<table id="report_table_'.$tableIdentifier.$group_value.'" width="100%" border="0" class="list view table-responsive aor_reports">';
 
@@ -995,13 +996,15 @@ class AOR_Report extends Basic
 
     public function calculateTotal($type, $totals)
     {
+        $totalCount = is_countable($totals) ? count($totals) : 0;
+
         switch ($type) {
             case 'SUM':
                 return array_sum($totals);
             case 'COUNT':
-                return is_countable($totals) ? count($totals) : 0;
+                return $totalCount;
             case 'AVG':
-                return array_sum($totals) / (is_countable($totals) ? count($totals) : 0);
+                return array_sum($totals) / $totalCount;
             default:
                 return '';
         }
@@ -1020,7 +1023,7 @@ class AOR_Report extends Basic
 
     public function build_report_csv()
     {
-        $field = null;
+
         global $beanList;
         ini_set('zlib.output_compression', 'Off');
 
@@ -1035,6 +1038,7 @@ class AOR_Report extends Basic
         $result = $this->db->query($sql);
 
         $fields = array();
+        $field = null;
         $i = 0;
         while ($row = $this->db->fetchByAssoc($result)) {
             $field = BeanFactory::newBean('AOR_Fields');
@@ -1372,9 +1376,11 @@ class AOR_Report extends Basic
         $query = array(),
         SugarBean $rel_module = null
     ) {
-        $params = [];
+
         // Alias to keep lines short
         $db = $this->db;
+        $params = [];
+
         if (!isset($query['join'][$alias])) {
             switch ($type) {
                 case 'custom':
@@ -1446,10 +1452,9 @@ class AOR_Report extends Basic
      */
     public function build_report_query_where($query = array())
     {
-        $aor_sql_operator_list = [];
-        $value = null;
         global $beanList, $app_list_strings, $sugar_config, $timedate;
 
+        $aor_sql_operator_list = [];
         $aor_sql_operator_list['Equal_To'] = '=';
         $aor_sql_operator_list['Not_Equal_To'] = '!=';
         $aor_sql_operator_list['Greater_Than'] = '>';
@@ -1566,6 +1571,8 @@ class AOR_Report extends Basic
                         $condition->operator = $condParam['operator'];
                         $condition->value_type = $condParam['type'];
                     }
+
+                    $value = '';
 
                     switch ($condition->value_type) {
                         case 'Field':

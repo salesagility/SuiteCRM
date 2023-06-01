@@ -192,10 +192,11 @@ class CalendarGrid
 
     public function display_mobile()
     {
-        $agenda_array = [];
         global $mod_strings;
 
         $str = "<div class='mobile_calendar_container'>";
+
+        $agenda_array = [];
 
         foreach ($this->cal->items as $cal_item) {
             if (date("Y-m-d", $cal_item['ts_start']) >= date("Y-m-d", $this->today_ts)) {

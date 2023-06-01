@@ -81,7 +81,7 @@ class EmailsViewCompose extends ViewEdit
         $this->ev = $this->getEditView();
         $this->ev->ss =& $this->ss;
 
-        if (!($this->bean->mailbox_id !== null) || empty($this->bean->mailbox_id)) {
+        if (!isset($this->bean->mailbox_id) || empty($this->bean->mailbox_id)) {
             $inboundEmailID = $current_user->getPreference('defaultIEAccount', 'Emails');
             $this->ev->ss->assign('INBOUND_ID', $inboundEmailID);
         } else {
@@ -100,7 +100,7 @@ class EmailsViewCompose extends ViewEdit
         $this->ev->ss->assign('RETURN_ACTION', isset($_GET['return_action']) ? $_GET['return_action'] : '');
         $this->ev->ss->assign('RETURN_ID', isset($_GET['return_id']) ? $_GET['return_id'] : '');
         $this->ev->ss->assign('IS_MODAL', isset($_GET['in_popup']) ? $_GET['in_popup'] : false);
-        
+
         $attachmentName = $mod_strings['LBL_ATTACHMENT'];
         if (isset($_GET['return_module']) && isset($_GET['return_id'])) {
             $attachmentName = $attachmentName . ' (' . $_GET['return_module'] . ')';
@@ -119,7 +119,7 @@ class EmailsViewCompose extends ViewEdit
             }
         }
         $this->ev->ss->assign('ATTACHMENT_NAME', $attachmentName);
-        
+
         $this->ev->setup(
             $this->module,
             $this->bean,
@@ -141,6 +141,9 @@ class EmailsViewCompose extends ViewEdit
 
     /**
      * Prepends body with $user's default signature
+     *
+     * @deprecated
+     *
      * @param Email $email
      * @param User $user
      * @return bool|Email

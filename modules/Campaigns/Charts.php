@@ -66,8 +66,10 @@ class campaign_charts
      */
     public function campaign_response_by_activity_type($datay= array(), $targets=array(), $campaign_id= null, $cache_file_name='a_file', $refresh=false, $marketing_id='')
     {
-        $targeted = [];
+
         global $app_strings, $mod_strings, $charset, $lang, $barChartColors,$app_list_strings;
+
+        $targeted = [];
 
         if ($campaign_id) {
             $sugarChart = SugarChartFactory::getInstance('', 'Reports');
@@ -216,11 +218,13 @@ class campaign_charts
         $is_dashlet=false,
         $dashlet_id=''
         ) {
-        $focus = null;
-        $opp_data1 = [];
+
         global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
 
         $not_empty = false;
+        $focus = null;
+        $opp_data1 = [];
+
 
         if ($is_dashlet) {
             $mod_strings = return_module_language($current_language, 'Campaigns');
@@ -370,8 +374,7 @@ class campaign_charts
     //perhaps add another boolean to the parameter list to return just the data or the chart
     public function campaign_response_roi_data($datay= array(), $targets=array(), $campaign_id = null, $cache_file_name='a_file', $refresh=false, $marketing_id='', $is_dashlet=false, $dashlet_id='')
     {
-        $focus = null;
-        $opp_data1 = [];
+
         global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
 
         $campaign_id = (int) $campaign_id;
@@ -381,6 +384,8 @@ class campaign_charts
         }
 
         $not_empty = false;
+        $focus = null;
+        $opp_data1 = [];
 
         if ($is_dashlet) {
             $mod_strings = return_module_language($current_language, 'Campaigns');

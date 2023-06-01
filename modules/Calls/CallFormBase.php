@@ -207,7 +207,6 @@ EOQ;
 
     public function handleSave($prefix, $redirect=true, $useRequired=false)
     {
-        $return_id = null;
         require_once('include/formbase.php');
 
         global $current_user;
@@ -273,6 +272,8 @@ EOQ;
         if (!empty($focus->id)) {
             $newBean = false;
         }
+
+        $return_id = '';
 
         //add assigned user and current user if this is the first time bean is saved
         if (empty($focus->id) && !empty($_REQUEST['return_module']) && $_REQUEST['return_module'] =='Calls' && !empty($_REQUEST['return_action']) && $_REQUEST['return_action'] =='DetailView') {
