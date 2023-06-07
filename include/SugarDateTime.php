@@ -109,6 +109,7 @@ class SugarDateTime extends DateTime
      * @return SugarDateTime
      * @see DateTime::createFromFormat
      */
+    #[ReturnTypeWillChange]
     public static function createFromFormat($format, $time, $timezone = null)
     {
         if (empty($time) || empty($format)) {

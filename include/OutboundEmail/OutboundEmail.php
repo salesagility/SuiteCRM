@@ -46,6 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Outbuound email management
  * @api
  */
+#[\AllowDynamicProperties]
 class OutboundEmail
 {
     /**
