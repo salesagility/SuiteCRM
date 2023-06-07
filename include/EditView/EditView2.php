@@ -979,7 +979,7 @@ class EditView
                     $group_panel = preg_replace("/[\r\n]+/", '', (string) $group_panel);
                     $group_panel_append = <<<EOQ
     <script>
-        $('#${form_name}_tabs .panel-content').append($('${group_panel}'));
+        $('#{$form_name}_tabs .panel-content').append($('{$group_panel}'));
     </script>
 EOQ;
                     $str .= $group_panel_append;

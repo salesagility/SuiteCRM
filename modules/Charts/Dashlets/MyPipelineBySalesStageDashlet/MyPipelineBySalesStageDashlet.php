@@ -248,7 +248,7 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
             id: '$canvasId',
             x: 10,
             y: 30,
-            text: 'Pipeline total is ${currency_symbol}$total$thousands_symbol',
+            text: 'Pipeline total is {$currency_symbol}$total$thousands_symbol',
             options: {
                 font: 'Arial',
                 bold: true,

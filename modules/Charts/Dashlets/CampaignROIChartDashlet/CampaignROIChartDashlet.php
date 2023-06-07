@@ -206,7 +206,7 @@ class CampaignROIChartDashlet extends DashletGenericChart
             id: '$canvasId',
             x: 10,
             y: 20,
-            text: 'Amount in ${currency_symbol}',
+            text: 'Amount in {$currency_symbol}',
             options: {
                 font: 'Arial',
                 bold: true,
@@ -230,7 +230,7 @@ EOD;
     {
         //global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
         global $mod_strings;
-        
+
         if (!$campaign_id) {
             $GLOBALS['log']->debug('roi chart need a campaign id');
             return false;

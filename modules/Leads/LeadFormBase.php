@@ -105,20 +105,20 @@ class LeadFormBase extends PersonFormBase
         $user_id = $current_user->id;
         $lbl_email_address = $mod_strings['LBL_EMAIL_ADDRESS'];
         $form = <<<EOQ
-		<input type="hidden" name="${prefix}record" value="">
-		<input type="hidden" name="${prefix}status" value="New">
-		<input type="hidden" name="${prefix}assigned_user_id" value='${user_id}'>
-		<table class='evenListRow' border='0' width='100%'><tr><td nowrap cospan='1'>$lbl_first_name<br><input name="${prefix}first_name" type="text" value=""></td><td colspan='1'><FONT class="required">$lbl_required_symbol</FONT>&nbsp;$lbl_last_name<br><input name='${prefix}last_name' type="text" value=""></td></tr>
+		<input type="hidden" name="{$prefix}record" value="">
+		<input type="hidden" name="{$prefix}status" value="New">
+		<input type="hidden" name="{$prefix}assigned_user_id" value='{$user_id}'>
+		<table class='evenListRow' border='0' width='100%'><tr><td nowrap cospan='1'>$lbl_first_name<br><input name="{$prefix}first_name" type="text" value=""></td><td colspan='1'><FONT class="required">$lbl_required_symbol</FONT>&nbsp;$lbl_last_name<br><input name='{$prefix}last_name' type="text" value=""></td></tr>
 		<tr><td colspan='4'><hr></td></tr>
-		<tr><td nowrap colspan='1'>${mod_strings['LBL_TITLE']}<br><input name='${prefix}title' type="text" value=""></td><td nowrap colspan='1'>${mod_strings['LBL_DEPARTMENT']}<br><input name='${prefix}department' type="text" value=""></td></tr>
+		<tr><td nowrap colspan='1'>{$mod_strings['LBL_TITLE']}<br><input name='{$prefix}title' type="text" value=""></td><td nowrap colspan='1'>{$mod_strings['LBL_DEPARTMENT']}<br><input name='{$prefix}department' type="text" value=""></td></tr>
 		<tr><td colspan='4'><hr></td></tr>
-		<tr><td nowrap colspan='4'>$lbl_address<br><input type='text' name='${prefix}primary_address_street' size='80'></td></tr>
-		<tr><td> ${mod_strings['LBL_CITY']}<BR><input name='${prefix}primary_address_city'  maxlength='100' value=''></td><td>${mod_strings['LBL_STATE']}<BR><input name='${prefix}primary_address_state'  maxlength='100' value=''></td><td>${mod_strings['LBL_POSTAL_CODE']}<BR><input name='${prefix}primary_address_postalcode'  maxlength='100' value=''></td><td>${mod_strings['LBL_COUNTRY']}<BR><select name='${prefix}primary_address_country' size='1'>{$primary_address_country_options}</select></td></tr>
+		<tr><td nowrap colspan='4'>$lbl_address<br><input type='text' name='{$prefix}primary_address_street' size='80'></td></tr>
+		<tr><td> {$mod_strings['LBL_CITY']}<BR><input name='{$prefix}primary_address_city'  maxlength='100' value=''></td><td>{$mod_strings['LBL_STATE']}<BR><input name='{$prefix}primary_address_state'  maxlength='100' value=''></td><td>{$mod_strings['LBL_POSTAL_CODE']}<BR><input name='{$prefix}primary_address_postalcode'  maxlength='100' value=''></td><td>{$mod_strings['LBL_COUNTRY']}<BR><select name='{$prefix}primary_address_country' size='1'>{$primary_address_country_options}</select></td></tr>
 		<tr><td colspan='4'><hr></td></tr>
-		<tr><td nowrap >$lbl_phone<br><input name='${prefix}phone_work' type="text" value=""></td><td nowrap >${mod_strings['LBL_MOBILE_PHONE']}<br><input name='${prefix}phone_mobile' type="text" value=""></td><td nowrap >${mod_strings['LBL_FAX_PHONE']}<br><input name='${prefix}phone_fax' type="text" value=""></td><td nowrap >${mod_strings['LBL_HOME_PHONE']}<br><input name='${prefix}phone_home' type="text" value=""></td></tr>
+		<tr><td nowrap >$lbl_phone<br><input name='{$prefix}phone_work' type="text" value=""></td><td nowrap >{$mod_strings['LBL_MOBILE_PHONE']}<br><input name='{$prefix}phone_mobile' type="text" value=""></td><td nowrap >{$mod_strings['LBL_FAX_PHONE']}<br><input name='{$prefix}phone_fax' type="text" value=""></td><td nowrap >{$mod_strings['LBL_HOME_PHONE']}<br><input name='{$prefix}phone_home' type="text" value=""></td></tr>
 		<tr><td colspan='4'><hr></td></tr>
-		<tr><td nowrap colspan='1'>$lbl_email_address<br><input name='${prefix}email1' type="text" value=""></td><td nowrap colspan='1'>${mod_strings['LBL_OTHER_EMAIL_ADDRESS']}<br><input name='${prefix}email2' type="text" value=""></td></tr>
-		<tr><td nowrap colspan='4'>${mod_strings['LBL_DESCRIPTION']}<br><textarea cols='80' rows='4' name='${prefix}description' ></textarea></td></tr></table>
+		<tr><td nowrap colspan='1'>$lbl_email_address<br><input name='{$prefix}email1' type="text" value=""></td><td nowrap colspan='1'>{$mod_strings['LBL_OTHER_EMAIL_ADDRESS']}<br><input name='{$prefix}email2' type="text" value=""></td></tr>
+		<tr><td nowrap colspan='4'>{$mod_strings['LBL_DESCRIPTION']}<br><textarea cols='80' rows='4' name='{$prefix}description' ></textarea></td></tr></table>
 
 EOQ;
 
@@ -154,18 +154,18 @@ EOQ;
         $user_id = $current_user->id;
         $lbl_email_address = $mod_strings['LBL_EMAIL_ADDRESS'];
         $form = <<<EOQ
-		<input type="hidden" name="${prefix}record" value="">
-		<input type="hidden" name="${prefix}email2" value="">
-		<input type="hidden" name="${prefix}status" value="New">
-		<input type="hidden" name="${prefix}assigned_user_id" value='${user_id}'>
+		<input type="hidden" name="{$prefix}record" value="">
+		<input type="hidden" name="{$prefix}email2" value="">
+		<input type="hidden" name="{$prefix}status" value="New">
+		<input type="hidden" name="{$prefix}assigned_user_id" value='{$user_id}'>
 <p>		$lbl_first_name<br>
-		<input name="${prefix}first_name" type="text" value=""><br>
+		<input name="{$prefix}first_name" type="text" value=""><br>
 		$lbl_last_name <span class="required">$lbl_required_symbol</span><br>
-		<input name='${prefix}last_name' type="text" value=""><br>
+		<input name='{$prefix}last_name' type="text" value=""><br>
 		$lbl_phone<br>
-		<input name='${prefix}phone_work' type="text" value=""><br>
+		<input name='{$prefix}phone_work' type="text" value=""><br>
 		$lbl_email_address<br>
-		<input name='${prefix}email1' type="text" value=""></p>
+		<input name='{$prefix}email1' type="text" value=""></p>
 
 EOQ;
 
@@ -201,13 +201,13 @@ EOQ;
         $the_form = get_left_form_header($mod_strings['LBL_NEW_FORM_TITLE']);
         $the_form .= <<<EOQ
 
-		<form name="${prefix}LeadSave" onSubmit="return check_form('${prefix}LeadSave')" method="POST" action="index.php">
-			<input type="hidden" name="${prefix}module" value="Leads">
-			<input type="hidden" name="${prefix}action" value="Save">
+		<form name="{$prefix}LeadSave" onSubmit="return check_form('{$prefix}LeadSave')" method="POST" action="index.php">
+			<input type="hidden" name="{$prefix}module" value="Leads">
+			<input type="hidden" name="{$prefix}action" value="Save">
 EOQ;
-        $the_form .= $this->getFormBody($prefix, $mod, "${prefix}LeadSave");
+        $the_form .= $this->getFormBody($prefix, $mod, "{$prefix}LeadSave");
         $the_form .= <<<EOQ
-		<p><input title="$lbl_save_button_title" accessKey="$lbl_save_button_key" class="button" type="submit" name="${prefix}button" value="  $lbl_save_button_label  " ></p>
+		<p><input title="$lbl_save_button_title" accessKey="$lbl_save_button_key" class="button" type="submit" name="{$prefix}button" value="  $lbl_save_button_label  " ></p>
 		</form>
 
 EOQ;

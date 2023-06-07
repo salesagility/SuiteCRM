@@ -76,21 +76,21 @@ class EmailTemplateFormBase
         $default_parent_type= $app_list_strings['record_type_default_key'];
 
         $form = <<<EOF
-				<input type="hidden" name="${prefix}record" value="">
-				<input type="hidden" name="${prefix}parent_type" value="${default_parent_type}">
+				<input type="hidden" name="{$prefix}record" value="">
+				<input type="hidden" name="{$prefix}parent_type" value="{$default_parent_type}">
 				<p>
 				<table cellspacing="0" cellpadding="0" border="0">
 				<tr>
 				    <td scope="row">$lbl_subject <span class="required">$lbl_required_symbol</span></td>
 				</tr>
 				<tr>
-				    <td ><input name='${prefix}name' size='${size}' maxlength='255' type="text" value=""></td>
+				    <td ><input name='{$prefix}name' size='{$size}' maxlength='255' type="text" value=""></td>
 				</tr>
 				<tr>
 				    <td scope="row">$lbl_description</td>
 				</tr>
 				<tr>
-				    <td ><textarea name='${prefix}description' cols='${size}' rows='4' ></textarea></td>
+				    <td ><textarea name='{$prefix}description' cols='{$size}' rows='4' ></textarea></td>
 				</tr>
 				</table></p>
 EOF;
@@ -123,11 +123,11 @@ EOF;
         $the_form = get_left_form_header($mod_strings['LBL_NEW_FORM_TITLE']);
         $the_form .= <<<EOQ
 
-				<form name="${prefix}EmailTemplateSave" onSubmit="return check_form('${prefix}EmailTemplateSave')" method="POST" action="index.php">
-					<input type="hidden" name="${prefix}module" value="EmailTemplates">
-					<input type="hidden" name="${prefix}action" value="Save">
+				<form name="{$prefix}EmailTemplateSave" onSubmit="return check_form('{$prefix}EmailTemplateSave')" method="POST" action="index.php">
+					<input type="hidden" name="{$prefix}module" value="EmailTemplates">
+					<input type="hidden" name="{$prefix}action" value="Save">
 EOQ;
-        $the_form .= $this->getFormBody($prefix, $mod, "${prefix}EmailTemplateSave", "20");
+        $the_form .= $this->getFormBody($prefix, $mod, "{$prefix}EmailTemplateSave", "20");
         $the_form .= <<<EOQ
 				<p><input title="$lbl_save_button_title" accessKey="$lbl_save_button_key" class="button" type="submit" name="button" value="  $lbl_save_button_label  " ></p>
 				</form>

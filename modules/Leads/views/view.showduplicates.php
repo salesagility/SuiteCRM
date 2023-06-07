@@ -109,13 +109,13 @@ class ViewShowDuplicates extends SugarView
         $input = '';
         foreach ($lead->column_fields as $field) {
             if (!empty($_POST['Leads'.$field])) {
-                $input .= "<input type='hidden' name='$field' value='${_POST['Leads'.$field]}'>\n";
+                $input .= "<input type='hidden' name='$field' value='{$_POST['Leads'.$field]}'>\n";
             }
         }
 
         foreach ($lead->additional_column_fields as $field) {
             if (!empty($_POST['Leads'.$field])) {
-                $input .= "<input type='hidden' name='$field' value='${_POST['Leads'.$field]}'>\n";
+                $input .= "<input type='hidden' name='$field' value='{$_POST['Leads'.$field]}'>\n";
             }
         }
 

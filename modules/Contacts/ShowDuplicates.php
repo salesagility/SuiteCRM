@@ -117,13 +117,13 @@ $xtpl->assign('FORMBODY', $contactForm->buildTableForm($duplicateContacts));
 $input = '';
 foreach ($contact->column_fields as $field) {
     if (!empty($_POST['Contacts'.$field])) {
-        $input .= "<input type='hidden' name='$field' value='${_POST['Contacts'.$field]}'>\n";
+        $input .= "<input type='hidden' name='$field' value='{$_POST['Contacts'.$field]}'>\n";
     }
 }
 
 foreach ($contact->additional_column_fields as $field) {
     if (!empty($_POST['Contacts'.$field])) {
-        $input .= "<input type='hidden' name='$field' value='${_POST['Contacts'.$field]}'>\n";
+        $input .= "<input type='hidden' name='$field' value='{$_POST['Contacts'.$field]}'>\n";
     }
 }
 

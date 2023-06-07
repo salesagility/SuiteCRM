@@ -489,7 +489,7 @@ class jjwg_MapsController extends SugarController
         $enclosure_esc = preg_quote((string) $enclosure, '/');
         $output = array();
         foreach ($fields as $field) {
-            $output[] = preg_match("/(?:${delimiter_esc}|${enclosure_esc}|\s)/", (string) $field) ? (
+            $output[] = preg_match("/(?:{$delimiter_esc}|{$enclosure_esc}|\s)/", (string) $field) ? (
                 $enclosure . str_replace($enclosure, $enclosure . $enclosure, (string) $field) . $enclosure
                     ) : $field;
         }

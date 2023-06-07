@@ -230,7 +230,7 @@ new RGraph.HBar({
             id: '$canvasId',
             x: 10,
             y: 550,
-            text: 'Opportunity size in ${currency_symbol}1$thousands_symbol',
+            text: 'Opportunity size in {$currency_symbol}1$thousands_symbol',
             options: {
                 font: 'Arial',
                 bold: true,

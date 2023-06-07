@@ -1249,7 +1249,7 @@ EOQ;
         $javascriptend = <<<EOQ
 		 <script type="text/javascript">
 		Calendar.setup ({
-			inputField : "${varname}jscal_field", daFormat : "$cal_dateformat", ifFormat : "$cal_dateformat", showsTime : false, button : "${varname}jscal_trigger", singleClick : true, step : 1, startWeekday: $cal_fdow, weekNumbers:false
+			inputField : "{$varname}jscal_field", daFormat : "$cal_dateformat", ifFormat : "$cal_dateformat", showsTime : false, button : "{$varname}jscal_trigger", singleClick : true, step : 1, startWeekday: $cal_fdow, weekNumbers:false
 		});
 		</script>
 EOQ;
@@ -1304,7 +1304,7 @@ EOQ;
 	$cal_fdow = $current_user->get_first_day_of_week() ? $current_user->get_first_day_of_week() : '0';
 
         $javascriptend = <<<EOQ
-		 
+
 	<span id="{$varname}_trigger" class="suitepicon suitepicon-module-calendar" onclick="return false;"></span>
 EOQ;
         $dtscript = getVersionedScript('include/SugarFields/Fields/Datetimecombo/Datetimecombo.js');
