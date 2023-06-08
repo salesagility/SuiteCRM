@@ -126,7 +126,7 @@ class UpgradeMetaHelper
 
     public function saveMatchingFilesQueries($currStep, $value)
     {
-        $file_queries = null;
+        $file_queries = [];
         $upgrade_progress_dir = sugar_cached('upgrades/temp');
         if (!is_dir($upgrade_progress_dir) && !mkdir($upgrade_progress_dir) && !is_dir($upgrade_progress_dir)) {
             throw new \RuntimeException(sprintf('Directory "%s" was not created', $upgrade_progress_dir));

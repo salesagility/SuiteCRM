@@ -100,7 +100,7 @@ $files = new RecursiveIteratorIterator(
     new RecursiveCallbackFilterIterator(
         new RecursiveDirectoryIterator(
             clean_path($baseDirectory),
-            RecursiveDirectoryIterator::SKIP_DOTS | \FilesystemIterator::SKIP_DOTS
+            RecursiveDirectoryIterator::SKIP_DOTS
         ),
         $fileCheck
     )

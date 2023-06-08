@@ -121,7 +121,7 @@ function commitMakeBackupFiles($rest_dir, $install_file, $unzip_dir, $zip_from_d
         $newFiles = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator(
                 clean_path($unzip_dir . '/' . $zip_from_dir),
-                RecursiveDirectoryIterator::SKIP_DOTS | RecursiveIteratorIterator::SELF_FIRST | \FilesystemIterator::SKIP_DOTS
+                RecursiveDirectoryIterator::SKIP_DOTS | RecursiveIteratorIterator::SELF_FIRST
             )
         );
 
@@ -194,7 +194,7 @@ function commitCopyNewFiles($unzip_dir, $zip_from_dir, $path='')
     $newFiles = new RecursiveIteratorIterator(
         new RecursiveDirectoryIterator(
             $zipPath,
-            RecursiveDirectoryIterator::SKIP_DOTS | RecursiveIteratorIterator::SELF_FIRST | \FilesystemIterator::SKIP_DOTS
+            RecursiveDirectoryIterator::SKIP_DOTS | RecursiveIteratorIterator::SELF_FIRST
         )
     );
 
@@ -2146,7 +2146,6 @@ if (!function_exists('validate_manifest')) {
      */
     function validate_manifest($manifest)
     {
-        $suitecrm_version = null;
         logThis('validating manifest.php file');
         // takes a manifest.php manifest array and validates contents
         global $subdirs;
@@ -2154,6 +2153,7 @@ if (!function_exists('validate_manifest')) {
         global $sugar_config;
         global $sugar_flavor;
         global $mod_strings;
+        global $suitecrm_version;
 
         include('suitecrm_version.php');
 
@@ -2347,7 +2347,7 @@ function deleteTree($folder, $keepRootFolder = false)
 
     // Delete all children.
     $files = new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($folder, RecursiveDirectoryIterator::SKIP_DOTS | \FilesystemIterator::SKIP_DOTS),
+        new RecursiveDirectoryIterator($folder, RecursiveDirectoryIterator::SKIP_DOTS),
         RecursiveIteratorIterator::CHILD_FIRST
     );
 
@@ -3086,7 +3086,7 @@ function get_upgrade_progress()
 }
 function currSubStep($currStep)
 {
-    $currState = null;
+    $currState = '';
     $currSubStep = '';
     if (is_array($currStep)) {
         foreach ($currStep as $key=>$val) {
@@ -4284,7 +4284,7 @@ function remove_linkedin_connector()
  */
 function upgradeEnableInsideViewConnector($path='')
 {
-    $mapping = null;
+    $mapping = [];
     $modules_sources = [];
     logThis('Begin upgradeEnableInsideViewConnector', $path);
 

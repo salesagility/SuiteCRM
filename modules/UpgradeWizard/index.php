@@ -526,7 +526,7 @@ if ($_REQUEST['step'] === '4' && !$_REQUEST['additional_step']) {
     if (isset($stop) && $stop === true) {
         $frozen = (isset($frozen)) ? '<br />' . $frozen : '';
         $_SESSION['frozen'] = $frozen;
-        if ($step === 0) {
+        if ($step === 'upload') {
             $u_allow = 'false';
         }
     }
