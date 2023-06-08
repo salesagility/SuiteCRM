@@ -76,7 +76,7 @@ class ViewDashlet extends ViewListView
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
-        
+
         return array(
            translate('LBL_MODULE_NAME', 'Administration'),
            ModuleBuilderController::getModuleTitle(),
@@ -133,7 +133,7 @@ class ViewDashlet extends ViewListView
         $smarty = new Sugar_Smarty() ;
         $smarty->assign('translate', true) ;
         $smarty->assign('language', $parser->getLanguage()) ;
-        
+
         $smarty->assign('view', $this->editLayout) ;
         $smarty->assign('action', 'dashletSave') ;
         $smarty->assign('module', 'ModuleBuilder');
@@ -173,7 +173,7 @@ class ViewDashlet extends ViewListView
 
 
         $histaction = "ModuleBuilder.history.browse(\"{$this->editModule}\", \"{$this->editLayout}\")" ;
-        if (property_exists($this, 'searchlayout') && $this->searchlayout !== null) {
+        if (isset($this->searchlayout)) {
             $histaction = "ModuleBuilder.history.browse(\"{$this->editModule}\", \"{$this->editLayout}\", \"{$this->searchlayout}\")" ;
         }
 
@@ -213,7 +213,7 @@ class ViewDashlet extends ViewListView
         } else {
             $title =  $app_list_strings [ 'moduleList' ] [ $this->editModule ] ;
         }
-        
+
         return $GLOBALS [ 'mod_strings' ] [ 'LBL_LISTVIEW_EDIT' ] . ':&nbsp;' . $title ;
     }
 }

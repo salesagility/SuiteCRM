@@ -59,7 +59,8 @@ class MBLanguage
 
     public function loadStrings($file)
     {
-        $mod_strings = null;
+        global $mod_strings;
+        $mod_strings = $mod_strings ?? [];
         $module = strtoupper($this->name);
         $object_name = strtoupper($this->key_name);
         $_object_name = strtolower($this->name);
@@ -82,7 +83,8 @@ class MBLanguage
 
     public function loadAppListStrings($file)
     {
-        $app_list_strings = null;
+        global $app_list_strings;
+        $app_list_strings = $app_list_strings ?? [];
         if (!file_exists($file)) {
             return;
         }
@@ -268,9 +270,9 @@ class MBLanguage
 
     public function loadTemplates()
     {
-        $config = [];
         if (empty($this->templates)) {
             if (file_exists("$this->path/config.php")) {
+                $config = [];
                 include "$this->path/config.php";
                 $this->templates = $config['templates'];
                 $this->iTemplates = array();

@@ -68,13 +68,13 @@ class ParserSearchFields extends ModuleBuilderParser
             return;
         }
 
-        $key = $this->packageKey !== null ? $this->packageKey . '_' . $this->moduleName : $this->moduleName;
+        $key = isset($this->packageKey) ? $this->packageKey . '_' . $this->moduleName : $this->moduleName;
         $this->searchFields[$key][$name] = $searchField;
     }
 
     public function removeSearchField($name)
     {
-        $key = $this->packageKey !== null ? $this->packageKey . '_' . $this->moduleName : $this->moduleName;
+        $key = isset($this->packageKey) ? $this->packageKey . '_' . $this->moduleName : $this->moduleName;
 
         if (isset($this->searchFields[$key][$name])) {
             unset($this->searchFields[$key][$name]);

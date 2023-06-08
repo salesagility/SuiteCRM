@@ -69,22 +69,6 @@ define('MB_EXPORTPREPEND', 'project_');
 define('MB_VISIBILITY', 'visibility');
 
 #[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
 class MBConstants
 {
     public static $EMPTY = array( 'name' => '(empty)' , 'label' => '(empty)' ) ;

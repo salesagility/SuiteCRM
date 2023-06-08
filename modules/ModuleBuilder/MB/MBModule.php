@@ -500,7 +500,7 @@ class MBModule
             $path . '/vardefs.php',
             $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/vardef.tpl')
         );
-        
+
         if (! file_exists($path . '/metadata')) {
             mkdir_recursive($path . '/metadata') ;
         }
@@ -559,7 +559,7 @@ class MBModule
         $popups = array( );
         $popups [] = array('name' => translate('LBL_POPUPLISTVIEW') , 'type' => 'popuplistview' , 'action' => 'module=ModuleBuilder&action=editLayout&view=popuplist&view_module=' . $this->name . '&view_package=' . $this->package );
         $popups [] = array('name' => translate('LBL_POPUPSEARCH') , 'type' => 'popupsearch' , 'action' => 'module=ModuleBuilder&action=editLayout&view=popupsearch&view_module=' . $this->name . '&view_package=' . $this->package );
-        
+
         $layouts = array(
             array( 'name' => translate('LBL_EDITVIEW') , 'type' => 'edit' , 'action' => 'module=ModuleBuilder&MB=true&action=editLayout&view='.MB_EDITVIEW.'&view_module=' . $this->name . '&view_package=' . $this->package ) ,
             array( 'name' => translate('LBL_DETAILVIEW') , 'type' => 'detail' , 'action' => 'module=ModuleBuilder&MB=true&action=editLayout&view='.MB_DETAILVIEW.'&view_module=' . $this->name . '&view_package=' . $this->package ) ,
@@ -692,13 +692,13 @@ class MBModule
                         $this->key_name . 'Dashlet'
                     );
                     $contents = str_replace($search_array, $replace_array, $contents);
-                    
-                    
+
+
                     if ("relationships.php" == $e) {
                         //bug 39598 Relationship Name Is Not Updated If Module Name Is Changed In Module Builder
                         $contents = str_replace("'{$old_name}'", "'{$this->key_name}'", $contents) ;
                     }
-                    
+
                     sugar_file_put_contents($new_dir . '/' . $e, $contents) ;
                 }
             }
@@ -757,9 +757,9 @@ class MBModule
 
     public function getAvailibleSubpanelDef($panelName)
     {
-        $subpanel_layout = null;
         $filepath = $this->getModuleDir() . "/metadata/subpanels/{$panelName}.php" ;
         if (file_exists($filepath)) {
+            $subpanel_layout = [];
             include($filepath) ;
             return $subpanel_layout ;
         }
@@ -840,7 +840,7 @@ class MBModule
         // hardcoded list of types for now, as also hardcoded in a different form in getNodes
         // TODO: replace by similar mechanism to StudioModule to determine the list of available views for this module
         $views = array( 'editview' , 'detailview' , 'listview' , 'basic_search' , 'advanced_search' , 'dashlet' , 'popuplist');
-        
+
         foreach ($views as $type) {
             $parser = ParserFactory::getParser($type, $this->name, $this->package) ;
             if ($parser->removeField($fieldName)) {
@@ -881,7 +881,7 @@ class MBModule
                 }
             }
         }
-        
+
         return $field_defs;
     }
 

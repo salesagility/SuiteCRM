@@ -55,8 +55,6 @@ require_once 'modules/ModuleBuilder/parsers/constants.php';
  * which tracks files, not objects, needs us to create an intermediate file representation of the definition that it can manage and restore
  */
 #[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
 class DeployedSubpanelImplementation extends AbstractMetaDataImplementation implements MetaDataImplementationInterface
 {
     public const HISTORYFILENAME = 'restored.php';

@@ -59,8 +59,6 @@ require_once 'modules/ModuleBuilder/parsers/constants.php';
  * Class DeployedMetaDataImplementation
  */
 #[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
 class DeployedMetaDataImplementation extends AbstractMetaDataImplementation implements MetaDataImplementationInterface
 {
     /**

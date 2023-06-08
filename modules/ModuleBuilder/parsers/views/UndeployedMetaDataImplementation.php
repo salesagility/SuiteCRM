@@ -50,8 +50,6 @@ require_once 'modules/ModuleBuilder/parsers/views/GridLayoutMetaDataParser.php' 
 require_once 'modules/ModuleBuilder/parsers/constants.php' ;
 
 #[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
 class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation implements MetaDataImplementationInterface
 {
     protected $_packageName ;
@@ -219,7 +217,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
                 return $module->getModuleDir() . '/metadata/' . $filenames [ $view ] . '.php' ;
         }
     }
-    
+
     public function getModuleDir()
     {
         return $this->module->key_name;

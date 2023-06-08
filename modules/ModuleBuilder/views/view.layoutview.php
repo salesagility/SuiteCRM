@@ -288,7 +288,7 @@ class ViewLayoutView extends SugarView
         // set up language files
         $smarty->assign('language', $parser->getLanguage()) ; // for sugar_translate in the smarty template
         $smarty->assign('from_mb', $this->fromModuleBuilder);
-        $smarty->assign('calc_field_list', json_encode($parser->getCalculatedFields(), JSON_THROW_ON_ERROR));
+        $smarty->assign('calc_field_list', json_encode($parser->getCalculatedFields()));
         if ($this->fromModuleBuilder) {
             $mb = new ModuleBuilder() ;
             $module = & $mb->getPackageModule($this->package, $this->editModule) ;

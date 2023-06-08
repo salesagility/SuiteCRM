@@ -43,8 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 #[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
-#[\AllowDynamicProperties]
 abstract class AbstractMetaDataParser
 {
 

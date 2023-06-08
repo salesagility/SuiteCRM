@@ -123,7 +123,7 @@ class ViewProperty extends SugarView
         $smarty->assign('APP', $GLOBALS['app_strings']);
         $smarty->assign("view_module", $this->editModule);
         $smarty->assign("subpanel", $this->subpanel);
-        if (property_exists($this, 'editPackage') && $this->editPackage !== null) {
+        if (isset($this->editPackage)) {
             $smarty->assign("view_package", $this->editPackage);
         }
 
