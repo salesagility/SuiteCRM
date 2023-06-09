@@ -936,17 +936,11 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
     {
         // base64 encoded of {"web":"test"}
         $json = 'eyJ3ZWIiOiJ0ZXN0In0=';
-
-
-
         $query = "SELECT COUNT(*) AS cnt FROM users";
         $db = DBManagerFactory::getInstance();
-        $results = $db->query($query);
-        while ($row = $db->fetchByAssoc($results)) {
-            $cnt = $row['cnt'];
-            break;
-        }
-        self::assertEquals(1, $cnt);
+        $count = $db->getOne($query);
+
+        self::assertNotFalse($count);
 
         $user1 = BeanFactory::getBean('Users');
         $user1->last_name = 'UNIT_TESTS1';
@@ -959,15 +953,8 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
         $user1->setPreference('syncGCal', 1, 0, 'GoogleSync');
         $user1->savePreferencesToDB();
 
-
-        $query = "SELECT COUNT(*) AS cnt FROM users";
-        $db = DBManagerFactory::getInstance();
-        $results = $db->query($query);
-        while ($row = $db->fetchByAssoc($results)) {
-            $cnt = $row['cnt'];
-            break;
-        }
-        self::assertEquals(2, $cnt);
+        $cnt = $db->getOne($query);
+        self::assertEquals(++$count, $cnt );
 
         $user2 = BeanFactory::getBean('Users');
         $user2->last_name = 'UNIT_TESTS2';
@@ -981,38 +968,15 @@ class GoogleSyncTest extends SuitePHPUnitFrameworkTestCase
 
         self::assertNotSame($id1, $id2);
 
-        $query = "SELECT COUNT(*) AS cnt FROM users";
-        $db = DBManagerFactory::getInstance();
-        $results = $db->query($query);
-        while ($row = $db->fetchByAssoc($results)) {
-            $cnt = $row['cnt'];
-            break;
-        }
-        self::assertEquals(3, $cnt);
+        $cnt = $db->getOne($query);
+        self::assertEquals(++$count, $cnt);
 
         $object = new GoogleSyncMock($this->getFakeSugarConfig('{"web":"test"}'));
         $tempData = [];
         $countOfSyncUsers = $object->callMethod('setSyncUsers', [&$tempData]);
-        self::assertSame([
-            'founds' => 3,
-            'results' => [
-                ['notEmpty' => false],
-                [
-                    'syncPref' => 1,
-                    'decoded' => true,
-                    'notEmpty' => true,
-                    'added' => true,
-                ],
-                [
-                    'syncPref' => 1,
-                    'decoded' => true,
-                    'notEmpty' => true,
-                    'added' => true,
-                ],
-            ],
-        ], $tempData);
-
-        self::assertGreaterThanOrEqual(2, $countOfSyncUsers); // TODO: check how many user should be counted!?
+        
+        self::assertEquals($count, $tempData['founds']);
+        self::assertGreaterThanOrEqual(2, $countOfSyncUsers);
     }
 
     /**

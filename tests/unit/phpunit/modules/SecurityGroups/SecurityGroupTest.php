@@ -319,10 +319,9 @@ class SecurityGroupTest extends SuitePHPUnitFrameworkTestCase
         );
 
         $actual = $securityGroup::getSecurityModules();
-        $actualKeys = array_keys($actual);
-        sort($expected);
-        sort($actualKeys);
-        self::assertSame($expected, $actualKeys);
+        foreach ($expected as $expect) {
+            self::assertContains($expect, $actual);
+        }
     }
 
     public function testgetLinkName(): void

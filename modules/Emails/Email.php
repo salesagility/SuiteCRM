@@ -3391,31 +3391,30 @@ class Email extends Basic
      */
     public function fill_in_additional_list_fields()
     {
-        global $timedate, $mod_strings;
         $this->fill_in_additional_detail_fields();
 
         $this->link_action = 'DetailView';
-        ///////////////////////////////////////////////////////////////////////
-        //populate attachment_image, used to display attachment icon.
-        $query = "select 1 from notes where notes.parent_id = '$this->id' and notes.deleted = 0";
-        $result = $this->db->query($query, true, " Error filling in additional list fields: ");
+        $this->attachment_image = '';
 
-        $row = $this->db->fetchByAssoc($result);
+        if (!empty($this->id)) {
+            //populate attachment_image, used to display attachment icon.
+            $query = "select 1 from notes where notes.parent_id = '$this->id' and notes.deleted = 0";
+            $result = $this->db->query($query, true, " Error filling in additional list fields: ");
 
-        if ($row) {
-            $this->attachment_image = SugarThemeRegistry::current()->getImage(
-                'attachment',
-                '',
-                null,
-                null,
-                '.gif',
-                translate('LBL_ATTACHMENT', 'Emails')
-            );
-        } else {
-            $this->attachment_image = '';
+            $row = $this->db->fetchByAssoc($result);
+
+            if ($row) {
+                $this->attachment_image = SugarThemeRegistry::current()->getImage(
+                    'attachment',
+                    '',
+                    null,
+                    null,
+                    '.gif',
+                    translate('LBL_ATTACHMENT', 'Emails')
+                );
+            }
         }
-
-        ///////////////////////////////////////////////////////////////////////
+        
         if (empty($this->contact_id) && !empty($this->parent_id) && !empty($this->parent_type) && $this->parent_type === 'Contacts' && !empty($this->parent_name)) {
             $this->contact_id = $this->parent_id;
             $this->contact_name = $this->parent_name;

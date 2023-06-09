@@ -30,10 +30,16 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
     // ----- FOLLOWIN TESTS ARE USING FAKE IMAP ----
     // ------------------------------------------------->
 
+    /**
+     * @var resource
+     */
+    protected $connection;
+    
     public function setUp(): void
     {
         parent::setUp();
 
+        $this->connection = tempFileWithMode('wb+');
         $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], 'InboundEmail');
     }
 
@@ -46,11 +52,12 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return tempFileWithMode('wb+');
+            return $this->connection;
         }]);
         $fake->add('close', null, [null]);
         $fake->add('ping', null, [true]);
-        $fake->add('reopen', ['{:/service=}first', 32768, 0], [true]);
+        $fake->add('reopen', ['{:143/service=imap}first', 32768, 0], [true]);
+        $fake->add('isValidStream', $this->connection, [true]);
         $imap = new ImapHandlerFake($fake);
         $ie = new InboundEmail($imap);
         $_REQUEST['folder'] = 'inbound';
@@ -69,11 +76,12 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return tempFileWithMode('wb+');
+            return $this->connection;
         }]);
         $fake->add('close', null, [null]);
         $fake->add('ping', null, [true]);
-        $fake->add('reopen', ['{:/service=}test', 32768, 0], [true]);
+        $fake->add('reopen', ['{:143/service=imap}test', 32768, 0], [true]);
+        $fake->add('isValidStream', $this->connection, [true]);
         $imap = new ImapHandlerFake($fake);
         $ie = new InboundEmail($imap);
         $_REQUEST['folder'] = 'inbound';
@@ -92,11 +100,12 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('setTimeout', [3, 60], [true]);
         $fake->add('getErrors', null, [false]);
         $fake->add('getConnection', null, [function () {
-            return tempFileWithMode('wb+');
+            return $this->connection;
         }]);
         $fake->add('close', null, [null]);
         $fake->add('ping', null, [true]);
-        $fake->add('reopen', ['{:/service=}INBOX', 32768, 0], [true]);
+        $fake->add('reopen', ['{:143/service=imap}INBOX', 32768, 0], [true]);
+        $fake->add('isValidStream', $this->connection, [true]);
         $imap = new ImapHandlerFake($fake);
         $ie = new InboundEmail($imap);
         $_REQUEST['folder'] = 'inbound';
@@ -117,7 +126,8 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         }]);
         $fake->add('close', null, [null]);
         $fake->add('ping', null, [true]);
-        $fake->add('reopen', ['{:/service=}', 32768, 0], [true]);
+        $fake->add('reopen', ['{:143/service=imap}', 32768, 0], [true]);
+        $fake->add('isValidStream', $this->connection, [true]);
         $imap = new ImapHandlerFake($fake);
         $ie = new InboundEmail($imap);
         $_REQUEST['folder'] = 'sent';
@@ -144,8 +154,9 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('getConnection', null, [function () {
             return tempFileWithMode('wb+');
         }]);
-        $fake->add('getMailboxes', ['{:/service=/ssl/tls/validate-cert/secure}', '*'], [[]]);
+        $fake->add('getMailboxes', ['{:143/service=imap/ssl/tls/validate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
+        $fake->add('isValidStream', $this->connection, [true]);
         $imap = new ImapHandlerFake($fake);
 
         $_REQUEST['ssl'] = 1;
@@ -165,9 +176,10 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('getConnection', null, [function () {
             return tempFileWithMode('wb+');
         }]);
-        $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
+        $fake->add('getMailboxes', ['{:143/service=imap/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('ping', null, [true]);
-        $fake->add('reopen', ['{:/service=}', 32768, 0], [true]);
+        $fake->add('reopen', ['{:143/service=imap}', 32768, 0], [true]);
+        $fake->add('isValidStream', $this->connection, [true]);
         $imap = new ImapHandlerFake($fake);
 
         $_REQUEST['ssl'] = 1;
@@ -202,11 +214,12 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('getConnection', null, [function () {
             return tempFileWithMode('wb+');
         }]);
-        $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
+        $fake->add('getMailboxes', ['{:143/service=imap/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
+        $fake->add('isValidStream', $this->connection, [true]);
 
         $exp = [
-            'serial' => '::::::::novalidate-cert::notls::secure',
+            'serial' => '::::::imap::novalidate-cert::notls::secure',
             'service' => 'foo/notls/novalidate-cert/secure',
         ];
 
@@ -240,6 +253,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         }]);
         $fake->add('getMailboxes', ['{:143/service=imap/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
+        $fake->add('isValidStream', $this->connection, [true]);
 
         $exp = [
             'good' => [],
@@ -283,13 +297,14 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('getConnection', null, [function () {
             return tempFileWithMode('wb+');
         }]);
-        $fake->add('getMailboxes', ['{:/service=/notls/novalidate-cert/secure}', '*'], [[]]);
+        $fake->add('getMailboxes', ['{:143/service=imap/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
-
+        $fake->add('isValidStream', $this->connection, [true]);
+        
         $imap = new ImapHandlerFake($fake);
         $ret = (new InboundEmail($imap))->findOptimumSettings();
         self::assertEquals([
-            'serial' => '::::::::novalidate-cert::notls::secure',
+            'serial' => '::::::imap::novalidate-cert::notls::secure',
             'service' => 'foo/notls/novalidate-cert/secure',
         ], $ret);
     }
@@ -324,8 +339,9 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('getConnection', null, [function () {
             return tempFileWithMode('wb+');
         }]);
-        $fake->add('getMailboxes', ['{:/service=/ssl/tls/validate-cert/secure}', '*'], [[]]);
+        $fake->add('getMailboxes', ['{:143/service=imap/ssl/tls/validate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
+        $fake->add('isValidStream', $this->connection, [true]);
 
         $imap = new ImapHandlerFake($fake);
 
@@ -333,7 +349,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
         $ret = (new InboundEmail($imap))->findOptimumSettings();
         self::assertEquals([
-            'serial' => 'tls::::ssl::::::::secure',
+            'serial' => 'tls::::ssl::imap::::::secure',
             'service' => 'foo/ssl/tls/validate-cert/secure',
         ], $ret);
     }
@@ -2243,6 +2259,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_export_query(): void
     {
+        
         $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test with empty string params
@@ -2273,12 +2290,20 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
             'IS_PERSONAL' => '0',
             'MAILBOX_TYPE_NAME' => null,
             'GLOBAL_PERSONAL_STRING' => 'group',
+            'PORT' => '143',
+            'MOVE_MESSAGES_TO_TRASH_AFTER_IMPORT' => '0',
+            'AUTH_TYPE' => 'Basic Auth',
+            'PROTOCOL' => 'imap',
+            'IS_SSL' => '0',
+            'IS_DEFAULT' => '0',
+            'IS_AUTO_IMPORT' => '0',
+            'IS_CREATE_CASE' => '0',
+            'ALLOW_OUTBOUND_GROUP_USAGE' => '0',
         );
 
         self::assertIsArray($result);
         self::assertEquals($expected, $result);
 
-        $result = $inboundEmail->get_list_view_data();
     }
 
     public function testfill_in_additional_list_fields(): void

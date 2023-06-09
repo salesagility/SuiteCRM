@@ -83,7 +83,7 @@ class GoogleApiKeySaverEntryPointTest extends SuitePHPUnitFrameworkTestCase
         $client = new Google\Client();
         $request['getnew'] = 'ERR_NOT_ADMIN';
         $epMock = new GoogleApiKeySaverEntryPointMock($user, $cfg, $client, $request);
-        $expected = "https://accounts.google.com/o/oauth2/auth?response_type=code&access_type=offline&client_id=UNIT_TEST_client_id&redirect_uri=http%3A%2F%2Fwww.example.com%2Findex.php%3FentryPoint%3DsaveGoogleApiKey&state&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar&approval_prompt=force";
+        $expected = "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&access_type=offline&client_id=UNIT_TEST_client_id&redirect_uri=http%3A%2F%2Fwww.example.com%2Findex.php%3FentryPoint%3DsaveGoogleApiKey&state&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar&approval_prompt=force";
         $redirectString = $epMock->getRedirectUrl();
         self::assertEquals($expected, $redirectString);
     }
