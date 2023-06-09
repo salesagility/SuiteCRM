@@ -56,7 +56,7 @@ class ViewSugarpdfTest extends SuitePHPUnitFrameworkTestCase
         if (isset($_REQUEST)) {
             $_request = $_REQUEST;
         }
-        
+
         //execute the method with request parameters and test if it works.
         $_REQUEST['sugarpdf'] = 'someValue';
         $view = new ViewSugarpdf();
