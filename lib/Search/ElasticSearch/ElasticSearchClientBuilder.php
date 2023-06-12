@@ -135,7 +135,7 @@ class ElasticSearchClientBuilder
             return self::loadDefaultConfig();
         }
 
-        $hosts = json_decode($results, true, 512, JSON_THROW_ON_ERROR);
+        $hosts = json_decode($results, true);
 
         return self::loadFromArray($hosts);
     }
