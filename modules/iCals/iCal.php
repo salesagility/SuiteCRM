@@ -285,7 +285,7 @@ class iCal extends vCal
                     $ical_array[] = array("LOCATION", $event->location);
                     $eventUsers = $event->get_meeting_users();
                     $query = "SELECT contact_id as id from meetings_contacts where meeting_id='$event->id' AND deleted=0";
-                    $eventContacts = $event->build_related_list(BeanFactory::newBean('Contacts'), $query);
+                    $eventContacts = $event->build_related_list($query, BeanFactory::newBean('Contacts'));
                     $eventAttendees = array_merge($eventUsers, $eventContacts);
                     if (is_array($eventAttendees)) {
                         foreach ($eventAttendees as $attendee) {

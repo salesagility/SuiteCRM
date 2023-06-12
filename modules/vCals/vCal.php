@@ -105,7 +105,7 @@
             // First, get the list of IDs.
             $query = "SELECT id from vcals where user_id='{$user_bean->id}' AND type='vfb' AND deleted=0";
             $vCal = BeanFactory::newBean('vCals');
-            $vcal_arr = $this->build_related_list($vCal, $query);
+            $vcal_arr = $this->build_related_list($query, $vCal);
 
             foreach ($vcal_arr as $focus) {
                 if (empty($focus->content)) {

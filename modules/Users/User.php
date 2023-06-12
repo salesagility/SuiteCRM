@@ -1643,7 +1643,7 @@ EOQ;
         $query = "SELECT meeting_id as id from meetings_users where user_id='$this->id' AND deleted=0";
 
         $meeting = BeanFactory::newBean('Meetings');
-        return $this->build_related_list($meeting, $query);
+        return $this->build_related_list($query, $meeting);
     }
 
     public function get_calls()
@@ -1651,7 +1651,7 @@ EOQ;
         // First, get the list of IDs.
         $query = "SELECT call_id as id from calls_users where user_id='$this->id' AND deleted=0";
 
-        return $this->build_related_list(BeanFactory::newBean('Calls'), $query);
+        return $this->build_related_list($query, BeanFactory::newBean('Calls'));
     }
 
     /**
