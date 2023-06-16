@@ -70,9 +70,13 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
      *                                         - user_default_team_id, user_is_admin, user_default_dateformat, user_default_timeformat
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    public function login($user_auth, $application = null, $name_value_list = array())
+    public function login($user_auth, $application = null, $name_value_list = array(), ...$args)
     {
-        $GLOBALS['log']->info("Begin: SugarWebServiceImpl->login({$user_auth['user_name']}, $application, ". print_r($name_value_list, true) .")");
+        $application_name = $args['application_name'] ?? '';
+        if ($application_name === '' && $application === null){
+            $GLOBALS['log']->info("Application name not set. Please set using 'application_name' or 'application'. ");
+        }
+        $GLOBALS['log']->info("Begin: SugarWebServiceImpl->login({$user_auth['user_name']}, $application_name, ". print_r($name_value_list, true) .")");
         global $sugar_config, $system_config;
         $error = new SoapError();
         $user = BeanFactory::newBean('Users');
