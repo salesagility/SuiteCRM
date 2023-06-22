@@ -406,7 +406,7 @@ class AbstractRelationships
 
             $fh = fopen($filename, 'wb') ;
             fwrite($fh, $out, strlen($out)) ;
-            fclose($fh) ;
+            sugar_fclose($fh) ;
 
 
             foreach ($sugar_config['languages'] as $lk => $lv) {
