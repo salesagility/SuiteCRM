@@ -155,7 +155,7 @@ class ModuleBuilderParser
 
 //           $GLOBALS['log']->debug("parser.modifylayout.php->_writeFile(): out=".print_r($out,true));
             fwrite($fh, $out);
-            fclose($fh);
+            sugar_fclose($fh);
         } else {
             $GLOBALS['log']->fatal("ModuleBuilderParser->_writeFile() Could not write new viewdef file ".$file);
         }
