@@ -1497,7 +1497,7 @@ EOHTML;
         if (!empty($paramString)) {
             $theTitle .= "<h2 class='module-title-text'> $paramString </h2>";
 
-            if ($this->type == "detail") {
+            if ($this->type === "detail") {
                 $theTitle .= "<div class='favorite' record_id='" .
                     $this->bean->id .
                     "' module='" .
