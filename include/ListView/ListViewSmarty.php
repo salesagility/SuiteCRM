@@ -291,8 +291,8 @@ class ListViewSmarty extends ListViewDisplay
         global $app_strings, $sugar_version, $sugar_flavor, $currentModule, $app_list_strings;
         $this->ss->assign('moduleListSingular', $app_list_strings["moduleListSingular"]);
         $this->ss->assign('moduleList', $app_list_strings['moduleList']);
-        $this->ss->assign('data', $this->data['data']);
-        $this->ss->assign('query', $this->data['query']);
+        $this->ss->assign('data', $this->data['data'] ?? []);
+        $this->ss->assign('query', $this->data['query'] ?? '');
         $this->ss->assign('sugar_info', array("sugar_version" => $sugar_version,
             "sugar_flavor" => $sugar_flavor));
 
@@ -308,7 +308,7 @@ class ListViewSmarty extends ListViewDisplay
             $this->data['pageData']['offsets']['lastOffsetOnPage'] = $this->data['pageData']['offsets']['current'] + count((array)$this->data['data']);
         }
 
-        $this->ss->assign('pageData', $this->data['pageData']);
+        $this->ss->assign('pageData', $this->data['pageData'] ?? []);
 
         $navStrings = array('next' => $app_strings['LNK_LIST_NEXT'],
             'previous' => $app_strings['LNK_LIST_PREVIOUS'],
