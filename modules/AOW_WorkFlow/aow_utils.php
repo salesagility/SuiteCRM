@@ -530,7 +530,7 @@ function getModuleField(
         }
 
         if ($fieldlist[$name]['type'] == 'enum' || $fieldlist[$name]['type'] == 'multienum' || $fieldlist[$name]['type'] == 'dynamicenum') {
-            if ($params['value_set'] === true && $value === "") {
+            if (($params['value_set'] ?? '') === true && $value === "") {
                 $fieldlist[$name]['default'] = $value;
             }
         }
@@ -769,7 +769,9 @@ function getAssignField($aow_field, $view, $value)
 
     global $app_list_strings;
 
-    $value = json_decode((string) html_entity_decode_utf8($value), true);
+    $value = json_decode(html_entity_decode_utf8($value), true);
+
+    $value = $value ?? [];
 
     $roles = get_bean_select_array(true, 'ACLRole', 'name', '', 'name', true);
 
@@ -784,23 +786,23 @@ function getAssignField($aow_field, $view, $value)
     $field = '';
 
     if ($view == 'EditView') {
-        $field .= "<select type='text' name='$aow_field".'[0]'."' id='$aow_field".'[0]'."' onchange='assign_field_change(\"$aow_field\")' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_assign_options'], $value[0]) ."</select>&nbsp;&nbsp;";
+        $field .= "<select type='text' name='$aow_field".'[0]'."' id='$aow_field".'[0]'."' onchange='assign_field_change(\"$aow_field\")' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_assign_options'] ?? '', $value[0] ?? '') ."</select>&nbsp;&nbsp;";
         if (!file_exists('modules/SecurityGroups/SecurityGroup.php')) {
             $field .= "<input type='hidden' name='$aow_field".'[1]'."' id='$aow_field".'[1]'."' value=''  />";
         } else {
             $display = 'none';
-            if ($value[0] == 'security_group') {
+            if (($value[0] ?? '') === 'security_group') {
                 $display = '';
             }
-            $field .= "<select type='text' style='display:$display' name='$aow_field".'[1]'."' id='$aow_field".'[1]'."' title='' tabindex='116'>". get_select_options_with_id($securityGroups, $value[1]) ."</select>&nbsp;&nbsp;";
+            $field .= "<select type='text' style='display:$display' name='$aow_field".'[1]'."' id='$aow_field".'[1]'."' title='' tabindex='116'>". get_select_options_with_id($securityGroups, $value[1] ?? '') ."</select>&nbsp;&nbsp;";
         }
         $display = 'none';
-        if ($value[0] == 'role' || $value[0] == 'security_group') {
+        if (($value[0] ?? '') === 'role' || ($value[0] ?? '') === 'security_group') {
             $display = '';
         }
-        $field .= "<select type='text' style='display:$display' name='$aow_field".'[2]'."' id='$aow_field".'[2]'."' title='' tabindex='116'>". get_select_options_with_id($roles, $value[2]) ."</select>&nbsp;&nbsp;";
+        $field .= "<select type='text' style='display:$display' name='$aow_field".'[2]'."' id='$aow_field".'[2]'."' title='' tabindex='116'>". get_select_options_with_id($roles, $value[2] ?? '') ."</select>&nbsp;&nbsp;";
     } else {
-        $field = $app_list_strings['aow_assign_options'][$value[1]];
+        $field = $app_list_strings['aow_assign_options'][($value[1] ?? '')];
     }
     return $field;
 }

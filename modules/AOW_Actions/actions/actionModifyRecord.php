@@ -41,7 +41,7 @@ class actionModifyRecord extends actionCreateRecord
     {
         require_once("modules/AOW_WorkFlow/aow_utils.php");
 
-        $modules = getModuleRelationships($bean->module_dir, 'EditView', $params['rel_type']);
+        $modules = getModuleRelationships($bean->module_dir, 'EditView', $params['rel_type'] ?? '');
 
         $html = "<input type='hidden' name='aow_actions_param[".$line."][record_type]' id='aow_actions_param_record_type".$line."' value='' />";
         $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%' data-workflow-action='modify-record'>";
@@ -77,7 +77,7 @@ class actionModifyRecord extends actionCreateRecord
 EOS;
 
 
-        $module = getRelatedModule($bean->module_name, $params['rel_type']);
+        $module = getRelatedModule($bean->module_name, $params['rel_type'] ?? '');
         $html .= "cr_module[" . $line . "] = \"" . $module . "\";";
         $html .= "cr_fields[" . $line . "] = \"" . trim(preg_replace(
             '/\s+/',

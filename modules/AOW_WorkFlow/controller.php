@@ -558,6 +558,10 @@ class AOW_WorkFlowController extends SugarController
             $aow_action->retrieve($_REQUEST['id']);
             $id = $aow_action->id;
             $params = unserialize(base64_decode($aow_action->parameters));
+
+            if ($params === false) {
+                $params = [];
+            }
         }
 
         $action = new $action_name($id);
