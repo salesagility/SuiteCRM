@@ -97,7 +97,7 @@ function to_html($string, $encode=true)
 
     if ($encode && is_string($string)) {
         if (is_array($toHTML)) {
-            $string = str_ireplace((string) $GLOBALS['toHTML_keys'], (string) $GLOBALS['toHTML_values'], $string);
+            $string = str_ireplace($GLOBALS['toHTML_keys'], $GLOBALS['toHTML_values'] ?? [], $string);
         } else {
             $string = htmlentities($string, ENT_HTML401|ENT_QUOTES, 'UTF-8');
         }
@@ -132,7 +132,7 @@ function from_html($string, $encode=true)
     $string = html_entity_decode($string, ENT_HTML401|ENT_QUOTES, 'UTF-8');
 
     if (!isset($cache[$string])) {
-        $cache[$string] = str_ireplace((string) $toHTML_values, (string) $toHTML_keys, $string);
+        $cache[$string] = str_ireplace($toHTML_values ?? '', $toHTML_keys ?? '', $string);
     }
     return $cache[$string];
 }

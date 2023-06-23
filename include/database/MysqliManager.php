@@ -137,7 +137,12 @@ class MysqliManager extends MysqlManager
         $this->lastsql = $sql;
         if (!empty($sql)) {
             if ($this->database instanceof mysqli) {
-                $result = $suppress ? @mysqli_query($this->database, $sql) : mysqli_query($this->database, $sql);
+                $result = false;
+                try {
+                    $result = mysqli_query($this->database, $sql);
+                } catch (Exception $e) {
+                }
+
                 if ($result === false && !$suppress) {
                     if (inDeveloperMode()) {
                         LoggerManager::getLogger()->debug('Mysqli_query failed, error was: ' . $this->lastDbError() . ', query was: ');
@@ -308,10 +313,10 @@ class MysqliManager extends MysqlManager
             $dbhost = $configOptions['db_host_name'];
             $dbport = isset($configOptions['db_port']) ? ($configOptions['db_port'] == '' ? null : $configOptions['db_port']) : null;
 
-            $pos = strpos((string) $configOptions['db_host_name'], ':');
+            $pos = strpos($configOptions['db_host_name'], ':');
             if ($pos !== false) {
-                $dbhost = substr((string) $configOptions['db_host_name'], 0, $pos);
-                $dbport = substr((string) $configOptions['db_host_name'], $pos + 1);
+                $dbhost = substr($configOptions['db_host_name'], 0, $pos);
+                $dbport = substr($configOptions['db_host_name'], $pos + 1);
             }
 
             $this->database = @mysqli_connect(
