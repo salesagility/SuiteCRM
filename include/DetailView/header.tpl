@@ -71,7 +71,7 @@ SUGAR.util.doWhen(function(){
     {{if count($form.buttons) > $num_buttons}}
         {{foreach from=$form.buttons key=val item=button}}
             {{if is_array($button) && $button.customCode}}
-                {{sugar_button module="$module" id="$button" view="EditView" form_id="formDetailView" appendTo="detail_header_buttons"}}
+                {{sugar_button module="$module" id=$val view="EditView" form_id="formDetailView" appendTo="detail_header_buttons"}}
             {{/if}}
         {{/foreach}}
     {{/if}}

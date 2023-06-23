@@ -14,7 +14,7 @@
     {{if count($form.buttons) > $num_buttons}}
     {{foreach from=$form.buttons key=val item=button}}
     {{if is_array($button) && $button.customCode}}
-    <li>{{sugar_button module="$module" id="$button" view="EditView" form_id="formDetailView"}}</li>
+    <li>{{sugar_button module="$module" id=$val view="EditView" form_id="formDetailView"}}</li>
     {{/if}}
     {{/foreach}}
     {{/if}}
