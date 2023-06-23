@@ -826,7 +826,7 @@ class SugarBean
         $final_query = '';
         $final_query_rows = '';
         $subpanel_list = array();
-        if (method_exists($subpanel_def, 'isCollection')) {
+        if (method_exists($subpanel_def ?? '', 'isCollection')) {
             if ($subpanel_def->isCollection()) {
                 if ($subpanel_def->load_sub_subpanels() === false) {
                     $subpanel_list = array();
@@ -1003,7 +1003,7 @@ class SugarBean
             return $response;
         }
 
-        if (method_exists($parentbean, 'process_union_list_query')) {
+        if (method_exists($parentbean ?? '', 'process_union_list_query')) {
             return $parentbean->process_union_list_query(
                 $parentbean,
                 $final_query,
@@ -1040,7 +1040,8 @@ class SugarBean
 
         foreach ($subpanel_list as $this_subpanel) {
             if (
-            method_exists($this_subpanel, 'isDatasourceFunction')
+                is_object($this_subpanel) &&
+                method_exists($this_subpanel, 'isDatasourceFunction')
             ) {
                 if (!$this_subpanel->isDatasourceFunction() || ($this_subpanel->isDatasourceFunction()
                         && isset($this_subpanel->_instance_properties['generate_select'])
@@ -1050,6 +1051,7 @@ class SugarBean
                     if ($this_subpanel->isDatasourceFunction()) {
                         $shortcut_function_name = $this_subpanel->get_data_source_name();
                         $parameters = $this_subpanel->get_function_parameters();
+                        $query_array = [];
                         if (!empty($parameters)) {
                             //if the import file function is set, then import the file to call the custom function from
                             if (is_array($parameters) && isset($parameters['import_function_file'])) {
@@ -1059,16 +1061,16 @@ class SugarBean
                                 }
                                 //call function from required file
                                 $query_array = $shortcut_function_name($parameters);
-                            } else {
+                            } elseif (!empty($parentbean)) {
                                 //call function from parent bean
                                 $query_array = $parentbean->$shortcut_function_name($parameters);
                             }
-                        } else {
+                        } elseif (!empty($parentbean)) {
                             $query_array = $parentbean->$shortcut_function_name();
                         }
                     } else {
                         $related_field_name = $this_subpanel->get_data_source_name();
-                        if (!method_exists($parentbean, 'load_relationship')) {
+                        if (!method_exists($parentbean ?? '', 'load_relationship')) {
                             $GLOBALS['log']->fatal('Fatal error:  Call to a member function load_relationship() ' .
                                 'on an invalid object');
                         } else {
@@ -1129,11 +1131,11 @@ class SugarBean
                     }
 
 
-                    if (!method_exists($subpanel_def, 'isCollection')) {
+                    if (!method_exists($subpanel_def ?? '', 'isCollection')) {
                         $GLOBALS['log']->fatal('Call to a member function isCollection() on an invalid object');
                     }
                     if (
-                        method_exists($subpanel_def, 'isCollection') &&
+                        method_exists($subpanel_def ?? '', 'isCollection') &&
                         !$subpanel_def->isCollection() &&
                         isset($list_fields[$order_by]) &&
                         isset($submodule->field_defs[$order_by]) &&
@@ -1147,16 +1149,16 @@ class SugarBean
                     $params['distinct'] = $this_subpanel->distinct_query();
 
                     $params['joined_tables'] = isset($query_array['join_tables']) ? $query_array['join_tables'] : null;
-                    $params['include_custom_fields'] = method_exists($subpanel_def, 'isCollection')
+                    $params['include_custom_fields'] = method_exists($subpanel_def ?? '', 'isCollection')
                         ? !$subpanel_def->isCollection() : null;
-                    $params['collection_list'] = method_exists($subpanel_def, 'get_inst_prop_value')
+                    $params['collection_list'] = method_exists($subpanel_def ?? '', 'get_inst_prop_value')
                         ? $subpanel_def->get_inst_prop_value('collection_list') : null;
 
                     // use single select in case when sorting by relate field
-                    $singleSelect = method_exists($submodule, 'is_relate_field')
+                    $singleSelect = method_exists($submodule ?? '', 'is_relate_field')
                         ? $submodule->is_relate_field($order_by) : null;
 
-                    $subquery = method_exists($submodule, 'create_new_list_query')
+                    $subquery = method_exists($submodule ?? '', 'create_new_list_query')
                         ? $submodule->create_new_list_query(
                             '',
                             $subwhere,
