@@ -620,8 +620,9 @@ class SecurityGroup extends SecurityGroup_sugar
         $query = "SELECT lhs_module, rhs_module FROM $rs->table_name WHERE deleted=0 AND (lhs_module = 'SecurityGroups' OR rhs_module='SecurityGroups')";
         $GLOBALS['log']->debug("SecuritySuite: Get SecuritySuite Enabled Modules: $query");
         $result = $rs->db->query($query);
+
         while (($row = $rs->db->fetchByAssoc($result)) != null) {
-            if ($row['lhs_module'] == 'SecurityGroups') {
+            if ($row['lhs_module'] === 'SecurityGroups') {
                 if (in_array($row['rhs_module'], $module_blacklist)) {
                     continue;
                 }
