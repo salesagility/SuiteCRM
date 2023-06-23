@@ -106,7 +106,7 @@ class ViewQuickcreateTest extends SuitePHPUnitFrameworkTestCase
         ob_end_clean();
 
         self::assertGreaterThan(0, strlen($renderedContent));
-        self::assertEquals(false, json_decode($renderedContent, null, 512, JSON_THROW_ON_ERROR)); //check that it doesn't return json.
+        self::assertEquals(false, json_decode($renderedContent)); //check that it doesn't return json.
 
         if (isset($_session)) {
             $_SESSION = $_session;

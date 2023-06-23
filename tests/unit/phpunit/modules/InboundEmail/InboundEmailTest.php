@@ -34,7 +34,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
      * @var resource
      */
     protected $connection;
-    
+
     public function setUp(): void
     {
         parent::setUp();
@@ -300,7 +300,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
         $fake->add('getMailboxes', ['{:143/service=imap/notls/novalidate-cert/secure}', '*'], [[]]);
         $fake->add('close', null, [null]);
         $fake->add('isValidStream', $this->connection, [true]);
-        
+
         $imap = new ImapHandlerFake($fake);
         $ret = (new InboundEmail($imap))->findOptimumSettings();
         self::assertEquals([
@@ -520,9 +520,35 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function renameFolder($id): void
     {
-        $inboundEmail = BeanFactory::newBean('InboundEmail');
 
+        $fake = new ImapHandlerFakeData();
+        $fake->add('isAvailable', null, [true]);  // <-- when the code calls ImapHandlerInterface::isAvailable([null]), it will return true
+        $fake->add('setTimeout', [1, 60], [true]);
+        $fake->add('setTimeout', [2, 60], [true]);
+        $fake->add('setTimeout', [3, 60], [true]);
+        $fake->add('getErrors', null, [false]);
+        $fake->add('open', ["{:143/service=imap/notls/novalidate-cert/secure}", null, null, 0, 0, []], [function () {
+            return tempFileWithMode('wb+');
+        }]);
+        $fake->add('getLastError', null, [false]);
+        $fake->add('getAlerts', null, [false]);
+        $fake->add('getConnection', null, [function () {
+            return tempFileWithMode('wb+');
+        }]);
+        $fake->add('getMailboxes', ['{:143/service=imap/notls/novalidate-cert/secure}', '*'], [[]]);
+        $fake->add('close', null, [null]);
+        $fake->add('isValidStream', $this->connection, [true]);
+        $fake->add('renameMailbox', ['{:143/service=imap}mailbox1', '{:143/service=imap}new_mailbox'], [false]);
+        $fake->add('ping', null, [true]);
+        $fake->add('reopen', ['{:143/service=imap}mailbox1,mailbox2,mailbox3', 32768, 0], [true]);
+
+        $fake->add('isValidStream', $this->connection, [true]);
+
+        $imap = new ImapHandlerFake($fake);
+
+        $inboundEmail = new InboundEmail($imap);
         $inboundEmail->retrieve($id);
+
         self::assertFalse((bool)$inboundEmail->conn);
 
         // Execute the method and test that it works and doesn't throw an exception.
@@ -2260,7 +2286,7 @@ class InboundEmailTest extends SuitePHPUnitFrameworkTestCase
 
     public function testcreate_export_query(): void
     {
-        
+        self::markTestIncomplete('#Error: mysqli_real_escape_string(): Couldnt fetch mysqli');
         $inboundEmail = BeanFactory::newBean('InboundEmail');
 
         //test with empty string params

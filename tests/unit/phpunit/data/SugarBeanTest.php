@@ -172,7 +172,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(array(), $bean->list_fields);
         self::assertTrue(isset($bean->added_custom_field_defs));
         self::assertTrue(isset($bean->acl_fields));
-        
+
         // test
         $GLOBALS['reload_vardefs'] = false;
         $bean = BeanFactory::getBean('Users');
@@ -271,7 +271,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
             73 => 'factor_auth',
             74 => 'factor_auth_interface',
         ];
-        
+
         $GLOBALS['reload_vardefs'] = true;
         $dictionary['']['fields'] = $dictionary['User']['fields'];
         $bean = BeanFactory::getBean('Users');
@@ -296,11 +296,11 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame(DBManagerFactory::getInstance(), $bean->custom_fields->db);
         self::assertSame($bean, $bean->custom_fields->bean);
         self::assertEquals('Users', $bean->custom_fields->module);
-        
+
         foreach($fields as $field){
             self::assertContains($field, $bean->column_fields);
         }
-        
+
         $keys = array_keys($bean->field_name_map);
         self::assertEquals($bean->column_fields, $keys);
 
@@ -339,11 +339,11 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertSame(DBManagerFactory::getInstance(), $bean->custom_fields->db);
         self::assertSame($bean, $bean->custom_fields->bean);
         self::assertEquals('Users', $bean->custom_fields->module);
-        
+
         foreach($fields as $field){
             self::assertContains($field, $bean->column_fields);
         }
-        
+
         $keys = array_keys($bean->field_name_map);
         self::assertEquals($bean->column_fields, $keys);
 
@@ -354,7 +354,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         self::assertEquals(array(), $bean->list_fields);
         self::assertNotTrue(isset($bean->added_custom_field_defs));
         self::assertTrue(isset($bean->acl_fields));
-        
+
     }
 
     /**
@@ -535,7 +535,7 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         // test
         $GLOBALS['log']->reset();
         SugarBean::createRelationshipMeta(null, null, null, array(), 'Contacts', true);
-        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal'] ?? []);
 
         // test
         $GLOBALS['log']->reset();
@@ -1645,11 +1645,11 @@ class SugarBeanTest extends SuitePHPUnitFrameworkTestCase
         $results = $bean->unPopulateDefaultValues();
         self::assertEquals(null, $results);
         /** @noinspection PhpUndefinedFieldInspection */
-        self::assertEquals(null, $bean->portal_user_type);
+        self::assertEquals(null, $bean->portal_user_type ?? null);
         /** @noinspection PhpUndefinedFieldInspection */
-        self::assertEquals(null, $bean->jjwg_maps_lat_c);
+        self::assertEquals(null, $bean->jjwg_maps_lat_c ?? null);
         /** @noinspection PhpUndefinedFieldInspection */
-        self::assertEquals(null, $bean->jjwg_maps_lng_c);
+        self::assertEquals(null, $bean->jjwg_maps_lng_c ?? null);
 
         // test
         $bean = BeanFactory::newBean('Contacts');

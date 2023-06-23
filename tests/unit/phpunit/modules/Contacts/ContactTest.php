@@ -218,8 +218,8 @@ class ContactTest extends SuitePHPUnitFrameworkTestCase
 
         $result = $contact->set_notification_body(new Sugar_Smarty(), $contact);
 
-        self::assertEquals($contact->full_name, $result->_tpl_vars['CONTACT_NAME']);
-        self::assertEquals($contact->description, $result->_tpl_vars['CONTACT_DESCRIPTION']);
+        self::assertEquals($contact->full_name, $result->tpl_vars['CONTACT_NAME']->value);
+        self::assertEquals($contact->description, $result->tpl_vars['CONTACT_DESCRIPTION']->value);
     }
 
     public function testget_contact_id_by_email(): void
