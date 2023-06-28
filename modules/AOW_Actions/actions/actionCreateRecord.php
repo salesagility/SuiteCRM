@@ -287,7 +287,8 @@ class actionCreateRecord extends actionBase
                                     $date = $params['value'][$key][0];
                                 } else {
                                     $dateToUse = $params['value'][$key][0];
-                                    $date = $bean->$dateToUse;
+                                    $bean->retrieve($bean->id);
+                                    $date = $timedate->fromUser($bean->$dateToUse)->asDB();
                                 }
 
                                 if ($params['value'][$key][1] !== 'now') {
