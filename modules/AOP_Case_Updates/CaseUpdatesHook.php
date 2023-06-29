@@ -338,7 +338,7 @@ class CaseUpdatesHook
             return;
         }
         $case->send_closure_email = true;
-        if ($case->state !== 'Closed' || $case->fetched_row['state'] === 'Closed') {
+        if (($case->state ?? '') !== 'Closed' || ($case->fetched_row['state'] ?? '') === 'Closed') {
             $case->send_closure_email = false;
         }
     }
