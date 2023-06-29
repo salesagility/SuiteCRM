@@ -72,8 +72,8 @@ class CaseEventsHook
                 (isset($new->$fieldName) ? $new->$fieldName : null)
             ) {
                 $event = BeanFactory::newBean('AOP_Case_Events');
-                $oldDisplay = $old->$displayField;
-                $newDisplay = $new->$displayField;
+                $oldDisplay = $old->$displayField ?? '';
+                $newDisplay = $new->$displayField ?? '';
                 $desc = $name . ' changed from ' . $oldDisplay . ' to ' . $newDisplay . '.';
                 $event->name = $desc;
                 $event->description = $desc;
