@@ -280,7 +280,6 @@ function make_sugar_config(&$sugar_config)
             'min_cron_interval' => 30, // minimal interval between cron jobs
         ),
         'strict_id_validation' => false,
-        'legacy_email_behaviour' => false,
     );
 }
 
@@ -577,8 +576,7 @@ function get_sugar_config_defaults(): array
             'enable' => true,
             'gc_probability' => 1,
             'gc_divisor' => 100,
-        ],
-        'legacy_email_behaviour' => false,
+        ]
     ];
 
     if (!is_object($locale)) {
@@ -3163,10 +3161,24 @@ function get_bean_select_array(
 
         $query .= " {$focus->table_name}.deleted=0";
 
-        $accessWhere = $focus->buildAccessWhere('list');
-        if (!empty($accessWhere)) {
-            $query .= ' AND ' . $accessWhere;
+        /* BEGIN - SECURITY GROUPS */
+        global $current_user, $sugar_config;
+        if ($focus->module_dir == 'Users' && !is_admin($current_user) && isset($sugar_config['securitysuite_filter_user_list']) && $sugar_config['securitysuite_filter_user_list'] == true
+        ) {
+            require_once 'modules/SecurityGroups/SecurityGroup.php';
+            $group_where = SecurityGroup::getGroupUsersWhere($current_user->id);
+            $query .= ' AND (' . $group_where . ') ';
+        } elseif ($focus->bean_implements('ACL') && ACLController::requireSecurityGroup($focus->module_dir, 'list')) {
+            require_once 'modules/SecurityGroups/SecurityGroup.php';
+            $owner_where = $focus->getOwnerWhere($current_user->id);
+            $group_where = SecurityGroup::getGroupWhere($focus->table_name, $focus->module_dir, $current_user->id);
+            if (!empty($owner_where)) {
+                $query .= ' AND (' . $owner_where . ' or ' . $group_where . ') ';
+            } else {
+                $query .= ' AND ' . $group_where;
+            }
         }
+        /* END - SECURITY GROUPS */
 
         if ($order_by != '') {
             $query .= " order by {$focus->table_name}.{$order_by}";
@@ -5105,27 +5117,6 @@ function filterInboundEmailPopSelection($protocol)
 }
 
 /**
- * Get Inbound Email protocols
- *
- * @return array
- */
-function getInboundEmailProtocols(): array
-{
-    global $app_list_strings, $sugar_config;
-
-    $protocols = $app_list_strings['dom_email_server_type'];
-    if (!isset($sugar_config['allow_pop_inbound']) || !$sugar_config['allow_pop_inbound']) {
-        if (isset($protocols['pop3'])) {
-            unset($protocols['pop3']);
-        }
-    } else {
-        $protocols['pop3'] = 'POP3';
-    }
-
-    return $protocols;
-}
-
-/**
  * The function is used because currently we are not supporting mbstring.func_overload
  * For some user using mssql without FreeTDS, they may store multibyte charaters in varchar using latin_general collation. It cannot store so many mutilbyte characters, so we need to use strlen.
  * The varchar in MySQL, Orcale, and nvarchar in FreeTDS, we can store $length mutilbyte charaters in it. we need mb_substr to keep more info.
@@ -6036,7 +6027,7 @@ function has_valid_extension($fieldName, $name, $validExtensions)
  * @return bool
  */
 function isTrue($value): bool {
-    return $value === true || $value === 'true' || $value === 1 || $value === '1' || $value === 'on';
+    return $value === true || $value === 'true' || $value === 1;
 }
 
 /**
@@ -6045,7 +6036,7 @@ function isTrue($value): bool {
  * @return bool
  */
 function isFalse($value): bool {
-    return $value === false || $value === 'false' || $value === 0 || $value === '0';
+    return $value === false || $value === 'false' || $value === 0;
 }
 
 /**
@@ -6061,48 +6052,6 @@ function get_id_validation_pattern(): string {
     }
 
     return $pattern;
-}
-
-/**
- * Check if user has group and action acls defined
- * @param string $module
- * @param string $action
- * @return bool
- */
-function has_group_action_acls_defined(string $module, string $action): bool
-{
-    global $current_user;
-
-    $hasGroupActionAcls = true;
-
-    $groups = SecurityGroup::getUserSecurityGroups($current_user->id);
-    $hasGroups = !empty($groups);
-
-    $aclActions = ACLAction::getUserActions($current_user->id, false, $module, 'module', $action);
-    $isDefaultListACL = !empty($aclActions['isDefault']) && isTrue($aclActions['isDefault']);
-
-    if (!$hasGroups) {
-        $hasGroupActionAcls = false;
-    }
-
-    if ($isDefaultListACL) {
-        $hasGroupActionAcls = false;
-    }
-
-    return $hasGroupActionAcls;
-}
-
-/**
- * Check if is value is smtp in a case-insensitive way
- * @param $value
- * @return bool
- */
-function isSmtp($value): bool {
-    if (empty($value) || !is_string($value)) {
-        return false;
-    }
-
-    return strtolower($value)  === 'smtp';
 }
 
 /**

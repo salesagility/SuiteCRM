@@ -182,126 +182,6 @@ class InboundEmail extends SugarBean
     private $overview;
 
     /**
-     * @var string|null
-     */
-    public $from_addr;
-
-    /**
-     * @var string|null
-     */
-    public $from_name;
-
-    /**
-     * @var string|null
-     */
-    public $reply_to_name;
-
-    /**
-     * @var string|null
-     */
-    public $reply_to_addr;
-
-    /**
-     * @var string|null
-     */
-    public $only_since;
-
-    /**
-     * @var string|null
-     */
-    public $filter_domain;
-
-    /**
-     * @var string|null
-     */
-    public $trashFolder;
-
-    /**
-     * @var string|null
-     */
-    public $sentFolder;
-
-    /**
-     * @var string|null
-     */
-    public $distrib_method;
-
-    /**
-     * @var string|null
-     */
-    public $distribution_user_id;
-
-    /**
-     * @var string|null
-     */
-    public $distribution_options;
-
-    /**
-     * @var string|null
-     */
-    public $create_case_template_id;
-
-    /**
-     * @var int|null
-     */
-    public $email_num_autoreplies_24_hours;
-
-    /**
-     * @var bool|null
-     */
-    public $is_auto_import;
-
-    /**
-     * @var bool|null
-     */
-    public $is_create_case;
-
-    /**
-     * @var bool|string|null
-     */
-    public $allow_outbound_group_usage;
-
-    /**
-     * @var string|null
-     */
-    public $outbound_email_id;
-
-    /**
-     * @var bool|string|null
-     */
-    public $leave_messages_on_mail_server;
-
-    /**
-     * @var string|null
-     */
-    public $type;
-
-    /**
-     * @var int|null
-     */
-    public $is_default;
-
-    /**
-     * @var string|null
-     */
-    public $external_oauth_connection_id;
-
-    /**
-     * @var string|null
-     */
-    public $auth_type;
-
-    /**
-     * @var string|null
-     */
-    public $connection_string;
-
-    /**
-     * @var bool|null
-     */
-    public $move_messages_to_trash_after_import;
-
-    /**
      * Email constructor
      * @param ImapHandlerInterface|null $imapHandler
      * @param MailMimeParser|null $mailParser
@@ -317,13 +197,29 @@ class InboundEmail extends SugarBean
 
         $this->mailParser = $mailParser;
 
-        if (!empty($imapHandler)) {
-            $this->imap = $imapHandler;
+        // using ImapHandlerInterface as dependency
+        if (null === $imapHandler) {
+            LoggerManager::getLogger()->debug('Using system default ImapHandler. Hint: Use any ImapHandlerInterface as dependency of InboundEmail');
+            $imapHandlerFactory = new ImapHandlerFactory();
+            $imapHandler = $imapHandlerFactory->getImapHandler();
         }
+        $this->imap = $imapHandler;
 
         $this->InboundEmailCachePath = sugar_cached('modules/InboundEmail');
         $this->EmailCachePath = sugar_cached('modules/Emails');
         parent::__construct();
+
+        if ($this->getImap()->isAvailable()) {
+            /*
+             * 1: Open
+             * 2: Read
+             * 3: Write
+             * 4: Close
+             */
+            $this->getImap()->setTimeout(1, 60);
+            $this->getImap()->setTimeout(2, 60);
+            $this->getImap()->setTimeout(3, 60);
+        }
 
         $this->smarty = new Sugar_Smarty();
         $this->overview = new Overview();
@@ -344,21 +240,7 @@ class InboundEmail extends SugarBean
         if (null === $this->imap) {
             if (null === $imap) {
                 $imapFactory = new ImapHandlerFactory();
-
-                $handlerType = $this->getImapHandlerType();
-
-                $imap = $imapFactory->getImapHandler(null, $handlerType);
-                if ($imap->isAvailable()) {
-                    /*
-                     * 1: Open
-                     * 2: Read
-                     * 3: Write
-                     * 4: Close
-                     */
-                    $imap->setTimeout(1, 5);
-                    $imap->setTimeout(2, 5);
-                    $imap->setTimeout(3, 5);
-                }
+                $imap = $imapFactory->getImapHandler();
             }
             $this->imap = $imap;
         }
@@ -382,11 +264,6 @@ class InboundEmail extends SugarBean
             $this->retrieveMailBoxFolders();
         }
 
-        if (!empty($ret) && !$this->checkPersonalAccountAccess()) {
-            $this->logPersonalAccountAccessDenied('retrieve');
-            return null;
-        }
-
         return $ret;
     }
 
@@ -396,14 +273,6 @@ class InboundEmail extends SugarBean
      */
     public function save($check_notify = false)
     {
-        if (!$this->checkPersonalAccountAccess()) {
-            $this->logPersonalAccountAccessDenied('save');
-            throw new RuntimeException('Access Denied');
-        }
-
-        $this->clearAuthTypeDependantFields();
-        $this->keepWriteOnlyFieldValues();
-
         // generate cache table for email 2.0
         $multiDImArray = $this->generateMultiDimArrayFromFlatArray(
             explode(",", $this->mailbox),
@@ -419,126 +288,6 @@ class InboundEmail extends SugarBean
         $ret = parent::save($check_notify);
 
         return $ret;
-    }
-
-    /**
-     * Check if user has access to personal account
-     * @return bool
-     */
-    public function checkPersonalAccountAccess() : bool {
-        global $current_user;
-
-        if (is_admin($current_user)) {
-            return true;
-        }
-
-        if (!isTrue($this->is_personal ?? false)) {
-            return true;
-        }
-
-        if (empty($this->created_by)) {
-            return true;
-        }
-
-        if($this->created_by === $current_user->id) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Log personal account access denied
-     * @param string $action
-     * @return void
-     */
-    public function logPersonalAccountAccessDenied(string $action) : void {
-        global $log, $current_user;
-
-        $log->fatal("InboundEmail | Access denied. Non-admin user trying to access personal account. Action: '" . $action . "' | Current user id: '" . $current_user->id . "' | record: '" . $this->id . "'" );
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function ACLAccess($view, $is_owner = 'not_set', $in_group = 'not_set')
-    {
-        global $current_user;
-
-        $isNotAllowAction = $this->isNotAllowedAction($view);
-        if ($isNotAllowAction === true) {
-            return false;
-        }
-
-        if (!$this->checkPersonalAccountAccess()) {
-            $this->logPersonalAccountAccessDenied("ACLAccess-$view");
-            return false;
-        }
-
-        $isPersonal = isTrue($this->is_personal);
-        $isAdmin = is_admin($current_user);
-
-        if ($isPersonal === true && $this->checkPersonalAccountAccess()) {
-            return true;
-        }
-
-        $isAdminOnlyAction = $this->isAdminOnlyAction($view);
-        if (!$isPersonal && !$isAdmin && $isAdminOnlyAction === true) {
-            return false;
-        }
-
-        $hasActionAclsDefined = has_group_action_acls_defined('InboundEmail', 'view');
-        $isSecurityGroupBasedAction = $this->isSecurityGroupBasedAction($view);
-
-        if (!$isPersonal && !$isAdmin && !$hasActionAclsDefined && $isSecurityGroupBasedAction === true) {
-            return false;
-        }
-
-        return parent::ACLAccess($view, $is_owner, $in_group);
-    }
-
-    /**
-     * @return void
-     */
-    protected function keepWriteOnlyFieldValues(): void
-    {
-        if (empty($this->fetched_row)) {
-            return;
-        }
-
-        foreach ($this->field_defs as $field => $field_def) {
-            if (empty($field_def['display']) || $field_def['display'] !== 'writeonly') {
-                continue;
-            }
-
-            if (empty($this->fetched_row[$field])) {
-                continue;
-            }
-
-            if (!empty($this->$field)) {
-                continue;
-            }
-
-            $this->$field = $this->fetched_row[$field];
-        }
-    }
-
-    /**
-     * @return void
-     */
-    protected function clearAuthTypeDependantFields(): void
-    {
-        if (empty($this->auth_type)) {
-            return;
-        }
-
-        if ($this->auth_type === 'basic') {
-            $this->external_oauth_connection_id = '';
-        }
-
-        if ($this->auth_type === 'oauth') {
-            $this->email_password = '';
-        }
     }
 
     public function filterMailBoxFromRaw($mailboxArray, $rawArray)
@@ -657,18 +406,160 @@ class InboundEmail extends SugarBean
             return false;
         }
 
-        [$sortCriteria, $sortCRM, $sortOrder] = $this->getSortCriteria($order);
-        $filterCriteria = $this->getFilterCriteria($filter);
 
-        $emailHeaders = $this->getImap()->getMessageList(
-            $filterCriteria,
-            $sortCriteria,
-            $sortOrder,
-            $offset,
-            $pageSize,
-            $mailboxInfo,
-            $columns
+        // handle sorting
+        // Default: to sort the date in descending order
+        $sortCriteria = SORTDATE;
+        $sortCRM = 'udate';
+        $sortOrder = 1;
+        if ($order['sortOrder'] == 'ASC') {
+            $sortOrder = 0;
+        }
+
+        if (stristr($order['orderBy'], 'date') !== false) {
+            $sortCriteria = SORTDATE;
+            $sortCRM = 'udate';
+        } elseif (stristr($order['orderBy'], 'to') !== false) {
+            $sortCriteria = SORTTO;
+            $sortCRM = 'to';
+        } elseif (stristr($order['orderBy'], 'from') !== false) {
+            $sortCriteria = SORTFROM;
+            $sortCRM = 'from';
+        } elseif (stristr($order['orderBy'], 'cc') !== false) {
+            $sortCriteria = SORTCC;
+        } elseif (stristr($order['orderBy'], 'name') !== false) {
+            $sortCriteria = SORTSUBJECT;
+            $sortCRM = 'subject';
+        } elseif (stristr($order['orderBy'], 'subject') !== false) {
+            $sortCriteria = SORTSUBJECT;
+            $sortCRM = 'subject';
+        }
+
+        // handle filtering
+        $filterCriteria = null;
+
+
+        if (!empty($filter)) {
+            foreach ($filter as $filterField => $filterFieldValue) {
+                if (empty($filterFieldValue)) {
+                    continue;
+                }
+
+                // Convert to a blank string as NULL will break the IMAP request
+                if ($filterCriteria == null) {
+                    $filterCriteria = '';
+                }
+
+                $filterCriteria .= ' ' . $filterField . ' "' . $filterFieldValue . '" ';
+            }
+        }
+
+        if (empty($filterCriteria) && $sortCriteria === SORTDATE) {
+            // Performance fix when no filters are enabled
+            $totalMsgs = $this->getImap()->getNumberOfMessages();
+            $mailboxInfo['Nmsgs'] = $totalMsgs;
+
+            if ($sortOrder === 0) {
+                // Ascending order
+                if ($offset === "end") {
+                    $firstMsg = $totalMsgs - (int)$pageSize;
+                    $lastMsg = $totalMsgs;
+                } elseif ($offset <= 0) {
+                    $firstMsg = 1;
+                    $lastMsg = $firstMsg + (int)$pageSize;
+                } else {
+                    $firstMsg = (int)$offset;
+                    $lastMsg = $firstMsg + (int)$pageSize;
+                }
+            } else {
+                // Descending order
+                if ($offset === "end") {
+                    $firstMsg = 1;
+                    $lastMsg = $firstMsg + (int)$pageSize;
+                } elseif ($offset <= 0) {
+                    $firstMsg = $totalMsgs - (int)$pageSize;
+                    $lastMsg = $totalMsgs;
+                } else {
+                    $offset = ($totalMsgs - (int)$offset) - (int)$pageSize;
+                    $firstMsg = $offset;
+                    $lastMsg = $firstMsg + (int)$pageSize;
+                }
+            }
+            $firstMsg = $firstMsg < 1 ? 1 : $firstMsg;
+            $firstMsg = $firstMsg > $totalMsgs ? $totalMsgs : $firstMsg;
+            $lastMsg = $lastMsg < $firstMsg ? $firstMsg : $lastMsg;
+            $lastMsg = $lastMsg > $totalMsgs ? $totalMsgs : $lastMsg;
+
+            $sequence = $firstMsg . ':' . $lastMsg;
+            $emailSortedHeaders = $this->getImap()->fetchOverview($sequence);
+
+            $uids = array_map(
+                function ($x) {
+                    return $x->uid;
+                },
+                $emailSortedHeaders // TODO: this should be an array!
+            );
+        } else {
+            // Filtered case and other sorting cases
+            // Returns an array of msgno's which are sorted and filtered
+            $emailSortedHeaders = $this->getImap()->sort(
+                $sortCriteria,
+                $sortOrder,
+                SE_UID,
+                $filterCriteria
+            );
+
+            $uids = array_slice($emailSortedHeaders, $offset, $pageSize);
+
+            $lastSequenceNumber = $mailboxInfo['Nmsgs'] = count($emailSortedHeaders);
+
+            // paginate
+            if ($offset === "end") {
+                $offset = $lastSequenceNumber - $pageSize;
+            } elseif ($offset <= 0) {
+                $offset = 0;
+            }
+        }
+
+
+        // TODO: uids could be invalid for implode!
+        $uids = implode(',', $uids);
+
+        // Get result
+        $emailHeaders = $this->getImap()->fetchOverview(
+            $uids,
+            FT_UID
         );
+        $emailHeaders = json_decode(json_encode($emailHeaders), true);
+        if (isset($columns['has_attachment'])) {
+            // get attachment status
+            foreach ($emailHeaders as $i => $emailHeader) {
+                $structure = $this->getImap()->fetchStructure($emailHeader['uid'], FT_UID);
+
+                $emailHeaders[$i]['has_attachment'] = $this->messageStructureHasAttachment($structure);
+            }
+        }
+
+
+        // TODO: parameter 1 could be a bool but it should be an array!
+        usort(
+            $emailHeaders,
+            function ($a, $b) use ($sortCRM) {  // defaults to DESC order
+                if ($a[$sortCRM] === $b[$sortCRM]) {
+                    return 0;
+                } elseif ($a[$sortCRM] < $b[$sortCRM]) {
+                    return 1;
+                }
+
+                return -1;
+            }
+        );
+
+        // Make it ASC order
+        if (!$sortOrder) {
+            array_reverse($emailHeaders);
+        };
+
 
         return array(
             "data" => $emailHeaders,
@@ -682,25 +573,13 @@ class InboundEmail extends SugarBean
      */
     public function messageStructureHasAttachment($imapStructure)
     {
-        if(empty($imapStructure)){
-            return false;
-        }
-
         if (($imapStructure->type !== 0) && ($imapStructure->type !== 1)) {
             return true;
         }
 
         $attachments = [];
 
-        if(empty($imapStructure->parts)){
-            return false;
-        }
-
         foreach ($imapStructure->parts as $i => $part) {
-            if(empty($part->dparameters)){
-                continue;
-            }
-
             if (is_string($part->dparameters[0]->value)) {
                 $attachments[] = $part->dparameters[0]->value;
             }
@@ -771,7 +650,7 @@ class InboundEmail extends SugarBean
             if ($this->isPop3Protocol()) {
                 $uid = $this->getCorrectMessageNoForPop3($uid);
             }
-            if (!$this->getImap()->isValidStream($this->conn)) {
+            if (!is_resource($this->conn)) {
                 LoggerManager::getLogger()->fatal('Inbound Email connection is not a resource for getting Formatted Raw Source');
 
                 return null;
@@ -823,7 +702,7 @@ class InboundEmail extends SugarBean
             $uid = $this->getCorrectMessageNoForPop3($uid);
         }
 
-        if (!$this->getImap()->isValidStream($this->conn)) {
+        if (!is_resource($this->conn)) {
             LoggerManager::getLogger()->fatal('Inbound Email connection is not a resource');
 
             return null;
@@ -870,7 +749,7 @@ class InboundEmail extends SugarBean
         }
         $this->connectMailserver();
 
-        if ($this->getImap()->isValidStream($this->conn)) {
+        if (is_resource($this->conn)) {
             $uids = $this->getImap()->search("ALL", SE_UID);
         } else {
             LoggerManager::getLogger()->warn('connection is not a valid resource to empty trush');
@@ -1779,7 +1658,7 @@ class InboundEmail extends SugarBean
     {
         $fetchedOverviews = array();
         if ($this->isPop3Protocol()) {
-            if (!$this->getImap()->isValidStream($this->conn)) {
+            if (!is_resource($this->conn)) {
                 LoggerManager::getLogger()->fatal('Connection is not a valid resource but it is a POP3 Protocol');
             } else {
                 $fetchedOverviews = $this->getImap()->fetchOverview($msgno);
@@ -1789,7 +1668,7 @@ class InboundEmail extends SugarBean
                 }
             }
         } else {
-            if (!$this->getImap()->isValidStream($this->conn)) {
+            if (!is_resource($this->conn)) {
                 LoggerManager::getLogger()->fatal('Connection is not a valid resource');
             } else {
                 $fetchedOverviews = $this->getImap()->fetchOverview($uid, FT_UID);
@@ -1836,7 +1715,7 @@ class InboundEmail extends SugarBean
         }
         $this->setCacheTimestamp($mailbox);
         $GLOBALS['log']->info("[EMAIL] Performing IMAP search using criteria [{$criteria}] on mailbox [{$mailbox}] for user [{$current_user->user_name}]");
-        if (!$this->getImap()->isValidStream($this->conn)) {
+        if (!is_resource($this->conn)) {
             LoggerManager::getLogger()->warn('checkEmailOneMailbox: connection is not a valid resource');
             $searchResults = null;
         } else {
@@ -1881,7 +1760,7 @@ class InboundEmail extends SugarBean
         }
 
         if ($this->mailbox != $trashFolder) {
-            if (!$this->getImap()->isValidStream($this->conn)) {
+            if (!is_resource($this->conn)) {
                 LoggerManager::getLogger()->warn('connection is not a valid resource for checkEmailOneMailbox()');
                 $searchResults = null;
             } else {
@@ -1989,7 +1868,7 @@ class InboundEmail extends SugarBean
             }
 
             if ($this->mailbox != $trashFolder) {
-                if (!$this->getImap()->isValidStream($this->conn)) {
+                if (!is_resource($this->conn)) {
                     LoggerManager::getLogger()->warn('mailbox != trash folder but connection is not a valid resource for checkEmailOneMailbox()');
                     $searchResults = null;
                 } else {
@@ -2035,7 +1914,7 @@ class InboundEmail extends SugarBean
             } // if
         } // if
         if (!$cacheDataExists) {
-            if (!$this->getImap()->isValidStream($this->conn)) {
+            if (!is_resource($this->conn)) {
                 LoggerManager::getLogger()->fatal('Inbound Email Connection is not a valid resource.');
             } else {
                 $searchResults = $this->getImap()->search($criteria, SE_UID);
@@ -2154,7 +2033,7 @@ class InboundEmail extends SugarBean
         }
 
         $GLOBALS['log']->info("INBOUNDEMAIL: using [ {$criteria} ]");
-        if (!$this->getImap()->isValidStream($this->conn)) {
+        if (!is_resource($this->conn)) {
             LoggerManager::getLogger()->warn('connection is not a valid resource for getMailboxProcessCount()');
             $searchResults = null;
         } else {
@@ -2465,6 +2344,7 @@ class InboundEmail extends SugarBean
             }
         }
 
+
         // validate for IMAP flag type
 
         if (!$type) {
@@ -2473,7 +2353,7 @@ class InboundEmail extends SugarBean
             return false;
         }
 
-        if (!$this->getImap()->isValidStream($this->conn)) {
+        if (!is_resource($this->conn)) {
             LoggerManager::getLogger()->fatal('Inbound Email connection is not a valid resource for marking Emails');
 
             return false;
@@ -2538,7 +2418,7 @@ class InboundEmail extends SugarBean
             unlink($file);
         }
 
-        if (!$this->getImap()->isValidStream($this->conn)) {
+        if (!is_resource($this->conn)) {
             LoggerManager::getLogger()->fatal('Inboun Email Connenction is not a valid resource for deleting Folder');
         } elseif ($this->getImap()->unsubscribe($this->getImap()->utf7Encode($connectString))) {
             if ($this->getImap()->deleteMailbox($connectString)) {
@@ -2601,7 +2481,7 @@ class InboundEmail extends SugarBean
         $mbox .= $delimiter . str_replace($delimiter, "_", $name);
         $connectString = $this->getConnectString('', $mbox);
 
-        if (!$this->getImap()->isValidStream($this->conn)) {
+        if (!is_resource($this->conn)) {
             LoggerManager::getLogger()->fatal('Inboun Email Connectrion is not a valid resource for saving new folder');
         } elseif ($this->getImap()->createMailbox($this->getImap()->utf7Encode($connectString))) {
             $this->getImap()->subscribe($this->getImap()->utf7Encode($connectString));
@@ -3178,22 +3058,35 @@ class InboundEmail extends SugarBean
 
     public function getFoldersListForMailBox()
     {
-        global $mod_strings;
-        $msg = $this->connectMailserver(true);
-        if (strpos($msg, "successfully")) {
-            $foldersList = $this->getSessionInboundFoldersString(
-                $this->server_url,
-                $this->email_user,
-                $this->port,
-                $this->protocol
-            );
+        $return = array();
+        $foldersList = $this->getSessionInboundFoldersString(
+            $this->server_url,
+            $this->email_user,
+            $this->port,
+            $this->protocol
+        );
+        if (empty($foldersList)) {
+            global $mod_strings;
+            $msg = $this->connectMailserver(true);
+            if (strpos($msg, "successfully")) {
+                $foldersList = $this->getSessionInboundFoldersString(
+                    $this->server_url,
+                    $this->email_user,
+                    $this->port,
+                    $this->protocol
+                );
+                $return['status'] = true;
+                $return['foldersList'] = $foldersList;
+                $return['statusMessage'] = "";
+            } else {
+                $return['status'] = false;
+                $return['statusMessage'] = $msg;
+            } // else
+        } else {
             $return['status'] = true;
             $return['foldersList'] = $foldersList;
             $return['statusMessage'] = "";
-        } else {
-            $return['status'] = false;
-            $return['statusMessage'] = $msg;
-        } // else
+        }
 
         return $return;
     } // fn
@@ -3311,23 +3204,15 @@ class InboundEmail extends SugarBean
             "Mailbox is empty"
         );
         $login = $this->email_user;
-        $imapConnectionOptions = 0;
-        [$passw, $imapConnectionOptions] = $this->getOAuthCredentials($this->email_password, $imapConnectionOptions);
-        if (!empty($this->connection_string)) {
-            $returnService = [];
-            $serviceArr = [];
-            $this->overrideConnectionConfigs($returnService, $serviceArr, $tmpMailbox);
-        }
-
+        $passw = $this->email_password;
         $foundGoodConnection = false;
         foreach ($serviceArr as $k => $serviceTest) {
             $errors = '';
             $alerts = '';
-
             $GLOBALS['log']->debug($l . ': I-E testing string: ' . $serviceTest);
 
             // Open the connection and try the test string
-            $this->conn = $this->getImapConnection($serviceTest, $login, $passw, $imapConnectionOptions);
+            $this->conn = $this->getImapConnection($serviceTest, $login, $passw);
 
             if (($errors = $this->getImap()->getLastError()) || ($alerts = $this->getImap()->getAlerts())) {
                 // login failure means don't bother trying the rest
@@ -3359,7 +3244,7 @@ class InboundEmail extends SugarBean
                 $foundGoodConnection = true;
             }
 
-            if ($this->getImap()->isValidStream($this->getImap()->getConnection())) {
+            if (is_resource($this->getImap()->getConnection())) {
                 if (!$this->isPop3Protocol()) {
                     $serviceTest = str_replace("INBOX", "", $serviceTest);
                     $boxes = $this->getImap()->getMailboxes($serviceTest, "*");
@@ -3437,9 +3322,6 @@ class InboundEmail extends SugarBean
             $testConnectString = str_replace('foo', '', $good);
             $testConnectString = '{' . $this->server_url . ':' . $this->port . '/service=' . $this->protocol .
                 $testConnectString . '}';
-            if (!empty($this->connection_string)) {
-                $testConnectString = '{' . $this->connection_string . '}';
-            }
             $this->setSessionConnectionString(
                 $this->server_url,
                 $this->email_user,
@@ -4035,7 +3917,7 @@ class InboundEmail extends SugarBean
      */
     public function getMessageTextFromSingleMimePart($msgNo, $section, $structure)
     {
-        if (!$this->getImap()->isValidStream($this->conn)) {
+        if (!is_resource($this->conn)) {
             LoggerManager::getLogger()->fatal('Inbound Email Connection in not a valid resource for getting message text from a single mime part.');
 
             return false;
@@ -4123,13 +4005,13 @@ class InboundEmail extends SugarBean
         $emailBody = $this->imap->fetchBody($uid, '', FT_UID);
 
         if (!empty($type) && strtolower($type) === 'text/plain') {
-            $emailMessage = $this->mailParser->parse($emailBody, false)->getTextContent();
+            $emailMessage = $this->mailParser->parse($emailBody)->getTextContent();
             $emailMessage = $this->handleInlineImages($emailBody, $emailMessage);
             $emailMessage = $this->customGetMessageText($emailMessage);
             return SugarCleaner::cleanHtml($emailMessage, false);
         }
 
-        $emailMessage = $this->mailParser->parse($emailBody, false)->getHtmlContent();
+        $emailMessage = $this->mailParser->parse($emailBody)->getHtmlContent();
         $emailMessage = $this->handleInlineImages($emailBody, $emailMessage);
         $emailMessage = $this->customGetMessageText($emailMessage);
 
@@ -4144,7 +4026,7 @@ class InboundEmail extends SugarBean
      */
     protected function handleInlineImages($email, $emailHTML)
     {
-        foreach ($this->mailParser->parse($email, false)->getAllAttachmentParts() as $attachment) {
+        foreach ($this->mailParser->parse($email)->getAllAttachmentParts() as $attachment) {
             $disposition = $attachment->getContentDisposition();
             if ($disposition === 'inline') {
                 $fileName = $attachment->getFilename();
@@ -4700,7 +4582,7 @@ class InboundEmail extends SugarBean
 
         // download the attachment if we didn't do it yet
         if (!file_exists($uploadDir . $fileName)) {
-            if (!$this->getImap()->isValidStream($this->conn)) {
+            if (!is_resource($this->conn)) {
                 LoggerManager::getLogger()->fatal('Inbounc Email Connection is not valid resource for saving attachment binaries.');
 
                 return false;
@@ -5004,7 +4886,7 @@ class InboundEmail extends SugarBean
         global $sugar_config;
         global $current_user;
 
-        if (!$this->getImap()->isValidStream($this->conn)) {
+        if (!is_resource($this->conn)) {
             LoggerManager::getLogger()->fatal('Inbounc Email Connection is not valid resource for getting duplicate email id.');
 
             return false;
@@ -5069,7 +4951,7 @@ class InboundEmail extends SugarBean
         // UNCOMMENT THIS IF YOU HAVE THIS PROBLEM!  See notes on Bug # 45477
         // $this->markEmails($uid, "read");
 
-        if (!$this->getImap()->isValidStream($this->conn)) {
+        if (!is_resource($this->conn)) {
             LoggerManager::getLogger()->warn('Connection is not a valid resource for importOneEmail()');
             $header = null;
             $fullHeader = null;
@@ -5498,7 +5380,7 @@ class InboundEmail extends SugarBean
             }
 
             $emailBody = $this->imap->fetchBody($uid, '', FT_UID);
-            $contentType = $this->mailParser->parse($emailBody, false)->getHeaderValue('Content-Type');
+            $contentType = $this->mailParser->parse($emailBody)->getHeaderValue('Content-Type');
 
             if (!empty($contentType) && strtolower($contentType) === 'text/plain') {
                 $email->description = $this->getMessageTextWithUid(
@@ -5768,7 +5650,7 @@ class InboundEmail extends SugarBean
                 $oldPrefix = $this->imagePrefix;
 
                 $emailBody = $this->imap->fetchBody($uid, '', FT_UID);
-                $contentType = $this->mailParser->parse($emailBody, false)->getHeaderValue('Content-Type');
+                $contentType = $this->mailParser->parse($emailBody)->getHeaderValue('Content-Type');
 
                 if (!empty($contentType) && strtolower($contentType) === 'text/plain') {
                     $email->description = $this->getMessageTextWithUid(
@@ -6283,7 +6165,7 @@ class InboundEmail extends SugarBean
             $this->stored_options = base64_encode(serialize($storedOptions));
             $this->save();
         } else {
-            if (!$this->getImap()->isValidStream($this->conn)) {
+            if (!is_resource($this->conn)) {
                 LoggerManager::getLogger()->fatal('Inbound Email Connection is not valid resource for getting New Message Ids.');
 
                 return false;
@@ -6311,11 +6193,6 @@ class InboundEmail extends SugarBean
         $port = $this->port ?? '143';
 
         $connectString = '{' . $this->server_url . ':' . $port . '/service=' . $protocol . $service . '}';
-
-        if (!empty($this->connection_string)){
-            $connectString = '{' . $this->connection_string . '}';
-        }
-
         $connectString .= ($includeMbox) ? $mbox : "";
 
         return $connectString;
@@ -6326,7 +6203,7 @@ class InboundEmail extends SugarBean
      */
     public function disconnectMailserver()
     {
-        if ($this->getImap()->isValidStream($this->conn)) {
+        if (is_resource($this->conn)) {
             $this->getImap()->close();
         }
     }
@@ -6371,7 +6248,7 @@ class InboundEmail extends SugarBean
             $this->getImap()->setTimeout(3, 15);
 
             $opts = $this->findOptimumSettings($useSsl);
-            if (!empty($opts) && isset($opts['good']) && empty($opts['good'])) {
+            if (!empty($opts) && isset($opts['good']) && empty($opts['bad'])) {
                 $ret = array_pop($opts['err']); // TODO: lost error info?
 
                 return $ret;
@@ -6412,7 +6289,7 @@ class InboundEmail extends SugarBean
         /*
          * Try to recycle the current connection to reduce response times
          */
-        if ($this->getImap()->isValidStream($this->getImap()->getConnection())) {
+        if (is_resource($this->getImap()->getConnection())) {
             if ($force) {
                 // force disconnect
                 $this->getImap()->close();
@@ -6425,30 +6302,22 @@ class InboundEmail extends SugarBean
         }
 
         // final test
-        if (!$this->getImap()->isValidStream($this->getImap()->getConnection()) && !$test) {
-
-            $imapUser = $this->email_user;
-            [$imapPassword, $imapOAuthConnectionOptions] = $this->getOAuthCredentials($this->email_password, CL_EXPUNGE);
-
+        if (!is_resource($this->getImap()->getConnection()) && !$test) {
             $this->conn = $this->getImapConnection(
                 $connectString,
-                $imapUser,
-                $imapPassword,
-                $imapOAuthConnectionOptions
+                $this->email_user,
+                $this->email_password,
+                CL_EXPUNGE
             );
         }
 
         if ($test) {
-            if ($opts === false && !$this->getImap()->isValidStream($this->getImap()->getConnection())) {
-
-                $imapUser = $this->email_user;
-                [$imapPassword, $imapOAuthConnectionOptions] = $this->getOAuthCredentials($this->email_password, CL_EXPUNGE);
-
+            if ($opts === false && !is_resource($this->getImap()->getConnection())) {
                 $this->conn = $this->getImapConnection(
                     $connectString,
-                    $imapUser,
-                    $imapPassword,
-                    $imapOAuthConnectionOptions
+                    $this->email_user,
+                    $this->email_password,
+                    CL_EXPUNGE
                 );
             }
             $errors = '';
@@ -6480,7 +6349,7 @@ class InboundEmail extends SugarBean
 
             $this->getImap()->getErrors(); // collapse error stack
 
-            if ($this->getImap()->isValidStream($this->getImap()->getConnection())) {
+            if (is_resource($this->getImap()->getConnection())) {
                 $this->getImap()->close();
             } else {
                 LoggerManager::getLogger()->warn('Connection is not a valid resource.');
@@ -6488,8 +6357,8 @@ class InboundEmail extends SugarBean
 
 
             return $msg;
-        } elseif (!$this->getImap()->isValidStream($this->getImap()->getConnection())) {
-            $GLOBALS['log']->fatal('Couldn\'t connect to mail server id: ' . $this->id);
+        } elseif (!is_resource($this->getImap()->getConnection())) {
+            $GLOBALS['log']->info('Couldn\'t connect to mail server id: ' . $this->id);
 
             return "false";
         }
@@ -6532,17 +6401,6 @@ class InboundEmail extends SugarBean
         $connection = null;
         $authenticators = ['', 'GSSAPI', 'NTLM'];
 
-        $isOAuth = $this->isOAuth();
-        if ($isOAuth === true) {
-            $token = $this->getOAuthToken($this->external_oauth_connection_id ?? '');
-
-            if ($token === null) {
-                return false;
-            }
-
-            $password = $token;
-        }
-
         while (!$connection && ($authenticator = array_shift($authenticators)) !== null) {
             if ($authenticator) {
                 $params = [
@@ -6553,7 +6411,6 @@ class InboundEmail extends SugarBean
             }
 
             $connection = $this->getImap()->open($mailbox, $username, $password, $options, 0, $params);
-
         }
 
         return $connection;
@@ -6596,7 +6453,7 @@ class InboundEmail extends SugarBean
             $user = $GLOBALS['current_user'];
         }
 
-        $query = "SELECT count(*) as c FROM inbound_email WHERE deleted=0 AND is_personal='1' AND (group_id='{$user->id}' OR created_by='{$user->id}') AND status='Active'";
+        $query = "SELECT count(*) as c FROM inbound_email WHERE deleted=0 AND is_personal='1' AND group_id='{$user->id}' AND status='Active'";
 
         $rs = $this->db->query($query);
         $row = $this->db->fetchByAssoc($rs);
@@ -6720,82 +6577,6 @@ class InboundEmail extends SugarBean
     }
 
     /**
-     * @return array
-     */
-    public function getUserInboundAccounts(): array {
-        global $current_user, $db;
-
-        $where = '';
-        if (is_admin($current_user)) {
-            $currentUserId = $db->quote($current_user->id);
-            $tableName = $db->quote($this->table_name);
-            $where = "(($tableName.is_personal IS NULL) OR ($tableName.is_personal = 0 ) OR ($tableName.is_personal = 1 AND $tableName.created_by = '$currentUserId'))";
-        }
-
-        return $this->get_list('', $where)['list'] ?? [];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function create_new_list_query(
-        $order_by,
-        $where,
-        $filter = array(),
-        $params = array(),
-        $show_deleted = 0,
-        $join_type = '',
-        $return_array = false,
-        $parentbean = null,
-        $singleSelect = false,
-        $ifListForExport = false
-    ) {
-        global $current_user, $db;
-
-        $ret_array = parent::create_new_list_query(
-            $order_by,
-            $where,
-            $filter,
-            $params ,
-            $show_deleted,
-            $join_type,
-            true,
-            $parentbean,
-            $singleSelect,
-            $ifListForExport
-        );
-
-        if(is_admin($current_user)) {
-            if ($return_array) {
-                return $ret_array;
-            }
-
-            return $ret_array['select'] . $ret_array['from'] . $ret_array['where'] . $ret_array['order_by'];
-        }
-
-        if (is_array($ret_array) && !empty($ret_array['where'])){
-            $tableName = $db->quote($this->table_name);
-            $currentUserId = $db->quote($current_user->id);
-
-            $showGroupRecords = "($tableName.is_personal IS NULL) OR ($tableName.is_personal = 0) OR ";
-
-            $hasActionAclsDefined = has_group_action_acls_defined('InboundEmail', 'list');
-
-            if($hasActionAclsDefined === false) {
-                $showGroupRecords = '';
-            }
-
-            $ret_array['where'] = $ret_array['where'] . " AND ( $showGroupRecords ($tableName.is_personal = 1 AND $tableName.created_by = '$currentUserId') )";
-        }
-
-        if ($return_array) {
-            return $ret_array;
-        }
-
-        return $ret_array['select'] . $ret_array['from'] . $ret_array['where'] . $ret_array['order_by'];
-    }
-
-    /**
      * Override's SugarBean's
      */
 
@@ -6807,15 +6588,11 @@ class InboundEmail extends SugarBean
         global $mod_strings;
         global $app_list_strings;
         $temp_array = $this->get_list_view_array();
-
-        $temp_array['MAILBOX_TYPE_NAME'] = '';
-        if (!empty($this->mailbox_type)) {
-            if (!isset($app_list_strings['dom_mailbox_type'][$this->mailbox_type])) {
-                LoggerManager::getLogger()->fatal('Language string not found for app_list_string[dom_mailbox_type][' . $this->mailbox_type . ']');
-            }
-            $temp_array['MAILBOX_TYPE_NAME'] = $app_list_strings['dom_mailbox_type'][$this->mailbox_type] ?? null;
+        if (!isset($app_list_strings['dom_mailbox_type'][$this->mailbox_type])) {
+            LoggerManager::getLogger()->fatal('Language string not found for app_list_string[dom_mailbox_type][' . $this->mailbox_type . ']');
         }
-
+        $temp_array['MAILBOX_TYPE_NAME'] = isset($app_list_strings['dom_mailbox_type'][$this->mailbox_type]) ?
+            $app_list_strings['dom_mailbox_type'][$this->mailbox_type] : null;
         //cma, fix bug 21670.
         $temp_array['GLOBAL_PERSONAL_STRING'] = ($this->is_personal ? $mod_strings['LBL_IS_PERSONAL'] : $mod_strings['LBL_IS_GROUP']);
         $temp_array['STATUS'] = ($this->status == 'Active') ? $mod_strings['LBL_STATUS_ACTIVE'] : $mod_strings['LBL_STATUS_INACTIVE'];
@@ -6836,12 +6613,6 @@ class InboundEmail extends SugarBean
      */
     public function fill_in_additional_detail_fields()
     {
-        $this->calculateType();
-        $this->calculateDefault();
-        $this->calculateSignature();
-
-        $this->expandStoreOptions();
-
         if (!empty($this->service)) {
             $exServ = explode('::', $this->service);
             $this->tls = $exServ[0];
@@ -6855,102 +6626,6 @@ class InboundEmail extends SugarBean
                 $this->protocol = $exServ[3];
             }
         }
-    }
-
-    public function calculateType(): void {
-
-        if (!empty($this->type)){
-            return;
-        }
-
-        if (isTrue($this->is_personal ?? false)) {
-            $this->type = 'personal';
-            return;
-        }
-
-        $mailboxType = $this->mailbox_type ?? '';
-        if ($mailboxType === 'createcase') {
-            $this->type = 'group';
-            return;
-        }
-
-        if ($mailboxType === 'bounce') {
-            $this->type = 'bounce';
-            return;
-        }
-
-        if ($mailboxType === 'pick' ) {
-            $this->type = 'group';
-        }
-    }
-
-    public function calculateDefault(): void {
-
-        global $current_user;
-
-        if ($this->type === 'personal' && $this->getUsersDefaultOutboundServerId($current_user) === $this->id) {
-            $this->is_default = 1;
-        }
-    }
-
-    public function calculateSignature(): void {
-        $inboundEmailId = $this->id ?? '';
-        $createdBy = $this->created_by ?? '';
-
-        if ($inboundEmailId === '' || $createdBy === '') {
-            return;
-        }
-
-        /** @var User $owner */
-        $owner = BeanFactory::getBean('Users', $createdBy);
-
-        $emailSignatures = $owner->getPreference('account_signatures', 'Emails');
-        $emailSignatures = sugar_unserialize(base64_decode($emailSignatures));
-
-        $signatureId = $emailSignatures[$inboundEmailId] ?? '';
-
-        if ($signatureId !== '') {
-            $this->account_signature_id = $signatureId;
-        }
-    }
-
-    /**
-     * Expand options
-     * @return void
-     */
-    public function expandStoreOptions(): void {
-
-        if (empty($this->stored_options)) {
-            return;
-        }
-
-        // FROM NAME and Address
-        $storedOptions = unserialize(base64_decode($this->stored_options), ['allowed_classes' => false]);
-
-        $this->from_name = ($storedOptions['from_name'] ?? '');
-        $this->from_addr = ($storedOptions['from_addr'] ?? '');
-        $this->reply_to_name = $storedOptions['reply_to_name'] ?? '';
-        $this->reply_to_addr = $storedOptions['reply_to_addr'] ?? '';
-        $this->only_since = isTrue($storedOptions['LBL_ONLY_SINCE_NO'] ?? false);
-        $this->filter_domain = $storedOptions['filter_domain'] ?? '';
-        $this->trashFolder =  $storedOptions['trashFolder'] ?? '';
-        $this->sentFolder = $storedOptions['sentFolder'] ?? '';
-        $this->mailbox = $storedOptions['mailbox'] ?? '';
-
-        $this->leave_messages_on_mail_server = isTrue($storedOptions['leaveMessagesOnMailServer'] ?? false);
-        $this->move_messages_to_trash_after_import = !isTrue($storedOptions['leaveMessagesOnMailServer'] ?? true);
-
-        $this->distrib_method = $storedOptions['distrib_method'] ?? '';
-        $this->distribution_user_id = $storedOptions['distribution_user_id'] ?? '';
-        $this->distribution_options = $storedOptions['distribution_options'] ?? '';
-        $this->create_case_template_id = $storedOptions['create_case_email_template'] ?? '';
-        $this->email_num_autoreplies_24_hours = $storedOptions['email_num_autoreplies_24_hours'] ?? $this->defaultEmailNumAutoreplies24Hours;
-
-        $this->is_auto_import = isTrue($storedOptions['isAutoImport'] ?? false);
-        $this->is_create_case = ($this->mailbox_type ?? '') === 'createcase';
-        $this->allow_outbound_group_usage = isTrue($storedOptions['allow_outbound_group_usage'] ?? false);
-
-        $this->outbound_email_id = $storedOptions['outbound_email'] ?? '';
     }
 
     /**
@@ -7272,9 +6947,9 @@ class InboundEmail extends SugarBean
             }
             $uidsToMove = implode('::;::', $uids);
             if ($this->moveEmails($this->id, $this->mailbox, $this->id, $trashFolder, $uidsToMove)) {
-                $GLOBALS['log']->fatal("INBOUNDEMAIL: MoveEmail to {$trashFolder} successful.");
+                $GLOBALS['log']->debug("INBOUNDEMAIL: MoveEmail to {$trashFolder} successful.");
             } else {
-                $GLOBALS['log']->fatal("INBOUNDEMAIL: MoveEmail to {$trashFolder} FAILED - trying hard delete for message: $uid");
+                $GLOBALS['log']->debug("INBOUNDEMAIL: MoveEmail to {$trashFolder} FAILED - trying hard delete for message: $uid");
                 $uidsToDelete = implode(',', $uids);
                 $this->getImap()->delete($uidsToDelete, FT_UID);
                 $return = true;
@@ -7304,7 +6979,7 @@ class InboundEmail extends SugarBean
      */
     public function deleteMessageOnMailServerForPop3($uid)
     {
-        if (!$this->getImap()->isValidStream($this->conn)) {
+        if (!is_resource($this->conn)) {
             LoggerManager::getLogger()->fatal('Inbound Email connection is not a resource for deleting Message On Mail Server For Pop3');
 
             return false;
@@ -7364,30 +7039,6 @@ class InboundEmail extends SugarBean
         }
 
         return $id;
-    }
-
-
-    public function isOnlyPersonalInbound()
-    {
-        $inboundAccount = $this->getUserPersonalAccountCount();
-        if ($inboundAccount == 1) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * @param $id
-     * @return bool
-     */
-    public function isDefaultPersonalInbound($userId): bool
-    {
-        $user = BeanFactory::getBean('Users', $userId);
-        $isDefault = $user->getPreference($this->keyForUsersDefaultIEAccount, 'Emails');
-        if ($isDefault == $userId){
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -8260,7 +7911,7 @@ eoq;
         // ids's count limit for batch processing
         $limit = 20;
 
-        if (!$this->getImap()->isValidStream($this->conn)) {
+        if (!is_resource($this->conn)) {
             LoggerManager::getLogger()->fatal('Inbound Email connection is not a resource for getting New Emails For Synced Mailbox');
 
             return false;
@@ -8439,255 +8090,4 @@ eoq;
 
         return $uid;
     }
-
-    public function bean_implements($interface)
-    {
-        if ($interface === 'ACL') {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Check if its admin only action
-     * @param string $view
-     * @return bool
-     */
-    protected function isAdminOnlyAction(string $view): bool
-    {
-        $adminOnlyAction = ['edit', 'delete', 'editview', 'save'];
-        return in_array(strtolower($view), $adminOnlyAction);
-    }
-
-    /**
-     * Check if its a security based action
-     * @param string $view
-     * @return bool
-     */
-    protected function isSecurityGroupBasedAction(string $view): bool
-    {
-        $securityBasedActions = ['detail', 'detailview', 'view'];
-        return in_array(strtolower($view), $securityBasedActions);
-    }
-
-    /**
-     * Get not allowed action
-     * @param string $view
-     * @return bool
-     */
-    protected function isNotAllowedAction(string $view): bool
-    {
-        $notAllowed = ['export', 'import', 'massupdate', 'duplicate'];
-        return in_array(strtolower($view), $notAllowed);
-    }
-
-
-    /**
-     * @param array $order
-     * @return array
-     */
-    protected function getSortCriteria(array $order): array
-    {
-        // handle sorting
-        // Default: to sort the date in descending order
-        $sortCriteria = SORTARRIVAL;
-        $sortCRM = 'udate';
-        $sortOrder = 1;
-
-        return [$sortCriteria, $sortCRM, $sortOrder];
-    }
-
-    /**
-     * @param array $filter
-     * @return string|null
-     */
-    protected function getFilterCriteria(array $filter): ?string
-    {
-// handle filtering
-        $filterCriteria = null;
-
-
-        if (!empty($filter)) {
-            foreach ($filter as $filterField => $filterFieldValue) {
-                if (empty($filterFieldValue)) {
-                    continue;
-                }
-
-                // Convert to a blank string as NULL will break the IMAP request
-                if ($filterCriteria == null) {
-                    $filterCriteria = '';
-                }
-
-                $filterCriteria .= ' ' . $filterField . ' "' . $filterFieldValue . '" ';
-            }
-        }
-
-        return $filterCriteria;
-    }
-
-    /**
-     * @param array $returnService
-     * @param array $serviceArr
-     * @param $tmpMailbox
-     * @return void
-     */
-    protected function overrideConnectionConfigs(array &$returnService, array &$serviceArr, $tmpMailbox): void
-    {
-        $connectionString = (string) str_replace('//', '', $this->connection_string ?? '');
-
-        $parts = explode('/', $connectionString) ?? [];
-        array_shift($parts);
-        $servicesString = implode('/', $parts);
-        $serviceKey = implode('-', $parts);
-
-        $returnService[$serviceKey] = 'foo' . $servicesString;
-        $serviceArr[$serviceKey] = '{' . $this->connection_string . '}' . $tmpMailbox;
-    }
-
-    /**
-     * @param $emailHeaders
-     * @param $sortCRM
-     * @param $sortOrder
-     * @return mixed
-     */
-    protected function sortMessageList($emailHeaders, $sortCRM, $sortOrder)
-    {
-        // TODO: parameter 1 could be a bool but it should be an array!
-        usort(
-            $emailHeaders,
-            function ($a, $b) use ($sortCRM) {  // defaults to DESC order
-                if ($a[$sortCRM] === $b[$sortCRM]) {
-                    return 0;
-                } elseif ($a[$sortCRM] < $b[$sortCRM]) {
-                    return 1;
-                }
-
-                return -1;
-            }
-        );
-
-        // Make it ASC order
-        if (!$sortOrder) {
-            array_reverse($emailHeaders);
-        };
-
-        return $emailHeaders;
-    }
-
-    /**
-     * @param $password
-     * @param int $imapConnectionOptions
-     * @return array
-     */
-    protected function getOAuthCredentials($password, int $imapConnectionOptions): array
-    {
-        if ($this->isOAuth()) {
-            /** @var ExternalOAuthConnection $oAuthConnection */
-            $oAuthConnection = BeanFactory::getBean('ExternalOAuthConnection', $this->external_oauth_connection_id);
-            $password = $oAuthConnection->access_token;
-            $imapConnectionOptions = OP_XOAUTH2;
-        }
-
-        return [$password, $imapConnectionOptions];
-    }
-
-    /**
-     * Get Imap handler type
-     * @return string
-     */
-    protected function getImapHandlerType(): string
-    {
-        global $log;
-        $handlerType = 'native';
-
-        if (!empty($this->auth_type) && $this->auth_type === 'oauth') {
-            $handlerType = 'imap2';
-        }
-
-        $log->debug('Using imap handler type: ' . $handlerType);
-
-        return $handlerType;
-    }
-
-    /**
-     * Get refersh token error messages
-     * @param $reLogin
-     * @param ExternalOAuthConnection $oauthConnection
-     * @param string $oAuthConnectionId
-     * @return string
-     */
-    protected function getOAuthRefreshTokenErrorMessage(
-        $reLogin,
-        ExternalOAuthConnection $oauthConnection,
-        string $oAuthConnectionId
-    ): string {
-        $message = translate('ERR_IMAP_OAUTH_CONNECTION_ERROR', 'InboundEmail');
-        $linkAction = 'DetailView';
-
-        if ($reLogin === true) {
-            $linkAction = 'EditView';
-            $message = translate('WARN_OAUTH_TOKEN_SESSION_EXPIRED', 'InboundEmail');
-        }
-
-        $oauthConnectionName = $oauthConnection->name;
-
-        $hasAccess = $oauthConnection->ACLAccess('edit') ?? false;
-        if ($hasAccess === true) {
-            $message .= " <a href=\"index.php?module=ExternalOAuthConnection&action=$linkAction&record=$oAuthConnectionId\">$oauthConnectionName</a>.";
-        } else {
-            $message .= $oauthConnectionName . '.';
-        }
-
-        return $message;
-    }
-
-    /**
-     * Get OAuthToken. Refresh if needed
-     * @param string $oAuthConnectionId
-     * @return string|null
-     */
-    protected function getOAuthToken(string $oAuthConnectionId): ?string
-    {
-        require_once __DIR__ . '/../ExternalOAuthConnection/services/OAuthAuthorizationService.php';
-        $oAuth = new OAuthAuthorizationService();
-
-        /** @var ExternalOAuthConnection $oauthConnection */
-        $oauthConnection = BeanFactory::getBean('ExternalOAuthConnection', $oAuthConnectionId);
-        $password = $oauthConnection->access_token;
-
-        $hasExpiredFeedback = $oAuth->hasConnectionTokenExpired($oauthConnection);
-        $refreshToken = $hasExpiredFeedback['refreshToken'] ?? false;
-        if ($refreshToken === true) {
-            $refreshTokenFeedback = $oAuth->refreshConnectionToken($oauthConnection);
-
-            if ($refreshTokenFeedback['success'] === false) {
-                $message = $this->getOAuthRefreshTokenErrorMessage(
-                    $refreshTokenFeedback['reLogin'],
-                    $oauthConnection,
-                    $oAuthConnectionId
-                );
-                displayAdminError($message);
-                return null;
-            }
-
-            return $oauthConnection->access_token;
-        }
-
-        return $password;
-    }
-
-    /**
-     * Check if is using oauth authentication
-     * @return bool
-     */
-    protected function isOAuth(): bool
-    {
-        $authType = $this->auth_type ?? '';
-        $oAuthConnectionId = $this->external_oauth_connection_id ?? '';
-
-        return $authType === 'oauth' && $oAuthConnectionId !== '';
-    }
-
-
 } // end class definition

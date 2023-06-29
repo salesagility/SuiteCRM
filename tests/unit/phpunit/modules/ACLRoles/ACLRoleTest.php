@@ -78,12 +78,14 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
 
     public function testgetUserRoleNames(): void
     {
+        $aclRole = BeanFactory::newBean('ACLRoles');
+
         //test with empty value
-        $result = ACLRole::getUserRoleNames('');
+        $result = $aclRole->getUserRoleNames('');
         self::assertIsArray($result);
 
         //test with non empty but non existing role id value
-        $result = ACLRole::getUserRoleNames('1');
+        $result = $aclRole->getUserRoleNames('1');
         self::assertIsArray($result);
     }
 
@@ -125,8 +127,6 @@ class ACLRoleTest extends SuitePHPUnitFrameworkTestCase
           'EmailMarketing',
           'Emails',
           'FP_events',
-          'ExternalOAuthConnection',
-          'ExternalOAuthProvider',
           'InboundEmail',
           'AOD_Index',
           'AOD_IndexEvent',
