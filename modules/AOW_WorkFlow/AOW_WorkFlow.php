@@ -176,7 +176,7 @@ class AOW_WorkFlow extends Basic
             }
         }
 
-        $app_list_strings['aow_moduleList'] = array_merge(array(''=>''), (array)$app_list_strings['aow_moduleList']);
+        $app_list_strings['aow_moduleList'] = array_merge(array(''=>''), (array)($app_list_strings['aow_moduleList'] ?? []));
 
         asort($app_list_strings['aow_moduleList']);
     }
