@@ -121,7 +121,7 @@ class MBLanguage
         $language .= '.lang.php';
 
         if(isset($this->strings['_override_'. $language])){
-            $this->strings['en_us.lang.php'] = array_replace($this->strings[$language],$this->strings['_override_'. $language]);
+            $this->strings[$language] = array_replace($this->strings[$language],$this->strings['_override_'. $language]);
         }
 
         if (!empty($this->strings[$language]) && $language != 'en_us.lang.php') {
