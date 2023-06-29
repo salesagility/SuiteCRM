@@ -233,12 +233,12 @@ class vCard
                         $index = $newindex;
                     }
                     $values = explode(';', $value);
-                    $key = strtoupper($keyvalue[0]);
+                    $key = strtoupper($keyvalue[0] ?? '');
                     $key = strtr($key, '=', '');
                     $key = strtr($key, ',', ';');
                     $keys = explode(';', $key);
 
-                    if ($keys[0] == 'TEL') {
+                    if (($keys[0] ?? '') == 'TEL') {
                         if (substr_count($key, 'WORK') > 0) {
                             if (substr_count($key, 'FAX') > 0) {
                                 if (!isset($bean->phone_fax)) {
@@ -274,7 +274,7 @@ class vCard
                         }
                     }
 
-                    if ($keys[0] == 'N') {
+                    if (($keys[0] ?? '') == 'N') {
                         if (count($values) > 0) {
                             $bean->last_name = $values[0];
                         }
@@ -286,12 +286,12 @@ class vCard
                         }
                     }
 
-                    if ($keys[0] == 'FN') {
+                    if (($keys[0] ?? '') == 'FN') {
                         $fullname = $value;
                     }
                 }
 
-                if ($keys[0] == 'ADR') {
+                if (($keys[0] ?? '') == 'ADR') {
                     if (substr_count((string) $key, 'WORK') > 0 && (substr_count((string) $key, 'POSTAL') > 0|| substr_count((string) $key, 'PARCEL') == 0)) {
                         if (!isset($bean->primary_address_street) && (is_countable($values) ? count($values) : 0) > 2) {
                             $textBreaks = array("\n", "\r");
@@ -313,10 +313,10 @@ class vCard
                     }
                 }
 
-                if ($keys[0] == 'TITLE') {
+                if (($keys[0] ?? '') == 'TITLE') {
                     $bean->title = $value;
                 }
-                if ($keys[0] == 'EMAIL') {
+                if (($keys[0] ?? '') == 'EMAIL') {
                     $field = 'email' . $email_suffix;
                     if (!isset($bean->$field)) {
                         $bean->$field = $value;
@@ -327,7 +327,7 @@ class vCard
                     $email_suffix++;
                 }
 
-                if ($keys[0] == 'ORG') {
+                if (($keys[0] ?? '') == 'ORG') {
                     $GLOBALS['log']->debug('I found a company name');
                     if (!empty($value)) {
                         $GLOBALS['log']->debug('I found a company name (fer real)');
