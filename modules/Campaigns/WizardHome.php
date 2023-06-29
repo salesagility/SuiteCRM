@@ -174,7 +174,7 @@ if (isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
         $db = DBManagerFactory::getInstance();
         $campaignId = $db->quote($campaignId);
         $emailMarketings = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '$campaignId'");
-        $firstEmailMarketing = $emailMarketings[0];
+        $firstEmailMarketing = $emailMarketings[0] ?? null;
         if (!is_object($firstEmailMarketing)) {
             $ret = null;
             LoggerManager::getLogger()->warn('Campaign Wisard Home trying to get first marketing id but the email marketings does not contains it');
