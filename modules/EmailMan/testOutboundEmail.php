@@ -57,25 +57,14 @@ $json = getJSONobj();
 $pass = '';
 if (!empty($_REQUEST['mail_smtppass'])) {
     $pass = $_REQUEST['mail_smtppass'];
-
 } elseif (isset($_REQUEST['mail_type'])) {
     $oe = new OutboundEmail();
-
-    if (!empty($_REQUEST["mail_smtpuser"])) {
-        $oe = null;
-    }
-    if (!empty($oe)) {
+    if (!empty($oe) && !empty($_REQUEST["mail_smtpuser"])) {
+        $oe = $oe->getMailerByEmail($_REQUEST["mail_smtpuser"]);
         $pass = $oe->mail_smtppass;
-    } else {
-        LoggerManager::getLogger()->error('Outbound Email password could not be found for user ' . $_REQUEST['mail_smtpuser']);
-        $error = [
-            'status' => false,
-            'errorMessage' => $app_list_strings['LBL_EMAIL_OUTBOUND_PASSWORD_MISSING'] . $_REQUEST['mail_smtpuser'],
-            'fullSmtpLog' => $app_list_strings['LBL_EMAIL_OUTBOUND_PASSWORD_MISSING'] . $_REQUEST['mail_smtpuser']
-        ];
-        $error = $json->encode($error);
-        echo $error;
-        return $error;
+    }else{
+        //if pw cannot be retrieved, use system default
+        $oe = $oe->getSystemMailerSettings();
     }
 }
 $email = BeanFactory::newBean('Emails');
@@ -94,3 +83,4 @@ $out = $email->sendEmailTest(
 
 $out = $json->encode($out);
 echo $out;
+
