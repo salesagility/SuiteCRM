@@ -2087,7 +2087,7 @@ abstract class DBManager
                     }
                 }
 
-                if (!empty($val) && !empty($fieldDef['len']) && strlen($val) > $fieldDef['len']) {
+                if (!empty($val) && !empty($fieldDef['len']) && strlen(from_html($val)) > $fieldDef['len']) {
                     $val = $this->truncate($val, $fieldDef['len']);
                 }
 
@@ -2257,7 +2257,7 @@ abstract class DBManager
                     break;
             }
         } else {
-            if (!empty($val) && !empty($fieldDef['len']) && strlen($val) > $fieldDef['len']) {
+            if (!empty($val) && !empty($fieldDef['len']) && strlen(from_html($val)) > $fieldDef['len']) {
                 $val = $this->truncate($val, $fieldDef['len']);
             }
         }
