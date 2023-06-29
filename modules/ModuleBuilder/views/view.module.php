@@ -64,9 +64,7 @@ class ViewModule extends SugarView
         global $mod_strings, $current_language;
         $smarty = new Sugar_Smarty();
 
-        if (empty($mod_strings)) {
-            $mod_strings = return_module_language($current_language, 'ModuleBuilder');
-        }
+        $mod_strings = return_module_language($current_language, 'ModuleBuilder');
 
         require_once('modules/ModuleBuilder/MB/ModuleBuilder.php');
         $mb = new ModuleBuilder();
@@ -91,7 +89,7 @@ class ViewModule extends SugarView
         $smarty->assign('mod_strings', $mod_strings);
 
         $ajax = new AjaxCompose();
-        $ajax->addCrumb($GLOBALS['mod_strings']['LBL_MODULEBUILDER'], 'ModuleBuilder.main("mb")');
+        $ajax->addCrumb($GLOBALS['mod_strings']['LBL_MODULEBUILDER'] ?? '', 'ModuleBuilder.main("mb")');
         $ajax->addCrumb(' '. $package->name, 'ModuleBuilder.getContent("module=ModuleBuilder&action=package&package='.$package->name.'")');
         if (empty($module_name)) {
             $module_name = translate('LBL_NEW_MODULE', 'ModuleBuilder');

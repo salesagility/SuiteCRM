@@ -97,7 +97,16 @@ class StudioModule
             )
         );
 
-        $moduleNames = array_change_key_case($GLOBALS ['app_list_strings'] ['moduleList']);
+        $appListStrings = $GLOBALS['app_list_strings'] ?? [];
+        $current_language = $GLOBALS['app_list_strings'] ?? 'en_us';
+
+        if (empty($appListStrings)) {
+            $appListStrings = return_app_list_strings_language($current_language);
+        }
+
+        $moduleList = $appListStrings['moduleList'] ?? [];
+
+        $moduleNames = array_change_key_case($moduleList);
         $this->name = isset($moduleNames [strtolower($module)]) ? $moduleNames [strtolower($module)] : strtolower($module);
         $this->module = $module;
         $this->seed = BeanFactory::getBean($this->module);
