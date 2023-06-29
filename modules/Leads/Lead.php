@@ -140,6 +140,7 @@ class Lead extends Person implements EmailInterface
     public $module_dir = "Leads";
     public $new_schema = true;
     public $emailAddress;
+    public $prospect_id;
 
     public $importable = true;
 
