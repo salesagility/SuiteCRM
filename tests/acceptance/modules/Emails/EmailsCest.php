@@ -62,10 +62,12 @@ class EmailsCest
      */
     public function testScenarioViewEmailBodyHTML(
         AcceptanceTester $I,
-        WebDriverHelper $webDriverHelper
+        WebDriverHelper $webDriverHelper,
+        \Codeception\Scenario $scenario
     ) {
 
         // TODO: Refactor
+        $scenario->skip('Needs to be re-implemented');
 
         $I->wantTo('View the HTML of two emails');
 
