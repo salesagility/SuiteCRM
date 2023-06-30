@@ -85,6 +85,10 @@ class EventsCest
         $this->fakeData->seed($this->fakeDataSeed);
         $event->createEvent('Test_'. $this->fakeData->company(), $location_name);
 
+        $I->see('01/01/2000 12:45');
+        $I->see('01/01/2000 01:45');
+        $I->see('1h 0m');
+
         // Delete event
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
