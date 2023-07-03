@@ -103,5 +103,6 @@ $mod_strings = array(
     'LBL_SURVEY_DISTINCT' => 'Distinct Surveys Sent:',
     'LBL_DRAFT' => 'Draft',
     'LBL_SUBMIT' => 'Submit',
-    'LBL_STARS' => 'Stars'
+    'LBL_STARS' => 'Stars',
+    'LBL_SURVEY_CLOSE_RESPONSE' => 'Thanks for your interest but this survey is now closed.',
 );
