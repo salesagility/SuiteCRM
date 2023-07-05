@@ -206,7 +206,7 @@ class SearchResults
      * @param string $link
      * @return string
      */
-    protected function getRelatedId(SugarBean $obj, string $idName, string $link): string
+    protected function getRelatedId(SugarBean $obj, string $idName, string $link): ?string
     {
         $relField = $idName;
         if (isset($obj->$link)) {
