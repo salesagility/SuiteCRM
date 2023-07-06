@@ -929,9 +929,9 @@ function get_user_array($add_blank = true, $status = 'Active', $user_id = '', $u
         $temp_result = array();
         // Including deleted users for now.
         if (empty($status)) {
-            $query = 'SELECT id, first_name, last_name, user_name FROM users WHERE 1=1' . $portal_filter;
+            $query = 'SELECT id, first_name, last_name, user_name FROM users WHERE deleted=0' . $portal_filter;
         } else {
-            $query = "SELECT id, first_name, last_name, user_name from users WHERE status='$status'" . $portal_filter;
+            $query = "SELECT id, first_name, last_name, user_name from users WHERE deleted=0 AND status='$status'" . $portal_filter;
         }
         /* BEGIN - SECURITY GROUPS */
         global $current_user, $sugar_config;
