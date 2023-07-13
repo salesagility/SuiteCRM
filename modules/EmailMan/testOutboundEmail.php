@@ -57,14 +57,11 @@ $json = getJSONobj();
 $pass = '';
 if (!empty($_REQUEST['mail_smtppass'])) {
     $pass = $_REQUEST['mail_smtppass'];
-} elseif (isset($_REQUEST['mail_type'])) {
+} elseif (isset($_REQUEST["mailbox_id"])) {
     $oe = new OutboundEmail();
-    if (!empty($oe) && !empty($_REQUEST["mail_smtpuser"])) {
-        $oe = $oe->getMailerByEmail($_REQUEST["mail_smtpuser"]);
+    $oe->retrieve($_REQUEST["mailbox_id"]);
+    if (!empty($oe->id) && !empty($oe->mail_smtppass)) {
         $pass = $oe->mail_smtppass;
-    }else{
-        //if pw cannot be retrieved, use system default
-        $oe = $oe->getSystemMailerSettings();
     }
 }
 $email = BeanFactory::newBean('Emails');

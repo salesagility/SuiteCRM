@@ -143,26 +143,6 @@ class OutboundEmail
     }
 
     /**
-     * Get mailer by using mailboxes smtp user
-     *
-     * @param string $email
-     * @return OutboundEmail|false
-     */
-    public function getMailerByEmail(string $email)
-    {
-        $query = "SELECT id FROM outbound_email WHERE mail_smtpuser = '$email' AND deleted = 0";
-        $rs = $this->db->query($query);
-        $row = $this->db->fetchByAssoc($rs);
-        if (!empty($row['id'])) {
-            $oe = new OutboundEmail();
-            $oe->retrieve($row['id']);
-            return $oe;
-        } else {
-            return null;
-        }
-    }
-
-    /**
      * Determines if a user needs to set their user name/password for their system
      * override account.
      *
