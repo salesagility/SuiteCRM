@@ -618,7 +618,7 @@ class TimeDate
                 return $this->asUserDate($date, true, $user);
                 break;
             case 'time':
-                return $this->asUserTime($date, true, $user);
+                return $this->asUserTime($date, $user);
                 break;
             case 'datetime':
             case 'datetimecombo':
