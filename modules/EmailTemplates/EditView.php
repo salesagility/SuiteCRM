@@ -403,6 +403,9 @@ if (true) {
             $xtpl->assign("TYPEDROPDOWN", get_select_options_with_id($app_list_strings['emailTemplates_type_list_no_workflow'], $templateType));
         }
     }
+    // add template timezone date format
+    $dateFormat = !empty($focus->template_date_format) ? $focus->template_date_format : '';
+    $xtpl->assign("TEMPLATE_DATE_FORMAT", get_select_options_with_id($app_list_strings['template_date_format'], $dateFormat));
     // done and parse
     $xtpl->parse("main.textarea");
 }

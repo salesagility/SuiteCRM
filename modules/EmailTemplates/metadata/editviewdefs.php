@@ -10,18 +10,24 @@ $viewdefs['EmailTemplates']['EditView'] = array(
  'panels' =>array(
   'default' =>
   array(
-    
+
     array(
       'name',
       '',
     ),
-    
+
     array(
       'type',
     ),
-    
+
     array(
-      
+
+            'template_date_format',
+            '',
+    ),
+
+    array(
+
       array(
         'name' => 'description',
         'displayParams' =>

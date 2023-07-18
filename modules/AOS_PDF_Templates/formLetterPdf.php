@@ -153,9 +153,9 @@ foreach ($recordIds as $recordId) {
     $header = preg_replace($search, $replace, $template->pdfheader);
     $footer = preg_replace($search, $replace, $template->pdffooter);
 
-    $converted = templateParser::parse_template($text, $object_arr);
-    $header = templateParser::parse_template($header, $object_arr);
-    $footer = templateParser::parse_template($footer, $object_arr);
+    $converted = templateParser::parse_template($text, $object_arr, $template);
+    $header = templateParser::parse_template($header, $object_arr, $template);
+    $footer = templateParser::parse_template($footer, $object_arr, $template);
 
     $printable = str_replace("\n", "<br />", $converted);
 

@@ -29,11 +29,11 @@ use SuiteCRM\Utility\SuiteValidator as SuiteValidator;
 
 class templateParser
 {
-    public static function parse_template($string, $bean_arr)
+    public static function parse_template($string, $bean_arr, $template)
     {
         foreach ($bean_arr as $bean_name => $bean_id) {
             $focus = BeanFactory::getBean($bean_name, $bean_id);
-            $string = templateParser::parse_template_bean($string, $focus->table_name, $focus);
+            $string = templateParser::parse_template_bean($string, $focus->table_name, $focus, $template);
 
             foreach ($focus->field_defs as $focus_name => $focus_arr) {
                 if ($focus_arr['type'] == 'relate') {
@@ -41,7 +41,7 @@ class templateParser
                         $idName = $focus_arr['id_name'];
                         $relate_focus = BeanFactory::getBean($focus_arr['module'], $focus->$idName);
 
-                        $string = templateParser::parse_template_bean($string, $focus_arr['name'], $relate_focus);
+                        $string = templateParser::parse_template_bean($string, $focus_arr['name'], $relate_focus, $template);
                     }
                 }
             }
@@ -53,10 +53,11 @@ class templateParser
      * @param $string
      * @param $key
      * @param $focus
+     * @param $template
      * @return mixed
      * @throws Exception
      */
-    public static function parse_template_bean($string, $key, &$focus)
+    public static function parse_template_bean($string, $key, &$focus, $template)
     {
         global $app_strings, $sugar_config;
         $repl_arr = array();
@@ -71,11 +72,14 @@ class templateParser
                     continue;
                 }
 
-                if ($field_def['type'] == 'currency') {
+                $fieldType = $field_def['type'] ?? '';
+                $fieldDbType = $field_def['dbType'] ?? '';
+
+                if ($fieldType === 'currency') {
                     $repl_arr[$key . "_" . $fieldName] = currency_format_number($focus->$fieldName, $params = array('currency_symbol' => false));
-                } elseif (($field_def['type'] == 'radioenum' || $field_def['type'] == 'enum' || $field_def['type'] == 'dynamicenum') && isset($field_def['options'])) {
+                } elseif (($fieldType === 'radioenum' || $fieldType === 'enum' || $fieldType === 'dynamicenum') && isset($field_def['options'])) {
                     $repl_arr[$key . "_" . $fieldName] = translate($field_def['options'], $focus->module_dir, $focus->$fieldName);
-                } elseif ($field_def['type'] == 'multienum' && isset($field_def['options'])) {
+                } elseif ($fieldType === 'multienum' && isset($field_def['options'])) {
                     $mVals = unencodeMultienum($focus->{$fieldName});
                     $translatedVals = array();
 
@@ -85,15 +89,15 @@ class templateParser
 
                     $repl_arr[$key . "_" . $fieldName] = implode(", ", $translatedVals);
                 } //Fix for Windows Server as it needed to be converted to a string.
-                elseif ($field_def['type'] == 'int') {
+                elseif ($fieldType === 'int') {
                     $repl_arr[$key . "_" . $fieldName] = (string)$focus->$fieldName;
-                } elseif ($field_def['type'] == 'bool') {
+                } elseif ($fieldType === 'bool') {
                     if ($focus->{$fieldName} == "1") {
                         $repl_arr[$key . "_" . $fieldName] = "true";
                     } else {
                         $repl_arr[$key . "_" . $fieldName] = "false";
                     }
-                } elseif ($field_def['type'] == 'image') {
+                } elseif ($fieldType === 'image') {
                     $secureLink = $sugar_config['site_url'] . '/' . "public/" . $focus->id . '_' . $fieldName;
                     $file_location = $sugar_config['upload_dir'] . '/' . $focus->id . '_' . $fieldName;
                     // create a copy with correct extension by mime type
@@ -110,11 +114,42 @@ class templateParser
                         $link = $secureLink;
                         $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="' . $field_def['width'] . '" height="' . $field_def['height'] . '"/>';
                     }
-                } elseif ($field_def['type'] == 'wysiwyg') {
+                } elseif ($fieldType === 'wysiwyg') {
                     $repl_arr[$key . "_" . $field_def['name']] = html_entity_decode($focus->$field_def['name'],
                         ENT_COMPAT, 'UTF-8');
                     $repl_arr[$key . "_" . $fieldName] = html_entity_decode($focus->{$fieldName},
                         ENT_COMPAT, 'UTF-8');
+                } elseif ($fieldType === 'datetime' || $fieldDbType === 'datetime') {
+
+                    $datetimeValue = $focus->{$fieldName} ?? '';
+                    $templateFormat = $template->template_date_format ?? '';
+                    if ($datetimeValue !== '' && is_string($datetimeValue)){
+                        if (empty($templateFormat)) {
+                            $datetimeValue = self::getDateFormatService()->toUserDateTime($datetimeValue);
+                        } else{
+                            global $timedate;
+                            $time = $timedate->get_db_time_format();
+                            $datetimeValue = self::getDateFormatService()->toFormat($datetimeValue, $templateFormat . ' ' . $time);
+                        }
+                    }
+
+                    $repl_arr[$key . "_" . $fieldName] = $datetimeValue;
+
+                } elseif ($fieldType === 'date' || $fieldDbType === 'date') {
+
+                    $dateValue = $focus->{$fieldName} ?? '';
+                    $templateFormat = $template->template_date_format ?? '';
+
+                    if ($dateValue !== '' && is_string($dateValue)) {
+                        if (empty($templateFormat)) {
+                            $dateValue = self::getDateFormatService()->toUserDate($dateValue);
+                        } else {
+                            $dateValue = self::getDateFormatService()->toFormat($dateValue, $templateFormat);
+                        }
+                    }
+
+                    $repl_arr[$key . "_" . $fieldName] = $dateValue;
+
                 } else {
                     $repl_arr[$key . "_" . $fieldName] = $focus->{$fieldName};
                 }
@@ -152,20 +187,7 @@ class templateParser
                 $sep = get_number_separators();
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
             }
-            if (!empty($focus->field_defs[$name]['dbType'])
-                && $focus->field_defs[$name]['dbType'] === 'datetime'
-                && (strpos($name, 'date') > 0 || strpos($name, 'expiration') > 0)
-            ) {
-                if ($value != '') {
-                    $dt = explode(' ', $value);
-                    $value = $dt[0];
-                    if (isset($dt[1]) && $dt[1] != '') {
-                        if (strpos($dt[1], 'am') > 0 || strpos($dt[1], 'pm') > 0) {
-                            $value = $dt[0] . ' ' . $dt[1];
-                        }
-                    }
-                }
-            }
+
             if ($value != '' && is_string($value)) {
                 $string = str_replace("\$$name", $value, $string);
             } elseif (strpos($name, 'address') > 0) {
@@ -178,5 +200,14 @@ class templateParser
         }
 
         return $string;
+    }
+
+    /**
+     * Get Date format service
+     * @return DateFormatService
+     */
+    protected static function getDateFormatService(): DateFormatService {
+        require_once __DIR__ . '/../../include/portability/Services/DateTime/DateFormatService.php';
+        return new DateFormatService();
     }
 }

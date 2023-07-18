@@ -123,9 +123,10 @@ function getPortalEmailSettings()
  *
  * @param string $string
  * @param array $bean_arr
+ * @param array $template
  * @return string
  */
-function aop_parse_template($string, $bean_arr)
+function aop_parse_template($string, $bean_arr, $template)
 {
     $typeMap = array('dynamicenum' => 'enum');
 
@@ -143,7 +144,7 @@ function aop_parse_template($string, $bean_arr)
         }
 
         $emailTemplate = BeanFactory::newBean('EmailTemplates');
-        $string = $emailTemplate->parse_template_bean($string, $bean_name, $focus);
+        $string = $emailTemplate->parse_template_bean($string, $bean_name, $focus, $template);
 
     }
 

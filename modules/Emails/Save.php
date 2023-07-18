@@ -137,9 +137,9 @@ if (empty($object_arr)) {
 // do not parse email templates if the email is being saved as draft....
 if ($focus->type != 'draft' && count($object_arr) > 0) {
     require_once($beanFiles['EmailTemplate']);
-    $focus->name = EmailTemplate::parse_template($focus->name, $object_arr);
-    $focus->description = EmailTemplate::parse_template($focus->description, $object_arr);
-    $focus->description_html = EmailTemplate::parse_template($focus->description_html, $object_arr);
+    $focus->name = EmailTemplate::parse_template($focus->name, $object_arr, $template);
+    $focus->description = EmailTemplate::parse_template($focus->description, $object_arr, $template);
+    $focus->description_html = EmailTemplate::parse_template($focus->description_html, $object_arr, $template);
 }
 ////	END TEMPLATE PARSING
 ///////////////////////////////////////////////////////////////////////////////

@@ -70,6 +70,12 @@ $dictionary['EmailTemplate'] = array(
             'comment' => 'Date record last modified',
             'inline_edit' => false
         ),
+        'template_date_format' => array(
+            'name' => 'template_date_format',
+            'vname' => 'LBL_TEMPLATE_DATE_FORMAT',
+            'type' => 'enum',
+            'comment' => 'This is the timezone that the template will always use',
+        ),
         'modified_user_id' => array(
             'name' => 'modified_user_id',
             'rname' => 'user_name',

@@ -466,15 +466,16 @@ class CaseUpdatesHook
             'Users' => $bean->assigned_user_id,
         ];
         $ret = [];
-        $ret['subject'] = from_html(aop_parse_template($template->subject, $beans));
+        $ret['subject'] = from_html(aop_parse_template($template->subject, $beans, $template));
         $ret['body'] = from_html(
             $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] . aop_parse_template(
                 str_replace(
                     '$sugarurl',
                     $sugar_config['site_url'],
-                    $template->body_html
+                    $template->body_html,
                 ),
-                $beans
+                $beans,
+                $template
             )
         );
         $ret['body_alt'] = strip_tags(
@@ -485,7 +486,8 @@ class CaseUpdatesHook
                         $sugar_config['site_url'],
                         $template->body
                     ),
-                    $beans
+                    $beans,
+                    $template
                 )
             )
         );
