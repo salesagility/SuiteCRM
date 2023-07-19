@@ -77,6 +77,7 @@ class Opportunity extends SugarBean
     public $meeting_id;
     public $call_id;
     public $email_id;
+    public $email1 = '';
     public $assigned_user_name;
 
     public $table_name = "opportunities";

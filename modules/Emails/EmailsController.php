@@ -175,7 +175,8 @@ class EmailsController extends SugarController
             $relateLine = '<input type="hidden" class="email-relate-target" ';
             $relateLine .= 'data-relate-module="' . $_REQUEST['relatedModule'] . '" ';
             $relateLine .= 'data-relate-id="' . $_REQUEST['relatedId'] . '" ';
-            $relateLine .= 'data-relate-name="' . $relateBean->name . '">';
+            $relatedName = $relateBean->name ?? '';
+            $relateLine .= 'data-relate-name="' . $relatedName . '">';
             echo $relateLine;
         }
     }
