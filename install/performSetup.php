@@ -712,9 +712,11 @@ $_POST['user_theme'] = (string) SugarThemeRegistry::getDefault();
 $_REQUEST['do_not_redirect'] = true;
 
 // restore superglobals and vars
-$GLOBALS = $varStack['GLOBALS'];
+foreach ($varStack['GLOBALS'] ?? [] as $index => $item) {
+    $GLOBALS[$index] = $item;
+}
 foreach ($varStack['defined_vars'] as $__key => $__value) {
-    ${$__key} = $__value;
+    $$__key = $__value;
 }
 
 
@@ -728,7 +730,7 @@ if (!is_array($bottle) || !is_object($bottle)) {
 }
 
 
-if (count($bottle) > 0) {
+if (is_countable($bottle) && count($bottle) > 0) {
     foreach ($bottle as $bottle_message) {
         $bottleMsg .= "{$bottle_message}\n";
     }
