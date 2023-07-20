@@ -47,6 +47,7 @@ require_once('include/ListView/ListViewSmarty.php');
 require_once('include/TemplateHandler/TemplateHandler.php');
 require_once('include/SearchForm/SearchForm2.php');
 define("NUM_COLS", 2);
+#[\AllowDynamicProperties]
 class PopupSmarty extends ListViewSmarty
 {
     public $contextMenus = false;

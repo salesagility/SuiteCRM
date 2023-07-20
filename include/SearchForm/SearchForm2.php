@@ -47,7 +47,7 @@ require_once('include/ListView/ListViewSmarty.php');
 require_once('include/TemplateHandler/TemplateHandler.php');
 require_once('include/EditView/EditView2.php');
 
-
+#[\AllowDynamicProperties]
 class SearchForm
 {
     public $seed = null;

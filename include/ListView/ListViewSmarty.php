@@ -46,7 +46,7 @@ require_once('include/ListView/ListViewDisplay.php');
 
 
 require_once('include/contextMenus/contextMenu.php');
-
+#[\AllowDynamicProperties]
 class ListViewSmarty extends ListViewDisplay
 {
     public $data;
@@ -253,7 +253,7 @@ class ListViewSmarty extends ListViewDisplay
         if (isset($sugar_config['hideColumnFilter'][$module]) && $sugar_config['hideColumnFilter'][$module]) {
             $this->ss->assign('hideColumnFilter', true);
         }
-        
+
         $this->ss->assign('showFilterIcon', !in_array($module, $sugar_config['enable_legacy_search'] ?? array()));
     }
 

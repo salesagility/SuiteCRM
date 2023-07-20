@@ -47,6 +47,7 @@ require_once('include/EditView/SugarVCR.php');
  * Data set for ListView
  * @api
  */
+#[\AllowDynamicProperties]
 class ListViewData
 {
     public $additionalDetails = true;
