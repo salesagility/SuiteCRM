@@ -494,8 +494,8 @@ class PackageManager
             exit();
         }
 
-        $versionSugarOk = $this->validateManifestVersion($manifest['acceptable_sugar_versions'], 'acceptable_sugar_versions');
-        $versionSuiteOk = $this->validateManifestVersion($manifest['acceptable_suitecrm_versions'], 'acceptable_suitecrm_versions');
+        $versionSugarOk = $this->validateManifestVersion($manifest['acceptable_sugar_versions'] ?? '', 'acceptable_sugar_versions');
+        $versionSuiteOk = $this->validateManifestVersion($manifest['acceptable_suitecrm_versions'] ?? '', 'acceptable_suitecrm_versions');
 
         if (!$versionSugarOk || !$versionSuiteOk) {
             exit();

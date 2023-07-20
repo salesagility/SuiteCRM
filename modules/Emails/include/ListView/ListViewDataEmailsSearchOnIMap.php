@@ -122,7 +122,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         $emailServerEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter, $filter_fields);
 
         $total = $emailServerEmails['mailbox_info']['Nmsgs']; // + count($importedEmails['data']);
-        if ($request['Emails2_EMAIL_offset'] === "end") {
+        if (isset($request['Emails2_EMAIL_offset']) && $request['Emails2_EMAIL_offset'] === "end") {
             $offset = $total - $limitPerPage;
         }
 

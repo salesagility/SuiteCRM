@@ -3179,8 +3179,9 @@ function post_install_progress($progArray='', $action='')
         $currProg = array();
         if (file_exists($upgrade_progress_file)) {
             include($upgrade_progress_file);
-            if (is_array($upgrade_config[count($upgrade_config)]['commit']['post_install']) && count($upgrade_config[count($upgrade_config)]['commit']['post_install'])>0) {
-                foreach ($upgrade_config[count($upgrade_config)]['commit']['post_install'] as $k=> $v) {
+            $commitPostInstall = $upgrade_config[count($upgrade_config)]['commit']['post_install'] ?? '';
+            if (is_array($commitPostInstall) && count($commitPostInstall)>0) {
+                foreach ($commitPostInstall as $k=> $v) {
                     $currProg[$k]=$v;
                 }
             }
@@ -3195,13 +3196,14 @@ function post_install_progress($progArray='', $action='')
         } else {
             fopen($upgrade_progress_file, 'wb+');
         }
-        if (!is_array($upgrade_config[count($upgrade_config)]['commit']['post_install'])) {
-            $upgrade_config[count($upgrade_config)]['commit']['post_install']=array();
-            $upgrade_config[count($upgrade_config)]['commit']['post_install']['post_install'] = 'in_progress';
+        $commitPostInstall = $upgrade_config[count($upgrade_config)]['commit']['post_install'] ?? '';
+        if (!is_array($commitPostInstall)) {
+            $commitPostInstall = [];
+            $commitPostInstall['post_install'] = 'in_progress';
         }
         if ($progArray != null && is_array($progArray)) {
             foreach ($progArray as $key=>$val) {
-                $upgrade_config[count($upgrade_config)]['commit']['post_install'][$key]=$val;
+                $commitPostInstall[$key]=$val;
             }
         }
         if (is_writable($upgrade_progress_file) && write_array_to_file(

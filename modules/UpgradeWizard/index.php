@@ -42,6 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+global $current_user;
+global $app_strings;
+
 if (!is_admin($current_user)) {
     sugar_die($app_strings['ERR_NOT_ADMIN']);
 }
@@ -58,6 +61,8 @@ if (!isset($locale) || empty($locale)) {
 }
 global $sugar_config;
 global $sugar_flavor;
+global $current_language;
+
 
 require_once('modules/Trackers/TrackerManager.php');
 $trackerManager = TrackerManager::getInstance();
@@ -289,7 +294,7 @@ if ($upgradeStepFile == 'end') {
     //}
 }
 
-if (!isset($_REQUEST['additional_step']) || !$_REQUEST['additional_step']) {
+if (!isset($additionalStep) || !$additionalStep) {
     require('modules/UpgradeWizard/' . $upgradeStepFile . '.php');
 }
 
@@ -501,7 +506,8 @@ function getSelectedModulesForLayoutMerge()
 eoq;
 
 // If we are on step  4 then force a redirect to run again to pick up changes to smarty before setting the template.
-if ($_REQUEST['step'] === '4' && !$_REQUEST['additional_step']) {
+$additionalStep = $_REQUEST['additional_step'] ?? false;
+if ($_REQUEST['step'] === '4' && !$additionalStep) {
     // Set session variables
     $_SESSION['UW_MAIN'] = $uwMain;
     $_SESSION['UW_JS'] = $js;
@@ -540,7 +546,7 @@ if ($_REQUEST['step'] === '4' && !$_REQUEST['additional_step']) {
     die();
 }
 
-if($_REQUEST['step'] === '4' && $_REQUEST['additional_step']) {
+if($_REQUEST['step'] === '4' && $additionalStep) {
     // Set Smarty variables
     $uwMain = $_SESSION['UW_MAIN'];
     $js = $_SESSION['UW_JS'];
@@ -562,7 +568,7 @@ if($_REQUEST['step'] === '4' && $_REQUEST['additional_step']) {
     $_SESSION['STEPS_STEP'] = $_REQUEST['step'];
     $uwHistory = $_SESSION['UW_HISTORY'];
     $disableNextForLicense = $_SESSION['disableNextForLicense'];
-    $frozen = $_SESSION['frozen'];
+    $frozen = $_SESSION['frozen'] ?? '';
     $u_allow = $_SESSION['u_allow'];
     $_SESSION['top_message'] = $GLOBALS['top_message'];
 }

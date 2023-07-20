@@ -105,7 +105,7 @@ class sendEmail
 
 
         // team id
-        $email->team_id = $current_user->default_team;
+        $email->team_id = $current_user->default_team ?? '';
         // assigned_user_id
         $email->assigned_user_id = $current_user->id;
         // Save the email object

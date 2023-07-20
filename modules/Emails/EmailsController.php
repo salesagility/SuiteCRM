@@ -264,8 +264,10 @@ class EmailsController extends SugarController
                 $useOutbound = $outboundEmailAccount->ACLAccess('view');
             }
 
-            $this->bean->from_name = $_REQUEST['from_addr_name'];
-            $this->bean->from_addr_name = $_REQUEST['from_addr_name'];
+            $fromAddr = $_REQUEST['from_addr_name'] ?? '';
+
+            $this->bean->from_name = $fromAddr;
+            $this->bean->from_addr_name = $fromAddr;
         }
 
         if ($useOutbound || $this->userIsAllowedToSendEmail($current_user, $inboundEmailAccount, $this->bean)) {

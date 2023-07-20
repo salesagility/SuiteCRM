@@ -182,6 +182,10 @@ function sugar_file_put_contents($filename, $data, $flags = null, $context = nul
         return false;
     }
 
+    if ($flags === null){
+        $flags = 0;
+    }
+
     $result = file_put_contents($filename, $data, $flags, $context);
     if ((new SplFileInfo($filename))->getExtension() == 'php') {
         SugarCache::cleanFile($filename);

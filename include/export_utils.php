@@ -111,6 +111,7 @@ function export($type, $records = null, $members = false, $sample=false)
     global $mod_strings;
     global $current_language;
     global $log;
+    global $sugar_config;
     $sampleRecordNum = 5;
 
     //Array of fields that should not be exported, and are only used for logic

@@ -972,7 +972,7 @@ class ListView
 
         foreach ($priority_map as $p) {
             if (array_key_exists($p, $sortOrderList)) {
-                $order = strtolower($sortOrderList[$p]);
+                $order = strtolower($sortOrderList[$p] ?? '');
                 if (in_array($order, array('asc', 'desc'))) {
                     return $order;
                 }

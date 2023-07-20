@@ -516,7 +516,8 @@ EOQ;
                 if ($focus->hasCustomFields()) {
                     foreach ($focus->field_defs as $name=>$field) {
                         if (!empty($field['source']) && $field['source'] == 'custom_fields') {
-                            $get .= "&Contacts$name=".urlencode($focus->$name);
+                            $fieldName = $focus->$name ?? '';
+                            $get .= "&Contacts$name=".urlencode($fieldName);
                         }
                     }
                 }

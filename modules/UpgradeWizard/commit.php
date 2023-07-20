@@ -82,7 +82,8 @@ if (didThisStepRunBefore('commit')) {
     set_upgrade_progress('commit', 'in_progress', 'commit', 'in_progress');
 }
 //Initialize session errors array
-if (!isset($_SESSION['sqlSkippedQueries']) && !is_array($_SESSION['sqlSkippedQueries'])) {
+$sqlSkipppedQueries = $_SESSION['sqlSkippedQueries'] ?? '';
+if (empty($sqlSkipppedQueries) && !is_array($sqlSkipppedQueries)) {
     $_SESSION['sqlSkippedQueries'] = array();
 }
 // prevent "REFRESH" double commits

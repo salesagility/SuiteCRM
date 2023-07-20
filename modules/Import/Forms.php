@@ -157,7 +157,10 @@ function getControl(
         $focus = loadBean($module);
     }
     // create the dropdowns for the parent type fields
-    if ($vardef['type'] == 'parent_type') {
+
+    $type = $vardef['type'] ?? '';
+
+    if ($type === 'parent_type') {
         $focus->field_defs[$vardef['name']]['options'] = $focus->field_defs[$vardef['group']]['options'];
     }
     $vardefFields = $focus->getFieldDefinitions();

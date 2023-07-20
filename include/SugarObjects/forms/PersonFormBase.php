@@ -128,7 +128,9 @@ abstract class PersonFormBase extends FormBase
         if (isset($rows[0])) {
             foreach ($rows[0] as $key=>$value) {
                 if ($key != 'id') {
-                    $form .= "<td scope='col' >". $mod_strings[$mod_strings['db_'.$key]]. "</td>";
+                    $newKey = $mod_strings['db_'.$key] ?? '';
+                    $string = $mod_strings[$newKey] ?? '';
+                    $form .= "<td scope='col' >". $string . "</td>";
                 }
             }
             $form .= "</tr>";
