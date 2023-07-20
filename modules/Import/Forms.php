@@ -91,9 +91,7 @@ function getControl(
         }
         
         // remove the special text entry field function 'getEmailAddressWidget'
-        if (isset($vardef['function'])
-                && ($vardef['function'] == 'getEmailAddressWidget'
-                    || $vardef['function']['name'] == 'getEmailAddressWidget')) {
+        if (isset($vardef['function']) && $vardef['function'] == 'getEmailAddressWidget') {
             unset($vardef['function']);
         }
         
@@ -114,9 +112,7 @@ function getControl(
         $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', (string) $contents);
         
         // hack to disable one of the js calls in this control
-        if (isset($vardef['function'])
-                && ($vardef['function'] == 'getCurrencyDropDown'
-                    || $vardef['function']['name'] == 'getCurrencyDropDown')) {
+        if (isset($vardef['function']) && $vardef['function'] == 'getCurrencyDropDown') {
             $contents .= "{literal}<script>function CurrencyConvertAll() { return; }</script>{/literal}";
         }
 
