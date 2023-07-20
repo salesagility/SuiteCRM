@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
+global $beanFiles, $timedate, $current_user;
 ///////////////////////////////////////////////////////////////////////////////
 ////	EMAIL SEND/SAVE SETUP
 $focus = BeanFactory::newBean('Emails');
@@ -75,8 +75,10 @@ foreach ($allfields as $field) {
     }
 }
 
-$focus->description = $_REQUEST['description_html'];
-$focus->description_html = $_REQUEST['description_html'];
+$description_html = $_REQUEST['description_html'] ?? '';
+
+$focus->description = $description_html;
+$focus->description_html = $description_html;
 
 if (!isset($_REQUEST['to_addrs'])) {
     $_REQUEST['to_addrs'] = "";
@@ -137,9 +139,9 @@ if (empty($object_arr)) {
 // do not parse email templates if the email is being saved as draft....
 if ($focus->type != 'draft' && count($object_arr) > 0) {
     require_once($beanFiles['EmailTemplate']);
-    $focus->name = EmailTemplate::parse_template($focus->name, $object_arr);
-    $focus->description = EmailTemplate::parse_template($focus->description, $object_arr);
-    $focus->description_html = EmailTemplate::parse_template($focus->description_html, $object_arr);
+    $focus->name = (new EmailTemplate())->parse_template($focus->name, $object_arr);
+    $focus->description = (new EmailTemplate())->parse_template($focus->description, $object_arr);
+    $focus->description_html = (new EmailTemplate())->parse_template($focus->description_html, $object_arr);
 }
 ////	END TEMPLATE PARSING
 ///////////////////////////////////////////////////////////////////////////////
@@ -157,11 +159,14 @@ if (empty($focus->id)) {
 $focus->handleAttachments();
 ////	END ATTACHMENT HANDLING
 ///////////////////////////////////////////////////////////////////////////////
+$dateStart = $_REQUEST['date_start'] ?? '';
+$timeStart = $_REQUEST['time_start'] ?? '';
+$meridiem = $_REQUEST['meridiem'] ?? '';
 $focus->status = 'draft';
 if ($focus->type == 'archived') {
     $focus->status= 'archived';
-    $focus->date_start = $_REQUEST['date_start'];
-    $focus->time_start = $_REQUEST['time_start'] . $_REQUEST['meridiem'];
+    $focus->date_start = $dateStart;
+    $focus->time_start = $timeStart . $meridiem;
 } elseif (($focus->type == 'out' || $focus->type == 'forward') && isset($_REQUEST['send']) && $_REQUEST['send'] == '1') {
     ///////////////////////////////////////////////////////////////////////////
     ////	REPLY PROCESSING
@@ -233,8 +238,8 @@ $focus = populateFromPost('', $focus);
 
 //CCL - Bug: 40168 Fix ability to change date sent from saved emails
 if ($focus->type == 'archived') {
-    $focus->date_start = $_REQUEST['date_start'];
-    $focus->time_start = $_REQUEST['time_start'] . $_REQUEST['meridiem'];
+    $focus->date_start = $dateStart;
+    $focus->time_start = $timeStart . $meridiem;
     $focus->date_sent_received = '';
 }
 
