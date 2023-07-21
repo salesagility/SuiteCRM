@@ -443,6 +443,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
     $_REQUEST['record'] = $bean->id;
     $vardef['fields']['ID'] = $bean->id;
     $vardef['fields'][strtoupper($vardef['name'])] = $value;
+    $vardef['ext2'] = '';
 
     // If field is of type email.
     if ($vardef['name'] == "email1" && $vardef['group'] == "email1") {
