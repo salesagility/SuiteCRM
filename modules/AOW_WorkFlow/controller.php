@@ -554,7 +554,7 @@ class AOW_WorkFlowController extends SugarController
 
         $id = '';
         $params = array();
-        if (isset($_REQUEST['id'])) {
+        if (isset($_REQUEST['id']) && strlen(trim($_REQUEST['id'])) > 0 ) {
             require_once('modules/AOW_Actions/AOW_Action.php');
             $aow_action = BeanFactory::newBean('AOW_Actions');
             $aow_action->retrieve($_REQUEST['id']);
