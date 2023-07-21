@@ -164,11 +164,11 @@ EOHTML;
 
         foreach ($audit_list as $audit) {
             if (empty($audit['before_value_string']) && empty($audit['after_value_string'])) {
-                $before_value = $audit['before_value_text'];
-                $after_value = $audit['after_value_text'];
+                $before_value = $audit['before_value_text'] ?? '';
+                $after_value = $audit['after_value_text'] ?? '';
             } else {
-                $before_value = $audit['before_value_string'];
-                $after_value = $audit['after_value_string'];
+                $before_value = $audit['before_value_string'] ?? '';
+                $after_value = $audit['after_value_string'] ?? '';
             }
 
             // Let's run the audit data through the sugar field system

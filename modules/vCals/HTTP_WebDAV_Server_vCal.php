@@ -185,16 +185,18 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
 
 
 
+            $userName = $query_arr['user_name'] ?? '';
+
             /**
              * Fake a response so that it is not different from when a user is found
              */
             if ($this->user_focus->id === null) {
-                $this->user_focus->last_name = $query_arr['user_name'];
+                $this->user_focus->last_name = $userName;
             } elseif (
                 !$current_user->isAdmin() &&
                 $current_user->user_name !== $this->user_focus->user_name
             ) {
-                $this->user_focus->last_name = $query_arr['user_name'];
+                $this->user_focus->last_name = $userName;
             }
 
             parent::ServeRequest();

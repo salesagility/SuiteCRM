@@ -524,7 +524,7 @@ class EditView
         }
 
         if (isset($_REQUEST['offset'])) {
-            $this->offset = $_REQUEST['offset'] - 1;
+            $this->offset = (int)$_REQUEST['offset'] - 1;
         }
 
         if ($this->showVCRControl) {
