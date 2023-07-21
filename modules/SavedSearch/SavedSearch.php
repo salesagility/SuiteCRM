@@ -344,7 +344,9 @@ class SavedSearch extends SugarBean
             LoggerManager::getLogger()->warn('SavedSearch::handleDelete() - Requested search module is not set');
         }
 
-        SugarApplication::headerRedirect("Location: index.php?action=index&module={$requestSearchModule}&advanced={$_REQUEST['advanced']}&query=true&clear_query=true");
+        $advanced = $_REQUEST['advanced'] ?? 'false';
+        $query = $_REQUEST['query'] ?? 'false';
+        SugarApplication::headerRedirect("Location: index.php?action=index&module={$requestSearchModule}&advanced={$advanced}&query={$query}&clear_query=true");
     }
 
     public function handleSave($prefix, $redirect = true, $useRequired = false, $id = null, $searchModuleBean = null)
