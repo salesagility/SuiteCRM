@@ -77,10 +77,10 @@ $object_arr = array();
 $object_arr[$bean->module_dir] = $bean->id;
 
 //backward compatibility
-$object_arr['Accounts'] = $bean->billing_account_id;
-$object_arr['Contacts'] = $bean->billing_contact_id;
-$object_arr['Users'] = $bean->assigned_user_id;
-$object_arr['Currencies'] = $bean->currency_id;
+$object_arr['Accounts'] = $bean->billing_account_id ?? '';
+$object_arr['Contacts'] = $bean->billing_contact_id ?? '';
+$object_arr['Users'] = $bean->assigned_user_id ?? '';
+$object_arr['Currencies'] = $bean->currency_id ?? '';
 
 $search = array('/<script[^>]*?>.*?<\/script>/si',      // Strip out javascript
     '/<[\/\!]*?[^<>]*?>/si',        // Strip out HTML tags
