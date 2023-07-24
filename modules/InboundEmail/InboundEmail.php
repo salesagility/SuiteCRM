@@ -5379,22 +5379,17 @@ class InboundEmail extends SugarBean
                 $this->imagePrefix = 'cid:';
             }
 
-            $emailBody = $this->imap->fetchBody($uid, '', FT_UID);
-            $contentType = $this->mailParser->parse($emailBody)->getHeaderValue('Content-Type');
-
-            if (!empty($contentType) && strtolower($contentType) === 'text/plain') {
-                $email->description = $this->getMessageTextWithUid(
-                    $uid,
-                    $contentType,
-                    $structure = null,
-                    $fullHeader = null,
-                    true
-                );
-            }
+            $email->description = $this->getMessageTextWithUid(
+                $uid,
+                'text/plain',
+                $structure = null,
+                $fullHeader = null,
+                true
+            );
 
             $email->description_html = $this->getMessageTextWithUid(
                 $uid,
-                $structure->subtype,
+                $type = null,
                 $structure,
                 $fullHeader,
                 $clean_email
@@ -5649,22 +5644,17 @@ class InboundEmail extends SugarBean
 
                 $oldPrefix = $this->imagePrefix;
 
-                $emailBody = $this->imap->fetchBody($uid, '', FT_UID);
-                $contentType = $this->mailParser->parse($emailBody)->getHeaderValue('Content-Type');
-
-                if (!empty($contentType) && strtolower($contentType) === 'text/plain') {
-                    $email->description = $this->getMessageTextWithUid(
-                        $uid,
-                        $contentType,
-                        $structure = null,
-                        $fullHeader = null,
-                        true
-                    );
-                }
+                $email->description = $this->getMessageTextWithUid(
+                    $uid,
+                    'text/plain',
+                    $structure = null,
+                    $fullHeader = null,
+                    true
+                );
 
                 $email->description_html = $this->getMessageTextWithUid(
                     $uid,
-                    $contentType,
+                    $type = null,
                     $structure = null,
                     $fullHeader = null,
                     true
