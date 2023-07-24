@@ -59,9 +59,7 @@ class updateDependencies
 
         if ($bean->date_finish != $fetchedDateFinish) { //if the end date of a current task is changed
 
-            $fetchedRow = $bean->fetched_row ?? [];
-
-            $diff = $this->count_days($bean->date_finish, $fetchedRow['date_finish']); //Gets the difference in days
+            $diff = $this->count_days($bean->date_finish, $bean->fetched_row['date_finish'] ?? ''); //Gets the difference in days
 
             if ($tasks) {
                 foreach ($tasks as $task) { //loop through all dependant tasks

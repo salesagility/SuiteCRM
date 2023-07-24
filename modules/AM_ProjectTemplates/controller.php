@@ -239,7 +239,7 @@ class AM_ProjectTemplatesController extends SugarController
         }
 
         //set project end date to the same as end date of the last task
-        $project->estimated_end_date = $end;
+        $project->estimated_end_date = $end ?? '';
         $project->save();
 
 
