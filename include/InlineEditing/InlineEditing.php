@@ -48,6 +48,8 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
     $vardefFields = [];
     $parentfieldlist = [];
     $displayParams = [];
+    $rel_value = '';
+
     global $current_language, $app_strings, $app_list_strings, $current_user, $beanFiles, $beanList;
 
     $bean = BeanFactory::getBean($module, $id);
