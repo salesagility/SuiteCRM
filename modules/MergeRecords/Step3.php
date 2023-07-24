@@ -103,7 +103,8 @@ if (isset($_REQUEST['change_parent']) && $_REQUEST['change_parent']=='1') {
     }
 } else {
     $base_id=$_REQUEST['record'];
-    foreach ($_REQUEST['mass'] as $id) {
+    $mass = $_REQUEST['mass'] ?? [];
+    foreach ($mass as $id) {
         $merge_ids_array[] = $id;
     }
 }
