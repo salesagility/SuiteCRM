@@ -91,6 +91,7 @@ $mod_strings = array(
     'LBL_SURVEYS_SURVEYQUESTIONS_FROM_SURVEYQUESTIONS_TITLE' => 'Survey Questions',
     'LBL_SURVEYS_SURVEYRESPONSES_FROM_SURVEYRESPONSES_TITLE' => 'Survey Responses',
     'LBL_SHOW_RESPONSES' => 'Show responses',
+    'LBL_HIDE_RESPONSES' => 'Hide responses',
     'LBL_SURVEY_QUESTION' => 'Question',
     'LBL_SURVEY_TEXT' => 'Text',
     'LBL_SURVEY_TYPE' => 'Type',
