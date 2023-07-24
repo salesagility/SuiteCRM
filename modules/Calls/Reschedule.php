@@ -12,7 +12,7 @@ $date = $_POST['date'];
 $reason = $_POST['reason'];
 $hour = $_POST['date_start_hours'];
 $minutes = $_POST['date_start_minutes'];
-$ampm = $_POST['date_start_meridiem'];
+$ampm = $_POST['date_start_meridiem'] ?? '';
 
 $time_format = $timedate->get_user_time_format(); //get the logged in users time settings
 
