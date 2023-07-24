@@ -322,7 +322,7 @@ class AM_ProjectTemplatesController extends SugarController
         $task_name = $_POST['task_name'];
         $project_id = $_POST['project_id'];
         $override_business_hours = (int)$_POST['override_business_hours'];
-        $task_id = $_POST['task_id'];
+        $task_id = $_POST['task_id'] ?? '';
         $predecessor = $_POST['predecessor'];
         $rel_type = $_POST['rel_type'];
         $resource = $_POST['resource'];
