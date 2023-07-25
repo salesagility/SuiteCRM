@@ -67,6 +67,7 @@ class SurveyResponses extends Basic
     public $assigned_user_link;
     public $SecurityGroups;
     public $email_response_sent;
+    public $contact_id;
 
     public function __construct()
     {
