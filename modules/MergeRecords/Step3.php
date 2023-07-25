@@ -180,10 +180,12 @@ foreach ($temp_field_array as $field_array) {
         }
         //check for vname in mod strings first, then app, else just display name
         $col_name =$tempName;
-        if (isset($focus->merge_bean_strings[$field_array['vname']]) && $focus->merge_bean_strings[$field_array['vname']] != '') {
-            $xtpl->assign("FIELD_LABEL", $focus->merge_bean_strings[$field_array['vname']]);
-        } elseif (isset($app_strings[$field_array['vname']]) && $app_strings[$field_array['vname']] != '') {
-            $xtpl->assign("FIELD_LABEL", $app_strings[$field_array['vname']]);
+        $focusVname = $field_array['vname'] ?? '';
+
+        if (isset($focus->merge_bean_strings[$focusVname]) && $focus->merge_bean_strings[$focusVname] != '') {
+            $xtpl->assign("FIELD_LABEL", $focus->merge_bean_strings[$focusVname]);
+        } elseif (isset($app_strings[$focusVname]) && $app_strings[$focusVname] != '') {
+            $xtpl->assign("FIELD_LABEL", $app_strings[$focusVname]);
         } else {
             $xtpl->assign("FIELD_LABEL", $tempName);
         }
