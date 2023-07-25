@@ -40,6 +40,7 @@
 
 $mod_strings = array(
     'LBL_ASSIGNED_TO_ID'                                     => 'Assigned User Id',
+    'LBL_ADD_OPTION'                                         => 'Add new option',
     'LBL_ASSIGNED_TO_NAME'                                   => 'Assigned to',
     'LBL_SECURITYGROUPS'                                     => 'Security Groups',
     'LBL_SECURITYGROUPS_SUBPANEL_TITLE'                      => 'Security Groups',
