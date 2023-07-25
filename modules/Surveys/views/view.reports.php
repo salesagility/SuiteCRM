@@ -55,7 +55,8 @@ EOF;
         foreach ($responses as $response) {
             foreach ($response->get_linked_beans('surveyresponses_surveyquestionresponses') as $questionResponse) {
                 $questionId = $questionResponse->surveyquestion_id;
-                switch ($data[$questionId]['type']) {
+                $dataType = $data[$questionId]['type'] ?? '';
+                switch ($dataType) {
                     case "Checkbox":
                         $answerBool = !empty($questionResponse->answer_bool) ? 1 : 0;
                         $data[$questionId]['responses'][$answerBool]['count']++;
