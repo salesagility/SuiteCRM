@@ -54,7 +54,7 @@ if (!defined('SUGAR_SMARTY_DIR')) {
 class Sugar_Smarty extends Smarty
 {
     public $_filepaths_cache = [];
-
+    protected $_compile_id;
     /**
      * Sugar_Smarty constructor.
      */
