@@ -67,6 +67,7 @@ class Project extends SugarBean
     public $opportunity_id;
     public $email_id;
     public $estimated_start_date;
+    public $team_id;
 
     // calculated information
     public $total_estimated_effort;

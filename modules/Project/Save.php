@@ -122,7 +122,7 @@ if (isset($_REQUEST['save_type']) || isset($_REQUEST['duplicateSave']) && $_REQU
         if ($sugarbean->is_template) {
             $projectTasks[$i]->assigned_user_id = '';
         }
-        $projectTasks[$i]->team_id = $sugarbean->team_id;
+        $projectTasks[$i]->team_id = $sugarbean->team_id ?? '';
         if (empty($projectTasks[$i]->duration_unit)) {
             $projectTasks[$i]->duration_unit = " ";
         } //Since duration_unit cannot be null.
