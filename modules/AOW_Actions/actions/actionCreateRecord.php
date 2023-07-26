@@ -383,12 +383,14 @@ class actionCreateRecord extends actionBase
 
         $bean_processed = isset($record->processed) ? $record->processed : false;
 
+        $assignedUserId = $record->fetched_row['assigned_user_id'] ?? '';
+
         if ($in_save) {
             global $current_user;
             $record->processed = true;
-            $check_notify = $record->assigned_user_id != $current_user->id && $record->assigned_user_id != $record->fetched_row['assigned_user_id'];
+            $check_notify = $record->assigned_user_id != $current_user->id && $record->assigned_user_id != $assignedUserId;
         } else {
-            $check_notify = $record->assigned_user_id != $record->fetched_row['assigned_user_id'];
+            $check_notify = $record->assigned_user_id != $assignedUserId;
         }
 
         $record->process_save_dates =false;
