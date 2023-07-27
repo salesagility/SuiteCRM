@@ -613,7 +613,7 @@ function getModuleField(
             $fieldlist[$fieldname]['value'] = $timedate->to_display($value, $convert_format, $params['date_format']);
         } else {
             if ($fieldlist[$fieldname]['type'] == 'date') {
-                $fieldlist[$fieldname]['value'] = $timedate->to_display_date($value, true, true);
+                $fieldlist[$fieldname]['value'] = $timedate->to_display_date($value, false);
             } else {
                 $fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
             }
