@@ -1526,6 +1526,9 @@ class SugarFolder
     }
 
     /**
+     * Check if parent or child folder can be displayed
+     * Prevents display of folders that have been unselected in user preferences
+     *
      * @param array $folders
      * @param string $folderId
      * @return bool
@@ -1537,14 +1540,23 @@ class SugarFolder
         }
 
         foreach ($folders as $folder) {
+            // Check if unselected in user preferences
             $isSelected = $folder['selected'] ?? false;
             if (isFalse($isSelected)) {
                 continue;
             }
-            $id = $folder['id'] ?? '';
-
-            if ($id === $folderId) {
+            // Check parent ID
+            if ($folder['id'] === $folderId) {
                 return true;
+            }
+
+            // Check child IDs
+            if ($folder['has_child']) {
+                foreach ($folder['children'] as $childFolder) {
+                    if ($childFolder['id'] === $folderId) {
+                        return true;
+                    }
+                }
             }
         }
 
