@@ -79,7 +79,11 @@ class AdministrationViewThemesettings extends SugarView
 
         if (isset($_REQUEST['disabled_themes'])) {
             $configurator = new Configurator();
-            $configurator->config['disabled_themes'] = implode(',', $_REQUEST['disabled_themes']);
+            $disableThemes = $_REQUEST['disabled_themes'] ?? [];
+            if (!is_array($_REQUEST['disabled_themes'])){
+                $disableThemes = [$_REQUEST['disabled_themes']];
+            }
+            $configurator->config['disabled_themes'] = implode(',', $disableThemes);
             $configurator->config['default_theme'] = $_REQUEST['default_theme'];
             $configurator->handleOverride();
         }
