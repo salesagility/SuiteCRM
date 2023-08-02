@@ -420,8 +420,6 @@ eoq;
         foreach ($sampleSet as $v) {
             if ((is_countable($v) ? count($v) : 0) > $maxColumns) {
                 $maxColumns = is_countable($v) ? count($v) : 0;
-            } else {
-                continue;
             }
         }
 
@@ -439,13 +437,16 @@ eoq;
             array_unshift($rows, array_fill(0, 1, ''));
         }
 
-        foreach ($rows as &$row) {
+        foreach ($rows as $key => &$row) {
             if (is_array($row)) {
                 foreach ($row as &$val) {
                     $val = strip_tags($val);
                 }
+            }else{
+                unset($rows[$key]);
             }
         }
+
         return $rows;
     }
 
