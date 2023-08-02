@@ -235,7 +235,11 @@ function sugar_file_put_contents_atomic($filename, $data, $mode = 'wb')
     }
 
     if (file_exists($filename)) {
-        $result = sugar_chmod($filename, 0755);
+        if (!empty($GLOBALS['sugar_config']['default_permissions']['file_mode'])) {
+            $result = sugar_chmod($filename, $GLOBALS['sugar_config']['default_permissions']['file_mode']);
+        }else{
+            $result = sugar_chmod($filename, 0755);
+        }
         if ((new SplFileInfo($filename))->getExtension() == 'php') {
             SugarCache::cleanFile($filename);
         }
