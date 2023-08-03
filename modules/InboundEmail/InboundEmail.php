@@ -6922,6 +6922,16 @@ class InboundEmail extends SugarBean
     }
 
     /**
+     * marks emails as read on server
+     * @param string $uid UID(s), comma delimited, of email(s) on server
+     * @return bool true on success
+     */
+    public function markEmailsAsReadOnMailServer($uid)
+    {
+        return $this->getImap()->setFlagFull($uid, '\\SEEN', ST_UID);
+    }
+
+    /**
      * deletes and expunges emails on server
      * @param string $uid UID(s), comma delimited, of email(s) on server
      * @return bool true on success

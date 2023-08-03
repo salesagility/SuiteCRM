@@ -173,11 +173,13 @@ if (!empty($focus->stored_options)) {
     } else {
         $leaveMessagesOnMailServer = $app_strings['LBL_EMAIL_NO'];
     } // else
-    if (!isset($storedOptions['leaveMessagesOnMailServer']) || $storedOptions['leaveMessagesOnMailServer'] == 1) {
-        $leaveMessagesOnMailServer = $app_strings['LBL_EMAIL_YES'];
+
+    if (isset($storedOptions['markAsReadOnMailServer']) && $storedOptions['markAsReadOnMailServer'] === 1) {
+        $markAsReadOnMailServer = $app_strings['LBL_EMAIL_YES'];
     } else {
-        $leaveMessagesOnMailServer = $app_strings['LBL_EMAIL_NO'];
-    } // else
+        $markAsReadOnMailServer = $app_strings['LBL_EMAIL_NO'];
+    }
+
     $distrib_method = (isset($storedOptions['distrib_method'])) ? $storedOptions['distrib_method'] : "";
     $create_case_email_template = (isset($storedOptions['create_case_email_template'])) ? $storedOptions['create_case_email_template'] : "";
     $email_num_autoreplies_24_hours = (isset($storedOptions['email_num_autoreplies_24_hours'])) ? $storedOptions['email_num_autoreplies_24_hours'] : $focus->defaultEmailNumAutoreplies24Hours;
@@ -251,6 +253,7 @@ if ($focus->is_personal) {
 }
 $xtpl->assign('LEAVEMESSAGESONMAILSERVER_STYLE', $leaveMessagesOnMailServerStyle);
 $xtpl->assign('LEAVEMESSAGESONMAILSERVER', $leaveMessagesOnMailServer);
+$xtpl->assign('MARKASREADONMAILSERVER', $markAsReadOnMailServer);
 $xtpl->assign('CREATE_CASE_ROW_STYLE', $createCaseRowStyle);
 $xtpl->assign('DISTRIBUTION_METHOD', $distributionMethod);
 $xtpl->assign('CREATE_CASE_EMAIL_TEMPLATE', $create_case_email_template_name);

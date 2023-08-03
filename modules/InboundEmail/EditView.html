@@ -337,6 +337,16 @@
 			<td valign="top"  width="35%"><span>
 				&nbsp;</span></td>
 		</tr>
+		<tr id = "markAsReadOnMailServerRow" style="{LEAVEMESSAGESONMAILSERVER_STYLE}">
+			<td valign="top" scope="row" width='20%'>
+				<span>{MOD.LBL_MARK_AS_READ}:</span></td>
+			<td valign="top"  width='30%'>
+				<select name='markAsReadOnMailServer' tabindex='253'>{MARKASREADONMAILSERVER}</select></td>
+			<td valign="top" scope="row">
+				<span>&nbsp;</span></td>
+			<td valign="top"  width="35%"><span>
+				&nbsp;</span></td>
+		</tr>
 	</table>
 	</div>
 
@@ -411,6 +421,7 @@ function showCreateCaseRow() {
 		createCaseRow1.style.display = 'none';
 		possibleActionChange();
 	} // else
+	showHideLeaveMessagesOnMailServer();
 } // fn
 
 function possibleActionChange() {
@@ -586,13 +597,16 @@ function show_edit_group_folder_link(field) {
 }
 
 function showHideLeaveMessagesOnMailServer() {
-	var field=document.getElementById('group_folder_id');
+	var autoImportEl = document.getElementById('is_auto_import').checked;
 	var leaveMessagesOnMailServerRow = document.getElementById('leaveMessagesOnMailServerRow');
-	if (field.selectedIndex == 0) {
-		leaveMessagesOnMailServerRow.style.display="none";
+	var markAsReadOnMailServerRow = document.getElementById('markAsReadOnMailServerRow');
+	if (autoImportEl) {
+		leaveMessagesOnMailServerRow.style.display='';
+		markAsReadOnMailServerRow.style.display='';
 	}
 	else {
-		leaveMessagesOnMailServerRow.style.display='';
+		leaveMessagesOnMailServerRow.style.display='none';
+		markAsReadOnMailServerRow.style.display='none';
 	}
 
 } // fn
@@ -611,6 +625,7 @@ function showWarningsIfChaningAutoImport() {
         document.getElementById('is_auto_import').checked = true;
         alert(warningForAutoChangeWithCreateCase);
     }
+	showHideLeaveMessagesOnMailServer()
 }
 toggle_monitored_folder(document.getElementById('protocol'));
 setPortDefault();

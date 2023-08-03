@@ -180,6 +180,13 @@ if (!empty($focus->stored_options)) {
     } else {
         $leaveMessagesOnMailServer = 0;
     } // else
+
+    if (isset($storedOptions['markAsReadOnMailServer']) && $storedOptions['markAsReadOnMailServer'] === 1) {
+        $markAsReadOnMailServer = 1;
+    } else {
+        $markAsReadOnMailServer = 0;
+    }
+
 } else { // initialize empty vars for template
     $from_name = $current_user->name;
     $from_addr = $current_user->email1;
@@ -358,6 +365,7 @@ if ($focus->is_personal) {
 $xtpl->assign('hasGrpFld', $focus->groupfolder_id == null ? '' : 'checked="1"');
 $xtpl->assign('LEAVEMESSAGESONMAILSERVER_STYLE', $leaveMessagesOnMailServerStyle);
 $xtpl->assign('LEAVEMESSAGESONMAILSERVER', get_select_options_with_id($app_list_strings['dom_int_bool'], $leaveMessagesOnMailServer));
+$xtpl->assign('MARKASREADONMAILSERVER', get_select_options_with_id($app_list_strings['dom_int_bool'], $markAsReadOnMailServer));
 
 $distributionMethod = get_select_options_with_id($app_list_strings['dom_email_distribution_for_auto_create'], $distrib_method);
 $xtpl->assign('DISTRIBUTION_METHOD', $distributionMethod);
