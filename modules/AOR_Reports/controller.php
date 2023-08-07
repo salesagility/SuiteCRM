@@ -199,7 +199,7 @@ class AOR_ReportsController extends SugarController
 
         $companyLogo = explode('?', SugarThemeRegistry::current()->getImageURL('company_logo.png'), 2);
         $reportName = strtoupper($this->bean->name);
-        $graphs = $_POST["graphsForPDF"];
+        $graphs = $_POST["graphsForPDF"] ?? '';
         $graphHtml = '';
         $chartsPerRow = $this->bean->graphs_per_row;
 
