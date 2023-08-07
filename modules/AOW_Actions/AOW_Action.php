@@ -97,7 +97,8 @@ class AOW_Action extends Basic
                     }
                 }
                 $params = array();
-                foreach ($post_data[$key . 'param'][$i] as $param_name => $param_value) {
+                $postData = $post_data[$key . 'param'][$i] ?? [];
+                foreach ($postData as $param_name => $param_value) {
                     if ($param_name == 'value') {
                         foreach ($param_value as $p_id => $p_value) {
                             if (!isset($post_data[$key . 'param'][$i]['value_type'])) {
