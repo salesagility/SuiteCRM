@@ -330,8 +330,8 @@ class AOW_WorkFlowController extends SugarController
         }
 
         $params = [];
-
-        if ($_REQUEST['is_value_set'] === 'false'){
+        $isValueSet = $_REQUEST['is_value_set'] ?? 'false';
+        if ($isValueSet === 'false'){
             $params['value_set'] = false;
         } else{
             $params['value_set'] = true;
