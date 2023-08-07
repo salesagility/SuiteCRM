@@ -58,5 +58,6 @@ class EmailsViewList extends ViewList
     public function preDisplay()
     {
         $this->lv = new ListViewSmartyEmails();
+        parent::preDisplay();
     }
 }
