@@ -48,7 +48,9 @@ class SugarFieldText extends SugarFieldBase
             $displayParams['nl2br'] = true;
         }
 
-        if (!isset($displayParams['htmlescape']) && $vardef['editor'] != "html") {
+        $editor = $vardef['editor'] ?? '';
+
+        if (!isset($displayParams['htmlescape']) && $editor != "html") {
             $displayParams['htmlescape'] = true;
         }
 
