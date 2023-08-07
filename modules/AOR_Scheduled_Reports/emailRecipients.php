@@ -41,12 +41,13 @@
 function display_email_lines($focus, $field, $value, $view)
 {
     global $app_list_strings;
+    $aorEmailToList = $app_list_strings['aor_email_to_list'] ?? '';
     $params = unserialize(base64_decode($value));
 
     if ($view == 'EditView') {
         $html = '<script src="modules/AOR_Scheduled_Reports/emailRecipients.js"></script>';
         $html .= '<input type="hidden" name="aor_email_type_list" id="aor_email_type_list" value="' . get_select_options_with_id($app_list_strings['aor_email_type_list'], '') . '">
-				  <input type="hidden" name="aor_email_to_list" id="aor_email_to_list" value="' . get_select_options_with_id($app_list_strings['aor_email_to_list'], '') . '">';
+				  <input type="hidden" name="aor_email_to_list" id="aor_email_to_list" value="' . get_select_options_with_id($aorEmailToList, '') . '">';
 
         $html .= '<button type="button" class="button" onclick="add_emailLine()"><img src="' . SugarThemeRegistry::current()->getImageURL('id-ff-add.png') . '"></button>';
         $html .= '<table id="emailLine_table" width="100%"></table>';
