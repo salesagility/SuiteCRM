@@ -276,7 +276,9 @@ function getValidFieldsTypes($module, $field)
     $focus = new $beanList[$module];
     $vardef = $focus->getFieldDefinition($field);
 
-    switch ($vardef['type']) {
+    $vardefType = $vardef['type'] ?? '';
+
+    switch ($vardefType) {
         case 'double':
         case 'decimal':
         case 'float':
