@@ -776,7 +776,8 @@ class AOW_WorkFlow extends Basic
                             && isset($condition_bean->rel_fields_before_value[$condition->field])) {
                             $value = $condition_bean->rel_fields_before_value[$condition->field];
                         } else {
-                            $value = from_html($condition_bean->fetched_row[$condition->field]);
+                            $conditionField = $condition_bean->fetched_row[$condition->field] ?? '';
+                            $value = from_html($conditionField);
                             // Bug - on delete bean action CRM load bean in a different way and bean can contain html characters
                             $field = from_html($field);
                         }
