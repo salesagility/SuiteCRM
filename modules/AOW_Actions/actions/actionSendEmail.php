@@ -326,13 +326,17 @@ class actionSendEmail extends actionBase
         $attachments = $this->getAttachments($emailTemp);
 
         $ret = true;
+
+        $emailCC = $emails['cc'] ?? '';
+        $emailBCC = $emails['bcc'] ?? '';
+
         if (isset($params['individual_email']) && $params['individual_email']) {
             foreach ($emails['to'] as $email_to) {
                 $emailTemp = BeanFactory::newBean('EmailTemplates');
                 $emailTemp->retrieve($params['email_template']);
-                $template_override = isset($emails['template_override'][$email_to]) ? $emails['template_override'][$email_to] : array();
+                $template_override = $emails['template_override'][$email_to] ?? array();
                 $this->parse_template($bean, $emailTemp, $template_override);
-                if (!$this->sendEmail(array($email_to), $emailTemp->subject, $emailTemp->body_html, $emailTemp->body, $bean, $emails['cc'], $emails['bcc'], $attachments)) {
+                if (!$this->sendEmail(array($email_to), $emailTemp->subject, $emailTemp->body_html, $emailTemp->body, $bean, $emailCC, $emailBCC, $attachments)) {
                     $ret = false;
                     $this->lastEmailsFailed++;
                 } else {
@@ -347,7 +351,7 @@ class actionSendEmail extends actionBase
                 $email_body_html = $emailTemp->body_html;
             }
 
-            if (!$this->sendEmail($emails['to'], $emailTemp->subject, $email_body_html, $emailTemp->body, $bean, $emails['cc'], $emails['bcc'], $attachments)) {
+            if (!$this->sendEmail($emails['to'], $emailTemp->subject, $email_body_html, $emailTemp->body, $bean, $emailCC, $emailBCC, $attachments)) {
                 $ret = false;
                 $this->lastEmailsFailed++;
             } else {
