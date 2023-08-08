@@ -257,7 +257,9 @@ class AOW_WorkFlowController extends SugarController
         $focus = new $beanList[$module];
         $vardef = $focus->getFieldDefinition($fieldname);
 
-        switch ($vardef['type']) {
+        $vardefType = $vardef['type'] ?? '';
+
+        switch ($vardefType) {
             case 'double':
             case 'decimal':
             case 'float':
