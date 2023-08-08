@@ -59,7 +59,8 @@ function display_email_lines($focus, $field, $value, $view)
                 if (is_array($params['email'][$key])) {
                     $params['email'][$key] = json_encode($params['email'][$key]);
                 }
-                $html .= "load_emailline('" . $params['email_to_type'][$key] . "','" . $params['email_target_type'][$key] . "','" . $params['email'][$key] . "');";
+                $emailToType = $params['email_to_type'][$key] ?? '';
+                $html .= "load_emailline('" . $emailToType . "','" . $params['email_target_type'][$key] . "','" . $params['email'][$key] . "');";
             }
         }
         $html .= "</script>";
