@@ -954,7 +954,8 @@ function fixUpFormatting($module, $field, $value)
 
     static $boolean_false_values = array('off', 'false', '0', 'no');
 
-    switch ($bean->field_defs[$field]['type']) {
+    $defsFieldType = $bean->field_defs[$field]['type'] ?? '';
+    switch ($defsFieldType) {
         case 'datetime':
         case 'datetimecombo':
             // If value is array, don't attempt to convert to DB format
