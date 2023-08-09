@@ -202,7 +202,7 @@ if ($focus->type == 'archived') {
 $focus->to_addrs = $_REQUEST['to_addrs'];
 $focus->cc_addrs = $_REQUEST['cc_addrs'];
 $focus->bcc_addrs = $_REQUEST['bcc_addrs'];
-$focus->from_addr = $_REQUEST['from_addr'];
+$focus->from_addr = $_REQUEST['from_addr'] ?? '';
 isValidEmailAddress($focus->from_addr);
 
 if (!empty($_REQUEST['to_addrs_ids'])) {
