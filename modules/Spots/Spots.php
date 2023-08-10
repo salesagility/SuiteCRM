@@ -86,9 +86,11 @@ class Spots extends Basic
      */
     public function save($check_notify = false)
     {
-        $type = $_REQUEST['type'];
-        $name = $_REQUEST['name'];
-        $config = htmlspecialchars_decode((string) $_REQUEST['config']);
+        $type = $_REQUEST['type'] ?? '';
+        $name = $_REQUEST['name'] ?? '';
+        $configData = $_REQUEST['config'] ?? '';
+
+        $config = htmlspecialchars_decode((string) $configData);
         $jsonConfig = json_decode($config, true);
 
         $colsLabels = array();
