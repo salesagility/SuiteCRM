@@ -158,14 +158,14 @@ function getUITextForType($type)
 {
     $type = 'LBL_UW_TYPE_'.strtoupper($type);
     global $mod_strings;
-    return $mod_strings[$type];
+    return $mod_strings[$type] ?? '';
 }
 
 function getUITextForMode($mode)
 {
     $mode = 'LBL_UW_MODE_'.strtoupper($mode);
     global $mod_strings;
-    return $mod_strings[$mode];
+    return $mod_strings[$mode] ?? '';
 }
 
 function validate_manifest($manifest)
