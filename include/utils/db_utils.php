@@ -115,9 +115,10 @@ function to_html($string, $encode=true)
  */
 function from_html($string, $encode=true)
 {
-    if ($string === null){
+    if ($string === null || is_array($string)){
         return '';
     }
+
     if (!is_string($string) || !$encode) {
         return $string;
     }
