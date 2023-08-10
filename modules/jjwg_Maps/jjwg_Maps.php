@@ -964,24 +964,25 @@ class jjwg_Maps extends jjwg_Maps_sugar
          */
         $aInfo = array('address' => $address);
         if (!empty($googlemaps) && isset($googlemaps['status'])) {
+            $resultsGeography = $googlemaps['results'][0]['geometry'] ?? [];
             if ($googlemaps['status'] == 'OVER_QUERY_LIMIT') {
                 // Debug: Log Over Limit
                 $GLOBALS['log']->warn(__METHOD__.' Google Maps API Status of OVER_QUERY_LIMIT: Over Your Quota');
-            } elseif (!$allow_approximate && $googlemaps['results'][0]['geometry']['location_type'] == 'APPROXIMATE') {
+            } elseif (!$allow_approximate && ($resultsGeography['location_type'] ?? '') == 'APPROXIMATE') {
                 // Consider 'APPROXIMATE' to be similar to 'ZERO_RESULTS'
                 @$aInfo = array(
                     'address' => $address,
                     'status' => 'APPROXIMATE',
-                    'lat' => $googlemaps['results'][0]['geometry']['location']['lat'],
-                    'lng' => $googlemaps['results'][0]['geometry']['location']['lng']
+                    'lat' => $resultsGeography['location']['lat'],
+                    'lng' => $resultsGeography['location']['lng']
                 );
             } else {
                 // Return address info
                 @$aInfo = array(
                     'address' => $address,
                     'status' => $googlemaps['status'],
-                    'lat' => $googlemaps['results'][0]['geometry']['location']['lat'],
-                    'lng' => $googlemaps['results'][0]['geometry']['location']['lng']
+                    'lat' => $resultsGeography['location']['lat'],
+                    'lng' => $resultsGeography['location']['lng']
                 );
             }
         }

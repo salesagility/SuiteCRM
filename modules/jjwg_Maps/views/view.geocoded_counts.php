@@ -49,9 +49,9 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView
             echo '<tr>';
             echo '<td><strong><a href="'.htmlspecialchars($geocode_url).'">'.$GLOBALS['app_list_strings']['moduleList'][$module].'</a></strong></td>';
             foreach ($this->bean->geocoded_headings as $heading) {
-                echo '<td>'.$this->bean->geocoded_counts[$module][$heading].'</td>';
+                echo '<td>'.($this->bean->geocoded_counts[$module][$heading] ?? "").'</td>';
             }
-            echo '<td><strong>'.$this->bean->geocoded_module_totals[$module].'</strong></td>';
+            echo '<td><strong>'.($this->bean->geocoded_module_totals[$module] ?? "").'</strong></td>';
             echo '<td><strong><a href="'.htmlspecialchars($reset_url).'">'.$GLOBALS['mod_strings']['LBL_MODULE_RESET_HEADING'].'</a.</strong></td>';
             echo '</tr>'."\n";
         }
