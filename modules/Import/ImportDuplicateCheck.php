@@ -126,10 +126,12 @@ class ImportDuplicateCheck
                         continue;
                     }
                     $fieldDef = $this->_focus->getFieldDefinition($field);
-                    if (isset($fieldDef['vname']) && isset($super_language_pack[$fieldDef['vname']])) {
-                        $labelsArray[$fieldDef['name']] = $super_language_pack[$fieldDef['vname']];
-                    } else {
-                        $labelsArray[$fieldDef['name']] = $fieldDef['name'];
+                    if ($fieldDef) {
+                        if (isset($fieldDef['vname']) && isset($super_language_pack[$fieldDef['vname']])) {
+                            $labelsArray[$fieldDef['name']] = $super_language_pack[$fieldDef['vname']];
+                        } else {
+                            $labelsArray[$fieldDef['name']] = $fieldDef['name'];
+                        }
                     }
                 }
                 $index_array[$index['name']] = str_replace(":", "", implode(", ", $labelsArray));
