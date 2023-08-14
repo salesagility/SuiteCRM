@@ -128,6 +128,7 @@ $ss->assign("MAIL_SSL_OPTIONS", get_select_options_with_id($app_list_strings['em
 /*********** New Mail Box UI DIV Stuff ****************/
 $mbox_qry = "select * from inbound_email where deleted ='0' and mailbox_type = 'bounce'";
 $mbox_res = $focus->db->query($mbox_qry);
+$mbox = [];
 while ($mbox_row = $focus->db->fetchByAssoc($mbox_res)) {
     $mbox[] = $mbox_row;
 }
