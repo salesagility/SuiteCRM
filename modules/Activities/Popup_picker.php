@@ -370,7 +370,7 @@ class Popup_Picker
                     'module' => 'Notes',
                     'status' => '',
                     'parent_id' => $note->parent_id,
-                    'parent_type' => $app_list_strings['parent_type_display'][$note->parent_type],
+                    'parent_type' => $app_list_strings['parent_type_display'][$note->parent_type] ?? '',
                     'parent_name' => $note->parent_name,
                     'contact_id' => $note->contact_id,
                     'contact_name' => $note->contact_name,
