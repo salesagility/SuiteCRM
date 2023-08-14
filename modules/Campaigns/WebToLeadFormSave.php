@@ -93,7 +93,7 @@ if (stripos((string) $html, "<html") === false) {
     $html = "<html {$langHeader}><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"></head><body>" . $html . "</body></html>";
 }
 
-if (!mb_detect_encoding($str, 'UTF-8')) {
+if (!mb_detect_encoding($html, 'UTF-8')) {
     $html = mb_convert_encoding($html, 'UTF-8', 'ISO-8859-1');
 }
 $html = str_replace('Â', ' ', (string) $html);
