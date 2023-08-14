@@ -644,7 +644,8 @@ class EmailsController extends SugarController
                 }
             } else {
                 foreach ($_REQUEST['uid'] as $uid) {
-                    $importedEmailId = $inboundEmail->returnImportedEmail($_REQUEST['msgno'], $uid);
+                    $msgno = $_REQUEST['msgno'] ?? '';
+                    $importedEmailId = $inboundEmail->returnImportedEmail($msgno, $uid);
                     $this->bean = $this->setAfterImport($importedEmailId, $_REQUEST);
                 }
             }
