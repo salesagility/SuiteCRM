@@ -121,7 +121,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         // TODO: PHP Warning:  imap_fetchbody(): Bad message number
         $emailServerEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter, $filter_fields);
 
-        $total = $emailServerEmails['mailbox_info']['Nmsgs']; // + count($importedEmails['data']);
+        $total = $emailServerEmails['mailbox_info']['Nmsgs'] ?? 0; // + count($importedEmails['data']);
         if (isset($request['Emails2_EMAIL_offset']) && $request['Emails2_EMAIL_offset'] === "end") {
             $offset = $total - $limitPerPage;
         }
@@ -129,7 +129,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
 
         /// Populate the data and its fields from the email server
         $request['uids'] = array();
-
+        $emailServerEmailsData = [];
 
         if (isset($emailServerEmails['data']) && is_array($emailServerEmails['data'])) {
             $emailServerEmailsData = $emailServerEmails['data'];
