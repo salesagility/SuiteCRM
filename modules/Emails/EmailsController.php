@@ -954,21 +954,20 @@ class EmailsController extends SugarController
      */
     protected function setAfterImport($importedEmailId, $request)
     {
-        $emails = BeanFactory::getBean("Emails", $importedEmailId);
+        $emails = BeanFactory::getBean("Emails", $importedEmailId) ?? '';
 
-        foreach ($request as $requestKey => $requestValue) {
-            if (strpos($requestKey, 'SET_AFTER_IMPORT_') !== false) {
-                $field = str_replace('SET_AFTER_IMPORT_', '', $requestKey);
-                if (in_array($field, self::$doNotImportFields)) {
-                    continue;
+        if (!empty($emails)) {
+            foreach ($request as $requestKey => $requestValue) {
+                if (strpos($requestKey, 'SET_AFTER_IMPORT_') !== false) {
+                    $field = str_replace('SET_AFTER_IMPORT_', '', $requestKey);
+                    if (in_array($field, self::$doNotImportFields)) {
+                        continue;
+                    }
+                    $emails->{$field} = $requestValue;
                 }
-
-                $emails->{$field} = $requestValue;
             }
+            $emails->save();
         }
-
-        $emails->save();
-
         return $emails;
     }
 
