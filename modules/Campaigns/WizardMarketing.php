@@ -103,6 +103,7 @@ $ss->assign("DEC_SEP", $seps[1]);
 //$campaign_focus->load_relationship('emailmarketing');
 //$mrkt_ids = $campaign_focus->emailmarketing->get();
 
+$mrkt_lists = [];
 $mrkt_focus = BeanFactory::newBean('EmailMarketing');
 
 //override marketing by session stored selection earlier..
