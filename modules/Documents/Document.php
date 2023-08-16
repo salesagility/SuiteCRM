@@ -328,7 +328,7 @@ class Document extends File
         }
         if (!empty($this->related_doc_id)) {
             $this->related_doc_name = (new Document())->get_document_name($this->related_doc_id);
-            $this->related_doc_rev_number = DocumentRevision::get_document_revision_name($this->related_doc_rev_id);
+            $this->related_doc_rev_number = (new DocumentRevision)->get_document_revision_name($this->related_doc_rev_id);
         }
     }
 
