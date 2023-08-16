@@ -125,7 +125,7 @@ require_once 'modules/ACL/ACLController.php';
 require_once 'modules/Administration/Administration.php';
 require_once 'modules/Administration/updater_utils.php';
 require_once 'modules/Users/User.php';
-require_once 'modules/Users/authentication/AuthenticationController.php';
+require_once get_custom_file_if_exists('modules/Users/authentication/AuthenticationController.php');
 require_once 'include/utils/LogicHook.php';
 require_once 'include/SugarTheme/SugarTheme.php';
 require_once 'include/MVC/SugarModule.php';

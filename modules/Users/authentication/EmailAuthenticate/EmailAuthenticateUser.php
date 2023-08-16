@@ -48,7 +48,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * This file is where the user authentication occurs. No redirection should happen in this file.
  *
  */
-require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticateUser.php');
+require_once get_custom_file_if_exists(
+    AuthenticationController::MODULE_FOLDER . DIRECTORY_SEPARATOR . SugarAuthenticate::SUGAR_AUTHENTICATE_DIRECTORY . '/SugarAuthenticateUser.php'
+);
 class EmailAuthenticateUser extends SugarAuthenticateUser
 {
     public $passwordLength = 4;
@@ -130,7 +132,7 @@ class EmailAuthenticateUser extends SugarAuthenticateUser
             return;
         }
 
-        require_once("include/SugarPHPMailer.php");
+        require_once(get_custom_file_if_exists("include/SugarPHPMailer.php"));
         global $locale;
         $OBCharset = $locale->getPrecedentPreference('default_email_charset');
         $notify_mail = new SugarPHPMailer();

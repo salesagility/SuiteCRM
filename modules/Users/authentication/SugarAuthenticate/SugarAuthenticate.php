@@ -50,8 +50,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SugarAuthenticate
 {
+    const SUGAR_AUTHENTICATE_DIRECTORY = 'SugarAuthenticate';
+
     public $userAuthenticateClass = 'SugarAuthenticateUser';
-    public $authenticationDir = 'SugarAuthenticate';
+    public $authenticationDir = self::SUGAR_AUTHENTICATE_DIRECTORY;
 
 
     /**
@@ -67,13 +69,7 @@ class SugarAuthenticate
      */
     public function __construct()
     {
-        // check in custom dir first, in case someone want's to override an auth controller
-
-        if (file_exists('custom/modules/Users/authentication/'.$this->authenticationDir.'/' . $this->userAuthenticateClass . '.php')) {
-            require_once('custom/modules/Users/authentication/'.$this->authenticationDir.'/' . $this->userAuthenticateClass . '.php');
-        } elseif (file_exists('modules/Users/authentication/'.$this->authenticationDir.'/' . $this->userAuthenticateClass . '.php')) {
-            require_once('modules/Users/authentication/'.$this->authenticationDir.'/' . $this->userAuthenticateClass . '.php');
-        }
+        require_once(get_custom_file_if_exists(AuthenticationController::MODULE_FOLDER . "/{$this->authenticationDir}/{$this->userAuthenticateClass}.php"));
 
         $this->userAuthenticate = new $this->userAuthenticateClass();
     }
@@ -100,7 +96,7 @@ class SugarAuthenticate
         $_SESSION['waiting_error']='';
         $_SESSION['hasExpiredPassword']='0';
         if ($this->userAuthenticate->loadUserOnLogin($username, $password, $fallback, $PARAMS)) {
-            require_once('modules/Users/password_utils.php');
+            require_once(get_custom_file_if_exists('modules/Users/password_utils.php'));
             if (hasPasswordExpired($username)) {
                 $_SESSION['hasExpiredPassword'] = '1';
             }
@@ -171,7 +167,7 @@ class SugarAuthenticate
         $GLOBALS['log']->debug("authenticated_user_language is $authenticated_user_language");
 
         // Clear all uploaded import files for this user if it exists
-        require_once('modules/Import/ImportCacheFiles.php');
+        require_once(get_custom_file_if_exists('modules/Import/ImportCacheFiles.php'));
         $tmp_file_name = ImportCacheFiles::getImportDir()."/IMPORT_" . $GLOBALS['current_user']->id;
 
         if (file_exists($tmp_file_name)) {

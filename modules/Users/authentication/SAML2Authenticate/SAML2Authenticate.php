@@ -42,7 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-require_once __DIR__ . '/../../../../modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php';
+require_once get_custom_file_if_exists(
+    AuthenticationController::MODULE_FOLDER . DIRECTORY_SEPARATOR . AuthenticationController::DEFAULT_TYPE . DIRECTORY_SEPARATOR . AuthenticationController::DEFAULT_TYPE . '.php'
+);
 
 /**
  * Returns the XML metadata which can be used to register the SP with the IDP
@@ -70,8 +72,10 @@ function getSAML2Metadata($settingsInfo) {
  */
 class SAML2Authenticate extends SugarAuthenticate
 {
+    const SAML2_AUTHENTICATE_DIRECTORY = 'SAML2Authenticate';
+
     public $userAuthenticateClass = 'SAML2AuthenticateUser';
-    public $authenticationDir = 'SAML2Authenticate';
+    public $authenticationDir = self::SAML2_AUTHENTICATE_DIRECTORY;
 
     /**
      * @var OneLogin_Saml2_Auth
@@ -89,7 +93,7 @@ class SAML2Authenticate extends SugarAuthenticate
      */
     public function pre_login()
     {
-        require_once __DIR__ . '/../SAML2Authenticate/lib/onelogin/settings.php';
+        require_once get_custom_file_if_exists(AuthenticationController::MODULE_FOLDER . "/{$this->authenticationDir}/lib/onelogin/settings.php");
         $auth = new OneLogin_Saml2_Auth($settingsInfo);
 
         if (!empty($_POST['SAMLResponse'])) {
@@ -187,7 +191,7 @@ class SAML2Authenticate extends SugarAuthenticate
      */
     public function preLogout()
     {
-        require_once dirname(dirname(__FILE__)) . '/SAML2Authenticate/lib/onelogin/settings.php';
+        require_once get_custom_file_if_exists(AuthenticationController::MODULE_FOLDER . "/{$this->authenticationDir}/lib/onelogin/settings.php");
         $auth = new OneLogin_Saml2_Auth($settingsInfo);
 
         $returnTo = null;
