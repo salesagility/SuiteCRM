@@ -1107,6 +1107,8 @@ class Imap2Handler implements ImapHandlerInterface
         $messageSet = null,
         bool $returnUid = true
     ) {
+        global $sugar_config;
+
         if (!$this->isValidStream($this->getStream())) {
             return [];
         }
@@ -1127,7 +1129,7 @@ class Imap2Handler implements ImapHandlerInterface
 
             if (!empty($ids)) {
 
-                $ids = array_slice($ids, $start - 1, $end);
+                $ids = array_slice($ids, $start - 1, $sugar_config['list_max_entries_per_page'] ?? 10);
             }
         }
 
@@ -1144,7 +1146,8 @@ class Imap2Handler implements ImapHandlerInterface
         int $offset,
         int $pageSize,
         array &$mailboxInfo,
-        array $columns
+        array $columns,
+        string $auth_type
     ): array {
 
         $uids = null;
@@ -1205,7 +1208,12 @@ class Imap2Handler implements ImapHandlerInterface
             $pageLast = $pageOffSet + $pageSize;
             $sequence = "$pageOffSet:$pageLast";
 
-            $sorteUids = $this->getSortedMessageIds('ARRIVAL', $pageOffSet, $pageLast, '');
+            if ($auth_type === 'basic'){
+                $sorteUids = $this->getSortedMessageIds('ARRIVAL', $pageOffSet, $pageLast, '');
+            } else {
+                $sorteUids = $this->getSortedMessageIds('ARRIVAL', $pageOffSet, $pageLast);
+            }
+
             $sequence = implode(',', $sorteUids);
 
             $mailList = $this->$fetchMethod($sequence, FT_UID);

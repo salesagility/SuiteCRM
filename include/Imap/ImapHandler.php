@@ -914,7 +914,8 @@ class ImapHandler implements ImapHandlerInterface
         int $offset,
         int $pageSize,
         array &$mailboxInfo,
-        array $columns
+        array $columns,
+        $auth_type
     ): array {
 
         if (empty($filterCriteria) && $sortCriteria === SORTDATE) {

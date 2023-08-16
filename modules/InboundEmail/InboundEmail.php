@@ -668,7 +668,8 @@ class InboundEmail extends SugarBean
             $offset,
             $pageSize,
             $mailboxInfo,
-            $columns
+            $columns,
+            $this->auth_type
         );
 
         return array(
