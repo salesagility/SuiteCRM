@@ -188,7 +188,8 @@ class DocumentRevision extends SugarBean
             $this->latest_revision_id = $row['document_revision_id'];
 
             if (empty($this->revision)) {
-                $this->revision = $this->latest_revision + 1;
+                $latestRevision = $this->latest_revision;
+                $this->revision = is_numeric($latestRevision) ? $latestRevision + 1 : '';
             }
         }
     }
