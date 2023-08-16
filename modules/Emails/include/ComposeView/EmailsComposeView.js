@@ -356,6 +356,10 @@
         return false;
       }
 
+      if(self.signatureAdded === true){
+        return false;
+      }
+
       var signatureElement = $('<div></div>')
         .addClass('email-signature');
       var signatures = $(self).find('.email-signature');
@@ -400,11 +404,6 @@
       var body = tinymce.activeEditor.getContent();
       if (body === '') {
         tinymce.activeEditor.setContent('<p></p>' + signatureElement[0].outerHTML, {format: 'html'});
-      } else if ($(body).hasClass('email-signature')) {
-        var newBody = $('<div></div>');
-        $(body).appendTo(newBody);
-        $(newBody).find('.email-signature').replaceWith(signatureElement[0].outerHTML);
-        tinymce.activeEditor.setContent(newBody.html(), {format: 'html'});
       } else {
         // reply to / forward
         if (self.prependSignature === true) {
@@ -413,6 +412,7 @@
           tinymce.activeEditor.setContent(body + signatureElement[0].outerHTML, {format: 'html'});
         }
       }
+      self.signatureAdded = true;
     };
     
     self.updateFromInfos = function () {
@@ -1072,6 +1072,7 @@
         $.ajax({
           "url": 'index.php?module=Emails&action=getFromFields'
         }).done(function (response) {
+          self.signatureAdded = false;
           var json = JSON.parse(response);
           if (typeof json.data !== "undefined") {
             $(json.data).each(function (i, v) {
