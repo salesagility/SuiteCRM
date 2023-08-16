@@ -76,7 +76,7 @@ function smarty_function_sugar_field($params, &$smarty)
     if(isset($params['fieldSpan'])) $displayParams['fieldSpan'] = $params['fieldSpan'];
     else $displayParams['fieldSpan'] = null;
 
-    if(isset($params['typeOverride'])) { // override the type in the vardef?
+    if(!empty($params['typeOverride'])) { // override the type in the vardef?
         $params['vardef']['type'] = $params['typeOverride'];
     }
     if(isset($params['formName'])) $displayParams['formName'] = $params['formName'];
