@@ -9,6 +9,7 @@ class OsHelper
 {
     const OS_WINDOWS = 'WINDOWS';
     const OS_LINUX = 'LINUX';
+    const OS_FREEBSD = 'FREEBSD';
     const OS_OSX = 'OSX';
 
     /**
@@ -28,8 +29,21 @@ class OsHelper
             case stristr(PHP_OS, 'LINUX'):
                 return self::OS_LINUX;
 
+            case stristr(PHP_OS, 'FREEBSD'):
+                return self::OS_FREEBSD;
+
             default:
                 throw new \RuntimeException('Unable to determine OS');
         }
+    }
+    
+    /**
+     * @return boolean
+     *
+     * @throws \RuntimeException When unable to determine OS.
+     */
+    public static function isWindows()
+    {
+        return self::getOS() === self::OS_WINDOWS;
     }
 }

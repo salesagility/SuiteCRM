@@ -24,7 +24,7 @@ return CustomLoader::mergeCustomArray([
         // base dir must exist in entryPoint.php
         $baseDir = $GLOBALS['BASE_DIR'];
 
-        $shouldCheckPermissions = OsHelper::getOS() !== OsHelper::OS_WINDOWS;
+        $shouldCheckPermissions = !OsHelper::isWindows();
 
         $server = new AuthorizationServer(
             new ClientRepository(
@@ -90,7 +90,7 @@ return CustomLoader::mergeCustomArray([
     ResourceServer::class => static function (Container $container) {
         $baseDir = $GLOBALS['BASE_DIR'];
 
-        $shouldCheckPermissions = OsHelper::getOS() !== OsHelper::OS_WINDOWS;
+        $shouldCheckPermissions = !OsHelper::isWindows();
 
         return new ResourceServer(
             new AccessTokenRepository(
