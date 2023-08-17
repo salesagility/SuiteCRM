@@ -132,7 +132,8 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
 $distribStrings = $app_list_strings['dom_email_distribution_for_auto_create'];
 unset($distribStrings['AOPDefault']);
 $distributionMethod = get_select_options_with_id($distribStrings, $cfg->config['aop']['distribution_method']);
-$distributionOptions = getAOPAssignField('distribution_options', $cfg->config['aop']['distribution_options']);
+$distributionOptionsValue = $cfg->config['aop']['distribution_options'] ?? '';
+$distributionOptions = getAOPAssignField('distribution_options', $distributionOptionsValue);
 
 if (!empty($cfg->config['aop']['distribution_user_id'])) {
     $distributionUserName = BeanFactory::getBean("Users", $cfg->config['aop']['distribution_user_id'])->name;
