@@ -173,6 +173,9 @@ function getControl(
         }
         // Bug 22730: make sure all enums have the ability to select blank as the default value.
         if (!isset($fieldlist[$name]['options'][''])) {
+            if ($name === 'report_module'){
+                continue;
+            }
             $fieldlist[$name]['options'][''] = '';
         }
     }
