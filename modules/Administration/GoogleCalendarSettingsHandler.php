@@ -126,7 +126,10 @@ class GoogleCalendarSettingsHandler extends BaseHandler
      */
     public function handleDisplay()
     {
+        global $app_strings;
         $this->ss->assign('PAGE_TITLE', $this->getPageTitle());
+        $this->ss->assign('APP', $app_strings);
+        $this->ss->assign('MOD', $this->modStrings);
 
         $this->getJavascript();
         $this->getGoogleCalendarAuthState();
