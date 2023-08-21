@@ -299,6 +299,9 @@ function display_single_update(AOP_Case_Updates $update)
 function display_case_attachments($case)
 {
     $html = '';
+    if(empty($case->id)){
+        return '';
+    }
     $notes = $case->get_linked_beans('notes', 'Notes');
     if ($notes) {
         foreach ($notes as $note) {
