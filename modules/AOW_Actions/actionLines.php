@@ -37,6 +37,7 @@ function display_action_lines(SugarBean $focus, $field, $value, $view)
     $html .= '<script src="cache/jsLanguage/AOW_Actions/'. $GLOBALS['current_language'] . '.js"></script>';
 
     $app_list_actions = [];
+    $app_list_actions[''] = '';
 
     if ($view == 'EditView') {
         $html .= '<script src="modules/AOW_Actions/actionLines.js"></script>';
