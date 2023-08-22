@@ -196,7 +196,7 @@ if (!defined('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES')) {
     define('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES', 6 * 1024 * 1024);
 }
 
-if ($upload_max_filesize_bytes > constant('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES')) {
+if ($upload_max_filesize_bytes >= constant('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES')) {
     $fileMaxStatus = "{$mod_strings['LBL_CHECKSYS_OK']}</font>";
 } else {
     $fileMaxStatus = "<span class='stop'><b>{$mod_strings['ERR_UPLOAD_MAX_FILESIZE']}</font></b></span>";
