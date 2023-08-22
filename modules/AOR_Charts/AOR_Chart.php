@@ -702,10 +702,12 @@ EOF;
 
         $_data = array();
         foreach ($data as $label => $values) {
+            $_data[$label] = [];
             foreach ($values as $key => $value) {
-                    $_data[$label][$tooltips[$label][$key]] += $value;
+                $_data[$label][$tooltips[$label][$key]] = ($_data[$label][$tooltips[$label][$key]] ?? 0) + 1;
             }
         }
+
         $data = $_data;
 
 
