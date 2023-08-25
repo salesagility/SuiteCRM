@@ -2087,8 +2087,8 @@ abstract class DBManager
                     }
                 }
 
-                if (!empty($val) && !empty($fieldDef['len']) && strlen($val) > $fieldDef['len']) {
-                    $val = $this->truncate($val, $fieldDef['len']);
+                if (!empty($val) && !empty($fieldDef['len']) && strlen(from_html($val)) > $fieldDef['len']) {
+                    $val = $this->truncate(from_html($val), $fieldDef['len']);
                 }
 
                 if (!empty($bean->bean_fields_to_save) && !in_array($fieldDef['name'], $bean->bean_fields_to_save, true)) {
@@ -2257,8 +2257,8 @@ abstract class DBManager
                     break;
             }
         } else {
-            if (!empty($val) && !empty($fieldDef['len']) && strlen($val) > $fieldDef['len']) {
-                $val = $this->truncate($val, $fieldDef['len']);
+            if (!empty($val) && !empty($fieldDef['len']) && strlen(from_html($val)) > $fieldDef['len']) {
+                $val = $this->truncate(from_html($val), $fieldDef['len']);
             }
         }
 
