@@ -1881,6 +1881,10 @@ function get_select_options_with_id_separate_key($label_list, $key_list, $select
     //create the type dropdown domain and set the selected value if $opp value already exists
     foreach ($key_list as $option_key => $option_value) {
         $selected_string = '';
+
+        if (is_string($selected_key)) {
+            $option_key = strval($option_key);
+        }
         // the system is evaluating $selected_key == 0 || '' to true.  Be very careful when changing this.  Test all cases.
         // The bug was only happening with one of the users in the drop down.  It was being replaced by none.
         if (
