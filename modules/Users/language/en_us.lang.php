@@ -96,6 +96,7 @@ $mod_strings = array(
     'LBL_REGULAR_DESC' => 'User can access modules and records based on roles.',
     'LBL_PHOTO' => 'Photo',
     'LBL_ADMIN' => 'System Administrator',
+    'LBL_LAST_ADMIN_NOTICE' => 'Current selection could include yourself. You cannot change your own type of user or status.',    
     'LBL_ADVANCED' => 'Advanced',
     'LBL_ANY_ADDRESS' => 'Any Address:',
     'LBL_ANY_EMAIL' => 'Any Email',
@@ -689,5 +690,9 @@ $mod_strings = array(
     'LBL_GOOGLE_API_TOKEN_BTN' => 'Get Token',
     'LBL_GSYNC_CAL' => 'Enable Calendar Sync',
     // END Google Token/Synchronization settings
+
+    'LNK_LIST_OUTBOUND_EMAIL_ACCOUNTS' => 'Outbound Email Accounts',
+    'LNK_LIST_INBOUND_EMAIL_ACCOUNTS' => 'Inbound Email Accounts',
+    'LNK_EXTERNAL_OAUTH_CONNECTIONS' => 'External OAuth Connections',
 
 ); // END STRINGS DEFS

@@ -46,6 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 // The history of upgrades on the system
+#[\AllowDynamicProperties]
 class UpgradeHistory extends SugarBean
 {
     public $new_schema = true;
@@ -162,7 +163,7 @@ class UpgradeHistory extends SugarBean
 
     public function getList($query)
     {
-        return(parent::build_related_list($query, $this));
+        return(parent::build_related_list($query,$this));
     }
 
     public function findByMd5($var_md5)
@@ -250,10 +251,10 @@ class UpgradeHistory extends SugarBean
      */
     public function is_right_version_greater($left, $right, $equals_is_greater = true)
     {
-        if (count($left) == 0 && count($right) == 0) {
+        if ((is_countable($left) ? count($left) : 0) == 0 && (is_countable($right) ? count($right) : 0) == 0) {
             return $equals_is_greater;
         } else {
-            if (count($left) == 0 || count($right) == 0) {
+            if ((is_countable($left) ? count($left) : 0) == 0 || (is_countable($right) ? count($right) : 0) == 0) {
                 return true;
             } else {
                 if ($left[0] == $right[0]) {
@@ -286,7 +287,7 @@ class UpgradeHistory extends SugarBean
             $found = false;
             $query = "SELECT id FROM $this->table_name WHERE id_name = '".$dependent['id_name']."'";
             $matches = $this->getList($query);
-            if (0 != count($matches)) {
+            if (0 != (is_countable($matches) ? count($matches) : 0)) {
                 foreach ($matches as $match) {
                     if ($this->is_right_version_greater(explode('.', $match->version), explode('.', $dependent['version']))) {
                         $found = true;

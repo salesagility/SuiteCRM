@@ -38,8 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -56,9 +54,6 @@ if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_modu
     isset($_REQUEST['execute'])? $execute=$_REQUEST['execute'] : $execute= false;
     $export = false;
 
-    $isElasticSearchEnabled = isset($sugar_config['search']['ElasticSearch']['enabled']) ?
-        $sugar_config['search']['ElasticSearch']['enabled'] : false;
-
     if (count($_POST) && isset($_POST['raction'])) {
         if (isset($_POST['raction']) && strtolower($_POST['raction']) == "export") {
             //jc - output buffering is being used. if we do not clean the output buffer
@@ -71,12 +66,12 @@ if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_modu
             header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
             header("Last-Modified: " . TimeDate::httpTime());
             header("Cache-Control: post-check=0, pre-check=0", false);
-            header("Content-Length: " . strlen($_POST['sql']));
+            header("Content-Length: " . strlen((string) $_POST['sql']));
 
             //jc:7347 - for whatever reason, html_entity_decode is choking on converting
             //the html entity &#039; to a single quote, so we will use str_replace
             //instead
-            $sql = str_replace(array('&#039;', '&#96;'), array("'", "`"), $_POST['sql']);
+            $sql = str_replace(array('&#039;', '&#96;'), array("'", "`"), (string) $_POST['sql']);
             //echo html_entity_decode($_POST['sql']);
             echo $sql;
         } elseif (isset($_POST['raction']) && strtolower($_POST['raction']) == "execute") {
@@ -91,7 +86,7 @@ if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_modu
                     "'",
                     "`"
                 ),
-                preg_replace('#(/\*.+?\*/\n*)#', '', $_POST['sql'])
+                preg_replace('#(/\*.+?\*/\n*)#', '', (string) $_POST['sql'])
             );
             foreach (explode(";", $sql) as $stmt) {
                 $stmt = trim($stmt);
@@ -102,10 +97,6 @@ if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_modu
             }
 
             echo "<h3>{$mod_strings['LBL_REPAIR_DATABASE_SYNCED']}</h3>";
-
-            if ($isElasticSearchEnabled === true) {
-                ElasticSearchIndexer::repairElasticsearchIndex();
-            }
         }
     } else {
         if (!$export && empty($_REQUEST['repair_silent'])) {
@@ -184,10 +175,6 @@ if (is_admin($current_user) || isset($from_sync_client) || is_admin_for_any_modu
                 echo $ss->fetch('modules/Administration/templates/RepairDatabase.tpl');
             } else {
                 echo "<h3>{$mod_strings['LBL_REPAIR_DATABASE_SYNCED']}</h3>";
-
-                if ($isElasticSearchEnabled === true) {
-                    ElasticSearchIndexer::repairElasticsearchIndex();
-                }
             }
         }
     }

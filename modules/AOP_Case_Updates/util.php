@@ -72,6 +72,55 @@ function getAOPAssignField($assignField, $value)
 }
 
 /**
+ * @param mixed $value
+ * @return string
+ */
+function getAOPAssignFieldDetailView($value)
+{
+    global $app_list_strings, $app_strings;
+
+    if (empty($value)){
+        return '';
+    }
+
+    if (is_string($value)){
+        return $value;
+    }
+
+    $roles = get_bean_select_array(true, 'ACLRole', 'name', '', 'name', true);
+    $securityGroups = get_bean_select_array(true, 'SecurityGroup', 'name', '', 'name', true);
+
+    $field = '';
+    $type = $value[0] ?? null;
+    $field .= $app_list_strings['aow_assign_options'][$type] ?? '';
+
+    if (file_exists('modules/SecurityGroups/SecurityGroup.php'))  {
+        $display = 'none';
+        if (isset($value[0]) && $value[0] === 'security_group') {
+            $display = '';
+        }
+        if ($display !== 'none') {
+            $securityGroup = $value[1] ?? null;
+            $field .= ' | ' . $app_strings['LBL_SECURITYGROUP'] . ': ' . $securityGroups[$securityGroup] ?? '';
+        }
+
+    }
+
+    $display = 'none';
+    if (isset($value[0]) && ($value[0] === 'role' || $value[0] === 'security_group')) {
+        $display = '';
+    }
+
+    if ($display !== 'none') {
+        $role = $value[2] ?? null;
+
+        $field .= ' | ' . $app_strings['LBL_ROLE'] . ': ' .  $roles[$role] ?? '';
+    }
+
+    return $field;
+}
+
+/**
  * @return bool
  */
 function isAOPEnabled()

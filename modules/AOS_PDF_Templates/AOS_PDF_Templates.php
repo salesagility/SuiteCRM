@@ -28,6 +28,7 @@
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
 require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates_sugar.php');
+#[\AllowDynamicProperties]
 class AOS_PDF_Templates extends AOS_PDF_Templates_sugar
 {
     public function __construct()
@@ -35,5 +36,11 @@ class AOS_PDF_Templates extends AOS_PDF_Templates_sugar
         parent::__construct();
     }
 
-
+    public function cleanBean()
+    {
+        parent::cleanBean();
+        $this->pdfheader = purify_html($this->pdfheader);
+        $this->description = purify_html($this->description);
+        $this->pdffooter = purify_html($this->pdffooter);
+    }
 }

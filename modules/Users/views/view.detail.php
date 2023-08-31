@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('modules/Users/UserViewHelper.php');
 
+#[\AllowDynamicProperties]
 class UsersViewDetail extends ViewDetail
 {
     public function __construct()

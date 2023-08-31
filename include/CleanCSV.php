@@ -48,6 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Class CleanCSV
  * @package SuiteCRM
  */
+#[\AllowDynamicProperties]
 class CleanCSV
 {
     /**
@@ -93,7 +94,7 @@ class CleanCSV
      */
     public function escapeField($cell)
     {
-        if (!is_string($cell)) {
+        if (!is_string($cell) || empty($cell)) {
             return $cell;
         }
 

@@ -326,6 +326,13 @@ $mod_strings = array(
     'LBL_LOCALE' => 'Set default localization settings for your system',
     'LBL_MAILBOX_DESC' => 'Set up group mail accounts for monitoring inbound email and manage personal inbound mail account information for users',
     'LBL_MAILBOX_OUTBOUND_DESC' => 'Configure outbound email settings',
+
+    'LBL_MANAGE_EXTERNAL_OAUTH_CONNECTIONS' => 'External OAuth Connections',
+    'LBL_MANAGE_EXTERNAL_OAUTH_CONNECTIONS_DESC' => 'Setup external OAuth connections',
+
+    'LBL_MANAGE_EXTERNAL_OAUTH_PROVIDERS' => 'External OAuth Providers',
+    'LBL_MANAGE_EXTERNAL_OAUTH_PROVIDERS_DESC' => 'Setup external OAuth providers',
+
     'LBL_MANAGE_CURRENCIES' => 'Currencies',
     'LBL_MANAGE_LANGUAGES' => 'Languages',
     'LBL_MANAGE_LICENSE_TITLE' => 'License Management',
@@ -578,6 +585,9 @@ $mod_strings = array(
     'LBL_UW_UPGRADE_SUCCESSFUL' => "<b>Upgrade applied successfully!</b><br>\n",
     'LBL_UW_UPLOAD_MODULE' => 'Module',
     'LBL_UW_TYPE_THEME' => 'Theme',
+    'LBL_UW_TYPE_MODULE' => 'Module',
+    'LBL_UW_MODE_INSTALL' => 'Installed',
+    'LBL_UW_MODE_UNINSTALL' => 'Uninstalled',
     'LBL_UW_UPLOAD_SUCCESS' => " has been uploaded.<br>",
     'LBL_VISIBLE_PANELS' => 'Displayed Subpanels',
     'LBL_VISIBLE_TABS' => 'Displayed Modules',
@@ -615,6 +625,8 @@ $mod_strings = array(
     'LBL_QUICK_REPAIR_TITLE' => 'Please select Module(s) to repair:',
     'LBL_QUICK_REPAIR_AND_REBUILD_DESC' => 'Repairs and rebuilds DB, Extensions, Vardefs, SuiteCRM Dashlets etc.',
     'LBL_ALL_MODULES' => 'All Modules',
+    'LBL_REPAIR_ELASTICSEARCH_INDEX' => 'Repair ElasticSearch Index',
+    'LBL_REPAIR_ELASTICSEARCH_INDEX_DONE' => 'ElasticSearch Indexing has been repaired',
     'LBL_CAMPAIGN_CONFIG_TITLE' => 'Campaign Email Settings',
     'LBL_CAMPAIGN_CONFIG_DESC' => 'Configure email settings for campaigns',
     'LBL_REPAIR_ORACLE_FULLTEXT' => 'Rebuild fulltext indices',
@@ -847,6 +859,10 @@ $mod_strings = array(
     'LBL_AOP_CASE_CLOSURE_EMAIL_TEMPLATE' => 'Case Closed Email Template',
     'LBL_AOP_JOOMLA_ACCOUNT_CREATION_EMAIL_TEMPLATE' => 'Joomla Support Portal Account Creation Template',
 
+    'LBL_CASE_MACRO' => 'Case Macro',
+    'LBL_CASE_MACRO_DESC' => 'Set the macro which will be parsed and used to link imported email to a Case.',
+    'LBL_CASE_MACRO_DESC2' => 'Set this to any value, but preserve the <b>"%1"</b>.',
+
     'LBL_AOP_BUSINESS_HOURS_SETTINGS' => 'Business Hours',
     'LBL_AOP_BUSINESS_HOURS_DESC' => "Restrict Workflow & Case automations to certain days and times",
     'LBL_SUPPORT_FROM_ADDRESS' => 'Support Email From Address',
@@ -932,6 +948,7 @@ $mod_strings = array(
     'LBL_ELASTIC_SEARCH_TEST_CONNECTION' => 'Test connection',
     'LBL_ELASTIC_SEARCH_TEST_CONNECTION_SUCCESS' => 'Connection successful.',
     'LBL_ELASTIC_SEARCH_TEST_CONNECTION_FAIL' => 'Connection failed.',
+    'LBL_SETUP_ELASTICSEARCH' => 'Please enable ElasticSearch before repairing Indexes',
     'LBL_ELASTIC_SEARCH_TEST_CONNECTION_ERROR' => 'Failed perform ping request.',
     'LBL_ELASTIC_SEARCH_SERVER' => 'Server',
     'LBL_ELASTIC_SEARCH_HOST' => 'Host',

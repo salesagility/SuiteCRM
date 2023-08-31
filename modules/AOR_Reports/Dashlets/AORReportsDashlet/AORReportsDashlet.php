@@ -7,6 +7,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/Dashlets/Dashlet.php');
 require_once 'modules/AOR_Reports/aor_utils.php';
 
+#[\AllowDynamicProperties]
 class AORReportsDashlet extends Dashlet
 {
     public $def;
@@ -137,9 +138,11 @@ class AORReportsDashlet extends Dashlet
             'parameter_type',
             'parameter_operator'
         ));
+        // Fix for issue #1700 - save value as db type
+        $itemsCount = is_countable($req['parameter_value']) ? count($req['parameter_value']) : 0;
 
         // Fix for issue #1700 - save value as db type
-        for ($i = 0; $i < count($req['parameter_value']); $i++) {
+        for ($i = 0; $i < $itemsCount; $i++) {
             if (isset($req['parameter_value'][$i]) && $req['parameter_value'][$i] != '') {
                 global $current_user, $timedate;
                 $user_date_format = $timedate->get_date_format($current_user);

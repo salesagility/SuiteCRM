@@ -49,6 +49,7 @@ require_once('include/SubPanel/SubPanelDefinitions.php');
  * Subpanel tiles
  * @api
  */
+#[\AllowDynamicProperties]
 class SubPanelTiles
 {
     public $id;
@@ -454,6 +455,7 @@ class SubPanelTiles
             [
                 'buttons' => $buttons,
                 'class' => 'clickMenu fancymenu',
+                'flat' => $thisPanel->get_inst_prop_value('flat')
             ],
             $this->xTemplate
         );

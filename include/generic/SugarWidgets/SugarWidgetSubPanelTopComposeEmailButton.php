@@ -41,6 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+#[\AllowDynamicProperties]
 class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopButton
 {
     public $form_value = '';
@@ -74,9 +75,9 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
             // awu: Not all beans have emailAddress property, we must account for this
             if (isset($bean->emailAddress)) {
                 $to_addrs = $bean->emailAddress->getPrimaryAddress($bean);
-                $button = "<input class='button' type='button' value='$value' id='" . $this->getWidgetId() . "' name='" . preg_replace('[ ]', '', $value) . "' title='$title' onclick=\"location.href='mailto:$to_addrs';return false;\"/>";
+                $button = "<input class='button' type='button' value='$value' id='" . $this->getWidgetId() . "' name='" . preg_replace('[ ]', '', (string) $value) . "' title='$title' onclick=\"location.href='mailto:$to_addrs';return false;\"/>";
             } else {
-                $button = "<input class='button' type='button' value='$value' id='" . $this->getWidgetId() . "' name='" . preg_replace('[ ]', '', $value) . "' title='$title' onclick=\"location.href='mailto:';return false;\"/>";
+                $button = "<input class='button' type='button' value='$value' id='" . $this->getWidgetId() . "' name='" . preg_replace('[ ]', '', (string) $value) . "' title='$title' onclick=\"location.href='mailto:';return false;\"/>";
             }
         } else {
             // Generate the compose package for the quick create options.
@@ -101,13 +102,12 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
 
             $emailUI = new EmailUI();
             $emailUI->appendTick = false;
-            $button = '<a class="email-link" onclick="$(document).openComposeViewModal(this);" data-module="'
-            . $bean->module_name . '" data-record-id="'
-            . $bean->id . '" data-module-name="'
-            . $bean->name .'" data-email-address="'
-            . $bean->email1 .'">'
-            . $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL']
-            . '</a>';
+            $button = '<div type="hidden" onclick="currentModule=\''
+              . $bean->module_name . '\';$(document).openComposeViewModal(this);" data-module="'
+              . $bean->module_name . '" data-record-id="'
+              . $bean->id . '" data-module-name="'
+              . $bean->name .'" data-email-address="'
+              . $bean->email1 .'">';
         }
 
         return $button;

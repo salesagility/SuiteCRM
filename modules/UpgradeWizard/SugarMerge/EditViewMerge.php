@@ -53,6 +53,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * This is the base class that all other SugarMerge objects extend
  *
  */
+#[\AllowDynamicProperties]
 class EditViewMerge
 {
     /**
@@ -407,7 +408,7 @@ class EditViewMerge
                 $loc['source'] = 'custom';
 
                 $do_merge = true;
-                
+
                 //Address fields present a special problem...
                 if (preg_match('/(alt_|primary_|billing_|shipping_)address_street/i', $field, $matches)) {
                     $prefix = $matches[1];
@@ -415,7 +416,7 @@ class EditViewMerge
                     $postal_code = $prefix . 'address_postalcode';
                     $state = $prefix . 'address_state';
                     $country = $prefix . 'address_country';
-                   
+
                     if (isset($this->customFields[$city]) ||
                       isset($this->customFields[$postal_code]) ||
                       isset($this->customFields[$state]) ||
@@ -426,7 +427,7 @@ class EditViewMerge
                             'loc'=>$loc);
                     }
                 }
-                
+
                 if ($do_merge) {
                     //but we still merge the meta data of the three
                     $this->mergedFields[$field] = array(
@@ -443,7 +444,7 @@ class EditViewMerge
                     $this->mergedFields[$field] = array(
                     'data'=>$this->mergeField('', $this->newFields[$field]['data'], $this->customFields[$field]['data']),
                     'loc'=>$this->customFields[$field]['loc']);
-                
+
                     $this->mergedFields[$field]['loc']['source'] = 'custom';
                     //echo var_export($this->mergedFields[$field], true);
                 }
@@ -681,7 +682,7 @@ class EditViewMerge
         $panel_ids = array();
         $setDefaultPanel = false;
         
-        if (count($panels) == 1) {
+        if ((is_countable($panels) ? count($panels) : 0) == 1) {
             $arrayKeys = array_keys($panels);
             if (!empty($arrayKeys[0])) {
                 $this->defaulPanel = $arrayKeys[0];
@@ -720,12 +721,12 @@ class EditViewMerge
         $this->module = $module;
         $varnmame = $this->varName;
         require($original_file);
-        $this->originalData = $$varnmame;
+        $this->originalData = ${$varnmame};
         require($new_file);
-        $this->newData = $$varnmame;
+        $this->newData = ${$varnmame};
         if (file_exists($custom_file)) {
             require($custom_file);
-            $this->customData = $$varnmame;
+            $this->customData = ${$varnmame};
         } else {
             $this->customData = $this->originalData;
         }

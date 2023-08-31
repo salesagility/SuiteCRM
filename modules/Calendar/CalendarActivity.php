@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once 'include/utils/activity_utils.php';
 
+#[\AllowDynamicProperties]
 class CalendarActivity
 {
     public $sugar_bean;

@@ -227,7 +227,7 @@ function display_lines($focus, $field, $value, $view)
 //will also be stripped off) The custom decimal separator is passed in to the function from the locale settings
 function stripDecimalPointsAndTrailingZeroes($inputString, $decimalSeparator)
 {
-    return preg_replace('/'.preg_quote($decimalSeparator).'[0]+$/', '', $inputString);
+    return preg_replace('/'.preg_quote((string) $decimalSeparator).'[0]+$/', '', (string) $inputString);
 }
 
 function get_discount_string($type, $amount, $params, $locale, $sep)

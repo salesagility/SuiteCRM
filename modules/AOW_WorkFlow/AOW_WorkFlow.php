@@ -38,6 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+#[\AllowDynamicProperties]
 class AOW_WorkFlow extends Basic
 {
     public $new_schema = true;
@@ -75,6 +76,7 @@ class AOW_WorkFlow extends Basic
      */
     private function getSQLOperator($key)
     {
+        $sqlOperatorList = [];
         $sqlOperatorList['Equal_To'] = '=';
         $sqlOperatorList['Not_Equal_To'] = '!=';
         $sqlOperatorList['Greater_Than'] = '>';
@@ -174,7 +176,7 @@ class AOW_WorkFlow extends Basic
             }
         }
 
-        $app_list_strings['aow_moduleList'] = array_merge((array)array(''=>''), (array)$app_list_strings['aow_moduleList']);
+        $app_list_strings['aow_moduleList'] = array_merge(array(''=>''), (array)($app_list_strings['aow_moduleList'] ?? []));
 
         asort($app_list_strings['aow_moduleList']);
     }
@@ -300,10 +302,12 @@ class AOW_WorkFlow extends Basic
         SugarBean $module,
         $query = array()
     ) {
+     global $db;
+     $params = [];
         if (!isset($query['join'][$name])) {
             if ($module->load_relationship($name)) {
                 $params['join_type'] = 'LEFT JOIN';
-                $params['join_table_alias'] = $name;
+                $params['join_table_alias'] = $db->quoteIdentifier($name);
                 $join = $module->$name->getJoin($params, true);
 
                 $query['join'][$name] = $join['join'];
@@ -394,6 +398,8 @@ class AOW_WorkFlow extends Basic
             }
         }
 
+        $value = '';
+
         if ($this->isSQLOperator($condition->operator)) {
             $where_set = false;
 
@@ -406,16 +412,68 @@ class AOW_WorkFlow extends Basic
                 $field = $table_alias.'_cstm.'.$condition->field;
                 $query = $this->build_flow_custom_query_join(
                     $table_alias,
-                    $table_alias.'_cstm',
+                    $table_alias . '_cstm',
                     $condition_module,
                     $query
                 );
+            } else if (isset($data['source']) && $data['source'] == 'non-db' && $data['type'] == 'relate' && !empty($data['link'])) {
+                $rel = $data['link'];
+                if (!isset($query['join'][$rel])) {
+                    if ($condition_module->load_relationship($rel)) {
+                        $join = $condition_module->$rel->getJoin([
+                            'join_type' => 'LEFT JOIN',
+                            'join_table_alias' => str_replace('.', '_', $rel),
+                            'left_join_table_alias' => $table_alias,
+                            'right_join_table_alias' => $table_alias
+                        ], true);
+                        $query['join'][$rel] = $join['join'];
+                        $query['select'][] = $join['select'] . " AS '" . str_replace('.', '_', $rel) . "_id'";
+                    }
+                }
+                $relObject = $condition_module->$rel;
+
+                if (!empty($relObject)) {
+                    if ($relObject->getRelationshipObject()->type == 'one-to-many') {
+                        $field = $table_alias . '.' . $data['id_name'];
+                    } else {
+                        $targetTable = $relObject->getRelationshipObject()->getRelationshipTable();
+                        $field = $targetTable . '.' . $data['id_name'];
+                    }
+                } else {
+                    $field = $table_alias . '.' . $condition->field;
+                }
+            } else if (isset($data['source']) && $data['source'] == 'non-db' && $data['type'] == 'relate') {
+                $relModule = $data['module'];
+                $relBean = BeanFactory::getBean($relModule);
+                $relAlias = $data['id'];
+                $id_name = $data['id_name'];
+                $parentFieldDef = $condition_module->getFieldDefinition($data['id_name']);
+                if (!empty($parentFieldDef['source']) && $parentFieldDef['source'] == 'custom_fields') {
+                    $query = $this->build_flow_custom_query_join(
+                        $table_alias,
+                        $table_alias . '_cstm',
+                        $condition_module,
+                        $query
+                    );
+                    $table_alias = $table_alias . '_cstm';
+                }
+                $primaryKey = $relBean->getPrimaryFieldDefinition();
+                if (!isset($query['join'][$relAlias])) {
+                    $query['join'][$relAlias] = ' LEFT JOIN ' . $relBean->getTableName()
+                        . ' ' . $relAlias . ' ON ' . $table_alias . '.' . $id_name . ' = ' . $relAlias . '.' . $primaryKey['name'];
+                }
+                $field = $relAlias . '.' . $data['rname'];
+                $relFieldDef = $relBean->getFieldDefinition($data['rname']);
+
+                if (isset($relFieldDef['db_concat_fields'])) {
+                    $field = $this->db->concat($relAlias, $relFieldDef['db_concat_fields']);
+                }
             } else {
-                $field = $table_alias.'.'.$condition->field;
+                $field = $table_alias . '.' . $condition->field;
             }
 
             if ($condition->operator == 'is_null') {
-                $query['where'][] = '('.$field.' '.$this->getSQLOperator($condition->operator).' OR '.$field.' '.$this->getSQLOperator('Equal_To')." '')";
+                $query['where'][] = '(' . $field . ' ' . $this->getSQLOperator($condition->operator) . ' OR ' . $field . ' ' . $this->getSQLOperator('Equal_To') . " '')";
                 return $query;
             }
 
@@ -718,7 +776,8 @@ class AOW_WorkFlow extends Basic
                             && isset($condition_bean->rel_fields_before_value[$condition->field])) {
                             $value = $condition_bean->rel_fields_before_value[$condition->field];
                         } else {
-                            $value = from_html($condition_bean->fetched_row[$condition->field]);
+                            $conditionField = $condition_bean->fetched_row[$condition->field] ?? '';
+                            $value = from_html($conditionField);
                             // Bug - on delete bean action CRM load bean in a different way and bean can contain html characters
                             $field = from_html($field);
                         }
@@ -822,6 +881,10 @@ class AOW_WorkFlow extends Basic
                         } elseif ($data['type'] == 'bool' && (!(bool)$value || strtolower($value) == 'false')) {
                             $value = 0;
                         }
+                        $type = $data['dbType'] ?? $data['type'];
+                        if ((strpos((string) $type, 'char') !== false || strpos((string) $type, 'text') !== false) && !empty($field)) {
+                            $field = from_html($field);
+                        }
                         break;
                 }
 
@@ -864,9 +927,9 @@ class AOW_WorkFlow extends Basic
             case "Less_Than":  return $var1 <  $var2;
             case "Greater_Than_or_Equal_To": return $var1 >= $var2;
             case "Less_Than_or_Equal_To": return $var1 <= $var2;
-            case "Contains": return strpos($var1, $var2);
-            case "Starts_With": return strrpos($var1, $var2, -strlen($var1));
-            case "Ends_With": return strpos($var1, $var2, strlen($var1) - strlen($var2));
+            case "Contains": return strpos(strtolower($var1), strtolower($var2)) !== false;
+            case "Starts_With": return substr(strtolower($var1), 0, strlen((string) $var2) ) === strtolower($var2);
+            case "Ends_With": return substr(strtolower($var1), -strlen((string) $var2) ) === strtolower($var2);
             case "is_null": return $var1 == '';
             case "One_of":
                 if (is_array($var1)) {

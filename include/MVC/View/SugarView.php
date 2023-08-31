@@ -251,7 +251,7 @@ class SugarView
             $content = ob_get_clean();
             $module = $this->module;
             $ajax_ret = array(
-                'content' => mb_detect_encoding($content) == "UTF-8" ? $content : utf8_encode($content),
+                'content' => mb_detect_encoding($content) == "UTF-8" ? $content : mb_convert_encoding($content, 'ISO-8859-1', 'UTF-8'),
                 'menu' => array(
                     'module' => $module,
                     'label' => translate($module),
@@ -390,6 +390,7 @@ class SugarView
         $ss->assign("THEME_IE6COMPAT", $themeObject->ie6compat ? 'true' : 'false');
         $ss->assign("MODULE_NAME", $this->module);
         $ss->assign("langHeader", get_language_header());
+        $ss->assign("BROWSER_TITLE", $this->getBrowserTitle());
 
 
         // set ab testing if exists
@@ -1014,6 +1015,7 @@ EOHTML;
 
         $ss = new Sugar_Smarty();
         $ss->assign("AUTHENTICATED", isset($_SESSION["authenticated_user_id"]));
+        $ss->assign("APP", $app_strings);
         $ss->assign('MOD', return_module_language($GLOBALS['current_language'], 'Users'));
 
         $bottomLinkList = array();
@@ -1495,7 +1497,7 @@ EOHTML;
         if (!empty($paramString)) {
             $theTitle .= "<h2 class='module-title-text'> $paramString </h2>";
 
-            if ($this->type == "detail") {
+            if ($this->type === "detail") {
                 $theTitle .= "<div class='favorite' record_id='" .
                     $this->bean->id .
                     "' module='" .

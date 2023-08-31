@@ -46,6 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
+#[\AllowDynamicProperties]
 class SugarWidgetFieldName extends SugarWidgetFieldVarchar
 {
     protected static $moduleSavePermissions = array();
@@ -58,6 +59,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
 
     public function displayList(&$layout_def)
     {
+        $field_def = [];
         if (empty($layout_def['column_key'])) {
             return $this->displayListPlain($layout_def);
         }
@@ -91,7 +93,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
             $value = $this->displayListPlain($layout_def);
             $str .= $value;
             $field_name = $layout_def['name'];
-            $field_type = $field_def['type'];
+            $field_type = $field_def['type'] ?? '';
             $str .= "</a>";
             if ($field_name == 'name') {
                 $str .= "&nbsp;" .SugarThemeRegistry::current()->getImage("edit_inline", "border='0' alt='Edit Layout' align='bottom' onClick='SUGAR.reportsInlineEdit.inlineEdit(\"$div_id\",\"$value\",\"$module\",\"$record\",\"$field_name\",\"$field_type\");'");
@@ -140,7 +142,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
             return $this->_get_normal_column_select($layout_def);
         }
         $localeNameFormat = $locale->getLocaleFormatMacro($current_user);
-        $localeNameFormat = trim(preg_replace('/s/i', '', $localeNameFormat));
+        $localeNameFormat = trim(preg_replace('/s/i', '', (string) $localeNameFormat));
 
         if (empty($field_def['fields']) || empty($field_def['fields'][0]) || empty($field_def['fields'][1])) {
             return parent::_get_column_select($layout_def);

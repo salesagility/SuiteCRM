@@ -51,6 +51,7 @@ use Api\V8\BeanDecorator\BeanManager;
 use DBManagerFactory;
 use User;
 
+#[\AllowDynamicProperties]
 class ApiCommands extends Tasks
 {
     use RoboTrait;

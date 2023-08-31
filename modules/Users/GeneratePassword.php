@@ -115,7 +115,7 @@ if (isset($_POST['Users0emailAddress0'])) {
 ///////////////////////////////////////////////////
 ///////  Check email address
 
-    if (!preg_match($regexmail, $usr->emailAddress->getPrimaryAddress($usr))) {
+    if (!preg_match($regexmail, (string) $usr->emailAddress->getPrimaryAddress($usr))) {
         echo $mod_strings['ERR_EMAIL_INCORRECT'];
         return;
     }
@@ -125,6 +125,12 @@ if (isset($_POST['Users0emailAddress0'])) {
     $isLink = isset($_POST['link']) && $_POST['link'] == '1';
     // if i need to generate a password (not a link)
     $password = $isLink ? '' : User::generatePassword();
+
+$isPasswordGenerationActive = $res['SystemGeneratedPasswordON'] ?? false;
+if(!$isLink && empty($isPasswordGenerationActive)) {
+    echo 'Access Denied';
+    return;
+}
 
 // Create URL
 if ($isLink) {

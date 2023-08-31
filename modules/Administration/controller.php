@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
+#[\AllowDynamicProperties]
 class AdministrationController extends SugarController
 {
     public function action_savetabs()
@@ -57,7 +58,7 @@ class AdministrationController extends SugarController
         }
 
         // handle the tabs listing
-        $toDecode = html_entity_decode($_REQUEST['enabled_tabs'], ENT_QUOTES);
+        $toDecode = html_entity_decode((string) $_REQUEST['enabled_tabs'], ENT_QUOTES);
         $enabled_tabs = json_decode($toDecode);
         $tabs = new TabController();
         $tabs->set_system_tabs($enabled_tabs);
@@ -65,7 +66,7 @@ class AdministrationController extends SugarController
 
         // handle the subpanels
         if (isset($_REQUEST['disabled_tabs'])) {
-            $disabledTabs = json_decode(html_entity_decode($_REQUEST['disabled_tabs'], ENT_QUOTES));
+            $disabledTabs = json_decode(html_entity_decode((string) $_REQUEST['disabled_tabs'], ENT_QUOTES));
             $disabledTabsKeyArray = $tabs->get_key_array($disabledTabs);
             $subPanelDefinition = new SubPanelDefinitions($this->bean);
             $subPanelDefinition->set_hidden_subpanels($disabledTabsKeyArray);
@@ -77,9 +78,9 @@ class AdministrationController extends SugarController
     public function action_savelanguages()
     {
         global $sugar_config;
-        $toDecode = html_entity_decode($_REQUEST['disabled_langs'], ENT_QUOTES);
+        $toDecode = html_entity_decode((string) $_REQUEST['disabled_langs'], ENT_QUOTES);
         $disabled_langs = json_decode($toDecode);
-        $toDecode = html_entity_decode($_REQUEST['enabled_langs'], ENT_QUOTES);
+        $toDecode = html_entity_decode((string) $_REQUEST['enabled_langs'], ENT_QUOTES);
         $enabled_langs = json_decode($toDecode);
         $cfg = new Configurator();
         $cfg->config['disabled_languages'] = implode(',', $disabled_langs);
@@ -138,7 +139,7 @@ class AdministrationController extends SugarController
     {
         require_once('modules/Configurator/Configurator.php');
         $cfg = new Configurator();
-        $disabled = json_decode(html_entity_decode($_REQUEST['disabled_modules'], ENT_QUOTES));
+        $disabled = json_decode(html_entity_decode((string) $_REQUEST['disabled_modules'], ENT_QUOTES));
         $cfg->config['addAjaxBannedModules'] = empty($disabled) ? false : $disabled;
         $cfg->addKeyToIgnoreOverride('addAjaxBannedModules', $disabled);
         $cfg->handleOverride();
@@ -154,7 +155,10 @@ class AdministrationController extends SugarController
      */
     public function action_callRebuildSprites()
     {
-        global $current_user;
+        global $current_user, $mod_strings;
+
+        $mod_strings = $mod_strings ?? [];
+
         $this->view = 'ajax';
         if (function_exists('imagecreatetruecolor')) {
             if (is_admin($current_user)) {

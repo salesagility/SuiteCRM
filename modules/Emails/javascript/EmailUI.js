@@ -3440,15 +3440,6 @@
           active: true
         }));
         tabContent.parentNode.removeChild(tabContent);
-        tabContent = Dom.get("tab_accounts");
-        var accountTab = new YAHOO.widget.Tab({
-          label: app_strings.LBL_EMAIL_SETTINGS_ACCOUNTS,
-          scroll: true,
-          content: tabContent.innerHTML,
-          id: "accountSettings"
-        });
-        tp.addTab(accountTab);
-        tabContent.parentNode.removeChild(tabContent);
 
         tp.appendTo(dlg.body);
       }

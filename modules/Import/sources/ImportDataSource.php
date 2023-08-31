@@ -47,6 +47,7 @@ require_once('modules/Import/ImportCacheFiles.php');
 
 
 
+#[\AllowDynamicProperties]
 abstract class ImportDataSource implements Iterator
 {
     /**

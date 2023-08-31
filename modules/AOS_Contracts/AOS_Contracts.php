@@ -29,6 +29,7 @@
  */
 require_once('modules/AOS_Contracts/AOS_Contracts_sugar.php');
 
+#[\AllowDynamicProperties]
 class AOS_Contracts extends AOS_Contracts_sugar
 {
     public function __construct()

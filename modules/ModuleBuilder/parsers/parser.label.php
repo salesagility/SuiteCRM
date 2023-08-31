@@ -48,6 +48,7 @@ require_once 'modules/ModuleBuilder/parsers/ModuleBuilderParser.php';
 /**
  * Class ParserLabel
  */
+#[\AllowDynamicProperties]
 class ParserLabel
 {
     /**
@@ -126,6 +127,7 @@ class ParserLabel
      */
     public static function removeLabel($language, $label, $labelvalue, $moduleName, $basepath = null, $forRelationshipLabel = false)
     {
+        $deployedModule = false;
         static::setLogger();
 
         static::$logger->debug("ParserLabel::removeLabels($language, \$label, \$labelvalue, $moduleName, $basepath );");
@@ -215,7 +217,11 @@ class ParserLabel
             }
         }
 
-        $filename = "$basepath/_override_$language.lang.php";
+        if (!$deployedModule) {
+            $filename = "$basepath/$language.lang.php";
+        } else {
+            $filename = "$basepath/_override_$language.lang.php";
+        }
         $dir_exists = is_dir($basepath);
 
         $mod_strings = array();

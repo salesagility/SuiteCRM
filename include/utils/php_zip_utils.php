@@ -77,7 +77,7 @@ function unzip_file($zip_archive, $archive_file, $zip_dir)
     $res = $zip->open(UploadFile::realpath($zip_archive));
 
     if ($res !== true) {
-        LoggerManager::getLogger()->fatal(sprintf(sprintf('ZIP Error(%d): Status(%s)', $res, $zip->status)));
+        LoggerManager::getLogger()->fatal(sprintf('ZIP Error(%d): Status(%s)', $res, $zip->status));
         if (defined('SUITE_PHPUNIT_RUNNER') || defined('SUGARCRM_INSTALL')) {
             return false;
         }
@@ -94,7 +94,7 @@ function unzip_file($zip_archive, $archive_file, $zip_dir)
     }
 
     if ($res !== true) {
-        LoggerManager::getLogger()->fatal(sprintf(sprintf('ZIP Error(%d): Status(%s)', $res, $zip->status)));
+        LoggerManager::getLogger()->fatal(sprintf('ZIP Error(%d): Status(%s)', $res, $zip->status));
         if (defined('SUITE_PHPUNIT_RUNNER') || defined('SUGARCRM_INSTALL')) {
             return false;
         }
@@ -122,7 +122,7 @@ function zip_dir($zip_dir, $zip_archive)
     $zip->open(UploadFile::realpath($zip_archive),
         ZipArchive::CREATE | ZipArchive::OVERWRITE);
     $path = UploadFile::realpath($zip_dir);
-    $chop = strlen($path) + 1;
+    $chop = strlen((string) $path) + 1;
     $dir = new RecursiveDirectoryIterator($path);
     foreach (new RecursiveIteratorIterator($dir, RecursiveIteratorIterator::SELF_FIRST) as $fileinfo) {
         // Bug # 45143
@@ -132,7 +132,7 @@ function zip_dir($zip_dir, $zip_archive)
         if ($fileName === '.' || $fileName === '..') {
             continue;
         }
-        $localname = str_replace("\\", '/', substr($fileinfo->getPathname(), $chop));
+        $localname = str_replace("\\", '/', substr((string) $fileinfo->getPathname(), $chop));
         if ($fileinfo->isDir()) {
             $zip->addEmptyDir($localname . '/');
         } else {
@@ -163,8 +163,8 @@ function zip_files_list($zip_file, $file_list, $prefix = '')
         return false;
     }
     foreach ($file_list as $file) {
-        if (!empty($prefix) && preg_match($prefix, $file, $matches) > 0) {
-            $zipname = substr($file, strlen($matches[0]));
+        if (!empty($prefix) && preg_match($prefix, (string) $file, $matches) > 0) {
+            $zipname = substr((string) $file, strlen($matches[0]));
         } else {
             $zipname = $file;
         }

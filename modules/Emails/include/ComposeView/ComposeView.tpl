@@ -256,10 +256,13 @@
       $(document).ready(function() {ldelim}
         $('#ComposeView').EmailsComposeView({if $RETURN_MODULE != 'Emails' && $RETURN_ID}{ldelim}
           'attachment': {ldelim}
-            'module': '{$RETURN_MODULE}',
-            'id': '{$RETURN_ID}'
+            'module': '{$RETURN_MODULE|escape:'javascript'}',
+            'id': '{$RETURN_ID|escape:'javascript'}'
           {rdelim}
         {rdelim}{/if});
+      {rdelim});
+      $( "#emails_email_templates_name" ).change(function() {ldelim}
+          $.fn.EmailsComposeView.onTemplateChange()
       {rdelim});
     </script>
     {/if}

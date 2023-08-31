@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
+#[\AllowDynamicProperties]
 class Project extends SugarBean
 {
     // database table columns
@@ -66,6 +67,7 @@ class Project extends SugarBean
     public $opportunity_id;
     public $email_id;
     public $estimated_start_date;
+    public $team_id;
 
     // calculated information
     public $total_estimated_effort;
@@ -277,7 +279,7 @@ class Project extends SugarBean
 
         if (!empty($order_by)) {
             //check to see if order by variable already has table name by looking for dot "."
-            $table_defined_already = strpos($order_by, ".");
+            $table_defined_already = strpos((string) $order_by, ".");
 
             if ($table_defined_already === false) {
                 //table not defined yet, define accounts to avoid "ambigous column" SQL error
@@ -608,6 +610,7 @@ class Project extends SugarBean
 
                 //----------------------------------
 
+                $enddate_array = [];
 
                 if ($count == '1') {
                     $project_task->date_start = $start;

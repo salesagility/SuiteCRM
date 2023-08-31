@@ -41,7 +41,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
- 
+
+ #[\AllowDynamicProperties]
  class ListCurrency
  {
      public $focus = null;
@@ -77,7 +78,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
              }
          }
      }
-        
+
      public function handleUpdate()
      {
          global $current_user;
@@ -88,11 +89,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
                  $symbols= $_POST['symbol'];
                  $rates  = $_POST['rate'];
                  $isos  = $_POST['iso'];
-                 $size = count($ids);
-                 if ($size != count($names)|| $size != count($isos) || $size != count($symbols) || $size != count($rates)) {
+                 $size = is_countable($ids) ? count($ids) : 0;
+                 if ($size !== count($names)|| $size !== count($isos) || $size !== count($symbols) || $size !== count($rates)) {
                      return;
                  }
-            
+
                  $temp = BeanFactory::newBean('Currencies');
                  for ($i = 0; $i < $size; $i++) {
                      $temp->id = $ids[$i];
@@ -105,7 +106,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
              }
          }
      }
-    
+
      public function getJavascript()
      {
          // wp: DO NOT add formatting and unformatting numbers in here, add them prior to calling these to avoid double calling
@@ -129,7 +130,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 					function ConvertRateSingle(id,field){
 						var temp = field.innerHTML.substring(1, field.innerHTML.length);
 						unformattedNumber = unformatNumber(temp, num_grp_sep, dec_sep);
-						
+
 						field.innerHTML = CurrencySymbols[id] + formatNumber(toDecimal(ConvertFromDollar(ConvertToDollar(unformattedNumber, lastRate), ConversionRates[id])), num_grp_sep, dec_sep, 2, 2);
 						lastRate = ConversionRates[id];
 					}
@@ -137,33 +138,33 @@ if (!defined('sugarEntry') || !sugarEntry) {
                         try {
                         var id = form.currency_id.options[form.currency_id.selectedIndex].value;
 						var fields = new Array();
-						
+
 						for(i in currencyFields){
 							var field = currencyFields[i];
 							if(typeof(form[field]) != 'undefined'){
 								form[field].value = unformatNumber(form[field].value, num_grp_sep, dec_sep);
 								fields.push(form[field]);
 							}
-							
+
 						}
-							
+
 							ConvertRate(id, fields);
 						for(i in fields){
 							fields[i].value = formatNumber(fields[i].value, num_grp_sep, dec_sep);
 
 						}
-							
+
 						} catch (err) {
                             // Do nothing, if we can't find the currency_id field we will just not attempt to convert currencies
                             // This typically only happens in lead conversion and quick creates, where the currency_id field may be named somethnig else or hidden deep inside a sub-form.
                         }
-						
+
 					}
 				</script>
 EOQ;
      }
-    
-    
+
+
      public function getSelectOptions($id = '')
      {
          global $current_user;
@@ -195,6 +196,7 @@ EOQ;
      }
      public function getTable()
      {
+         global $sugar_config;
          $this->lookupCurrencies();
          $usdollar = translate('LBL_US_DOLLAR');
          $currency = translate('LBL_CURRENCY');
@@ -203,7 +205,7 @@ EOQ;
          $add = translate('LBL_ADD');
          $delete = translate('LBL_DELETE');
          $update = translate('LBL_UPDATE');
-        
+
          $form = $html = "<br><table cellpadding='0' cellspacing='0' border='0'  class='tabForm'><tr><td><tableborder='0' cellspacing='0' cellpadding='0'>";
          $form .= <<<EOQ
 					<form name='DeleteCurrency' action='index.php' method='post'><input type='hidden' name='action' value='{$_REQUEST['action']}'>
@@ -230,7 +232,7 @@ EOQ;
 EOQ;
          return $form;
      }
-    
+
      public function setCurrencyFields($fields)
      {
          $json = getJSONobj();
