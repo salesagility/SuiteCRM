@@ -605,7 +605,7 @@ function getRunningUser()
                 $runningUser = $usr['name'];
 	    }
         } else {
-            $GLOBALS['log']->error("getRunningUser: Please install your distribution package 'php-posix' which is required on Linux/Unix-type OS.");
+            $GLOBALS['log']->error('('.__FUNCTION__."): Please install your distribution package 'php-posix' which is required on Linux/Unix-type OS.");
         }
     }
     return ($runningUser == null) ? '' : $runningUser;
