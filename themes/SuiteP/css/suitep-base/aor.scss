@@ -79,10 +79,24 @@
       }
     }
 
+  #chartLines {
+    table {
+      width: 75%;
+      tr {
+        text-align: center;
+      }
+    }
+
+  #chartHead {
+    text-align: center;
+    }
+  }
+
   #fieldLines {
     tbody {
       tr {
         height: 64px;
+        text-align: center;
 
         td {
           background-color: $main-alternate-bg;
@@ -111,6 +125,10 @@
         }
       }
     }
+
+    #fieldLines_head {
+      text-align: center;
+    }
   }
 
   #aor_conditionLines {
@@ -121,6 +139,7 @@
     tbody {
       tr {
         height: 64px;
+        text-align: center;
 
         td {
           background-color: $main-alternate-bg;
@@ -155,10 +174,7 @@
       td:last-of-type {
         padding-right: 8px;
       }
-    }
-
-    #aor_conditions_body {
-
+      text-align: center;
     }
   }
 
