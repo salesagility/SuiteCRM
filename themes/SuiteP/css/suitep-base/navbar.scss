@@ -1258,6 +1258,10 @@
 }
 
 @media (min-width: 375px) and (max-width: 750px) {
+  .quickcreatetop .dropdown-toggle .label-quickcreate {
+    position: relative;
+    top: 2px;
+  }
   .navbar-search > .dropdown-menu {
     top: -($navbar-toolbar-height  + 12px);
     bottom: auto;
@@ -1593,7 +1597,10 @@
 }
 
 @media (min-width: 751px) {
-
+  .quickcreatetop .dropdown-toggle span {
+    position: relative;
+    top: 8%;
+  }
 	.navbar-toggle {
 		height:60px;
         margin-top: 0;
@@ -2379,7 +2386,7 @@
   vertical-align: sub;
   margin-left: 0.2em;
   margin-right: 0.2em;
-  white-space: nowrap;    
+  white-space: nowrap;
 }
 
 
