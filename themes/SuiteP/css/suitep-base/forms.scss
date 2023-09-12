@@ -146,6 +146,11 @@ div.input-group input {
   background-image: none;
 }
 
+.dropdown-toggle > span {
+  position: relative;
+  top: 8%;
+}
+
 .button-primary.disabled {
   background-color: $disabled-btn-color;
   border-color: $disabled-btn-color;

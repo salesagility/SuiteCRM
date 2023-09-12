@@ -493,7 +493,8 @@
             <ul id="toolbar" class="toolbar">
                 <li id="quickcreatetop" class="create dropdown nav navbar-nav quickcreatetop">
                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        {$APP.LBL_CREATE_BUTTON_LABEL}<span class="suitepicon suitepicon-action-caret"></span>
+                        <span>{$APP.LBL_CREATE_BUTTON_LABEL}</span>
+                        <span class="suitepicon suitepicon-action-caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_CREATE}{sugar_translate module="Accounts" label="LBL_MODULE_NAME"}</a></li>
@@ -563,10 +564,10 @@
                             <li role="presentation">
                                 <a id="{$gcl_key}_link"
                                    href="{$GCL.URL}"
-                                   {if !empty($GCL.ONCLICK)} 
+                                   {if !empty($GCL.ONCLICK)}
                                    onclick="{$GCL.ONCLICK}"
                                    {/if}
-                                   {if !empty($GCL.TARGET)} 
+                                   {if !empty($GCL.TARGET)}
                                    target="{$GCL.TARGET}"
                                    {/if}
                                    >{$GCL.LABEL}</a>
@@ -582,7 +583,8 @@
             <ul id="toolbar" class="toolbar">
                 <li id="quickcreatetop" class="create dropdown nav navbar-nav quickcreatetop">
                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        {$APP.LBL_CREATE_BUTTON_LABEL}<span class="suitepicon suitepicon-action-caret"></span>
+                        <span>{$APP.LBL_CREATE_BUTTON_LABEL}</span>
+                        <span class="suitepicon suitepicon-action-caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_CREATE}{sugar_translate module="Accounts" label="LBL_MODULE_NAME"}</a></li>
@@ -653,10 +655,10 @@
                             <li role="presentation">
                                 <a id="{$gcl_key}_link"
                                    href="{$GCL.URL}"
-                                   {if !empty($GCL.ONCLICK)} 
+                                   {if !empty($GCL.ONCLICK)}
                                    onclick="{$GCL.ONCLICK}"
                                    {/if}
-                                   {if !empty($GCL.TARGET)} 
+                                   {if !empty($GCL.TARGET)}
                                    target="{$GCL.TARGET}"
                                    {/if}
                                    >{$GCL.LABEL}</a>
@@ -672,7 +674,8 @@
             <ul id="toolbar" class="toolbar">
                 <li id="quickcreatetop" class="create dropdown nav navbar-nav quickcreatetop">
                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        {$APP.LBL_CREATE_BUTTON_LABEL}<span class="suitepicon suitepicon-action-caret"></span>
+                        <span>{$APP.LBL_CREATE_BUTTON_LABEL}</span>
+                        <span class="suitepicon suitepicon-action-caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_CREATE}{sugar_translate module="Accounts" label="LBL_MODULE_NAME"}</a></li>
@@ -743,7 +746,7 @@
                             <li role="presentation">
                                 <a id="{$gcl_key}_link"
                                    href="{$GCL.URL}"
-                                   {if !empty($GCL.ONCLICK)} 
+                                   {if !empty($GCL.ONCLICK)}
                                    onclick="{$GCL.ONCLICK}"
                                    {/if}
                                    {if !empty($GCL.TARGET)}
