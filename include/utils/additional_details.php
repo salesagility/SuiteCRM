@@ -68,7 +68,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
         // Load smarty templates
         $templateCaption = new Sugar_Smarty();
         $templateCaption->assign('APP', $app_list_strings);
-        $templateCaption->assign('MOD', $mod_strings);
+        $templateCaption->assign('MOD_STR', $mod_strings);
         $templateCaption->assign('FIELD', $fields);
         $templateCaption->assign('ACL_EDIT_VIEW', $bean->ACLAccess('EditView'));
         $templateCaption->assign('ACL_DETAIL_VIEW', $bean->ACLAccess('DetailView'));
@@ -79,7 +79,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
         $templateBody = new Sugar_Smarty();
         $templateBody->assign('APP', $app_list_strings);
-        $templateBody->assign('MOD', $mod_strings);
+        $templateBody->assign('MOD_STR', $mod_strings);
         $templateBody->assign('FIELD', $fields);
         $templateBody->assign('ACL_EDIT_VIEW', $bean->ACLAccess('EditView'));
         $templateBody->assign('ACL_DETAIL_VIEW', $bean->ACLAccess('DetailView'));
