@@ -3598,3 +3598,30 @@ ul.clickMenu > li > span.searchAppliedAlert {
     display: inline-block;
   }
 }
+
+// list-view additional-details
+.qtip-title-text-add-details {
+@extend .qtip-title-text;
+  color: $color-43 !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.qtip-title-buttons-add-details {
+  @extend .qtip-title-buttons;
+  a {
+    color: $color-12 !important;
+    padding: 0 4px;
+    margin: 0;
+    &:hover {
+      color: $color-43 !important;
+    }
+  a:first-of-type {
+    margin: 0 0 0 4px;
+    }
+  }
+}
+
+.link-color-add-details {
+  color: $color-43 !important;
+}

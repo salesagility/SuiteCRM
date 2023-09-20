@@ -41,7 +41,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-                
+
 $mod_strings = array(
     'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
@@ -52,8 +52,10 @@ $mod_strings = array(
     'LBL_MODIFIED_NAME' => 'Modified By Name',
     'LBL_CREATED' => 'Created By',
     'LBL_DESCRIPTION' => 'Description',
+    'LBL_EVENT_DESCRIPTION' => 'Description:',
     'LBL_DELETED' => 'Deleted',
     'LBL_NAME' => 'Name',
+    'LBL_EVENT_NAME' => 'Name:',
     'LBL_CREATED_USER' => 'Created by User',
     'LBL_MODIFIED_USER' => 'Modified by User',
     'LBL_LIST_NAME' => 'Name',
@@ -70,12 +72,17 @@ $mod_strings = array(
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
     'LBL_NEW_FORM_TITLE' => 'New Event',
     'LBL_LOCATION' => 'Location',
+    'LBL_LOCATION_ADDITIONAL_DETAILS' => 'Location:',
     'LBL_START_DATE' => 'start date',
     'LBL_END_DATE' => 'End Date/Time',
     'LBL_BUDGET' => 'Budget',
     'LBL_DATE' => 'Start Date',
+    'LBL_DATE_TIME' => 'Start Date & Time:',
     'LBL_DATE_END' => 'End Date',
     'LBL_DURATION' => 'Duration',
+    'LBL_EVENT_HOURS_ABBREV' => 'hours',
+    'LBL_EVENT_HOUR_ABBREV' => 'h',
+    'LBL_EVENT_MINSS_ABBREV' => 'm',
     'LBL_INVITE_TEMPLATES' => 'Email Invite Template',
     'LBL_INVITE_PDF' => 'Send Invites',
     'LBL_EDITVIEW_PANEL1' => 'Event Details',
@@ -129,5 +136,5 @@ $mod_strings = array(
     // Email links
     'LBL_ACCEPT_LINK' => 'Accept',
     'LBL_DECLINE_LINK' => 'Decline',
-    
+
 );
