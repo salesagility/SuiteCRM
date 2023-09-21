@@ -1498,6 +1498,15 @@ td.edit.view td[align=right] {
   padding-right: 0;
 }
 
+#popup_query_form {
+  .dateTimeRangeChoice select{
+    float: left!important;
+  }
+  .dateRangeInput {
+    width: 70%!important;
+  }
+}
+
 #container_upload {
   margin-top: 7px;
 }
@@ -5760,7 +5769,7 @@ body.popupBody {
 	input {
       border-radius: 4px;
     }
-  .button {        
+  .button {
       border-radius: 4px;
-    } 
+    }
 }

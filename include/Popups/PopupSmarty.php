@@ -341,7 +341,9 @@ class PopupSmarty extends ListViewSmarty
             require('modules/'.$this->module.'/metadata/metafiles.php');
         }
 
-        if (!empty($metafiles[$this->module]['searchfields'])) {
+        if(file_exists('custom/modules/'.$this->module.'/metadata/SearchFields.php')) {
+            require('custom/modules/'.$this->module.'/metadata/SearchFields.php');
+        } elseif (!empty($metafiles[$this->module]['searchfields'])) {
             require($metafiles[$this->module]['searchfields']);
         } elseif (file_exists('modules/'.$this->module.'/metadata/SearchFields.php')) {
             require('modules/'.$this->module.'/metadata/SearchFields.php');
