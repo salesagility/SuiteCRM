@@ -488,8 +488,8 @@ var selectedIndex=0;var nodeCount=-1;for(i in left_side.childNodes){if(typeof le
 selectedIndex=nodeCount;}}
 document.getElementById('orderBySelect').selectedIndex=selectedIndex;};SUGAR.tabChooser.movementCallback(document.getElementById('display_tabs_td').getElementsByTagName('select')[0]);if(document.search_form.orderBy){if(document.search_form.orderBy.length>1&&document.search_form.orderBy[1].type=='select-one'){document.search_form.orderBy[1].options.value=SUGAR.savedViews.selectedOrderBy;}
 else{document.search_form.orderBy.options.value=SUGAR.savedViews.selectedOrderBy;}}
-if(SUGAR.savedViews.selectedSortOrder=='DESC')document.getElementById('sort_order_desc_radio').checked=true;else document.getElementById('sort_order_asc_radio').checked=true;var sortableColumnsCount=0;var columnDefs=SUGAR.savedViews.columnsMeta;if(columnDefs&&typeof columnDefs==='object'&&Object.keys(columnDefs)){Object.keys(columnDefs).forEach(function(columnKey){var column=columnDefs[columnKey];if(!column||!column.sortable){return;}
-if(column.sortable===true){sortableColumnsCount++;}})}
+if(SUGAR.savedViews.selectedSortOrder=='DESC')document.getElementById('sort_order_desc_radio').checked=true;else document.getElementById('sort_order_asc_radio').checked=true;var sortableColumnsCount=0;var columnDefs=SUGAR.savedViews.columnsMeta;if(columnDefs&&typeof columnDefs==='object'&&Object.keys(columnDefs)){Object.keys(columnDefs).forEach(function(columnKey){var column=columnDefs[columnKey];if(!column){return;}
+if(column.sortable!==false){sortableColumnsCount++;}})}
 if(sortableColumnsCount<1){$('.saved-search-sort-column-config-row').hide();}}};}();SUGAR.searchForm=function(){var url;return{searchFormSelect:function(view,previousView){var module=view.split('|')[0];var theView=view.split('|')[1];var handleDisplay=function(){document.search_form.searchFormTab.value=theView;patt=module+"(.*)SearchForm$";divId=document.search_form.getElementsByTagName('div');for(i=0;i<divId.length;i++){if(divId[i].id.match(module)==module){if(divId[i].id.match('SearchForm')=='SearchForm'){if(document.getElementById(divId[i].id).style.display==''){previousTab=divId[i].id.match(patt)[1];}
 document.getElementById(divId[i].id).style.display='none';}}}
 adv=document.getElementById('advanced_search_link');bas=document.getElementById('basic_search_link');if(adv!==null){adv.setAttribute('accesskey','');}
@@ -573,9 +573,8 @@ URL+='&create='+create;if(metadata!=''&&metadata!=undefined){URL+='&metadata='+m
 if(popup_request_data.jsonObject){var request_data=popup_request_data.jsonObject;}else{var request_data=popup_request_data;}
 var field_to_name_array_url='';if(request_data&&request_data.field_to_name_array!=undefined){for(var key in request_data.field_to_name_array){if(key.toLowerCase()!='id'){field_to_name_array_url+='&field_to_name[]='+encodeURIComponent(key.toLowerCase());}}}
 if(field_to_name_array_url){URL+=field_to_name_array_url;}
-win=SUGAR.util.openWindow(URL,windowName,windowFeatures);if(win){if(win.focus){win.focus();} 
-win.popupCount=popupCount;return win;}
-return;}
+win=SUGAR.util.openWindow(URL,windowName,windowFeatures);if(win){$(win).focus(function(){win.focus();});win.popupCount=popupCount;return win;}
+return'';}
 var from_popup_return=false;function replaceHTMLChars(value){return value.replace(/&amp;/gi,'&').replace(/&lt;/gi,'<').replace(/&gt;/gi,'>').replace(/&#039;/gi,'\'').replace(/&quot;/gi,'"');}
 function set_return_basic(popup_reply_data,filter){var form_name=popup_reply_data.form_name;var name_to_value_array=popup_reply_data.name_to_value_array;for(var the_key in name_to_value_array){if(the_key=='toJSON'){}
 else if(the_key.match(filter)){var displayValue=replaceHTMLChars(name_to_value_array[the_key]);if(window.document.forms[form_name]&&window.document.forms[form_name].elements[the_key]){if(window.document.forms[form_name].elements[the_key].tagName=='SELECT'){var selectField=window.document.forms[form_name].elements[the_key];for(var i=0;i<selectField.options.length;i++){if(selectField.options[i].text==displayValue){selectField.options[i].selected=true;SUGAR.util.callOnChangeListers(selectField);break;}}}else{window.document.forms[form_name].elements[the_key].value=displayValue;SUGAR.util.callOnChangeListers(window.document.forms[form_name].elements[the_key]);}}}}}

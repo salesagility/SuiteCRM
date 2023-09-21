@@ -3675,11 +3675,11 @@ SUGAR.savedViews = function () {
       if(columnDefs && typeof columnDefs === 'object' && Object.keys(columnDefs))  {
         Object.keys(columnDefs).forEach(function (columnKey) {
           var column = columnDefs[columnKey];
-          if (!column || !column.sortable) {
+          if (!column) {
             return;
           }
 
-          if (column.sortable === true) {
+          if (column.sortable !== false) {
             sortableColumnsCount++;
           }
         })
