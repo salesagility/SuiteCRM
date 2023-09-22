@@ -55,7 +55,7 @@ class InboundEmailController extends SugarController
             return;
         }
 
-        if (!empty($this->bean) && isTrue($this->bean->is_personal) && $this->bean->checkPersonalAccountAccess()) {
+        if (!empty($this->bean) && isTrue($this->bean->is_personal) && $this->bean->hasAccessToPersonalAccount()) {
             $this->hasAccess = true;
         }
     }

@@ -69,7 +69,7 @@ class ExternalOAuthConnection extends Basic
     {
         $result = parent::retrieve($id, $encode, $deleted);
 
-        if (!empty($result) && !$this->checkPersonalAccountAccess()) {
+        if (!empty($result) && !$this->hasAccessToPersonalAccount()) {
             $this->logPersonalAccountAccessDenied('retrieve');
 
             return null;
@@ -83,7 +83,7 @@ class ExternalOAuthConnection extends Basic
      */
     public function save($check_notify = false)
     {
-        if (!$this->checkPersonalAccountAccess()) {
+        if (!$this->hasAccessToPersonalAccount()) {
             $this->logPersonalAccountAccessDenied('save');
             throw new RuntimeException('Access Denied');
         }
@@ -98,7 +98,7 @@ class ExternalOAuthConnection extends Basic
      * Check if user has access to personal account
      * @return bool
      */
-    public function checkPersonalAccountAccess(): bool
+    public function hasAccessToPersonalAccount(): bool
     {
         global $current_user;
 
@@ -162,7 +162,7 @@ class ExternalOAuthConnection extends Basic
             return false;
         }
 
-        if (!$this->checkPersonalAccountAccess()) {
+        if (!$this->hasAccessToPersonalAccount()) {
             $this->logPersonalAccountAccessDenied("ACLAccess-$view");
 
             return false;
@@ -171,7 +171,7 @@ class ExternalOAuthConnection extends Basic
         $isPersonal = $this->type === 'personal';
         $isAdmin = is_admin($current_user);
 
-        if ($isPersonal === true && $this->checkPersonalAccountAccess()) {
+        if ($isPersonal === true && $this->hasAccessToPersonalAccount()) {
             return true;
         }
 

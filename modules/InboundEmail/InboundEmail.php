@@ -383,7 +383,7 @@ class InboundEmail extends SugarBean
             $this->retrieveMailBoxFolders();
         }
 
-        if (!empty($ret) && !$this->checkPersonalAccountAccess()) {
+        if (!empty($ret) && !$this->hasAccessToPersonalAccount()) {
             $this->logPersonalAccountAccessDenied('retrieve');
             return null;
         }
@@ -397,7 +397,7 @@ class InboundEmail extends SugarBean
      */
     public function save($check_notify = false)
     {
-        if (!$this->checkPersonalAccountAccess()) {
+        if (!$this->hasAccessToPersonalAccount()) {
             $this->logPersonalAccountAccessDenied('save');
             throw new RuntimeException('Access Denied');
         }
@@ -426,7 +426,7 @@ class InboundEmail extends SugarBean
      * Check if user has access to personal account
      * @return bool
      */
-    public function checkPersonalAccountAccess() : bool {
+    public function hasAccessToPersonalAccount() : bool {
         global $current_user;
 
         if (is_admin($current_user)) {
@@ -471,7 +471,7 @@ class InboundEmail extends SugarBean
             return false;
         }
 
-        if (!$this->checkPersonalAccountAccess()) {
+        if (!$this->hasAccessToPersonalAccount()) {
             $this->logPersonalAccountAccessDenied("ACLAccess-$view");
             return false;
         }
@@ -479,7 +479,7 @@ class InboundEmail extends SugarBean
         $isPersonal = isTrue($this->is_personal);
         $isAdmin = is_admin($current_user);
 
-        if ($isPersonal === true && $this->checkPersonalAccountAccess()) {
+        if ($isPersonal === true && $this->hasAccessToPersonalAccount()) {
             return true;
         }
 

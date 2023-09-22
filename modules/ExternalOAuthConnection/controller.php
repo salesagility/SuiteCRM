@@ -60,7 +60,7 @@ class ExternalOAuthConnectionController extends SugarController
             return;
         }
 
-        if (!empty($this->bean) && $_REQUEST['type'] === 'personal' && $this->bean->checkPersonalAccountAccess()) {
+        if (!empty($this->bean) && $_REQUEST['type'] === 'personal' && $this->bean->hasAccessToPersonalAccount()) {
             $this->hasAccess = true;
         }
     }
