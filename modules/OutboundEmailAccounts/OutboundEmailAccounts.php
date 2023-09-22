@@ -272,6 +272,10 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
             return false;
         }
 
+        if (empty($this->type) && $this->assigned_user_id === $current_user->id){
+            $this->type = 'user';
+        }
+
         $isPersonal = $this->type === 'user';
         $isAdmin = is_admin($current_user);
 
