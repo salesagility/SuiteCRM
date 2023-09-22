@@ -27,8 +27,8 @@ function survey_questions_display_detail(Surveys $focus, $field, $value, $view)
     );
     $smarty->assign('questions', $questions);
     $smarty->assign('message', '');
-    $isDuplicate = $_REQUEST['isDuplicate'] ?? false;
-    if ($view == 'EditView' && $isDuplicate === false) {
+    $isDuplicate = $_REQUEST['isDuplicate'] ?? 'false';
+    if ($view == 'EditView' && isFalse($isDuplicate)) {
         $smarty->assign('message', $mod_strings['LBL_CANT_EDIT_RESPONDED']);
     }
     $smarty->assign('APP_LIST', $app_list_strings);
