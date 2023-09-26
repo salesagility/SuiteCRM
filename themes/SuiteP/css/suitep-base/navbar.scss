@@ -704,7 +704,7 @@
   font-size: $navbar-toolbar-height - 2px;
   font-weight: 400;
   position: relative;
-  top: 7px;
+  top: 5px;
   vertical-align: top;
 }
 
@@ -2376,10 +2376,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline-block;
-  vertical-align: sub;
+  vertical-align: text-top;
   margin-left: 0.2em;
   margin-right: 0.2em;
-  white-space: nowrap;    
+  white-space: nowrap;
 }
 
 
