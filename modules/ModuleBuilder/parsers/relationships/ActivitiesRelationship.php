@@ -96,7 +96,7 @@ class ActivitiesRelationship extends OneToManyRelationship
      * Define the labels to be added to the module for the new relationships
      * @return array    An array of system value => display value
      */
-    public function buildLabels()
+    public function buildLabels($update = false)
     {
         $labelDefinitions = array( ) ;
         if (!$this->relationship_only) {
@@ -155,7 +155,7 @@ class ActivitiesRelationship extends OneToManyRelationship
         return $vardefs ;
     }
 
-    protected function getLinkFieldDefinition($sourceModule, $relationshipName)
+    protected function getLinkFieldDefinition($sourceModule, $relationshipName, $right_side = false, $vname = "", $id_name = false)
     {
         $vardef = array( ) ;
         $vardef [ 'name' ] = $relationshipName;
