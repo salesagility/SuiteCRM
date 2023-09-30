@@ -96,6 +96,7 @@ $mod_strings = array(
     'LBL_TIME_AND' => 'and',
     'LBL_TIME_AGO' => 'ago',
 // Activity stream
+    'CREATED_ACCOUNT' => 'created a <b>NEW</b> {0}',
     'CREATED_CONTACT' => 'created a <b>NEW</b> {0}',
     'CREATED_OPPORTUNITY' => 'created a <b>NEW</b> {0}',
     'CREATED_CASE' => 'created a <b>NEW</b> {0}',
