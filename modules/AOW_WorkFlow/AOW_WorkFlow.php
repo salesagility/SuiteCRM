@@ -643,6 +643,16 @@ class AOW_WorkFlow extends Basic
                     $where_set = true;
                     break;
                 case 'Value':
+                    if(empty($condition->value) && $condition->operator === 'Equal_To') {
+                        $value = "'' OR {$field} IS NULL)";
+                        $field = "(" . $field;
+                        break;
+                    }
+                    if(empty($condition->value) && $condition->operator === 'Not_Equal_To') {
+                        $value = "'' OR {$field} IS NOT NULL)";
+                        $field = "(" . $field;
+                        break;
+                    }
                 default:
                     $value = "'".$condition->value."'";
                     break;

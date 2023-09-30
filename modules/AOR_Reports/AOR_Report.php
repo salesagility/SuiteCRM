@@ -1859,6 +1859,19 @@ class AOR_Report extends Basic
                         $field = "(" . $field;
                     }
 
+                    if ($condition->value_type == 'Value' && !$condition->value && $condition->operator == 'Not_Equal_To') {
+                        if (!isset($value)) {
+                            $GLOBALS['log']->warn(
+                                $condition->field
+                                . ' value is not set, assuming empty string value'
+                            );
+                            $value = '';
+                        }
+
+                        $value = "{$value} OR {$field} IS NOT NULL)";
+                        $field = "(" . $field;
+                    }
+
                     if (!$where_set) {
                         if ($condition->value_type == "Period") {
                             if (array_key_exists($condition->value, $app_list_strings['date_time_period_list'])) {
