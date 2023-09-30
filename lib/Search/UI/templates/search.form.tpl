@@ -65,6 +65,10 @@
                                    class="text-muted">{$APP.LBL_SEARCH_RESULTS_PER_PAGE}</label>
                             {html_options options=$sizeOptions selected=$searchQuerySize id="search-query-size" name="search-query-size"}
                             &nbsp;&nbsp;
+                            <label for="search-query-modules"
+                                   class="text-muted">{$APP.LBL_SEARCH_MODULES}:</label>
+                            {html_options options=$moduleOptions selected=$searchQueryModules id="search-query-modules" name="search-query-modules[]" multiple="1"}
+
                             <input type="hidden" name="search-query-from" value="{$searchQueryFrom}">
 
                             {if $engineOptions|@count gt 1}

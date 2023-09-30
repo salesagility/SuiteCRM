@@ -104,7 +104,10 @@ class ElasticSearchEngine extends SearchEngine
     private function createSearchParams(SearchQuery $query): array
     {
         $searchStr = $query->getSearchString();
-        $searchModules = SearchWrapper::getModules();
+        $searchModules = $query->getModules();
+        if (empty($searchModules)) {
+            $searchModules = SearchWrapper::getModules();
+        }
         $indexes = implode(',', array_map('strtolower', $searchModules));
 
         // Wildcard character required for Elasticsearch
