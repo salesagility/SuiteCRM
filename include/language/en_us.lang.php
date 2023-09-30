@@ -81,7 +81,6 @@ $app_list_strings = array(
         'Documents' => 'Documents',
         'DocumentRevisions' => 'Document Revisions',
         'Connectors' => 'Connectors',
-        'Roles' => 'Roles',
         'Notifications' => 'Notifications',
         'Sync' => 'Sync',
         'Users' => 'Users',
