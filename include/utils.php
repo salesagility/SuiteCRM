@@ -2665,7 +2665,9 @@ function purify_html(?string $value): string {
         $cleanedValue = '';
     }
 
-    return $cleanedValue;
+    $doubleCleanedValue = htmlentities((string) SugarCleaner::cleanHtml($doubleDecoded, true));
+
+    return $doubleCleanedValue;
 }
 
 function preprocess_param($value)

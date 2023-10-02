@@ -465,8 +465,8 @@ EOQ;
 
         $focus->save($check_notify);
 
-        if (!empty($_POST['duplicate_parent_id'])) {
-            clone_relationship($focus->db, array('opportunities_contacts'), 'opportunity_id', $_POST['duplicate_parent_id'], $focus->id);
+        if (!empty($_POST['duplicate_parent_id']) && (new \SuiteCRM\Utility\SuiteValidator())->isValidId($_POST['duplicate_parent_id'] ?? '')) {
+            clone_relationship($focus->db, array('opportunities_contacts'), 'opportunity_id', $focus->db->quote($_POST['duplicate_parent_id']), $focus->id);
         }
         $return_id = $focus->id;
 
