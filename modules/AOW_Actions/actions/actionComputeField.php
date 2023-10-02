@@ -453,7 +453,6 @@ class actionComputeField extends actionBase
 					</div>
 				</fieldset>";
 
-        if (count($params) > 0) {
             $parameters = $this->createJavascriptArrayFromParams($params, 'parameter');
             $parameterTypes = $this->createJavascriptArrayFromParams($params, 'parameterType');
             $formulas = $this->createJavascriptArrayFromParams($params, 'formula');
@@ -473,7 +472,7 @@ class actionComputeField extends actionBase
 					
 					$('#relationParameterSelect$line').change(onRelationParameterSelectChange$line);					
 					$('#relationParameterSelect$line').change();
-					
+   
 					function onFieldChange$line(dropdown, valueDropdown) {
 						var value = $(dropdown).find('option:selected').attr('dataType');						
 						if (value == 'enum' || value == 'multienum' || value == 'dynamicenum') {
@@ -482,19 +481,7 @@ class actionComputeField extends actionBase
 							$(valueDropdown).hide();
 						}
 					}
-					
-					$('#$containerName .computeFieldParametersContainer').find('.parameterSelect').change(function () {
-						onFieldChange$line(this, $('#$containerName .computeFieldParametersContainer').find('.parameterTypeSelect'));
-					});
-					
-					$('#$containerName .computeFieldRelationParametersContainer').find('.relationParameterFieldSelect').change(function () {
-						onFieldChange$line(this, $('#$containerName .computeFieldRelationParametersContainer').find('.relationParameterTypeSelect'));
-					});
-					
-					$('#$containerName .computeFieldParametersContainer').find('.parameterSelect').change();
-					$('#$containerName .computeFieldRelationParametersContainer').find('.relationParameterFieldSelect:visible').change();
 				</script>";
-        }
 
         $html .= "
 			</div>
