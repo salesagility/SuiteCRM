@@ -2521,12 +2521,12 @@ class SugarBean
                 }
 
                 if (isset($def['type']) && ($def['type'] == 'html' || $def['type'] == 'longhtml')) {
-                    $this->$key = htmlentities((string) SugarCleaner::cleanHtml($this->$key, true));
+                    $this->$key = purify_html($this->$key);
                 } elseif (
                     (strpos((string) $type, 'char') !== false || strpos((string) $type, 'text') !== false || $type == 'enum') &&
                     !empty($this->$key)
                 ) {
-                    $this->$key = htmlentities((string) SugarCleaner::cleanHtml($this->$key, true));
+                    $this->$key = purify_html($this->$key);
                 }
             }
         }
