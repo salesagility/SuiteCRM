@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-require_once('include/SugarTinyMCE.php');
+require_once 'include/SuiteEditor/SuiteEditorConnector.php';
 
 
 
@@ -98,8 +98,11 @@ $xtpl->assign('SIGNATURE_TEXT', !empty($focus->signature_html) ? $focus->signatu
 if (isset($_REQUEST['the_user_id'])) {
     $xtpl->assign('THE_USER_ID', $_REQUEST['the_user_id']);
 }
-$tiny = new SugarTinyMCE();
-$xtpl->assign("tinyjs", $tiny->getInstance('sigText'));
+$templateWidth = 400;
+$editor_settings = SuiteEditorConnector::getSuiteSettings(isset($focus->signature_html) ? html_entity_decode($focus->signature_html) : '', $templateWidth);
+$editor_settings["textareaId"] = "sigText";
+$xtpl->assign('template_width', $templateWidth);
+$xtpl->assign('BODY_EDITOR', SuiteEditorConnector::getHtml($editor_settings));
 
 $xtpl->parse('main.textarea');
 
