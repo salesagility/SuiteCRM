@@ -8,7 +8,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2023 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,11 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
-
-
-
-
-
 $focus = BeanFactory::newBean('ProspectLists');
 
 if (!isset($_REQUEST['record'])) {
@@ -59,4 +54,9 @@ if (!$focus->ACLAccess('Delete')) {
 }
 $focus->mark_deleted($_REQUEST['record']);
 
-header("Location: index.php?module=".$_REQUEST['return_module']."&action=".$_REQUEST['return_action']."&record=".$_REQUEST['return_id']);
+$return_id = $_REQUEST['return_id'] ?? $focus->id;
+$return_module = $_REQUEST['return_module'];
+
+require_once('include/formbase.php');
+
+handleRedirect($return_id, $return_module);
