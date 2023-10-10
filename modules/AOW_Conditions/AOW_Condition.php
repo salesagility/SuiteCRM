@@ -124,13 +124,15 @@ class AOW_Condition extends Basic
                             }
                         } else {
                             if ($field_name === 'value' && $post_data[$key . 'value_type'][$i] === 'Value') {
-                                $condition_module = $_REQUEST['flow_module'];
-                                if ($condition_relation !== $condition_module){
-                                    $flow_bean = new $GLOBALS['beanList'][$_REQUEST['flow_module']];
-                                    $flow_bean->load_relationship($condition_relation);
-                                    $rel_module = $flow_bean->$condition_relation->relationship->lhsLinkDef['module'];
-                                    if (!empty($rel_module) && $_REQUEST['flow_module'] !== $rel_modules) {
-                                        $condition_module = $rel_module;
+                                $condition_module = $_REQUEST['flow_module'] ?? '';
+                                if ($condition_relation !== $condition_module && !empty($condition_module)) {
+                                    $flow_bean = BeanFactory::newBean($condition_module);
+                                    if (!empty($flow_bean)) {
+                                        $flow_bean->load_relationship($condition_relation);
+                                        $rel_module = $flow_bean->$condition_relation->relationship->lhsLinkDef['module'];
+                                        if (!empty($rel_module) &&  $condition_module !== $rel_modules) {
+                                            $condition_module = $rel_module;
+                                        }
                                     }
                                 }
                                 $post_data[$key . $field_name][$i] = fixUpFormatting($condition_module, $condition->field, $post_data[$key . $field_name][$i]);
