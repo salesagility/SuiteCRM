@@ -50,6 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class SugarWidgetFieldName extends SugarWidgetFieldVarchar
 {
     protected static $moduleSavePermissions = array();
+    protected $sugarWidgetFieldId;
 
     public function __construct(&$layout_manager)
     {
