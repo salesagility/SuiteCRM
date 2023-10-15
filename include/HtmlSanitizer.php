@@ -49,6 +49,7 @@ class HtmlSanitizer
         $config->set('AutoFormat.RemoveEmpty', true);
         $config->set('Cache.SerializerPermissions', 0775);
         $config->set('Filter.ExtractStyleBlocks.TidyImpl', false);
+        $config->set('URI.AllowedSchemes', array('data' => true));
         if (!empty($sugar_config['html_allow_objects'])) {
             $config->set('HTML.SafeObject', true);
             $config->set('HTML.SafeEmbed', true);
