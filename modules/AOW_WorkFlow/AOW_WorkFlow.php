@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2023 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -68,6 +68,7 @@ class AOW_WorkFlow extends Basic
     public $run_when;
     public $flow_run_on;
     public $multiple_runs;
+    public static $doNotRunInSaveLogic = false;
 
     /**
      * return an SQL operator
@@ -205,6 +206,7 @@ class AOW_WorkFlow extends Basic
      */
     public function run_flow()
     {
+        AOW_WorkFlow::$doNotRunInSaveLogic = true;
         $beans = $this->get_flow_beans();
         if (!empty($beans)) {
             foreach ($beans as $bean) {
@@ -212,6 +214,7 @@ class AOW_WorkFlow extends Basic
                 $this->run_actions($bean);
             }
         }
+        AOW_WorkFlow::$doNotRunInSaveLogic = false;
     }
 
     /**
@@ -219,6 +222,10 @@ class AOW_WorkFlow extends Basic
      */
     public function run_bean_flows(SugarBean $bean)
     {
+        if (AOW_WorkFlow::$doNotRunInSaveLogic) {
+            return;
+        }
+
         $query = "SELECT id FROM aow_workflow WHERE aow_workflow.flow_module = '" . $bean->module_dir . "' AND aow_workflow.status = 'Active' AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'On_Save' OR aow_workflow.run_when = 'Create') AND aow_workflow.deleted = 0 ";
 
         $result = $this->db->query($query, false);
