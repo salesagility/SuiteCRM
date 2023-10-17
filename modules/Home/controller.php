@@ -102,11 +102,16 @@ class HomeController extends SugarController
                     } else {
                         $GLOBALS['log']->warn("Unknown text label in a fielddef: {$fielddef['vname']}");
                         if (!isset($fielddef['label'])) {
-                            $fielddef['label'] = null;
+                            $fielddef['label'] = $fielddef['labelValue'] ?? null;
                         }
                     }
                 }
                 $validate_array = array('type' => $fielddef['type'], 'required' => $fielddef['required'],'label' => $fielddef['label']);
+                if (isset($fielddef['validation']) && isset($fielddef['validation']['type']) && $fielddef['validation']['type']=='range') {
+                    $validate_array['type'] = $fielddef['validation']['type'];
+                    $validate_array['min'] = $fielddef['validation']['min'] ?? null;
+                    $validate_array['max'] = $fielddef['validation']['max'] ?? null;
+                }
 
                 echo json_encode($validate_array);
             }

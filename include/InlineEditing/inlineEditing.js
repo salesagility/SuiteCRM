@@ -626,10 +626,16 @@ function getValidationRules(field, module, id) {
         );
         return false;
     }
-
-    return (
-        "<script type='text/javascript'>addToValidate('EditView', \"" + field + '", "' + validation["type"] + '", ' + validation["required"] + ',"' + validation["label"] + '");</script>'
-    );
+    if(validation["type"]=="range") {
+        return (
+            "<script type='text/javascript'>addToValidateRange('EditView', \"" + field + '", "' + validation["type"] + '", ' + validation["required"] + ',"' + validation["label"] + '",' + validation["min"] + ',' + validation["max"]+');</script>'
+        );
+    }
+    else {
+        return (
+            "<script type='text/javascript'>addToValidate('EditView', \"" + field + '", "' + validation["type"] + '", ' + validation["required"] + ',"' + validation["label"] + '");</script>'
+        );
+    }
 }
 
 /**
