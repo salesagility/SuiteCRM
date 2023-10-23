@@ -70,9 +70,9 @@ trait IndexingSchedulerTrait
         $indexer = new self();
         $indexer->getLogger()->debug('Starting scheduled job');
 
-        $indexer->setDifferentialIndexing(
-            isset($options['partial']) ? $options['partial'] : true
-        );
+        $checkPartialIndexing = json_decode(html_entity_decode($options['fetched_row']['data']), true);
+
+        $indexer->setDifferentialIndexing($checkPartialIndexing['partial'] ?? true);
 
         try {
             $indexer->index();
