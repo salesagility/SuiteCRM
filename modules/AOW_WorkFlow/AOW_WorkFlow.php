@@ -880,6 +880,18 @@ class AOW_WorkFlow extends Basic
                             $value = strtotime($value);
                         } elseif ($data['type'] == 'bool' && (!(bool)$value || strtolower($value) == 'false')) {
                             $value = 0;
+                        } elseif($data['type'] == 'multienum') {
+                            $value = unencodeMultienum($value);
+                            $field = unencodeMultienum($field);
+                            switch ($condition->operator) {
+                                case 'Not_Equal_To':
+                                    $condition->operator = 'Not_One_of';
+                                    break;
+                                case 'Equal_To':
+                                default:
+                                    $condition->operator = 'One_of';
+                                    break;
+                            }
                         }
                         $type = $data['dbType'] ?? $data['type'];
                         if ((strpos((string) $type, 'char') !== false || strpos((string) $type, 'text') !== false) && !empty($field)) {
