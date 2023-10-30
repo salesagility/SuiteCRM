@@ -530,11 +530,12 @@ function getModuleField(
         if (isset($fieldlist[$name]['options']) && is_array($fieldlist[$name]['options']) && !isset($fieldlist[$name]['options'][''])) {
             $fieldlist[$name]['options'][''] = '';
         }
-
+	    // Fix #9435 - The editview of a workflow is built using a Smarty template. When editing an existing workflow with an action
+        // that sets to blank an enum field which has a not blank default value, the template does not show the blank value (as expected)
+        // but the default value. In order to properly show the expected blank value, we hack the vardef definition overriding default value 
+        // with blank value when the stored workflow value (now in $value) is blank.
         if ($fieldlist[$name]['type'] == 'enum' || $fieldlist[$name]['type'] == 'multienum' || $fieldlist[$name]['type'] == 'dynamicenum') {
-            if (($params['value_set'] ?? '') === true && $value === "") {
-                $fieldlist[$name]['default'] = $value;
-            }
+            $fieldlist[$name]['default'] = $value === "" ? $value : $fieldlist[$name]['default'];
         }
     }
 
