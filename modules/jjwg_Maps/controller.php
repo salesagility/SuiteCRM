@@ -117,8 +117,8 @@ class jjwg_MapsController extends SugarController
                 $this->bean->geocoded_headings[] = $code;
             }
         }
-        $responses['Approximate'] = 'APPROXIMATE';
-        $responses['Empty'] = 'Empty';
+        $responses['APPROXIMATE'] = 'APPROXIMATE';
+        $responses['EMPTY'] = 'EMPTY';
         $this->bean->geocoded_headings[] = 'APPROXIMATE';
         $this->bean->geocoded_headings[] = 'EMPTY';
 
