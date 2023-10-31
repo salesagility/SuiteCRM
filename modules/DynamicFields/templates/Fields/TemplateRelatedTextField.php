@@ -218,6 +218,7 @@ class TemplateRelatedTextField extends TemplateText
         $def['quicksearch'] = 'enabled';
         $def['studio'] = 'visible';
         $def['source'] = 'non-db';
+        $def['resetFieldInStudio'] = 'true';
         return $def;
     }
 
