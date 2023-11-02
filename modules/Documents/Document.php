@@ -270,7 +270,7 @@ class Document extends File
 
                 $allowedPreview = $sugar_config['allowed_preview'] ?? [];
 
-                if (in_array($row['file_ext'], $allowedPreview, true)) {
+                if (!empty($row['file_ext']) && in_array($row['file_ext'], $allowedPreview, true)) {
                     $this->show_preview = true;
                 }
 

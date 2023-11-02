@@ -678,6 +678,7 @@ $mod_strings = array(
     'ML_SUITE_DZ' => 'SuiteCRM Developer Zone',
     'ML_AVAIL_RESTRICTION' => 'The available restrictions and exceptions are detailed in the',
     'ML_OVERRIDE_CORE_FILES' => 'Overriding of core SuiteCRM files is not allowed ',
+    'ML_INVALID_PHP_FILE' => 'Invalid file',
     'ML_PATH_MAY_NOT_CONTAIN' => 'File path may not contain',
     'ML_INVALID_ACTION_IN_MANIFEST' => 'Invalid action in your manifest:',
     'ML_NO_MANIFEST' => 'This package does not contain a manifest',

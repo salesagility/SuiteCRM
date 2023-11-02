@@ -542,7 +542,7 @@ class DashletGeneric extends Dashlet
             }
         }
         if (!empty($req['dashletTitle'])) {
-            $options['title'] = $req['dashletTitle'];
+            $options['title'] = htmlentities(html_entity_decode($req['dashletTitle']));
         }
 
         // Don't save the options for myItemsOnly if we're not even showing the options.

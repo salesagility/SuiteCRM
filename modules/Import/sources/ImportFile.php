@@ -235,6 +235,8 @@ class ImportFile extends ImportDataSource
                 $this->_currentRow[$key] = $locale->translateCharset($value, $this->_encoding);
             }
 
+            $this->_currentRow[$key] = securexss($value);
+
             // Convert all line endings to the same style as PHP_EOL
             // Use preg_replace instead of str_replace as str_replace may cause extra lines on Windows
             $this->_currentRow[$key] = preg_replace("[\r\n|\n|\r]", PHP_EOL, (string) $this->_currentRow[$key]);

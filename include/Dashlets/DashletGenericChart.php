@@ -232,7 +232,7 @@ abstract class DashletGenericChart extends Dashlet
         }
 
         if (!empty($req['dashletTitle'])) {
-            $options['title'] = $req['dashletTitle'];
+            $options['title'] = htmlentities(html_entity_decode($req['dashletTitle']));
         }
 
         $options['autoRefresh'] = empty($req['autoRefresh']) ? '0' : $req['autoRefresh'];

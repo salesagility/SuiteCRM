@@ -84,7 +84,16 @@ function unzip_file($zip_archive, $archive_file, $zip_dir)
     }
 
     if ($archive_file !== null) {
-        $res = $zip->extractTo(UploadFile::realpath($zip_dir), $archive_file);
+        try {
+            $res = $zip->extractTo(UploadFile::realpath($zip_dir), $archive_file);
+        } catch (ValueError $t) {
+            if (file_exists($zip_archive)){
+                LoggerManager::getLogger()->fatal(sprintf('ZIP Error(%d): Invalid file(%s). Deleting.', $res, $zip_archive));
+                unlink($zip_archive);
+            }
+            throw $t;
+        }
+
         if ((new SplFileInfo($archive_file))->getExtension() == 'php') {
             SugarCache::cleanFile(UploadFile::realpath($zip_dir).'/'.$archive_file);
         }

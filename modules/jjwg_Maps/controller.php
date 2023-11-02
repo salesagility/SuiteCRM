@@ -1106,7 +1106,9 @@ class jjwg_MapsController extends SugarController
             $this->sugarSmarty->assign("address", $display['jjwg_maps_address_c']);
             $this->sugarSmarty->assign("fields", $display); // display fields array
             // Use @ error suppression to avoid issues with SugarCRM On-Demand
-            $marker['html'] = @$this->sugarSmarty->fetch('./custom/modules/jjwg_Maps/tpls/' . $module_type . 'InfoWindow.tpl');
+            if (file_exists('./custom/modules/jjwg_Maps/tpls/' . $module_type . 'InfoWindow.tpl')) {
+                $marker['html'] = $this->sugarSmarty->fetch('./custom/modules/jjwg_Maps/tpls/' . $module_type . 'InfoWindow.tpl');
+            }
             if (empty($marker['html'])) {
                 $marker['html'] = $this->sugarSmarty->fetch('./modules/jjwg_Maps/tpls/' . $module_type . 'InfoWindow.tpl');
             }
@@ -1154,7 +1156,9 @@ class jjwg_MapsController extends SugarController
             $this->sugarSmarty->assign("module_type", 'jjwg_Markers');
             $this->sugarSmarty->assign("fields", $fields); // display fields array
             // Use @ error suppression to avoid issues with SugarCRM On-Demand
-            $marker['html'] = @$this->sugarSmarty->fetch('./custom/modules/jjwg_Markers/tpls/MarkersInfoWindow.tpl');
+            if (file_exists('./custom/modules/jjwg_Markers/tpls/MarkersInfoWindow.tpl')) {
+                $marker['html'] = $this->sugarSmarty->fetch('./custom/modules/jjwg_Markers/tpls/MarkersInfoWindow.tpl');
+            }
             if (empty($marker['html'])) {
                 $marker['html'] = $this->sugarSmarty->fetch('./modules/jjwg_Markers/tpls/MarkersInfoWindow.tpl');
             }
@@ -1192,7 +1196,9 @@ class jjwg_MapsController extends SugarController
             $this->sugarSmarty->assign("module_type", 'jjwg_Areas');
             $this->sugarSmarty->assign("fields", $fields); // display fields array
             // Use @ error suppression to avoid issues with SugarCRM On-Demand
-            $area['html'] = @$this->sugarSmarty->fetch('./custom/modules/jjwg_Areas/tpls/AreasInfoWindow.tpl');
+            if (file_exists('./custom/modules/jjwg_Areas/tpls/AreasInfoWindow.tpl')) {
+                $area['html'] = $this->sugarSmarty->fetch();
+            }
             if (empty($area['html'])) {
                 $area['html'] = $this->sugarSmarty->fetch('./modules/jjwg_Areas/tpls/AreasInfoWindow.tpl');
             }

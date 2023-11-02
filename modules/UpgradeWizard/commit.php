@@ -344,6 +344,12 @@ eoq;
             logThis('*** ERROR: could not write config.php! - upgrade will fail!');
             $errors[] = $mod_strings['ERR_UW_CONFIG_WRITE'];
         }
+
+        if (function_exists('post_install_config_rebuild')) {
+            logThis('running post_install_config_rebuild() function');
+            @post_install_config_rebuild();
+        }
+
     }
     logThis('post_install() done.');
     //// END POSTINSTALL SCRIPTS

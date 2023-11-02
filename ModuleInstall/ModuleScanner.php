@@ -603,6 +603,8 @@ class ModuleScanner
         }
         $contents = file_get_contents($file);
         if (!$this->isPHPFile($contents)) {
+            $issues[] = translate('ML_INVALID_PHP_FILE', 'Administration');
+            $this->issues['file'][$file] = $issues;
             return $issues;
         }
         $tokens = @token_get_all($contents);

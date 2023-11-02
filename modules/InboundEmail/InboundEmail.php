@@ -6360,7 +6360,7 @@ class InboundEmail extends SugarBean
      */
     public function connectMailserver($test = false, $force = false)
     {
-        global $mod_strings;
+        global $mod_strings, $sugar_config;
 
         $msg = '';
 
@@ -6381,6 +6381,11 @@ class InboundEmail extends SugarBean
             $requestSsl = null;
         } else {
             $requestSsl = $_REQUEST['ssl'];
+        }
+
+        if (empty($this->port) || !in_array($this->port, $sugar_config['valid_imap_ports'] ?? [], true)) {
+            $GLOBALS['log']->fatal("InboundEmail::connectMailserver - Invalid port provided: '" . ($this->port ?? '') . "'. See valid_imap_ports config.");
+            return $mod_strings['ERR_INVALID_PORT'] ?? "Invalid port";
         }
 
         $useSsl = ($requestSsl == 'true') ? true : false; // TODO: validate the ssl request variable value (for e.g its posibble to give a numeric 1 as true)
