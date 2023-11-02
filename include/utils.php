@@ -231,7 +231,6 @@ function make_sugar_config(&$sugar_config)
         'upload_dir' => $upload_dir, // this must be set!!
         'upload_maxsize' => empty($upload_maxsize) ? 30000000 : $upload_maxsize,
         'allowed_preview' => [
-            'pdf',
             'gif',
             'png',
             'jpeg',
@@ -280,6 +279,10 @@ function make_sugar_config(&$sugar_config)
             'min_cron_interval' => 30, // minimal interval between cron jobs
         ),
         'strict_id_validation' => false,
+        'legacy_email_behaviour' => false,
+        'valid_imap_ports' => [
+            '110', '143', '993', '995'
+        ]
     );
 }
 
@@ -495,7 +498,6 @@ function get_sugar_config_defaults(): array
             'bmp'
         ],
         'allowed_preview' => [
-            'pdf',
             'gif',
             'png',
             'jpeg',
@@ -569,6 +571,10 @@ function get_sugar_config_defaults(): array
             'enable' => true,
             'gc_probability' => 1,
             'gc_divisor' => 100,
+        ],
+        'legacy_email_behaviour' => false,
+        'valid_imap_ports' => [
+            '110', '143', '993', '995'
         ]
     ];
 
@@ -2627,7 +2633,7 @@ function securexss($uncleanString)
     $partialString = str_replace(array_keys($xss_cleanup), $xss_cleanup, $uncleanString);
 
     $antiXss = new AntiXSS();
-    $antiXss->removeEvilAttributes(['style']);
+    $antiXss->removeEvilAttributes(['style', 'onerror']);
 
     return $antiXss->xss_clean($partialString);
 }
@@ -2651,21 +2657,23 @@ function securexsskey($value, $die = true)
  * @param string|null $value
  * @return string
  */
-function purify_html(?string $value): string {
+function purify_html(?string $value, array $extraOptions = []): string {
 
     if (($value ?? '') === '') {
         return '';
     }
 
-    $cleanedValue = htmlentities(SugarCleaner::cleanHtml($value, true));
+    $sanitizer = new SuiteCRM\HtmlSanitizer($extraOptions);
+
+    $cleanedValue = htmlentities($sanitizer->clean($value, true));
     $decoded = html_entity_decode($cleanedValue);
     $doubleDecoded = html_entity_decode($decoded);
 
     if (stripos($decoded, '<script>') !== false || stripos($doubleDecoded, '<script>') !== false){
-        $cleanedValue = '';
+        $doubleDecoded = '';
     }
 
-    $doubleCleanedValue = htmlentities((string) SugarCleaner::cleanHtml($doubleDecoded, true));
+    $doubleCleanedValue = htmlentities($sanitizer->clean($doubleDecoded, true));
 
     return $doubleCleanedValue;
 }

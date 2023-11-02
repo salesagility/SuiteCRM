@@ -272,7 +272,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
                 $row['file_ext'] = pathinfo($name, PATHINFO_EXTENSION);
             }
 
-            if (in_array($row['file_ext'], $allowedPreview, true)) {
+            if (!empty($row['file_ext']) && in_array($row['file_ext'], $allowedPreview, true)) {
                 $showPreview = isset($_REQUEST['preview']) && $_REQUEST['preview'] === 'yes' && $mime_type !== 'text/html';
             }
 
