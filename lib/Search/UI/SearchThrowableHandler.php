@@ -62,6 +62,7 @@ use Whoops\Run;
  *
  * If developer mode is enabled, further details will be provided.
  */
+#[\AllowDynamicProperties]
 class SearchThrowableHandler
 {
     /** @var Throwable The Exception or Error that has occurred */
@@ -157,7 +158,7 @@ class SearchThrowableHandler
     /**
      * Returns an array with the SearchWrapper status to be displayed in the detailed view.
      *
-     * @return array
+     * @return mixed[]|null
      */
     private function getSearchWrapperStatus(): ?array
     {

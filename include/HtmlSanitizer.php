@@ -7,6 +7,7 @@ namespace SuiteCRM;
  * @package SuiteCRM
  * Html Sanitizer
  */
+#[\AllowDynamicProperties]
 class HtmlSanitizer
 {
     /**

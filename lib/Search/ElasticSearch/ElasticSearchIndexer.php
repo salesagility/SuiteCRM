@@ -61,6 +61,7 @@ use SuiteCRM\Search\Index\IndexingStatisticsTrait;
 /**
  * Class ElasticSearchIndexer takes care of creating a search index for the database.
  */
+#[\AllowDynamicProperties]
 class ElasticSearchIndexer extends AbstractIndexer
 {
     use IndexingStatisticsTrait;
@@ -91,7 +92,7 @@ class ElasticSearchIndexer extends AbstractIndexer
     /**
      * Returns whether the Elasticsearch is enabled by user configuration or not.
      *
-     * @return bool
+     * @return bool|null
      */
     public static function isEnabled(): ?bool
     {
@@ -369,7 +370,7 @@ class ElasticSearchIndexer extends AbstractIndexer
      *
      * @param string $module name of the module
      *
-     * @return array an associative array with the metadata
+     * @return mixed[]|null an associative array with the metadata
      */
     public function getMeta(string $module): ?array
     {
@@ -500,16 +501,18 @@ class ElasticSearchIndexer extends AbstractIndexer
             // logs the errors
             foreach ($responses['items'] as $item) {
                 $action = array_keys($item)[0];
-                $type = $item[$action]['error']['type'];
-                $reason = $item[$action]['error']['reason'];
-                $this->logger->error("[$action] [$type] $reason");
+                if(isset($item[$action]['error'])) {
+                    $type = $item[$action]['error']['type'];
+                    $reason = $item[$action]['error']['reason'];
+                    $this->logger->error("[$action] [$type] $reason");
+                    
+                    if ($action === 'index') {
+                        $this->indexedRecordsCount--;
+                    }
 
-                if ($action === 'index') {
-                    $this->indexedRecordsCount--;
-                }
-
-                if ($action === 'delete') {
-                    $this->removedRecordsCount--;
+                    if ($action === 'delete') {
+                        $this->removedRecordsCount--;
+                    }
                 }
             }
         }
@@ -546,7 +549,7 @@ class ElasticSearchIndexer extends AbstractIndexer
     private function makeParamsHeaderFromBean(SugarBean $bean): array
     {
         return [
-            'index' => $bean->module_name,
+            'index' => strtolower($bean->module_name),
             'id' => $bean->id,
         ];
     }

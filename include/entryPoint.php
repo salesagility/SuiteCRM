@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 $GLOBALS['starttTime'] = microtime(true);
 
 set_include_path(
-    dirname(__FILE__).'/..'.PATH_SEPARATOR.
+    __DIR__.'/..'.PATH_SEPARATOR.
     get_include_path()
 );
 
@@ -141,7 +141,7 @@ UploadStream::register();
 ///////////////////////////////////////////////////////////////////////////////
 ////    Handle loading and instantiation of various Sugar* class
 if (!defined('SUGAR_PATH')) {
-    define('SUGAR_PATH', realpath(dirname(__FILE__).'/..'));
+    define('SUGAR_PATH', realpath(__DIR__.'/..'));
 }
 require_once 'include/SugarObjects/SugarRegistry.php';
 
@@ -159,6 +159,15 @@ if (empty($GLOBALS['installing'])) {
         } else {
             unset($_GET['PHPSESSID']);
         }
+    }
+
+    $sessionGCConfig = $sugar_config['session_gc'] ?? [];
+    if (!isset($sessionGCConfig['enable']) || isTrue($sessionGCConfig['enable'])) {
+        $gcProbability = $sessionGCConfig['gc_probability'] ?? 1;
+        $gcDivisor = $sessionGCConfig['gc_divisor'] ?? 100;
+
+        ini_set('session.gc_probability', $gcProbability);
+        ini_set('session.gc_divisor', $gcDivisor);
     }
 
     if (!empty($sugar_config['session_dir'])) {

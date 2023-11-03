@@ -171,12 +171,12 @@ class ViewMetadataTest extends SuitePHPUnitFrameworkTestCase
         self::assertIsArray($fields1);
 
         //check with a very common attribute
-        $attributes = array('id');
+        $attributes = ['id' => 'true'];
         $fields2 = VardefBrowser::findFieldsWithAttributes($attributes);
         self::assertIsArray($fields2);
 
         //check with a very specific attribute
-        $attributes = array('category');
+        $attributes = ['category' => 'true'];
         $fields3 = VardefBrowser::findFieldsWithAttributes($attributes);
         self::assertIsArray($fields3);
 

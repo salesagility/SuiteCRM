@@ -45,6 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once __DIR__ . '/../../include/OutboundEmail/OutboundEmail.php';
 require_once __DIR__ . '/../../modules/UserPreferences/UserPreference.php';
 
+#[\AllowDynamicProperties]
 class UsersController extends SugarController
 {
     /**

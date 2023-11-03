@@ -141,11 +141,7 @@ class SugarCache
             }
         }
         // Zend OPcache
-        if (
-            extension_loaded('Zend OPcache') &&
-            ($opcache_status = opcache_get_status(false)) !== false &&
-            $opcache_status['opcache_enabled'] && $full_reset
-        ) {
+        if ($full_reset && SugarCache::isOPcacheEnabled()) {
             if (!opcache_reset()) {
                 LoggerManager::getLogger()->error("OPCache - could not reset");
             }
@@ -163,11 +159,7 @@ class SugarCache
         }
 
         // Zend OPcache
-        if (
-            extension_loaded('Zend OPcache') &&
-            ($opcache_status = opcache_get_status(false)) !== false &&
-            $opcache_status['opcache_enabled']
-        ) {
+        if (SugarCache::isOPcacheEnabled()) {
             // three attempts incase concurrent opcache operations pose a lock
             for ($i = 3; $i && !opcache_invalidate($file, true); --$i) {
                 sleep(0.2);
@@ -192,6 +184,24 @@ class SugarCache
             if ((new SplFileInfo($file))->getExtension() == 'php') {
                 sugarCache::cleanFile($file);
             }
+        }
+    }
+
+    /**
+     * Check if OPcache is enabled
+     *
+     */
+    public static function isOPcacheEnabled()
+    {
+        if (extension_loaded('Zend OPcache')) {
+            if (function_exists('opcache_get_status')) {
+                $opcache_status = opcache_get_status(false);
+                return $opcache_status !== false && ($opcache_status['opcache_enabled'] ?? false);
+            } else {
+                return ini_get('opcache.enable');
+            }
+        } else {
+            return false;
         }
     }
 }

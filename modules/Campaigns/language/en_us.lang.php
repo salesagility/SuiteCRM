@@ -415,6 +415,7 @@ $mod_strings = array(
     'LBL_ATTACHMENTS' => 'Attachments',
     'ERR_MISSING_REQUIRED_FIELDS' => 'Missing required field',
     'LBL_SUITE_DOCUMENT' => 'Document',
+    'LBL_UPLOAD_FILE' => 'Upload File',
     'LBL_EMAIL_ATTACHMENT' => 'Email Attachment',
     'LBL_PROCESS_BOUNCED_EMAILS' => 'Process Bounced Emails',
     'LBL_PROCESS_CAMPAIGN_EMAILS' => 'Process Campaign Emails',

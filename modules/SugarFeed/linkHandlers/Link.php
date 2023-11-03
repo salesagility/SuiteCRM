@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 
 
+#[\AllowDynamicProperties]
 class FeedLinkHandlerLink
 {
     public function getDisplay(&$data)
@@ -61,7 +62,7 @@ class FeedLinkHandlerLink
             }
         }
         // Make sure they aren't trying to do something nasty like break out of a quote or something
-        $link_url = str_replace(array('<','>','"',"'"), array('&lt;','&gt;','&quot;','&apos;'), $link_url);
+        $link_url = str_replace(array('<','>','"',"'"), array('&lt;','&gt;','&quot;','&apos;'), (string) $link_url);
 
         $feed->link_url = $link_url;
     }

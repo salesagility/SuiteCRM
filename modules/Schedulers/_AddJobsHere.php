@@ -183,7 +183,7 @@ function pollMonitoredInboxes()
                                 if ($ieX->isMailBoxTypeCreateCase()) {
                                     $userId = "";
                                     if ($distributionMethod == 'roundRobin') {
-                                        if (count($users) == 1) {
+                                        if (count($users) === 1) {
                                             $userId = $users[0];
                                             $lastRobin = $users[0];
                                         } else {
@@ -198,7 +198,7 @@ function pollMonitoredInboxes()
                                             }
                                         } // else
                                     } else {
-                                        if (count($users) == 1) {
+                                        if (count($users) === 1) {
                                             foreach ($users as $k => $value) {
                                                 $userId = $value;
                                             } // foreach
@@ -316,7 +316,7 @@ function pruneDatabase()
             }
 
             $custom_columns = array();
-            if (array_search($table . '_cstm', $tables)) {
+            if (array_search($table . '_cstm', $tables, true)) {
                 $custom_columns = $db->get_columns($table . '_cstm');
                 if (empty($custom_columns['id_c'])) {
                     $custom_columns = array();
@@ -665,6 +665,9 @@ function pollMonitoredInboxesAOP()
                                             throw new Exception('Email retrieving error to handle case create, email id was: ' . $emailId);
                                         }
                                     }
+                                    if (empty($aopInboundEmailX->email)) {
+                                        throw new Exception('Invalid type for email id ' . $emailId);
+                                    }
                                     $aopInboundEmailX->handleCreateCase($aopInboundEmailX->email, $userId);
                                 } // if
                             } // if
@@ -833,6 +836,7 @@ function processAOW_Workflow()
     return $workflow->run_flows();
 }
 
+#[\AllowDynamicProperties]
 class AORScheduledReportJob implements RunnableSchedulerJob
 {
     public function setJob(SchedulersJob $job)
@@ -903,7 +907,7 @@ EOF;
 
 function runElasticSearchIndexerScheduler($data)
 {
-    return \SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer::schedulerJob(json_decode($data));
+    return \SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer::schedulerJob(json_decode((string) $data));
 }
 
 if (file_exists('custom/modules/Schedulers/_AddJobsHere.php')) {

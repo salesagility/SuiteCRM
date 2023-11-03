@@ -1,15 +1,15 @@
 <h1>{$survey.name}</h1>
 <table>
     <tr>
-        <th>Responses:</th>
+        <th>{$MOD.LBL_SURVEY_RESPONSES}</th>
         <td>{$responsesCount}</td>
     </tr>
     <tr>
-        <th>Surveys Sent:</th>
+        <th>{$MOD.LBL_SURVEYS_SENT}</th>
         <td>{$surveysSent}</td>
     </tr>
     <tr>
-        <th>Distinct Surveys Sent:</th>
+        <th>{$MOD.LBL_SURVEY_DISTINCT}</th>
         <td>{$surveysSentDistinct}</td>
     </tr>
 </table>

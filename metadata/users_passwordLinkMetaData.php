@@ -51,6 +51,13 @@ $dictionary['users_password_link'] = [
             'type' => 'id',
             'required' => true,
         ],
+        'keyhash' => [
+            'name' => 'keyhash',
+            'vname' => 'LBL_KEY',
+            'type' => 'varchar',
+            'len'=>'255',
+            'required' => true,
+        ],
         'user_id' => [
             'name' => 'user_id',
             'vname' => 'LBL_USER_ID',

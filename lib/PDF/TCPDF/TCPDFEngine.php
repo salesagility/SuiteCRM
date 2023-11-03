@@ -49,6 +49,7 @@ use SuiteCRM\PDF\PDFEngine;
  * Class TFPDFEngine
  * @package SuiteCRM\PDF\TCPDF
  */
+#[\AllowDynamicProperties]
 class TCPDFEngine extends PDFEngine
 {
     /**
