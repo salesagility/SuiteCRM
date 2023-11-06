@@ -48,7 +48,7 @@ function setBrowserDisabled(id, state) {
 function getBrowserHTML(id, target_form_element, type, prefix) {
 	var option = prefix + "_" + type + "_browser_callback", cb, html;
 
-	cb = tinyMCEPopup.getParam(option, tinyMCEPopup.getParam("file_browser_callback"));
+	cb = tinyMCEPopup.getParam(option, tinyMCEPopup.getParam("file_picker_callback"));
 
 	if (!cb)
 		return "";

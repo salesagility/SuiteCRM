@@ -72,7 +72,7 @@ echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['
 $xtpl = new XTemplate('modules/Users/UserSignatureEditView.html');
 $xtpl->assign('MOD', $mod_strings);
 $xtpl->assign('APP', $app_strings);
-    
+
 $xtpl->assign('CANCEL_SCRIPT', 'window.close()');
 
 if (isset($_REQUEST['return_module'])) {
@@ -98,11 +98,81 @@ $xtpl->assign('SIGNATURE_TEXT', !empty($focus->signature_html) ? $focus->signatu
 if (isset($_REQUEST['the_user_id'])) {
     $xtpl->assign('THE_USER_ID', $_REQUEST['the_user_id']);
 }
-$tiny = new SugarTinyMCE();
-$xtpl->assign("tinyjs", $tiny->getInstance('sigText'));
+$js = displayTMCE();
+$xtpl->assign("tinyjs", $js);
 
 $xtpl->parse('main.textarea');
 
 //Add Custom Fields
 $xtpl->parse('main');
 $xtpl->out('main');
+
+
+function displayTMCE()
+{
+    require_once("include/SugarTinyMCE.php");
+    global $locale;
+
+    $tiny = new SugarTinyMCE();
+    $tinyMCE = $tiny->getConfig();
+
+    $js =<<<JS
+		<script language="javascript" type="text/javascript">
+		$tinyMCE
+		var df = '{$locale->getPrecedentPreference('default_date_format')}';
+
+ 		tinyMCE.init({
+    		theme : "advanced",
+    		theme_advanced_toolbar_align : "left",
+    		mode: "exact",
+			elements : "description",
+			theme_advanced_toolbar_location : "top",
+			theme_advanced_buttons1: "code,help,separator,bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,forecolor,backcolor,separator,styleprops,styleselect,formatselect,fontselect,fontsizeselect",
+			theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,selectall,separator,search,replace,separator,bullist,numlist,separator,outdent,indent,separator,ltr,rtl,separator,undo,redo,separator, link,unlink,anchor,image,separator,sub,sup,separator,charmap,visualaid",
+			theme_advanced_buttons3: "tablecontrols,separator,advhr,hr,removeformat,separator,insertdate,pagebreak",
+			theme_advanced_fonts:"Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Helvetica Neu=helveticaneue,sans-serif;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats",
+			plugins : "advhr,insertdatetime,table,paste,searchreplace,directionality,style,pagebreak",
+			height:"500",
+			width: "100%",
+			inline_styles : true,
+			directionality : "ltr",
+			remove_redundant_brs : true,
+			entity_encoding: 'raw',
+			cleanup_on_startup : true,
+			strict_loading_mode : true,
+			convert_urls : false,
+			plugin_insertdate_dateFormat : '{DATE '+df+'}',
+			pagebreak_separator : "<div style=\"page-break-before: always;\">&nbsp;</div>",
+			extended_valid_elements : "textblock,barcode[*]",
+			custom_elements: "textblock",
+		});
+
+		tinyMCE.init({
+    		theme : "advanced",
+    		theme_advanced_toolbar_align : "left",
+    		mode: "exact",
+			elements : "pdfheader,pdffooter",
+			theme_advanced_toolbar_location : "top",
+			theme_advanced_buttons1: "code,separator,bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,undo,redo,separator,forecolor,backcolor,separator,styleprops,styleselect,formatselect,fontselect,fontsizeselect,separator,insertdate",
+			theme_advanced_buttons2 : "",
+    		theme_advanced_buttons3 : "",
+    		theme_advanced_fonts:"Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Helvetica Neu=helveticaneue,sans-serif;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats",
+			plugins : "advhr,insertdatetime,table,paste,searchreplace,directionality,style",
+			width: "100%",
+			inline_styles : true,
+			directionality : "ltr",
+			entity_encoding: 'raw',
+			cleanup_on_startup : true,
+			strict_loading_mode : true,
+			convert_urls : false,
+			remove_redundant_brs : true,
+			plugin_insertdate_dateFormat : '{DATE '+df+'}',
+			extended_valid_elements : "textblock,barcode[*]",
+			custom_elements: "textblock",
+		});
+
+		</script>
+
+JS;
+    return $js;
+}

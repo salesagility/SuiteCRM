@@ -170,7 +170,9 @@
             {{assign var='collapseIcon' value="glyphicon glyphicon-minus"}}
             {{assign var='panelHeadingCollapse' value=""}}
             {{/if}}
-
+            <div id="html-editor">
+                <input id="my-file" type="file" name="my-file" style="display: none;" onchange="" />
+            </div>
             <div class="panel panel-default">
                 <div class="panel-heading {{$panelHeadingCollapse}}">
                     <a class="{{$collapsed}}" role="button" data-toggle="collapse-edit" aria-expanded="false">

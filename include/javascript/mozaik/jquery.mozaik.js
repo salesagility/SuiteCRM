@@ -206,15 +206,27 @@ var plgBackground = {
                 "CC99FF", "Plum"
             ],
 
-            file_browser_callback: function(field_name, url, type, win, e) {
-                mozaik.uploadPathField = field_name;
-                if(type=='image') {
-                    $('form#upload_form input[type="file"]').each(function(i,e){
-                        if($(e).css('display') != 'none') {
-                            $(e).click();
-                        }
-                    });
+            file_picker_callback: function (callback, value, meta) {
+                if (meta.filetype == 'image') {
+                    var input = document.getElementById('my-file');
+                    input.click();
+                    input.onchange = function () {
+                        var file = input.files[0];
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            callback(e.target.result, {
+                                alt: file.name
+                            });
+                        };
+                        reader.readAsDataURL(file);
+                    };
                 }
+            },
+
+            images_upload_handler: function (blobInfo, success, failure)
+            {
+                // no upload, just return the blobInfo.blob() as base64 data
+                success("data:" + blobInfo.blob().type + ";base64," + blobInfo.base64());
             }
         };
 

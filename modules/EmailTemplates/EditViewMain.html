@@ -54,7 +54,9 @@
 {FIELD_DEFS_JS}
 </script>
 {JSLANG}
-
+<div id="html-editor">
+	<input id="my-file" type="file" name="my-file" style="display: none;" onchange="" />
+</div>
 <form name="EditView" id="EditView" method="POST" action="index.php" enctype="multipart/form-data">
 	<input type="hidden" name="module" value="EmailTemplates">
 	<input type="hidden" name="record" value="{ID}">

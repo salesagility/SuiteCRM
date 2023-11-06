@@ -1607,10 +1607,11 @@
   };
 
   $.fn.EmailsComposeView.defaults = {
+
     "tinyMceOptions": {
       menubar: false,
-      plugins: ['link'],
-      toolbar: ['fontselect | fontsizeselect | bold italic underline | forecolor backcolor | styleselect | outdent indent | link'],
+      plugins: ['link, image'],
+      toolbar: ['fontselect | fontsizeselect | bold italic underline | forecolor backcolor | styleselect | outdent indent | link | image'],
       formats: {
         bold: {inline: 'b'},
         italic: {inline: 'i'},
@@ -1619,6 +1620,29 @@
       convert_urls: false,
       relative_urls: false,
       remove_script_host: false,
+
+      file_picker_callback: function (callback, value, meta) {
+        if (meta.filetype == 'image') {
+          var input = document.getElementById('my-file');
+          input.click();
+          input.onchange = function () {
+            var file = input.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              callback(e.target.result, {
+                alt: file.name
+              });
+            };
+            reader.readAsDataURL(file);
+          };
+        }
+      },
+
+      images_upload_handler: function (blobInfo, success, failure)
+      {
+        // no upload, just return the blobInfo.blob() as base64 data
+        success("data:" + blobInfo.blob().type + ";base64," + blobInfo.base64());
+      }
     }
   };
 }(jQuery));
