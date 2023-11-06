@@ -266,6 +266,7 @@ class ProjectTaskViewList extends ViewList
         $lv->searchColumns = $searchForm->searchColumns;
 
         if (empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false) {
+            $lv->ss->assign('savedSearchData', $searchForm->getSavedSearchData());
             //Bug 58841 - mass update form was not displayed for non-admin users that should have access
             if (ACLController::checkAccess($module, 'massupdate') || ACLController::checkAccess($module, 'export')) {
                 $lv->setup($seed, 'include/ListView/ListViewGeneric.tpl', $where, $params);
