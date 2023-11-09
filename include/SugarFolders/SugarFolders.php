@@ -1545,8 +1545,9 @@ class SugarFolder
             if (isFalse($isSelected)) {
                 continue;
             }
+            $id = $folder['id'] ?? '';
             // Check parent ID
-            if ($folder['id'] === $folderId) {
+            if ($id === $folderId) {
                 return true;
             }
 
