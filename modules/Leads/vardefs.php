@@ -661,5 +661,4 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
 , 'optimistic_locking' => true,
 );
 
-VardefManager::createVardef('Leads', 'Lead', array('default', 'assignable', 'security_groups',
-    'person'));
+VardefManager::createVardef('Leads', 'Lead', array('assignable', 'security_groups', 'person'));

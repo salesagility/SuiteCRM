@@ -16,7 +16,15 @@ array(
         ),
         'buttons' =>
         array(
-          0 => 'SAVE',
+          0   =>  array(
+              'customCode' => '{if $bean->aclAccess("save")}<input title="{$APP.LBL_SAVE_BUTTON_TITLE}"'
+                  .'accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button primary"'
+                  .'onclick="var _form=document.getElementById(\'EditView\'); {if $isDuplicate}_form.return_id.value=\'\'; {/if}'
+                  .'_form.action.value=\'Save\';if(check_form(\'EditView\') && confirm({$APP.LBL_CONFIRM_SAVE_BUTTON}))'
+                  .'SUGAR.ajaxUI.submitForm(_form);return false;"'
+                  .'type="submit" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}"'
+                  .'id="SAVE_CONFIRM">{/if}'
+          ),
           1 => 'CANCEL',
         ),
       ),
@@ -34,7 +42,19 @@ array(
           'field' => '30',
         ),
       ),
-      'javascript' => '<script type="text/javascript" language="Javascript">function copyAddressRight(form)  {ldelim} form.alt_address_street.value = form.primary_address_street.value;form.alt_address_city.value = form.primary_address_city.value;form.alt_address_state.value = form.primary_address_state.value;form.alt_address_postalcode.value = form.primary_address_postalcode.value;form.alt_address_country.value = form.primary_address_country.value;return true; {rdelim} function copyAddressLeft(form)  {ldelim} form.primary_address_street.value =form.alt_address_street.value;form.primary_address_city.value = form.alt_address_city.value;form.primary_address_state.value = form.alt_address_state.value;form.primary_address_postalcode.value =form.alt_address_postalcode.value;form.primary_address_country.value = form.alt_address_country.value;return true; {rdelim} </script>',
+      'javascript' => '<script type="text/javascript">function copyAddressRight(form) '
+      .' {ldelim} form.alt_address_street.value = form.primary_address_street.value;'
+      .'form.alt_address_city.value = form.primary_address_city.value;'
+      .'form.alt_address_state.value = form.primary_address_state.value;'
+      .'form.alt_address_postalcode.value = form.primary_address_postalcode.value;'
+      .'form.alt_address_country.value = form.primary_address_country.value;return true;{rdelim}'
+      .'function copyAddressLeft(form)  {ldelim} '
+      .'form.primary_address_street.value =form.alt_address_street.value;'
+      .'form.primary_address_city.value = form.alt_address_city.value;'
+      .'form.primary_address_state.value = form.alt_address_state.value;'
+      .'form.primary_address_postalcode.value =form.alt_address_postalcode.value;'
+      .'form.primary_address_country.value = form.alt_address_country.value;return true; {rdelim} '
+      .'</script>',
       'useTabs' => false,
       'tabDefs' =>
       array(
@@ -132,6 +152,38 @@ array(
         array(
           0 => 'description',
         ),
+        8 =>
+            array(
+                0 =>
+                    array(
+                        'name' => 'color',
+                        'type' => 'html',
+                        'customCode' => '
+<div style="display:flex;justify-content: space-evenly;">
+    <label>
+        <input name="color" value="" type="radio" 
+        {if ($fields.color.value eq  \'\')}checked{/if}>
+        No color
+    </label>
+    <label style="color:green">
+        <input name="color" value="green" type="radio" 
+        {if ($fields.color.value eq \'green\')}checked{/if}> 
+        Green
+    </label>
+    <label style="color:red">
+        <input name="color" value="red" type="radio" 
+        {if ($fields.color.value eq  \'red\')}checked{/if}> 
+        Red
+    </label>
+    <label style="color:#ce9e05">
+        <input name="color" value="yellow" type="radio" 
+        {if ($fields.color.value eq \'yellow\')}checked{/if}> 
+        Yellow
+    </label>
+</div>
+',
+             ),
+         ),
       ),
       'LBL_PANEL_ADVANCED' =>
       array(

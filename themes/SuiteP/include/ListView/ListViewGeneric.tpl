@@ -226,7 +226,7 @@
 			{/if}
 			<tr height='20' class='{$_rowColor}S1'>
 				{if $prerow}
-				<td>
+				<td {if ($rowData.COLOR)}style="background-color: {$rowData.COLOR}"{/if}>
 				 {if !$is_admin && $is_admin_for_user && $rowData.IS_ADMIN==1}
 						<input type='checkbox' disabled="disabled" class='listview-checkbox' value='{$rowData.ID}'>
 				 {else}
@@ -252,6 +252,8 @@
 
 				{/if}
 				{counter start=0 name="colCounter" print=false assign="colCounter"}
+
+
 				{foreach from=$displayColumns key=col item=params}
 					{if $colCounter == '0'}
 						{assign var='hide' value=""}

@@ -94,7 +94,8 @@
     "phpstan/phpstan": "^1.10",
     "phpunit/phpunit": "^9.5",
     "rector/rector": "^0.16.0",
-    "scssphp/scssphp": "^1.5"
+    "scssphp/scssphp": "^1.5",
+    "symfony/var-dumper": " ^4.4"
   },
   "autoload": {
     "files": [

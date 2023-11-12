@@ -230,4 +230,9 @@ array(
     'label' => 'LBL_DATE_ENTERED',
     'default' => true,
   ),
+    'COLOR' =>
+        array(
+            'default' => true,
+            'visible' => false
+        ),
 );

@@ -1,10 +1,10 @@
 <?php
-require_once('include/ListView/ListViewSmarty.php');
+require_once('custom/Extension/modules/Leads/ListView/ListViewSmartyCustom.php');
 require_once('modules/AOS_PDF_Templates/formLetter.php');
 
 
 #[\AllowDynamicProperties]
-class LeadsListViewSmarty extends ListViewSmarty
+class LeadsListViewSmarty extends ListViewSmartyCustom
 {
     public function __construct()
     {

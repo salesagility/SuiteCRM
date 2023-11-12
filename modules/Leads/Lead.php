@@ -132,7 +132,7 @@ class Lead extends Person implements EmailInterface
     public $alt_address_street_3;
     public $primary_address_street_2;
     public $primary_address_street_3;
-
+    public $color;
 
     public $table_name = "leads";
     public $object_name = "Lead";
