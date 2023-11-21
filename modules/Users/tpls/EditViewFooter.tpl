@@ -412,6 +412,13 @@
                     </slot>
                 </td>
             </tr>
+            <tr>
+            <td width="17%" scope="row">
+               <slot>{$MOD.LBL_USER_LANGUAGE}:</slot></td>
+            <td scope="row">
+            <slot><select tabindex='15' id="language" name="language">{$LanguageOptions}</select></slot>
+            </td>
+            </tr>
         </table>
     </div>
     <div id="calendar_options" style="display:{$HIDE_FOR_GROUP_AND_PORTAL}">

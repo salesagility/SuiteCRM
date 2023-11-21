@@ -122,6 +122,7 @@ $mod_strings = array(
     'LBL_NUMBER_GROUPING_SEP_TEXT' => 'Character used to separate thousands',
     'LBL_DECIMAL_SEP' => 'Decimal Symbol',
     'LBL_DECIMAL_SEP_TEXT' => 'Character used to separate decimal portion',
+    'LBL_USER_LANGUAGE' => 'User Language',
     'LBL_FDOW' => 'First Day of Week',
     'LBL_FDOW_TEXT' => 'First Day displayed in Week, Month, and Year Views',
     'LBL_DATE_FORMAT_TEXT' => 'Set the display format for date stamps',

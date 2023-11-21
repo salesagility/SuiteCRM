@@ -399,7 +399,7 @@ class UserViewHelper
 
     protected function setupAdvancedTabUserSettings()
     {
-        global $current_user, $locale, $app_strings, $app_list_strings, $sugar_config;
+        global $current_user, $locale, $app_strings, $app_list_strings, $sugar_config, $current_language;
         // This is for the "Advanced" tab, it's not controlled by the metadata UI so we have to do more for it.
 
         $admin = BeanFactory::newBean('Administration');
@@ -410,6 +410,10 @@ class UserViewHelper
         if ($this->bean->receive_notifications || (!isset($this->bean->id) && $admin->settings['notify_send_by_default'])) {
             $this->ss->assign("RECEIVE_NOTIFICATIONS", "checked");
         }
+        $currentLanguage = $this->bean->getPreference('language') ?? $current_language;
+        $languages = get_languages();
+        $languageOptions = get_select_options_with_id($languages, $currentLanguage);
+        $this->ss->assign('LanguageOptions', $languageOptions);
 
         //jc:12293 - modifying to use the accessor method which will translate the
         //available character sets using the translation files
