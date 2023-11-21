@@ -732,7 +732,7 @@ class User extends Person implements EmailInterface
         if (!$this->is_group && !$this->portal_only) {
             require_once('modules/MySettings/TabController.php');
 
-            global $current_user, $sugar_config;
+            global $current_user, $sugar_config, $app_strings, $mod_strings, $current_language;
 
             $display_tabs_def = isset($_REQUEST['display_tabs_def']) ? urldecode($_REQUEST['display_tabs_def']) : '';
             $hide_tabs_def = isset($_REQUEST['hide_tabs_def']) ? urldecode($_REQUEST['hide_tabs_def']) : '';
@@ -877,6 +877,13 @@ class User extends Person implements EmailInterface
             }
             if (isset($_POST['timezone'])) {
                 $this->setPreference('timezone', $_POST['timezone'], 0, 'global');
+            }
+            if (isset($_POST['language'])) {
+                $_SESSION['authenticated_user_language'] = $_POST['language'];
+                $current_language = $_POST['language'];
+                $mod_strings = return_module_language($_POST['language'], 'Users');
+                $app_strings = return_application_language($_POST['language']);
+                $this->setPreference('language', $_POST['language'], 0, 'global');
             }
             if (isset($_POST['mail_fromname'])) {
                 $this->setPreference('mail_fromname', $_POST['mail_fromname'], 0, 'global');
