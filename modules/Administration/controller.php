@@ -77,11 +77,19 @@ class AdministrationController extends SugarController
 
     public function action_savelanguages()
     {
-        global $sugar_config;
+        global $sugar_config, $current_language, $mod_strings;
         $toDecode = html_entity_decode((string) $_REQUEST['disabled_langs'], ENT_QUOTES);
         $disabled_langs = json_decode($toDecode);
         $toDecode = html_entity_decode((string) $_REQUEST['enabled_langs'], ENT_QUOTES);
         $enabled_langs = json_decode($toDecode);
+
+        if (in_array($current_language, $disabled_langs)){
+            $GLOBALS['log']->fatal($mod_strings['LBL_CANNOT_DISABLE_CURRENT_LANGUAGE']);
+            displayAdminError(translate('LBL_CANNOT_DISABLE_CURRENT_LANGUAGE', 'Administration'));
+            SugarApplication::redirect('index.php?module=Administration&action=Languages');
+            return;
+        }
+
         $cfg = new Configurator();
         $cfg->config['disabled_languages'] = implode(',', $disabled_langs);
         // TODO: find way to enforce order

@@ -783,6 +783,8 @@ $mod_strings = array(
     'LBL_SPRITES_ADDED' => 'Added sprite {0}',
     'LBL_SPRITES_EXCLUDING_FILE' => 'Excluding file: {0}',
 
+    'LBL_CANNOT_DISABLE_CURRENT_LANGUAGE' => 'The language being actively used cannot be disabled. Please change to another language in order to disable it.',
+
     //FTS
     'LBL_DELETE_FTS_DATA' => 'Delete existing data when index is performed. Only data in the selected modules will be indexed.',
     'LBL_SAVE_SCHED_BUTTON' => 'Save and Schedule System Index',
