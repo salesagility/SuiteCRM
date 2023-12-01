@@ -40,7 +40,7 @@
 
 *}
 <select name='{{$vardef.type_name}}' {{if !empty($tabindex)}} tabindex="{{$tabindex}}" {{/if}}  id='{{$vardef.type_name}}' title='{{$vardef.help}}'
-onchange='document.{{$form_name}}.{{sugarvar key='name'}}.value="";document.{{$form_name}}.parent_id.value=""; 
+onchange='document.{{$form_name}}.{{sugarvar key='name'}}.value="";document.{{$form_name}}.parent_id.value="";
         changeParentQSSearchView("{{sugarvar key='name'}}"); checkParentType(document.{{$form_name}}.{{$vardef.type_name}}.value, document.{{$form_name}}.btn_{{sugarvar key='name'}});'>
 {html_options options={{sugarvar key='options' string=true}} selected=$fields.{{$vardef.type_name}}.value}
 </select>
@@ -66,6 +66,7 @@ onchange='document.{{$form_name}}.{{sugarvar key='name'}}.value="";document.{{$f
 if (typeof(changeParentQSSearchView) == 'undefined'){
 function changeParentQSSearchView(field) {
 	field = YAHOO.util.Dom.get(field);
+    var sqs_objects = {};
     var form = field.form;
     var sqsId = form.id + "_" + field.id;
     var typeField =  form.elements["{{$vardef.type_name}}"];
