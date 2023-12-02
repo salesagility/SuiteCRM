@@ -125,9 +125,17 @@ $viewdefs ['AOW_WorkFlow'] =
                     ),
                     4 =>
                     array(
-                        0 => 'description',
+                        0 =>
+                        array (
+                            'name' => 'limit_beans',
+                            'label' => 'LBL_LIMIT_BEANS',
+                        ),
                     ),
                     5 =>
+                    array(
+                        0 => 'description',
+                    ),
+                    6 =>
                     array(
                         0 =>
                         array(
