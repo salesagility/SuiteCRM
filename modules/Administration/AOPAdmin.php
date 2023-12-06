@@ -156,7 +156,8 @@ $closureEmailTemplateDropdown =
 $joomlaEmailTemplateDropdown =
     get_select_options_with_id($emailTemplateList, $cfg->config['aop']['joomla_account_creation_email_template_id']);
 
-$inboundEmailCaseMacro = $cfg->config['inbound_email_case_subject_macro'] ?? '';
+$case = BeanFactory::newBean('Cases');
+$inboundEmailCaseMacro = $cfg->config['inbound_email_case_subject_macro'] ?? $case->getEmailSubjectMacro();
 
 $sugar_smarty->assign('inbound_email_case_macro', $inboundEmailCaseMacro);
 $sugar_smarty->assign('USER_EMAIL_TEMPLATES', $userEmailTemplateDropdown);
@@ -371,7 +372,7 @@ function getStatusRowTemplate($mod_strings, $ifDropdown, $thenDropdown)
         <td width="100">
             <select id='then_status_select[]' name='then_status[]'>{$thenDropdown}</select>
         </td>
-        <td><button class="removeStatusButton" type="button">{$mod_strings['LBL_AOP_REMOVE_STATUS']}</button></td>
+        <td><button class="removeStatusButton button" type="button">{$mod_strings['LBL_AOP_REMOVE_STATUS']}</button></td>
     </tr>
 EOF;
 
