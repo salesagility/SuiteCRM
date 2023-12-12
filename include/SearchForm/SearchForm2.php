@@ -1153,6 +1153,7 @@ class SearchForm
 
                         if ($type == 'datetime' || $type == 'datetimecombo') {
                             try {
+                                $field_value = $timedate->to_db_date($field_value, false);
                                 if ($operator == '=' || $operator == 'between') {
                                     // FG - bug45287 - If User asked for a range, takes edges from it.
                                     $placeholderPos = strpos($field_value, "<>");
