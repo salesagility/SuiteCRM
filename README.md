@@ -24,7 +24,24 @@
 
 Our vision is to be the most adopted open source enterprise CRM in the world, giving users full control of their data and freedom to own and customise their business solution.
 
+### Demo
+
+#### Online Demo
 Try out a free fully working [SuiteCRM demo available here](https://suitecrm.com/demo/)
+
+#### Play with docker
+
+[Bitnami offers a Docker solution for SuiteCRM](https://github.com/bitnami/containers/tree/main/bitnami/suitecrm#how-to-use-this-image)
+
+- Download the docker-composer configuration file and run it
+
+```bash.
+curl -sSL https://raw.githubusercontent.com/bitnami/containers/main/bitnami/suitecrm/docker-compose.yml > docker-compose.yml
+docker-compose up -d
+```
+
+- Open http://localhost/ with a browser, port is 80
+- Default username and password: user / bitnami
 
 ### Contribute [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/salesagility/SuiteCRM/issues)
 
