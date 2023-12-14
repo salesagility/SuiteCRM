@@ -6155,3 +6155,15 @@ function isSelfRequest($endpoint) : bool {
 
     return stripos((string) $endpoint, (string) $domain) !== false || stripos((string) $endpoint, (string) $siteUrl) !== false;
 }
+
+/**
+ * Get currency ID directly from the record, if property is empty -> use default currency ID
+ * @param $module
+ * @param $id
+ * @return string
+ */
+function getCurrencyId($module, $id)
+{
+    global $locale;
+    return BeanFactory::getBean($module, $id)->currency_id ?? $locale->getPrecedentPreference('currency');
+}
