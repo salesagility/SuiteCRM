@@ -1,0 +1,31 @@
+// indices/templates.asciidoc:138
+
+[source, php]
+----
+$params = [
+    'name' => 'template_1',
+    'body' => [
+        'index_patterns' => [
+            'te*',
+        ],
+        'settings' => [
+            'number_of_shards' => 1,
+        ],
+        'aliases' => [
+            'alias1' => [
+            ],
+            'alias2' => [
+                'filter' => [
+                    'term' => [
+                        'user' => 'kimchy',
+                    ],
+                ],
+                'routing' => 'kimchy',
+            ],
+            '{index}-alias' => [
+            ],
+        ],
+    ],
+];
+$response = $client->indices()->putTemplate($params);
+----

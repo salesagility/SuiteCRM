@@ -1,0 +1,18 @@
+// query-dsl/match-query.asciidoc:268
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'match' => [
+                'message' => [
+                    'query' => 'ny city',
+                    'auto_generate_synonyms_phrase_query' => false,
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

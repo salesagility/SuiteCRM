@@ -56,6 +56,10 @@ function get_body($ss, $vardef)
     $ss->assign('HTML_EDITOR', $edValue);
     $ss->assign('disableInlineEdit', 1);
     $ss->assign('preSave', 'document.popup_form.presave();');
+    // STIC-Custom 20221229 AAM - Hide MassUpdate property for this field type
+    // STIC#937
+    $ss->assign('hideMassUpdate', 'true');
+    // END STIC-Custom
     ///////////////////////////////////
     return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/html.tpl');
 }

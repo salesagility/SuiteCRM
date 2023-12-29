@@ -48,8 +48,11 @@ class LeadsViewDetail extends ViewDetail
     {
         global $sugar_config;
 
-        require_once('modules/AOS_PDF_Templates/formLetter.php');
-        formLetter::DVPopupHtml('Leads');
+        // STIC-Custom 20220124 MHP - Do not add the Print PDF logic in this module because it is added generically through include/DetailView/DetailView2.php
+        // STIC#564   
+        // require_once('modules/AOS_PDF_Templates/formLetter.php');
+        // formLetter::DVPopupHtml('Leads');
+        // END STIC-Custom        
 
         //If the convert lead action has been disabled for already converted leads, disable the action link.
         $disableConvert = ($this->bean->status == 'Converted' && !empty($sugar_config['disable_convert_lead'])) ? true : false;

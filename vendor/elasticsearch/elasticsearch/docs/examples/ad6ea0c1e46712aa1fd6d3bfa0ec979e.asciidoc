@@ -1,0 +1,16 @@
+// query-dsl/query-string-query.asciidoc:42
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'query_string' => [
+                'query' => '(new york city) OR (big apple)',
+                'default_field' => 'content',
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

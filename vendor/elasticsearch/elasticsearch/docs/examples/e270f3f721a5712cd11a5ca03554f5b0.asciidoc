@@ -1,0 +1,21 @@
+// query-dsl/multi-match-query.asciidoc:170
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'multi_match' => [
+                'query' => 'Will Smith',
+                'type' => 'best_fields',
+                'fields' => [
+                    'first_name',
+                    'last_name',
+                ],
+                'operator' => 'and',
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

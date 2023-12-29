@@ -1,0 +1,21 @@
+// query-dsl/multi-match-query.asciidoc:212
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'multi_match' => [
+                'query' => 'quick brown fox',
+                'type' => 'most_fields',
+                'fields' => [
+                    'title',
+                    'title.original',
+                    'title.shingles',
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

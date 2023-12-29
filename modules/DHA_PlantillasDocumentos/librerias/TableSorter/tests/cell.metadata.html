@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+<head>
+<title>tablesorter 2.0-dev demo, multi column sorting</title>
+	
+	<style type="text/css">@import "assets/css/default.css";</style>
+	
+	<script type="text/javascript" src="../jquery-latest.js"></script>
+	<script type="text/javascript" src="../jquery.metadata.js"></script>
+	<script type="text/javascript" src="../jquery.tablesorter.js"></script>
+	<script type="text/javascript">
+	
+	$(function() {
+		$("table").tablesorter({debug:true});
+	});
+	
+		</script>	
+</head>
+
+<body>
+<h1>tablesorter 2.0-dev demo, multi column sorting</h1>
+<p>
+To select more then one column to sort by, hold down your shift key and press the "headers".
+Pressing a all ready sorted column while holding down shift will reverse the order.
+</p>
+<p>
+Releasing the shift key and pressing a column will result in a one column sort.
+</p>
+
+<p>Not big enough? <a href="#" class="append">Add 500 random rows of data </a> (can be clicked many times, more then a 1000 rows can be slow)</p>
+
+<table id="large" cellspacing="0">
+	
+	<thead>
+
+		<tr>
+			<th>Name</th>
+			<th>Major</th>
+			<th>Sex</th>
+			<th class="{sorter:'metadata'}">English</th>
+			<th>Japanese</th>
+			<th>Calculus</th>
+			<th>Geometry</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th>Name</th>
+
+			<th>Major</th>
+			<th>Sex</th>
+			<th>English</th>
+			<th>Japanese</th>
+			<th>Calculus</th>
+			<th>Geometry</th>
+
+		</tr>
+	</tfoot>
+	<tbody>
+		<tr>
+			<td>Student01</td>
+			<td>Languages</td>
+			<td>male</td>
+
+			<td class="{sortValue: 0}">80</td>
+			<td>100'70,00.00</td>
+			<td>75.00</td>
+			<td>0</td>
+		</tr>
+		<tr>
+			<td>Student02</td>
+
+			<td>Mathematics</td>
+			<td>male</td>
+			<td class="{sortValue: 1}">90</td>
+			<td>88</td>
+			<td>100</td>
+			<td>90</td>
+
+		</tr>
+		<tr>
+			<td>Student03</td>
+			<td>Languages</td>
+			<td>female</td>
+			<td class="{sortValue: 2}">85</td>
+			<td>95</td>
+
+			<td>80</td>
+			<td>85</td>
+		</tr>
+		<tr>
+			<td>Student04</td>
+			<td>Languages</td>
+			<td>male</td>
+
+			<td class="{sortValue: 3}">60</td>
+			<td>55</td>
+			<td>100</td>
+			<td>100</td>
+		</tr>
+	</tbody>
+</table>
+	<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-2189649-1";
+urchinTracker();
+</script>
+	</body>
+</html>

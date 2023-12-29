@@ -169,7 +169,6 @@ class ListViewDisplay
         $this->fillDisplayColumnsWithVardefs();
 
         $this->process($file, $data, $seed->object_name);
-
         return true;
     }
 
@@ -355,6 +354,15 @@ class ListViewDisplay
                 && $this->showMassupdateFields && $mass->doMassUpdateFieldsExistForFocus()
             ) {
                 $menuItems[] = $this->buildMassUpdateLink($location);
+                // STIC-Custom - 20220704 - JCH - Add list view menu link for "Mass Duplicate & Update" action
+                // STIC#776
+                $massDuplicateUpdateExcludedModules = ['Users'];
+                
+                if(!in_array($this->seed->module_dir, $massDuplicateUpdateExcludedModules))
+                { 
+                    $menuItems[] = $this->buildMassDuplicateUpdateLink($location);
+                }
+                // END STIC
             }
 
             // merge
@@ -380,6 +388,10 @@ class ListViewDisplay
                 && $this->export
             ) {
                 $menuItems[] = $this->buildExportLink($location);
+                // STIC-Custom 20220124 MHP - Export and PDF Link must be able to be executed with the same ACL action
+                // STIC#564               
+                $menuItems[] = $this->buildPDFLinkAndPopupHtml();
+                // END-Custom
             }
 
             foreach ($this->actionsMenuExtraItems as $item) {
@@ -416,6 +428,21 @@ class ListViewDisplay
         return "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id=\"export_listview_". $loc ." \" onclick=\"return sListView.send_form(true, '{$this->seed->module_dir}', 'index.php?entryPoint=export','{$app_strings['LBL_LISTVIEW_NO_SELECTED']}')\">{$app_strings['LBL_EXPORT']}</a>";
     }
 
+    // STIC-Custom 20220124 MHP
+    // STIC#564   
+    /**
+     * Generate the PDF Link and popupHtml, in list view
+     *
+     * @return string HTML
+     */
+    protected function buildPDFLinkAndPopupHtml()
+    {
+        require_once('modules/AOS_PDF_Templates/formLetter.php'); 
+        formLetter::LVPopupHtml($this->seed->module_name);
+        return formLetter::LVSmarty();
+    }
+    // END STIC-Custom
+
     /**
      * Builds the massupdate link
      *
@@ -425,9 +452,60 @@ class ListViewDisplay
     {
         global $app_strings;
 
-        $onClick = "document.getElementById('massupdate_form').style.display = ''; var yLoc = YAHOO.util.Dom.getY('massupdate_form'); scroll(0,yLoc);";
+        $onClick = "
+        // STIC-Custom - 20220704 - JCH - Ensure standard mass update view is properly shown
+        // after having displayed the mass duplicate and update view.
+        // STIC#776
+        if($('#massupdate_form #mass_duplicate').length == 1){
+            $('#massupdate_form #mass_duplicate, #remove_name_container').remove()
+            $('#massupdate_form input#update_button').val('{$app_strings['LBL_UPDATE']}');
+            $('#massupdate_form > table.h3Row  h3').text(SUGAR.language.languages.app_strings.LBL_UPDATE)
+        }
+        // END STIC
+        document.getElementById('massupdate_form').style.display = ''; var yLoc = YAHOO.util.Dom.getY('massupdate_form'); scroll(0,yLoc);";
         return "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id=\"massupdate_listview_". $loc ."\" onclick=\"$onClick\">{$app_strings['LBL_MASS_UPDATE']}</a>";
     }
+    
+    // STIC-Custom - 20220704 - JCH - Add "Mass Duplicate & Update" action
+    // STIC#776
+    /**
+     * Builds the mass duplicate & update link
+     *
+     * @return string HTML
+     */
+    protected function buildMassDuplicateUpdateLink($loc = 'top')
+    {
+        global $app_strings;
+
+        $onClick = "
+        if($('#massupdate_form #mass_duplicate').length == 0){
+            $('<input>', {
+                'type': 'hidden',
+                'name': 'mass_duplicate',
+                'id': 'mass_duplicate',
+                'value': 1
+            }).prependTo('#massupdate_form');
+            $('<div>', {
+                'id': 'remove_name_container',
+                'text': '{$app_strings['LBL_MASS_DUPLICATE_REMOVE_NAME']}',
+                'style':'padding:1em 0;'
+            }).prependTo($('#mass_update_div'))
+            
+            $('<input>', {
+                'type': 'checkbox',
+                'name': 'remove_name',
+                'id': 'remove_name',
+                'value': true, 
+                'style':'margin-left:1em'
+            }).appendTo($('#remove_name_container'));
+            $('#massupdate_form input#update_button').val('{$app_strings['LBL_MASS_DUPLICATE_UPDATE_BTN']}');
+            $('#massupdate_form > table.h3Row  h3').text(SUGAR.language.languages.app_strings.LBL_MASS_DUPLICATE_UPDATE)
+        }
+        document.getElementById('massupdate_form').style.display = ''; 
+        document.getElementById('massupdate_form').scrollIntoView();";
+        return "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id=\"massupdate_listview_". $loc ."\" onclick=\"$onClick\">{$app_strings['LBL_MASS_DUPLICATE_UPDATE']}</a>";
+    }
+    // END STIC
 
     /**
      * Builds the compose email link

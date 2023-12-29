@@ -1,0 +1,19 @@
+// query-dsl/multi-match-query.asciidoc:50
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'multi_match' => [
+                'query' => 'this is a test',
+                'fields' => [
+                    'subject^3',
+                    'message',
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

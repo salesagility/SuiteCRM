@@ -1,0 +1,21 @@
+// query-dsl/query-string-query.asciidoc:518
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'query_string' => [
+                'fields' => [
+                    'title',
+                    'content',
+                ],
+                'query' => 'this OR that OR thus',
+                'type' => 'cross_fields',
+                'minimum_should_match' => 2,
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

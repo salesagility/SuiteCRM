@@ -1,0 +1,12 @@
+$mask-opacity: 0.9 !default;
+$mask-background: $content-color !default;
+
+$loadmask-font-size: $font-size-small !default;
+$loadmask-base-color: $content-color !default;
+
+$loadmask-msg-padding: 2px !default;
+// $loadmask-msg-border-color: $stroke-color !default;
+$loadmask-msg-background-gradient: $base-gradient !default;
+
+$loadmask-msg-inner-padding: 5px 10px 5px 25px !default;
+$loadmask-msg-inner-icon: 'grid/loading.gif' !default;

@@ -1,0 +1,64 @@
+{
+  "name": "elasticsearch/elasticsearch",
+  "description": "PHP Client for Elasticsearch",
+  "keywords": ["search","client", "elasticsearch"],
+  "type": "library",
+  "license": [
+    "Apache-2.0",
+    "LGPL-2.1-only"
+  ],
+  "authors": [
+    {
+        "name": "Zachary Tong"
+    },
+    {
+        "name": "Enrico Zimuel"
+    }
+  ],
+  "require": {
+    "php": "^7.3 || ^8.0",
+    "ext-json": ">=1.3.7",
+    "ezimuel/ringphp": "^1.1.2",
+    "psr/log": "^1|^2|^3"
+  },
+  "require-dev": {
+    "ext-yaml": "*",
+    "ext-zip": "*",
+    "mockery/mockery": "^1.2",
+    "phpstan/phpstan": "^0.12",
+    "phpunit/phpunit": "^9.3",
+    "squizlabs/php_codesniffer": "^3.4",
+    "symfony/finder": "~4.0"
+  },
+  "suggest": {
+    "ext-curl": "*",
+    "monolog/monolog": "Allows for client-level logging and tracing"
+  },
+  "autoload": {
+    "files": [
+      "src/autoload.php"
+    ],
+    "psr-4": {
+      "Elasticsearch\\": "src/Elasticsearch/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Elasticsearch\\Tests\\": "tests/Elasticsearch/Tests/",
+      "Elasticsearch\\IntegrationTests\\": "tests/Elasticsearch/IntegrationTests/",
+      "Elasticsearch\\Util\\": "util/"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "scripts": {
+    "phpcs": [
+      "phpcs --standard=ruleset.xml --extensions=php --encoding=utf-8 --tab-width=4 -sp src --ignore=src/Elasticsearch/Endpoints",
+      "phpcs --standard=ruleset.xml --extensions=php --encoding=utf-8 --tab-width=4 -sp tests --ignore=tests/Elasticsearch/Tests/Yaml"
+    ],
+    "phpstan": [
+      "phpstan analyse src --level 2 --no-progress"
+    ]
+  }
+}

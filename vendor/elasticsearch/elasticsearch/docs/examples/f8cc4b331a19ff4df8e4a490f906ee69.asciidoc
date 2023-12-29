@@ -1,0 +1,6 @@
+// getting-started.asciidoc:167
+
+[source, php]
+----
+$response = $client->cat()->health();
+----

@@ -54,6 +54,9 @@
 	{/if}
 	</td>
 </tr>
+{* 
+STIC-Custom AAM 20221212 - Making Massupdate parameter available to all types
+STIC#937 
 <tr>
 	<td class='mbLBL'>{sugar_translate module="DynamicFields" label="COLUMN_TITLE_MASS_UPDATE"}:</td>
 	<td>
@@ -63,7 +66,9 @@
 		<input type="checkbox" id="massupdate" name="massupdate" value="1" disabled {if !empty($vardef.massupdate)}checked{/if}/>
 	{/if}
 	</td>
-</tr>
+</tr> 
+END STIC-Custom 
+*}
 {if $range_search_option_enabled}
 <tr>	
     <td class='mbLBL'>{sugar_translate module="DynamicFields" label="COLUMN_TITLE_ENABLE_RANGE_SEARCH"}:</td>

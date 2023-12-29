@@ -1,0 +1,15 @@
+# Files to exclude when creating archive
+/tests export-ignore
+/.github export-ignore
+/.gitmodules export-ignore
+/.gitignore export-ignore
+/.php_cs export-ignore
+/.travis.yml export-ignore
+/.phpstan-src.neon export-ignore
+/.phpstan-src-71.neon export-ignore
+/.phpstan-tests.neon export-ignore
+/phpunit-integration.xml export-ignore
+/phpunit.xml export-ignore
+/ruleset.xml export-ignore
+/travis export-ignore
+/util export-ignore

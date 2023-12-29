@@ -1,0 +1,70 @@
+$stic-base: #b5bc31;
+$stic-dark: darken($stic-base, 7%);
+$stic-light: lighten($stic-base, 7%);
+$stic-superlight: lighten($stic-base, 35%);
+$stic-complement: #353535;
+$stic-main-bg: #f5f5f5;
+$stic-text: #353535;
+$stic-btn: $stic-text;
+$stic-sidebar: $stic-text;
+$stic-sidebar-text: rgb(245, 245, 245);
+
+/*
+Return best text (black or white ) forecolor for $color background 
+From this W3C document: http://www.webmasterworld.com/r.cgi?f=88&d=9769&url=http://www.w3.org/TR/AERT#color-contrast
+*/
+@function bw($color) {
+  $color-brightness: round((red($color) * 299) + (green($color) * 587) + (blue($color) * 114) / 1000);
+  $light-color: round((red(#ffffff) * 299) + (green(#ffffff) * 587) + (blue(#ffffff) * 114) / 1000);
+
+  @if abs($color-brightness) < ($light-color/2) {
+    @return white;
+  } @else {
+    @return black;
+  }
+}
+
+// base links
+@mixin stic-link-base() {
+  color: $stic-text;
+  font-weight: 400;
+  text-decoration: underline dotted $stic-text;
+  text-underline-offset: 2.3px;
+  // border-bottom: 1px dashed $stic-text;
+  border-bottom: none;
+}
+
+// normal links (not name)
+@mixin stic-link-normal() {
+  a {
+    @include stic-link-base();
+  }
+}
+
+// bold links (list-view name & all in detail-view)
+@mixin stic-link-bold() {
+  a {
+    @include stic-link-base();
+    font-weight: bold;
+  }
+}
+
+// Common appearance for stic suitepicon buttons
+@mixin stic-suitepicon-button() {
+  button {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border: none;
+    padding: 0px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    .suitepicon {
+      margin: auto;
+      color: bw($stic-light);
+      line-height: unset;
+    }
+  }
+}

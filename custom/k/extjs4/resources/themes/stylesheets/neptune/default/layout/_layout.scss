@@ -1,0 +1,273 @@
+$border-layout-ct-background: $neutral-color !default;
+
+$toolbar-scroll-border-color: #8db2e3 !default;
+
+@mixin extjs-layout {
+    .#{$prefix}docked {
+        position: absolute !important;
+        z-index: 1;
+    }
+
+    /**
+      * Dock Layouts
+      * @todo move this somewhere else?
+      */
+    .#{$prefix}docked-top {
+//        border-bottom-width: 0 !important; TODO remove this
+    }
+
+    .#{$prefix}docked-bottom {
+        border-top-width: 0 !important;
+    }
+
+    .#{$prefix}docked-left {
+        border-right-width: 0 !important;
+    }
+
+    .#{$prefix}docked-right {
+        border-left-width: 0 !important;
+    }
+
+    .#{$prefix}docked-noborder-top {
+        border-top-width: 0 !important;
+    }
+
+    .#{$prefix}docked-noborder-right {
+        border-right-width: 0 !important;
+    }
+
+    .#{$prefix}docked-noborder-bottom {
+        border-bottom-width: 0 !important;
+    }
+
+    .#{$prefix}docked-noborder-left {
+        border-left-width: 0 !important;
+    }
+
+    .#{$prefix}box-inner {
+        overflow: hidden;
+        position: relative;
+        left: 0;
+        top: 0;
+        // @tag iezoomhack
+    }
+
+    .#{$prefix}box-item {
+        position: absolute !important;
+        left: 0;
+        top: 0;
+    }
+
+    .#{$prefix}rtl .#{$prefix}box-item {
+        right: 0;
+        left: auto;
+    }
+
+    .#{$prefix}box-layout-ct,
+    .#{$prefix}border-layout-ct {
+        overflow: hidden;
+        // @tag iezoomhack
+    }
+
+    .#{$prefix}border-layout-ct {
+        background-color: #E4E5E5;
+
+        .#{$prefix}border-layout-ct {
+            background-color: darken(#E4E5E5, 5%);
+        }
+    }
+
+    .x-panel-default-framed > .#{$prefix}border-layout-ct {
+        background-color: $panel-base-color;
+
+        .#{$prefix}border-layout-ct {
+            background-color: darken($panel-base-color, 5%);
+        }
+//        padding: 5px;
+
+        .#{$prefix}panel {
+//            margin: 5px;
+        }
+
+        .#{$prefix}panel-body {
+//            border: 0;
+        }
+    }
+
+    .#{$prefix}overflow-hidden {
+        overflow: hidden !important;
+    }
+
+    .#{$prefix}inline-children > * {
+        display: inline-block !important;
+    }
+
+    .#{$prefix}abs-layout-ct {
+        position: relative;
+    }
+
+    .#{$prefix}abs-layout-item {
+        position: absolute !important;
+    }
+
+    .#{$prefix}fit-item {
+        position: relative;
+    }
+
+    .#{$prefix}border-region-slide-in {
+        z-index: 5;
+    }
+
+    .#{$prefix}region-collapsed-placeholder {
+        z-index: 4;
+    }
+
+    // Framing
+
+    .#{$prefix}frame-tl,
+    .#{$prefix}frame-tr,
+    .#{$prefix}frame-tc,
+    .#{$prefix}frame-bl,
+    .#{$prefix}frame-br,
+    .#{$prefix}frame-bc {
+        overflow: hidden;
+        background-repeat: no-repeat;
+    }
+
+    .#{$prefix}frame-tc,
+    .#{$prefix}frame-bc {
+        background-repeat: repeat-x;
+    }
+
+    .#{$prefix}frame-mc {
+        position: relative;
+        background-repeat: repeat-x;
+        overflow: hidden;
+    }
+
+    // Classes for horizontal Box layout scroller.
+    // Uses the *TAB* scroller image because it's all we have.
+    // This will not work well in other cases
+    .#{$prefix}box-scroller-left, .#{$prefix}box-scroller-right {
+        height: 100%;
+        z-index: 5;
+    }
+
+    .#{$prefix}toolbar-scroll-left, .#{$prefix}tabbar-scroll-left,
+    .#{$prefix}toolbar-scroll-right, .#{$prefix}tabbar-scroll-right {
+        @extend .mr-white-glove;
+        position: relative;
+//        width: 18px;
+//        height: $tab-height;
+    }
+
+    .#{$prefix}toolbar-scroll-left, .#{$prefix}toolbar-scroll-right {
+//        width: 14px;
+//        height: 22px;
+//        border-bottom: 1px solid $toolbar-scroll-border-color;
+    }
+
+    .#{$prefix}toolbar-scroll-left-disabled,
+    .#{$prefix}tabbar-scroll-left-disabled,
+    .#{$prefix}toolbar-scroll-right-disabled,
+    .#{$prefix}tabbar-scroll-right-disabled {
+        @include opacity(.5);
+        cursor: default;
+    }
+
+    .#{$prefix}box-scroller-left {
+        float: left;
+
+//        .#{$prefix}toolbar-scroll-left,
+//        .#{$prefix}tabbar-scroll-left {
+//            background: theme-background-image($theme-name, 'tab-bar/scroll-left.gif') no-repeat -18px 0;
+//        }
+//        .#{$prefix}toolbar-scroll-left-hover {
+//            background-position: 0 0;
+//        }
+//        .#{$prefix}toolbar-scroll-left-disabled,
+//        .#{$prefix}tabbar-scroll-left-disabled {
+//            background-position: -18px 0;
+//        }
+//        .#{$prefix}toolbar-scroll-left {
+//            background-image: theme-background-image($theme-name, 'toolbar/scroll-left.gif');
+//            background-position: -14px 0;
+//        }
+//        .#{$prefix}toolbar-scroll-left-hover {
+//            background-position: 0 0;
+//        }
+//        .#{$prefix}toolbar-scroll-left-disabled {
+//            background-position: -14px 0;
+//        }
+    }
+
+    .#{$prefix}horizontal-box-overflow-body {
+        float: left;
+    }
+
+    .#{$prefix}box-scroller-right {
+        float: right;
+
+        .#{$prefix}toolbar-scroll-right,
+        .#{$prefix}tabbar-scroll-right {
+            background: theme-background-image($theme-name, 'tab-bar/scroll-right.gif') no-repeat 0 0;
+        }
+        .#{$prefix}toolbar-scroll-right-hover {
+            background-position: -18px 0;
+        }
+        .#{$prefix}toolbar-scroll-right-disabled,
+        .#{$prefix}tabbar-scroll-right-disabled {
+            background-position: 0 0;
+        }
+
+        .#{$prefix}toolbar-scroll-right {
+            background-image: theme-background-image($theme-name, 'toolbar/scroll-right.gif');
+        }
+        .#{$prefix}toolbar-scroll-right-hover {
+            background-position: -14px 0;
+        }
+        .#{$prefix}toolbar-scroll-right-disabled {
+            background-position: 0 0;
+        }
+    }
+
+    // Classes for vertical Box layout scroller
+    .#{$prefix}box-scroller-top {
+        .#{$prefix}box-scroller {
+            line-height: 0;
+            font-size: 0;
+        }
+        .#{$prefix}menu-scroll-top {
+            background: transparent no-repeat center center;
+            background-image: theme-background-image($theme-name, 'layout/mini-top.gif');
+            height: 8px;
+            cursor: pointer;
+        }
+    }
+    .#{$prefix}box-scroller-bottom {
+        .#{$prefix}box-scroller {
+            line-height: 0;
+            font-size: 0;
+        }
+        .#{$prefix}menu-scroll-bottom {
+            background: transparent no-repeat center center;
+            background-image: theme-background-image($theme-name, 'layout/mini-bottom.gif');
+            height: 8px;
+            cursor: pointer;
+        }
+    }
+
+    .#{$prefix}box-menu-right {
+        float: right;
+        padding-right: $toolbar-horizontal-spacing;
+    }
+
+    .#{$prefix}column {
+        float: left;
+    }
+    @if $include-ie {
+        .#{$prefix}ie6 .#{$prefix}column {
+            display: inline; /*prevent IE6 double-margin bug*/
+        }
+    }
+}

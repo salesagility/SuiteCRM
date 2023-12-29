@@ -1,11 +1,13 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2019 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -27,15 +29,18 @@
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
  *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ * 
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * SugarCRM" logo, "Supercharged by SuiteCRM" logo and “Nonprofitized by SinergiaCRM” logo. 
+ * If the display of the logos is not reasonably feasible for technical reasons, 
+ * the Appropriate Legal Notices must display the words "Powered by SugarCRM", 
+ * "Supercharged by SuiteCRM" and “Nonprofitized by SinergiaCRM”. 
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -678,43 +683,127 @@ class User extends Person implements EmailInterface
         $setNewUserPreferences = empty($this->id) || !empty($this->new_with_id);
 
         if (!$this->verify_data()) {
-            SugarApplication::appendErrorMessage($this->error_string);
-            return SugarApplication::redirect('Location: index.php?action=Error&module=Users');
+            // STIC-Custom - Remove "Location:" and Check duplicate users in the import process
+            // 20220714 MHP - STIC#862
+            // 20221129 MHP - STIC#931
+            // SugarApplication::appendErrorMessage($this->error_string);
+            // return SugarApplication::redirect('Location: index.php?action=Error&module=Users');
+            if ($_REQUEST["module"] == 'Import') {
+                echo $this->error_string; // Send response to the Ajax request of the import process
+                exit; // Terminate the PHP script that listens to the Ajax call of the import process
+            } else {
+                SugarApplication::appendErrorMessage($this->error_string);
+                return SugarApplication::redirect('index.php?action=Error&module=Users');
+            }
+            // END STIC-Custom
         }
 
+        // STIC-Custom - Validate the password before saving the user, remove "Location:" string 
+        // and avoid validating password in two use cases. 
+        // 20220714 MHP - STIC#862
+        // 20221020 JCG - STIC#887
 
-        $retId = parent::save($check_notify);
-        if (!$retId) {
-            LoggerManager::getLogger()->fatal('save error: User is not saved, Person ID is not returned.');
-        }
-        if ($retId !== $this->id) {
-            LoggerManager::getLogger()->fatal('save error: User is not saved properly, returned Person ID does not match to User ID.');
-        }
-        // set some default preferences when creating a new user
-        if ($setNewUserPreferences) {
-            if (!$this->getPreference('calendar_publish_key')) {
-                $this->setPreference('calendar_publish_key', create_guid());
+        // $retId = parent::save($check_notify);
+        // if (!$retId) {
+        //     LoggerManager::getLogger()->fatal('save error: User is not saved, Person ID is not returned.');
+        // }
+        // if ($retId !== $this->id) {
+        //     LoggerManager::getLogger()->fatal('save error: User is not saved properly, returned Person ID does not match to User ID.');
+        // }
+        // // set some default preferences when creating a new user
+        // if ($setNewUserPreferences) {
+        //     if (!$this->getPreference('calendar_publish_key')) {
+        //         $this->setPreference('calendar_publish_key', create_guid());
+        //     }
+        // }
+
+        // $this->saveFormPreferences();
+
+        // $this->savePreferencesToDB();
+
+        // if ((isset($_POST['old_password']) || $this->portal_only) &&
+        //     (isset($_POST['new_password']) && !empty($_POST['new_password'])) &&
+        //     (isset($_POST['password_change']) && $_POST['password_change'] === 'true')) {
+        //     if (!$this->change_password($_POST['old_password'], $_POST['new_password'])) {
+        //         if (isset($_POST['page']) && $_POST['page'] === 'EditView') {
+        //             SugarApplication::appendErrorMessage($this->error_string);
+        //             SugarApplication::redirect("Location: index.php?action=EditView&module=Users&record=" . $_POST['record']);
+        //         }
+        //         if (isset($_POST['page']) && $_POST['page'] === 'Change') {
+        //             SugarApplication::appendErrorMessage($this->error_string);
+        //             SugarApplication::redirect("Location: index.php?action=ChangePassword&module=Users&record=" . $_POST['record']);
+        //         }
+        //     }
+        // }
+
+        // Init a couple of vars for later use
+        $saveUserWithoutPassword = false;
+        $saveUserAndPassword = false;
+
+        // We won't be validating the password in these two cases:
+        // 1- The user didn't fill the required password fields, or one of them
+        // 2- None of the password fields are set, therefore we might be in a MassUpdate or Import action.
+        if ((
+                isset($_POST['old_password']) && $_POST['old_password'] == '' &&
+                isset($_POST['new_password']) && $_POST['new_password'] == '' &&
+                isset($_POST['confirm_new_password']) && $_POST['confirm_new_password'] == ''
+            ) || (
+                !isset($_POST['old_password']) || 
+                !isset($_POST['new_password']) || 
+                !isset($_POST['confirm_new_password'])
+            )
+        ) 
+        {
+            $saveUserWithoutPassword = true;
+        // If the required password fields are set and aren't empty, we proceed on validating
+        } else {
+            // Validate the values entered in the password fields
+            if ((isset($_POST['old_password']) || $this->portal_only) &&
+                (isset($_POST['new_password']) && !empty($_POST['new_password'])) &&
+                (isset($_POST['password_change']) && $_POST['password_change'] === 'true')) 
+            {   // Validate the values entered in the password fields
+                if (!$this->validate_password_change($_POST['old_password'], $_POST['new_password'])) {
+                    // Provided values for changing password are wrong, will do nothing
+                    if (isset($_POST['page']) && $_POST['page'] === 'EditView') {
+                        SugarApplication::appendErrorMessage($this->error_string);
+                        SugarApplication::redirect("index.php?action=EditView&module=Users&record=" . $_POST['record']);
+                    }
+                    if (isset($_POST['page']) && $_POST['page'] === 'Change') {
+                        SugarApplication::appendErrorMessage($this->error_string);
+                        SugarApplication::redirect("index.php?action=ChangePassword&module=Users&record=" . $_POST['record']);
+                    }
+                } else {
+                    // If values provided for changing the password are right, both user bean and new password will be saved
+		    $saveUserAndPassword = true;
+                }
             }
         }
 
-        $this->saveFormPreferences();
-
-        $this->savePreferencesToDB();
-
-        if ((isset($_POST['old_password']) || $this->portal_only) &&
-            (isset($_POST['new_password']) && !empty($_POST['new_password'])) &&
-            (isset($_POST['password_change']) && $_POST['password_change'] === 'true')) {
-            if (!$this->change_password($_POST['old_password'], $_POST['new_password'])) {
-                if (isset($_POST['page']) && $_POST['page'] === 'EditView') {
-                    SugarApplication::appendErrorMessage($this->error_string);
-                    SugarApplication::redirect("Location: index.php?action=EditView&module=Users&record=" . $_POST['record']);
-                }
-                if (isset($_POST['page']) && $_POST['page'] === 'Change') {
-                    SugarApplication::appendErrorMessage($this->error_string);
-                    SugarApplication::redirect("Location: index.php?action=ChangePassword&module=Users&record=" . $_POST['record']);
+        if ($saveUserWithoutPassword || $saveUserAndPassword)
+        {
+            // Save the user bean
+	        $retId = parent::save($check_notify);
+            if (!$retId) {
+                LoggerManager::getLogger()->fatal('save error: User is not saved, Person ID is not returned.');
+            }
+            if ($retId !== $this->id) {
+                LoggerManager::getLogger()->fatal('save error: User is not saved properly, returned Person ID does not match to User ID.');
+            }
+            // set some default preferences when creating a new user
+            if ($setNewUserPreferences) {
+                if (!$this->getPreference('calendar_publish_key')) {
+                    $this->setPreference('calendar_publish_key', create_guid());
                 }
             }
-        }
+            $this->saveFormPreferences();
+            $this->savePreferencesToDB();
+
+            // Set the new password in the database
+            if ($saveUserAndPassword) {
+                $this->setNewPassword($_POST['new_password']);
+            }
+        }                
+        // END Stic-Custom
 
         // User Profile specific save for Email addresses
         $this->lastSaveErrorIsEmailAddressSaveError = false;
@@ -982,7 +1071,12 @@ class User extends Person implements EmailInterface
             } else {
                 $newUser = false;
             }
-            if ($newUser && !$this->is_group && !$this->portal_only && isset($sugar_config['passwordsetting']['SystemGeneratedPasswordON'])) {
+            // STIC-Custom 20220523 MHP - Send the password only if the property is set to 1. 
+            // In the previous code it could be sent with the property set to 0, which would be inadequate.
+            // STIC#737
+            // if ($newUser && !$this->is_group && !$this->portal_only && isset($sugar_config['passwordsetting']['SystemGeneratedPasswordON'])) {
+            if ($newUser && !$this->is_group && !$this->portal_only && $sugar_config['passwordsetting']['SystemGeneratedPasswordON'] == "1") {
+            // END STIC-Custom  
                 require_once 'modules/Users/GeneratePassword.php';
             }
         }
@@ -1330,6 +1424,47 @@ EOQ;
         return true;
     }
 
+    // STIC-Custom - It's a copy of change_password() except that it only performs the validations and doesn't call the function setNewPassword().
+    // The password will be saved in a further step with all the user data. Besides, if you want to change the username together with the password,
+    // the CRM will check if a user exists considering the username stored in the database ($this->row_date['user_name']) and not in the form
+    // 20220714 MHP - STIC#862
+    // 20221129 MHP - STIC#931
+    /**
+     * Validate if the password can be changed.
+     *
+     * @param string $username_password - Must be non null and at least 1 character.
+     * @param string $new_password - Must be non null and at least 1 character.
+     * @return boolean - If password can be changed return true, else return false.
+     */
+    public function validate_password_change($username_password, $new_password)
+    {
+        global $mod_strings;
+        global $current_user;
+        $GLOBALS['log']->debug("Starting password change for $this->user_name");
+
+        if (!isset($new_password) || $new_password == "") {
+            $this->error_string = $mod_strings['ERR_PASSWORD_CHANGE_FAILED_1'] . $current_user->user_name . $mod_strings['ERR_PASSWORD_CHANGE_FAILED_2'];
+            return false;
+        }
+        if ($this->error_string = $this->passwordValidationCheck($new_password)) {
+            return false;
+        }
+
+        //check old password if current user is not an admin or current user is an admin editing himself
+        if (!$current_user->isAdminForModule('Users') || ($current_user->isAdminForModule('Users') && ($current_user->id == $this->id))) {
+            //check old password first
+            $row = self::findUserPassword($this->fetched_row['user_name'], md5($username_password));
+            if (empty($row)) {
+                $GLOBALS['log']->warn("Incorrect old password for " . $this->user_name . "");
+                $this->error_string = $mod_strings['ERR_PASSWORD_INCORRECT_OLD_1'] . $this->user_name . $mod_strings['ERR_PASSWORD_INCORRECT_OLD_2'];
+
+                return false;
+            }
+        }
+        return true;
+    }
+    // END STIC-Custom
+    
     public function passwordValidationCheck($newPassword)
     {
         global $sugar_config, $mod_strings;
@@ -1461,6 +1596,10 @@ EOQ;
             $reports_to_self = 0;
             $check_user = $this->reports_to_id;
             $already_seen_list = array();
+            // STIC-Custom 20221103 MHP - STIC#904
+            // Add the initial user to the reporters array
+            $check_user_previous = $check_user;
+            // END STIC-Custom
             while (!empty($check_user)) {
                 if (isset($already_seen_list[$check_user])) {
                     // This user doesn't actually report to themselves
@@ -1476,12 +1615,26 @@ EOQ;
                 $query = "SELECT reports_to_id FROM users WHERE id='" . $this->db->quote($check_user) . "'";
                 $result = $this->db->query($query, true, "Error checking for reporting-loop");
                 $row = $this->db->fetchByAssoc($result);
-                echo("fetched: " . $row['reports_to_id'] . " from " . $check_user . "<br>");
+                // STIC-Custom 20221103 MHP - STIC#904
+                // Comment the line that generates the error in import
+                // echo("fetched: " . $row['reports_to_id'] . " from " . $check_user . "<br>");
+                // Save Previous Reporter
+                $check_user_previous = $check_user;
+                // END STIC-Custom
                 $check_user = $row['reports_to_id'];
             }
 
             if ($reports_to_self == 1) {
-                $this->error_string .= $mod_strings['ERR_REPORT_LOOP'];
+                // STIC-Custom - Manage cyclic dependency in the import process
+                // 20221103 MHP - STIC#904
+                // 20221129 MHP - STIC#931
+                // $this->error_string .= $mod_strings['ERR_REPORT_LOOP'];
+                if ($_REQUEST["module"] == 'Import') {
+                    $this->error_string .= translate('ERR_REPORT_LOOP', "Users") . "<br><br>" . $check_user_previous . $mod_strings['LBL_ERROR_CYCLIC_DEPENDENCY'] . $check_user;
+                } else {
+                    $this->error_string .= $mod_strings['ERR_REPORT_LOOP'];
+                }
+                // END STIC-Custom
                 $verified = false;
             }
         }
@@ -1494,7 +1647,15 @@ EOQ;
         $dup_users = $this->db->fetchByAssoc($result);
 
         if (!empty($dup_users)) {
-            $this->error_string .= $mod_strings['ERR_USER_NAME_EXISTS_1'] . $this->user_name . $mod_strings['ERR_USER_NAME_EXISTS_2'];
+            // STIC-Custom 20221129 MHP - Check duplicate users in the import process
+            // STIC#931
+            // $this->error_string .= $mod_strings['ERR_USER_NAME_EXISTS_1'] . " " . $this->user_name . " " . $mod_strings['ERR_USER_NAME_EXISTS_2'];
+            if ($_REQUEST["module"] == 'Import') {
+                $this->error_string .= translate('ERR_USER_NAME_EXISTS_1', "Users") . " " . $this->user_name . " " . translate('ERR_USER_NAME_EXISTS_2', "Users");
+            } else {
+                $this->error_string .= $mod_strings['ERR_USER_NAME_EXISTS_1'] . " " . $this->user_name . " " . $mod_strings['ERR_USER_NAME_EXISTS_2'];
+            }
+            // END STIC-Custom
             $verified = false;
         }
 
@@ -1503,7 +1664,15 @@ EOQ;
 
             if (($remaining_admins <= 1) && ($this->is_admin != '1') && ($this->id == $current_user->id)) {
                 $GLOBALS['log']->debug("Number of remaining administrator accounts: {$remaining_admins}");
-                $this->error_string .= $mod_strings['ERR_LAST_ADMIN_1'] . $this->user_name . $mod_strings['ERR_LAST_ADMIN_2'];
+                // STIC-Custom 20221129 MHP - Check that we do not configure the last administrator as a normal user in the import process
+                // STIC#931
+                // $this->error_string .= $mod_strings['ERR_LAST_ADMIN_1'] . $this->user_name . $mod_strings['ERR_LAST_ADMIN_2'];
+                if ($_REQUEST["module"] == 'Import') {
+                    $this->error_string .= translate('ERR_LAST_ADMIN_1', "Users") . $this->user_name . translate('ERR_LAST_ADMIN_2', "Users");           
+                } else {
+                    $this->error_string .= $mod_strings['ERR_LAST_ADMIN_1'] . $this->user_name . $mod_strings['ERR_LAST_ADMIN_2'];
+                }
+                // END STIC-Custom                
                 $verified = false;
             }
         }
@@ -2422,7 +2591,10 @@ EOQ;
     {
         $editorType = $this->getPreference('editor_type');
         if (!$editorType) {
-            $editorType = 'mozaik';
+            // STIC 20210621 - Change the default editor when creating a user 
+            // STIC#327
+            // $editorType = 'mozaik';
+            $editorType = 'tinymce';
             $this->setPreference('editor_type', $editorType);
         }
 

@@ -1,0 +1,18 @@
+// query-dsl/range-query.asciidoc:157
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'range' => [
+                'timestamp' => [
+                    'gte' => 'now-1d/d',
+                    'lt' => 'now/d',
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

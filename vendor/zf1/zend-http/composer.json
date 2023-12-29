@@ -1,0 +1,23 @@
+{
+	"name": "zf1/zend-http",
+	"description": "Zend Framework 1 Http package",
+	"keywords": [
+		"framework",
+		"zf1",
+		"zend",
+		"http"
+	],
+	"homepage": "http://framework.zend.com/",
+	"license": "BSD-3-Clause",
+	"require": {
+		"php": ">=5.2.11",
+		"zf1/zend-exception": "self.version",
+		"zf1/zend-loader": "self.version",
+		"zf1/zend-uri": "self.version"
+	},
+	"autoload": {
+		"psr-0": {
+			"Zend_Http": "library/"
+		}
+	}
+}

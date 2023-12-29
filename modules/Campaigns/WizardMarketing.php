@@ -94,6 +94,11 @@ if (isset($_REQUEST['return_id'])) {
 // handle Create $module then Cancel
 $ss->assign('CAMPAIGN_ID', $campaign_focus->id);
 
+// STIC-Custom 20220112 MHP - Add the campaign status to the TPL.
+// STIC#539
+$ss->assign('CAMPAIGN_STATUS', $campaign_focus->status);
+// END STIC-Custom
+
 $seps = get_number_separators();
 $ss->assign("NUM_GRP_SEP", $seps[0]);
 $ss->assign("DEC_SEP", $seps[1]);
@@ -590,10 +595,16 @@ $ss->assign('link_to_sender_details', 'index.php?return_module=Campaigns&module=
 // ---------------------------------
 
 
-require_once 'include/SuiteEditor/SuiteEditorConnector.php';
+// STIC-Custom 22/06/2021 - Include our SuiteEditorConnector to config TinyMCE Editor
+// STIC#539
+// require_once 'include/SuiteEditor/SuiteEditorConnector.php';
+require_once 'custom/modules/EmailTemplates/SticSuiteEditorConnector.php';
 $templateWidth = 600;
 $ss->assign('template_width', $templateWidth);
-$ss->assign('BODY_EDITOR', SuiteEditorConnector::getHtml(SuiteEditorConnector::getSuiteSettings(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', $templateWidth)));
+// STIC-Custom 22/06/2021 - Include our SuiteEditorConnector to config TinyMCE Editor
+// STIC#539
+// $ss->assign('BODY_EDITOR', SuiteEditorConnector::getHtml(SuiteEditorConnector::getSuiteSettings(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', $templateWidth)));
+$ss->assign('BODY_EDITOR', SticSuiteEditorConnector::getSticHtml(SticSuiteEditorConnector::getSticSuiteSettings(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', $templateWidth)));
 $ss->assign('hide_width_set', $current_user->getEditorType() != 'mozaik');
 
 // ---------------------------------

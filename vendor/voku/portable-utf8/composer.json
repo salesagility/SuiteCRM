@@ -1,0 +1,66 @@
+{
+    "name": "voku/portable-utf8",
+    "description": "Portable UTF-8 library - performance optimized (unicode) string functions for php.",
+    "type": "library",
+    "keywords": [
+        "clean",
+        "php",
+        "unicode",
+        "utf",
+        "utf-8",
+        "utf8"
+    ],
+    "homepage": "https://github.com/voku/portable-utf8",
+    "license": "(Apache-2.0 or GPL-2.0)",
+    "authors": [
+        {
+            "name": "Nicolas Grekas",
+            "email": "p@tchwork.com"
+        },
+        {
+            "name": "Hamid Sarfraz",
+            "homepage": "http://pageconfig.com/"
+        },
+        {
+            "name": "Lars Moelleken",
+            "homepage": "http://www.moelleken.org/"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "symfony/polyfill-php72": "~1.0",
+        "symfony/polyfill-iconv": "~1.0",
+        "symfony/polyfill-intl-grapheme": "~1.0",
+        "symfony/polyfill-intl-normalizer": "~1.0",
+        "symfony/polyfill-mbstring": "~1.0",
+        "voku/portable-ascii": "~2.0.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.0 || ~7.0 || ~9.0",
+        "phpstan/phpstan": "1.8.*@dev",
+        "phpstan/phpstan-strict-rules": "1.4.*@dev",
+        "thecodingmachine/phpstan-strict-rules": "1.0.*@dev",
+        "voku/phpstan-rules": "3.1.*@dev"
+    },
+    "suggest": {
+        "ext-json": "Use JSON for string detection",
+        "ext-ctype": "Use Ctype for e.g. hexadecimal digit detection",
+        "ext-fileinfo": "Use Fileinfo for better binary file detection",
+        "ext-intl": "Use Intl for best performance",
+        "ext-iconv": "Use iconv for best performance",
+        "ext-mbstring": "Use Mbstring for best performance"
+    },
+    "autoload": {
+        "psr-4": {
+            "voku\\": "src/voku/"
+        },
+        "files": [
+            "bootstrap.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "voku\\tests\\": "tests/"
+        }
+    }
+}

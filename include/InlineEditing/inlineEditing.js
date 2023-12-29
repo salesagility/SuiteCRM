@@ -350,7 +350,10 @@ $(document).on("click", function(e) {
                     ) + " " + message_field
                 );
                 if (r == true) {
-                    var output = setValueClose(output_value);
+                    // STIC-Custom jch 20210609 - Wrong email value displayed when aborting an inline edition
+                    // STIC#298
+                    // var output = setValueClose(output_value);
+                    var output = setValueClose(output_value, false);
                     clickListenerActive = false;
                 } else {
                     $("#" + field).focus();
@@ -472,6 +475,18 @@ function handleSave(field, id, module, type) {
         parent_type = $("#parent_type").val();
     }
     var output_value = saveFieldHTML(field, module, id, value, parent_type);
+    
+    // STIC-Custom - JCH - 2022-09-26 - In order to correct run dynamicenum filters, in detail view add to output an hidden input field with new select value
+    // STIC#865
+    // Changing views and module variable
+    // STIC#907
+    if(view == 'DetailView') {
+        if(type == 'enum' || type == 'multienum' || type == 'dynamicenum'){
+            output_value ='<input type="hidden" class="sugar_field" id="'+field+'" value="'+value+'">' + output_value;
+        }
+    }
+    // END STIC-Custom
+
     // If the field type is email, we don't want to handle linebreaks in the output.
     if (field === "email1") {
         setValueClose(output_value, false);
@@ -626,10 +641,19 @@ function getValidationRules(field, module, id) {
         );
         return false;
     }
-
-    return (
-        "<script type='text/javascript'>addToValidate('EditView', \"" + field + '", "' + validation["type"] + '", ' + validation["required"] + ',"' + validation["label"] + '");</script>'
-    );
+    // STIC Custom - JBL - 20230424 - Set Validation for inline Range edition
+    // STIC#1062
+    if(validation["type"]=="range") {
+        return (
+            "<script type='text/javascript'>addToValidateRange('EditView', \"" + field + '", "' + validation["type"] + '", ' + validation["required"] + ',"' + validation["label"] + '",' + validation["min"] + ',' + validation["max"]+');</script>'
+        );
+    }
+    else {
+        return (
+            "<script type='text/javascript'>addToValidate('EditView', \"" + field + '", "' + validation["type"] + '", ' + validation["required"] + ',"' + validation["label"] + '");</script>'
+        );
+    }    
+    // End STIC Custom
 }
 
 /**

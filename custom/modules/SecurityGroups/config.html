@@ -1,0 +1,232 @@
+<!-- 
+/**
+ * This file is part of SinergiaCRM.
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ */
+ -->
+
+<!-- BEGIN: main -->
+<style>
+	.sg-config em{
+		display: block;
+		padding-bottom:3em;
+		line-height: normal;
+		color:#777;
+	}
+
+	 .sg-config td{
+		 padding: .3em .7em;; 
+	} 
+	.sg-config h4{
+font-weight: bold;
+border-bottom: 1px solid #000;
+margin-bottom: 1em;;
+	}
+
+</style>
+
+<form name="ConfigureSettings" id="EditView" method="POST" >
+	<input type="hidden" name="module" value="SecurityGroups">
+	<input type="hidden" name="action">
+	<input type="hidden" name="return_module" value="{RETURN_MODULE}">
+	<input type="hidden" name="return_action" value="{RETURN_ACTION}">
+	<input type="hidden" name="source_form" value="config" />
+	<input type="hidden" name="remove_default_id" value="" />
+
+<table width="100%" cellpadding="2" cellspacing="2" border="0">
+	<tr>
+
+		<td style="padding-bottom: 2px;">
+			<input title="{APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{APP.LBL_SAVE_BUTTON_KEY}" class="button" onclick="this.form.action.value='SaveConfig';" type="submit" name="button" value=" {APP.LBL_SAVE_BUTTON_LABEL} ">
+			<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}';" type="submit" name="button" value=" {APP.LBL_CANCEL_BUTTON_LABEL} ">
+		</td>
+		<td align="right" nowrap>
+			<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span> {APP.NTC_REQUIRED}
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2>
+			<table width="100%" border="1" cellspacing="0" cellpadding="0" class="tabForm sg-config">
+				<tr>
+					<td>
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td style="width: 40%;" class="dataLabel">
+									{MOD.LBL_ADDITIVE}
+								</td>
+								<td style="width: 5%;" class="dataField" >
+									<input name="securitysuite_additive" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_additive}>
+								</td>
+								<td style="width: 40%" class="dataLabel" >
+									{MOD.LBL_USER_ROLE_PRECEDENCE}
+								</td>
+								<td style="width: 5%;" class="dataField" >
+									<input name="securitysuite_user_role_precedence" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_user_role_precedence}>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="dataField">
+								<em>{MOD.LBL_ADDITIVE_DESC}</em>
+								</td>
+								<td colspan="2" class="dataField">
+								<em>{MOD.LBL_USER_ROLE_PRECEDENCE_DESC}</em>
+								</td>
+							</tr>
+							<tr>
+								<td class="dataLabel">
+									{MOD.LBL_STRICT_RIGHTS}
+								</td>
+								<td class="dataField">
+									<input name="securitysuite_strict_rights" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_strict_rights}>
+								</td>
+								<td class="dataLabel" >
+									{MOD.LBL_FILTER_USER_LIST}
+								</td>
+								<td class="dataField" >
+									<input name="securitysuite_filter_user_list" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_filter_user_list}>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="dataField">
+								<em>{MOD.LBL_STRICT_RIGHTS_DESC}</em>
+								</td>
+								<td colspan="2" class="dataField">
+								<em>{MOD.LBL_FILTER_USER_LIST_DESC}</em>
+								</td>
+							</tr>
+							<tr>
+								<td class="dataLabel">
+									{MOD.LBL_USER_POPUP}
+								</td>
+								<td class="dataField">
+									<input name="securitysuite_user_popup" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_user_popup}>
+								</td>
+								<td class="dataLabel" >
+									{MOD.LBL_POPUP_SELECT}
+								</td>
+								<td class="dataField" >
+									<input name="securitysuite_popup_select" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_popup_select}>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="dataField">
+								<em>{MOD.LBL_USER_POPUP_DESC}</em>
+								</td>
+								<td colspan="2" class="dataField">
+								<em>{MOD.LBL_POPUP_SELECT_DESC}</em>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</td>
+		</tr>
+	</table>
+<P></P>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabForm sg-config">
+<tr><td>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr><th align="left" class="dataLabel" colspan="4"><h4 class="dataLabel">{MOD.LBL_INHERIT_TITLE}</h4></th>
+		</tr>
+		<tr>
+			<td colspan="4" class="dataField">
+				<em>{MOD.LBL_INHERIT_TITLE_DESC}</em>
+			</td>
+		</tr>
+							<tr>
+								<td style="width: 40%;" class="dataLabel">
+									{MOD.LBL_INHERIT_CREATOR}
+								</td>
+								<td style="width: 5%;" class="dataField">
+									<input name="securitysuite_inherit_creator" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_inherit_creator}>
+								</td>
+								<td style="width: 40%;" class="dataLabel" >
+									{MOD.LBL_INHERIT_PARENT}
+								</td>
+								<td style="width: 5%;" class="dataField" >
+									<input name="securitysuite_inherit_parent" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_inherit_parent}>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="dataField">
+								<em>{MOD.LBL_INHERIT_CREATOR_DESC}</em>
+								</td>
+								<td colspan="2" class="dataField">
+								<em>{MOD.LBL_INHERIT_PARENT_DESC}</em>
+								</td>
+							</tr>
+							<tr>
+								<td  class="dataLabel">
+									{MOD.LBL_INHERIT_ASSIGNED}
+								</td>
+								<td  class="dataField">
+									<input name="securitysuite_inherit_assigned" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_inherit_assigned}>
+								</td>
+								<td  class="dataLabel" >
+                                    {MOD.LBL_INBOUND_EMAIL}
+									&nbsp;
+								</td>
+								<td  class="dataField" >
+
+                                    <input name="securitysuite_inbound_email" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_inbound_email}>
+
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="dataField">
+								<em>{MOD.LBL_INHERIT_ASSIGNED_DESC}</em>
+								</td>
+								<td colspan="2" class="dataField">
+                                <em>{MOD.LBL_INBOUND_EMAIL_DESC}</em>
+								</td>
+							</tr>
+	</table>
+</td></tr>
+</table>
+
+<p></p>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabForm sg-config">
+<tr><td>
+	<table width="100%" border="0" cellspacing="0" id="typeForm" cellpadding="0">
+	<tr>
+	<th align="left" class="dataLabel" colspan="3"><h4 class="dataLabel"><span sugar='slot27'>{MOD.LBL_DEFAULT_GROUP_TITLE}</span sugar='slot'></h4></th>
+	</tr>
+	{DEFAULT_GROUPS}
+	<tr>
+	<td class="dataLabel" width="40%">
+		{MOD.LBL_GROUP} <select name='default_group' tabindex='1'>{SECURITY_GROUP_OPTIONS}</select>
+	</td>
+	<td class="dataField" width="45%">
+		{MOD.LBL_MODULE} <select name='default_module' tabindex='1'>{MODULE_OPTIONS}</select>
+	</td>
+	<td class="dataLabel" width="15%">
+		<input type="submit" tabindex='1' class="button" onclick="this.form.action.value='SaveConfig'; this.form.return_module.value='SecurityGroups'; this.form.return_action.value='config';" value='{MOD.LBL_ADD_BUTTON_LABEL}'/>
+	</td>
+	</tr>
+	</table>
+</td></tr></table>
+
+<div style="padding-top:2px;">
+			<input title="{APP.LBL_SAVE_BUTTON_TITLE}" class="button" onclick="this.form.action.value='SaveConfig'" type="submit" name="button" value=" {APP.LBL_SAVE_BUTTON_LABEL} ">
+			<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" class="button" onclick="this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}';" type="submit" name="button" value=" {APP.LBL_CANCEL_BUTTON_LABEL} ">
+</div>
+</form>
+
+<!-- END: main -->

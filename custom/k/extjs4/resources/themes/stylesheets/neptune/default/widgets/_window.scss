@@ -1,0 +1,183 @@
+@mixin extjs-window {
+
+    .#{$prefix}window {
+        @extend .outline-none;
+    }
+
+    .#{$prefix}window-wrap {
+        position: relative;
+    }
+
+    .#{$prefix}window-body {
+        position: relative;
+        overflow: hidden;
+        // border-style: $window-body-border-style;
+    }
+
+    // Maximized window
+    .#{$prefix}window-maximized {
+        .#{$prefix}window-wrap {
+            .#{$prefix}window-header {
+                @include important-no-border-radius;
+            }
+        }
+    }
+
+    // Collapsed window header styles
+    .#{$prefix}window-collapsed {
+        .#{$prefix}window-header-vertical, .#{$prefix}window-header-horizontal {
+            @include border-radius($window-border-radius);
+        }
+
+//        // Padding changes for collapsed headers.
+//        .#{$prefix}window-header-left {
+//            padding-right: $window-border-radius;
+//        }
+
+//        .#{$prefix}window-header-right {
+//            padding-left: $window-border-radius;
+//        }
+
+//        .#{$prefix}window-header-top {
+//            padding-bottom: $window-border-radius;
+//        }
+
+//        .#{$prefix}window-header-bottom {
+//            padding-top: $window-border-radius;
+//        }
+    }
+
+    .#{$prefix}window-header-left,
+    .#{$prefix}window-header-right {
+        .#{$prefix}vml-base {
+            left: -3px !important;
+        }
+    }
+
+    .#{$prefix}window-header-text {
+        @extend .no-select;
+        @extend .bigtext;
+        white-space: nowrap;
+        display: block;
+    }
+
+    .#{$prefix}window-body-plain {
+        background: transparent;
+    }
+
+    .#{$prefix}window-header {
+        .#{$prefix}window-header-body,
+        .#{$prefix}window-header-body > .x-box-inner {
+            overflow: visible;
+        }
+    }
+
+    @include extjs-window-ui('default');
+}
+
+/**
+  * @class Ext.Window
+  * Used to create a visual theme for an Ext.Panel
+  */
+@mixin extjs-window-ui(
+    $ui-label,
+
+    $ui-padding: null, // This was not set in @include above...
+    $ui-border-radius: $window-border-radius,
+    $ui-border-color: $window-border-color,
+    $ui-inner-border-color: $window-inner-border-color,
+
+    $ui-header-background-color: $window-base-color,
+    $ui-header-color: $window-header-color,
+    $ui-header-font-size: $window-header-font-size,
+    $ui-header-font-weight: $window-header-font-weight,
+
+    // $ui-body-border-color: $window-body-border-color,
+    $ui-body-background-color: $window-body-background-color,
+    $ui-body-color: $window-body-color,
+
+    $ui-base-color: $window-base-color
+){
+    .#{$prefix}window-#{$ui-label} {
+        border-color: $ui-border-color;
+        @include border-radius($ui-border-radius);
+//        @include background-image(linear-gradient(top, lighten($ui-base-color, 5%), darken($ui-base-color, 5%) 80px));
+
+        // @if $include-panel-highlights {
+        //     @include inner-border($window-inner-border-width, $ui-inner-border-color);
+        // }
+    }
+
+    // $ui-padding was never being set...
+    @if $ui-border-radius != null {
+        @include x-frame(
+            'window',
+            $ui-label,
+
+            $border-radius: $ui-border-radius,
+            $border-width: $window-border-width,
+            $padding: $ui-padding,
+            $background-color: $ui-base-color
+        );
+    }
+
+    // Window body
+    .#{$prefix}window-body-#{$ui-label} {
+        // border-color: $ui-body-border-color;
+        // border-width: $window-body-border-width;
+        background: $ui-body-background-color;
+        color: $ui-body-color;
+    }
+
+    .#{$prefix}window-header-#{$ui-label} {
+        border-color: $ui-border-color;
+        padding: 8px 10px 8px 10px;
+        @if ($include-window-highlights) {
+            @include inset-by-background($ui-base-color);
+        }
+        // @tag iezoomhack
+
+        @if $supports-gradients or $compile-all {
+            @if $ui-header-background-color != null { @include background-image(linear-gradient(top, lighten($ui-header-background-color, 5%), $ui-header-background-color 100%)); }
+        }
+    }
+
+    .#{$prefix}window-header-text-#{$ui-label} {
+        color: $ui-header-color;
+        font-weight: $ui-header-font-weight;
+        line-height: 1.2em;
+        font-size: $ui-header-font-size;
+    }
+
+    @if $ui-border-radius != null {
+        .#{$prefix}window-header-#{$ui-label}-top {
+            @include border-top-radius($ui-border-radius);
+        }
+    }
+
+    @if $ui-border-radius != null {
+        // @include x-frame('window-header', '#{$ui-label}-top',    top($ui-border-radius) right($ui-border-radius) 0 0, $window-border-width, 5px 5px 0, $ui-base-color);
+        // @include x-frame('window-header', '#{$ui-label}-right',  0 right($ui-border-radius) bottom($ui-border-radius) 0, $window-border-width, 5px 5px 5px 0, $ui-base-color);
+        // @include x-frame('window-header', '#{$ui-label}-bottom', 0 0 bottom($ui-border-radius) left($ui-border-radius), $window-border-width, 0 5px 5px, $ui-base-color);
+        // @include x-frame('window-header', '#{$ui-label}-left',   top($ui-border-radius) 0 0 left($ui-border-radius), $window-border-width, 5px 0px 5px 5px, $ui-base-color);
+    }
+
+    @if $include-panel-highlights {
+        // So much crud for inner borders...
+        // .#{$prefix}window-header-#{$ui-label}-top {
+        //     @include inner-border(1px 1px 0, $ui-inner-border-color);
+        // }
+
+        // .#{$prefix}window-header-#{$ui-label}-right {
+        //     @include inner-border(1px 1px 1px 0, $ui-inner-border-color);
+        // }
+
+        // .#{$prefix}window-header-#{$ui-label}-bottom {
+        //     @include inner-border(0px 1px 1px, $ui-inner-border-color);
+        // }
+
+        // .#{$prefix}window-header-#{$ui-label}-left {
+        //     @include inner-border(1px 0 1px 1px, $ui-inner-border-color);
+        // }
+    }
+}

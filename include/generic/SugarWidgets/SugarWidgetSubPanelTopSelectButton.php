@@ -66,6 +66,12 @@ class SugarWidgetSubPanelTopSelectButton extends SugarWidgetSubPanelTopButton
     //widget_data is the collection of attributes associated with the button in the layout_defs file.
     public function display($widget_data, $additionalFormFields = null, $nonbutton = false)
     {
+        // STIC-Custom 20230725 MHP - Add check if user has edit permissions
+        // STIC#1035
+        if (ACLController::moduleSupportsACL($widget_data['module']) && !ACLController::checkAccess($widget_data['module'], 'edit', true)) {
+            return false;
+        }
+        // END STIC-Custom
         global $app_strings;
         $initial_filter = '';
 
@@ -176,7 +182,6 @@ class SugarWidgetSubPanelTopSelectButton extends SugarWidgetSubPanelTopButton
             . ' value="' . $this->value . "\"\n"
             . " onclick='open_popup(\"$this->module_name\",600,400,\"$initial_filter\",true,true,$json_encoded_php_array,\"$popup_mode\",$create);' />\n";
     }
-
     /**
     * @return string
     */

@@ -1,0 +1,6 @@
+$google-font-name: false !default;
+$google-font-weights: false !default;
+
+@if $google-font-name AND $google-font-weights {
+    @import url("//fonts.googleapis.com/css?family=#{$google-font-name}:#{$google-font-weights}");
+}

@@ -1,0 +1,38 @@
+[[endpoint-closure]]
+=== Set the Endpoint closure
+
+The client uses an Endpoint closure to dispatch API requests to the correct 
+Endpoint object. A namespace object will construct a new Endpoint via this 
+closure, which means this is a handy location if you wish to extend the 
+available set of API endpoints available.
+
+For example, we could add a new endpoint like so:
+
+[source,php]
+----
+
+$transport = $this->transport;
+$serializer = $this->serializer;
+
+$newEndpoint = function ($class) use ($transport, $serializer) {
+    if ($class == 'SuperSearch') {
+        return new MyProject\SuperSearch($transport);
+    } else {
+        // Default handler
+        $fullPath = '\\Elasticsearch\\Endpoints\\' . $class;
+        if ($class === 'Bulk' || $class === 'Msearch' || $class === 'MPercolate') {
+            return new $fullPath($transport, $serializer);
+        } else {
+            return new $fullPath($transport);
+        }
+    }
+};
+
+$client = ClientBuilder::create()
+            ->setEndpoint($newEndpoint)
+            ->build();
+----
+
+Obviously, by doing this you take responsibility that all existing endpoints 
+still function correctly. And you also assume the responsibility of correctly 
+wiring the Transport and Serializer into each endpoint.

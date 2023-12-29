@@ -1,0 +1,142 @@
+@mixin extjs-slider {
+    .#{$prefix}slider {
+        // @tag iezoomhack
+    }
+
+    .#{$prefix}slider-inner {
+        position:relative;
+        left:0;
+        top:0;
+        overflow:visible;
+        // @tag iezoomhack
+    }
+
+    .#{$prefix}slider-focus {
+        position:absolute;
+        left:0;
+        top:0;
+        width:1px;
+        height:1px;
+        line-height:1px;
+        font-size:1px;
+        display:block;
+        overflow:hidden;
+        @extend .outline-none;
+        @extend .no-select;
+    }
+
+    /* Horizontal styles */
+    .#{$prefix}slider-horz {
+        padding-left:7px;
+        background:transparent no-repeat 0 -24px;
+    }
+
+    .#{$prefix}slider-horz .#{$prefix}slider-end {
+        padding-right:7px;
+        // @tag iezoomhack
+        background:transparent no-repeat right -46px;
+    }
+
+    .#{$prefix}slider-horz .#{$prefix}slider-inner {
+        background:transparent repeat-x 0 -2px;
+        height:18px;
+    }
+
+    .#{$prefix}slider-horz .#{$prefix}slider-thumb {
+        width: $horizontal-slider-thumb-width;
+        height: $horizontal-slider-thumb-height;
+        margin-left: -($horizontal-slider-thumb-width / 2);
+        position: absolute;
+        left: 0;
+        top: 1px;
+        background: transparent no-repeat 0 0;
+    }
+
+    .#{$prefix}slider-horz .#{$prefix}slider-thumb-over {
+        background-position: -14px -15px;
+    }
+
+    .#{$prefix}slider-horz .#{$prefix}slider-thumb-drag {
+        background-position: -28px -30px;
+    }
+
+    /* Vertical styles */
+    .#{$prefix}slider-vert {
+        padding-top:7px;
+        background:transparent no-repeat -44px 0;
+    }
+
+    .#{$prefix}slider-vert .#{$prefix}slider-end {
+        padding-bottom:7px;
+        // @tag iezoomhack
+        background:transparent no-repeat -22px bottom;
+        width:22px;
+    }
+
+    .#{$prefix}slider-vert .#{$prefix}slider-inner {
+        background:transparent repeat-y 0 0;
+        width:22px;
+    }
+
+    .#{$prefix}slider-vert .#{$prefix}slider-thumb {
+        width: $vertical-slider-thumb-width;
+        height: $vertical-slider-thumb-height;
+        margin-bottom: -($vertical-slider-thumb-height / 2);
+        position: absolute;
+        left: 3px;
+        bottom: 0;
+        background:transparent no-repeat 0 0;
+    }
+
+    .#{$prefix}slider-vert .#{$prefix}slider-thumb-over {
+        background-position: -15px -14px;
+    }
+
+    .#{$prefix}slider-vert .#{$prefix}slider-thumb-drag {
+        background-position: -30px -28px;
+    }
+    
+    .#{$prefix}slider-horz,
+    .#{$prefix}slider-horz .#{$prefix}slider-end,
+    .#{$prefix}slider-horz .#{$prefix}slider-inner {
+        background-image: theme-background-image($theme-name, 'slider/slider-bg.png');
+    }
+
+    .#{$prefix}slider-horz .#{$prefix}slider-thumb {
+        background-image: theme-background-image($theme-name, 'slider/slider-thumb.png');
+    }
+
+    .#{$prefix}slider-vert,
+    .#{$prefix}slider-vert .#{$prefix}slider-end,
+    .#{$prefix}slider-vert .#{$prefix}slider-inner {
+        background-image: theme-background-image($theme-name, 'slider/slider-v-bg.png');
+    }
+
+    .#{$prefix}slider-vert .#{$prefix}slider-thumb {
+        background-image: theme-background-image($theme-name, 'slider/slider-v-thumb.png');
+    }
+    
+    @if $include-ie {
+        .#{$prefix}ie6 {
+            .#{$prefix}slider-horz,
+            .#{$prefix}slider-horz .#{$prefix}slider-end,
+            .#{$prefix}slider-horz .#{$prefix}slider-inner {
+                background-image: theme-background-image($theme-name, 'slider/slider-bg.gif');
+            }
+
+            .#{$prefix}slider-horz .#{$prefix}slider-thumb {
+                background-image: theme-background-image($theme-name, 'slider/slider-thumb.gif');
+            }
+
+            .#{$prefix}slider-vert,
+            .#{$prefix}slider-vert .#{$prefix}slider-end,
+            .#{$prefix}slider-vert .#{$prefix}slider-inner {
+                background-image: theme-background-image($theme-name, 'slider/slider-v-bg.gif');
+            }
+
+            .#{$prefix}slider-vert .#{$prefix}slider-thumb {
+                background-image: theme-background-image($theme-name, 'slider/slider-v-thumb.gif');
+            }
+        }
+    }
+}

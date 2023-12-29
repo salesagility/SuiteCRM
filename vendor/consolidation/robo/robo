@@ -1,0 +1,50 @@
+#!/usr/bin/env php
+<?php
+/**
+ * If we're running from phar load the phar autoload,
+ * else let the script 'robo' search for the autoloader.
+ */
+
+// Hack: \Phar::running() cannot be used reliably here to determine
+// if we are running as a phar or not (works when phar is built with
+// box, but does not work when phar is built with the Robo phar task.)
+// We will use __FILE__ to determine our phar path; however, we cannot
+// distinguish whether a __FILE__ of "/path/robo" is this file, or a
+// 'robo.phar' that has been renamed to 'robo'.  We will use the file
+// size to differentiate.
+// Recommendation: Use box to build your phar. See https://github.com/g1a/starter
+$isPhar = (filesize(__FILE__) > 500000);
+
+//  Non-phar autoloader paths
+$candidates = [
+    __DIR__.'/vendor/autoload.php',
+    __DIR__.'/../../autoload.php',
+    __DIR__.'/../autoload.php',
+];
+
+// Use our phar alias path
+if ($isPhar) {
+    array_unshift($candidates, 'phar://robo.phar/vendor/autoload.php');
+}
+
+$autoloaderPath = false;
+foreach ($candidates as $candidate) {
+    if (file_exists($candidate)) {
+        $autoloaderPath = $candidate;
+        break;
+    }
+}
+if (!$autoloaderPath) {
+  die("Could not find autoloader. Run 'composer install'.");
+}
+$classLoader = require $autoloaderPath;
+$configFilePath = getenv('ROBO_CONFIG') ?: getenv('HOME') . '/.robo/robo.yml';
+$runner = new \Robo\Runner();
+$runner
+  ->setRelativePluginNamespace('Robo\Plugin')
+  ->setSelfUpdateRepository('consolidation/robo')
+  ->setConfigurationFilename($configFilePath)
+  ->setEnvConfigPrefix('ROBO')
+  ->setClassLoader($classLoader);
+$statusCode = $runner->execute($_SERVER['argv']);
+exit($statusCode);

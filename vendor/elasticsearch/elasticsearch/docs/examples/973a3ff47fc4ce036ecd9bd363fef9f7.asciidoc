@@ -1,0 +1,20 @@
+// docs/reindex.asciidoc:767
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'source' => [
+            'index' => 'metricbeat-*',
+        ],
+        'dest' => [
+            'index' => 'metricbeat',
+        ],
+        'script' => [
+            'lang' => 'painless',
+            'source' => 'ctx._index = \'metricbeat-\' + (ctx._index.substring(\'metricbeat-\'.length(), ctx._index.length())) + \'-1\'',
+        ],
+    ],
+];
+$response = $client->reindex($params);
+----

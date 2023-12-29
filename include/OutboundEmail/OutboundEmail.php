@@ -651,7 +651,16 @@ class OutboundEmail
                 return $this->getSystemMailerSettings();
             }
         }
-        $res = $this->db->query("SELECT id FROM outbound_email WHERE user_id = '{$user->id}' AND name='" . $this->db->quote($name) . "'");
+
+        // STIC-Custom 20230728 MHP - If the user is an administrator we do not filter by user
+        // STIC#1056
+        if ($user->is_admin){
+            $res = $this->db->query("SELECT id FROM outbound_email WHERE name='" . $this->db->quote($name) . "'");
+        } else {
+            $res = $this->db->query("SELECT id FROM outbound_email WHERE user_id = '{$user->id}' AND name='" . $this->db->quote($name) . "'");
+        }
+        // END Stic-Custom
+
         $a = $this->db->fetchByAssoc($res);
         if (!isset($a['id'])) {
             return false;

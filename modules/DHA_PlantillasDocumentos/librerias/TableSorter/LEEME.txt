@@ -1,0 +1,4 @@
+
+Para SugarCRM quitar los ficheros zip que hay dentro del subdirectorio themes.
+Estos ficheros no son necesarios.
+Si no se hace, da error en la actualización de Sugar

@@ -1,0 +1,58 @@
+[[configuration]]
+== Configuration
+
+Almost every aspect of the client is configurable. Most users only need to 
+configure a few parameters to suit their needs, but it is possible to completely 
+replace much of the internals if required.
+
+Custom configuration is accomplished before the client is instantiated, through 
+the ClientBuilder helper object. You can find all the configuration options and 
+check sample code that helps you replace the various components.
+
+To learn more about JSON in PHP, read <<php_json_objects>>.
+
+* <<host-config>>
+* <<set-retries>>
+* <<http-meta-data>>
+* <<enabling_logger>>
+* <<http-handler-config>>
+* <<namespaces>>
+* <<connection_pool>>
+* <<selectors>>
+* <<serializers>>
+* <<connection-factory>>
+* <<endpoint-closure>>
+* <<config-hash>>
+* <<per_request_configuration>>
+* <<future_mode>>
+
+
+include::php_json_objects.asciidoc[]
+
+include::host-config.asciidoc[]
+
+include::set-retries.asciidoc[]
+
+include::http-meta-data.asciidoc[]
+
+include::logger.asciidoc[]
+
+include::http-handler.asciidoc[]
+
+include::namespaces.asciidoc[]
+
+include::connection-pool.asciidoc[]
+
+include::selectors.asciidoc[]
+
+include::serializers.asciidoc[]
+
+include::connection-factory.asciidoc[]
+
+include::endpoint-closure.asciidoc[]
+
+include::config-hash.asciidoc[]
+
+include::per-request-configuration.asciidoc[]
+
+include::futures.asciidoc[]

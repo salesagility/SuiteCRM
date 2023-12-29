@@ -1,0 +1,29 @@
+// docs/index_.asciidoc:146
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'persistent' => [
+            'action.auto_create_index' => 'twitter,index10,-index1*,+ind*',
+        ],
+    ],
+];
+$response = $client->cluster()->putSettings($params);
+$params = [
+    'body' => [
+        'persistent' => [
+            'action.auto_create_index' => 'false',
+        ],
+    ],
+];
+$response = $client->cluster()->putSettings($params);
+$params = [
+    'body' => [
+        'persistent' => [
+            'action.auto_create_index' => 'true',
+        ],
+    ],
+];
+$response = $client->cluster()->putSettings($params);
+----

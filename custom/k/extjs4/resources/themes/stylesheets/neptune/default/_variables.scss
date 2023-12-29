@@ -1,0 +1,59 @@
+// Experiments
+
+// GrooveSencha
+/*$base-color: #3196FF;
+$neutral-color: #222;
+$base-gradient: flat;
+$toolbar-background-gradient: matte;*/
+
+// SenchaBook
+/*$base-color: #3b5998;
+$neutral-color: #627aad;
+$base-gradient: flat;
+$color-mode: light;
+$include-highlights: false;*/
+
+// Swiss
+/*$base-color: #A09DBC;
+$neutral-color: #eee;*/
+/*$stroke-color: #000;*/
+/*$base-gradient: flat;*/
+/*$include-highlights: false;*/
+/*$default-text-contrast: 100%;*/
+
+/*$base-color: #A13B18;
+$neutral-color: #303235;*/
+
+// Monochrome
+/*$neutral-color: #E0E6EF;*/
+
+// Basic theme
+/*$base-color: #d0d8da;
+$neutral-color: #d0d8da;
+$include-highlights: false;
+$base-gradient: flat;
+$stroke-color: $base-color;
+$panel-base-color: $neutral-color;
+$frame-base-color: lighten($neutral-color, 5%);
+$panel-border-color: $neutral-color;*/
+
+@import 'variables/core';
+
+@import 'variables/focus';
+@import 'variables/panel';
+@import 'variables/grid';
+@import 'variables/button';
+@import 'variables/pickers';
+@import 'variables/toolbar';
+@import 'variables/form';
+@import 'variables/menu';
+@import 'variables/window';
+@import 'variables/tabs';
+@import 'variables/qtip';
+@import 'variables/progress-bar';
+@import 'variables/btn-group';
+@import 'variables/boundlist';
+@import 'variables/tree';
+//@import 'variables/layout';
+@import 'variables/loadmask';
+@import 'variables/htmleditor';

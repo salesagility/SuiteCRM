@@ -1,0 +1,23 @@
+// query-dsl/bool-query.asciidoc:107
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'bool' => [
+                'must' => [
+                    'match_all' => [
+                    ],
+                ],
+                'filter' => [
+                    'term' => [
+                        'status' => 'active',
+                    ],
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

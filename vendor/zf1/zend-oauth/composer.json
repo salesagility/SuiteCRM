@@ -1,0 +1,27 @@
+{
+	"name": "zf1/zend-oauth",
+	"description": "Zend Framework 1 Oauth package",
+	"keywords": [
+		"framework",
+		"zf1",
+		"zend",
+		"oauth"
+	],
+	"homepage": "http://framework.zend.com/",
+	"license": "BSD-3-Clause",
+	"require": {
+		"php": ">=5.2.11",
+		"zf1/zend-exception": "self.version",
+		"zf1/zend-http": "self.version",
+		"zf1/zend-uri": "self.version",
+		"zf1/zend-crypt": "self.version"
+	},
+	"autoload": {
+		"psr-0": {
+			"Zend_Oauth": "library/"
+		}
+	},
+	"suggest": {
+		"zf1/zend-config": "Used in special situations or with special adapters"
+	}
+}

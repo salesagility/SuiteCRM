@@ -86,15 +86,29 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit
                     $options_array = array(''=>'');
                     if (isset($module_arr['module']) &&  $module_arr['module'] != '' && $module_arr['module'] != 'EmailAddress') {
                         $relate_module_name = $beanList[$module_arr['module']];
-                        $relate_module = new $relate_module_name();
+                        // STIC Custom 20230803 - JBL - Php error when edit a PDF Template with unknown related module
+                        // STIC#1178
+                        // $relate_module = new $relate_module_name();
 
-                        foreach ($relate_module->field_defs as $relate_name => $relate_arr) {
-                            if (!((isset($relate_arr['dbType']) && strtolower($relate_arr['dbType']) == 'id') || $relate_arr['type'] == 'id' || $relate_arr['type'] == 'link')) {
-                                if ((!isset($relate_arr['reportable']) || $relate_arr['reportable']) && isset($relate_arr['vname'])) {
-                                    $options_array['$'.$module_arr['name'].'_'.$relate_name] = translate($relate_arr['vname'], $relate_module->module_dir);
+                        // foreach ($relate_module->field_defs as $relate_name => $relate_arr) {
+                        //     if (!((isset($relate_arr['dbType']) && strtolower($relate_arr['dbType']) == 'id') || $relate_arr['type'] == 'id' || $relate_arr['type'] == 'link')) {
+                        //         if ((!isset($relate_arr['reportable']) || $relate_arr['reportable']) && isset($relate_arr['vname'])) {
+                        //             $options_array['$'.$module_arr['name'].'_'.$relate_name] = translate($relate_arr['vname'], $relate_module->module_dir);
+                        //         }
+                        //     }
+                        // } //End loop.
+                        if (!is_null($relate_module_name)) {
+                            $relate_module = new $relate_module_name();
+
+                            foreach ($relate_module->field_defs as $relate_name => $relate_arr) {
+                                if (!((isset($relate_arr['dbType']) && strtolower($relate_arr['dbType']) == 'id') || $relate_arr['type'] == 'id' || $relate_arr['type'] == 'link')) {
+                                    if ((!isset($relate_arr['reportable']) || $relate_arr['reportable']) && isset($relate_arr['vname'])) {
+                                        $options_array['$'.$module_arr['name'].'_'.$relate_name] = translate($relate_arr['vname'], $relate_module->module_dir);
+                                    }
                                 }
-                            }
-                        } //End loop.
+                            } //End loop.
+                        }
+                        // End STIC Custom 20230803 - JBL
 
                         $options = json_encode($options_array);
 

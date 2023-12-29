@@ -1,0 +1,22 @@
+// docs/update.asciidoc:271
+
+[source, php]
+----
+$params = [
+    'index' => 'test',
+    'id' => '1',
+    'body' => [
+        'script' => [
+            'source' => 'ctx._source.counter += params.count',
+            'lang' => 'painless',
+            'params' => [
+                'count' => 4,
+            ],
+        ],
+        'upsert' => [
+            'counter' => 1,
+        ],
+    ],
+];
+$response = $client->update($params);
+----

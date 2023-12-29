@@ -1,0 +1,19 @@
+// aggregations/bucket/terms-aggregation.asciidoc:626
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'aggs' => [
+            'tags' => [
+                'terms' => [
+                    'field' => 'tags',
+                    'include' => '.*sport.*',
+                    'exclude' => 'water_.*',
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

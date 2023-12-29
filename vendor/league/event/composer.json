@@ -1,0 +1,37 @@
+{
+    "name": "league/event",
+    "description": "Event package",
+    "keywords": ["event", "emitter", "listener"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Frank de Jonge",
+            "email": "info@frenky.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "henrikbjorn/phpspec-code-coverage": "~1.0.1",
+        "phpspec/phpspec": "^2.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "League\\Event\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "League\\Event\\Stub\\": "stubs/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.2-dev"
+        }
+    }
+}

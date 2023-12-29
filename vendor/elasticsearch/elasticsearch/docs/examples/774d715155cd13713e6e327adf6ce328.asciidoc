@@ -1,0 +1,18 @@
+// aggregations/bucket/terms-aggregation.asciidoc:857
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'aggs' => [
+            'tags' => [
+                'terms' => [
+                    'field' => 'tags',
+                    'execution_hint' => 'map',
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

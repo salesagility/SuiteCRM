@@ -1,0 +1,178 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * Usage:
+ *
+ * ./vendor/bin/release VERSION
+ */
+
+$semverRegEx = '(?<version>[0-9]+\.[0-9]+\.[0-9]+)(?<prerelease>-[0-9a-zA-Z.]+)?(?<build>\+[0-9a-zA-Z.]*)?';
+
+$optind = null;
+$options = getopt ("dvy", [
+  'pattern:',
+  'simulate',
+  'yes',
+], $optind) + [
+  'pattern' => "^SEMVER$",
+];
+$simulate = array_key_exists('simulate', $options);
+$yes = array_key_exists('yes', $options) || array_key_exists('y', $options);
+
+$pos_args = array_slice($argv, $optind);
+$path = array_shift($pos_args);
+
+if (empty($path)) {
+    print "Path to version file must be specified as a commandline argument\n";
+    exit(1);
+}
+
+if (!file_exists($path)) {
+    print "Version file not found at $path\n";
+    exit(1);
+}
+
+// The --pattern option is expected to contain the string SEMVER
+$regex = str_replace('SEMVER', "$semverRegEx", $options['pattern']);
+if ($regex == $options['pattern']) {
+    print "Pattern '$regex' must contain the string 'SEMVER'.\n";
+    exit(1);
+}
+
+// Read the contents of the version file and find the version string
+$contents = file_get_contents($path);
+if (!preg_match("#$regex#m", $contents, $matches)) {
+    print "A semver version not found in $path\n";
+    exit(1);
+}
+$matches += ['prerelease' => '', 'build' => ''];
+
+// Calculate the stable and next version strings
+$original_version_match = $matches[0];
+$original_version = $matches['version'] . $matches['prerelease'] . $matches['build'];
+$stable_version = $matches['version'] . (has_prerelease($matches) ? $matches['prerelease'] : '');
+$next_version = next_version($matches);
+
+$stable_version_replacement = str_replace($original_version, $stable_version, $original_version_match);
+$next_version_replacement = str_replace($original_version, $next_version, $original_version_match);
+
+$stable_version_contents = str_replace($original_version_match, $stable_version_replacement, $contents);
+$next_version_contents = str_replace($original_version_match, $next_version_replacement, $contents);
+
+$composerContents = file_get_contents('composer.json');
+$composerData = json_decode($composerContents, true);
+$project = $composerData['name'];
+
+$msg = "Release $project version $stable_version";
+$dashes = str_pad('', strlen($msg) + 8, '-', STR_PAD_LEFT);
+
+print "\n$dashes\n\n";
+print "    $msg\n";
+print "\n$dashes\n\n";
+
+// Write the stable version into the version file, tag and push the release
+if (!$simulate) {
+    file_put_contents($path, $stable_version_contents);
+}
+else {
+    print "Replace stable version in $path:\n> $stable_version_replacement\n";
+}
+
+run('git add {path}', ['{path}' => $path], $simulate);
+run('git commit -m "Version {version}"', ['{version}' => $stable_version], $simulate);
+run('git tag {version}', ['{version}' => $stable_version], $simulate);
+run('git push origin {version}', ['{version}' => $stable_version], $simulate);
+
+// Put the next version into the version file and push the result back to master
+if (!$simulate) {
+    file_put_contents($path, $next_version_contents);
+}
+else {
+    print "Replace next version in $path:\n> $next_version_replacement\n";
+}
+
+run('git add {path}', ['{path}' => $path], $simulate);
+run('git commit -m "[ci skip] Back to {version}"', ['{version}' => $next_version], $simulate);
+run('git push origin master', [], $simulate);
+
+exit(0);
+
+/**
+ * inflect replaces the placeholders in the command with the provided parameter values
+ * @param string $cmd
+ * @param array $parameters
+ * @return string
+ */
+function inflect($cmd, $parameters = [])
+{
+    if (!empty($parameters)) {
+        return str_replace(array_keys($parameters), array_values($parameters), $cmd);
+    }
+    return $cmd;
+}
+
+/**
+ * Run the specified command. Abort most rudely if an error is encountered
+ */
+function run($cmd, $parameters = [], $simulate = false)
+{
+    $cmd = inflect($cmd, $parameters);
+    if ($simulate) {
+        print "$cmd\n";
+        return;
+    }
+    passthru($cmd, $status);
+    if ($status) {
+        exit($status);
+    }
+}
+
+/**
+ * Determine the next version after the current release
+ */
+function next_version($matches)
+{
+    $version = $matches['version'];
+
+    $next_version = next_version_prerelease($matches);
+    if ($next_version !== false) {
+        return $next_version;
+    }
+    return next_version_stable($matches);
+}
+
+/**
+ * Determine the next version given that the current version is stable
+ */
+function next_version_stable($matches)
+{
+    $version_parts = explode('.', $matches['version']);
+    $last_version = array_pop($version_parts);
+    $last_version++;
+    $version_parts[] = $last_version;
+
+    return implode('.', $version_parts) . (empty($matches['prerelease']) ? '-dev' : $matches['prerelease']);
+}
+
+function has_prerelease($matches)
+{
+    if (empty($matches['prerelease'])) {
+        return false;
+    }
+
+    return is_numeric(substr($matches['prerelease'], -1));
+}
+
+/**
+ * Determine the next version given that the current version has a pre-release
+ * (e.g. '-alpha5').
+ */
+function next_version_prerelease($version_parts)
+{
+    if (!preg_match('#(.*?)([0-9]+)$#', $version_parts['prerelease'], $matches)) {
+        return false;
+    }
+    $next = $matches[2] + 1;
+    return $version_parts['version'] . $matches[1] . $next . '+dev';
+}

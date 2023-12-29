@@ -1,0 +1,19 @@
+// query-dsl/query-string-query.asciidoc:436
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'query_string' => [
+                'fields' => [
+                    'title',
+                ],
+                'query' => 'this that thus',
+                'minimum_should_match' => 2,
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

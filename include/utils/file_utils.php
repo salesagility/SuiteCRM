@@ -139,6 +139,10 @@ function write_override_label_to_file($the_name, $the_array, $the_file, $mode = 
     }
 
     foreach ($the_array as $labelName => $labelValue) {
+        // STIC-Custom 20220407 AAM - Use function addslashes to escape apostrophes.
+        // STIC#685
+        $labelValue = addslashes($labelValue);
+        // END STIC
         $the_string .= '$' . "{$the_name}['{$labelName}'] = '{$labelValue}';\n";
     }
 

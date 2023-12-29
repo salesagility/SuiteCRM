@@ -1,0 +1,30 @@
+$tip-base-color: color-offset($base-color, 45%) !default;
+$include-tip-highlights: $include-highlights !default;
+
+//background
+$tip-background-color: #fff !default;
+$tip-background-gradient: null !default;
+
+//text
+$tip-body-color: color-by-background($tip-base-color, $contrast: 40%) !default;
+$tip-body-font-size: $font-size-small !default;
+$tip-body-font-weight: normal !default;
+$tip-body-padding: 3px 3px 0 !default;
+$tip-body-link-color: darken($tip-body-color, 10%) !default;
+
+$tip-header-color      : $tip-body-color !default;
+$tip-header-font-size  : $tip-body-font-size !default;
+$tip-header-font-weight: bold !default;
+$tip-header-padding    : 3px 3px 0 !default;  
+
+//borders
+$tip-border-color: #fff !default; //color-offset($tip-base-color, $mode: dark, $contrast: 20%) !default;
+$tip-border-width: 0 !default;
+$tip-border-radius: 5px !default;
+
+//error tips
+$tip-error-inner-border-color: #d87166 !default;
+$tip-error-border-color: #a1311f !default;
+$tip-error-border-radius: 5px !default;
+$tip-error-border-width: 1px !default;
+$tip-error-background-color: #fff !default;

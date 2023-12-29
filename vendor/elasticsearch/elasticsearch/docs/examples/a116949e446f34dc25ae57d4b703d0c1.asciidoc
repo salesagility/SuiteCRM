@@ -1,0 +1,19 @@
+// query-dsl/range-query.asciidoc:16
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'range' => [
+                'age' => [
+                    'gte' => 10,
+                    'lte' => 20,
+                    'boost' => 2,
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

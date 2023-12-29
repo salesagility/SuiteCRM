@@ -1,0 +1,34 @@
+name: Self update testing
+on: push
+jobs:
+  # Checkout in separate job because docker image is alpine based and checkout action doesn't work.
+  functional:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: self-update-fixture
+    container:
+      image: quay.io/pantheon-public/php-ci:v7.4
+    name: Run functional tests
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: self-update
+      - name: Checkout self-update-fixtures
+        uses: actions/checkout@v2
+        with:
+          repository: consolidation/self-update-fixture
+          path: self-update-fixture
+          ref: self-update
+      - name: Run Composer Install
+        run: composer install
+      - name: Add path repository
+        run: composer config repositories.self-update path ../self-update
+      - name: Require self-update package
+        run: COMPOSER_MIRROR_PATH_REPOS=1 composer require consolidation/self-update:"*"
+      - name: Phar Build
+        run: composer phar:build
+      - name: Run tests
+        run: ./.github/workflows/test.sh ../self-update-fixture
+        working-directory: self-update

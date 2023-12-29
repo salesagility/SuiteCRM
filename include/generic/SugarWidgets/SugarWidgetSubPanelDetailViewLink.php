@@ -119,11 +119,30 @@ class SugarWidgetSubPanelDetailViewLink extends SugarWidgetField
             }
         }
         $value = $layout_def['fields'][$key];
+        
+        // STIC-Custom - JCH - 20220921 - Enable visibility of link to related modules in subpanels if 
+        // user has access by roles & Security Groups "group"
+        // STIC#861
+        // global $current_user;
+        // if (!empty($record) &&
+        //     ($layout_def['DetailView'] && !$layout_def['owner_module']
+        //     ||  $layout_def['DetailView'] && !ACLController::moduleSupportsACL($layout_def['owner_module'])
+        //     || ACLController::checkAccess($layout_def['owner_module'], 'view', $layout_def['owner_id'] == $current_user->id))) {
+        //     $link = ajaxLink("index.php?module=$module&action=$action&record={$record}{$parent}");
+        //     if ($module == 'EAPM') {
+        //         $link = "index.php?module=$module&action=$action&record={$record}{$parent}";
+        //     }
+        //     return '<a href="' . $link . '" >'."$value</a>";
+        // } else {
+        //     return $value;
+        // }
+
         global $current_user;
+        $groupAccessView = SecurityGroup::groupHasAccess($module,$record,'view');
         if (!empty($record) &&
             ($layout_def['DetailView'] && !$layout_def['owner_module']
-            ||  $layout_def['DetailView'] && !ACLController::moduleSupportsACL($layout_def['owner_module'])
-            || ACLController::checkAccess($layout_def['owner_module'], 'view', $layout_def['owner_id'] == $current_user->id))) {
+            || $layout_def['DetailView'] && !ACLController::moduleSupportsACL($layout_def['owner_module'])
+            || ACLController::checkAccess($layout_def['owner_module'], 'view', $layout_def['owner_id'] == $current_user->id, 'module',  $groupAccessView))) {
             $link = ajaxLink("index.php?module=$module&action=$action&record={$record}{$parent}");
             if ($module == 'EAPM') {
                 $link = "index.php?module=$module&action=$action&record={$record}{$parent}";
@@ -132,5 +151,6 @@ class SugarWidgetSubPanelDetailViewLink extends SugarWidgetField
         } else {
             return $value;
         }
+        // END STIC-Custom
     }
 }

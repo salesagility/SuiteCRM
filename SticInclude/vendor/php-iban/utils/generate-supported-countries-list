@@ -1,0 +1,37 @@
+#!/bin/bash
+# extract registry country names and codes
+cat registry.txt |cut -d '|' -f1,2 |grep -v country_name|sed 's/\(.*\)|\(.*\)$/* \2 (\1)/' \
+ | sed 's/^* Åland/ * Åland/' \
+ | sed 's/^* Faro/ * Faro/' \
+ | sed 's/^* Greenland/ * Greenland/' \
+ | sed 's/^* Saint Bart/ * Saint Bar/' \
+ | sed 's/^* French Guiana/ * French Guiana/' \
+ | sed 's/^* Guadelop/ * Guadelop/' \
+ | sed 's/^* Saint Mart/ * Saint Mart/' \
+ | sed 's/^* Martin/ * Martin/' \
+ | sed 's/^* Réunion/ * Réunion/' \
+ | sed 's/^* French Polynesia/ * French Polynesia/' \
+ | sed 's/^* French Southern/ * French Southern/' \
+ | sed 's/^* Mayotte/ * Mayotte/' \
+ | sed 's/^* New Cal/ * New Cal/' \
+ | sed 's/^* Saint-P/ * Saint-P/' \
+ | sed 's/^* Wallis/ * Wallis/' \
+  > temp.txt
+
+# begin constructing 'italicize unofficial countries' sed command
+echo -n "sed -i 's/^\( *\* \)\(.*\)\( (\(" > sedscript.txt
+# append a list of unofficial countries with sed alternators ('\|') between them
+cat registry.txt |cut -d '|' -f1,18 |grep '|0$'|cut -d '|' -f1|xargs echo |sed 's/ /\\|/g' >>sedscript.txt
+# quickly strip trailing newline (in OSX-portable format, can't use GNU head -c -1)
+printf "%s" "$(< sedscript.txt)" >sedscript.txt
+# complete sed command
+echo -n "\)\)\(.*\)$/\1*\2*\3\5/' temp.txt" >>sedscript.txt
+
+# execute sed command
+source sedscript.txt
+
+# output result
+cat temp.txt
+
+# cleanup
+rm temp.txt sedscript.txt

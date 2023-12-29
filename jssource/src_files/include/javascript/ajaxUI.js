@@ -1,10 +1,12 @@
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
  * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -26,21 +28,104 @@
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
  *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ * 
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * SugarCRM" logo, "Supercharged by SuiteCRM" logo and “Nonprofitized by SinergiaCRM” logo. 
+ * If the display of the logos is not reasonably feasible for technical reasons, 
+ * the Appropriate Legal Notices must display the words "Powered by SugarCRM", 
+ * "Supercharged by SuiteCRM" and “Nonprofitized by SinergiaCRM”. 
  */
 
+
 SUGAR.ajaxUI = {
-    loadingWindow : false,
+    // STIC Custom 20230510 JBL - Reload js and css without cleaning browse cache
+    // STIC#1075
+    stic_cssjscustomversion : "",
+    stic_lastversionloadstate : "Loaded", 
+    // End STIC CUSTOM
     callback : function(o)
     {
+        // STIC Custom 20230510 JBL - Reload js and css without cleaning browse cache
+        // STIC#1075
+        // How it works: 
+        //   - The ajax responses have Headers with last versions
+        //   - There is the current version in the Cookie
+        //   - When a version change is detected:
+        //        - Update current version in the Cookie
+        //        - Update current Version Change state
+        //        - Reload page
+        //   - Version Change States:
+        //        - Reload -> There is a new version in the server: Reload 
+        //             - Reload page, disable Ajax to force download all resources
+        //        - AjaxDisabled -> The page is reloaded without Ajax
+        //             - Enable Ajax in the next call
+        //        - AjaxEnabled -> Ajax calls are enabled again
+        //             - Check resource versions in the next ajax call
+        //        - Loaded -> Resorces are all updated, checked in an ajax call 
+        if (typeof o.getResponseHeader['stic-cssjscustomversion'] !== 'undefined' &&
+            typeof o.getResponseHeader['stic-cssjslangversion'] !== 'undefined') {
+
+            var header_cssJsCustomVersion = o.getResponseHeader['stic-cssjscustomversion'];
+            var header_cssjslangversion = o.getResponseHeader['stic-cssjslangversion'];
+            
+            SUGAR.ajaxUI.stic_cssjscustomversion = header_cssJsCustomVersion;
+
+            // Get cookie value for current version in browser
+            var cookie_cssJsCustomVersion = Get_Cookie('stic_cssjscustomversion');
+            var cookie_cssjslangversion = Get_Cookie('stic_cssjslangversion');
+            var sameVersionInCookie = cookie_cssJsCustomVersion == header_cssJsCustomVersion &&
+                                      cookie_cssjslangversion == header_cssjslangversion;
+            if (cookie_cssJsCustomVersion == null || cookie_cssjslangversion == null) {
+                sameVersionInCookie = true;
+                // Set last version in the cookie
+                Set_Cookie('stic_cssjscustomversion', header_cssJsCustomVersion, 3000, false, false, false);
+                Set_Cookie('stic_cssjslangversion', header_cssjslangversion, 3000, false, false, false);
+            }
+            if (!sameVersionInCookie) {
+                // Set last version in the cookie
+                Set_Cookie('stic_cssjscustomversion', header_cssJsCustomVersion, 3000, false, false, false);
+                Set_Cookie('stic_cssjslangversion', header_cssjslangversion, 3000, false, false, false);
+                // Set Last Version Load State: Reload
+                Set_Cookie('stic_lastversionloadstate', "Reload", 3000, false, false, false);
+                SUGAR.ajaxUI.stic_lastversionloadstate = "Reload";
+
+                // Reload page
+                window.location.reload(true);
+            } else {
+                //Check Last Version Load State
+                SUGAR.ajaxUI.stic_lastversionloadstate = Get_Cookie('stic_lastversionloadstate');
+                if (SUGAR.ajaxUI.stic_lastversionloadstate != "Loaded") {
+                    // Check all loaded resource versions (not only scripts or css)
+                    var resources = window.performance.getEntriesByType("resource");
+                    var allResourcesLastVersion = true;
+                    for (var i = 0; i < resources.length && allResourcesLastVersion; i++) {
+                        if(resources[i].name && resources[i].name.includes("?v=")) {
+                            allResourcesLastVersion &= (resources[i].name.includes("?v=" + cookie_cssJsCustomVersion) || 
+                                                        resources[i].name.includes("?v=" + cookie_cssjslangversion));
+                        }
+                    }
+                    if (allResourcesLastVersion) {
+                        // Update Last Version Load Stated: Loaded
+                        Set_Cookie('stic_lastversionloadstate', "Loaded", 3000, false, false, false);
+                        SUGAR.ajaxUI.stic_lastversionloadstate = "Loaded";
+                    } else {
+                        // Update Last Version Load State: Reload
+                        Set_Cookie('stic_lastversionloadstate', "Reload", 3000, false, false, false);
+                        SUGAR.ajaxUI.stic_lastversionloadstate = "Reload";
+
+                        window.location.reload(true);
+                    }
+                }
+            }
+        }
+        // End STIC CUSTOM
+
         var cont;
         if (typeof window.onbeforeunload == "function")
             window.onbeforeunload = null;
@@ -145,6 +230,26 @@ SUGAR.ajaxUI = {
         if( checkLS || (typeof(SUGAR.config.disableAjaxUI) != 'undefined' && SUGAR.config.disableAjaxUI == true)){
             return false;
         }
+
+        // STIC Custom 20230510 JBL - Reload js and css without cleaning browse cache
+        // STIC#1075
+
+        // Check Last Version Load State
+        SUGAR.ajaxUI.stic_lastversionloadstate = Get_Cookie('stic_lastversionloadstate');
+        if (SUGAR.ajaxUI.stic_lastversionloadstate == "Reload") {
+            // The page is reloaded: Update Last Version Load State and Disable Ajax
+            // Set Last Version Load State: AjaxDisabled
+            Set_Cookie('stic_lastversionloadstate', "AjaxDisabled", 3000, false, false, false);
+            SUGAR.ajaxUI.stic_lastversionloadstate = "AjaxDisabled";
+            return false;
+        }
+        if (SUGAR.ajaxUI.stic_lastversionloadstate == "AjaxDisabled") {
+            // Ajax was disabled: Enable again
+            // Set Last Version Load State: AjaxEnabled
+            Set_Cookie('stic_lastversionloadstate', "AjaxEnabled", 3000, false, false, false);
+            SUGAR.ajaxUI.stic_lastversionloadstate = "AjaxEnabled";
+        }
+        // End STIC CUSTOM
         
         var bannedModules = SUGAR.config.stockAjaxBannedModules;
         //If banned modules isn't there, we are probably on a page that isn't ajaxUI compatible
@@ -157,7 +262,7 @@ SUGAR.ajaxUI = {
         if(typeof(SUGAR.config.overrideAjaxBannedModules) != 'undefined'){
             bannedModules = SUGAR.config.overrideAjaxBannedModules;
         }
-        
+
         return SUGAR.util.arrayIndexOf(bannedModules, module) == -1;
     },
 
@@ -182,6 +287,18 @@ SUGAR.ajaxUI = {
             var module = mRegex ? mRegex[1] : false;
             if (module && SUGAR.ajaxUI.canAjaxLoadModule(module))
             {
+                // STIC Custom 20230510 JBL - Reload js and css without cleaning browse cache
+                // STIC#1075
+                if (url.startsWith("index.php?") && !url.startsWith("index.php?v=")) {
+                    if (SUGAR.ajaxUI.stic_lastversionloadstate == "Loaded" && SUGAR.ajaxUI.stic_cssjscustomversion != "") {
+                        // Use current version of index.php with last references
+                        url = url.replace("index.php?", "index.php?v=" + SUGAR.ajaxUI.stic_cssjscustomversion + "&");
+                    } else { 
+                        // Force reload index.php from server to update references
+                        url = url.replace("index.php?", "index.php?v=" + Math.floor(Math.random() * 10000) + "&");
+                    }
+                }
+                // End STIC CUSTOM
                 YAHOO.util.History.navigate('ajaxUILoc',  url);
             } else {
               window.location = url;

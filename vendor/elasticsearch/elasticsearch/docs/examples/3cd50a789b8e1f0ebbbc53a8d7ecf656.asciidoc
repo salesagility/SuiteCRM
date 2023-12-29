@@ -1,0 +1,36 @@
+// query-dsl/multi-match-query.asciidoc:438
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'bool' => [
+                'should' => [
+                    [
+                        'multi_match' => [
+                            'query' => 'Will Smith',
+                            'type' => 'cross_fields',
+                            'fields' => [
+                                'first',
+                                'last',
+                            ],
+                            'minimum_should_match' => '50%',
+                        ],
+                    ],
+                    [
+                        'multi_match' => [
+                            'query' => 'Will Smith',
+                            'type' => 'cross_fields',
+                            'fields' => [
+                                '*.edge',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

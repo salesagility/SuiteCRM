@@ -1,0 +1,20 @@
+$include-window-highlights: $include-highlights !default;
+
+$window-base-color: mix($base-color, $base-dark-color) !default; //darken($base-color, 7) !default;
+
+$window-border-radius: 4px !default;
+$window-border-width: 0 !default;
+$window-border-color: darken($window-base-color, 5%) !default;
+$window-inner-border-width: 0 !default; // Deprecated
+$window-inner-border-color: lighten($window-base-color, 5%) !default; // Deprecated
+
+// $window-body-border-width: 0 !default;
+// $window-body-border-style: solid !default;
+// $window-body-border-color: darken($window-base-color, 3%);
+$window-body-background-color: $content-color;
+$window-body-color: color-by-background($window-body-background-color, 60%) !default;
+
+// $window-header-padding: 10px 5px 0 !default;
+$window-header-font-size: $font-size-large !default; // Deprecated
+$window-header-color: color-by-background($window-base-color) !default; // Deprecated, move to mixin
+$window-header-font-weight: normal !default; // Deprecated

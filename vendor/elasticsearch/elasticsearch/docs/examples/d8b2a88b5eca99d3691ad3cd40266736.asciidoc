@@ -1,0 +1,24 @@
+// mapping.asciidoc:144
+
+[source, php]
+----
+$params = [
+    'index' => 'my-index',
+    'body' => [
+        'mappings' => [
+            'properties' => [
+                'age' => [
+                    'type' => 'integer',
+                ],
+                'email' => [
+                    'type' => 'keyword',
+                ],
+                'name' => [
+                    'type' => 'text',
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->indices()->create($params);
+----

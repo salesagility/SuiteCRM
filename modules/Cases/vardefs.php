@@ -117,7 +117,12 @@ $dictionary['Case'] = array(
             'audited' => true,
             'comment' => 'The state of the case (i.e. open/closed)',
             'default' => 'Open',
-            'parentenum' => 'status',
+            // STIC-Custom 20230519 PCS - Enabling massupdate for dynamicenum
+            // Fields of type "enum" should not have the parameter "parentenum"
+            // STIC#1109
+            //'parentenum' => 'status',
+            // END STIC-Custom
+
             'merge_filter' => 'disabled',
         ),
         'status' => array(

@@ -1,0 +1,9 @@
+// indices/put-mapping.asciidoc:553
+
+[source, php]
+----
+$params = [
+    'index' => 'my_index',
+];
+$response = $client->indices()->getMapping($params);
+----

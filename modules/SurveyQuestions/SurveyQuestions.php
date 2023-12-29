@@ -79,4 +79,16 @@ class SurveyQuestions extends Basic
 
         return false;
     }
+
+    // STIC-Custom 2021 AAM - Overriding mark_deleted function to delete all child records that won't be used anymore
+    // STIC#457
+    public function mark_deleted($id)
+    {
+        $optionQuestionBeans = $this->get_linked_beans('surveyquestions_surveyquestionoptions');
+        foreach ($optionQuestionBeans as $optionQuestionBean) {
+            $optionQuestionBean->mark_deleted($optionQuestionBean->id);
+        }
+        parent::mark_deleted($id);
+    }
+    // END STIC
 }

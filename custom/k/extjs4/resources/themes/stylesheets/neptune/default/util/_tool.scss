@@ -1,0 +1,255 @@
+@mixin extjs-tool {
+    .#{$prefix}tool {
+        cursor: pointer;
+
+        img {
+            overflow: hidden;
+
+            width: $tool-size;
+            height: $tool-size;
+
+            cursor: pointer;
+
+            background-color: transparent;
+            background-repeat: no-repeat;
+            // background-image: theme-background-image($theme-name, 'tools/tool-sprites.gif');
+
+            margin: 0;
+        }
+    }
+
+    .#{$prefix}panel-header-horizontal,
+    .#{$prefix}window-header-horizontal {
+        .#{$prefix}tool {
+            margin-left: 5px;
+        }
+    }
+
+    .#{$prefix}panel-header-tools-first {
+        .#{$prefix}tool {
+            margin-left: 0;
+            margin-right: 5px;
+        }
+    }
+
+    .#{$prefix}panel-header-vertical,
+    .#{$prefix}window-header-vertical {
+        .#{$prefix}tool {
+            margin-bottom: 5px;
+        }
+    }
+
+    .#{$prefix}tool-placeholder {
+        visibility: hidden;
+    }
+
+    //Icons
+    @include extjs-tool-icon('maximize', 0);
+    @include extjs-tool-icon('minimize', 1);
+    @include extjs-tool-icon('restore', 2);
+    @include extjs-tool-icon('save', 3);
+    @include extjs-tool-icon('refresh', 4);
+    @include extjs-tool-icon('help', 5);
+    @include extjs-tool-icon('info', 6);
+    @include extjs-tool-icon('search', 7);
+    @include extjs-tool-icon('gear', 8);
+    @include extjs-tool-icon('close', 9);
+    @include extjs-tool-icon('minus', 10);
+    @include extjs-tool-icon('plus', 11);
+    @include extjs-tool-icon('print', 12);
+    @include extjs-tool-icon('up', 13);
+    @include extjs-tool-icon('toggle', 13);
+    @include extjs-tool-icon('collapse', 13);
+    @include extjs-tool-icon('collapse-top', 13);
+    @include extjs-tool-icon('left', 14);
+    @include extjs-tool-icon('prev', 14);
+    @include extjs-tool-icon('down', 15);
+    @include extjs-tool-icon('collapse-bottom', 15);
+    @include extjs-tool-icon('expand-bottom', 15);
+    @include extjs-tool-icon('expand', 13);
+    @include extjs-tool-icon('right', 16);
+    @include extjs-tool-icon('next', 16);
+    @include extjs-tool-icon('collapse-all', 17);
+    @include extjs-tool-icon('expand-all', 18);
+    @include extjs-tool-icon('pin', 19);
+    @include extjs-tool-icon('unpin', 20);
+
+    .x-collapsed {
+        @include extjs-tool-icon('toggle', 15);
+    }
+
+    .x-accordion-hd {
+        @include extjs-tool-icon('collapse-top', 1, true);
+        @include extjs-tool-icon('collapse-bottom', 0, true);
+        @include extjs-tool-icon('expand-top', 1, true);
+        @include extjs-tool-icon('expand-bottom', 0, true);
+    }
+
+//    .#{$prefix}tool-prev {
+//        background-position: 0 -105px;
+//    }
+    
+//    .#{$prefix}tool-next {
+//        background-position: 0 -120px;
+//    }
+    
+//    .#{$prefix}tool-pin {
+//        background-position: 0 -135px;
+//    }
+
+//    .#{$prefix}tool-unpin {
+//        background-position: 0 -150px;
+//    }
+
+//    .#{$prefix}tool-right {
+//        background-position: 0 -165px;
+//    }
+
+//    .#{$prefix}tool-left {
+//        background-position: 0 -180px;
+//    }
+
+
+
+
+//    .#{$prefix}tool-up:after {
+//        content: "{";
+//    }
+
+//    .#{$prefix}tool-down:after {
+//        content: "}";
+//    }
+    
+//    .#{$prefix}tool-collapse {
+//        background-position: 0 -345px;
+//    }
+
+//    .#{$prefix}tool-expand {
+//        background-position: 0 -330px;
+//    }
+
+
+//    .#{$prefix}tool-expand-bottom,
+//    .#{$prefix}tool-collapse-bottom {
+//        background-position: 0 -195px;
+//    }
+
+//    .#{$prefix}tool-expand-top,
+//    .#{$prefix}tool-collapse-top,
+//    .#{$prefix}tool-expand-bottom,
+//    .#{$prefix}tool-collapse-bottom {
+//        // background-position: 0 -210px;
+//        background-color: #8DC3E8;//darken($base-color, 10%);
+
+//        &:after {
+////            @include triangle($color: lighten($base-color, 30%), $size: 12px);
+//            @include triangle($color: #0A54B0, $size: 12px);
+//            @include scale(.7, .5, 0, 0);
+//            position: absolute;
+//            left: 2px;
+//            top: 3px;
+//        }
+//    }
+
+//    .#{$prefix}tool-expand-bottom,
+//    .#{$prefix}tool-collapse-bottom {
+//        @include rotate(180deg);
+//    }
+
+//    .#{$prefix}tool-expand-left,
+//    .#{$prefix}tool-collapse-left {
+//        background-position: 0 -180px;
+//    }
+
+//    .#{$prefix}tool-expand-right,
+//    .#{$prefix}tool-collapse-right {
+//        background-position: 0 -165px;
+//    }
+
+//    .#{$prefix}tool-over {
+//        .#{$prefix}tool-prev,
+//        .#{$prefix}tool-next,
+//        .#{$prefix}tool-pin,
+//        .#{$prefix}tool-unpin,
+//        .#{$prefix}tool-right,
+//        .#{$prefix}tool-left,
+//        .#{$prefix}tool-down,
+//        .#{$prefix}tool-up,
+//        .#{$prefix}tool-expand,
+//        .#{$prefix}tool-collapse,
+//        .#{$prefix}tool-expand-bottom,
+//        .#{$prefix}tool-collapse-bottom,
+//        .#{$prefix}tool-expand-top,
+//        .#{$prefix}tool-collapse-top,
+//        .#{$prefix}tool-expand-left,
+//        .#{$prefix}tool-collapse-left,
+//        .#{$prefix}tool-expand-right,
+//        .#{$prefix}tool-collapse-right {
+//            background-position-y: -16px;
+//        }
+//    }
+}
+
+.#{$prefix}tool-base {
+    width: $tool-size;
+    height: $tool-size;
+
+    background-image: theme-background-image($theme-name, 'tools.png');
+}
+.#{$prefix}tool-base-over {
+    background-position-y: -$tool-size;
+}
+.#{$prefix}tool-base-pressed {
+    background-position-y: -($tool-size * 2);
+}
+
+.#{$prefix}accordion-tool-base {
+    width: $accordion-tool-size;
+    height: $accordion-tool-size;
+
+    background-image: theme-background-image($theme-name, 'tools-small.png');
+}
+.#{$prefix}accordion-tool-base-over {
+    background-position-y: -$accordion-tool-size;
+}
+.#{$prefix}accordion-tool-base-pressed {
+    background-position-y: -($accordion-tool-size * 2);
+}
+
+@mixin extjs-tool-icon($name, $offset, $accordion: false) {
+    @if $accordion {
+        .#{$prefix}tool-#{$name} {
+            @extend .#{$prefix}accordion-tool-base;
+            background-position-x: -($offset * $accordion-tool-size);
+        }
+
+        .#{$prefix}tool-over {
+            .#{$prefix}tool-#{$name} {
+                @extend .#{$prefix}accordion-tool-base-over;
+            }
+        }
+
+        .#{$prefix}tool-pressed {
+            .#{$prefix}tool-#{$name} {
+                @extend .#{$prefix}accordion-tool-base-pressed;
+            }
+        }
+    } @else {
+        .#{$prefix}tool-#{$name} {
+            @extend .#{$prefix}tool-base;
+            background-position-x: -($offset * $tool-size);
+        }
+
+        .#{$prefix}tool-over {
+            .#{$prefix}tool-#{$name} {
+                @extend .#{$prefix}tool-base-over;
+            }
+        }
+
+        .#{$prefix}tool-pressed {
+            .#{$prefix}tool-#{$name} {
+                @extend .#{$prefix}tool-base-pressed;
+            }
+        }
+    }
+}

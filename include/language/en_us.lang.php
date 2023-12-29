@@ -1567,6 +1567,13 @@ $app_strings = array(
     'LBL_PROFILE' => 'Profile',
     'LBL_MAILMERGE' => 'Mail Merge',
     'LBL_MASS_UPDATE' => 'Mass Update',
+    // STIC-Custom - 20220704 - JCH - Duplicate & Mass Update
+    // STIC#776
+    'LBL_MASS_DUPLICATE_UPDATE' => 'Duplicate & Mass Update',
+    'LBL_MASS_DUPLICATE_REMOVE_NAME' => 'Empty Name field in new records so it will be automatically rebuilt',
+    'LBL_MASS_DUPLICATE_UPDATE_CONFIRMATION_NUM' => 'Are you sure you want to duplicate and update the ',
+    'LBL_MASS_DUPLICATE_UPDATE_BTN' => 'Duplicate and Update',
+    // END STIC
     'LBL_NO_MASS_UPDATE_FIELDS_AVAILABLE' => 'There are no fields available for the Mass Update operation',
     'LBL_OPT_OUT_FLAG_PRIMARY' => 'Opt out Primary Email',
     'LBL_OPT_IN_FLAG_PRIMARY' => 'Opt in Primary Email',
@@ -1959,6 +1966,10 @@ $app_strings = array(
     //jchi #12300
     'LBL_MASSUPDATE_DATE' => 'Select Date',
 
+    // STIC-Custom 20230919 MHP - Create dynamic tag for text 'value'
+    // STIC#1221
+    'LBL_VALUE' => 'value',
+    // END STIC-Custom
     'LBL_VALIDATE_RANGE' => 'is not within the valid range',
     'LBL_CHOOSE_START_AND_END_DATES' => 'Please choose both a starting and ending date range',
     'LBL_CHOOSE_START_AND_END_ENTRIES' => 'Please choose both starting and ending range entries',
@@ -3130,12 +3141,15 @@ $app_list_strings['product_type_dom']['Service'] = 'Service';
 $app_list_strings['product_quote_parent_type_dom']['AOS_Quotes'] = 'Quotes';
 $app_list_strings['product_quote_parent_type_dom']['AOS_Invoices'] = 'Invoices';
 $app_list_strings['product_quote_parent_type_dom']['AOS_Contracts'] = 'Contracts';
-$app_list_strings['pdf_template_type_dom']['AOS_Quotes'] = 'Quotes';
-$app_list_strings['pdf_template_type_dom']['AOS_Invoices'] = 'Invoices';
-$app_list_strings['pdf_template_type_dom']['AOS_Contracts'] = 'Contracts';
-$app_list_strings['pdf_template_type_dom']['Accounts'] = 'Accounts';
-$app_list_strings['pdf_template_type_dom']['Contacts'] = 'Contacts';
-$app_list_strings['pdf_template_type_dom']['Leads'] = 'Leads';
+// STIC-Custom 20220124 MHP - Delete the values of the pdf_template_type_dom 
+// STIC#564            
+// $app_list_strings['pdf_template_type_dom']['AOS_Quotes'] = 'Quotes';
+// $app_list_strings['pdf_template_type_dom']['AOS_Invoices'] = 'Invoices';
+// $app_list_strings['pdf_template_type_dom']['AOS_Contracts'] = 'Contracts';
+// $app_list_strings['pdf_template_type_dom']['Accounts'] = 'Accounts';
+// $app_list_strings['pdf_template_type_dom']['Contacts'] = 'Contacts';
+// $app_list_strings['pdf_template_type_dom']['Leads'] = 'Leads';
+// END STIC-Custom
 $app_list_strings['pdf_template_sample_dom'][''] = '';
 $app_list_strings['contract_status_list']['Not Started'] = 'Not Started';
 $app_list_strings['contract_status_list']['In Progress'] = 'In Progress';

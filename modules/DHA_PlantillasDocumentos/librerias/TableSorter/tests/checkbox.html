@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+<head>
+<title>tablesorter 2.0-dev demo, multi column sorting</title>
+	
+	<style type="text/css">@import "assets/css/default.css";</style>
+	
+	<script type="text/javascript" src="../jquery-latest.js"></script>
+	<script type="text/javascript" src="../jquery.tablesorter.js"></script>
+	<script type="text/javascript">
+	
+	$(function() {
+		
+		// add ie checkbox widget
+		$.tablesorter.addWidget({
+			id: "iecheckboxes",
+			format: function(table) {
+				if($.browser.msie) {
+					if(!this.init) {
+						$(":checkbox",table).change(function() { this.checkedState = this.checked});				
+						this.init = true;
+					}
+					$(":checkbox",table).each(function() {
+						$(this).attr("checked",this.checkedState);
+					});
+				}
+			}
+		});
+		
+		$("table").tablesorter({widgets: ['iecheckboxes']})
+		
+		
+		
+		
+		
+	});
+		
+	</script>	
+</head>
+
+<body>
+
+<table id="large" cellspacing="0">
+	
+	<thead>
+		 <tr>
+			<th>Name</th>
+
+			<th>Major</th>
+			<th>Sex</th>
+			<th>English</th>
+			<th>Japanese</th>
+			<th>Calculus</th>
+			<th>Geometry</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th>Name</th>
+
+			<th>Major</th>
+			<th>Sex</th>
+			<th>English</th>
+			<th>Japanese</th>
+			<th>Calculus</th>
+			<th>Geometry</th>
+
+		</tr>
+	</tfoot>
+	<tbody>
+		<tr>
+			<td>Student01</td>
+			<td>Languages</td>
+			<td>male</td>
+
+			<td>80</td>
+			<td>70</td>
+			<td>75</td>
+			<td><form><input type="checkbox" checked=""/></form></td>
+		</tr>
+		<tr>
+			<td>Student02</td>
+
+			<td>Mathematics</td>
+			<td>male</td>
+			<td>90</td>
+			<td>88</td>
+			<td>100</td>
+			<td><form><input type="checkbox"/></form></td>
+
+		</tr>
+		<tr>
+			<td>Student03</td>
+			<td>Languages</td>
+			<td>female</td>
+			<td>85</td>
+			<td>95</td>
+
+			<td>80</td>
+			<td><form><input type="checkbox" checked=""/></form></td>
+		</tr>
+		<tr>
+			<td>Student04</td>
+			<td>Languages</td>
+			<td>male</td>
+
+			<td>60</td>
+			<td>55</td>
+			<td>100</td>
+			<td><form><input type="checkbox" checked=""/></form></td>
+		</tr>
+	</tbody>
+</table>
+	</body>
+</html>

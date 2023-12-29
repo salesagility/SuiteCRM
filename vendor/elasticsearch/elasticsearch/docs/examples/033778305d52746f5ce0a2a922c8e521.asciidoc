@@ -1,0 +1,20 @@
+// aggregations/bucket/terms-aggregation.asciidoc:544
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'aggs' => [
+            'genres' => [
+                'terms' => [
+                    'script' => [
+                        'source' => 'doc[\'genre\'].value',
+                        'lang' => 'painless',
+                    ],
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

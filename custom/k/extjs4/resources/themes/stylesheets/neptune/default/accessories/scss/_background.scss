@@ -1,0 +1,53 @@
+@mixin background-gradient($bg-color, $type: $base-gradient, $direction: top) {
+    background-image: none;
+    background-color: $bg-color;
+    
+    @if $base-gradient != null and $bg-color != transparent {
+
+        // Color stops provided
+        @if type-of($type) == "list" {
+            @include background-image(linear-gradient(color-stops($direction, $type)));
+        }
+
+        // Default gradients
+        @else if $type == bevel {
+            @include background-image(linear-gradient($direction, color_stops(
+                lighten($bg-color, 15%), 
+                lighten($bg-color, 8%) 30%, 
+                $bg-color 65%, 
+                darken($bg-color, 6%)
+            )));
+        } @else if $type == glossy {
+            @include background-image(linear-gradient($direction, color_stops(lighten($bg-color, 15%), lighten($bg-color, 5%) 50%, $bg-color 51%, darken($bg-color, 5%))));
+        } @else if $type == recessed {
+            @include background-image(linear-gradient($direction, color_stops(darken($bg-color, 10%), darken($bg-color, 5%) 10%, $bg-color 65%, lighten($bg-color, .5%))));
+        } @else if $type == linear {
+            @include background-image(linear-gradient($direction, color_stops(lighten($bg-color, 5%), darken($bg-color, 10%))));
+        } @else if $type == matte {
+            @include background-image(linear-gradient($direction, color_stops(lighten($bg-color, 15%), lighten($bg-color, 4%) 3%, darken($bg-color, 4%))));
+        }
+    }
+}
+
+// Special thanks to Lea Verou
+// http://leaverou.me/css3patterns/
+
+@mixin background-pattern-blueprint(
+    $bgcolor: #269,
+    $majorcolor: white,
+    $minorcolor: rgba(#fff, .3),
+    $majorsteps: 100px,
+    $minorsteps: 20px,
+    $majorwidth: 2px,
+    $minorwidth: 1px
+) {
+    background-color: $bgcolor;
+    @include background-image(
+        linear-gradient(top, color_stops($majorcolor $majorwidth, rgba($majorcolor, 0) $majorwidth)),
+        linear-gradient(left, color_stops($majorcolor $majorwidth, rgba($majorcolor, 0) $majorwidth)),
+        linear-gradient(top, color_stops($minorcolor $minorwidth, rgba($majorcolor, 0) $minorwidth)),
+        linear-gradient(left, $minorcolor $minorwidth, rgba($majorcolor, 0) $minorwidth)
+    );
+    background-size: $majorsteps $majorsteps, $majorsteps $majorsteps, $minorsteps $minorsteps, $minorsteps $minorsteps;
+    background-position: -$majorwidth -$majorwidth, -$majorwidth -$majorwidth, -$minorwidth -$minorwidth, -$minorwidth -$minorwidth;
+}

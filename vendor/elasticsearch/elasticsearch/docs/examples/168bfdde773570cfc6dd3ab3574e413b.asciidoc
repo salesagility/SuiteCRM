@@ -1,0 +1,6 @@
+// search/search.asciidoc:400
+
+[source, php]
+----
+$response = $client->search();
+----

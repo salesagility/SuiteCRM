@@ -1,10 +1,12 @@
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
  * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -26,16 +28,22 @@
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
  *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */SUGAR.ajaxUI={loadingWindow:false,callback:function(o){var cont;if(typeof window.onbeforeunload=="function")
+ * SugarCRM" logo, "Supercharged by SuiteCRM" logo and “Nonprofitized by SinergiaCRM” logo.
+ * If the display of the logos is not reasonably feasible for technical reasons,
+ * the Appropriate Legal Notices must display the words "Powered by SugarCRM",
+ * "Supercharged by SuiteCRM" and “Nonprofitized by SinergiaCRM”.
+ */SUGAR.ajaxUI={stic_cssjscustomversion:"",stic_lastversionloadstate:"Loaded",callback:function(o){if(typeof o.getResponseHeader['stic-cssjscustomversion']!=='undefined'&&typeof o.getResponseHeader['stic-cssjslangversion']!=='undefined'){var header_cssJsCustomVersion=o.getResponseHeader['stic-cssjscustomversion'];var header_cssjslangversion=o.getResponseHeader['stic-cssjslangversion'];SUGAR.ajaxUI.stic_cssjscustomversion=header_cssJsCustomVersion;var cookie_cssJsCustomVersion=Get_Cookie('stic_cssjscustomversion');var cookie_cssjslangversion=Get_Cookie('stic_cssjslangversion');var sameVersionInCookie=cookie_cssJsCustomVersion==header_cssJsCustomVersion&&cookie_cssjslangversion==header_cssjslangversion;if(cookie_cssJsCustomVersion==null||cookie_cssjslangversion==null){sameVersionInCookie=true;Set_Cookie('stic_cssjscustomversion',header_cssJsCustomVersion,3000,false,false,false);Set_Cookie('stic_cssjslangversion',header_cssjslangversion,3000,false,false,false);}
+if(!sameVersionInCookie){Set_Cookie('stic_cssjscustomversion',header_cssJsCustomVersion,3000,false,false,false);Set_Cookie('stic_cssjslangversion',header_cssjslangversion,3000,false,false,false);Set_Cookie('stic_lastversionloadstate',"Reload",3000,false,false,false);SUGAR.ajaxUI.stic_lastversionloadstate="Reload";window.location.reload(true);}else{SUGAR.ajaxUI.stic_lastversionloadstate=Get_Cookie('stic_lastversionloadstate');if(SUGAR.ajaxUI.stic_lastversionloadstate!="Loaded"){var resources=window.performance.getEntriesByType("resource");var allResourcesLastVersion=true;for(var i=0;i<resources.length&&allResourcesLastVersion;i++){if(resources[i].name&&resources[i].name.includes("?v=")){allResourcesLastVersion&=(resources[i].name.includes("?v="+cookie_cssJsCustomVersion)||resources[i].name.includes("?v="+cookie_cssjslangversion));}}
+if(allResourcesLastVersion){Set_Cookie('stic_lastversionloadstate',"Loaded",3000,false,false,false);SUGAR.ajaxUI.stic_lastversionloadstate="Loaded";}else{Set_Cookie('stic_lastversionloadstate',"Reload",3000,false,false,false);SUGAR.ajaxUI.stic_lastversionloadstate="Reload";window.location.reload(true);}}}}
+var cont;if(typeof window.onbeforeunload=="function")
 window.onbeforeunload=null;scroll(0,0);try{var r=YAHOO.lang.JSON.parse(o.responseText);cont=r.content;if(r.title){document.title=html_entity_decode(r.title);}
 if(r.action){action_sugar_grp1=r.action;}
 if(r.menu.module){module_sugar_grp1=r.menu.module;}
@@ -46,11 +54,14 @@ else if(typeof(logoStats)!="undefined"){$("#logo").attr("title",logoStats.replac
 SUGAR.ajaxUI.hideLoadingPanel();}catch(e){SUGAR.ajaxUI.hideLoadingPanel();SUGAR.ajaxUI.showErrorMessage(o.responseText);}
 SUGAR_callsInProgress--;},showErrorMessage:function(errorMessage){if(!SUGAR.ajaxUI.errorPanel){SUGAR.ajaxUI.errorPanel=new YAHOO.widget.Panel("ajaxUIErrorPanel",{modal:false,visible:true,width:"800px",height:"600px",close:true});}
 var panel=SUGAR.ajaxUI.errorPanel;panel.setHeader(SUGAR.language.get('app_strings','ERR_AJAX_LOAD'));panel.setBody('<iframe id="ajaxErrorFrame" style="width:780px;height:550px;border:none;marginheight="0" marginwidth="0" frameborder="0""></iframe>');panel.setFooter(SUGAR.language.get('app_strings','ERR_AJAX_LOAD_FOOTER'));panel.render(document.body);SUGAR.util.doWhen(function(){var f=document.getElementById("ajaxErrorFrame");return f!=null&&f.contentWindow!=null&&f.contentWindow.document!=null;},function(){document.getElementById("ajaxErrorFrame").contentWindow.document.body.innerHTML=errorMessage;window.setTimeout('throw "AjaxUI error parsing response"',300);});SUGAR.ajaxUI.errorMessage=errorMessage;window.setTimeout('if((typeof(document.getElementById("ajaxErrorFrame")) == "undefined" || typeof(document.getElementById("ajaxErrorFrame")) == null  || document.getElementById("ajaxErrorFrame").contentWindow.document.body.innerHTML == "")){document.getElementById("ajaxErrorFrame").contentWindow.document.body.innerHTML=SUGAR.ajaxUI.errorMessage;}',3000);panel.show();panel.center();throw"AjaxUI error parsing response";},canAjaxLoadModule:function(module){var checkLS=/&LicState=check/.exec(window.location.search);if(checkLS||(typeof(SUGAR.config.disableAjaxUI)!='undefined'&&SUGAR.config.disableAjaxUI==true)){return false;}
+SUGAR.ajaxUI.stic_lastversionloadstate=Get_Cookie('stic_lastversionloadstate');if(SUGAR.ajaxUI.stic_lastversionloadstate=="Reload"){Set_Cookie('stic_lastversionloadstate',"AjaxDisabled",3000,false,false,false);SUGAR.ajaxUI.stic_lastversionloadstate="AjaxDisabled";return false;}
+if(SUGAR.ajaxUI.stic_lastversionloadstate=="AjaxDisabled"){Set_Cookie('stic_lastversionloadstate',"AjaxEnabled",3000,false,false,false);SUGAR.ajaxUI.stic_lastversionloadstate="AjaxEnabled";}
 var bannedModules=SUGAR.config.stockAjaxBannedModules;if(typeof(bannedModules)=='undefined')
 return false;if(typeof(SUGAR.config.addAjaxBannedModules)!='undefined'){bannedModules.concat(SUGAR.config.addAjaxBannedModules);}
 if(typeof(SUGAR.config.overrideAjaxBannedModules)!='undefined'){bannedModules=SUGAR.config.overrideAjaxBannedModules;}
 return SUGAR.util.arrayIndexOf(bannedModules,module)==-1;},loadContent:function(url,params){if(YAHOO.lang.trim(url)!=""){var testUrl=decodeURIComponent(url);if(/^index.php?(([A-Z]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+[%=+#&\[\]\.]*)+/i.test(testUrl)===false){throw"Invalid url";}
-var mRegex=/module=([^&]*)/.exec(url);var module=mRegex?mRegex[1]:false;if(module&&SUGAR.ajaxUI.canAjaxLoadModule(module)){YAHOO.util.History.navigate('ajaxUILoc',url);}else{window.location=url;}}},go:function(url){if(YAHOO.lang.trim(url)!=""){var con=YAHOO.util.Connect,ui=SUGAR.ajaxUI;if(ui.lastURL==url){return;}
+var mRegex=/module=([^&]*)/.exec(url);var module=mRegex?mRegex[1]:false;if(module&&SUGAR.ajaxUI.canAjaxLoadModule(module)){if(url.startsWith("index.php?")&&!url.startsWith("index.php?v=")){if(SUGAR.ajaxUI.stic_lastversionloadstate=="Loaded"&&SUGAR.ajaxUI.stic_cssjscustomversion!=""){url=url.replace("index.php?","index.php?v="+SUGAR.ajaxUI.stic_cssjscustomversion+"&");}else{url=url.replace("index.php?","index.php?v="+Math.floor(Math.random()*10000)+"&");}}
+YAHOO.util.History.navigate('ajaxUILoc',url);}else{window.location=url;}}},go:function(url){if(YAHOO.lang.trim(url)!=""){var con=YAHOO.util.Connect,ui=SUGAR.ajaxUI;if(ui.lastURL==url){return;}
 var testUrl=decodeURIComponent(url);if(/^index.php?(([A-Z]|[a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+[%=+#&\[\]\.]*)+/i.test(testUrl)===false){throw"Invalid url";}
 var inAjaxUI=/action=ajaxui/.exec(window.location);if(typeof(window.onbeforeunload)=="function"&&window.onbeforeunload()){if(!confirm(window.onbeforeunload())){if(!inAjaxUI){window.location.hash="";}
 else{YAHOO.util.History.navigate('ajaxUILoc',ui.lastURL);}

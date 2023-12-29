@@ -5,8 +5,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $mod_strings;
 $module_menu[] = array("index.php?module=SecurityGroups&action=EditView&return_module=SecurityGroups&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"Create_Security_Group");
-
-$module_menu[] = array("index.php?module=SecurityGroups&action=ListView&return_module=SecurityGroups&return_action=ListView", $mod_strings['LBL_LIST_FORM_TITLE'],"Security_Groups");
+// STIC-Custom - JCH - 20220503 - Reapply fix parent record inheritance (#259) / Change label key
+// STIC#725
+// $module_menu[] = array("index.php?module=SecurityGroups&action=ListView&return_module=SecurityGroups&return_action=ListView", $mod_strings['LBL_LIST_FORM_TITLE'],"Security_Groups");
+$module_menu[] = array("index.php?module=SecurityGroups&action=ListView&return_module=SecurityGroups&return_action=ListView", $mod_strings['LNK_LIST'],"Security_Groups");
+// END STIC
 
 //if admin http://localhost/sugar_52/index.php?module=SecurityGroups&action=config
 global $current_user;

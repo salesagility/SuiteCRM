@@ -426,7 +426,11 @@ FROM prospect_lists_prospects plp
 
     public function mark_deleted($id)
     {
-        $query = "UPDATE prospect_lists_prospects SET deleted = 1, date_modified = NOW() WHERE prospect_list_id = '{$id}' AND deleted = 0";
+        // STIC - Custom 20230816 - ART - Incorrect date and time in the relationship
+        // STIC#1197
+        // $query = "UPDATE prospect_lists_prospects SET deleted = 1, date_modified = NOW() WHERE prospect_list_id = '{$id}' AND deleted = 0";
+        $query = "UPDATE prospect_lists_prospects SET deleted = 1, date_modified = UTC_TIMESTAMP() WHERE prospect_list_id = '{$id}' AND deleted = 0";
+        // END STIC - Custom 20230816 - ART
         $this->db->query($query);
         return parent::mark_deleted($id);
     }

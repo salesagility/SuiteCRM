@@ -55,7 +55,13 @@ $vardefs = array(
             'dbType' => 'id',
             'audited'=>true,
             'comment' => 'User ID assigned to record',
-            'duplicate_merge'=>'disabled'
+            // STIC-Custom 20230104 AAM - Enabling by default massupdate for assigned_used
+            // STIC#937
+            // 'duplicate_merge'=>'disabled'
+            'duplicate_merge'=>'disabled',
+            'massupdate' => true,
+            // END STIC-Custom
+
         ),
      'assigned_user_name' =>
      array(

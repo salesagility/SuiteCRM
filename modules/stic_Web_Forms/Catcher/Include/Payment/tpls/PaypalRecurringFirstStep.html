@@ -1,0 +1,65 @@
+<!--
+ * This file is part of SinergiaCRM.
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+-->
+<!--
+/*********************************************************************************
+    Template to generate the first step of recurring payment with Paypal
+ ********************************************************************************/
+-->
+<!-- BEGIN: main -->
+<html lang="{LANG}">
+
+<head>
+	<script>
+		window.onload = function () {
+			document.frm.submit();
+		}
+	</script>
+</head>
+
+<body>
+	<span>{LOADING_MESSAGE}</span>
+
+	<form action="{paypal_url}" method="post" name="frm">
+		<input type="hidden" name="business" value="{paypal_id}">
+		<input type="hidden" name="charset" value="utf-8">
+		<input type="hidden" name="cmd" value="_xclick-subscriptions">
+		<input type="hidden" name="at" value="YourIdentityToken">
+		<input type="hidden" name="item_name" value="{itemName}">
+		<input type="hidden" name="custom" value={custom}>
+		<input type="hidden" name="no_shipping" value="1">
+		<input type="hidden" name="rm" value="2">
+		<input type="hidden" name="amount" value="{amount}">
+		<input type="hidden" name="currency_code" value="EUR">
+		<input type="hidden" name="cancel_return" value="{koURL}">
+		<input type="hidden" name="return" value="{okURL}">
+		<input type="hidden" name="notify_url" value="{ipn}">
+		<input type="hidden" name="a3" value="{amount}" >
+		<input type="hidden" name="p3" value="{intervalCount}" >
+		<input type="hidden" name="t3" value="M" >
+		<input type="hidden" name="src" value="1" >
+		<input type="hidden" name="sra" value="1" >
+
+	</form>
+</body>
+
+</html>
+<!-- END: main -->

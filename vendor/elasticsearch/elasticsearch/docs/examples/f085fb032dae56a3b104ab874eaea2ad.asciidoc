@@ -1,0 +1,18 @@
+// aggregations/bucket/terms-aggregation.asciidoc:882
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'aggs' => [
+            'tags' => [
+                'terms' => [
+                    'field' => 'tags',
+                    'missing' => 'N/A',
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

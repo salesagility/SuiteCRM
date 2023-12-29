@@ -110,7 +110,12 @@ class SugarWidgetSubPanelRemoveButton extends SugarWidgetField
             $linked_field = 'emails';
         }
         //based on listview since that lets you select records
-        if ($layout_def['ListView'] && !$hideremove) {
+
+        // STIC-Custom 20230703 EPS: Show remove button must be dependant from Edit permission not from list permission
+        // STIC#1149
+        // if ($layout_def['ListView'] && !$hideremove) {
+        if ($layout_def['EditView'] && !$hideremove) {
+        // STIC-Custom END
             $retStr = "<a href=\"javascript:sub_p_rem('$subpanel', '$linked_field'"
                 . ", '$record', $refresh_page);\""
                 . ' class="listViewTdToolsS1"'

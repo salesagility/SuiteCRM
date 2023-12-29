@@ -1,0 +1,42 @@
+@mixin extjs-messagebox {
+    .#{$prefix}message-box .#{$prefix}window-body {
+        background-color: $window-background-color;
+        border: none;
+    }
+
+    .#{$prefix}message-box .#{$prefix}progress-wrap {
+        margin-top: 4px;
+    }
+
+    .#{$prefix}message-box-icon {
+        width: 47px;
+        height: 32px;
+    }
+
+    .#{$prefix}message-box-info,
+    .#{$prefix}message-box-warning,
+    .#{$prefix}message-box-question,
+    .#{$prefix}message-box-error {
+        background: transparent no-repeat top left;
+    }
+
+    .#{$prefix}message-box .#{$prefix}msg-box-wait {
+        background-image: theme-background-image($theme-name, 'shared/blue-loading.gif');
+    }
+
+    .#{$prefix}message-box-info {
+        background-image: theme-background-image($theme-name, 'shared/icon-info.gif');
+    }
+
+    .#{$prefix}message-box-warning {
+        background-image: theme-background-image($theme-name, 'shared/icon-warning.gif');
+    }
+
+    .#{$prefix}message-box-question {
+        background-image: theme-background-image($theme-name, 'shared/icon-question.gif');
+    }
+
+    .#{$prefix}message-box-error {
+        background-image: theme-background-image($theme-name, 'shared/icon-error.gif');
+    }
+}

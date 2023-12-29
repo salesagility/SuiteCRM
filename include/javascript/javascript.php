@@ -82,10 +82,23 @@ class javascript
         }
     }
 
-    public function addSpecialField($dispField, $realField, $type, $required, $prefix = '')
+    // STIC-Custom 20220224 - Translating Datetime string to smarty for avoiding single quote sintax errors
+    // STIC#617
+    // Replicating solution as in addField() function
+    // public function addSpecialField($dispField, $realField, $type, $required, $prefix = '')
+    public function addSpecialField($dispField, $realField, $type, $required, $prefix = '', $translate = false)
     {
         if (isset($this->sugarbean->field_name_map[$realField]['vname'])) {
-            $this->addFieldGeneric($dispField, 'date', $this->sugarbean->field_name_map[$realField]['vname'], $required, $prefix);
+            // STIC-Custom 20220224 - Translating Datetime string to smarty for avoiding single quote sintax errors
+            // STIC#617
+            // Replicating solution as in addField() function
+            $vname = $this->sugarbean->field_name_map[$realField]['vname'];
+            if ($translate) {
+                $vname = $this->buildStringToTranslateInSmarty($this->sugarbean->field_name_map[$realField]['vname']);
+            }
+            // $this->addFieldGeneric($dispField, 'date', $this->sugarbean->field_name_map[$realField]['vname'], $required, $prefix);
+            $this->addFieldGeneric($dispField, 'date', $vname, $required, $prefix);
+            // END STIC
         }
     }
 
@@ -280,7 +293,11 @@ class javascript
             if (!isset($skip_fields[$field])) {
                 if (isset($value['type']) && ($value['type'] == 'datetimecombo' || $value['type'] == 'datetime')) {
                     $isRequired = (isset($value['required']) && $value['required']) ? 'true' : 'false';
-                    $this->addSpecialField($value['name'] . '_date', $value['name'], 'datetime', $isRequired);
+                    // STIC-Custom 20220224 - Translating Datetime string to smarty for avoiding single quote sintax errors
+                    // STIC#617
+                    // Replicating solution as in addField() function
+                    // $this->addSpecialField($value['name'] . '_date', $value['name'], 'datetime', $isRequired);
+                    $this->addSpecialField($value['name'] . '_date', $value['name'], 'datetime', $isRequired, $prefix, $translate);
                     if ($value['type'] != 'link'  && isset($this->sugarbean->field_name_map[$field]['validation'])) {
                         //datetime should also support the isbefore or other type of validate
                         $this->addField($field, '', $prefix, '', $translate);

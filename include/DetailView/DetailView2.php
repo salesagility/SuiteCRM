@@ -96,6 +96,21 @@ class DetailView2 extends EditView
         }
         if (!empty($this->metadataFile) && file_exists($this->metadataFile)) {
             require($this->metadataFile);
+            // STIC-Custom 20220124 MHP - Show the PrintAsPDF button and popupHTML in detail view
+            // Right now, do not apply this logic to Contracts, Quotes and Invoices modules because they have their own custom code.
+            // Anyway, don't discard to do it in the future once these modules are better known.
+            // STIC#564   
+            // Schedulers is excluded because when adding the option to print PDF the Edit, Duplicate and Delete options are lost
+            // STIC#620
+            // OAuths modules are excluded because when adding the option to print PDF the Edit, Duplicate and Delete options are lost
+            // STIC#800
+            $excludedModules = ['AOS_Contracts', 'AOS_Quotes', 'AOS_Invoices', 'Schedulers', 'OAuth2Clients', 'OAuthKeys'];
+            if (!in_array($this->module, $excludedModules)){
+                $viewdefs[$this->module][$this->view]['templateMeta']['form']['buttons']['AOS_GENLET'] = array ('customCode' => '<input type="button" class="button" onClick="showPopup(\'pdf\');" value="{$APP.LBL_PRINT_AS_PDF}">');
+                require_once('modules/AOS_PDF_Templates/formLetter.php');
+                formLetter::DVPopupHtml($this->module);
+            }
+            // END STIC-Custom            
         } else {
             //If file doesn't exist we create a best guess
             if (!file_exists("modules/$this->module/metadata/$metadataFileName.php") &&

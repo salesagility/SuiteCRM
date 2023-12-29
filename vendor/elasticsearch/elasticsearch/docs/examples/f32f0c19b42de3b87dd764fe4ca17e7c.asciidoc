@@ -1,0 +1,17 @@
+// query-dsl/query-string-query.asciidoc:408
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'query_string' => [
+                'default_field' => 'title',
+                'query' => 'ny city',
+                'auto_generate_synonyms_phrase_query' => false,
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

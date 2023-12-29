@@ -58,6 +58,25 @@
         {/if}
     </td>
 </tr>
+{* 
+STIC-Custom AAM 20221212 - Making Massupdate parameter available to all types except those which $hideMassUpdate variable is true
+STIC#937 
+*}
+{if !$hideMassUpdate}
+<tr>
+	<td class='mbLBL'>{sugar_translate module="DynamicFields" label="COLUMN_TITLE_MASS_UPDATE"}:</td>
+	<td>
+	{if $hideLevel < 5}
+		<input type="checkbox" id="massupdate" name="massupdate" value="1" {if !empty($vardef.massupdate)}checked{/if}/>
+	{else}
+		<input type="checkbox" id="massupdate" name="massupdate" value="1" disabled {if !empty($vardef.massupdate)}checked{/if}/>
+	{/if}
+	</td>
+</tr>
+{/if}
+{* 
+END STIC-Custom 
+*}
 
 {if !$hideImportable}
 <tr><td class='mbLBL'>{sugar_translate module="DynamicFields" label="COLUMN_TITLE_IMPORTABLE"}:</td><td>

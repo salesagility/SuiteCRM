@@ -1,0 +1,18 @@
+// query-dsl/query-string-query.asciidoc:306
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'query_string' => [
+                'fields' => [
+                    'city.*',
+                ],
+                'query' => 'this AND that OR thus',
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

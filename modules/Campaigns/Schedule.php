@@ -105,6 +105,10 @@ if ($campaign_id && isset($campaign) && $campaign->status == 'Inactive') {
 
         if (!empty($campaign_id)) {
             array_push($where_clauses, "campaign_id = '".DBManagerFactory::getInstance()->quote($campaign_id)."'");
+            // STIC-Custom 20220112 MHP - Add a condition to get only active marketing emails when scheduling a mailing
+            // STIC#539
+            array_push($where_clauses, "status = 'active'");
+            // END STIC-Custom
         }
 
         $where = "";
@@ -172,6 +176,12 @@ if ($campaign_id && isset($campaign) && $campaign->status == 'Inactive') {
         $query.=" WHERE email_marketing.campaign_id='$campaign_id'";
         $query.=" and email_marketing.deleted=0 ";
         $query.=" and email_marketing.all_prospect_lists=1 ";
+        // STIC 20220112 - Add a condition to get only active marketing emails on test mailing
+        // STIC#539
+        $query .= " and email_marketing.status = 'active'";
+        // STIC-Custom 20210730 - Add ORDER BY clause to order marketing emails in test mails
+        // STIC#370
+        $query.=" ORDER BY date_modified desc ";
 
         $result=$focus->db->query($query);
         while (($row=$focus->db->fetchByAssoc($result)) != null) {

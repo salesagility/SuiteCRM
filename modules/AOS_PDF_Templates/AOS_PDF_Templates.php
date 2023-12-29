@@ -33,8 +33,56 @@ class AOS_PDF_Templates extends AOS_PDF_Templates_sugar
     public function __construct()
     {
         parent::__construct();
+        // STIC-Custom 20220124 MHP - Set in pdf_template_type_dom an ordered list with the names of the modules displayed in the menu tabs in the current user's language  
+        // STIC#564   
+        global $app_list_strings;
+        $app_list_strings['pdf_template_type_dom'] = $this->loadTabModules();
+        // END STIC-Custom        
     }
 
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function AOS_PDF_Templates()
+    {
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if (isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        } else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+    // STIC-Custom 20220124 MHP - Create loadTabModules function
+    // STIC#564  
+    /**
+     * Returns an ordered list with the names of the modules displayed in the menu tabs in the current user's language
+     * @return array
+     */
+    public static function loadTabModules()
+    {
+        global $app_list_strings;
+        include_once 'modules/MySettings/TabController.php';
+        $controller = new TabController();
+        $currentTabs = $controller->get_system_tabs();
+
+        // Modules to be excluded
+        $excludedModules = ['Home', 'Calendar'];
+
+        $modules = array();
+        foreach($currentTabs as $key => $mod){
+            if (!in_array($mod, $excludedModules)) {
+                $modules[$key] = (isset($app_list_strings['moduleList'][$key])) ? $app_list_strings['moduleList'][$key] : $key;
+            }
+        }
+
+        asort($modules);
+        return $modules;
+    }
+    // END STIC-Custom    
+     
     public function cleanBean()
     {
         parent::cleanBean();

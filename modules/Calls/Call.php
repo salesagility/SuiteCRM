@@ -174,7 +174,12 @@ class Call extends SugarBean
         global $timedate;
 
         if (!empty($this->date_start)) {
-            if (!empty($this->duration_hours) && !empty($this->duration_minutes)) {
+            // STIC custom - JCH - 20220714 - Ending time of the call is not properly 
+	    // calculated when one of the duration fields (hours or minutes) is 0.
+            // STIC#809
+            // if (!empty($this->duration_hours) && !empty($this->duration_minutes)) {
+            if (!empty($this->duration_hours + $this->duration_minutes)) {
+            // END STIC
                 $td = $timedate->fromDb($this->date_start);
                 if ($td) {
                     $this->date_end = $td->modify(

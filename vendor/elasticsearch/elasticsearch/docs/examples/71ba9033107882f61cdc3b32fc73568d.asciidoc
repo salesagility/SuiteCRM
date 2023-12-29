@@ -1,0 +1,17 @@
+// mapping.asciidoc:173
+
+[source, php]
+----
+$params = [
+    'index' => 'my-index',
+    'body' => [
+        'properties' => [
+            'employee-id' => [
+                'type' => 'keyword',
+                'index' => false,
+            ],
+        ],
+    ],
+];
+$response = $client->indices()->putMapping($params);
+----

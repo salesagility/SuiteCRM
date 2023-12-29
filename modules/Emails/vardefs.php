@@ -655,8 +655,18 @@ $dictionary['Email'] = array(
             'lhs_key' => 'id',
             'rhs_module' => 'Notes',
             'rhs_table' => 'notes',
-            'rhs_key' => 'parent_id',
-            'relationship_type' => 'one-to-many',
+            // STIC-Custom 20230511 Redefine relationship between notes and emails following the meeting-emails definition
+            // STIC#1081
+            // 'rhs_key' => 'parent_id',
+            // 'relationship_type' => 'one-to-many',
+            'rhs_key' => 'id',
+            'relationship_type' => 'many-to-many',
+            'join_table' => 'emails_beans',
+            'join_key_lhs' => 'email_id',
+            'join_key_rhs' => 'bean_id',
+            'relationship_role_column' => 'bean_module',
+            'relationship_role_column_value' => 'Notes',
+            // END STIC-Custom
         ),
         'emails_contacts_rel' => array(
             'lhs_module' => 'Emails',

@@ -1,0 +1,30 @@
+// aggregations/bucket/terms-aggregation.asciidoc:654
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'aggs' => [
+            'JapaneseCars' => [
+                'terms' => [
+                    'field' => 'make',
+                    'include' => [
+                        'mazda',
+                        'honda',
+                    ],
+                ],
+            ],
+            'ActiveCarManufacturers' => [
+                'terms' => [
+                    'field' => 'make',
+                    'exclude' => [
+                        'rover',
+                        'jensen',
+                    ],
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

@@ -1,0 +1,5 @@
+.DS_Store
+vendor
+build
+dependencies/*/vendor
+.phpunit.result.cache

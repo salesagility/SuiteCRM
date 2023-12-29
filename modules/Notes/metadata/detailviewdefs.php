@@ -44,6 +44,18 @@ array(
   array(
     'templateMeta' =>
     array(
+      // STIC-Custom 20220325 MHP - Add default actions (EDIT, DUPLICATE and DELETE)
+      // STIC#640
+      'form' => 
+      array(
+        'buttons' => 
+        array(
+          0 => 'EDIT',
+          1 => 'DUPLICATE',
+          2 => 'DELETE',
+        ),
+      ),      
+      // END-CUSTOM      
       'maxColumns' => '2',
       'widths' =>
       array(

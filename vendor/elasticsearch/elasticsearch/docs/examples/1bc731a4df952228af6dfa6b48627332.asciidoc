@@ -1,0 +1,24 @@
+// docs/reindex.asciidoc:802
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'max_docs' => 10,
+        'source' => [
+            'index' => 'twitter',
+            'query' => [
+                'function_score' => [
+                    'random_score' => [
+                    ],
+                    'min_score' => 0.9,
+                ],
+            ],
+        ],
+        'dest' => [
+            'index' => 'random_twitter',
+        ],
+    ],
+];
+$response = $client->reindex($params);
+----

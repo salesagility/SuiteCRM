@@ -81,6 +81,10 @@ $mod_strings = array(
     'LBL_USER_ROLE_PRECEDENCE' => 'User Role Precedence',
     'LBL_USER_ROLE_PRECEDENCE_DESC' => 'If any role is assigned directly to a user that role should take precedence over any group roles.',
     'LBL_INHERIT_TITLE' => 'Group Inheritance Rules',
+    // STIC custom - JCH - 20221130 - Add title description
+    // STIC#929
+    'LBL_INHERIT_TITLE_DESC' => 'Groups inheritance rules apply only at record creation time.',
+    // END STIC
     'LBL_INHERIT_CREATOR' => 'Inherit from Created By User',
     'LBL_INHERIT_CREATOR_DESC' => 'The record will inherit all the groups assigned to the user who created it.',
     'LBL_INHERIT_PARENT' => 'Inherit from Parent Record',
@@ -88,7 +92,11 @@ $mod_strings = array(
     'LBL_USER_POPUP' => 'New User Group Popup',
     'LBL_USER_POPUP_DESC' => 'When creating a new user show the SecurityGroups popup to assign the user to a group(s).',
     'LBL_INHERIT_ASSIGNED' => 'Inherit from Assigned To User',
-    'LBL_INHERIT_ASSIGNED_DESC' => 'The record will inherit all the groups of the user assigned to the record. Other groups assigned to the record will NOT be removed.',
+    // STIC custom - JCH - 20221130 - Homogenize description
+    // STIC#929
+    // 'LBL_INHERIT_ASSIGNED_DESC' => 'The record will inherit all the groups of the user assigned to the record. Other groups assigned to the record will NOT be removed.',
+    'LBL_INHERIT_ASSIGNED_DESC' => 'The record will inherit all the groups of the user assigned to the record.',
+    // END STIC
     'LBL_POPUP_SELECT' => 'Use Creator Group Select',
     'LBL_POPUP_SELECT_DESC' => 'When a record is created by a user in more than one group show a group selection panel on the create screen. Otherwise inherit that one group.',
     'LBL_FILTER_USER_LIST' => 'Filter User List',

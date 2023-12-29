@@ -1,0 +1,145 @@
+[[selectors]]
+=== Selectors
+
+The connection pool maintains the list of connections, and decides when nodes 
+should transition from alive to dead (and vice versa). It has no logic to choose 
+connections, however. That job belongs to the selector class.
+
+The job of a selector is to return a single connection from a provided array of 
+connections. Like the connection pool, there are several implementations to 
+choose from.
+
+
+[discrete]
+==== RoundRobinSelector (Default)
+
+This selector returns connections in a round-robin fashion. Node #1 is selected 
+on the first request, Node #2 on the second request, and so on. This ensures an 
+even load of traffic across your cluster. Round-robining happens on a 
+per-request basis (for example sequential requests go to different nodes).
+
+The `RoundRobinSelector` is default but if you wish to explicitly configure it 
+you can do:
+
+[source,php]
+----
+$client = ClientBuilder::create()
+            ->setSelector('\Elasticsearch\ConnectionPool\Selectors\RoundRobinSelector')
+            ->build();
+----
+
+Note that the implementation is specified via a namespace path to the class.
+
+
+[discrete]
+==== StickyRoundRobinSelector
+
+This selector is "sticky", so that it prefers to reuse the same connection 
+repeatedly. For example, Node #1 is chosen on the first request. Node #1 will 
+continue to be re-used for each subsequent request until that node fails. Upon 
+failure, the selector will round-robin to the next available node, then "stick" 
+to that node.
+
+This is an ideal strategy for many PHP scripts. Since PHP scripts are 
+shared-nothing and tend to exit quickly, creating new connections for each 
+request is often a sub-optimal strategy and introduces a lot of overhead. 
+Instead, it is better to "stick" to a single connection for the duration of the 
+script.
+
+By default, this selector randomizes the hosts upon initialization which still 
+guarantees an even load distribution across the cluster. It changes the 
+round-robin dynamics from per-request to per-script.
+
+If you are using <<future_mode>>, the "sticky" behavior of this selector is 
+non-ideal, since all parallel requests go to the same node instead of multiple 
+nodes in your cluster. When using future mode, the default `RoundRobinSelector`
+should be preferred.
+
+If you wish to use this selector, you may do so with:
+
+[source,php]
+----
+$client = ClientBuilder::create()
+            ->setSelector('\Elasticsearch\ConnectionPool\Selectors\StickyRoundRobinSelector')
+            ->build();
+----
+
+Note that the implementation is specified via a namespace path to the class.
+
+
+[discrete]
+==== RandomSelector
+
+This selector returns a random node, regardless of state. It is generally just 
+for testing.
+
+If you wish to use this selector, you may do so with:
+
+[source,php]
+----
+$client = ClientBuilder::create()
+            ->setSelector('\Elasticsearch\ConnectionPool\Selectors\RandomSelector')
+            ->build();
+----
+
+Note that the implementation is specified via a namespace path to the class.
+
+[discrete]
+=== Custom Selector
+
+You can implement your own custom selector. Custom selectors must implement 
+`SelectorInterface`:
+
+[source,php]
+----
+namespace MyProject\Selectors;
+
+use Elasticsearch\Connections\ConnectionInterface;
+use Elasticsearch\ConnectionPool\Selectors\SelectorInterface
+
+class MyCustomSelector implements SelectorInterface
+{
+
+    /**
+     * Selects the first connection
+     *
+     * @param array $connections Array of Connection objects
+     *
+     * @return ConnectionInterface
+     */
+    public function select($connections)
+    {
+        // code here
+    }
+
+}
+----
+{zwsp} +
+
+
+You can then use your custom selector either via object injection or namespace 
+instantiation:
+
+[source,php]
+----
+$mySelector = new MyCustomSelector();
+
+$client = ClientBuilder::create()
+            ->setSelector($mySelector)                             // object injection
+            ->setSelector('\MyProject\Selectors\FirstSelector')    // or namespace
+            ->build();
+----
+
+
+[discrete]
+==== Quick setup
+
+Selectors can be changed via the `setSelector()` method:
+
+[source,php]
+----
+$selector = '\Elasticsearch\ConnectionPool\Selectors\StickyRoundRobinSelector';
+$client = ClientBuilder::create()
+            ->setSelector($selector)
+            ->build();
+----

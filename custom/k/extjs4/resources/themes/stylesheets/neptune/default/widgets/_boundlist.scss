@@ -1,0 +1,68 @@
+@mixin extjs-boundlist {
+    .#{$prefix}boundlist {
+//        @if $boundlist-border-style {
+//            border: $boundlist-border-width $boundlist-border-style $boundlist-border-color;
+//        }
+        background: $boundlist-background-color;
+
+        .#{$prefix}toolbar {
+            border-width: 1px 0 0 0;
+        }
+    }
+
+    .#{$prefix}boundlist-item {
+        padding: $boundlist-item-padding;
+        @extend .no-select;
+        @extend .mr-white-glove;
+
+        font-size: $font-size-small;
+
+        position: relative; /*allow hover in IE on empty items*/
+
+        @if $boundlist-item-border-style {
+            border: $boundlist-item-border-width $boundlist-item-border-style $boundlist-item-border-color;            
+        }
+
+        &:last-child {
+            @include border-bottom-radius(4px);
+        }
+    }
+
+    .#{$prefix}boundlist-item-over {
+        background: $boundlist-item-over-background-color;
+        border-color: $boundlist-item-over-border-color;
+        color: color-by-background($boundlist-item-over-background-color);
+    }
+
+    .#{$prefix}boundlist-selected {
+        background: $boundlist-item-selected-background-color;
+        border-color: $boundlist-item-selected-border-color;
+        color: color-by-background($boundlist-item-selected-background-color);
+    }
+
+    .#{$prefix}boundlist-selected.#{$prefix}boundlist-item-over {
+        background: lighten($boundlist-item-selected-background-color, 5%);
+    }
+
+    .#{$prefix}boundlist-floating {
+        border-top-width: 0;
+
+        @include border-bottom-radius(4px);
+    }
+
+    .#{$prefix}boundlist-above {
+        border-top-width: 1px;
+        border-bottom-width: 0;
+
+        @include border-top-radius(4px);
+        @include border-bottom-radius(0);
+
+        &:first-child {
+            @include border-top-radius(4px);
+        }
+
+        &:last-child {
+            @include border-bottom-radius(4px);
+        }
+    }
+}

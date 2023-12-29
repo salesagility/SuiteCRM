@@ -1,0 +1,21 @@
+// indices/create-index.asciidoc:123
+
+[source, php]
+----
+$params = [
+    'index' => 'test',
+    'body' => [
+        'settings' => [
+            'number_of_shards' => 1,
+        ],
+        'mappings' => [
+            'properties' => [
+                'field1' => [
+                    'type' => 'text',
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->indices()->create($params);
+----

@@ -1,0 +1,16 @@
+// indices/put-mapping.asciidoc:465
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'source' => [
+            'index' => 'users',
+        ],
+        'dest' => [
+            'index' => 'new_users',
+        ],
+    ],
+];
+$response = $client->reindex($params);
+----

@@ -799,24 +799,47 @@ function add_error_style(formname, input, txt, flash) {
           window.setTimeout('fade_error_style(style, ' + wp * 10 + ')', 1000 + (wp * 50));
         }
       }
-      if (typeof (window[formname + "_tabs"]) != "undefined") {
-        var tabView = window[formname + "_tabs"];
-        var parentDiv = YAHOO.util.Dom.getAncestorByTagName(inputHandle, "div");
-        if (tabView.get) {
-          var tabs = tabView.get("tabs");
-          for (var i in tabs) {
-            if (tabs[i].get("contentEl") == parentDiv
-              || YAHOO.util.Dom.isAncestor(tabs[i].get("contentEl"), inputHandle)) {
-              tabs[i].get("labelEl").style.color = "red";
-              if (inputsWithErrors.length == 1)
-                tabView.selectTab(i);
+      // STIC-custom - 20220322 - JCH - Repair validations in editable views
+      // STIC#660
+      // if (typeof (window[formname + "_tabs"]) != "undefined") {
+      //   var tabView = window[formname + "_tabs"];
+      //   var parentDiv = YAHOO.util.Dom.getAncestorByTagName(inputHandle, "div");
+      //   if (tabView.get) {
+      //     var tabs = tabView.get("tabs");
+      //     for (var i in tabs) {
+      //       if (tabs[i].get("contentEl") == parentDiv
+      //         || YAHOO.util.Dom.isAncestor(tabs[i].get("contentEl"), inputHandle)) {
+      //         tabs[i].get("labelEl").style.color = "red";
+      //         if (inputsWithErrors.length == 1)
+      //           tabView.selectTab(i);
+      //       }
+      //     }
+      //     if (typeof selectTabOnErrorInputHandle == 'function') {
+      //       selectTabOnErrorInputHandle(inputHandle);
+      //     }
+      //   }
+      // }
+      if (typeof window[formname + "_tabs"] != "undefined") {
+        if ($(".validation-message")) {
+          // Reset tab error styles
+          $("#EditView_tabs li a").removeAttr("style");
+          counter = 0;
+          $(".validation-message").each(function () {
+            // Get error validation tabs ids
+            CurrentValidationTabId = $(this).closest(".tab-pane-NOBOOTSTRAPTOGGLER").attr("id").split('-').slice(-1);
+            // Get tabs
+            $CurrentValidationTabA = $("#EditView_tabs a#tab" + CurrentValidationTabId);
+            // Apply error tab style
+            $CurrentValidationTabA.attr("style", "background-color:red;").closest("li");
+            if (counter == 0) {
+              $CurrentValidationTabA.click();
+              $CurrentValidationTabA.addClass("active");
             }
-          }
-          if (typeof selectTabOnErrorInputHandle == 'function') {
-            selectTabOnErrorInputHandle(inputHandle);
-          }
+            counter++;
+          });
         }
       }
+      // END STIC
       window.setTimeout("inputsWithErrors[" + (inputsWithErrors.length - 1) + "].style.backgroundColor = '';", 2000);
     }
 
@@ -942,7 +965,13 @@ function validate_form(formname, startsWith) {
   inputsWithErrors = new Array();
   for (var i = 0; i < validate[formname].length; i++) {
     if (validate[formname][i][nameIndex].indexOf(startsWith) == 0) {
-      if (typeof form[validate[formname][i][nameIndex]] != 'undefined' && typeof form[validate[formname][i][nameIndex]].value != 'undefined') {
+      // STIC-Custom - JCH - 20230331 - This condition checks whether a field has the same name as an HTML tag property, and if it's not present in the EditView,
+      // the parameter form[validate[formname][i][nameIndex]] will return the form property value instead, which is incorrect. 
+      // To resolve this issue, we need to verify that it's an HTML tag property before processing it. 
+      // STIC#1037
+      // if (typeof form[validate[formname][i][nameIndex]] != 'undefined' && typeof form[validate[formname][i][nameIndex]].value != 'undefined') {
+      if (typeof form[validate[formname][i][nameIndex]] != 'undefined' && form[validate[formname][i][nameIndex]] instanceof HTMLElement && typeof form[validate[formname][i][nameIndex]].value != 'undefined') {
+      // End STIC
         var bail = false;
 
 
@@ -1005,6 +1034,10 @@ function validate_form(formname, startsWith) {
               }
               break;
             case 'int':
+            // STIC Custom - JBL - 20231106 - Int validation for inline Range edition
+            // STIC#1272
+            case 'range':
+            // End STIC Custom
               if (!isInteger(trim(form[validate[formname][i][nameIndex]].value))) {
                 isError = true;
                 add_error_style(formname, validate[formname][i][nameIndex], invalidTxt + " " + validate[formname][i][msgIndex]);
@@ -1107,7 +1140,11 @@ function validate_form(formname, startsWith) {
                   isError = true;
                   var lbl_validate_range = SUGAR.language.get('app_strings', 'LBL_VALIDATE_RANGE');
                   if (typeof validate[formname][i][minIndex] == 'number' && typeof validate[formname][i][maxIndex] == 'number') {
-                    add_error_style(formname, validate[formname][i][nameIndex], validate[formname][i][msgIndex] + " value " + form[validate[formname][i][nameIndex]].value + " " + lbl_validate_range + " (" + validate[formname][i][minIndex] + " - " + validate[formname][i][maxIndex] + ")");
+                    // STIC-Custom 20230919 MHP - Create dynamic tag for text 'value'
+                    // STIC#1221
+	                  // add_error_style(formname, validate[formname][i][nameIndex], validate[formname][i][msgIndex] + " value " + form[validate[formname][i][nameIndex]].value + " " + lbl_validate_range + " (" + validate[formname][i][minIndex] + " - " + validate[formname][i][maxIndex] + ")");
+                    add_error_style(formname, validate[formname][i][nameIndex], validate[formname][i][msgIndex] + " " + SUGAR.language.get('app_strings', 'LBL_VALUE') + " " + form[validate[formname][i][nameIndex]].value + " " + lbl_validate_range + " (" + validate[formname][i][minIndex] + " - " + validate[formname][i][maxIndex] + ")");
+                    // END STIC-Custom
                   }
                   else if (typeof validate[formname][i][minIndex] == 'number') {
                     add_error_style(formname, validate[formname][i][nameIndex], validate[formname][i][msgIndex] + " " + SUGAR.language.get('app_strings', 'MSG_SHOULD_BE') + ' ' + validate[formname][i][minIndex] + ' ' + SUGAR.language.get('app_strings', 'MSG_OR_GREATER'));
@@ -1989,7 +2026,15 @@ sugarListView.prototype.confirm_action = function (del) {
     return confirm(SUGAR.language.get('app_strings', 'NTC_DELETE_CONFIRMATION_NUM') + sugarListView.get_num_selected_string() + SUGAR.language.get('app_strings', 'NTC_DELETE_SELECTED_RECORDS'));
   }
   else {
-    return confirm(SUGAR.language.get('app_strings', 'NTC_UPDATE_CONFIRMATION_NUM') + sugarListView.get_num_selected_string() + SUGAR.language.get('app_strings', 'NTC_DELETE_SELECTED_RECORDS'));
+    // STIC-Custom - 20220704 - JCH - Add confirm msg for mass duplicate update
+    // STIC#776
+    // return confirm(SUGAR.language.get('app_strings', 'NTC_UPDATE_CONFIRMATION_NUM') + sugarListView.get_num_selected_string() + SUGAR.language.get('app_strings', 'NTC_DELETE_SELECTED_RECORDS'));    
+    if($('#massupdate_form input#mass_duplicate').length == 1){
+      return confirm(SUGAR.language.get('app_strings', 'LBL_MASS_DUPLICATE_UPDATE_CONFIRMATION_NUM') + sugarListView.get_num_selected_string() + SUGAR.language.get('app_strings', 'NTC_DELETE_SELECTED_RECORDS'));
+    } else { 
+      return confirm(SUGAR.language.get('app_strings', 'NTC_UPDATE_CONFIRMATION_NUM') + sugarListView.get_num_selected_string() + SUGAR.language.get('app_strings', 'NTC_DELETE_SELECTED_RECORDS'));
+    }
+    // END STIC
   }
 
 }
@@ -2998,7 +3043,10 @@ SUGAR.util = function () {
                   async: false,
                   method: 'GET'
                 }).done(function(responseText) {
-                  SUGAR.util.globalEval(responseText);
+                  // STIC-Custom 20220405 AAM - Duplicate execution of JS files in Chrome
+                  // STIC#688
+                  // SUGAR.util.globalEval(responseText);
+                  // END STIC
                 });
               })(srcResult);
             }

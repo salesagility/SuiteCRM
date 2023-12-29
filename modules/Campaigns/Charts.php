@@ -163,7 +163,10 @@ class campaign_charts
                                 "numerical_label" => "Hits",
                                 "numerical_key" => "hits",
                                 "module" => 'Campaigns',
-                                "group_base_text" => $outcome,
+                                // Stic-Custom 20220929 MHP - Use the translated values instead of the indices
+                                // STIC#876
+                                "group_base_text" => $outcome_translation,
+                                // END Stic-Custom
                                 "link" => $key
                             );
                     }

@@ -1,0 +1,28 @@
+{
+	"name": "zf1/zend-gdata",
+	"description": "Zend Framework 1 Gdata package",
+	"keywords": [
+		"framework",
+		"zf1",
+		"zend",
+		"gdata"
+	],
+	"homepage": "http://framework.zend.com/",
+	"license": "BSD-3-Clause",
+	"require": {
+		"php": ">=5.2.11",
+		"zf1/zend-exception": "self.version",
+		"zf1/zend-http": "self.version",
+		"zf1/zend-mime": "self.version",
+		"zf1/zend-version": "self.version",
+		"zf1/zend-xml": "self.version"
+	},
+	"autoload": {
+		"psr-0": {
+			"Zend_Gdata": "library/"
+		}
+	},
+	"suggest": {
+		"zf1/zend-loader": "Used in special situations or with special adapters"
+	}
+}

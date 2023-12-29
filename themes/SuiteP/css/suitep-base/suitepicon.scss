@@ -1,11 +1,20 @@
 
 @font-face {
     font-family: "suitepicon";
-    src: url("../../../../../themes/SuiteP/css/suitep-base/suitepicon.eot#iefix") format("embedded-opentype"),
-    url("../../../../../themes/SuiteP/css/suitep-base/suitepicon.woff2") format("woff2"),
-    url("../../../../../themes/SuiteP/css/suitep-base/suitepicon.woff") format("woff"),
-    url("../../../../../themes/SuiteP/css/suitep-base/suitepicon.ttf") format("truetype"),
-    url("../../../../../themes/SuiteP/css/suitep-base/suitepicon.svg#suitepicon") format("svg");
+    // STIC-Custom 20231218 JBL - Versioning Style resources in order to reload resources without cleaning browser cache
+	// #1075
+    // src: url("../../../../../themes/SuiteP/css/suitep-base/suitepicon.eot#iefix") format("embedded-opentype"),
+    //      url("../../../../../themes/SuiteP/css/suitep-base/suitepicon.woff2") format("woff2"),
+    //      url("../../../../../themes/SuiteP/css/suitep-base/suitepicon.woff") format("woff"),
+    //      url("../../../../../themes/SuiteP/css/suitep-base/suitepicon.ttf") format("truetype"),
+    //      url("../../../../../themes/SuiteP/css/suitep-base/suitepicon.svg#suitepicon") format("svg");
+    $random-number: random($limit: 10000);
+    src: url("../../../../../themes/SuiteP/css/suitep-base/suitepicon.eot#iefix?c=#{$random-number}") format("embedded-opentype"),
+         url("../../../../../themes/SuiteP/css/suitep-base/suitepicon.woff2?c=#{$random-number}") format("woff2"),
+         url("../../../../../themes/SuiteP/css/suitep-base/suitepicon.woff?c=#{$random-number}") format("woff"),
+         url("../../../../../themes/SuiteP/css/suitep-base/suitepicon.ttf?c=#{$random-number}") format("truetype"),
+         url("../../../../../themes/SuiteP/css/suitep-base/suitepicon.svg#suitepicon?c=#{$random-number}") format("svg");
+    // END STIC-Custom
 }
 
 .suitepicon {

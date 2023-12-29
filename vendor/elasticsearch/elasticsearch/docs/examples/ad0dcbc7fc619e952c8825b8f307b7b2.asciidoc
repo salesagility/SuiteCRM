@@ -1,0 +1,22 @@
+// query-dsl/multi-match-query.asciidoc:400
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'multi_match' => [
+                'query' => 'Jon',
+                'type' => 'cross_fields',
+                'fields' => [
+                    'first',
+                    'first.edge',
+                    'last',
+                    'last.edge',
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

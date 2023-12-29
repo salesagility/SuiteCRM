@@ -1,0 +1,9 @@
+parameters:
+    reportUnmatchedIgnoredErrors:
+        false
+    ignoreErrors:
+        - '#Unsafe usage of new static\(\)#'
+        - '#Call to static method performRequest\(\) on trait#'
+        - '#Constant JSON_THROW_ON_ERROR not found#'
+        - '#Caught class JsonException not found#'
+        - '#Call to method getCode\(\) on an unknown class JsonException#'

@@ -1,0 +1,20 @@
+// docs/reindex.asciidoc:666
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'source' => [
+            'index' => 'twitter',
+            '_source' => [
+                'user',
+                '_doc',
+            ],
+        ],
+        'dest' => [
+            'index' => 'new_twitter',
+        ],
+    ],
+];
+$response = $client->reindex($params);
+----

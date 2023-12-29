@@ -1,0 +1,13 @@
+// query-dsl/term-query.asciidoc:113
+
+[source, php]
+----
+$params = [
+    'index' => 'my_index',
+    'id' => '1',
+    'body' => [
+        'full_text' => 'Quick Brown Foxes!',
+    ],
+];
+$response = $client->index($params);
+----

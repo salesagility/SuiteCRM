@@ -1,0 +1,13 @@
+// getting-started.asciidoc:251
+
+[source, php]
+----
+$params = [
+    'index' => 'customer',
+    'id' => '1',
+    'body' => [
+        'name' => 'John Doe',
+    ],
+];
+$response = $client->index($params);
+----

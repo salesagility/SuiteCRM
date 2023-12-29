@@ -1,0 +1,69 @@
+{
+    "name": "league/container",
+    "description": "A fast and intuitive dependency injection container.",
+    "keywords": [
+        "league",
+        "container",
+        "dependency",
+        "injection",
+        "di",
+        "service",
+        "provider"
+    ],
+    "homepage": "https://github.com/thephpleague/container",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Phil Bennett",
+            "email": "mail@philbennett.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.2 || ^8.0",
+        "psr/container": "^1.1 || ^2.0"
+    },
+    "require-dev": {
+        "nette/php-generator": "^3.4",
+        "nikic/php-parser": "^4.10",
+        "phpstan/phpstan": "^0.12.47",
+        "phpunit/phpunit": "^8.5.17",
+        "roave/security-advisories": "dev-latest",
+        "scrutinizer/ocular": "^1.8",
+        "squizlabs/php_codesniffer": "^3.6"
+    },
+    "provide": {
+        "psr/container-implementation": "^1.0"
+    },
+    "replace": {
+        "orno/di": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "League\\Container\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "League\\Container\\Test\\": "tests"
+        },
+        "files": [
+            "tests/Asset/function.php"
+        ]        
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "4.x-dev",
+            "dev-4.x": "4.x-dev",
+            "dev-3.x": "3.x-dev",
+            "dev-2.x": "2.x-dev",
+            "dev-1.x": "1.x-dev"
+        }
+    },
+    "scripts": {
+        "test": [
+            "phpunit",
+            "phpstan analyse"
+        ]
+    }
+}

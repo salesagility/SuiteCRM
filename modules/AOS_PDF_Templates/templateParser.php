@@ -66,7 +66,11 @@ class templateParser
             if (isset($field_def['name']) && $field_def['name'] != '') {
                 $fieldName = $field_def['name'];
 
-                if (empty($focus->$fieldName)) {
+                // STIC Custom - JCH - 202210006 - Check if field is really empty
+                // STIC#880
+                // if (empty($focus->$fieldName)) {
+                if (empty($focus->$fieldName) && $focus->$fieldName == '' ) {
+                // END STIC-Custom
                     $repl_arr[$key . '_' . $fieldName] = '';
                     continue;
                 }
@@ -115,6 +119,31 @@ class templateParser
                         ENT_COMPAT, 'UTF-8');
                     $repl_arr[$key . "_" . $fieldName] = html_entity_decode($focus->{$fieldName},
                         ENT_COMPAT, 'UTF-8');
+                // STIC-custom 20210922 - Parse decimal symbol in templates according to configuration
+                // STIC#390
+                } elseif ($field_def['type'] == 'decimal') {
+                    require_once('SticInclude/Utils.php');
+                    if ($_REQUEST['entryPoint'] == 'formLetter') { // If generating a PDF...
+                        $value = SticUtils::formatDecimalInConfigSettings($focus->$fieldName, true); // ...get user config
+                    } else { // If sending a workflow email...
+                        $value = SticUtils::formatDecimalInConfigSettings($focus->$fieldName, false); // ...get system config
+                    }
+                    $repl_arr[$key . "_" . $fieldName] = $value; 
+                // END STIC-custom
+                // STIC-Custom 20221013 AAM - Parsing date/datetime fields when the bean is being modified
+                // STIC#883
+                } elseif ($field_def['dbType'] == 'date' || $field_def['dbType'] == 'datetime' || (!isset($field_def['dbType']) && ($field_def['type'] == 'date' || $field_def['type'] == 'datetime') )) {
+                    global $disable_date_format;
+                    if($focus->$fieldName && ($focus->fetched_row || $disable_date_format)) {
+                        $oldValueDisableDateFormat = $disable_date_format;
+                        $disable_date_format = false;
+                        $value = self::getUserDateDatetimeFormat($focus->$fieldName);
+                        $repl_arr[$key . "_" . $fieldName] = $value; 
+                        $disable_date_format = $oldValueDisableDateFormat;
+                    } else {
+                        $repl_arr[$key . "_" . $fieldName] = $focus->{$fieldName};
+                    }
+                // END STIC
                 } else {
                     $repl_arr[$key . "_" . $fieldName] = $focus->{$fieldName};
                 }
@@ -145,7 +174,14 @@ class templateParser
 
             if ($name === 'aos_products_quotes_product_qty') {
                 $sep = get_number_separators();
-                $value = rtrim(rtrim(format_number($value), '0'), $sep[1]);
+                // STIC-Custom 20230623 AAM - Allowing decimals in the product_qty field
+                // STIC#1144
+                // $value = rtrim(rtrim(format_number($value), '0'), $sep[1]);
+                // First, standarizing decimal separator
+                $value = str_replace(',', '.', $value); 
+                // Making sure there are two decimals in the value
+                $value = number_format($value, 2, $sep[1], $sep[0]);
+                // END STIC-Custom
             }
 
             if ($isValidator->isPercentageField($name)) {
@@ -179,4 +215,35 @@ class templateParser
 
         return $string;
     }
+
+    /**
+     * STIC-Custom AAM 20221013 - Function use to format the date/datetime field into user format
+     * STIC#883
+     * Some date field definition have the wrong "type" property in their vardef. Such as the field last_rev_create_date from Documents.
+     * Therefore we check the field format before formatting
+     * STIC#916
+     *
+     * @param String $date
+     * @return String
+     */
+    private static function getUserDateDatetimeFormat($date) {
+        $formatDate = 'Y-m-d';
+        $validDate = DateTime::createFromFormat($formatDate, $date);
+        $formatDateTime = 'Y-m-d H:i:s';
+        $validDateTime = DateTime::createFromFormat($formatDateTime, $date);
+        if ($validDate && $validDate->format($formatDate) === $date) {
+            // Date field
+            global $current_user, $timedate;
+            $date = $timedate->fromDbDate($date);
+            return $timedate->asUserDate($date, true, $current_user);
+        } elseif ($validDateTime && $validDateTime->format($formatDateTime) === $date) {
+            // Datetime field
+            global $current_user, $timedate;
+            $date = $timedate->fromDB($date);
+            return $timedate->asUser($date, $current_user);
+        } else { 
+            return $date;
+        }
+    }
+    // END STIC
 }

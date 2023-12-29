@@ -1,0 +1,162 @@
+/**
+ * Creates the base structure of FieldSet.
+ * @member Ext.form.FieldSet
+ */
+@mixin extjs-form-fieldset {
+    .#{$prefix}fieldset {
+        border: $fieldset-border;
+
+        padding: $fieldset-padding;
+        margin-bottom: $fieldset-padding;
+
+        display: block; /* preserve margins in IE */
+        position: relative;
+    }
+
+    // Insane IE bug: Fieldset padding-top is rendered *outside* the border!
+    // So we transfer the padding-top to the body element.
+    .#{$prefix}ie .#{$prefix}fieldset {
+        padding-top: 0;
+        .#{$prefix}fieldset-body {
+            padding-top: $fieldset-padding;
+        }
+    }
+
+    .#{$prefix}fieldset-header-checkbox {
+        line-height: $fieldset-header-line-height;
+    }
+
+    .#{$prefix}fieldset-header {
+        font: $fieldset-header-font;
+        color: $fieldset-header-color;
+        padding: $fieldset-header-padding;
+        overflow: hidden; // fixes a webkit bug where legend elements that have floated children are not displayed
+
+        .#{$prefix}fieldset-header-text {
+            float: left;
+            padding: 1px 0;
+        }
+        .#{$prefix}fieldset-header-text-collapsible {
+            cursor: pointer;
+        }
+
+        .#{$prefix}form-item,
+        .#{$prefix}tool {
+            float: left;
+            margin: 1px 0 0 0;
+        }
+
+        .#{$prefix}form-cb-wrap {
+            padding: 1px 0;
+            font-size: 0;
+            line-height: 0;
+        }
+    }
+
+    .#{$prefix}fieldset-with-title {
+        .#{$prefix}fieldset-header-checkbox,
+        .#{$prefix}tool {
+            margin-right: 3px;
+        }
+    }
+
+    // Use Webkit's built-in fieldset legend padding which takes precedence over padding-left/right
+    .#{$prefix}webkit {
+        .#{$prefix}fieldset-header {
+            -webkit-padding-start: #{left($fieldset-header-padding)};
+            -webkit-padding-end: #{right($fieldset-header-padding)};
+        }
+    }
+
+    // opera renders an invisible border above the fieldset in addition to the normal border when the fieldset has a legend.
+    // To compensate for this, give the fieldset a negative top margin equal to the top border width.
+    @if $include-opera {
+        .#{$prefix}opera {
+            .#{$prefix}fieldset-with-legend {
+                margin-top: -#{top($fieldset-border-width)};
+            }
+            &.#{$prefix}mac .#{$prefix}fieldset-header-text {
+                padding: 2px 0 0;
+            }
+        }
+    }
+    // IE8 strict has a problem similar to opera's, except the invisible top border only changes the position of
+    // the legend element, so we have to adjust the position of the legend using a negative top margin.
+    @if $include-ie {
+        .#{$prefix}strict .#{$prefix}ie8 .#{$prefix}fieldset-header {
+            margin-bottom: -#{top($fieldset-border-width)};
+            .#{$prefix}tool,
+            .#{$prefix}fieldset-header-text,
+            .#{$prefix}fieldset-header-checkbox {
+                position: relative;
+                top: -#{top($fieldset-border-width)};
+            }
+        }
+    }
+
+    @if $include-ie {
+        .#{$prefix}quirks .#{$prefix}ie,
+        .#{$prefix}ie8m {
+            .#{$prefix}fieldset-header {
+                padding-left: #{left($fieldset-header-padding) - 2};
+                padding-right: #{right($fieldset-header-padding) - 2};
+            }
+        }
+    }
+
+    .#{$prefix}fieldset-collapsed {
+        .#{$prefix}fieldset-body {
+            display: none;
+        }
+    }
+
+    .#{$prefix}fieldset-collapsed {
+        padding-bottom: 0 !important;
+
+        border-width: 1px 1px 0 1px !important;
+        border-left-color: transparent !important;
+        border-right-color: transparent !important;
+    }
+
+    @if $include-ie {
+        .#{$prefix}ie6 .#{$prefix}fieldset-collapsed {
+            border-width: 1px 0 0 0 !important;
+
+            padding-bottom: 0 !important;
+            margin-left: 1px;
+            margin-right: 1px;
+        }
+
+        .#{$prefix}ie .#{$prefix}fieldset-bwrap {
+            zoom: 1;
+        }
+    }
+
+    @if $include-ie {
+        /* IE legend positioning bug */
+        .#{$prefix}ie .#{$prefix}fieldset-noborder legend {
+            position: relative;
+
+            margin-bottom: 23px;
+        }
+
+        .#{$prefix}ie .#{$prefix}fieldset-noborder legend span {
+            position: absolute;
+            left: 16px;
+        }
+    }
+
+    .#{$prefix}fieldset {
+        overflow: hidden;
+    }
+
+    .#{$prefix}fieldset-bwrap {
+        overflow: hidden;
+
+        zoom: 1;
+    }
+
+    .#{$prefix}fieldset-body {
+        overflow: hidden;
+    }
+}

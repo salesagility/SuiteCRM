@@ -1,0 +1,16 @@
+// docs/update.asciidoc:325
+
+[source, php]
+----
+$params = [
+    'index' => 'test',
+    'id' => '1',
+    'body' => [
+        'doc' => [
+            'name' => 'new_name',
+        ],
+        'doc_as_upsert' => true,
+    ],
+];
+$response = $client->update($params);
+----

@@ -1,0 +1,92 @@
+$pictos-background-default: white !default;
+$pictos-default-border: null !default;
+$pictos-default-gradient: null !default;
+
+@mixin pictos($character,
+    $color: #fff,
+    $size: 24px,
+    $glow: null, // (shadow 1)
+    $border-color: $pictos-default-border,
+    $border-color-over: $border-color,
+    $border-color-active: $border-color,
+    $color-hover: $bright-color,
+    $gradient: matte,
+    $gradient-over: $gradient,
+    $gradient-active: recessed,
+    $glow-hover: $bright-color 0 0 10px,
+    $glow-active: $glow-hover,
+    $shadow: rgba(#000, .5) 0 1px 1px,
+    $include-states: true
+) {
+    @include background-clip(text);
+    overflow: visible;
+    @include text-shadow(rgba(#fff, .15) 0 1px 0);
+    position: relative;
+    height: $size;
+    line-height: $size;
+
+    &:after, &:before {
+        @extend .base-pictos;
+        font-size: $size;
+        content: $character;
+        @if $border-color != null {
+            -webkit-text-stroke: 1px $border-color;
+        }
+        
+        @include background-gradient($color, $gradient);
+    }
+    &:before {
+        @include background-clip(padding-box);
+        background: none;
+    }
+    
+    @if $include-states {
+        &:hover {
+            @if $border-color-over != null {
+                -webkit-text-stroke: 1px $border-color-over;
+            }
+
+            &:before {
+                @include text-shadow($shadow, $glow-hover);
+            }
+            &:after {
+                @include background-gradient($color-hover, $gradient-over);
+            }
+        }
+        &:active {
+            @if $border-color-active != null {
+                -webkit-text-stroke: 1px $bright-color;
+            }
+            top: 1px;
+            &:before {
+                @include text-shadow($shadow, $glow-active);
+            }
+            &:after {
+                @include background-gradient($bright-color, $gradient-active);
+            }
+        }
+    }
+}
+
+@mixin simple-pictos($character, $color: #fff, $size: 24px) {
+    overflow: visible;
+//    @include text-shadow(rgba(#fff, .15) 0 1px 0);
+    position: relative;
+    
+    &:after {
+        @include background-clip(text);
+        @extend .base-pictos;
+        font-size: $size;
+        content: $character;
+        @include background-gradient($color, matte);
+    }
+}
+
+.base-pictos {
+    font-family: Pictos;
+    color: transparent;
+    @include background-clip(text);
+    position: absolute;
+    top: 0;
+    left: 0;
+}

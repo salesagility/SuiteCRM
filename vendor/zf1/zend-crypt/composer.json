@@ -1,0 +1,21 @@
+{
+	"name": "zf1/zend-crypt",
+	"description": "Zend Framework 1 Crypt package",
+	"keywords": [
+		"framework",
+		"zf1",
+		"zend",
+		"crypt"
+	],
+	"homepage": "http://framework.zend.com/",
+	"license": "BSD-3-Clause",
+	"require": {
+		"php": ">=5.2.11",
+		"zf1/zend-exception": "self.version"
+	},
+	"autoload": {
+		"psr-0": {
+			"Zend_Crypt": "library/"
+		}
+	}
+}

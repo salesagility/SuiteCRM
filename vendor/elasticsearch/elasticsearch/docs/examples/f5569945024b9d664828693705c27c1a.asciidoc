@@ -1,0 +1,9 @@
+// search/search.asciidoc:388
+
+[source, php]
+----
+$params = [
+    'index' => 'kimchy,elasticsearch',
+];
+$response = $client->search($params);
+----

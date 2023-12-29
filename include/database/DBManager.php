@@ -2218,7 +2218,10 @@ abstract class DBManager
                         return 0;
                     }
 
-                    return (int)$val;
+                    // STIC 20210906 AAM - Non required integer fields save a 0 value when empty, but they should save NULL.
+                    // STIC#399
+                    // return (int)$val;
+                    return $val === '' ? 'NULL' : (int)$val; // If $val is empty, NULL will be returned. Otherwise, will save its value.
                 case 'bigint':
                     $val = (float)$val;
                     if (!empty($fieldDef['required']) && $val == false) {
@@ -2239,7 +2242,11 @@ abstract class DBManager
                         return 0;
                     }
 
-                    return (float)$val;
+                    // STIC 20210906 AAM - Non required float fields save a 0 value when empty, but they should save NULL.
+                    // STIC#399
+                    // return (float)$val;
+                    return $val === '' ? 'NULL' : (float)$val; // If $val has empty value, NULL will be returned. Otherwise, will save its value.
+                    // END STIC
                 case 'time':
                 case 'date':
                     // empty date can't be '', so convert it to either NULL or empty date value

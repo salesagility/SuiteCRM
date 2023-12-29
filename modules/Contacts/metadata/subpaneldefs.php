@@ -62,6 +62,28 @@ $layout_defs['Contacts'] = array(
                 array('widget_class' => 'SubPanelTopComposeEmailButton'),
             ),
             'collection_list' => array(
+                // STIC-Custom 20211217 - Put the Meetings module as the first module of the Activities subpanel
+                // STIC#510
+                // 'tasks' => array(
+                //     'module' => 'Tasks',
+                //     'subpanel_name' => 'ForActivities',
+                //     'get_subpanel_data' => 'tasks',
+                // ),
+                // 'tasks_parent' => array(
+                //     'module' => 'Tasks',
+                //     'subpanel_name' => 'ForActivities',
+                //     'get_subpanel_data' => 'tasks_parent',
+                // ),
+                // 'meetings' => array(
+                //     'module' => 'Meetings',
+                //     'subpanel_name' => 'ForActivities',
+                //     'get_subpanel_data' => 'meetings',
+                // ),                      
+                'meetings' => array(
+                    'module' => 'Meetings',
+                    'subpanel_name' => 'ForActivities',
+                    'get_subpanel_data' => 'meetings',
+                ),
                 'tasks' => array(
                     'module' => 'Tasks',
                     'subpanel_name' => 'ForActivities',
@@ -72,11 +94,7 @@ $layout_defs['Contacts'] = array(
                     'subpanel_name' => 'ForActivities',
                     'get_subpanel_data' => 'tasks_parent',
                 ),
-                'meetings' => array(
-                    'module' => 'Meetings',
-                    'subpanel_name' => 'ForActivities',
-                    'get_subpanel_data' => 'meetings',
-                ),
+                // END STIC
                 'calls' => array(
                     'module' => 'Calls',
                     'subpanel_name' => 'ForActivities',
@@ -102,6 +120,28 @@ $layout_defs['Contacts'] = array(
             ),
 
             'collection_list' => array(
+                // STIC-Custom 20211217 - Put the Meetings module as the first module of the Activities subpanel
+                // STIC#510
+                // 'tasks' => array(
+                //     'module' => 'Tasks',
+                //     'subpanel_name' => 'ForActivities',
+                //     'get_subpanel_data' => 'tasks',
+                // ),
+                // 'tasks_parent' => array(
+                //     'module' => 'Tasks',
+                //     'subpanel_name' => 'ForActivities',
+                //     'get_subpanel_data' => 'tasks_parent',
+                // ),
+                // 'meetings' => array(
+                //     'module' => 'Meetings',
+                //     'subpanel_name' => 'ForActivities',
+                //     'get_subpanel_data' => 'meetings',
+                // ),                      
+                'meetings' => array(
+                    'module' => 'Meetings',
+                    'subpanel_name' => 'ForHistory',
+                    'get_subpanel_data' => 'meetings',
+                ),
                 'tasks' => array(
                     'module' => 'Tasks',
                     'subpanel_name' => 'ForHistory',
@@ -112,11 +152,7 @@ $layout_defs['Contacts'] = array(
                     'subpanel_name' => 'ForHistory',
                     'get_subpanel_data' => 'tasks_parent',
                 ),
-                'meetings' => array(
-                    'module' => 'Meetings',
-                    'subpanel_name' => 'ForHistory',
-                    'get_subpanel_data' => 'meetings',
-                ),
+                // END STIC
                 'calls' => array(
                     'module' => 'Calls',
                     'subpanel_name' => 'ForHistory',

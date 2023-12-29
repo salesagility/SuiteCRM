@@ -558,7 +558,13 @@ class AbstractRelationship
         
         // finally, wrap up with section 4, the indices on the join table
         
-        $indexBase = $this->getValidDBName($relationshipName) ;
+        // STIC-Custom 20211227 JCH - On indexes, call the DBManagerFactory::getInstance()->getValidDBName() function 
+        // to ensure the right limit on the max length names (59 base chars + 5 suffix chars) will be applied.
+        // STIC#521
+        // $indexBase = $this->getValidDBName($relationshipName) ;
+        $indexBase = DBManagerFactory::getInstance()->getValidDBName($relationshipName, true, 'index');
+        // END STIC 
+
         $properties [ 'indices' ] [] = array( 'name' => $indexBase . 'spk' , 'type' => 'primary' , 'fields' => array( 'id' ) ) ;
 
         switch ($relationshipType) {

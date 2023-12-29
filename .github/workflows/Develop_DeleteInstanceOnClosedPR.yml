@@ -1,0 +1,43 @@
+name: Develop - Delete instance On Closed Pull Request
+on:
+    pull_request:
+        types: [closed]
+        branches: # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#onpushpull_requestbranchestags
+            - '**' # matches every branch
+    workflow_dispatch:
+env:
+    DEVELOP_HOST: ${{ secrets.DEVELOP_HOST}}
+    DEVELOP_SSH_USERNAME: ${{ secrets.DEVELOP_SSH_USERNAME}}
+    DEVELOP_DB_USERNAME: ${{ secrets.DEVELOP_DB_USERNAME }}
+    DEVELOP_DB_PASSWORD: ${{ secrets.DEVELOP_DB_PASSWORD }}
+jobs:
+    delete_instance:
+        name: Delete Develop instance
+        runs-on: ubuntu-latest
+        steps:
+            - name: Install SSH Key
+              uses: shimataro/ssh-key-action@v2
+              with:
+                key: ${{ secrets.SSH_PRIVATE_KEY }}
+                known_hosts: unnecessary
+            - name: Adding Known Hosts Develop
+              run: ssh-keyscan -H $DEVELOP_HOST  >> ~/.ssh/known_hosts
+            - name: Extract branch name
+              run: echo 'BRANCH='${{ github.head_ref }} >> $GITHUB_ENV
+            - name: Extract branch clean
+              run: echo 'BRANCH_CLEAN='`echo ${{ env.BRANCH }} | sed -e 's/[^a-zA-Z0-9_/]//g'` >> $GITHUB_ENV
+            - name: Get Develop instance database name
+              run: echo 'DATABASE_NAME='`ssh $DEVELOP_SSH_USERNAME@$DEVELOP_HOST grep "db_name" /web/${{ env.BRANCH_CLEAN }}/config_override.php | sed "s/.*=.'//g" | sed "s/';.*//g"` >> $GITHUB_ENV
+            - name: Set current date as env variable
+              run: echo 'NOW='$(date +'%Y-%m-%d %H:%M:%S') >> $GITHUB_ENV
+            - name: echo environment variables
+              run: echo ${{ env }}
+            - name: Delete develop instance
+              run: ssh $DEVELOP_SSH_USERNAME@$DEVELOP_HOST "test -e /web/${{ env.BRANCH_CLEAN }}" && (echo "Directory branch exists" && ssh $DEVELOP_SSH_USERNAME@$DEVELOP_HOST "rm -rf /web/${{ env.BRANCH_CLEAN }} && mysql -h 127.0.0.1 -u $DEVELOP_DB_USERNAME --password=$DEVELOP_DB_PASSWORD -e 'drop database if exists ${{ env.DATABASE_NAME }}; create database ${{ env.DATABASE_NAME }};'") || echo "Branch doesn't exist in develop"
+            - name: Create or Edit PR comment
+              uses: thollander/actions-comment-pull-request@v1
+              with:
+                message: |
+                    Actions executed at: ${{ env.NOW }}.
+                comment_includes: 'Actions executed at:'
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

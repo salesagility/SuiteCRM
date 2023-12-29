@@ -1,0 +1,20 @@
+{
+	"name": "zf1/zend-version",
+	"description": "Zend Framework 1 Version package",
+	"keywords": [
+		"framework",
+		"zf1",
+		"zend",
+		"version"
+	],
+	"homepage": "http://framework.zend.com/",
+	"license": "BSD-3-Clause",
+	"require": {
+		"php": ">=5.2.11"
+	},
+	"autoload": {
+		"psr-0": {
+			"Zend_Version": "library/"
+		}
+	}
+}

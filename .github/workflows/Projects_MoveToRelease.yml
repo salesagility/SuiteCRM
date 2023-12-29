@@ -1,0 +1,190 @@
+
+name: Projects Move to release
+on:
+  release:
+      types: [published]
+jobs:
+  move_to_release_project:
+    name: Move to release project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Get project Updates data
+        env:
+            GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+            ORGANIZATION: SinergiaTIC
+            PROJECT_NUMBER: 2
+        run: |
+            gh api graphql -f query='
+            query($org: String!, $number: Int!) {
+                organization(login: $org){
+                    projectV2(number: $number) {
+                        id
+                        fields(first:20) {
+                            nodes {
+                                ... on ProjectV2Field {
+                                    id
+                                    name
+                                }
+                                ... on ProjectV2SingleSelectField {
+                                    id
+                                    name
+                                    options {
+                                        id
+                                        name
+                                    }
+                                }
+                            }
+                        }
+                        items(first:100) {
+                            nodes {
+                                ... on ProjectV2Item {
+                                    id
+                                    fieldValues(first:100) {
+                                        nodes {
+                                            ... on ProjectV2ItemFieldSingleSelectValue {
+                                                name
+                                                item {
+                                                    id
+                                                    content{
+                                                        ... on PullRequest{
+                                                            id
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER > project_data.json
+            echo 'PROJECT_ID='$(jq '.data.organization.projectV2.id' project_data.json) >> $GITHUB_ENV
+            echo 'STATUS_FIELD_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .id' project_data.json) >> $GITHUB_ENV
+            echo 'STATUS_VALUE='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="Ready for next release") |.id' project_data.json) >> $GITHUB_ENV
+            PROJECT_ITEMS=$(jq '.data.organization.projectV2.items' project_data.json)
+            echo 'FILTERED_ITEMS='$(echo $PROJECT_ITEMS | jq -r '.nodes[] | .fieldValues.nodes[] | select(.name=="Ready for next release") | .') >> $GITHUB_ENV
+      - name: Get project Release data
+        env:
+            GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+            ORGANIZATION: SinergiaTIC
+            PROJECT_RELEASE: 5
+        run: |
+            gh api graphql -f query='
+            query($org: String!, $number: Int!) {
+                organization(login: $org){
+                    projectV2(number: $number) {
+                        id
+                        fields(first:20) {
+                            nodes {
+                                ... on ProjectV2Field {
+                                    id
+                                    name
+                                }
+                                ... on ProjectV2SingleSelectField {
+                                    id
+                                    name
+                                    options {
+                                        id
+                                        name
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }' -f org=$ORGANIZATION -F number=$PROJECT_RELEASE > project_data.json
+            echo 'PROJECT_ID_RELEASE='$(jq '.data.organization.projectV2.id' project_data.json) >> $GITHUB_ENV
+            echo 'VERSION_FIELD_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Version") | .id' project_data.json) >> $GITHUB_ENV
+            echo 'DATE_FIELD_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Date") | .id' project_data.json) >> $GITHUB_ENV
+            echo 'CURRENT_DATE='$(date +'%Y-%m-%d') >> $GITHUB_ENV
+      - name: Add PRs to release and add version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          VERSION_NUMBER: ${{ env.RELEASE_VERSION }}
+        run: |
+          FILTERED_ITEMS_CONTENT_ID=$(echo $FILTERED_ITEMS | jq -r '.item.content.id')
+          for PR_ITEM_CONTENT_ID in $FILTERED_ITEMS_CONTENT_ID; do 
+            ITEM_ID="$( gh api graphql -f query='
+                    mutation($project:ID!, $pr:ID!) {
+                      addProjectV2ItemById(input: {projectId: $project, contentId: $pr}) {
+                        item {
+                          id
+                        }
+                      }
+                    }' -f project=$PROJECT_ID_RELEASE -f pr=$PR_ITEM_CONTENT_ID --jq '.data.addProjectV2ItemById.item.id')"
+            echo $ITEM_ID
+            gh api graphql -f query='
+                mutation (
+                    $project: ID!
+                    $item: ID!
+                    $version_field: ID!
+                    $version_value: String!
+                ) {
+                set_version: updateProjectV2ItemFieldValue(input: {
+                    projectId: $project
+                    itemId: $item
+                    fieldId: $version_field
+                    value: { 
+                        text: $version_value
+                    }
+                }) {
+                    projectV2Item {
+                        id
+                    }
+                }
+                }' -f project=$PROJECT_ID_RELEASE -f item=$ITEM_ID -f version_field=$VERSION_FIELD_ID -f version_value=$VERSION_NUMBER --silent
+            gh api graphql -f query='
+                mutation (
+                    $project: ID!
+                    $item: ID!
+                    $date_field: ID!
+                    $date_value: Date!
+                ) {
+                set_date: updateProjectV2ItemFieldValue(input: {
+                    projectId: $project
+                    itemId: $item
+                    fieldId: $date_field
+                    value: { 
+                        date: $date_value
+                    }
+                })
+                    {
+                    projectV2Item {
+                        id
+                    }
+                }
+                }' -f project=$PROJECT_ID_RELEASE -f item=$ITEM_ID -f date_field=$DATE_FIELD_ID -f date_value=$CURRENT_DATE --silent
+          done
+      - name: Remove PRs from updates
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          FILTERED_ITEMS_ITEM_ID=$(echo $FILTERED_ITEMS | jq -r '.item.id')
+          for PR_ITEM_ID in $FILTERED_ITEMS_ITEM_ID; do 
+            gh api graphql -f query='
+                      mutation (
+                        $project: ID!
+                        $item: ID!
+                      ) {
+                        delete_item: deleteProjectV2Item(input: {
+                          projectId: $project
+                          itemId: $item
+                        }) {
+                            deletedItemId
+                        }
+                      }' -f project=$PROJECT_ID -f item=$PR_ITEM_ID -f status_field=$STATUS_FIELD_ID --silent
+          done
+    #   - name: Add PR Number as Tag
+    #     uses: actions/github-script@v6
+    #     with:
+    #       script: |
+    #         github.rest.git.createRef({
+    #           owner: context.repo.owner,
+    #           repo: context.repo.repo,
+    #           ref: 'refs/tags/v${{ github.event.pull_request.number }}',
+    #           sha: context.sha
+    #         })

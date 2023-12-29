@@ -1,0 +1,19 @@
+// query-dsl/query-string-query.asciidoc:342
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'query_string' => [
+                'fields' => [
+                    'content',
+                    'name.*^5',
+                ],
+                'query' => 'this AND that OR thus',
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

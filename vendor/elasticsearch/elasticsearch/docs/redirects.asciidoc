@@ -1,0 +1,14 @@
+["appendix",role="exclude",id="redirects"]
+= Deleted pages
+
+The following pages have moved or been deleted.
+
+[role="exclude",id="security"]
+== Security
+
+This page has moved. See <<authentication>>.
+
+[role="exclude",id="quickstart"]
+== Quickstart
+
+This page has moved. See <<installation>>.

@@ -64,15 +64,17 @@ $layout_defs['Accounts'] = array(
             ),
 
             'collection_list' => array(
-                'tasks' => array(
-                    'module' => 'Tasks',
-                    'subpanel_name' => 'ForActivities',
-                    'get_subpanel_data' => 'tasks',
-                ),
+                // STIC-Custom 20211217 - Put the Meetings module as the first module of the Activities subpanel
+                // STIC#510                   
                 'meetings' => array(
                     'module' => 'Meetings',
                     'subpanel_name' => 'ForActivities',
                     'get_subpanel_data' => 'meetings',
+                ),
+                'tasks' => array(
+                    'module' => 'Tasks',
+                    'subpanel_name' => 'ForActivities',
+                    'get_subpanel_data' => 'tasks',
                 ),
                 'calls' => array(
                     'module' => 'Calls',
@@ -99,15 +101,17 @@ $layout_defs['Accounts'] = array(
             ),
 
             'collection_list' => array(
-                'tasks' => array(
-                    'module' => 'Tasks',
-                    'subpanel_name' => 'ForHistory',
-                    'get_subpanel_data' => 'tasks',
-                ),
+                // STIC-Custom 20211217 - Put the Meetings module as the first module of the History subpanel
+                // STIC#510                   
                 'meetings' => array(
                     'module' => 'Meetings',
                     'subpanel_name' => 'ForHistory',
                     'get_subpanel_data' => 'meetings',
+                ),
+                'tasks' => array(
+                    'module' => 'Tasks',
+                    'subpanel_name' => 'ForHistory',
+                    'get_subpanel_data' => 'tasks',
                 ),
                 'calls' => array(
                     'module' => 'Calls',

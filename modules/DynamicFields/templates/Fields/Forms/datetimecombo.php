@@ -82,6 +82,11 @@ function get_body(&$ss, $vardef)
             }
         }
         $ss->assign('default_date', $date);
+    // STIC-Custom 20221229 AAM - Adding "now" option to default datetime values
+    // STIC#949
+    } elseif($vardef['display_default'] == 'now') {
+        $ss->assign('default_date', $vardef['display_default']);
+    // END STIC-Custom
     }
     $ss->assign('default_hours', $hours);
     $ss->assign('default_minutes', $minitues);

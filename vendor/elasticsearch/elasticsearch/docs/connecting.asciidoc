@@ -1,0 +1,471 @@
+[[connecting]]
+== Connecting
+
+This page contains the information you need to connect and use the Client with 
+{es}.
+
+**On this page**
+
+* <<authentication, Authentication options>>
+* <<client-usage, Using the client>>
+
+
+[discrete]
+[[authentication]]
+=== Authentication
+
+This section contains code snippets to show you how to connect to various {es} 
+providers.
+
+[discrete]
+[[auth-ec]]
+==== Elastic Cloud
+
+You can connect to Elastic Cloud using **Basic authentication**:
+
+[source,php]
+----
+$client = ClientBuilder::create()
+   ->setElasticCloudId('<cloud-id>')
+   ->setBasicAuthentication('<username>', '<password>')
+   ->build();
+----
+
+Where <cloud-id> is reported in the Deployment UI, and <username>, <password> 
+are generated when you deploy a new cloud instance. You need to store the 
+<username> and <password> since they will not be available via UI.
+
+Or using an **API key**:
+
+[source,php]
+----
+$client = ClientBuilder::create()
+   ->setElasticCloudId('<cloud-id>')
+   ->setApiKey('<id>', '<key>')
+   ->build();
+----
+
+Where <id> and <key> are generated when you create a new API key. The API key is 
+equivalent to Base64(<id>:<key>). You need to store the API key since it will 
+not be available via UI.
+
+
+[discrete]
+[[auth-http]]
+==== HTTP Authentication
+
+If your {es} server is protected by HTTP authentication, you need to provide the 
+credentials to ES-PHP so that requests can be authenticated server-side. 
+Authentication credentials are provided as part of the host array when 
+instantiating the client:
+
+[source,php]
+----
+$hosts = [
+    'http://user:pass@localhost:9200',       // HTTP Basic Authentication
+    'http://user2:pass2@other-host.com:9200' // Different credentials on different host
+];
+
+$client = ClientBuilder::create()
+                    ->setHosts($hosts)
+                    ->build();
+----
+
+Credentials are provided per-host, which allows each host to have their own set 
+of credentials. All requests sent to the cluster use the appropriate credentials 
+depending on the node being talked to.
+
+
+[discrete]
+[[auth-apikey]]
+==== ApiKey authentication
+
+If your {es} cluster is secured by API keys as described 
+{ref-7x}/security-api-create-api-key.html[here], you can use these values to 
+connect the client with your cluster, as illustrated in the following code 
+snippet.
+
+[source,php]
+----
+$client = ClientBuilder::create()
+                    ->setApiKey('id', 'api_key') <1>
+                    ->build();
+----
+<1> ApiKey pair of `id` and `api_key` from the create API key response.
+
+
+[discrete]
+[[ssl-encryption]]
+==== SSL encryption
+
+Configuring SSL is a little more complex. You need to identify if your 
+certificate has been signed by a public Certificate Authority (CA), or if it is 
+a self-signed certificate.
+
+[NOTE]
+.A note on libcurl version
+=================
+If you believe the client is configured to correctly use SSL, but it simply is 
+not working, check your libcurl version. On certain platforms, various features 
+may or may not be available depending on version number of libcurl. For example, 
+the `--cacert` option was not added to the OSX version of libcurl until version 
+7.37.1. The `--cacert` option is equivalent to PHP's `CURLOPT_CAINFO` constant, 
+meaning that custom certificate paths will not work on lower versions.
+
+If you are encountering problems, update your libcurl version and/or check the 
+http://curl.haxx.se/changes.html[curl changelog].
+=================
+
+
+[discrete]
+===== Public CA Certificates
+
+If your certificate has been signed by a public Certificate Authority and your 
+server has up-to-date root certificates, you only need to use `https` in the 
+host path. The client automatically verifies SSL certificates:
+
+[source,php]
+----
+$hosts = [
+    'https://localhost:9200' <1>
+];
+
+$client = ClientBuilder::create()
+                    ->setHosts($hosts)
+                    ->build();
+----
+<1> Note that `https` is used, not `http`
+
+
+If your server has out-dated root certificates, you may need to use a 
+certificate bundle. For PHP clients, the best way is to use 
+https://github.com/composer/ca-bundle[composer/ca-bundle]. Once installed, you 
+need to tell the client to use your certificates instead of the system-wide 
+bundle. To do this, specify the path to verify:
+
+[source,php]
+----
+$hosts = ['https://localhost:9200'];
+$caBundle = \Composer\CaBundle\CaBundle::getBundledCaBundlePath();
+
+$client = ClientBuilder::create()
+                    ->setHosts($hosts)
+                    ->setSSLVerification($caBundle)
+                    ->build();
+----
+
+
+[discrete]
+===== Self-signed Certificates
+
+Self-signed certificates are certs that have not been signed by a public CA. 
+They are signed by your own organization. Self-signed certificates are often 
+used for internal purposes, when you can securely spread the root certificate
+yourself. It should not be used when being exposed to public consumers, since 
+this leaves the client vulnerable to man-in-the-middle attacks.
+
+If you are using a self-signed certificate, you need to provide the certificate 
+to the client. This is the same syntax as specifying a new root bundle, but 
+instead you point to your certificate:
+
+[source,php]
+----
+$hosts = ['https://localhost:9200'];
+$myCert = 'path/to/cacert.pem';
+
+$client = ClientBuilder::create()
+                    ->setHosts($hosts)
+                    ->setSSLVerification($myCert)
+                    ->build();
+----
+
+
+[discrete]
+[[http-ssl]]
+==== Using authentication with SSL
+
+It is possible to use HTTP authentication with SSL. Simply specify `https` in 
+the URI, configure SSL settings as required and provide authentication 
+credentials. For example, this snippet authenticates using Basic HTTP auth and a 
+self-signed certificate:
+
+[source,php]
+----
+$hosts = ['https://user:pass@localhost:9200'];
+$myCert = 'path/to/cacert.pem';
+
+$client = ClientBuilder::create()
+                    ->setHosts($hosts)
+                    ->setSSLVerification($myCert)
+                    ->build();
+----
+
+
+[discrete]
+[[client-comp]]
+=== Enabling the Compatibility Mode
+
+The Elasticsearch server version 8.0 is introducing a new compatibility mode that
+allows you a smoother upgrade experience from 7 to 8. In a nutshell, you can use
+the latest 7.x Elasticsearch client with an 8.x Elasticsearch server, giving more
+room to coordinate the upgrade of your codebase to the next major version.
+
+If you want to leverage this functionality, please make sure that you are using the
+latest 7.x client and set the environment variable `ELASTIC_CLIENT_APIVERSIONING`
+to `true`. The client is handling the rest internally. For every 8.0 and beyond
+client, you're all set! The compatibility mode is enabled by default.
+
+
+[discrete]
+[[client-usage]]
+=== Usage 
+
+This section is a crash-course overview of the client and its syntax. If you 
+are familiar with {es}, you'll notice that the methods are named just like REST 
+endpoints.
+
+You may also notice that the client is configured in a manner that facilitates 
+easy discovery via your IDE. All core actions are available under the `$client` 
+object (indexing, searching, getting, etc). Index and cluster management are 
+located under the `$client->indices()` and `$client->cluster()` objects, 
+respectively.
+
+
+[discrete]
+==== Indexing a document
+
+In elasticsearch-php, almost everything is configured by associative arrays. The 
+REST endpoint, document and optional parameters - everything is an associative 
+array.
+
+To index a document, we need to specify three pieces of information: index, id 
+and a document body. This is done by constructing an associative array of 
+key:value pairs. The request body is itself an associative array with key:value 
+pairs corresponding to the data in your document:
+
+[source,php]
+----------------------------
+$params = [
+    'index' => 'my_index',
+    'id'    => 'my_id',
+    'body'  => ['testField' => 'abc']
+];
+
+$response = $client->index($params);
+print_r($response);
+----------------------------
+
+The response that you get back indicates that the document was created in the 
+index that you specified. The response is an associative array containing a 
+decoded version of the JSON that {es} returns:
+
+
+[source,php]
+----------------------------
+Array
+(
+    [_index] => my_index
+    [_type] => _doc
+    [_id] => my_id
+    [_version] => 1
+    [created] => 1
+)
+
+----------------------------
+
+
+[discrete]
+==== Getting a document
+
+Let's get the document that we just indexed. This returns the document:
+
+[source,php]
+----------------------------
+$params = [
+    'index' => 'my_index',
+    'id'    => 'my_id'
+];
+
+$response = $client->get($params);
+print_r($response);
+----------------------------
+
+
+The response contains metadata such as index, version, and so on as well as a 
+`_source` field, which is the original document you sent to {es}.
+
+[source,php]
+----------------------------
+Array
+(
+    [_index] => my_index
+    [_type] => _doc
+    [_id] => my_id
+    [_version] => 1
+    [found] => 1
+    [_source] => Array
+        (
+            [testField] => abc
+        )
+
+)
+----------------------------
+
+
+[discrete]
+==== Searching for a document
+
+Searching is a hallmark of {es}, so let's perform a search. We are going to use 
+the `match` query as a demonstration:
+
+[source,php]
+----------------------------
+$params = [
+    'index' => 'my_index',
+    'body'  => [
+        'query' => [
+            'match' => [
+                'testField' => 'abc'
+            ]
+        ]
+    ]
+];
+
+$response = $client->search($params);
+print_r($response);
+----------------------------
+
+The response here is different from the previous ones. You can see metadata 
+(`took`, `timed_out`, etc.) and an array named `hits`. This represents your 
+search results. Inside of `hits` is another array named `hits`, which contains 
+individual search results:
+
+[source,php]
+----------------------------
+Array
+(
+    [took] => 1
+    [timed_out] =>
+    [_shards] => Array
+        (
+            [total] => 5
+            [successful] => 5
+            [failed] => 0
+        )
+
+    [hits] => Array
+        (
+            [total] => 1
+            [max_score] => 0.30685282
+            [hits] => Array
+                (
+                    [0] => Array
+                        (
+                            [_index] => my_index
+                            [_type] => _doc
+                            [_id] => my_id
+                            [_score] => 0.30685282
+                            [_source] => Array
+                                (
+                                    [testField] => abc
+                                )
+                        )
+                )
+        )
+)
+----------------------------
+
+
+[discrete]
+==== Deleting a document
+
+Alright, let's go ahead and delete the document that we added previously:
+
+[source,php]
+----------------------------
+$params = [
+    'index' => 'my_index',
+    'id'    => 'my_id'
+];
+
+$response = $client->delete($params);
+print_r($response);
+----------------------------
+
+This syntax is identical to the `get` syntax. The only difference is the 
+operation: `delete` instead of `get`. The response confirms the document is 
+deleted:
+
+[source,php]
+----------------------------
+Array
+(
+    [found] => 1
+    [_index] => my_index
+    [_type] => _doc
+    [_id] => my_id
+    [_version] => 2
+)
+----------------------------
+
+
+[discrete]
+==== Deleting an index
+
+Due to the dynamic nature of {es}, the first document you added automatically 
+built an index with some default settings. Delete that index and specify your 
+own settings later:
+
+[source,php]
+----------------------------
+$deleteParams = [
+    'index' => 'my_index'
+];
+$response = $client->indices()->delete($deleteParams);
+print_r($response);
+----------------------------
+
+The response:
+
+
+[source,php]
+----------------------------
+Array
+(
+    [acknowledged] => 1
+)
+----------------------------
+
+
+[discrete]
+==== Creating an index
+
+Now that you are starting fresh (no data or index), add a new index with custom 
+settings:
+
+[source,php]
+----------------------------
+$params = [
+    'index' => 'my_index',
+    'body' => [
+        'settings' => [
+            'number_of_shards' => 2,
+            'number_of_replicas' => 0
+        ]
+    ]
+];
+
+$response = $client->indices()->create($params);
+print_r($response);
+----------------------------
+
+{es} now creates that index with your chosen settings and return an 
+acknowledgement:
+
+[source,php]
+----------------------------
+Array
+(
+    [acknowledged] => 1
+)
+----------------------------

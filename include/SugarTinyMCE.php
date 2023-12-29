@@ -163,6 +163,7 @@ function load_mce_{$unique}(){
         }
     } else {
 eoq;
+
         $exTargets = explode(",", $targets);
         foreach ($exTargets as $instance) {
             $ret .=<<<eoq

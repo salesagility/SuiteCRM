@@ -1,0 +1,18 @@
+[[operations]]
+== Operations 
+
+This page contains the information you need to perform various {es} operations 
+by using the Client.
+
+* <<index_management>>
+* <<search_operations>>
+* <<indexing_documents>>
+* <<getting_documents>>
+* <<updating_documents>>
+* <<deleting_documents>>
+
+include::index-operations.asciidoc[]
+
+include::search-operations.asciidoc[]
+
+include::crud.asciidoc[]

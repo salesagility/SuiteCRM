@@ -64,9 +64,11 @@ class AccountsViewDetail extends ViewDetail
             sugar_die($app_strings['ERROR_NO_RECORD']);
         }
 
-        require_once('modules/AOS_PDF_Templates/formLetter.php');
-        formLetter::DVPopupHtml('Accounts');
-
+        // STIC-Custom 20220124 MHP - Do not add the Print PDF logic in this module because it is added generically through include/DetailView/DetailView2.php
+        // STIC#564   
+        // require_once('modules/AOS_PDF_Templates/formLetter.php');
+        // formLetter::DVPopupHtml('Accounts');
+        // END STIC-Custom
         $this->dv->process();
         
         if (ACLController::checkAccess('Contacts', 'edit', true)) {

@@ -1,0 +1,204 @@
+/**
+ * @class Ext.form.field.Base
+ */
+
+/**
+ * @var {measurement} $form-field-height
+ * Height for form fields.
+ */
+$form-field-height: 22px !default;
+/**
+ * @var {measurement} $form-toolbar-field-height
+ * Height for form fields in toolbar.
+ */
+$form-toolbar-field-height: 20px !default;
+/**
+ * @var {measurement} $form-error-icon-width
+ * Width for form error icons.
+ */
+$form-error-icon-width: 18px !default;
+
+//padding
+
+/**
+ * @var {measurement} $form-field-padding
+ * Padding around form fields.
+ */
+$form-field-padding: 1px 3px !default;
+
+//fonts
+
+/**
+ * @var {measurement} $form-field-font-size
+ * Font size for form fields.
+ */
+$form-field-font-size: $font-size !default;
+
+/**
+ * @var {font-family} $form-field-font-family
+ * Font family for form fields.
+ */
+$form-field-font-family: $font-family !default;
+/**
+ * @var {font-weight} $form-field-font-weight
+ * Font weight for form fields.
+ */
+$form-field-font-weight: normal !default;
+/**
+ * @var {font} $form-field-font
+ * Font for form fields.
+ */
+$form-field-font: $form-field-font-weight $form-field-font-size $form-field-font-family !default;
+/**
+ * @var {color} $form-field-color
+ * Text color for form fields.
+ */
+$form-field-color: #000 !default;
+
+/**
+ * @var {color} $form-field-empty-color
+ * Text color for empty form fields.
+ */
+$form-field-empty-color: gray !default;
+
+//border
+
+/**
+ * @var {color} $form-field-border-color
+ * Border color for form fields.
+ */
+$form-field-border-color: #B5B8C8 !default;
+/**
+ * @var {measurement} $form-field-border-width
+ * Border width for form fields.
+ */
+$form-field-border-width: 1px !default;
+
+/**
+ * @var {color} $form-field-focus-border-color
+ * Border color for focused form fields.
+ */
+$form-field-focus-border-color: adjust-color($base-color, $hue: -4.322deg, $saturation: -1.065%, $lightness: -16.863%) !default;
+/**
+ * @var {color} $form-field-invalid-border-color
+ * Border color for invalid form fields.
+ */
+$form-field-invalid-border-color: #c30 !default;
+
+//background
+
+/**
+ * @var {color} $form-field-background-color
+ * Background color for form fields.
+ */
+$form-field-background-color: #fff !default;
+/**
+ * @var {string} $form-field-background-image
+ * Background image for form fields.
+ */
+$form-field-background-image: 'form/text-bg.gif' !default;
+
+/**
+ * @var {color} $form-field-invalid-background-color
+ * Background color for invalid form fields.
+ */
+$form-field-invalid-background-color: #fff !default;
+/**
+ * @var {string} $form-field-invalid-background-image
+ * Background image for invalid form fields.
+ */
+$form-field-invalid-background-image: 'grid/invalid_line.gif' !default;
+/**
+ * @var {background-repeat} $form-field-invalid-background-repeat
+ * Background repeat for invalid form fields.
+ */
+$form-field-invalid-background-repeat: repeat-x !default;
+/**
+ * @var {background-position} $form-field-invalid-background-position
+ * Background position for invalid form fields.
+ */
+$form-field-invalid-background-position: bottom !default;
+
+/**
+ * @class Ext.form.field.TextArea
+ */
+$form-textarea-padding: 2px 3px !default;
+
+/**
+ * @class Ext.form.Label
+ */
+$form-label-font-weight: normal !default;
+$form-label-font-size: $font-size !default;
+$form-label-font-family: $font-family !default;
+$form-label-font: $form-label-font-weight $form-label-font-size $form-label-font-family !default;
+
+/**
+ * @class Ext.form.field.Checkbox
+ */
+$form-checkbox-image: 'form/checkbox.gif' !default;
+$form-checkbox-size: 13px !default;
+
+/**
+ * @class Ext.form.field.Radio
+ */
+$form-radio-image: 'form/radio.gif' !default;
+
+
+/* Error messages */
+
+//icons
+$form-exclamation-icon: 'form/exclamation.gif' !default;
+
+//font
+$form-error-msg-color: #c0272b !default;
+$form-error-msg-font-weight: normal !default;
+$form-error-msg-font-size: ceil($font-size * .9) !default;
+$form-error-msg-font-family: $font-family !default;
+$form-error-msg-font: $form-error-msg-font-weight $form-error-msg-font-size $form-error-msg-font-family !default;
+$form-error-msg-line-height: 16px !default;
+
+/**
+ * @class Ext.form.field.Trigger
+ */
+$form-trigger-width: 17px !default;
+$form-trigger-height: $form-field-height !default;
+$form-toolbar-trigger-height: $form-toolbar-field-height !default;
+
+$form-trigger-border-bottom-width: 1px !default;
+$form-trigger-border-bottom-style: solid !default;
+$form-trigger-border-bottom-color: $form-field-border-color !default;
+$form-trigger-border-bottom: $form-trigger-border-bottom-width $form-trigger-border-bottom-style $form-trigger-border-bottom-color !default;
+
+$form-trigger-border-bottom-color-over: adjust-color($base-color, $hue: -4.322deg, $saturation: -1.065%, $lightness: -16.863%) !default;
+$form-trigger-border-bottom-color-focus: adjust-color($base-color, $hue: -4.322deg, $saturation: -1.065%, $lightness: -16.863%) !default;
+$form-trigger-border-bottom-color-focus-over: null !default;
+$form-trigger-border-bottom-color-pressed: null !default;
+
+$form-trigger-icon-background-position: 7px 6px !default;
+
+/**
+ * @class Ext.form.FieldSet
+ */
+$fieldset-header-font-size: ceil($font-size * .9) !default;
+$fieldset-header-font-weight: bold !default;
+$fieldset-header-font-family: $font-family !default;
+$fieldset-header-line-height: 14px !default;
+$fieldset-header-font: #{$fieldset-header-font-size}/#{$fieldset-header-line-height} $fieldset-header-font-weight $fieldset-header-font-family !default;
+$fieldset-header-color: adjust-color($base-color, $hue: 3.785deg, $saturation: 18.194%, $lightness: -52.745%) !default;
+
+$fieldset-border-width: 1px !default;
+$fieldset-border-style: solid !default;
+$fieldset-border-color: $form-field-border-color !default;
+$fieldset-border: $fieldset-border-width $fieldset-border-style $fieldset-border-color !default;
+
+$fieldset-padding: 10px !default;
+$fieldset-header-padding: 0 3px 1px !default;
+
+/**
+ * @class Ext.slider.Multi
+ */
+$horizontal-slider-thumb-width: 14px !default;
+$horizontal-slider-thumb-height: 15px !default;
+
+$vertical-slider-thumb-width: 15px !default;
+$vertical-slider-thumb-height: 14px !default;

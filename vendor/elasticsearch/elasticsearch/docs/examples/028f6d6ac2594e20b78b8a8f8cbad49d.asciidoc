@@ -1,0 +1,41 @@
+// aggregations/bucket/terms-aggregation.asciidoc:470
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'aggs' => [
+            'countries' => [
+                'terms' => [
+                    'field' => 'artist.country',
+                    'order' => [
+                        [
+                            'rock>playback_stats.avg' => 'desc',
+                        ],
+                        [
+                            '_count' => 'desc',
+                        ],
+                    ],
+                ],
+                'aggs' => [
+                    'rock' => [
+                        'filter' => [
+                            'term' => [
+                                'genre' => 'rock',
+                            ],
+                        ],
+                        'aggs' => [
+                            'playback_stats' => [
+                                'stats' => [
+                                    'field' => 'play_count',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

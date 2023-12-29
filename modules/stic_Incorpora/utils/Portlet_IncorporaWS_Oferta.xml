@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="urn:http.ws.incinc.lacaixa.es" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="urn:http.ws.incinc.lacaixa.es" xmlns:intf="urn:http.ws.incinc.lacaixa.es" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns1="http://xml.apache.org/axis/wsdd/providers/java" xmlns:tns2="http://model.portal.liferay.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema targetNamespace="http://xml.apache.org/axis/wsdd/providers/java" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://model.portal.liferay.com"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="es.lacaixa.incinc.ws.to.ComunesEntrada">
+    <sequence>
+     <element name="clave" nillable="true" type="soapenc:string"/>
+     <element name="idUsuario" nillable="true" type="soapenc:string"/>
+     <element name="idioma" nillable="true" type="soapenc:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+  <schema targetNamespace="http://model.portal.liferay.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xml.apache.org/axis/wsdd/providers/java"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="salComun">
+    <sequence>
+     <element name="codRespuesta" nillable="true" type="soapenc:string"/>
+     <element name="fechaRespuesta" nillable="true" type="soapenc:string"/>
+     <element name="idUsuario" nillable="true" type="soapenc:string"/>
+     <element name="msgRespuesta" nillable="true" type="soapenc:string"/>
+     <element name="tipoRespuesta" nillable="true" type="soapenc:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="salidaConsultaOfertaV1">
+    <sequence>
+     <element name="certificadoDiscapacidad" nillable="true" type="soapenc:string"/>
+     <element name="colectivo" nillable="true" type="soapenc:string"/>
+     <element name="emailTecnico" nillable="true" type="soapenc:string"/>
+     <element name="empresaOfertanteId" nillable="true" type="soapenc:string"/>
+     <element name="estado" nillable="true" type="soapenc:string"/>
+     <element name="estadoComparticion" nillable="true" type="soapenc:string"/>
+     <element name="estadoDetallado" nillable="true" type="soapenc:string"/>
+     <element name="fechaFinInscripcion" nillable="true" type="soapenc:string"/>
+     <element name="fechaIniContrato" nillable="true" type="soapenc:string"/>
+     <element name="fechaIniInscripcion" nillable="true" type="soapenc:string"/>
+     <element name="fechaRecepcion" nillable="true" type="soapenc:string"/>
+     <element name="funcionesTareas" nillable="true" type="soapenc:string"/>
+     <element name="ofertaCanetConducir" nillable="true" type="soapenc:string"/>
+     <element name="ofertaCanetsProfesionales" nillable="true" type="soapenc:string"/>
+     <element name="ofertaCnoN1" nillable="true" type="soapenc:string"/>
+     <element name="ofertaCnoN2" nillable="true" type="soapenc:string"/>
+     <element name="ofertaCnoN3" nillable="true" type="soapenc:string"/>
+     <element name="ofertaDesc" nillable="true" type="soapenc:string"/>
+     <element name="ofertaDireccionMunicipio" nillable="true" type="soapenc:string"/>
+     <element name="ofertaDireccionPais" nillable="true" type="soapenc:string"/>
+     <element name="ofertaDireccionPoblacion" nillable="true" type="soapenc:string"/>
+     <element name="ofertaDireccionProvincia" nillable="true" type="soapenc:string"/>
+     <element name="ofertaDuracionContrato" nillable="true" type="soapenc:string"/>
+     <element name="ofertaDuracionContratoDet" nillable="true" type="soapenc:string"/>
+     <element name="ofertaEdadMaxima" nillable="true" type="soapenc:string"/>
+     <element name="ofertaEdadMinima" nillable="true" type="soapenc:string"/>
+     <element name="ofertaEmpresaOfertante" nillable="true" type="soapenc:string"/>
+     <element name="ofertaEntidadReferencia" nillable="true" type="soapenc:string"/>
+     <element name="ofertaExperiencia" nillable="true" type="soapenc:string"/>
+     <element name="ofertaFormacion" nillable="true" type="soapenc:string"/>
+     <element name="ofertaGrupoReferencia" nillable="true" type="soapenc:string"/>
+     <element name="ofertaHorasSemanales" nillable="true" type="soapenc:string"/>
+     <element name="ofertaId" nillable="true" type="soapenc:string"/>
+     <element name="ofertaIdTecnicoReferencia" nillable="true" type="soapenc:string"/>
+     <element name="ofertaIdiomas" nillable="true" type="soapenc:string"/>
+     <element name="ofertaObservaciones" nillable="true" type="soapenc:string"/>
+     <element name="ofertaRemuneracionEuros" nillable="true" type="soapenc:string"/>
+     <element name="origenCaptacion" nillable="true" type="soapenc:string"/>
+     <element name="puestosTrabajo" nillable="true" type="soapenc:string"/>
+     <element name="salidaComun" nillable="true" type="tns2:salComun"/>
+     <element name="telefonoTecnico" nillable="true" type="soapenc:string"/>
+     <element name="tipoContrato" nillable="true" type="soapenc:string"/>
+     <element name="tipoJornada" nillable="true" type="soapenc:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="salidaAltaOfertaV1">
+    <sequence>
+     <element name="idAltaOferta" nillable="true" type="soapenc:string"/>
+     <element name="salidaComun" nillable="true" type="tns2:salComun"/>
+    </sequence>
+   </complexType>
+   <complexType name="salidaModificacionOfertaV1">
+    <sequence>
+     <element name="idModificacionOferta" nillable="true" type="soapenc:string"/>
+     <element name="salidaComun" nillable="true" type="tns2:salComun"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="modificacionOfertaV1Request">
+
+      <wsdl:part name="entrada" type="tns1:es.lacaixa.incinc.ws.to.ComunesEntrada"/>
+
+      <wsdl:part name="ofertaNombre" type="xsd:string"/>
+
+      <wsdl:part name="ofertaGrupoReferencia" type="xsd:string"/>
+
+      <wsdl:part name="ofertaEntidadReferencia" type="xsd:string"/>
+
+      <wsdl:part name="ofertaIdTecnicoReferencia" type="xsd:string"/>
+
+      <wsdl:part name="ofertaEmpresaOfertante" type="xsd:string"/>
+
+      <wsdl:part name="ofertaCnoN1" type="xsd:string"/>
+
+      <wsdl:part name="ofertaCnoN2" type="xsd:string"/>
+
+      <wsdl:part name="ofertaCnoN3" type="xsd:string"/>
+
+      <wsdl:part name="fechaRecepcion" type="xsd:string"/>
+
+      <wsdl:part name="puestosTrabajo" type="xsd:string"/>
+
+      <wsdl:part name="ofertaPais" type="xsd:string"/>
+
+      <wsdl:part name="ofertaProvincia" type="xsd:string"/>
+
+      <wsdl:part name="ofertaMunicipio" type="xsd:string"/>
+
+      <wsdl:part name="ofertaPoblacion" type="xsd:string"/>
+
+      <wsdl:part name="fechaIniContrato" type="xsd:string"/>
+
+      <wsdl:part name="fechaIniInscripcion" type="xsd:string"/>
+
+      <wsdl:part name="fechaFinInscripcion" type="xsd:string"/>
+
+      <wsdl:part name="tipoContrato" type="xsd:string"/>
+
+      <wsdl:part name="ofertaDuracionContrato" type="xsd:string"/>
+
+      <wsdl:part name="ofertaDuracionContratoDet" type="xsd:string"/>
+
+      <wsdl:part name="tipoJornada" type="xsd:string"/>
+
+      <wsdl:part name="ofertaHorasSemanales" type="xsd:string"/>
+
+      <wsdl:part name="origenCaptacion" type="xsd:string"/>
+
+      <wsdl:part name="colectivo" type="xsd:string"/>
+
+      <wsdl:part name="funcionesTareas" type="xsd:string"/>
+
+      <wsdl:part name="idOferta" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="modificacionOfertaV1Response">
+
+      <wsdl:part name="modificacionOfertaV1Return" type="tns2:salidaModificacionOfertaV1"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="altaOfertaV1Response">
+
+      <wsdl:part name="altaOfertaV1Return" type="tns2:salidaAltaOfertaV1"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="consultaOfertaV1Response">
+
+      <wsdl:part name="consultaOfertaV1Return" type="tns2:salidaConsultaOfertaV1"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="consultaOfertaV1Request">
+
+      <wsdl:part name="entrada" type="tns1:es.lacaixa.incinc.ws.to.ComunesEntrada"/>
+
+      <wsdl:part name="idOferta" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="altaOfertaV1Request">
+
+      <wsdl:part name="entrada" type="tns1:es.lacaixa.incinc.ws.to.ComunesEntrada"/>
+
+      <wsdl:part name="ofertaNombre" type="xsd:string"/>
+
+      <wsdl:part name="ofertaGrupoReferencia" type="xsd:string"/>
+
+      <wsdl:part name="ofertaEntidadReferencia" type="xsd:string"/>
+
+      <wsdl:part name="ofertaIdTecnicoReferencia" type="xsd:string"/>
+
+      <wsdl:part name="ofertaEmpresaOfertante" type="xsd:string"/>
+
+      <wsdl:part name="ofertaCnoN1" type="xsd:string"/>
+
+      <wsdl:part name="ofertaCnoN2" type="xsd:string"/>
+
+      <wsdl:part name="ofertaCnoN3" type="xsd:string"/>
+
+      <wsdl:part name="fechaRecepcion" type="xsd:string"/>
+
+      <wsdl:part name="puestosTrabajo" type="xsd:string"/>
+
+      <wsdl:part name="ofertaPais" type="xsd:string"/>
+
+      <wsdl:part name="ofertaProvincia" type="xsd:string"/>
+
+      <wsdl:part name="ofertaMunicipio" type="xsd:string"/>
+
+      <wsdl:part name="ofertaPoblacion" type="xsd:string"/>
+
+      <wsdl:part name="fechaIniContrato" type="xsd:string"/>
+
+      <wsdl:part name="fechaIniInscripcion" type="xsd:string"/>
+
+      <wsdl:part name="fechaFinInscripcion" type="xsd:string"/>
+
+      <wsdl:part name="tipoContrato" type="xsd:string"/>
+
+      <wsdl:part name="ofertaDuracionContrato" type="xsd:string"/>
+
+      <wsdl:part name="ofertaDuracionContratoDet" type="xsd:string"/>
+
+      <wsdl:part name="tipoJornada" type="xsd:string"/>
+
+      <wsdl:part name="ofertaHorasSemanales" type="xsd:string"/>
+
+      <wsdl:part name="origenCaptacion" type="xsd:string"/>
+
+      <wsdl:part name="colectivo" type="xsd:string"/>
+
+      <wsdl:part name="funcionesTareas" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="OfertaServiceSoap">
+
+      <wsdl:operation name="consultaOfertaV1" parameterOrder="entrada idOferta">
+
+         <wsdl:input message="impl:consultaOfertaV1Request" name="consultaOfertaV1Request"/>
+
+         <wsdl:output message="impl:consultaOfertaV1Response" name="consultaOfertaV1Response"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="altaOfertaV1" parameterOrder="entrada ofertaNombre ofertaGrupoReferencia ofertaEntidadReferencia ofertaIdTecnicoReferencia ofertaEmpresaOfertante ofertaCnoN1 ofertaCnoN2 ofertaCnoN3 fechaRecepcion puestosTrabajo ofertaPais ofertaProvincia ofertaMunicipio ofertaPoblacion fechaIniContrato fechaIniInscripcion fechaFinInscripcion tipoContrato ofertaDuracionContrato ofertaDuracionContratoDet tipoJornada ofertaHorasSemanales origenCaptacion colectivo funcionesTareas">
+
+         <wsdl:input message="impl:altaOfertaV1Request" name="altaOfertaV1Request"/>
+
+         <wsdl:output message="impl:altaOfertaV1Response" name="altaOfertaV1Response"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="modificacionOfertaV1" parameterOrder="entrada ofertaNombre ofertaGrupoReferencia ofertaEntidadReferencia ofertaIdTecnicoReferencia ofertaEmpresaOfertante ofertaCnoN1 ofertaCnoN2 ofertaCnoN3 fechaRecepcion puestosTrabajo ofertaPais ofertaProvincia ofertaMunicipio ofertaPoblacion fechaIniContrato fechaIniInscripcion fechaFinInscripcion tipoContrato ofertaDuracionContrato ofertaDuracionContratoDet tipoJornada ofertaHorasSemanales origenCaptacion colectivo funcionesTareas idOferta">
+
+         <wsdl:input message="impl:modificacionOfertaV1Request" name="modificacionOfertaV1Request"/>
+
+         <wsdl:output message="impl:modificacionOfertaV1Response" name="modificacionOfertaV1Response"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="Portlet_IncorporaWS_OfertaSoapBinding" type="impl:OfertaServiceSoap">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="consultaOfertaV1">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="consultaOfertaV1Request">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:http.ws.incinc.lacaixa.es" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="consultaOfertaV1Response">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:http.ws.incinc.lacaixa.es" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="altaOfertaV1">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="altaOfertaV1Request">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:http.ws.incinc.lacaixa.es" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="altaOfertaV1Response">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:http.ws.incinc.lacaixa.es" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="modificacionOfertaV1">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="modificacionOfertaV1Request">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:http.ws.incinc.lacaixa.es" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="modificacionOfertaV1Response">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:http.ws.incinc.lacaixa.es" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="OfertaServiceSoapService">
+
+      <wsdl:port binding="impl:Portlet_IncorporaWS_OfertaSoapBinding" name="Portlet_IncorporaWS_Oferta">
+
+         <wsdlsoap:address location="https://pre.intranet.incorpora.org:445/Incorpora/services/Portlet_IncorporaWS_Oferta"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

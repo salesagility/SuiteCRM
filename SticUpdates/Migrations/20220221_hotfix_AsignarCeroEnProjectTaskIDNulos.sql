@@ -1,0 +1,1 @@
+UPDATE `project_task` SET `project_task_id` = 0 WHERE `project_task_id` IS NULL

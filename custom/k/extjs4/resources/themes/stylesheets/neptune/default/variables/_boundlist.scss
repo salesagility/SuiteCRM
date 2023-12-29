@@ -1,0 +1,18 @@
+//background
+$boundlist-background-color: #fff !default;
+
+//borders
+$boundlist-border-color: #E4E4E4 !default;
+$boundlist-border-width: 1px !default;
+$boundlist-border-style: solid !default;
+
+$boundlist-item-padding: 5px 6px !default;
+$boundlist-item-border-width: 0 !default;
+$boundlist-item-border-style: solid !default;
+$boundlist-item-border-color: $boundlist-background-color !default;
+
+$boundlist-item-over-border-color: adjust-color($base-color, $hue: 6.952deg, $saturation: 5.848%, $lightness: -6.471%) !default;
+$boundlist-item-selected-border-color: darken($boundlist-item-over-border-color, 5) !default;
+
+$boundlist-item-over-background-color: #F2FBFF !default;
+$boundlist-item-selected-background-color:#094CB0 !default;

@@ -1,0 +1,41 @@
+{
+    "name": "consolidation/self-update",
+    "description": "Provides a self:update command for Symfony Console applications.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexander Menk",
+            "email": "menk@mestrona.net"
+        },
+        {
+            "name": "Greg Anderson",
+            "email": "greg.1.anderson@greenknowe.org"
+        }
+    ],
+    "autoload":{
+        "psr-4":{
+            "SelfUpdate\\":"src"
+        }
+    },
+    "require": {
+        "php": ">=5.5.0",
+        "composer/semver": "^3.2",
+        "symfony/console": "^2.8 || ^3 || ^4 || ^5 || ^6",
+        "symfony/filesystem": "^2.5 || ^3 || ^4 || ^5 || ^6"
+    },
+    "bin": [
+        "scripts/release"
+    ],
+    "scripts": {
+        "release":  "./scripts/release VERSION"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "2.x-dev"
+        }
+    }
+}

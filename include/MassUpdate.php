@@ -216,7 +216,11 @@ eoq;
                 }
 
                 if (($this->sugarbean->field_defs[$post]['type'] == 'radioenum' && isset($_POST[$post]) && strlen($value) == 0)
-                    || ($this->sugarbean->field_defs[$post]['type'] == 'enum' && $value == '__SugarMassUpdateClearField__') // Set to '' if it's an explicit clear
+                    // STIC-Custom 20230519 PCS - Enabling massupdate for dynamicenum
+                    // STIC#1109
+                    // || ($this->sugarbean->field_defs[$post]['type'] == 'enum' && $value == '__SugarMassUpdateClearField__') // Set to '' if it's an explicit clear
+                    || (($this->sugarbean->field_defs[$post]['type'] == 'enum' || $this->sugarbean->field_defs[$post]['type'] == 'dynamicenum') && $value == '__SugarMassUpdateClearField__') // Set to '' if it's an explicit clear
+                    //END STIC-Custom
                 ) {
                     $_POST[$post] = '';
                 }
@@ -341,8 +345,18 @@ eoq;
                             }
                         }
 
+                        // STIC-Custom - 20220704 - JCH - Add mass duplicate & update logic
+                        // STIC#828  
+                        // In mass duplicate and update the parent_type value might be stored for later use
+                        if($_REQUEST['mass_duplicate'] == 1 && !empty($newbean->parent_type))
+                        {
+                            $currentParentType = $newbean->parent_type;
+                        }
+                        // END STIC
+
                         //Call include/formbase.php, but do not call retrieve again
                         populateFromPost('', $newbean, true, true);
+
                         $newbean->save_from_post = false;
 
                         if (!isset($_POST['parent_id'])) {
@@ -386,7 +400,13 @@ eoq;
                         // Fix for issue 1549: mass update the cases, and change the state value from open to close,
                         // Status value can still display New, Assigned, Pending Input (even though it should not)
                         foreach ($newbean->field_name_map as $field_name) {
-                            if (isset($field_name['type']) && $field_name['type'] == 'dynamicenum') {
+                            // STIC-Custom 20230519 PCS - Enabling massupdate for dynamicenum
+                            // This Suite 1549 modification  ensures that during mass update, a child is always saved consistently with its parent. 
+                            // This code fragment will be maintained only for the Cases module, the module for which this code was designed
+                            // STIC#1109
+                            // if (isset($field_name['type']) && $field_name['type'] == 'dynamicenum')
+                            if (isset($field_name['type']) && $field_name['type'] == 'dynamicenum' && $this->sugarbean->module_name== "Cases") {
+                            // END STIC-Custom
                                 if (isset($field_name['parentenum']) && $field_name['parentenum'] != '') {
                                     $parentenum_name = $field_name['parentenum'];
                                     // Updated parent field value.
@@ -411,6 +431,50 @@ eoq;
                                 }
                             }
                         }
+
+                        // STIC-Custom - 20220704 - JCH - Add mass duplicate & update logic
+                        // STIC#776  
+                        // STIC#828  
+                        if($_REQUEST['mass_duplicate'] == 1){
+                            
+                            // Get current id for use later
+                            $fromId = $newbean->id;
+
+                            // Set new record id
+                            $newbean->id = create_guid();
+                            $newbean->new_with_id = true;
+                            
+                            // Empty dates. They will be set by the system when saving the record
+                            $newbean->date_entered = '';
+                            $newbean->date_modified = '';
+
+                            // Set mass duplicate bean property
+                            $newbean->fromId=$fromId;
+
+                            // Inherit parent record (for flex relate fields)
+                            if(empty($_REQUEST['parent_id'])){
+                                $newbean->parent_type = $currentParentType;
+                            }
+
+                            // Ensure proper format in field types with decimal values
+                            $decimalFields = array_filter($newbean->field_name_map, function ($k) {
+                                return in_array($k['type'], ['decimal', 'currency', 'float']);
+                            }, ARRAY_FILTER_USE_BOTH);
+                            foreach ($decimalFields as $key => $value) {
+                               $newbean->$key = (float) number_format($newbean->$key, $value['precision'] ?? 2, '.', '');
+                            }
+                            
+                            // A new record shouldn't have a fetched row
+                            unset($newbean->fetched_row);
+                            
+                            // If requested by user, remove name to rebuild it automatically
+                            if($_REQUEST['remove_name'] == true){
+                                $newbean->name = '';
+                            }
+                
+                        }
+                        // END STIC
+
 
                         $newbean->save($check_notify);
                         if (!empty($email_address_id)) {
@@ -503,7 +567,11 @@ eoq;
         );
 
         foreach ($this->sugarbean->field_defs as $field) {
-            if (!isset($banned[$field['name']]) && (!isset($field['massupdate']) || !empty($field['massupdate']))) {
+            // STIC-Custom 20230104 AAM - Enabling by default massupdate for assigned_used
+            // STIC#937
+            // if (!isset($banned[$field['name']]) && (!isset($field['massupdate']) || !empty($field['massupdate']))) {
+            if (!isset($banned[$field['name']]) && isset($field['massupdate']) && $field['massupdate']) {
+            // END STIC-Custom
                 $newhtml = '';
 
                 if ($even) {
@@ -563,7 +631,7 @@ eoq;
                         case "bool":
                             $even = !$even;
                             $newhtml .= $this->addBool($displayname, $field["name"]);
-                            break;
+                            break;   
                         case "enum":
                         case "dynamicenum":
                         case "multienum":
@@ -576,12 +644,18 @@ eoq;
                                 );
                                 break;
                             }
-                            if (!empty($field['options'])) {
+                             if (!empty($field['options'])) {
                                 $even = !$even;
                                 $newhtml .= $this->addStatus(
                                     $displayname,
                                     $field["name"],
-                                    translate($field["options"])
+                                    // STIC-Custom 20230519 PCS - Enabling massupdate for dynamicenum
+                                    //parentenum have been added as a paremeter of the function to load dynamicenums
+                                    // STIC#1109
+                                    //translate($field["options"])
+                                    translate($field["options"]),
+                                    $field["parentenum"] ?? null,
+                                    // END STIC-Custom
                                 );
                                 break;
                             }
@@ -607,6 +681,23 @@ eoq;
                             $even = !$even;
                             $newhtml .= $this->addDate($displayname, $field["name"]);
                             break;
+                        // STIC-Custom 20230104 AAM - Enabling MassUpdate functionality for the following field types
+                        // STIC#937
+                        case "text":
+                            $even = !$even;
+                            $newhtml .= $this->addText($displayname, $field["name"]);
+                            break;
+                        case "name":
+                        case "varchar":
+                        case "currency":
+                        case "decimal":
+                        case "float":
+                        case "phone":
+                        case "url":
+                            $even = !$even;
+                            $newhtml .= $this->addVarchar($displayname, $field["name"]);
+                            break;
+                        // END STIC-Custom
                         default:
                             $newhtml .= $this->addDefault($displayname, $field, $even);
                             break;
@@ -1160,16 +1251,20 @@ EOQ;
         return $html;
     }
 
-    /**
+   /**
      * Add Status selection popup window HTML code
      * @param displayname Name to display in the popup window
      * @param varname name of the variable
      * @param options array of options for status
      */
-    public function addStatus($displayname, $varname, $options)
+    // STIC-Custom 20230519 PCS - Enabling massupdate for dynamicenum
+    // STIC#1109
+    // public function addStatus($displayname, $varname, $options)
+    public function addStatus($displayname, $varname, $options, $parentname=Null)
+    // END STIC-Custom
     {
         global $app_strings, $app_list_strings;
-
+        
         // cn: added "mass_" to the id tag to differentiate from the status id in StoreQuery
         $html = '<td scope="row" width="15%">' . $displayname . '</td><td>';
         if (is_array($options)) {
@@ -1187,7 +1282,46 @@ EOQ;
                 '__SugarMassUpdateClearField__',
                 true
             );
-            $html .= '<select id="mass_' . $varname . '" name="' . $varname . '">' . $options . '</select>';
+            // STIC-Custom 20230519 PCS - Enabling massupdate for dynamicenum
+            // Code from the EditView.tpl file has been added, adapted for script tags, to dynamically update the HTML 
+            // of dynamicenum fields in the same manner as it does in the edit view.
+            // STIC#1109
+            // $html .= '<select id="mass_' . $varname . '" name="' . $varname . '">' . $options . '</select>';
+            if (isset($parentname)) {
+
+                if($this->sugarbean->field_defs[$parentname]['massupdate'] != 0){
+
+                    $parentname = 'mass_'.$parentname;
+                    $dtscript = getVersionedScript('include/SugarFields/Fields/Dynamicenum/SugarFieldDynamicenum.js');
+                    $html .= <<<EOQ
+                        {$dtscript}
+EOQ;
+                    $html .= '<select id="mass_' . $varname . '" name="' . $varname . '">' . $options . '</select>';
+                    $html .= <<<EOQ
+                    <script type="text/javascript">
+                    if (typeof de_entries == 'undefined') {
+                        var de_entries = [];
+                    }
+                    var el = document.getElementById('{$parentname}');
+                    addLoadEvent(function() {
+                        loadDynamicEnum('$parentname', 'mass_$varname');
+                    });
+                    if (SUGAR.ajaxUI && SUGAR.ajaxUI.hist_loaded) {
+                        loadDynamicEnum('$parentname', 'mass_$varname');
+                    }
+                    var childEnum = 'mass_$varname';
+                    </script>
+EOQ;
+                } else {
+                    $options = array();
+                    $options['0'] = '';      
+                    $html .= '<select id="mass_' . $varname . '" name="' . $varname . '">' . $options . '</select>';
+          
+                }
+            } else {
+                $html .= '<select id="mass_' . $varname . '" name="' . $varname . '">' . $options . '</select>';
+            }
+            // END STIC-Custom
         } else {
             $html .= $options;
         }
@@ -1243,7 +1377,7 @@ EOQ;
         $displayname = addslashes($displayname);
         $userformat = '(' . $timedate->get_user_date_format() . ')';
         $cal_dateformat = $timedate->get_cal_date_format();
-	$cal_fdow = $current_user->get_first_day_of_week() ? $current_user->get_first_day_of_week() : '0';
+	    $cal_fdow = $current_user->get_first_day_of_week() ? $current_user->get_first_day_of_week() : '0';
 
         $javascriptend = <<<EOQ
 		 <script type="text/javascript">
@@ -1253,12 +1387,12 @@ EOQ;
 		</script>
 EOQ;
         $html = <<<EOQ
-	<td scope="row" width="20%">$displayname</td>
-	<td class='dataField' width="30%"><input onblur="parseDate(this, '$cal_dateformat')" type="text" name='$varname' size="12" id='{$varname}jscal_field' maxlength='10' value="">
-    <span class="suitepicon suitepicon-module-calendar" id="{$varname}jscal_trigger" align="absmiddle" title="{$app_strings['LBL_MASSUPDATE_DATE']}" alt='{$app_strings['LBL_MASSUPDATE_DATE']}'></span>&nbsp;<span class="dateFormat">$userformat</span>
-	$javascriptend</td>
-	<script> addToValidate('MassUpdate','$varname','date',false,'$displayname');</script>
-EOQ;
+        <td scope="row" width="20%">$displayname</td>
+        <td class='dataField' width="30%"><input onblur="parseDate(this, '$cal_dateformat')" type="text" name='$varname' size="12" id='{$varname}jscal_field' maxlength='10' value="">
+        <span class="suitepicon suitepicon-module-calendar" id="{$varname}jscal_trigger" align="absmiddle" title="{$app_strings['LBL_MASSUPDATE_DATE']}" alt='{$app_strings['LBL_MASSUPDATE_DATE']}'></span>&nbsp;<span class="dateFormat">$userformat</span>
+        $javascriptend</td>
+        <script> addToValidate('MassUpdate','$varname','date',false,'$displayname');</script>
+        EOQ;
 
         return $html;
     }
@@ -1297,9 +1431,13 @@ EOQ;
     public function addDatetime($displayname, $varname)
     {
         global $timedate, $app_strings, $app_list_strings, $theme, $current_user;
+        // STIC-Custom 20220224 AAM - Adding slashes to avoid sintax error with single quotes. Replicating solution as in addDate() function
+        // STIC#617/
+        $displayname = addslashes($displayname);
+        // END STIC
         $userformat = $timedate->get_user_time_format();
         $cal_dateformat = $timedate->get_cal_date_format();
-	$cal_fdow = $current_user->get_first_day_of_week() ? $current_user->get_first_day_of_week() : '0';
+	    $cal_fdow = $current_user->get_first_day_of_week() ? $current_user->get_first_day_of_week() : '0';
 
         $javascriptend = <<<EOQ
 		 
@@ -1358,6 +1496,32 @@ EOQ;
 
         return $html;
     }
+
+    // STIC-Custom 20230104 AAM - It returns html code for displaying Text fields 
+    // STIC#937
+    public function addText($displayname, $varname) {
+        $varname = $varname;
+        $displayname = addslashes($displayname);
+        $html = <<<EOQ
+            <td scope="row" width="20%">$displayname</td>
+            <td class="dataField" width="30%"><textarea name="$varname" style="width: 90%;" id="mass_{$varname}"></textarea></td>
+        EOQ;
+        return $html;
+    }
+    // END STIC-Custom
+
+    // STIC-Custom 20230104 AAM - It returns html code for displaying Varchar-type fields 
+    // STIC#937
+    public function addVarchar($displayname, $varname) {
+        $varname = $varname;
+        $displayname = addslashes($displayname);
+        $html = <<<EOQ
+            <td scope="row" width="20%">$displayname</td>
+            <td class="dataField" width="30%"><input type="text" name="$varname" style="width: auto; " id="mass_{$varname}"></td>
+        EOQ;
+        return $html;
+    }
+    // END STIC-Custom
 
     public function date_to_dateTime($field, $value)
     {

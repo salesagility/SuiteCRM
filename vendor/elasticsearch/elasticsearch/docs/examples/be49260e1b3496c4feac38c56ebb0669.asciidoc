@@ -1,0 +1,9 @@
+// search/search.asciidoc:342
+
+[source, php]
+----
+$params = [
+    'index' => 'twitter',
+];
+$response = $client->search($params);
+----

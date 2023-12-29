@@ -1,0 +1,46 @@
+// query-dsl/bool-query.asciidoc:36
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'bool' => [
+                'must' => [
+                    'term' => [
+                        'user' => 'kimchy',
+                    ],
+                ],
+                'filter' => [
+                    'term' => [
+                        'tag' => 'tech',
+                    ],
+                ],
+                'must_not' => [
+                    'range' => [
+                        'age' => [
+                            'gte' => 10,
+                            'lte' => 20,
+                        ],
+                    ],
+                ],
+                'should' => [
+                    [
+                        'term' => [
+                            'tag' => 'wow',
+                        ],
+                    ],
+                    [
+                        'term' => [
+                            'tag' => 'elasticsearch',
+                        ],
+                    ],
+                ],
+                'minimum_should_match' => 1,
+                'boost' => 1,
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

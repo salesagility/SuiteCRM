@@ -50,7 +50,11 @@ $dictionary['Surveys'] = array(
             'vname'                     => 'LBL_STATUS',
             'type'                      => 'enum',
             'massupdate'                => 0,
-            'default'                   => 'LBL_DRAFT',
+            // STIC-Custom MHP 20230817 - Change the value LBL_DRATF since is not treated as a label, but as a string 
+            // STIC#1179
+            // 'default'                   => 'LBL_DRAFT',
+            'default'                   => 'Draft',
+            // END STIC-Custom
             'no_default'                => false,
             'comments'                  => '',
             'help'                      => '',

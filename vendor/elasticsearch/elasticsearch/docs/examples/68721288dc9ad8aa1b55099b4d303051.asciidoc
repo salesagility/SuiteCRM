@@ -1,0 +1,20 @@
+// query-dsl/multi-match-query.asciidoc:524
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'multi_match' => [
+                'query' => 'quick brown f',
+                'type' => 'bool_prefix',
+                'fields' => [
+                    'subject',
+                    'message',
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

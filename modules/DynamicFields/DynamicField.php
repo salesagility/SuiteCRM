@@ -1,11 +1,13 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
  * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -27,16 +29,20 @@
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
  *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ * 
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * SugarCRM" logo, "Supercharged by SuiteCRM" logo and “Nonprofitized by SinergiaCRM” logo. 
+ * If the display of the logos is not reasonably feasible for technical reasons, 
+ * the Appropriate Legal Notices must display the words "Powered by SugarCRM", 
+ * "Supercharged by SuiteCRM" and “Nonprofitized by SinergiaCRM”. 
  */
+
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -62,7 +68,7 @@ class DynamicField
     public function __construct($module = '')
     {
         global $sugar_config;
-        $this->module = (!empty($module)) ? $module : ((isset($_REQUEST['module']) && !empty($_REQUEST['module'])) ? $_REQUEST ['module'] : '');
+        $this->module = (!empty($module)) ? $module : ((isset($_REQUEST['module']) && !empty($_REQUEST['module'])) ? $_REQUEST['module'] : '');
         $this->base_path = "custom/Extension/modules/{$this->module}/Ext/Vardefs";
         if (isset($sugar_config['dbconfig'])) {
             $this->db = DBManagerFactory::getInstance();
@@ -123,7 +129,7 @@ class DynamicField
             $language = 'en_us';
         }
 
-        $params ['label_' . $key] = $value;
+        $params['label_' . $key] = $value;
         require_once 'modules/ModuleBuilder/parsers/parser.label.php';
         $parser = new ParserLabel($this->module);
         $parser->handleSave($params, $language);
@@ -168,30 +174,30 @@ class DynamicField
         // using 'encode'=false to fetchByAssoc to prevent any pre-formatting of the base metadata
         // for immediate use in HTML. This metadata will be further massaged by get_field_def() and so should not be pre-formatted
         while ($row = $this->db->fetchByAssoc($result, false)) {
-            $field = get_widget($row ['type']);
+            $field = get_widget($row['type']);
 
             foreach ($row as $key => $value) {
                 $field->$key = $value;
             }
             $field->default = $field->default_value;
             $vardef = $field->get_field_def();
-            $vardef ['id'] = $row ['id'];
-            $vardef ['custom_module'] = $row ['custom_module'];
-            if (empty($vardef ['source'])) {
-                $vardef ['source'] = 'custom_fields';
+            $vardef['id'] = $row['id'];
+            $vardef['custom_module'] = $row['custom_module'];
+            if (empty($vardef['source'])) {
+                $vardef['source'] = 'custom_fields';
             }
-            if (empty($results [$row ['custom_module']])) {
-                $results [$row ['custom_module']] = array();
+            if (empty($results[$row['custom_module']])) {
+                $results[$row['custom_module']] = array();
             }
-            $results [$row ['custom_module']] [$row ['name']] = $vardef;
+            $results[$row['custom_module']][$row['name']] = $vardef;
         }
         if (empty($module)) {
             foreach ($results as $module => $result) {
                 $this->saveToVardef($module, $result, $saveCache);
             }
         } else {
-            if (!empty($results [$module])) {
-                $this->saveToVardef($module, $results [$module], $saveCache);
+            if (!empty($results[$module])) {
+                $this->saveToVardef($module, $results[$module], $saveCache);
             } else {
                 $this->saveToVardef($module, array(), $saveCache);
             }
@@ -218,7 +224,7 @@ class DynamicField
         $result = $this->db->query($query);
         require_once 'modules/DynamicFields/FieldCases.php';
         if ($row = $this->db->fetchByAssoc($result)) {
-            $field = get_widget($row ['type']);
+            $field = get_widget($row['type']);
             $field->populateFromRow($row);
 
             return $field;
@@ -235,7 +241,7 @@ class DynamicField
     public function saveToVardef($module, $result, $saveCache = true)
     {
         global $beanList;
-        if (!empty($beanList [$module])) {
+        if (!empty($beanList[$module])) {
             $object = BeanFactory::getObjectName($module);
 
             if (empty($GLOBALS['dictionary'][$object]['fields'])) {
@@ -249,26 +255,26 @@ class DynamicField
             if (!isset($GLOBALS['dictionary'][$object]['custom_fields'])) {
                 $GLOBALS['dictionary'][$object]['custom_fields'] = false;
             }
-            if (!empty($GLOBALS ['dictionary'] [$object])) {
+            if (!empty($GLOBALS['dictionary'][$object])) {
                 if (!empty($result)) {
                     // First loop to add
 
                     foreach ($result as $field) {
                         foreach ($field as $k => $v) {
                             //allows values for custom fields to be defined outside of the scope of studio
-                            if (!isset($GLOBALS ['dictionary'] [$object] ['fields'] [$field ['name']][$k])) {
-                                $GLOBALS ['dictionary'] [$object] ['fields'] [$field ['name']][$k] = $v;
+                            if (!isset($GLOBALS['dictionary'][$object]['fields'][$field['name']][$k])) {
+                                $GLOBALS['dictionary'][$object]['fields'][$field['name']][$k] = $v;
                             }
                         }
                     }
 
                     // Second loop to remove
-                    foreach ($GLOBALS ['dictionary'] [$object] ['fields'] as $name => $fieldDef) {
-                        if (isset($fieldDef ['custom_module'])) {
-                            if (!isset($result [$name])) {
-                                unset($GLOBALS ['dictionary'] [$object] ['fields'] [$name]);
+                    foreach ($GLOBALS['dictionary'][$object]['fields'] as $name => $fieldDef) {
+                        if (isset($fieldDef['custom_module'])) {
+                            if (!isset($result[$name])) {
+                                unset($GLOBALS['dictionary'][$object]['fields'][$name]);
                             } else {
-                                $GLOBALS ['dictionary'] [$object] ['custom_fields'] = true;
+                                $GLOBALS['dictionary'][$object]['custom_fields'] = true;
                             }
                         }
                     } //if
@@ -598,7 +604,29 @@ class DynamicField
         $is_update = false;
         $label = strtoupper($field->label);
         if (!empty($id)) {
-            $is_update = true;
+            // STIC-Custom AAM 20210604 - There are certain properties that require a modification in the column definition of the database table.
+            // As for example, the Length and Precision properties.
+            // Therefore we use the following lines to build the query, if needed.
+            // STIC#299
+            // $is_update = true;
+            $query = $field->get_db_modify_alter_table($this->bean->table_name . '_cstm');
+            if (!empty($query)) {
+                $this->db->query($query, true, 'Cannot modify field');
+            }
+
+            // STIC-Custom AAM 20210506 - If the field is updated, save the changes in _override_ file, not in fields_meta_data table
+            // (that will keep the original field definition). To do this, we've created a new function and will skip the original
+            // code, that will only apply on field creation.
+            $this->sticSaveExtendedAttributes($field, $fmd);
+            $this->buildCache($this->module);
+            
+            // STIC-Custom - There is a bug in SuiteCRM that requires the cache/themes to be manually rebuilt.
+            // https://github.com/salesagility/SuiteCRM/issues/9119
+            include_once('include/TemplateHandler/TemplateHandler.php');
+            TemplateHandler::clearCache($this->module);
+
+            return true;
+            // End STIC
         } else {
             $db_name = $this->getDBName($field->name);
             $field->name = $db_name;
@@ -671,6 +699,121 @@ class DynamicField
     }
 
     /**
+     * STIC-Custom AAM 20210506 - This function is created to compare the properties of the field that is being updated
+     * with the properties defined in fields_meta_data. The properties that are different are saved in the _override_ file
+     * 
+     * @param $field Array of the field
+     * @param $fmd Array of the field
+     * @return void
+     */
+    public function sticSaveExtendedAttributes($field, $fmd)
+    {
+        global $beanList;
+
+        $to_save = array();
+
+        foreach ($field->vardef_map as $property => $fmd_col) {
+            // This condition is inherited from the core function saveExtendedAttributes. 
+            // It prevents unuseful $field array columns to be stored in the _override_ file.
+            if (
+                $property == 'action' || $property == 'label_value' || $property == 'label' || $property == 'default_value'
+                || (substr($property, 0, 3) == 'ext' && strlen($property) == 4)
+            ) {
+                continue;
+            }
+            // The value will be written in the _override file when it meets one of these conditions:
+            // 1) The value coming from Studio differs from the value set in fields_meta_data. Same as in saveExtendedAttributes() core function.
+            // 2) The properties are inline_edit or labelValue. They don't appear as columns in fields_meta_data table. Same as in saveExtendedAttributes()
+            // core function.
+            // 3) The properties are massupdate, disable_num_format, enable_range_search or audit. These properties are added as exceptions to force their 
+            // inclusion in the _override file, otherwise their default empty value defined in SticVardefs won't be overwritten. 
+            // STIC#589
+            // 4) When the required, duplicate_merge, default and/or display_default properties of a field are defined as non-empty in fields_meta_data, and an empty value 
+            // is set afterwards, the action won't be considered a change and the new default empty value won't be written in the _override_ file, so these properties 
+            // are added as exceptions too.
+            // STIC#679
+            // STIC#750
+            // STIC#962
+            if (
+                $field->$property != $fmd->$property
+                || $property == 'inline_edit' || $property == 'labelValue'
+                || $property == 'massupdate'  || $property == 'disable_num_format' || $property == 'enable_range_search' || $property == 'audit'
+                || $property == 'default' || $property == 'display_default' || $property == 'duplicate_merge' || $property == 'required'
+
+            ) {
+                // The property disable_num_format is mapped as ext3 in the fields_meta_data column, but its value isn't properly assigned
+                // to the array property "disable_num_format" in its template (modules/DynamicFields/templates/Fields/TemplateInt.php) when saving
+                // as a custom field. Therefore we add this exception to include the property into the _override file when there is a change.
+                // More details in PR description.
+                // STIC#589
+                if ($property == 'disable_num_format') {
+                    $to_save[$property] =
+                        is_string($field->ext3) ? htmlspecialchars_decode($field->ext3, ENT_QUOTES) : $field->ext3;
+                } else {
+                    $to_save[$property] =
+                        is_string($field->$property) ? htmlspecialchars_decode($field->$property, ENT_QUOTES) : $field->$property;
+                }
+
+                // The property duplicate_merge is dependent of the property duplicate_merge_dom_value.
+                // Sometimes the duplicate_merge_dom_value doesn't appear in Studio and needs to be manually added.
+                if ($property == 'duplicate_merge' && isset($field->duplicate_merge) && !isset($field->duplicate_merge_dom_value)) {
+                    $to_save['duplicate_merge_dom_value'] = $field->duplicate_merge;
+                    // STIC-custom AAM 20220603 - Adding code for merge_filter property management
+                    // STIC#750
+                    // merge_filter property isn't present in the properties array. Therefore we need to calculate it.
+                    // Using the same methodology as in the function "get_dup_merge_def()" from "TemplateField" Class in 
+                    // modules/DynamicFields/templates/Fields/TemplateField.php.
+                    // We don't use the function get_dup_merge_def because:
+                    // - Initially we don't have duplicate_merge_dom_value
+                    // - We have duplicate_merge value
+                    // - In case the function is modified
+                    switch ($to_save['duplicate_merge_dom_value']) {
+                        case 0:
+                            $to_save['merge_filter']='disabled';
+                            break;
+                        case 1:
+                            $to_save['merge_filter']='disabled';
+                            break;
+                        case 2:
+                            $to_save['merge_filter']='enabled';
+                            break;
+                        case 3:
+                            $to_save['merge_filter']='selected';
+                            break;
+                        case 4:
+                            $to_save['merge_filter']='enabled';
+                            break;
+                    }
+                    // END STIC-Custom
+                }
+
+                // The display_default value can't be null, otherwise it will be ignored.
+                // In that case we set the same value as the default property
+                // STIC#679
+                // STIC#949
+                if ($property == 'display_default' && is_null($field->display_default)) {
+                    $to_save['display_default'] = $field->default;
+                }
+            }
+            // STIC-custom PCS 20230509 - Adding code for avoid not saving HTML fields.
+            // Information for HTML fields is mapped to the 'ext4' property, which means that their value cannot be edited since these fields are excluded from the 'override_file'. 
+            // To resolve this issue, we added 'type == html' property as an exception. Now, if the field is of type HTML, its 'ext4' content can be saved. Additionally, we ensure 
+            //that the value is saved in the default_value and default properties, which are displayed in the detail and edit views.
+            // STIC#1084
+            if($field->type=='html' && ($field->ext4 != $fmd->ext4)){
+                $to_save['ext4'] = $field->ext4;
+                $to_save['default_value'] = htmlspecialchars_decode($field->ext4, ENT_QUOTES);
+                $to_save['default'] = htmlspecialchars_decode($field->ext4, ENT_QUOTES);            
+            }
+            // END STIC-Custom
+        }
+
+        $bean_name = $beanList[$this->module];
+
+        $this->writeVardefExtension($bean_name, $field, $to_save);
+    }
+
+    /**
      * @param $field
      * @param $column_fields
      */
@@ -684,7 +827,8 @@ class DynamicField
         $base_field = get_widget($field->type);
         foreach ($field->vardef_map as $property => $fmd_col) {
             //Skip over attributes that are either the default or part of the normal attributes stored in the DB
-            if (!isset($field->$property) || in_array($fmd_col, $column_fields) || in_array($property, $column_fields)
+            if (
+                !isset($field->$property) || in_array($fmd_col, $column_fields) || in_array($property, $column_fields)
                 || $this->isDefaultValue($property, $field->$property, $base_field)
                 || $property == 'action' || $property == 'label_value' || $property == 'label'
                 || (substr($property, 0, 3) == 'ext' && strlen($property) == 4)
@@ -772,7 +916,9 @@ class DynamicField
      */
     protected function removeVardefExtension($field)
     {
-        $file_loc = "$this->base_path/sugarfield_{$field->name}.php";
+        // STIC-Custom AAM 20210423 - Added modification for PR #257. Issue related with saving core field changes from Studio
+        // $file_loc = "$this->base_path/sugarfield_{$field->name}.php";
+        $file_loc = "$this->base_path/_override_sugarfield_{$field->name}.php";
 
         if (is_file($file_loc)) {
             unlink($file_loc);
@@ -910,7 +1056,7 @@ class DynamicField
      */
     public function add_existing_custom_field($data, $execute = true)
     {
-        $field = get_widget($data ['type']);
+        $field = get_widget($data['type']);
         $field->populateFromRow($data);
         $query = "/*MISSING IN DATABASE - {$data['name']} -  ROW*/\n"
             . $field->get_db_add_alter_table($this->bean->table_name . '_cstm');
@@ -979,15 +1125,15 @@ class DynamicField
         $field_key = $this->getDBName($displayLabel, false);
         $systemLabel = $field_key;
         if (!$this->use_existing_labels) { // use_existing_labels defaults to false in this module; as of today, only set to true by ModuleInstaller.php
-            while (isset($mod_strings [$systemLabel]) && $count <= $limit) {
+            while (isset($mod_strings[$systemLabel]) && $count <= $limit) {
                 $systemLabel = $field_key . "_$count";
                 ++$count;
             }
         }
         $selMod = (!empty($_REQUEST['view_module'])) ? $_REQUEST['view_module'] : $this->module;
         require_once 'modules/ModuleBuilder/parsers/parser.label.php';
-        $parser = new ParserLabel($selMod, isset($_REQUEST ['view_package']) ? $_REQUEST ['view_package'] : null);
-        $parser->handleSave(array('label_' . $systemLabel => $displayLabel), $GLOBALS ['current_language']);
+        $parser = new ParserLabel($selMod, isset($_REQUEST['view_package']) ? $_REQUEST['view_package'] : null);
+        $parser->handleSave(array('label_' . $systemLabel => $displayLabel), $GLOBALS['current_language']);
 
         return $systemLabel;
     }
@@ -1107,7 +1253,7 @@ class DynamicField
             if (empty($data['source']) || $data['source'] != 'custom_fields') {
                 continue;
             }
-            $field = get_widget($data ['type']);
+            $field = get_widget($data['type']);
             $field->populateFromRow($data);
             $field->view = $view;
             $field->bean = $this->bean;

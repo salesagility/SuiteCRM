@@ -1,11 +1,13 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
  * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -27,15 +29,18 @@
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
  *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ * 
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * SugarCRM" logo, "Supercharged by SuiteCRM" logo and “Nonprofitized by SinergiaCRM” logo. 
+ * If the display of the logos is not reasonably feasible for technical reasons, 
+ * the Appropriate Legal Notices must display the words "Powered by SugarCRM", 
+ * "Supercharged by SuiteCRM" and “Nonprofitized by SinergiaCRM”. 
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -87,10 +92,42 @@ require_once 'include/SugarObjects/SugarConfig.php';
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	DATA SECURITY MEASURES
+
 require_once 'include/utils.php';
 require_once 'include/clean.php';
 clean_special_arguments();
-clean_incoming_data();
+
+// STIC Custom 20220312 JCH - Skip clean_incoming_data() for exceptions defined in config.php
+// Certain uses of clean_incoming_data() cause errors over some CRM functionality, specially when dealing with HTML code.
+// While looking for a better way of ensuring both security and functionality, let's manage some exceptions.
+// STIC#633
+// STIC#699
+// clean_incoming_data();
+$skipAntiXSS = false;
+// See if the current module is set as an exception 
+foreach ($GLOBALS['sugar_config']['anti_xss_data_exceptions'] as $key => $xssException) {
+    if ($xssException['module'] == $_REQUEST['module'] && $skipAntiXSS !== true ) {
+        // Sort config exception array (further than module, may contain other params like action or step)
+        ksort($xssException);
+        // Create a subarray from $_REQUEST containing the elements with keys defined in the prior exception
+        $requestFiltered = array_intersect_key($_REQUEST, $xssException);
+        // Sort the new array in order to have its elements in the same order of the config exception array 
+        ksort($requestFiltered);
+        // If both arrays are equal (ie, there is a match not only in module param but in all of them: action, step, etc.)
+        // clean_incoming_data() should be avoided
+        if (join($xssException) == join($requestFiltered)) {
+            $skipAntiXSS = true;
+            break;
+        } 
+    }
+}
+
+// Use clean_incoming_data() only when it won't cause any "damage"
+if ($skipAntiXSS !== true) {
+    clean_incoming_data();
+}
+// END STIC
+
 ////	END DATA SECURITY MEASURES
 ///////////////////////////////////////////////////////////////////////////////
 

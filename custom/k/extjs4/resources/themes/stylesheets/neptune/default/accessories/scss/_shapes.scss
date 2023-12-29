@@ -1,0 +1,34 @@
+// Only handles right direction for now...
+
+.base-shape {
+    display: block;
+    content: '';
+}
+
+@mixin triangle($direction: down, $size: 30px, $color: black) {
+    @extend .base-shape;
+    width: 0;
+    height: 0;
+    
+    @if $direction == down {
+        border-left: $size/2 solid transparent;
+        border-right: $size/2 solid transparent;
+        border-top: $size solid $color;
+        border-bottom: 0;
+    } @else if $direction == right {
+        border-top: $size/2 solid transparent;
+        border-bottom: $size/2 solid transparent;
+        border-left: $size solid $color;
+        border-right: 0;
+    } @else if $direction == left {
+        border-top: $size/2 solid transparent;
+        border-bottom: $size/2 solid transparent;
+        border-right: $size solid $color;
+        border-left: 0;
+    } @else if $direction == up {
+        border-left: $size/2 solid transparent;
+        border-right: $size/2 solid transparent;
+        border-bottom: $size solid $color;
+        border-top: 0;
+    }
+}

@@ -1327,7 +1327,11 @@ eoq;
             $oe->name = $_REQUEST['mail_name'];
             $type = empty($_REQUEST['type']) ? 'user' : $_REQUEST['type'];
             $oe->type = $type;
-            $oe->user_id = $current_user->id;
+            // STIC-Custom 20220504 MHP - Assign the user id of the REQUEST instead of the current user
+            // STIC#1056
+            // $oe->user_id = $current_user->id;
+            $oe->user_id = $_REQUEST['user_id'];
+            // END STIC-Custom 
             $oe->mail_sendtype = "SMTP";
 
             $oe->smtp_from_name = trim($_REQUEST['smtp_from_name']);

@@ -1,0 +1,133 @@
+// import main selectize bootstrap css
+@import '../../../../SticInclude/vendor/selectize/css/selectize.bootstrap3';
+
+/* Common selectize customizations (also for editing forms)*/
+.selectize-input {
+  border-color: $stic-base !important;
+  padding: 5px;
+  min-height: 32px;
+  z-index: auto;
+}
+
+.selectize-input .item[data-value] {
+  padding: 0 3px;
+  border-radius: 2px;
+}
+
+.selectize-control {
+  .selectize-dropdown-content .option {
+    &[data-value=""]{
+      height: 20px;
+  }
+    color: #000 !important ;
+    opacity: 1 !important;
+  }
+  &.single .selectize-input .item {
+    background-color: transparent;
+  }
+  &.multi .selectize-input .item {
+    background-color: $stic-superlight !important;
+    color: bw($stic-superlight);
+    &.active {
+      color: bw($stic-superlight);
+      font-weight: bold !important;
+    }
+  }
+}
+
+.selectize-control {
+  width: 90% !important;
+
+  &.multi {
+    .selectize-input {
+      padding-left: 4px !important;
+      padding-right: 16px !important;
+      padding-top: 0px;
+      padding-bottom: 0px;
+
+      &:after {
+        top: 16px;
+        right: 0px;
+        margin-top: -10px;
+        width: 20px;
+        content: '\2632';
+        position: absolute;
+        font-weight: bold;
+        font-size: 17px;
+      }
+    }
+
+    .selectize-input.dropdown-active:after {
+      content: '\2631';
+    }
+  }
+
+  &.single {
+    height: 32px !important;
+    min-width: 150px;
+    width: calc(100% - 40px);
+
+    .selectize-input:after {
+      top: 40%;
+      right: 4px;
+      margin-top: -3px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 11px 8px 0 8px;
+      border-color: #000 transparent transparent transparent;
+    }
+
+    .selectize-input.dropdown-active:after {
+      margin-top: -4px;
+      border-width: 0 8px 11px 8px;
+      border-color: transparent transparent #000 transparent;
+    }
+  }
+}
+
+td.inlineEditActive {
+  &[type='enum'],
+  &[type='multienum'],
+  &[type='dynamicenum'],
+  &[type='varchar'] {
+    form#EditView {
+      display: flex;
+      justify-content: space-between;
+
+      #inline_edit_field {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+
+      #inlineEditSaveButton {
+        width: 30px;
+      }
+    }
+  }
+}
+
+.selectize-dropdown-content {
+  .option {
+    word-wrap: normal;
+    background: rgb(255 255 255);
+    line-height: initial;
+
+    &:hover,
+    &.active {
+      background: $stic-superlight;
+      cursor: pointer;
+    }
+  }
+}
+
+// Search forms specific customizations
+#search_form {
+  .selectize-control {
+    width: 80% !important;
+    &.single .selectize-input{
+      height: 32px !important;
+    }
+  }
+}

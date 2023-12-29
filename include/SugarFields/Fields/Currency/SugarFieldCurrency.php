@@ -94,8 +94,18 @@ class SugarFieldCurrency extends SugarFieldFloat
         ImportFieldSanitize $settings
         ) {
         $value = str_replace($settings->currency_symbol, "", $value);
+        // STIC-custom - 2022-09-16 - Fix import filter for currency fields
+        // STIC#847
+        // return $settings->float($value, $vardef, $focus);
+        $value = str_replace($settings->num_grp_sep, "", $value);       
         
-        return $settings->float($value, $vardef, $focus);
+        if (isset($vardef['len'])) {
+            // check for field length
+            $value = sugar_substr($value, $vardef['len']);
+        }
+        
+        return $value;
+        // END STIC
     }
 
     /**

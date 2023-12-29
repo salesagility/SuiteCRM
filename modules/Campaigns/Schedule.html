@@ -39,9 +39,36 @@
  */
 
 /**
-
- */
--->
+*	STIC-Custom 20220112 MHP - Add a condition to get only active marketing emails when scheduling a mailing
+*	STIC#539 
+*	Comments can't be added inside the HTML code after B3GIN: main
+*	Modifications:
+*	<input title="{MOD.LBL_SCHEDULE_BUTTON_TITLE}" class="button" onclick="this.form.module.value='Campaigns';this.form.action.value='QueueCampaign';" type="submit" name="Schedule" value="  {MOD.LBL_SCHEDULE_BUTTON_LABEL}  ">
+*	to:
+*	<input id="sendButton" title="{MOD.LBL_SCHEDULE_BUTTON_TITLE}" class="button" onclick="this.form.module.value='Campaigns';this.form.action.value='QueueCampaign';" type="submit" name="Schedule" value="  {MOD.LBL_SCHEDULE_BUTTON_LABEL}  ">
+*	
+*	<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view"> 
+*	to:
+*	<table id="emailsMarketingTable" cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
+*	
+*	Adding:
+*	function checkActiveMarketingEmails()
+*	{
+*	    if ($(".checkbox").length > 0) {
+*	        $("#sendButton").show();
+*	    } else {
+*			$("#sendButton").hide();
+*			let text = "<tr><td colspan=4 style='color:red; padding:2rem'>" + SUGAR.language.translate("Campaigns", "LBL_CAMPAIGN_NO_ACTIVE_MARKETING_EMAILS") + "</td></tr>"; 
+*			$("#emailsMarketingTable").html(text);
+*		}
+*	}
+*	checkActiveMarketingEmails();
+*/
+-->	<!-- 
+		/**
+		*	
+		*/
+	-->
 <!-- BEGIN: main -->
 <input type="hidden" name="return_module" value="{RETURN_MODULE}"/>
 <input type="hidden" name="return_action" value="{RETURN_ACTION}"/>
@@ -52,10 +79,12 @@
 
 <p>
 	<h3>{SCHEDULE_MESSAGE_HEADER}</h3>
-	<input title="{MOD.LBL_SCHEDULE_BUTTON_TITLE}" class="button" onclick="this.form.module.value='Campaigns';this.form.action.value='QueueCampaign';" type="submit" name="Schedule" value="  {MOD.LBL_SCHEDULE_BUTTON_LABEL}  ">
+
+	<input id="sendButton" title="{MOD.LBL_SCHEDULE_BUTTON_TITLE}" class="button" onclick="this.form.module.value='Campaigns';this.form.action.value='QueueCampaign';" type="submit" name="Schedule" value="  {MOD.LBL_SCHEDULE_BUTTON_LABEL}  ">
 	<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.module.value='{RETURN_MODULE}';this.form.action.value='DetailView';this.form.record.value='{RETURN_ID}';" type="submit" name="Schedule" value="  {APP.LBL_CANCEL_BUTTON_LABEL}  ">
 </p>
-<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
+
+<table id="emailsMarketingTable" cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
 <!-- BEGIN: list_nav_row -->
 {PAGINATION}
 	<!-- END: list_nav_row -->
@@ -89,5 +118,18 @@ function save_checks(offset, module)
     document.MassUpdate.submit();
     return true;
 }
+
+function checkActiveMarketingEmails()
+{
+    if ($(".checkbox").length > 0) {
+        $("#sendButton").show();
+    } else {
+		$("#sendButton").hide();
+		let text = "<tr><td colspan=4 style='color:red; padding:2rem'>" + SUGAR.language.translate("Campaigns", "LBL_CAMPAIGN_NO_ACTIVE_MARKETING_EMAILS") + "</td></tr>"; 
+		$("#emailsMarketingTable").html(text);
+	}
+}
+checkActiveMarketingEmails();
+
 </script>
 <!-- END: main -->

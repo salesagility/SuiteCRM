@@ -29,14 +29,33 @@
                             'maxColumnsBasic' => '4',
                             'widths' => array('label' => '10', 'field' => '30'),
                            ),
+                    // STIC-Custom 20221026 MHP - Add date filters
+                    // STIC#893
+                    // 'layout' => array(
+                    //     'basic_search' => array(
+                    //         'aow_workflow',
+                    //         ),
+                    //     'advanced_search' => array(
+                    //         'aow_workflow',
+                    //         'parent_name',
+                    //         'status'
+                    //     ),
+                    // ),                    
                     'layout' => array(
                         'basic_search' => array(
                             'aow_workflow',
+                            'parent_type',
+                            'parent_name',
+                            'status',
                             ),
                         'advanced_search' => array(
                             'aow_workflow',
+                            'parent_type',                            
                             'parent_name',
-                            'status'
+                            'status',
+                            'date_entered',
+                            'date_modified',
                         ),
                     ),
+                    // END STIC-Custom
                );

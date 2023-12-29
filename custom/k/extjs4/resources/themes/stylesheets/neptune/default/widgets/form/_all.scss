@@ -1,0 +1,78 @@
+@mixin extjs-form {
+    // Remove blue focus halo from Safari/Chrome
+    // Actually, this is in reset-extras...
+    // .#{$prefix}webkit {
+    //     *:focus {
+    //         outline: none !important;
+    //     }
+    // }
+    
+    //form items
+    .#{$prefix}form-item {
+        vertical-align: top;
+        margin-bottom: 5px;
+        table-layout: fixed;
+    }
+    
+    // Padding row when Labelable Fields are in a form layout
+    td.#{$prefix}form-item-pad {
+        height: 5px;
+    }
+    
+    // No padding when inside an Editor
+    .#{$prefix}editor .#{$prefix}form-item-body {
+        padding-bottom: 0;
+    }
+
+    .#{$prefix}form-item-label {
+        display: block;
+        padding: 3px 5px 0 0;
+        font-size: $form-label-font-size;
+        @extend .no-select;
+    }
+    
+    .#{$prefix}form-item-label-left {
+        text-align: right;
+    }
+
+    .#{$prefix}form-item-label-top {
+        padding: 0;
+    }
+
+    .#{$prefix}form-item-label-right {
+        text-align: right;
+    }
+
+    .#{$prefix}form-invalid-under {
+        padding: 2px 2px 2px $form-error-icon-width;
+
+        color: $form-error-msg-color;
+        font: $form-error-msg-font;
+        line-height: $form-error-msg-line-height;
+
+        background: no-repeat 0 2px;
+        background-image: theme-background-image($theme-name, $form-exclamation-icon);
+    }
+    
+    .#{$prefix}external-error-icon {
+        position: absolute;
+        right: ($form-error-icon-width - 1);
+        height: $form-field-height;
+    }
+
+    .#{$prefix}form-invalid-icon {
+        position: relative;
+        width: ($form-error-icon-width + $form-error-icon-margin-left);
+        overflow: hidden;
+        ul {
+            @include pictos('!', $size: 21px, $include-states: false, $color: #FC0D1B);
+            display: block;
+            margin-left: $form-error-icon-margin-left;
+            width: $form-error-icon-width;
+            li {
+                /* prevent inner elements from interfering with QuickTip hovering */
+                display: none;
+            }
+        }
+    }
+}

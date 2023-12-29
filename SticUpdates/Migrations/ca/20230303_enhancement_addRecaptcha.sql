@@ -1,0 +1,2 @@
+-- Crear constant RECAPTCHA amb valor buit.
+REPLACE INTO `stic_settings` (`id`, `date_entered`, `date_modified`, `modified_user_id`, `created_by`, `deleted`, `assigned_user_id`, `type`, `name`, `value`, `description`) VALUES ('2c389ba8-78aa-e9fa-d77d-642a92edba46', NOW(), NOW(), '1', '1', 0, '1', 'GENERAL', 'GENERAL_RECAPTCHA', '', "Valor de la clau secreta retornada per Google durant el procés d'integrar la validació recaptcha a un formulari. Podem veure la documentació de com integrar la validació recaptcha als nostres forumalari a l'apartat de la wiki");

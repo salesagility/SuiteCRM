@@ -1,0 +1,9 @@
+// indices/create-index.asciidoc:203
+
+[source, php]
+----
+$params = [
+    'index' => 'test',
+];
+$response = $client->indices()->create($params);
+----

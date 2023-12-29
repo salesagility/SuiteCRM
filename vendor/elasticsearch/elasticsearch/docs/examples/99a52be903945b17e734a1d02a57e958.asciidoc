@@ -1,0 +1,10 @@
+// mapping.asciidoc:257
+
+[source, php]
+----
+$params = [
+    'index' => 'my-index',
+    'fields' => 'employee-id',
+];
+$response = $client->indices()->getFieldMapping($params);
+----

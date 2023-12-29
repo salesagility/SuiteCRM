@@ -41,18 +41,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 $layout_defs['ProjectTask'] = array(
     // list of what Subpanels to show in the DetailView
     'subpanel_setup' => array(
 
         'activities' => array(
             'order' => 20,
-            'sort_order' => 'desc',
+            'sort_order' => 'asc',
             'sort_by' => 'date_due',
             'title_key' => 'LBL_ACTIVITIES_SUBPANEL_TITLE',
             'type' => 'collection',
-            'subpanel_name' => 'activities',   //this values is not associated with a physical file.
+            'subpanel_name' => 'activities', //this values is not associated with a physical file.
             'module' => 'Activities',
 
             'top_buttons' => array(
@@ -78,16 +77,16 @@ $layout_defs['ProjectTask'] = array(
                     'subpanel_name' => 'ForActivities',
                     'get_subpanel_data' => 'calls',
                 ),
-            )
+            ),
         ),
 
         'history' => array(
             'order' => 30,
             'sort_order' => 'desc',
-            'sort_by' => 'date_entered',
+            'sort_by' => 'date_modified',
             'title_key' => 'LBL_HISTORY_SUBPANEL_TITLE',
             'type' => 'collection',
-            'subpanel_name' => 'history',   //this values is not associated with a physical file.
+            'subpanel_name' => 'history', //this values is not associated with a physical file.
             'module' => 'Activities',
 
             'top_buttons' => array(
@@ -125,39 +124,35 @@ $layout_defs['ProjectTask'] = array(
                 ),
             ),
             'searchdefs' => array(
-                'collection' =>
-                    array(
-                        'name' => 'collection',
-                        'label' => 'LBL_COLLECTION_TYPE',
-                        'type' => 'enum',
-                        'options' => $GLOBALS['app_list_strings']['collection_temp_list'],
-                        'default' => true,
-                        'width' => '10%',
-                    ),
-                'name' =>
-                    array(
-                        'name' => 'name',
-                        'default' => true,
-                        'width' => '10%',
-                    ),
-                'current_user_only' =>
-                    array(
-                        'name' => 'current_user_only',
-                        'label' => 'LBL_CURRENT_USER_FILTER',
-                        'type' => 'bool',
-                        'default' => true,
-                        'width' => '10%',
-                    ),
-                'date_modified' =>
-                    array(
-                        'name' => 'date_modified',
-                        'default' => true,
-                        'width' => '10%',
-                    ),
+                'collection' => array(
+                    'name' => 'collection',
+                    'label' => 'LBL_COLLECTION_TYPE',
+                    'type' => 'enum',
+                    'options' => $GLOBALS['app_list_strings']['collection_temp_list'],
+                    'default' => true,
+                    'width' => '10%',
+                ),
+                'name' => array(
+                    'name' => 'name',
+                    'default' => true,
+                    'width' => '10%',
+                ),
+                'current_user_only' => array(
+                    'name' => 'current_user_only',
+                    'label' => 'LBL_CURRENT_USER_FILTER',
+                    'type' => 'bool',
+                    'default' => true,
+                    'width' => '10%',
+                ),
+                'date_modified' => array(
+                    'name' => 'date_modified',
+                    'default' => true,
+                    'width' => '10%',
+                ),
             ),
         ),
         'securitygroups' => array(
-            'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'),),
+            'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect')),
             'order' => 900,
             'sort_by' => 'name',
             'sort_order' => 'asc',

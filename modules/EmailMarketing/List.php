@@ -53,7 +53,11 @@ if (!isset($_REQUEST['campaign_id']) || !$_REQUEST['campaign_id']) {
     unset($_SESSION['campaignWizard'][$campaign_id]['defaultSelectedMarketingId']);
 } else {
     $campaign_id = $db->quote($_REQUEST['campaign_id']);
-    if ($list = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '{$campaign_id}'")) {
+    // STIC-Custom 20220112 MHP - Add condition to show only active marketing emails
+    // STIC#539
+    // if ($list = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '{$campaign_id}'")) {
+    if ($list = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '{$campaign_id}' and status = 'active'")) {
+    // END STIC-Custom
         foreach ($list as $elem) {
             $results['data'][] = array(
                 'id' => $elem->id,

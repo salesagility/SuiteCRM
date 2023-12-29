@@ -1,0 +1,16 @@
+// getting-started.asciidoc:482
+
+[source, php]
+----
+$params = [
+    'index' => 'bank',
+    'body' => [
+        'query' => [
+            'match' => [
+                'address' => 'mill lane',
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

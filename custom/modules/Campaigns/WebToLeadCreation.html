@@ -1,0 +1,460 @@
+<!--
+/**
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo, "Supercharged by SuiteCRM" logo and “Nonprofitized by SinergiaCRM” logo. 
+ * If the display of the logos is not reasonably feasible for technical reasons, 
+ * the Appropriate Legal Notices must display the words "Powered by SugarCRM", 
+ * "Supercharged by SuiteCRM" and “Nonprofitized by SinergiaCRM”. 
+ */
+
+
+/**
+
+ */
+-->
+<!-- BEGIN: main -->
+<script type="text/javascript" src="include/javascript/popup_parent_helper.js?v={VERSION_MARK}"></script>
+<script type="text/javascript" src="modules/Campaigns/WebToLead.js?v={VERSION_MARK}"></script>
+<script type="text/javascript" src="include/javascript/jquery/jquery-ui-min.js?v={VERSION_MARK}"></script>
+
+<hr>
+
+<div id="formSettings" style="display:none;">
+
+<form id="WebToLeadCreation" name="WebToLeadCreation" method="POST" action="index.php">
+    <input type="hidden" name="module" value="Campaigns">
+	<input type="hidden" name="record" value="{ID}">
+        <input type="hidden" name="action" id="action">
+	<input type="hidden" name="return_module" value="{RETURN_MODULE}">
+	<input type="hidden" name="return_id" value="{RETURN_ID}">
+	<input type="hidden" name="return_action" value="{RETURN_ACTION}">
+
+
+        <div id='lead_queries_Div'>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="edit view">
+
+	<tr>
+		<td>
+		<table border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<td scope="row" width="20%">{MOD.LBL_DEFINE_LEAD_HEADER}</td>
+				<td  width="80%"><input id="web_header" name="web_header" title="Name" size="60"
+					value="{MOD.LBL_LEAD_DEFAULT_HEADER}" type="text"></td>
+			</tr>
+			<tr>
+				<td scope="row"><span>{MOD.LBL_DESCRIPTION_LEAD_FORM}</span></td>
+                                <td ><span><textarea tabindex='1' id="web_description" name='web_description' rows='2' cols='55'>{MOD.LBL_DESCRIPTION_TEXT_LEAD_FORM}</textarea></span></td>
+			</tr>
+			<tr>
+				<td scope="row">{MOD.LBL_DEFINE_LEAD_SUBMIT}</td>
+				<td ><input id="web_submit" name="web_submit" title="Name" size="60"
+					value="{MOD.LBL_DEFAULT_LEAD_SUBMIT}" type="text"></td>
+			</tr>
+			<tr>
+				<td scope="row"><span>{MOD.LBL_DEFINE_LEAD_POST_URL}</span></td>
+				<td ><span><input id="post_url" name="post_url" size="60"
+					disabled='true' value="{WEB_POST_URL}" type="text"></span> <input
+					id="chk_edit_url" name="chk_edit_url" onclick="editUrl();" class='checkbox' type='checkbox'> <class ="dataLabel" width="10%">{MOD.LBL_EDIT_LEAD_POST_URL}
+			</tr>
+			</tr>
+			<tr>
+				<td scope="row"><span>{MOD.LBL_DEFINE_LEAD_REDIRECT_URL}</span></td>
+				<td ><span><input id="redirect_url" name="redirect_url" size="60"
+					 value="{REDIRECT_URL_DEFAULT}" type="text"></span></td>
+			</tr>
+
+			<tr>
+				<td scope="row"><span sugar='slot40'>{MOD.LBL_LEAD_NOTIFY_CAMPAIGN}</span sugar='slot'><span
+					class="required">{APP.LBL_REQUIRED_SYMBOL}</span></td>
+				<td ><span sugar='slot40b'> <input class="sqsEnabled" tabindex="1"
+					autocomplete="off" id='campaign_name' name='campaign_name' type="text" value="{CAMPAIGN_NAME}" /> <input
+					id='campaign_id' name='campaign_id' type="hidden" value="{CAMPAIGN_ID}" /> <input
+					title="{APP.LBL_SELECT_BUTTON_TITLE}" type="button" tabindex='1'
+					class="button" value='{APP.LBL_SELECT_BUTTON_LABEL}' name=btn1
+					onclick='open_popup("Campaigns", 600, 400, "", true, false,{encoded_campaigns_popup_request_data});' /></span sugar='slot'>
+                    <div class="required validation-message webToPersonError" id="relatedCampaignError"></div>
+                </td>
+
+			</tr>
+			<tr>
+	        	 <td scope="row"><span sugar='slot45'>{APP.LBL_ASSIGNED_TO}</span sugar='slot'><span
+					class="required">{APP.LBL_REQUIRED_SYMBOL}</span></td>
+          	  	 <td  ><span sugar='slot45b'><input class="sqsEnabled" tabindex="1" autocomplete="off" id="assigned_user_name" name='assigned_user_name' type="text" value="{ASSIGNED_USER_NAME}"><input id='assigned_user_id' name='assigned_user_id' type="hidden" value="{ASSIGNED_USER_ID}" />
+		    	 <input title="{APP.LBL_SELECT_BUTTON_TITLE}" type="button" tabindex='1' class="button" value='{APP.LBL_SELECT_BUTTON_LABEL}' name=btn1
+				  onclick='open_popup("Users", 600, 400, "", true, false, {encoded_users_popup_request_data});' /></span sugar='slot'>
+                     <div class="required validation-message webToPersonError" id="assignedToError"></div>
+				</td>
+
+      	    </tr>
+			<tr>
+				<td scope="row"><span>{MOD.LBL_LEAD_FOOTER}</span></td>
+				<td ><span><textarea tabindex='1' name='web_footer' rows='2' cols='55'></textarea></span></td>
+			</tr>
+
+            <tr>
+                <td scope="row">
+                    <span>
+                        {MOD.LBL_WEBFORMS_INCLUDES_RECAPTCHA}
+                        <i id="include_recaptcha_help" class="inline-help glyphicon glyphicon-info-sign"></i>
+                        <div id="include_recaptcha_help_text" class="inline-help-content" style="display:none;">{MOD.LBL_WEBFORMS_RECAPTCHA_HELP}</div>
+                    </span>
+                </td>
+                <td><span><input type="checkbox" name="include_recaptcha" id="include_recaptcha" value="1"></span></td>
+            </tr>
+            <tr>
+                <td scope="row"><span>{MOD.LBL_WEBFORMS_CHOOSE_RECAPTCHA}</span></td>
+                <td><span><select name='recaptcha_selected' id='recaptcha_selected'></select></span></td>
+            </tr> 
+            <tr>
+                <td scope="row"><span>{MOD.LBL_WEBFORMS_RECAPTCHA_KO_URL}</span></td>
+				<td ><span><input id="redirect_url_ko_recaptcha" name="redirect_url_ko_recaptcha" size="60"
+					 value="{REDIRECT_URL_KO_RECAPTCHA_DEFAULT}" type="text"></span></td>
+            </tr>
+		</table>
+		</td>
+	</tr>
+</table>
+</div>
+</form>
+
+    <input type="button" name="btnBack" value="{APP.LBL_BACK}" id="btnBack" />
+    <input type="button" name="btnGenerateForm" value="{APP.LBL_GENERATE_WEB_TO_LEAD_FORM}" id="btnGenerateForm" />
+</div>
+
+
+
+
+<div id="fieldChoices" style="display:none;">
+<select id='personTypeSelect'></select>
+<div id="fieldcontainer">
+        <div class="containerTitles">
+            <div class="title">{APP.LBL_AVAILABLE_FIELDS}</div>
+            <div class="title">{APP.LBL_FIRST_FORM_COLUMN}</div>
+            <div class="title">{APP.LBL_SECOND_FORM_COLUMN}</div>
+        </div>
+        <div class="field-list field-container ui-droppable ui-sortable ui-state-highlight" id="backlog"></div>
+        <div class="field-list field-container ui-droppable ui-sortable" id="pending"></div>
+        <div class="field-list field-container ui-droppable ui-sortable" id="inProgress"></div>
+    <div style="clear:both;"></div>
+</div>
+
+<div class="optionButtonsHolder">
+    <input type="button" name="btnAddAllFields" value="{APP.LBL_ADD_ALL_LEAD_FIELDS}" id="btnAddAllFields" />
+    <input type="button" name="btnResetAllFields" value="{APP.LBL_RESET_ALL_LEAD_FIELDS}" id="btnResetAllFields" />
+    <input type="button" name="btnNext" value="{APP.LBL_NEXT_BTN}" id="btnNext" />
+</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        var beanList = {BEAN_LIST};
+        populatePersonTypeDropDown(beanList);
+
+
+        $('#btnGenerateForm').on('click',function(){
+            //Check that the related campaign and assigned to have values
+            var assignedUser = $('#assigned_user_id').val();
+            var campaignId = $('#campaign_id').val();
+            var errorFound = false;
+
+            $('.webToPersonError').text('');
+
+            if(assignedUser === '')
+            {
+                $('#assignedToError').text('{APP.LBL_ASSIGNED_TO_REQUIRED}');
+                errorFound = true;
+            }
+            if(campaignId === '')
+            {
+                $('#relatedCampaignError').text('{APP.LBL_RELATED_CAMPAIGN_REQUIRED}');
+                errorFound = true;
+            }
+
+            if(errorFound)
+            {
+                return;
+            }
+            $('#action').val('GenerateWebToLeadForm');
+            $('#WebToLeadCreation').submit();
+        });        
+        // STIC-Custom 20230823 JBL - Add reCAPTCHA validation to forms
+        // STIC#1180
+        var recaptchaList = {RECAPTCHA_CONFIG_LIST};
+        prepareRecaptcha(recaptchaList);
+        function prepareRecaptcha(configList) {
+            // Set the Qtip
+            $('#include_recaptcha_help').qtip({
+                content: { 
+                    text: function (api) { return $("#include_recaptcha_help_text").html(); },
+                    title: { text: SUGAR.language.languages.app_strings.LBL_ALT_INFO },
+                    style: { classes: 'qtip-inline-help' },
+                },
+                hide: { 
+                    event: 'mouseleave unfocus',
+                    fixed: true,
+                    delay: 200,
+                }
+            });
+            $("#include_recaptcha").prop("checked", {RECAPTCHA_CHECKED}===1);
+            var list = "";
+            var i = 0;
+            $.each(configList,function(k,v){
+               list+="<option value='"+i+"'>"+ k +"</option>";
+               i++;
+            });
+            $("#recaptcha_selected").empty().append(list);
+            $("#include_recaptcha").prop("disabled", configList.length==0);
+            $("#recaptcha_selected").prop("disabled", configList.length==0 || !$("#include_recaptcha").prop("checked"));
+            $("#redirect_url_ko_recaptcha").prop("disabled", $("#recaptcha_selected").prop("disabled"));
+
+            $("#post_url").prop("disabled", false);
+            if($("#include_recaptcha").prop("checked")) {
+                $("#post_url").val($("#post_url").val().replace("WebToPersonCapture", "stic_Web_Forms_saveRecaptcha"));
+            } else {
+                $("#post_url").val($("#post_url").val().replace("stic_Web_Forms_saveRecaptcha", "WebToPersonCapture"));
+            }
+            $("#post_url").prop("disabled", $("#chk_edit_url").prop("disabled"));
+        }
+        $('#include_recaptcha').on('click',function(){
+            $("#recaptcha_selected").prop("disabled", !$("#include_recaptcha").prop("checked"));
+            $("#redirect_url_ko_recaptcha").prop("disabled", $("#recaptcha_selected").prop("disabled"));
+            $("#post_url").prop("disabled", false);
+            if($("#include_recaptcha").prop("checked")) {
+                $("#post_url").val($("#post_url").val().replace("WebToPersonCapture", "stic_Web_Forms_saveRecaptcha"));
+            } else {
+                $("#post_url").val($("#post_url").val().replace("stic_Web_Forms_saveRecaptcha", "WebToPersonCapture"));
+            }
+            $("#post_url").prop("disabled", $("#chk_edit_url").prop("disabled"));
+        });
+        // END STIC-Custom
+
+        function populatePersonTypeDropDown(beanList)
+        {
+            var list = "";
+            $.each(beanList,function(i,v){
+               list+="<option value='"+i+"'>"+ v.moduleKnownAs+"</option>";
+            });
+            $("#personTypeSelect").empty().append(list);
+        }
+
+        $('#personTypeSelect').on('change',function(){
+            //RESET THE LIST AND CHANGE TYPE
+            $('.field-list').empty();
+            populateFields(beanList,getSelectedPersonType(),"#backlog");
+        });
+
+        $('#btnResetAllFields').on('click',function(){
+            $('.field-list').empty();
+            populateFields(beanList,getSelectedPersonType(),"#backlog");
+        });
+
+        $('#btnBack').on('click',function(){
+            $('#fieldChoices').show();
+            $('#formSettings').hide();
+        });
+
+        function addItemsToForm(items,form,name)
+        {
+            $.each(items,function(i,v){
+                $('<input/>', {
+                    class: 'fieldItems',
+                    id: name+i,
+                    name: name+'[]',
+                    type: 'hidden',
+                    value: v
+                }).appendTo('#'+form);
+            });
+        }
+
+        function addItemToForm(form,name,value)
+        {
+                $('<input/>', {
+                    class: 'fieldItems',
+                    id: name,
+                    name: name,
+                    type: 'hidden',
+                    value: value
+                }).appendTo('#'+form);
+        }
+
+        function addTypeOfPersonToForm(type, form)
+        {
+            $('<input/>', {
+                id: 'typeOfPerson',
+                name: 'typeOfPerson',
+                type: 'hidden',
+                value: type
+            }).appendTo('#'+form);
+        }
+
+        $('#btnNext').on('click',function(){
+
+
+
+            var requiredItemsNotIncluded =$('#backlog div.required');
+            if(requiredItemsNotIncluded.length === 0)
+            {
+                //Remove all previously added column items to stop duplicate items (should not happen but worth ensuring)
+                $('#WebToLeadCreation .fieldItems').remove();
+
+                var colsFirst = getArrayOfItemsForForm($('#pending input.fieldKey'));
+                var colsSecond = getArrayOfItemsForForm($('#inProgress input.fieldKey'));
+
+                if(colsFirst.length > 0)
+                    addItemsToForm(colsFirst,'WebToLeadCreation','colsFirst');
+
+                if(colsSecond.length > 0)
+                    addItemsToForm(colsSecond,'WebToLeadCreation','colsSecond');
+
+
+                var index = $("#personTypeSelect option:selected").val();
+                var bean = beanList[index];
+
+                var personType = bean.name;
+                addTypeOfPersonToForm(personType, 'WebToLeadCreation');
+
+                addItemToForm('WebToLeadCreation','moduleDir',bean.moduleDir);
+                addItemToForm('WebToLeadCreation','moduleName',bean.moduleName);
+
+                $('#fieldChoices').hide();
+                $('#formSettings').show();
+
+                var personLabel = $("#personTypeSelect option:selected").text();
+
+                $('#web_header').val('{APP.LBL_TYPE_OF_PERSON_FOR_FORM}'+personLabel);
+
+                $('#web_description').val('{APP.LBL_TYPE_OF_PERSON_FOR_FORM_DESC}'+personLabel);
+
+            }
+            else
+            {
+                var requiredFields = "";
+                $.each(requiredItemsNotIncluded,function(i,v){
+                   requiredFields += '\n'+v.innerText;
+                });
+                alert("{MOD.LBL_SELECT_REQUIRED_LEAD_FIELDS}"+requiredFields);
+            }
+
+        })
+
+        $('#btnAddAllFields').on('click',function(){
+            $('#backlog div.field').appendTo($('#pending'));
+        });
+
+        function populateFields(beanList,index,destination){
+            if(beanList === undefined || index === undefined || beanList[index] === undefined )
+            {
+                alert("Sorry, no person type items found");
+                return;
+            }
+            var availableFields = "";
+
+            var fieldList = beanList[index].fields;
+
+            $.each(fieldList,function(i,v){
+                var field = ''
+                if(v[2] !== undefined)
+                    field+='<div class="field ui-sortable-handle required">';
+                else
+                    field+='<div class="field ui-sortable-handle">';
+                field+=     '<div class="field-header">';
+                field+=         '<div class="field-type">'+v[0]+'</div>';
+                field+=         '<input type="hidden" class="fieldKey" value="'+v[1]+'">';
+                field+=     '</div>';
+                field+= '</div>';
+                availableFields+=field;
+            });
+            $(destination).append(availableFields);
+            var $container = $(".field-container");
+            var $field = $('.field');
+
+            $field.draggable({
+                addClasses: false,
+                connectToSortable: ".field-container",
+            });
+
+            $container.droppable({
+                accept: ".field"
+            });
+
+
+            $(".ui-droppable").sortable({
+                placeholder: "ui-state-highlight",
+                helper: 'original',
+                beforeStop: function (event, ui) {
+                    newItem = ui.item;
+                },
+                receive: function (event, ui) {
+
+                }
+            }).disableSelection().droppable({
+                over: ".ui-droppable",
+                activeClass: 'highlight',
+                drop: function (event, ui) {
+                    $(this).addClass("ui-state-highlight");
+                }
+            });
+        }
+
+        populateFields(beanList,getSelectedPersonType(),"#backlog");
+
+        function getSelectedPersonType()
+        {
+            return parseInt($("#personTypeSelect").val());
+        }
+
+        function getArrayOfItemsForForm(items)
+        {
+            var keyValues = [];
+            if(items !== undefined && items.length > 0)
+            {
+
+                $.each(items,function(i,v){
+                    keyValues.push($(v).val());
+                });
+            }
+            return keyValues;
+        }
+
+        $('#formSettings').hide();
+        $('#fieldChoices').show();
+    });
+</script>
+<!-- http://jsfiddle.net/milesrobinson/gbhw4yj8/1/ -->
+<!-- <div id="ddgrid4" class="ygrid-mso" style="width:250px;height:200px;overflow:hidden;">-->
+<!-- END: main -->

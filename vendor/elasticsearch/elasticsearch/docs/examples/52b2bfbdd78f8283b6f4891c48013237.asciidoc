@@ -1,0 +1,17 @@
+// docs/reindex.asciidoc:618
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'max_docs' => 1,
+        'source' => [
+            'index' => 'twitter',
+        ],
+        'dest' => [
+            'index' => 'new_twitter',
+        ],
+    ],
+];
+$response = $client->reindex($params);
+----

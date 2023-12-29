@@ -1,0 +1,63 @@
+$include-panel-uis: $include-default-uis !default;
+$include-panel-highlights: $include-highlights !default;
+
+$panel-border-radius: 0 !default;
+$panel-border-width: 0 !default;
+$panel-base-color: $base-color !default;
+$panel-border-color: $base-color !default;
+$panel-background-color: #D7DDE2 !default;
+
+// ===============================
+// ========= PANEL BODY ==========
+// ===============================
+$panel-body-border-style: solid !default;
+$panel-body-background-color: $content-color !default;
+$panel-body-color: #333 !default;
+$panel-body-border-width: $panel-border-width !default;
+$panel-body-border-color: $stroke-color !default;
+$panel-body-radius: 0 !default;
+
+// ===============================
+// ======== PANEL TOOLS ==========
+// ===============================
+$tool-size: 16px !default;
+$accordion-tool-size: 12px !default;
+
+// ===============================
+// ======== PANEL HEADER =========
+// ===============================
+$panel-header-border-width: $panel-border-width !default;
+$panel-header-border-style: solid !default;
+$panel-header-inner-border: $include-highlights !default;
+$panel-header-inner-border-width: 1px 0 0 !default;
+
+//padding
+$panel-header-padding: 8px 10px 8px 10px !default;
+
+//fonts
+$panel-header-font-size: $font-size-large !default;
+$panel-header-font-weight: normal !default;
+$panel-header-font-family: $font-family !default;
+
+//background
+$panel-header-background-gradient: $base-gradient !default;
+
+// UI defaults
+$panel-header-border-color: $stroke-color !default;
+$panel-header-background-color: $panel-base-color !default;
+$panel-header-inner-border-color: $clear !default;
+$panel-header-color: color-by-background($panel-base-color) !default;
+
+// Framed
+$frame-base-color: $panel-base-color !default;
+
+$panel-frame-border-radius: 4px !default;
+$panel-frame-border-width: $panel-border-width !default;
+$panel-frame-border-style: solid !default;
+$panel-frame-padding: 4px !default;
+
+// UI defaults
+$panel-frame-body-background-color: $panel-body-background-color !default;
+$panel-frame-body-color: color-by-background($panel-frame-body-background-color) !default;
+$panel-frame-background-color: rgba(255,255,255,0) !default;
+$panel-frame-border-color: $stroke-color !default;

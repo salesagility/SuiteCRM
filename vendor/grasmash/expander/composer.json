@@ -1,0 +1,50 @@
+{
+    "name": "grasmash/expander",
+    "description": "Expands internal property references in PHP arrays file.",
+    "type": "library",
+    "require": {
+        "php": ">=7.1",
+        "dflydev/dot-access-data": "^3.0.0",
+        "psr/log": "^1 | ^2 | ^3"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthew Grasmick"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Grasmash\\Expander\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.0 || ^8.0 || ^9",
+        "greg-1-anderson/composer-test-scenarios": "^1",
+        "squizlabs/php_codesniffer": "^2.7 || ^3.3"
+    },
+    "scripts": {
+        "cs": "phpcs -n --standard=PSR2 src tests --exclude=Generic.Files.LineLength",
+        "cbf": "phpcbf -n --standard=PSR2 src tests --exclude=Generic.Files.LineLength",
+        "unit": "phpunit",
+        "lint": [
+            "find src -name '*.php' -print0 | xargs -0 -n1 php -l",
+            "find tests -name '*.php' -print0 | xargs -0 -n1 php -l"
+        ],
+        "test": [
+            "@lint",
+            "@unit",
+            "@cs"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    }
+}

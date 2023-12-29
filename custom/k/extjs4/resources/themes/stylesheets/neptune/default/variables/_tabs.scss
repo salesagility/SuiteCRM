@@ -1,0 +1,89 @@
+//color
+$tabbar-base-color: rgba(0,0,0,0) !default;
+$tabbar-background-gradient: null !default;
+
+//background
+$tab-base-color: rgba(0,0,0,0) !default;
+$tab-base-color-over: lighten($panel-base-color, 15%) !default;
+$tab-base-color-active: $content-color !default;
+$tab-base-color-disabled: $tab-base-color !default;
+
+$tab-background: $tab-base-color !default;
+$tab-background-active: $tab-base-color-active !default; // Deprecated, just use base
+$tab-background-disabled: $tab-base-color-disabled !default; // Deprecated
+
+$tab-color: color-by-background($panel-base-color, 80%) !default;
+$tab-color-over: color-by-background($panel-base-color, 100%) !default;
+$tab-color-active: color-by-background($tab-base-color-active, 80%) !default;
+$tab-color-disabled: rgba($tab-color, .5) !default;
+
+$tab-font-size: $font-size !default;
+$tab-font-size-over: $tab-font-size !default; // Deprecated
+$tab-font-size-active: $tab-font-size !default; // Deprecated
+$tab-font-size-disabled: $tab-font-size !default; // Deprecated
+
+$tab-font-family: $font-family !default;
+$tab-font-family-over: $tab-font-family !default; // Deprecated
+$tab-font-family-active: $tab-font-family !default; // Deprecated
+$tab-font-family-disabled: $tab-font-family !default; // Deprecated
+
+$tab-font-weight: bold !default;
+$tab-font-weight-over: $tab-font-weight !default;
+$tab-font-weight-active: $tab-font-weight !default;
+$tab-font-weight-disabled: $tab-font-weight !default;
+
+$tab-background-gradient: flat !default;
+$tab-background-gradient-over: $tab-background-gradient !default; // Deprecated
+$tab-background-gradient-active: $tab-background-gradient !default; // Deprecated
+$tab-background-gradient-disabled: $tab-background-gradient !default; // Deprecated
+
+//borders
+$tab-inner-border: false !default;
+
+$tab-top-border-radius: 3px 3px 0 0 !default;
+$tab-top-border-width: 0 !default;
+$tab-top-inner-border-width: 1px 1px 0 !default;
+
+$tab-bottom-border-radius: 0 0 3px 3px !default;
+$tab-bottom-border-width: 0 1px 1px 1px !default;
+$tab-bottom-inner-border-width: 0 1px 1px 1px !default;
+
+$tab-border-color: $stroke-color !default;
+$tab-border-color-over: $tab-border-color !default; // Deprecated
+$tab-border-color-active: $tab-border-color !default; // Deprecated
+$tab-border-color-disabled: $tab-border-color !default; // Deprecated
+
+$tab-inner-border-color: lighten($tab-background, 7%) !default;
+
+$tabbar-border-color: $stroke-color !default;
+
+//size
+$tab-height: ceil($font-size-large * 2) !default;
+$tab-spacing: 1px !default;
+$tab-icon-size: 16px !default;
+
+//tab bar body border and padding
+$tabbar-top-body-border-width: 0 !default;
+$tabbar-top-body-padding: 5px 0 0 !default;
+$tabbar-top-plain-body-border-width: 0 !default;
+$tabbar-top-plain-body-padding: 0 !default;
+$tabbar-bottom-body-border-width: 0 !default;
+$tabbar-bottom-body-padding: 0 !default;
+$tabbar-bottom-plain-body-border-width: 0 !default;
+$tabbar-bottom-plain-body-padding: 0 !default;
+
+//closable tab
+$tab-closable-icon: 'tab/tab-default-close.gif' !default;
+$tab-closable-icon-width: 11px !default;
+$tab-closable-icon-height: 11px !default;
+$tab-closable-icon-top: 2px !default;
+$tab-closable-icon-right: 2px !default;
+$nbr-tab-closable-icon-top: 0px !default;
+$nbr-tab-closable-icon-right: 0px !default;
+
+//tab bar strip
+$tabbar-strip-height: 3px !default;
+$tabbar-strip-border-color: $stroke-color !default;
+$tabbar-strip-background-color: mix($tab-base-color, $base-color, 70) !default;
+$tabbar-top-strip-border-width: 1px 1px 0 !default;
+$tabbar-bottom-strip-border-width: 0 1px 1px !default;

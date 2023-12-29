@@ -1,0 +1,293 @@
+<?php
+/**
+ * This file is part of SinergiaCRM.
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ */
+
+$dictionary['stic_Personal_Environment'] = array(
+    'table' => 'stic_personal_environment',
+    'audited' => true,
+    'inline_edit' => true,
+    'duplicate_merge' => true,
+    'fields' => array(
+        'relationship_type' => array(
+            'required' => true,
+            'name' => 'relationship_type',
+            'vname' => 'LBL_RELATIONSHIP_TYPE',
+            'type' => 'enum',
+            'massupdate' => '1',
+            'no_default' => false,
+            'comments' => '',
+            'help' => '',
+            'importable' => 'true',
+            'duplicate_merge' => 'enabled',
+            'duplicate_merge_dom_value' => '0',
+            'audited' => false,
+            'inline_edit' => true,
+            'reportable' => true,
+            'unified_search' => false,
+            'merge_filter' => 'enabled',
+            'len' => 100,
+            'size' => '20',
+            'options' => 'stic_personal_environment_relationships_list',
+            'studio' => 'visible',
+            'dependency' => false,
+        ),
+        'reference_contact' => array(
+            'required' => false,
+            'name' => 'reference_contact',
+            'vname' => 'LBL_REFERENCE_CONTACT',
+            'type' => 'bool',
+            'massupdate' => true,
+            'no_default' => false,
+            'comments' => '',
+            'help' => '',
+            'importable' => 'true',
+            'duplicate_merge' => 'enabled',
+            'duplicate_merge_dom_value' => '0',
+            'audited' => false,
+            'inline_edit' => true,
+            'reportable' => true,
+            'unified_search' => false,
+            'merge_filter' => 'enabled',
+            'studio' => 'visible',
+            'dependency' => false,
+        ),
+        'coexistence_status' => array(
+            'required' => false,
+            'name' => 'coexistence_status',
+            'vname' => 'LBL_COEXISTENCE_STATUS',
+            'type' => 'enum',
+            'massupdate' => 1,
+            'no_default' => false,
+            'comments' => '',
+            'help' => '',
+            'importable' => 'true',
+            'duplicate_merge' => 'enabled',
+            'duplicate_merge_dom_value' => '0',
+            'audited' => false,
+            'inline_edit' => true,
+            'reportable' => true,
+            'unified_search' => false,
+            'merge_filter' => 'enabled',
+            'len' => 100,
+            'size' => '20',
+            'options' => 'stic_personal_environment_coexistence_list',
+            'studio' => 'visible',
+            'dependency' => false,
+        ),
+        'start_date' => array(
+            'required' => true,
+            'name' => 'start_date',
+            'vname' => 'LBL_START_DATE',
+            'type' => 'date',
+            'massupdate' => '1',
+            'no_default' => false,
+            'comments' => '',
+            'help' => '',
+            'importable' => 'true',
+            'duplicate_merge' => 'enabled',
+            'duplicate_merge_dom_value' => '0',
+            'audited' => false,
+            'inline_edit' => true,
+            'reportable' => true,
+            'unified_search' => false,
+            'merge_filter' => 'enabled',
+            'size' => '20',
+            'enable_range_search' => true,
+            'options' => 'date_range_search_dom',
+        ),
+        'end_date' => array(
+            'required' => false,
+            'name' => 'end_date',
+            'vname' => 'LBL_END_DATE',
+            'type' => 'date',
+            'massupdate' => '1',
+            'no_default' => false,
+            'comments' => '',
+            'help' => '',
+            'importable' => 'true',
+            'duplicate_merge' => 'enabled',
+            'duplicate_merge_dom_value' => '0',
+            'audited' => false,
+            'inline_edit' => true,
+            'reportable' => true,
+            'unified_search' => false,
+            'merge_filter' => 'enabled',
+            'size' => '20',
+            'enable_range_search' => true,
+            'options' => 'date_range_search_dom',
+        ),
+
+        'stic_personal_environment_contacts' => array(
+            'name' => 'stic_personal_environment_contacts',
+            'type' => 'link',
+            'relationship' => 'stic_personal_environment_contacts',
+            'source' => 'non-db',
+            'module' => 'Contacts',
+            'bean_name' => 'Contact',
+            'vname' => 'LBL_STIC_PERSONAL_ENVIRONMENT_CONTACTS_FROM_CONTACTS_TITLE',
+            'id_name' => 'stic_personal_environment_contactscontacts_ida',
+        ),
+        'stic_personal_environment_contacts_name' => array(
+            'name' => 'stic_personal_environment_contacts_name',
+            'type' => 'relate',
+            'source' => 'non-db',
+            'vname' => 'LBL_STIC_PERSONAL_ENVIRONMENT_CONTACTS_FROM_CONTACTS_TITLE',
+            'save' => 1,
+            'id_name' => 'stic_personal_environment_contactscontacts_ida',
+            'link' => 'stic_personal_environment_contacts',
+            'table' => 'contacts',
+            'module' => 'Contacts',
+            'massupdate' => 1,
+            'rname' => 'name',
+            'required' => 0,
+            'db_concat_fields' => array(
+                0 => 'first_name',
+                1 => 'last_name',
+            ),
+        ),
+        'stic_personal_environment_contactscontacts_ida' => array(
+            'name' => 'stic_personal_environment_contactscontacts_ida',
+            'type' => 'link',
+            'relationship' => 'stic_personal_environment_contacts',
+            'source' => 'non-db',
+            'reportable' => false,
+            'side' => 'right',
+            'vname' => 'LBL_STIC_PERSONAL_ENVIRONMENT_CONTACTS_FROM_CONTACTS_TITLE',
+        ),
+        'stic_personal_environment_contacts_1' => array(
+            'name' => 'stic_personal_environment_contacts_1',
+            'type' => 'link',
+            'relationship' => 'stic_personal_environment_contacts_1',
+            'source' => 'non-db',
+            'module' => 'Contacts',
+            'bean_name' => 'Contact',
+            'vname' => 'LBL_STIC_PERSONAL_ENVIRONMENT_CONTACTS_1_FROM_CONTACTS_TITLE',
+            'id_name' => 'stic_personal_environment_contacts_1contacts_ida',
+        ),
+        'stic_personal_environment_contacts_1_name' => array(
+            'name' => 'stic_personal_environment_contacts_1_name',
+            'type' => 'relate',
+            'source' => 'non-db',
+            'vname' => 'LBL_STIC_PERSONAL_ENVIRONMENT_CONTACTS_1_FROM_CONTACTS_TITLE',
+            'save' => 1,
+            'id_name' => 'stic_personal_environment_contacts_1contacts_ida',
+            'link' => 'stic_personal_environment_contacts_1',
+            'table' => 'contacts',
+            'module' => 'Contacts',
+            'massupdate' => 1,
+            'rname' => 'name',
+            'required' => 0,
+            'db_concat_fields' => array(
+                0 => 'first_name',
+                1 => 'last_name',
+            ),
+        ),
+        'stic_personal_environment_contacts_1contacts_ida' => array(
+            'name' => 'stic_personal_environment_contacts_1contacts_ida',
+            'type' => 'link',
+            'relationship' => 'stic_personal_environment_contacts_1',
+            'source' => 'non-db',
+            'reportable' => false,
+            'side' => 'right',
+            'vname' => 'LBL_STIC_PERSONAL_ENVIRONMENT_CONTACTS_1_FROM_CONTACTS_TITLE',
+        ),
+        'stic_personal_environment_accounts' => array(
+            'name' => 'stic_personal_environment_accounts',
+            'type' => 'link',
+            'relationship' => 'stic_personal_environment_accounts',
+            'source' => 'non-db',
+            'module' => 'Accounts',
+            'bean_name' => 'Account',
+            'vname' => 'LBL_STIC_PERSONAL_ENVIRONMENT_ACCOUNTS_FROM_ACCOUNTS_TITLE',
+            'id_name' => 'stic_personal_environment_accountsaccounts_ida',
+        ),
+        'stic_personal_environment_accounts_name' => array(
+            'name' => 'stic_personal_environment_accounts_name',
+            'type' => 'relate',
+            'source' => 'non-db',
+            'vname' => 'LBL_STIC_PERSONAL_ENVIRONMENT_ACCOUNTS_FROM_ACCOUNTS_TITLE',
+            'save' => 1,
+            'id_name' => 'stic_personal_environment_accountsaccounts_ida',
+            'link' => 'stic_personal_environment_accounts',
+            'table' => 'accounts',
+            'module' => 'Accounts',
+            'massupdate' => 1,
+            'rname' => 'name',
+            'required' => 0,
+
+        ),
+        'stic_personal_environment_accountsaccounts_ida' => array(
+            'name' => 'stic_personal_environment_accountsaccounts_ida',
+            'type' => 'link',
+            'relationship' => 'stic_personal_environment_accounts',
+            'source' => 'non-db',
+            'reportable' => false,
+            'side' => 'right',
+            'vname' => 'LBL_STIC_PERSONAL_ENVIRONMENT_ACCOUNTS_FROM_ACCOUNTS_TITLE',
+        ),
+        'stic_families_stic_personal_environment' => array(
+            'name' => 'stic_families_stic_personal_environment',
+            'type' => 'link',
+            'relationship' => 'stic_families_stic_personal_environment',
+            'source' => 'non-db',
+            'module' => 'stic_Families',
+            'bean_name' => false,
+            'vname' => 'LBL_STIC_FAMILIES_STIC_PERSONAL_ENVIRONMENT_FROM_STIC_FAMILIES_TITLE',
+            'id_name' => 'stic_families_stic_personal_environmentstic_families_ida',
+        ),
+        'stic_families_stic_personal_environment_name' => array(
+            'name' => 'stic_families_stic_personal_environment_name',
+            'type' => 'relate',
+            'source' => 'non-db',
+            'vname' => 'LBL_STIC_FAMILIES_STIC_PERSONAL_ENVIRONMENT_FROM_STIC_FAMILIES_TITLE',
+            'save' => true,
+            'id_name' => 'stic_families_stic_personal_environmentstic_families_ida',
+            'link' => 'stic_families_stic_personal_environment',
+            'table' => 'stic_families',
+            'module' => 'stic_Families',
+            'rname' => 'name',
+        ),
+        'stic_families_stic_personal_environmentstic_families_ida' => array(
+            'name' => 'stic_families_stic_personal_environmentstic_families_ida',
+            'type' => 'link',
+            'relationship' => 'stic_families_stic_personal_environment',
+            'source' => 'non-db',
+            'reportable' => false,
+            'side' => 'right',
+            'vname' => 'LBL_STIC_FAMILIES_STIC_PERSONAL_ENVIRONMENT_FROM_STIC_PERSONAL_ENVIRONMENT_TITLE',
+        ),
+    ),
+    'relationships' => array(
+    ),
+    'optimistic_locking' => true,
+    'unified_search' => true,
+    'unified_search_default_enabled' => true,
+);
+if (!class_exists('VardefManager')) {
+    require_once 'include/SugarObjects/VardefManager.php';
+}
+VardefManager::createVardef('stic_Personal_Environment', 'stic_Personal_Environment', array('basic', 'assignable', 'security_groups'));
+
+// Set special values for SuiteCRM base fields
+$dictionary['stic_Personal_Environment']['fields']['name']['required'] = '0'; // Name is not required in this module
+$dictionary['stic_Personal_Environment']['fields']['name']['importable'] = true; // Name is importable but not required in this module
+$dictionary['stic_Personal_Environment']['fields']['description']['rows'] = '2'; // Make textarea fields shorter

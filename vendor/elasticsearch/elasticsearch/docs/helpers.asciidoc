@@ -1,0 +1,84 @@
+[[client-helpers]]
+== Client helpers
+
+The client comes with helpers to give you a more comfortable experience with 
+some APIs.
+
+
+[discrete]
+[[iterators]]
+=== Iterators
+
+
+[discrete]
+[[search-response-iterator]]
+==== Search response iterator
+
+The `SearchResponseIterator` can be used to iterate page by page in a search 
+result using 
+https://www.elastic.co/guide/en/elasticsearch/reference/current/paginate-search-results.html#paginate-search-results[pagination].
+
+An example as follows:
+
+[source,php]
+----
+use Elasticsearch\Helper\Iterators\SearchResponseIterator;
+
+$search_params = [
+    'scroll'      => '5m', // period to retain the search context
+    'index'       => '<name of index>', // here the index name
+    'size'        => 100, // 100 results per page
+    'body'        => [
+        'query' => [
+            'match_all' => new StdClass // {} in JSON
+        ]
+    ]
+];
+// $client is Elasticsearch\Client instance
+$pages = new SearchResponseIterator($client, $search_params);
+
+// Sample usage of iterating over page results
+foreach($pages as $page) {
+    // do something with hit e.g. copy its data to another index
+    // e.g. prints the number of document per page (100)
+    echo count($page['hits']['hits']), PHP_EOL;
+}
+----
+
+
+[discrete]
+[[search-hit-iterator]]
+==== Search hit iterator
+
+The `SearchHitIterator` can be used to iterate in a `SearchResponseIterator` 
+without worrying about 
+https://www.elastic.co/guide/en/elasticsearch/reference/current/paginate-search-results.html#paginate-search-results[pagination].
+
+An example as follows:
+
+[source,php]
+----
+use Elasticsearch\Helper\Iterators\SearchHitIterator;
+use Elasticsearch\Helper\Iterators\SearchResponseIterator;
+
+$search_params = [
+    'scroll'      => '5m', // period to retain the search context
+    'index'       => '<name of index>', // here the index name
+    'size'        => 100, // 100 results per page
+    'body'        => [
+        'query' => [
+            'match_all' => new StdClass // {} in JSON
+        ]
+    ]
+];
+// $client is Elasticsearch\Client instance
+$pages = new SearchResponseIterator($client, $search_params);
+$hits = new SearchHitIterator($pages);
+
+// Sample usage of iterating over hits
+foreach($hits as $hit) {
+    // do something with hit e.g. write to CSV, update a database, etc
+    // e.g. prints the document id
+    echo $hit['_id'], PHP_EOL;
+}
+----

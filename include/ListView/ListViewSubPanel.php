@@ -417,10 +417,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
                                 $alias_field_def['name'] = $list_field['alias'];
                                 // Add alias field def into bean to can render field in subpanel
                                 $aItem->field_defs[$list_field['alias']] = $alias_field_def;
-                                if (!isset($fields[strtoupper($list_field['alias'])]) || empty($fields[strtoupper($list_field['alias'])])) {
+                                // STIC CUSTOM 20231213 EPS - Visualización incorrecta del campo due date de las Tasks a partir del segundo registro
+                                // On second record, for alias fields, $aItem->field_defs contains the field definition, but field_name_map does not have the type information.
+                                // On second record, for alias fields, the treatment is set to be the same than on first record
+                                // STIC#1336
+                                // if (!isset($fields[strtoupper($list_field['alias'])]) || empty($fields[strtoupper($list_field['alias'])])) {
+                                if (!isset($fields[strtoupper($list_field['alias'])]) || empty($fields[strtoupper($list_field['alias'])]) || !isset($aitem->field_name_map[$list_field['alias']])) {
+                                // End STIC CUSTOM
                                     global $timedate;
                                     $fields[strtoupper($list_field['alias'])] = (!empty($aItem->$field_name)) ? $aItem->$field_name : $timedate->to_display_date_time($aItem->{$list_field['alias']});
                                 }
+
                             } else {
                                 $list_field['name'] = $field_name;
                             }

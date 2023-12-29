@@ -1,0 +1,14 @@
+version: 2
+dependencies:
+- type: php
+  settings:
+    composer_options: "--no-dev"  # used in "collection", overriden when actually making updates
+  lockfile_updates:
+    settings:
+      composer_options: ""
+  manifest_updates:
+    settings:
+      composer_options: ""
+    filters:
+    - name: ".*"
+      versions: "L.Y.Y"

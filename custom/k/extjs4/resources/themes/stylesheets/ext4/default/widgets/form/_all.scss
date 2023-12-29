@@ -1,0 +1,120 @@
+/**
+ * Creates the base structure of Ext.form.Panel.
+ * @member Ext.form.Panel
+ */
+@mixin extjs-form {
+    /*misc*/
+    .#{$prefix}webkit {
+        * {
+            &:focus {
+                outline:none !important;
+            }
+        }
+    }
+
+    // form items
+    .#{$prefix}form-item {
+        vertical-align: top;
+        table-layout: fixed;
+    }
+
+    // form items within auto, anchor, vbox checkboxgroup, and table layouts have bottom margin of 5px
+    .#{$prefix}autocontainer-form-item,
+    .#{$prefix}anchor-form-item,
+    .#{$prefix}vbox-form-item,
+    .#{$prefix}checkboxgroup-form-item,
+    .#{$prefix}table-form-item {
+        margin-bottom: 5px;
+    }
+
+    // form items within form layout have 5px margin around them
+    .#{$prefix}form-layout-table {
+        border-collapse: separate;
+        border-spacing: 0 2px;
+    }
+
+    // Allow for positioned child elements, e.g. custom icons
+    .#{$prefix}form-item-body {
+        position: relative;
+    }
+
+    .#{$prefix}form-form-item {
+        td {
+            border-top: 1px solid transparent;
+        }
+    }
+
+    // IE6 cannot do border-spacing 0 2px;
+    // IE6 cannot do border-color: transparent
+    // So we revert pack to a pad row for IE6
+    .#{$prefix}ie6 {
+        .#{$prefix}form-layout-table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        .#{$prefix}form-form-item {
+            td {
+                border-top-width: 0;
+            }
+        }
+
+        // Padding row for IE6 when Labelable Fields are in a form layout
+        td.#{$prefix}form-item-pad {
+            height: 5px;
+        }
+    }
+
+    // No padding when inside an Editor
+    .#{$prefix}editor .#{$prefix}form-item-body {
+        padding-bottom: 0;
+    }
+
+    .#{$prefix}form-item-label {
+        display: block;
+        padding: 3px 0 0;
+        font-size: $form-label-font-size;
+        @include no-select;
+    }
+
+    .#{$prefix}form-item-label-top {
+        display: block;
+        zoom: 1;
+        padding: 0 0 5px 0;
+    }
+
+    .#{$prefix}form-item-label-right {
+        text-align: right;
+    }
+
+    .#{$prefix}form-invalid-under {
+        padding: 2px 2px 2px $form-error-icon-width;
+
+        color: $form-error-msg-color;
+        font: $form-error-msg-font;
+        line-height: $form-error-msg-line-height;
+
+        background: no-repeat 0 2px;
+        background-image: theme-background-image($theme-name, $form-exclamation-icon);
+    }
+
+    .#{$prefix}form-invalid-icon {
+        width: $form-error-icon-width;
+        height: 14px;
+        background: no-repeat center center;
+        background-image: theme-background-image($theme-name, $form-exclamation-icon);
+        overflow: hidden;
+        ul {
+            display: block;
+            width: $form-error-icon-width;
+            li {
+                /* prevent inner elements from interfering with QuickTip hovering */
+                display: none;
+            }
+        }
+    }
+
+    // When the label is on top, the right icon cell is taller, so the icon image needs bumping down
+    .#{$prefix}lbl-top-err-icon {
+        margin-bottom: 4px;
+    }
+}

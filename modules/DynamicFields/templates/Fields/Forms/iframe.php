@@ -51,5 +51,9 @@ function get_body(&$ss, $vardef)
         $fieldOptions[$id] = $def['name'];
     }
     $ss->assign('fieldOpts', $fieldOptions);
+    // STIC-Custom 20221229 AAM - Hide MassUpdate property for this field type
+    // STIC#937
+    $ss->assign('hideMassUpdate', 'true');
+    // END STIC-Custom
     return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/iframe.tpl');
 }

@@ -1,0 +1,21 @@
+// docs/reindex.asciidoc:751
+
+[source, php]
+----
+$params = [
+    'index' => 'metricbeat-2016.05.30',
+    'id' => '1',
+    'body' => [
+        'system.cpu.idle.pct' => 0.908,
+    ],
+];
+$response = $client->index($params);
+$params = [
+    'index' => 'metricbeat-2016.05.31',
+    'id' => '1',
+    'body' => [
+        'system.cpu.idle.pct' => 0.105,
+    ],
+];
+$response = $client->index($params);
+----

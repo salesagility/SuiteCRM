@@ -307,6 +307,14 @@ class SubPanelTiles
                 $div_display = $div_cookies[$cookie_name] === 'false' ? 'none' : '';
             }
 
+            // STIC-Custom 20210713 - In campaign status view subpanels are not properly filtered by EmailMarketing if they are closed when the filter is selected
+            // The following workaround expands all subpanels every time the view is reloaded as a way to ensure their content will be properly filtered
+            // STIC#350
+            if ($_REQUEST['action'] == "TrackDetailView") {
+                $div_display = 'inline';
+            }
+            // STIC End 
+
             if ($div_display == 'none') {
                 $opp_display = 'inline';
                 $tabs_properties[$t]['expanded_subpanels'] = false;

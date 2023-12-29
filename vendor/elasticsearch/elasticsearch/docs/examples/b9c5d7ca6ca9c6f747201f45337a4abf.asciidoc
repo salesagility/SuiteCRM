@@ -1,0 +1,15 @@
+// indices/create-index.asciidoc:99
+
+[source, php]
+----
+$params = [
+    'index' => 'twitter',
+    'body' => [
+        'settings' => [
+            'number_of_shards' => 3,
+            'number_of_replicas' => 2,
+        ],
+    ],
+];
+$response = $client->indices()->create($params);
+----

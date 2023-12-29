@@ -83,58 +83,62 @@ class SurveyResponses extends Basic
 
     public function save($check_notify = false)
     {
-        global $sugar_config;
+        // STIC-Custom 20211029 AAM - The following core functionality isn't fully working, there is missing some previous logic within the happiness fields. 
+        // Therefore we remove it all until it's updated. We just leave the code that return the ID of the new SurveyResponse.
+
+        // global $sugar_config;
         $res = parent::save($check_notify);
 
-        if ($this->email_response_sent) {
-            return $res;
-        }
+        // if ($this->email_response_sent) {
+        //     return $res;
+        // }
 
-        if (!$this->contact_id) {
-            return $res;
-        }
+        // if (!$this->contact_id) {
+        //     return $res;
+        // }
 
-        $contact = BeanFactory::getBean('Contacts', $this->contact_id);
+        // $contact = BeanFactory::getBean('Contacts', $this->contact_id);
 
-        if (empty($contact->id)) {
-            return $res;
-        }
-        $email = $contact->emailAddress->getPrimaryAddress($contact);
-        if (!$email) {
-            return $res;
-        }
+        // if (empty($contact->id)) {
+        //     return $res;
+        // }
+        // $email = $contact->emailAddress->getPrimaryAddress($contact);
+        // if (!$email) {
+        //     return $res;
+        // }
 
-        if ($this->happiness > 7 || $this->happiness == -1) {
-            $templateId = $sugar_config['survey_positive_confirmation_email'];
-        } else {
-            $templateId = $sugar_config['survey_negative_confirmation_email'];
-            //Create case
-            $case = BeanFactory::newBean('Cases');
-            $case->name = 'SurveyFollowup';
-            $case->description = "Received the following dissatisfied response from " . $contact->name . "<br>";
-            $case->description .= $this->happiness_text;
-            $case->from_negative_survey = true;
-            $case->status = 'Open_New';
-            $case->priority = 'P1';
-            $case->type = 'User';
-            //$account = BeanFactory::getBean('Accounts',$contact->account_id);
-            if (!empty($contact->assigned_user_id)) {
-                $case->assigned_user_id = $contact->assigned_user_id;
-                $case->auto_assigned = true;
-            }
-            $case->save();
-            $case->load_relationship('contacts');
-            $case->contacts->add($contact);
-        }
-        if (!$templateId) {
-            return $res;
-        }
-        if ($this->sendEmail($contact, $email, $templateId, $case)) {
-            $this->email_response_sent = true;
-            $this->save();
-        }
+        // if ($this->happiness > 7 || $this->happiness == -1) {
+        //     $templateId = $sugar_config['survey_positive_confirmation_email'];
+        // } else {
+        //     $templateId = $sugar_config['survey_negative_confirmation_email'];
+        //     //Create case
+        //     $case = BeanFactory::newBean('Cases');
+        //     $case->name = 'SurveyFollowup';
+        //     $case->description = "Received the following dissatisfied response from " . $contact->name . "<br>";
+        //     $case->description .= $this->happiness_text;
+        //     $case->from_negative_survey = true;
+        //     $case->status = 'Open_New';
+        //     $case->priority = 'P1';
+        //     $case->type = 'User';
+        //     //$account = BeanFactory::getBean('Accounts',$contact->account_id);
+        //     if (!empty($contact->assigned_user_id)) {
+        //         $case->assigned_user_id = $contact->assigned_user_id;
+        //         $case->auto_assigned = true;
+        //     }
+        //     $case->save();
+        //     $case->load_relationship('contacts');
+        //     $case->contacts->add($contact);
+        // }
+        // if (!$templateId) {
+        //     return $res;
+        // }
+        // if ($this->sendEmail($contact, $email, $templateId, $case)) {
+        //     $this->email_response_sent = true;
+        //     $this->save();
+        // }
 
         return $res;
+        // END STIC
     }
 
     private function sendEmail($contact, $email, $emailTemplateId, $case)
@@ -224,4 +228,17 @@ class SurveyResponses extends Basic
         $emailObj->status = 'sent';
         $emailObj->save();
     }
+
+    // STIC-Custom 2021 AAM - Overriding mark_deleted function to delete all child records that won't be used anymore
+    // STIC#457
+    public function mark_deleted($id)
+    {
+        $questionResponsesBeans = $this->get_linked_beans('surveyresponses_surveyquestionresponses');
+        foreach ($questionResponsesBeans as $questionResponsesBean) {
+            $questionResponsesBean->mark_deleted($questionResponsesBean->id);
+        }
+
+        parent::mark_deleted($id);
+    }
+    // END STIC
 }

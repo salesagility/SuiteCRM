@@ -1,0 +1,33 @@
+{
+    "name": "zbateson/mb-wrapper",
+    "description": "Wrapper for mbstring with fallback to iconv for encoding conversion and string manipulation",
+    "keywords": ["mb_convert_encoding", "charset", "encoding", "string", "mbstring", "iconv", "multibyte", "mb", "mime", "mail", "http"],
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "Zaahid Bateson"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "symfony/polyfill-mbstring": "^1.9",
+        "symfony/polyfill-iconv": "^1.9"
+    },
+    "require-dev": {
+        "sanmai/phpunit-legacy-adapter": "^6.3 || ^8"
+    },
+    "suggest": {
+        "ext-mbstring": "For best support/performance",
+        "ext-iconv": "For best support/performance"
+    },
+    "autoload": {
+        "psr-4": {
+            "ZBateson\\MbWrapper\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ZBateson\\MbWrapper\\": "tests/MbWrapper"
+        }
+    }
+}

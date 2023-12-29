@@ -590,9 +590,17 @@ function get_sugar_config_defaults(): array
  */
 function getRunningUser()
 {
+    // STIC Custom 20230511 - JBL - Reducing use of deprecated code
+    // STIC#1066
+    //  - exec is disabled in shared hosting as CDMON: Always returns null and a php_errors log: "PHP Warning:  exec() has been disabled for security reasons"
+    // Solution from https://github.com/salesagility/SuiteCRM/pull/9703
+
     // works on Windows and Linux, but might return null on systems that include "exec" in
     // disabled_functions in php.ini (typical in shared hosting)
-    $runningUser = exec('whoami');
+    // $runningUser = exec('whoami');
+
+    $runningUser = @exec('whoami');
+    // End STIC Custom
 
     if ($runningUser == null) {  // matches null, false and ""
         if (is_windows()) {
@@ -1878,11 +1886,22 @@ function get_select_options_with_id_separate_key($label_list, $key_list, $select
     }
     //create the type dropdown domain and set the selected value if $opp value already exists
     foreach ($key_list as $option_key => $option_value) {
+        // STIC-Custom 20231004 PCS - STIC#1242
+        // A condition has been included to assess whether a dropdown field is a string, to transform it if it isn't and ensure it meets the subsequent condition.
         $selected_string = '';
+        if(!is_string($option_key)){
+            $option_key = strval($option_key);
+        }
+        // END STIC-Custom
+
         // the system is evaluating $selected_key == 0 || '' to true.  Be very careful when changing this.  Test all cases.
         // The bug was only happening with one of the users in the drop down.  It was being replaced by none.
         if (
+                // STIC-Custom 20230914 MHP - STIC#1179
+                // Prevent the value of the Call duration_minutes field, an Integer field with drop-down behavior in a call's edit view, from being lost when editing an existing call.
+                // ($option_key !== '' && $selected_key === $option_key) || (
                 ($option_key !== '' && $selected_key === $option_key) || (
+                // END STIC-Custom
                     $option_key === '' && (($selected_key === '' && !$massupdate) || $selected_key === '__SugarMassUpdateClearField__')
                 ) || (is_array($selected_key) && in_array($option_key, $selected_key))
         ) {
@@ -5437,6 +5456,18 @@ function verify_uploaded_image($path, $jpeg_only = false)
     $filetype = $img_size['mime'];
     $tmpArray = explode('.', $path);
     $ext = end($tmpArray);
+
+    // STIC-Custom 20220705 - After prior explode, if full tmp path contains a dot, as the tmp filename 
+    // does not have an extension, $ext will contain part of this full tmp path instead of only 
+    // the extension of the uploaded file, as it would be expected. This will cause an error, not
+    // allowing to properly update the logo. By checking the presence of slash char in $ext, will be 
+    // able to overwrite $ext and skip later false positive error when checking allowed extensions.
+    // STIC#793
+    if (strpos($ext, '/')) {
+        $ext = $path;
+    }
+    // END STIC-Custom
+
     if (substr_count('..', $path) > 0 || ($ext !== $path && !isset($supportedExtensions[strtolower($ext)])) ||
             !in_array($filetype, array_values($supportedExtensions))
     ) {

@@ -1,0 +1,760 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Plug-in Help</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+.pagebreak { page-break-before:always;
+}
+.tbsname {	font-size: 12px;
+	font-weight: bolder;
+  color: #4D3A81;
+}
+.norm {
+	margin-left: 30px;
+	padding: 5px;
+	border: 1px solid #999999;
+	margin-top: 12px;
+	margin-bottom: 12px;
+}
+.decal {
+	margin-left: 20px;
+}
+.title-1 {
+	font-size: 16px;
+}
+.title-1b {
+	text-decoration: underline;
+}
+.title-1c {
+	font-weight: bold;
+}
+.title-2 {
+	font-size: 16px;
+	text-decoration: underline;
+}
+.title-3 {
+	font-size: 16px;
+	text-decoration: underline;
+	background-color: #6699CC;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.txt-small {
+	font-size: 10px;
+}
+.txt-code {
+	font-family: "Courier New", Courier, mono;
+	font-size: 12px;
+}
+.txt-tiny {
+	font-size: 9px;
+}
+.asciiart {
+	font-family: "Courier New", Courier, mono;
+	font-size: 8px;
+	font-weight: bold;
+	color: #0066CC;
+}
+table {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+.opt-name {
+	color: #990000;
+}
+a.opt-name {
+	color: #990000;
+	text-decoration:none;
+}
+a.opt-name:hover {
+	color: #990000;
+	text-decoration:underline;
+}
+.opt-value {
+	color: #000099;
+}
+.opt-html {
+	color: #006600;
+}
+.opt-type {
+	font-style: italic;
+	color: #0033CC;
+}
+.border-0 {
+	border: 1px solid #999999;
+}
+.border-1 {
+	border: 1px solid #FF3399;
+}
+.border-2 {
+	border: 1px solid #336699;
+}
+.border-3 {
+	border: 1.5px solid #CC6600;
+}
+.contextual {
+	padding: 1px;
+	border: 1px dotted #6699CC;
+}
+.versioning {
+	background-color: #EAEAEA;
+}
+.attention {
+	font-weight: bolder;
+	color: #FF0000;
+}
+-->
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<div align="center"><span class="title-1 title-1c">Help for  TBS plug-ins of the standard distribution</span><br>
+	<span class="txt-small">by Skrol29, 2012-08-15 </span></div>
+<br>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>&nbsp;</td>
+    <td width="540" class="versioning"><div><span class="txt-small"><span class="attention">Important note:</span> <br>
+      When you use plug-ins with PHP 4 you should code:<br> 
+      <span class="txt-code">&nbsp;&nbsp;TBS =&amp; new clsTinyButStrong;</span> <br>
+      instead of:<br> 
+      <span class="txt-code">&nbsp;&nbsp;TBS = new clsTinyButStrong;<br>
+    </span> otherwise some plug-in may not run correctly. This problem does not happens with PHP 5. </span></div></td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<br>
+<table border="0" cellpadding="4" cellspacing="0">
+  <tr>
+  	<td width="10" valign="top">&bull;</td>
+    <td valign="top"><a href="#plugin_bypage">ByPage</a></td>
+    <td>Enables the  MergeBlock() method to display only a part of the records, instead of all records. </td>
+  </tr>
+  <tr>
+  	<td valign="top">&bull;</td>
+    <td valign="top"><a href="#plugin_cache">Cache System</a></td>
+    <td>Provides several actions for a small Cache System.</td>
+  </tr>
+  <tr>
+  	<td valign="top">&bull;</td>
+    <td valign="top"><a href="#plugin_navbar">NavBar</a></td>
+    <td>Displays a navigation bar. </td>
+  </tr>
+  <tr>
+  	<td valign="top">&bull;</td>
+   	  <td valign="top"><a href="#plugin_html">Html</a></td>
+   	  <td>Selecting HTML items and checking HTML contents.</td>
+  </tr>
+  <tr>
+  	<td valign="top">&bull;</td>
+    <td valign="top"><a href="#plugin_mergeonfly">MergeOnFly</a></td>
+    <td>Enables the MergeBlock() method to display data on  fly.</td>
+  </tr>
+</table>
+<br>
+<br>
+<div><a name="plugin_bypage" id="plugin_bypage"></a><span class="title-2">Plug-in ByPage</span> <span class="versioning"> version 1.0.5</span> </div>
+<div class="norm">
+	<table border="0" cellpadding="4" cellspacing="0" class="versioning">
+		<tr>
+			<td>Compatibility:</td>
+			<td>Plug-in ByPage  1.0.0 run  with TBS from 3.0.0 to 3.0.6</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>Plug-in ByPage  1.0.2 or higher run  with TBS  3.1.0 or higher</td>
+		</tr>
+	</table>
+	<br>
+	This plug-in enables the  MergeBlock() method to display only a part of the records, instead of all records. Displayed records are those corresponding to a page number, like if the record set was split by pages having the same size.<br>
+  Note: when you call the plug-in command, it activates the ByPage mode only for one  MergeBlock() call. Other MergBlock() calls  won't have the ByPage mode until you call the plug-in just before them.<br>
+  <br>
+  <span class="attention">Important remark:</span> In most of cases, the ByPage mode  costs as much process time as for the normal mode with the same query. This is explained in the chapter &quot;how the ByPage plug-in works?&quot; above. <br>
+  <br>
+  <span class="title-1b">Requirement:</span> include the file <span class="tbsname">'tbs_plugin_bypage.php'</span>. 
+  This can be after the TBS object variable is created. <br>
+  <br>
+  <span class="title-1b">Installation mode:</span> automatic when the plug-in command is called for the first time.
+  <br>
+  <br>
+  <span class="title-1b">Command syntax:</span> <span class="txt-code"><span class="opt-name">$TBS</span>-&gt;PlugIn(TBS_BYPAGE, <span class="opt-type">int</span><span class="opt-name"> PageSize</span>, <span class="opt-type">int</span><span class="opt-name"> PageNum</span> <span class="opt-name"><font color="#333333">{</font></span>, <span class="opt-type">int</span> <span class="opt-name">RecCount<font color="#333333">}</font></span>)</span><br>
+  <br>
+  <table border="0" cellpadding="5" cellspacing="0">
+    <tr class="title-1b">
+      <td width="80" align="left" valign="top">Argument</td>
+      <td align="left" valign="top">Description</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="txt-code">TBS_BYPAGE</td>
+      <td align="left" valign="top">This constant is the plug-in's key. </td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="opt-name">PageSize </td>
+      <td align="left" valign="top">Indicates the number of records per page.</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="opt-name">PageNum</td>
+      <td align="left" valign="top">Indicates the number of the page to display. The first page is number 1. 
+      The special value -1 will display the last page of the record set.</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="opt-name">RecCount</td>
+      <td align="left" valign="top"> Optional, default value is 0. Use this argument if you need the MergeBlock() method to return the real total number of records. See more detail below. </td>
+    </tr>
+  </table>
+  <br>
+  Example :<br>
+  <div class="decal txt-code">include_once(<span class="opt-value">'tbs_plugin_bypage.php'</span>);
+  <br>
+  <span class="opt-name">$TBS</span>-&gt;PlugIn(TBS_BYPAGE, <span class="opt-value">20</span>,<span class="opt-value"> 3</span>);<br>
+  <span class="opt-name">$TBS</span>-&gt;MergeBlock(<span class="opt-value">'b1'</span>,<span class="opt-value">'mysql'</span>,<span class="opt-value">'SELECT * FROM t_mytable ORDER BY id'</span>);</div>
+  <br>
+  <span class="title-1c">How the ByPage plug-in works ?<br> 
+  </span><span class="attention">It's important to notice that this plug-in won't makes the query to run faster.</span> Because all database systems don't have a LIMIT clause for SELECT queries, and because all  queries are not SELECT queries then the plug-in must let the query as is without inserting any LIMIT clause by itself. Thus, the ByPage plug-in just sends the query, reads all records in order, starts to display records when the beginning of the page is reached, and stops to read and display  when the end of the  page is reached. <br>
+  That's why <span class="attention">the ByPage plug-in is not convenient to display a page among a large number of records.</span> It's better to use the LIMIT clause of your database system instead (or other  native clause for limiting data).<br>
+  <br>
+  <span class="title-1c">How to use argument RecCount ?</span> <br>
+  You should use RecCount if you need the MergeBlock() method to return the real total number of record (this can be useful when you need to display the page of data noticing the total number of records). In the normal mode, the MergeBlock()
+  method return the total number of records, but in the ByPage mode, it return the number of the last read record, this can be different. But RecCount enables MergBlock() to whether makes a real count or to trust your value.<br> 
+  <br>
+  Value of argument RecCount:<br> 
+  <div class="decal">
+    <table border="0" cellpadding="3" cellspacing="0">
+
+      <tr>
+        <td width="110" valign="top"><span class="opt-name">RecCount</span> = <span class="opt-value">-1</span></td>
+        <td>MergBlock() counts the real total number of record, and return this value. This need to read all data up to the bottom. </td>
+      </tr>
+      <tr>
+        <td valign="top"><span class="opt-name">RecCount </span>&gt; <span class="opt-value">0</span></td>
+        <td>MergeBlock() return RecCount. </td>
+      </tr>
+      <tr>
+        <td valign="top"><span class="opt-name">RecCount</span> = <span class="opt-value">0</span><br>
+        (default value)</td>
+        <td> MergeBlock() return the number of the last record read, which can be different of the total number of record. </td>
+      </tr>
+    </table>
+  </div>
+  <br>
+  Example :<br>
+  <div class="decal"><span class="txt-code">if (isset(<span class="opt-name">$_GET</span>[<span class="opt-value">'nbrtot'</span>]) {<br>
+&nbsp;&nbsp;<span class="opt-name">$RecCount</span> = <span class="opt-name">$_GET</span>[<span class="opt-value">'nbrtot'</span>];  <span class="opt-html">// MergeBlock() will trus this value.</span> <br>
+} else {<br>
+&nbsp;&nbsp;<span class="opt-name">$RecCount</span> = <span class="opt-value">-1</span>; <span class="opt-html">// Will Force MergeBlock() to count all records.</span> <br>
+} 
+    <br>
+    include_once(<span class="opt-value">'tbs_plugin_bypage.php'</span>); <br>
+    <span class="opt-name">$TBS</span>-&gt;PlugIn(TBS_BYPAGE, <span class="opt-value">20</span>,<span class="opt-value"> 3</span>, <span class="opt-name">$RecCount</span>);<br>
+    <span class="opt-name">$nbrtot</span> = <span class="opt-name">$TBS</span>-&gt;MergeBlock(</span><span class="opt-value">'b1'</span><span class="txt-code">,<span class="opt-value"> 'mysql'</span>, <span class="opt-value">'SELECT * FROM t_mytable ORDER BY id'</span>);</span></div>
+  <br>
+  <div class="decal"><br>
+  </div>
+</div>
+<div><a name="plugin_cache" id="plugin_cache"></a><span class="title-2">Plug-in Cache System</span> <span class="versioning"> version 1.0.6</span></div>
+<div class="norm">
+  <table border="0" cellpadding="4" cellspacing="0" class="versioning">
+    <tr>
+      <td>Compatibility:</td>
+      <td>Plug-in CacheSystem  1.0.3 to 1.05 run  with TBS from 3.0.3 to 3.2.0</td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>Plug-in CacheSystem  1.0.6 or higher run with TBS 3.3.0 or higher</td>
+    </tr>
+  </table>
+  <br>
+  This plug-in provides several actions for a Cache System. The Cache System enables you to manage manually or automatically the backup of the merge result into a temporary file called &quot;cache&quot; file.<br>
+  <br>
+  <span class="title-1b">Requirement:</span> include the file <span class="tbsname">'tbs_plugin_cache.php'</span>. This can be after the TBS object variable is created. <br>
+<br>
+<span class="title-1b">Installation mode:</span> automatic when the plug-in command is called for the first time.<br>
+You can aslo install the plug-in manually in order to specify the default directory and the cache mask. See <a href="#plugin_cache_parameters">Setting Cache System parameters</a> for more details. <br>
+<br>
+<span class="title-1b">Command syntax:</span> <span class="txt-code"><span class="opt-name"></span></span><span class="txt-code"><span class="opt-type">bool</span> <span class="opt-name">$TBS</span>-&gt;PlugIn(TBS_CACHE, <span class="opt-type">string </span><span class="opt-name">CacheId</span> {,<span class="opt-type"> int</span> <span class="opt-name">Action/MaxAge</span><span class="opt-name"></span>}{,<span class="opt-type"> string</span> <span class="opt-name">Dir</span>})<br>
+  </span> The function  returns <span class="opt-type">true</span> or <span class="opt-type">false</span> depending to the success or failure of the action. <br>
+  <span class="txt-code"><br>
+  </span>
+  <table border="0" cellpadding="5" cellspacing="0">
+    <tr class="title-1b">
+      <td width="80" align="left" valign="top">Argument</td>
+      <td align="left" valign="top">Description</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="opt-name">CacheId</td>
+      <td align="left" valign="top">Unic id of the cache file. This must be a string, and it will be used in the name of the file.</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="opt-name">Action/MaxAge</td>
+      <td align="left" valign="top">Determine the action to do. It must a be a  constant of the Cache Sytem plug-in or a positive value. See table below for more details on available actions. The default value is <span class="opt-value">3600</span> wich correspond to an automatic backup with a max age of 1 hour. </td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="opt-name">Dir</td>
+      <td align="left" valign="top">Optional. The path of the directory where the cache file is saved.<br>
+        By default, it is the same directory as the script.</td>
+    </tr>
+  </table>
+  <br>
+  Example :<br>
+  <div class="decal txt-code">include_once(<span class="opt-value">'tbs_plugin_cache.php'</span>); <br>
+  	<span class="opt-name">$TBS</span>-&gt;PlugIn(TBS_CACHE, <span class="opt-value">'mainpage'</span>, <span class="opt-value">3600</span>);  </div>
+  <br>
+  <span class="title-1c"><span class="title-1b">Manage a cache file:</span></span><br>
+  The Cache System enables you to create, load, update or delete a cache file identified by <span class="txt-code"><span class="opt-name">CacheId</span></span>. There is also an Automatic Mode that let the System manage those actions depending to a max-age of the cache file. <br>
+  <br>
+  <span class="title-1b">Cache on Show:</span> <br>
+  If you start the &quot;Cache on Show&quot;, then the result of the merge will be automatically saved in the cache file at the first use of the TBS Show() method. The recording takes place after the display of the result. <br>
+  Please note that by default the Show() method causes the end of the script. If you want to continue some treatments after the &quot;Cache on Show&quot;, then you have to set the TBS Render property in order to avoid the end of the script.<br>
+  <br>
+  Here is the list of possible actions for the <span class="txt-code"><span class="opt-name">Action/MaxAge</span><span class="opt-name"></span></span> argument, it can be a  constant of  the plug-in or a positive numerical value.<br>
+  <table border="0" cellpadding="5" cellspacing="0">
+    <tr class="title-1b">
+      <td width="80" align="left" valign="top">Action</td>
+      <td align="left" valign="top">Description</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><span class="opt-value">x</span> &gt;=0 <br>
+        (positive number)</td>
+      <td align="left" valign="top">Automatic Mode with max-age: <br>
+        <table width="100%"  border="0" cellspacing="0" cellpadding="0">
+          <tr valign="top">
+            <td width="10">-</td>
+            <td>If the cache file exists and has been created less that <span class="opt-value">x</span> seconds ago, then the file is loaded and the TBS Show() method is executed. If you haven't set the TBS Render property then the script ends after displaying the result, otherwise the PlugIn() function returns<span class="opt-type"> true</span>.</td>
+          </tr>
+          <tr valign="top">
+            <td>-</td>
+            <td>If the cache file doesn't exist or if it has been created more than <span class="opt-value">x</span> seconds ago, then &quot;Cache on Show&quot; is started (see above). The script continues normally and PlugIn() function returns <span class="opt-type">false</span>.</td>
+          </tr>
+        </table></td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="opt-value">TBS_CACHENOW</td>
+      <td align="left" valign="top">Save the current result of the merge in the cache file corresponding to <span class="opt-name">CacheId</span>.<br>
+        PlugIn() function returns <span class="opt-type">false</span>.<br>
+        Example: <span class="txt-code">$TBS-&gt;PlugIn(<span class="opt-value">TBS_CACHE</span>,$CacheId,<span class="opt-value">TBS_CACHENOW</span>);</span></td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="opt-value">TBS_CACHELOAD</td>
+      <td align="left" valign="top">Load the cache file corresponding to <span class="opt-name">CacheId</span>.<br>
+        PlugIn() function  returns <span class="opt-type">true</span> if the cache file has been found and loaded, otherwise it returns <span class="opt-type">false</span>.<br>
+        Example: <span class="txt-code">$TBS-&gt;PlugIn(<span class="opt-value">TBS_CACHE</span>,$CacheId,<span class="opt-value">TBS_CACHELOAD</span>);</span></td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="opt-value">TBS_CACHEDELETE</td>
+      <td align="left" valign="top"> Delete the cache file corresponding to <span class="opt-name">CacheId</span>, if it exists. You can delete all the cache files of the directory using <span class="opt-value">'*'</span> for <span class="opt-name">CacheId</span>. Returns the number of deleted files.<br>
+        Examples:<br>        <div class="decal"><span class="txt-code">$TBS-&gt;PlugIn(<span class="opt-value">TBS_CACHE</span>,$CacheId,<span class="opt-value">TBS_CACHEDELETE</span>);<br>
+         $TBS-&gt;PlugIn(<span class="opt-value">TBS_CACHE</span>,'*',<span class="opt-value">TBS_CACHEDELETE</span>);</span></div></td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="opt-value">TBS_CACHEDELETEMASK</td>
+      <td align="left" valign="top"> Delete  files using a mask instead of the <span class="opt-name">CacheId</span>. Returns the number of deleted files.<br>
+        The mask must not contain any path information. Use the optional argument $Dir instead. <br>
+        Example: <span class="txt-code">$TBS-&gt;PlugIn(<span class="opt-value">TBS_CACHE</span>,'*.txt',<span class="opt-value">TBS_CACHEDELETEMASK</span>,'./temp');</span><br>
+        <span class="versioning">Supported since plug-in version 1.0.5</span> </td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="opt-value">TBS_CACHEONSHOW</td>
+      <td align="left" valign="top">Start &quot;Cache on show&quot; for the cache file corresponding to <span class="opt-name">CacheId</span>. Always return <span class="opt-type">false</span>.<br>
+        Example: <span class="txt-code">$TBS-&gt;PlugIn(<span class="opt-value">TBS_CACHE</span>,$CacheId,<span class="opt-value">TBS_CACHEONSHOW</span>);</span></td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="opt-value">TBS_CACHECANCEL</td>
+      <td align="left" valign="top">Cancel &quot;Cache on Show&quot; whatever is <span class="opt-name">CacheId</span>. Always return <span class="opt-type">false</span>.<br>
+        Example: <span class="txt-code">$TBS-&gt;PlugIn(<span class="opt-value">TBS_CACHE</span>,$CacheId,<span class="opt-value">TBS_CACHECANCEL</span>);</span></td>
+    </tr>
+    <tr id="v202_cachegetage">
+      <td align="left" valign="top" class="opt-value">TBS_CACHEGETAGE</td>
+      <td align="left" valign="top">Return the age of the cache file in seconds. Return <span class="opt-type">false</span> if the cache file doesn't exist.</td>
+    </tr>
+    <tr id="v202_cachegetname">
+      <td align="left" valign="top" class="opt-value">TBS_CACHEGETNAME</td>
+      <td align="left" valign="top">Return the name of the cache file corresponding to the given <span class="opt-name">CacheId</span>.<br>
+        A name is returned even if the cache file doesn't exist yet. </td>
+    </tr>
+    <tr id="v202_cacheisonshow">
+      <td align="left" valign="top" class="opt-value">TBS_CACHEISONSHOW</td>
+      <td align="left" valign="top">Return <span class="opt-type">true</span> if &quot;Cache on show&quot; is activated, otherwise, return <span class="opt-type">false</span>. </td>
+    </tr>
+  </table>
+  <br>
+  <span class="title-1c"><a name="plugin_cache_parameters"></a>Setting Cache Sytem parameters:</span><br>
+  By installing the plug-in manually, you can  set the default directory and the names of cache files. Take care that you must install the plug-in before to use its command. Installing the plug-in after having called the command will produce an error.
+  <br>
+  <br> 
+ Install syntax: <span class="txt-code"><span class="opt-name">$TBS</span>-&gt;PlugIn(TBS_INSTALL, TBS_CACHE&nbsp;{,<span class="opt-type"> string</span> <span class="opt-name">Dir</span><span class="opt-name"></span>}{,<span class="opt-type"> string</span> <span class="opt-name">Mask</span>})<br>
+<br>
+</span>
+<table border="0" cellpadding="5" cellspacing="0">
+  <tr class="title-1b">
+    <td width="80" align="left" valign="top">Argument</td>
+    <td align="left" valign="top">Description</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" class="opt-name">Dir</td>
+    <td align="left" valign="top">Default value is false.<br>
+      Indicates tThe path of the directory where the cache file is saved.<br>
+      By default, it is the same directory as the your application.</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" class="opt-name">Mask</td>
+    <td align="left" valign="top">Default value is <span class="opt-value">'tbs_cache_*.php'</span>.<br>
+      Representes the names of the created cache files. The mask must have one joker character '*' wich is replaced by the cache Id.<br>
+      For example, with the default mask, the command <span class="txt-code"><span class="opt-name">$TBS</span>-&gt;PlugIn(TBS_CACHE,<span class="opt-value">'mainpage'</span>,<span class="opt-value">1000</span>); </span>will create a cache file named <span class="opt-value">'tbs_cache_mainpage.php'</span>. </td>
+  </tr>
+</table>
+<br>
+Example :<br>
+<div class="decal txt-code">include_once(<span class="opt-value">'tbs_plugin_cache.php'</span>);<br>
+  <span class="opt-name">$TBS</span>-&gt;PlugIn(TBS_INSTALL, TBS_CACHE, <span class="opt-value">'./cache'</span>,<span class="opt-value"> 'cache_*.tmp'</span>);
+  <br>
+  <span class="opt-name">$TBS</span>-&gt;PlugIn(TBS_CACHE, <span class="opt-value">'mainpage'</span>, <span class="opt-value">3600</span>);<br>
+  <br>
+</div>
+</div>
+<div><a name="plugin_navbar" id="plugin_navbar"></a><span class="title-2">Plug-in NavBar</span> <span class="versioning"> version 1.0.6</span></div>
+<div class="norm"> This plug-in enables you to displays a navigation bar based on specific TBS block and TBS fields.The design of the navigation bar must be prepared in the HTML side using TBS block havins some specifications. See<a href="#plugin_navbar_html"> HTML side</a> for more details. <br>
+		<br>
+		<span class="title-1b">Requirement:</span> include the file <span class="tbsname">'tbs_plugin_navbar.php'</span>. This can be after the TBS object variable is created.<br>
+<br>
+<span class="title-1b">Installation mode:</span> automatic when the plug-in command is called for the first time.<br>
+<br>
+<span class="title-1b">Command syntax:</span> <span class="txt-code"><span class="opt-name"></span></span><span class="txt-code"><span class="opt-name">$TBS</span>-&gt;PlugIn(TBS_NAVBAR,<span class="opt-type">string </span><span class="opt-name">NavName</span>,<span class="opt-type"> mix</span> <span class="opt-name">Options</span>,<span class="opt-type"> int</span> <span class="opt-name">PageNum </span>[,<span class="opt-type"> int</span> <span class="opt-name">RecCount</span>,<span class="opt-type"> int</span> <span class="opt-name">PageSize</span>])</span> <br>
+<br>
+<table border="0" cellpadding="5" cellspacing="0">
+    <tr class="title-1b">
+      <td width="80" align="left" valign="top">Argument</td>
+      <td align="left" valign="top">Description</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="opt-name">NavName</td>
+      <td align="left" valign="top">The name of the navigation bar.<br>
+        <span  id="v205_navnames">Note: you can merge several Navigation bars in one time and with the same options by separating their names with a comma.</span></td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="opt-name">Options</td>
+      <td align="left" valign="top"> Enables you to force some options of the navigation bar. Those options can also be defined using block parameters in the template. But if you put them at the PlugIn() command too, they will be forced.<br>
+        This parameter can be blank ('', 0 or null), a numeric value or an array. <br>
+        If it's a numeric value, it indicates the number of pages displayed.<br>
+        If it's an array, it can contain the following items:<br>
+        <div class="decal">
+          <table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td width="50" class="title-1b">Key</td>
+              <td class="title-1b">Value</td>
+            </tr>
+            <tr valign="top">
+              <td class="opt-value">'navsize'</td>
+              <td>Number of pages displayed in the navigation bar. (default = 10).</td>
+            </tr>
+            <tr valign="top">
+              <td class="opt-value">'navpos'</td>
+              <td>Position of the navigation bar compared to the active page number. Use one of the following keywords:<br>
+                - <span class="opt-value">'step'</span> (by default) to have the bar progressing by step.<br>
+                - <span class="opt-value">'centred'</span> to center the bar on the active page number.</td>
+            </tr>
+            <tr valign="top">
+              <td class="opt-value">'navdel'</td>
+              <td>Name of a TBS block to delete when there is only one page or no page to display.<br>
+                This TBS block must surroud the navigation bar. If there are several pages to display then only TBS definition tags of this bloc are deleted. </td>
+            </tr>
+            <tr valign="top">
+              <td class="opt-value">'pagemin'</td>
+              <td>Number of the first page (default = 1).</td>
+            </tr>
+          </table>
+        </div></td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="opt-name">PageNum</td>
+      <td align="left" valign="top">Number of the active page.<br>
+        The first page is number <span class="opt-value">1</span>. To indicate the last page, use the value <span class="opt-value">-1</span>. </td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="opt-name">RecCount</td>
+      <td align="left" valign="top">Optional. The default value is<span class="opt-value"> -1</span>.<br>
+        Indicates the total number of records, if known. If this number is unknown, you have to put the value <span class="opt-value">-1</span>. This argument is used only to calculate the number of the last page of the navigation bar.</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top" class="opt-name">PageSize</td>
+      <td align="left" valign="top">Optional. The default value is <span class="opt-value">1</span>.<br>
+        Indicates the number of records per page. It has to be used together with <span class="opt-name">RecCount.</span> It is used only to calculate the number of the last page of the navigation bar.</td>
+    </tr>
+  </table>
+  <br>
+  Example:<br>
+  <br>
+  <div class="decal"><span class="txt-code"><span class="opt-name">$TBS</span>-&gt;PlugIn(TBS_NAVBAR,<span class="opt-value">'nav'</span>,'',$page,$rec_nbr,$page_size);</span></div>
+  <br>
+	<span class="title-1c"><a name="plugin_navbar_html"></a>HTML side</span><br>
+		<br>
+	Use a normal TBS block to display the page numbers.<br>
+	This block will be merged with a virtual data source having as much records as pages to display, and with the following columns:<br>
+	<div class="decal">
+		<table border="0" cellspacing="0" cellpadding="2">
+			<tr class="title-1b">
+				<td width="100">Name</td>
+				<td>Description</td>
+			</tr>
+			<tr>
+				<td valign="top" class="opt-name">page</td>
+				<td>Returns the number of a common page, reachable from the navigation bar.</td>
+			</tr>
+			<tr>
+				<td valign="top" class="opt-name">curr </td>
+				<td>Returns the number of the active page.</td>
+			</tr>
+			<tr>
+				<td valign="top" class="opt-name">first</td>
+				<td>Returns the number of the first page (1 by default).</td>
+			</tr>
+			<tr>
+				<td valign="top" class="opt-name">prev</td>
+				<td>Returns the number of the previous page.</td>
+			</tr>
+			<tr>
+				<td valign="top" class="opt-name">next</td>
+				<td>Returns the number of the next page.</td>
+			</tr>
+			<tr>
+				<td valign="top" class="opt-name">last</td>
+				<td>Returns the number of the last page if it's known, otherwise returns -1.</td>
+			</tr>
+		</table>
+  </div>
+	<span class="opt-name">page</span> is the only value that changes and its linked field must be placed inside the block. Others columns have always the same value and can be placed inside the block as well as outside the block.<br>
+	Those fields support the parameter <span class="opt-name">endpoint</span>. It will replace the value of the field with an empty string ('') when the active page is equal to first page or last page. This enables you to manage display exceptions with parameter <a href="#html_field_prm_magnet">magnet</a> for example.
+	<div class="decal">Example:<br>
+		<span class="opt-html">&lt;a href=&quot;script.php?page=</span>[nav.<span class="opt-name">first</span>;<span class="opt-name">endpoint</span>;<span class="opt-name">magnet</span>=a;<span class="opt-name">mtype</span>=m+m]<span class="opt-html">&quot;&gt;Beginning&lt;/a&gt;</span><br>
+	<span class="txt-small">In this example, the link will be deleted when the active page is the first page.</span></div>
+	<br>
+	The block can contain a special section to display the active page differently.<br>
+	This section is defined using parameter <span class="opt-name">currpage</span> on the block definition. <br>
+	<br>
+	<div class="decal">Example:<br>
+		<br>
+		Template: <br>
+		<table cellpadding="3" cellspacing="0" class="border-3">
+			<tr bgcolor="#99CC99">
+				<td width="10" class="border-3">|&lt;</td>
+				<td width="10" class="border-3">&lt;</td>
+				<td width="10" class="border-3">[nav.page;block=td]</td>
+				<td width="10" bgcolor="#FFCC66" class="border-3">[nav.page;block=td;currpage]</td>
+				<td width="10" class="border-3">&gt;</td>
+				<td width="10" class="border-3">&gt;|</td>
+			</tr>
+		</table>
+		<br>
+		Php code used:<br>
+		<span class="txt-code"> &nbsp; <span class="opt-name">$TBS</span>-&gt;PlugIn(TBS_NAVBAR,<span class="opt-value">'nav'</span>,<span class="opt-value">10</span>,<span class="opt-value">17</span>) ;</span><br>
+		<br>
+		Result of the merge:<br>
+		<table cellpadding="3" cellspacing="0" class="border-3">
+			<tr bgcolor="#99CC99">
+				<td width="10" class="border-3">|&lt;</td>
+				<td width="10" class="border-3">&lt;</td>
+				<td width="10" class="border-3">11</td>
+				<td width="10" class="border-3">12</td>
+				<td width="10" class="border-3">13</td>
+				<td width="10" class="border-3">14</td>
+				<td width="10" class="border-3">15</td>
+				<td width="10" class="border-3">16</td>
+				<td width="10" bgcolor="#FFCC66" class="border-3">17</td>
+				<td width="10" class="border-3">18</td>
+				<td width="10" class="border-3">19</td>
+				<td width="10" class="border-3">20</td>
+				<td width="10" class="border-3">&gt;</td>
+				<td width="10" class="border-3">&gt;|</td>
+			</tr>
+		</table>
+		<br>
+	<span class="txt-small">Remark: this example doesn't display links.</span></div>
+	<br>
+	You can use parameter <span class="opt-name">bmagnet</span> (which is a  block's parameter supported by TBS) to delete the navigation bar when there is only one page to display.<br>
+	<div class="decal">Example:<br>
+		<table cellpadding="3" cellspacing="0" class="border-3">
+		<tr bgcolor="#99CC99">
+			<td width="10" class="border-3">|&lt;</td>
+			<td width="10" class="border-3">&lt;</td>
+			<td width="10" class="border-3">[nav.page;block=td;bmagnet=table]</td>
+			<td width="10" bgcolor="#FFCC66" class="border-3">[nav.page;block=td;currpage]</td>
+			<td width="10" class="border-3">&gt;</td>
+			<td width="10" class="border-3">&gt;|</td>
+		</tr>
+	</table>
+	</div>
+	<br>
+ 	<span class="title-1c">Options</span><br>
+	<br>
+	The block definition can contain parameters that are specific to the navigation bar.<br>
+	Those options can also be defined as a parameter of the plug-in's command<br>
+	<br>
+	<table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="125" class="title-1b">Parameter</td>
+			<td class="title-1b">Description</td>
+		</tr>
+		<tr valign="top">
+			<td><span class="opt-name">navsize</span>=<span class="opt-value">num</span></td>
+			<td>Number of pages displayed in the navigation bar. (default = 10).</td>
+		</tr>
+		<tr valign="top">
+			<td><span class="opt-name">navpos</span>=<span class="opt-value">keyword</span></td>
+			<td>Position of the navigation bar compared to the active page number. Use one of the following keywords:<br>
+				- <span class="opt-value">'step'</span> (by default) to have the bar progressing by step.<br>
+			- <span class="opt-value">'centred'</span> to center the bar on the active page number.</td>
+		</tr>
+		<tr valign="top">
+			<td><span class="opt-name">pagemin</span>=<span class="opt-value">num</span></td>
+			<td>Number of the first page (default = 1).</td>
+		</tr>
+	</table>
+	<br>
+</div>
+<div><a name="plugin_html" id="plugin_html"></a><span class="title-2">Plug-in HTML</span> <span class="versioning"> version 1.0.4</span></div>
+<div class="norm">
+	<table border="0" cellpadding="4" cellspacing="0" class="versioning">
+		<tr>
+			<td>Versioning:</td>
+			<td>Plug-in HTML version 1.0 run  with TBS 3.0.0 to 3.0.6</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>Plug-in HTML version 1.0.2 and higher run  with TBS &gt;= 3.1.0</td>
+		</tr>
+	</table>
+	This plug-in provides several features to manage HTML templates:<br>
+	&bull; <a href="#plugin_html_select">Select</a> HTML items (lists, checkboxes and radio buttons). <br>
+	&bull; <a href="#plugin_html_look">Looks</a> if contents is HTML before to convert. <br>
+	Those features can be called from any TBS field using parameter &quot;<span class="opt-name">ope</span>=<span class="opt-value">html</span>&quot;. See below for more details.<br>
+	The plug-in must be installed, otherwise you'll have a TBS error: &quot;parameter ope doesn't support value 'html'&quot;.<br>
+	<br>
+	<span class="title-1b">Requirement:</span> include the file <span class="tbsname">'tbs_plugin_html.php'</span>.<br>
+	<br>
+	<span class="title-1b">Installation mode:</span> automatic when included before the creation of the TBS variable.<br>
+	If you include it after the creation of the TBS varibale, you should force the installation by using the command : <br>
+	<div class="txt-code"><span class="opt-name">$TBS</span>-&gt;PlugIn(TBS_INSTALL,TBS_HTML);</div>
+	<br>
+	<span class="title-1b">Command syntax:</span> <span class="txt-code"><span class="opt-name"></span></span> &nbsp;(no command).<br>
+	<br>
+	<span class="title-2"><a name="plugin_html_select" id="plugin_html_select"></a></span><br>
+	<span class="title-1c">Select HTML items:</span>	<br>
+	<br>
+	<div class="title-1b">List of options:</div><br>
+	<table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="20">&nbsp;</td>
+			<td><form name="form1" method="post" action="">
+				Example:<br>
+				<select name="select4" size="4" class="txt-small">
+					<option value="1">Boston
+						<option value="2">Washington
+						<option value="3">New York
+						<option>[var.town_id;ope=html;select] 
+					</select>
+				<span class="txt-small">which will become after the merge:</span>
+				<select name="select3" size="4" class="txt-small">
+					<option value="1">Boston
+						<option value="2" selected>Washington
+						<option value="3">New York
+					</select>
+			</form></td>
+		</tr>
+	</table>
+	<br>
+	Create a new item anywhere in the list. Inside this item,  place a TBS field  which would display the value of the item to select (you can place it anywhere inside the option tags). Then add parameters <span class="opt-name">ope</span>=<span class="opt-value">html</span> and <span class="opt-name">select</span> (without value) to the TBS field and it will select the corresponding item. This new item  won't be displayed, il will only make other be selected. <br>
+	<br>
+	If the value of the field is a PHP array, then several items can be selected. <br>
+	<br>
+	If the value of the field is not found in the list, then no item is selected. But if you add parameter <span class="opt-name">addmising</span> then not found values will be added at the end of the list. <span class="versioning">Parameter addmissing is supported since version 1.0.3 of this plug-in. </span><br>
+	<br>
+	<br>
+	<div class="title-1b">Radio buttons and Checkboxes:</div>
+	<br>
+	Place a TBS field which would display the value of the item to select (you can place it anywhere in the area containing items to select, see optimization below for more details about this area). Then add parameters <span class="opt-name">ope</span>=<span class="opt-value">html</span> and <span class="opt-name">select</span>=<span class="opt-value">tagname</span>  to the TBS field and it will select the corresponding item. Only radio buttons and checkboxes named <span class="opt-value">tagname</span> will be browsed. The TBS field won't be displayed, il will only make items be selected. <br>
+	<br>
+	<table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td width="20">&nbsp;</td>
+			<td><form name="form1" method="post" action="">
+				Example:<br>
+				<table border="0" cellspacing="2" cellpadding="2">
+					<tr>
+						<td valign="top"><input name="r_test" type="radio" value="1">
+							Boston [var.town_id;<span class="opt-name">ope</span>=<span class="opt-value">html</span>;<span class="opt-name">select</span>=<span class="opt-value">r_test</span>]<br>
+							<input name="r_test" type="radio"  value="2">
+							Washington<br>
+							<input name="r_test" type="radio" value="3">
+							New York</td>
+						<td valign="bottom" class="txt-small">which will be after the merge:</td>
+						<td valign="top"><input name="r_test" type="radio" value="1">
+							Boston<br>
+							<input name="r_test" type="radio" value="2" checked>
+							Washington<br>
+							<input name="r_test" type="radio" value="3">
+							New York</td>
+					</tr>
+				</table>
+				<br>
+				<span class="txt-small">In this example, the Radio button captioned 'Washington ' has been selected because the name of the Radio button tag is ''r_test' and its value is 2, and the TBS tag named 'town_id' has been merged with the value 2. </span>
+			</form></td>
+		</tr>
+	</table>
+	<br>
+	If the value of the field is a PHP array, then several items can be selected. <br>
+	<br>
+	<span class="title-1b">Optimization:</span> <br>
+	By default the bounds for searching items to select are html tags <span class="opt-html">&lt;select&gt;</span> for lists , and <span class="opt-html">&lt;form&gt;</span> for radio buttons and checkboxes. But you can change those bounds using parameter <span class="opt-name">selbounds.</span>  It enables you   to change the search zone for items to select by indicating an HTML tag type.<br>
+Example:<BR>
+<DIV class="decal"> [var.town_id;<span class="opt-name">ope</span>=<span class="opt-value">html</span>;<span class="opt-name">select</span>=<span class="opt-value">r_test</span>;<span class="opt-name">selbounds</span>=<span class="opt-value">div</span>]<BR>
+  In this example, items to select will be searched   between <span class="opt-html">&lt;div&gt;</span> and <span class="opt-html">&lt;/div&gt;</span> tags that surround the TBS field.<BR>
+</DIV>
+<br>
+<span class="title-2"><a name="plugin_html_look" id="plugin_html_look"></a></span> <br>
+<span class="title-1c"> Look if contents is HTML :</span><br>
+<br>
+Use a TBS field with parameter <span class="opt-name">ope</span>=<span class="opt-value">html</span> and parameter <span class="opt-name">look </span> in order to check the value to merge and to convert it into HTML only if is not yet HTML.<br>
+Example:
+<div class="decal">[var.entered_data;<span class="opt-name">ope</span>=<span class="opt-value">html</span>;<span class="opt-name">look</span>]</div>
+<br>
+<br>
+</div>
+<div><a name="plugin_mergeonfly" id="plugin_mergeonfly"></a><span class="title-2">Plug-in MergeOnFly</span> <span class="versioning"> version 1.1.1</span></div>
+<div class="norm">This plug-in enables the MergeBlock() method to display data on  fly. This means that the result of the merge will be displayed progressively  during the execution of MergeBlock(). At the end of the MergeBlock(), only the part of the template after the block will remain. You steel have to use the Show() method for this ending part. <br>
+  Notice: when you call the plug-in command, it activates the OnFly mode only for one  MergeBlock() call. Other MergBlock() calls won't have the OnFly mode until you call the plug-in just before them.<br>
+      <br>
+      You have to take care that the OnFly mode will cost much more time execution, because several small echo() commands always cost more time than a single big one. Despite this loss of execution time, the OnFly mode can be a smart issue when you have a very large number of records  to display because the user can start the read the data before it ends.<br>
+  <br>
+    <span class="title-1b">Requirement:</span> include the file <span class="tbsname">'tbs_plugin_mergeonfly.php'</span>. This can be after the TBS object variable is created.<br>
+<br>
+<span class="title-1b">Installation mode:</span> automatic when the plug-in command is called for the first time.<br>
+<br>
+<span class="title-1b">Command syntax:</span> <span class="txt-code"><span class="opt-name"></span></span><span class="txt-code"><span class="opt-name">$TBS</span>-&gt;PlugIn(TBS_ONFLY, <span class="opt-type">int </span><span class="opt-name">PackSize</span> [, <span class="opt-type">boolean </span><span class="opt-name">CountSubRecord</span>=false])<br>
+</span><span class="txt-code"><br>
+</span>
+<table border="0" cellpadding="5" cellspacing="0">
+  <tr class="title-1b">
+    <td width="80" align="left" valign="top">Argument</td>
+    <td align="left" valign="top">Description</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" class="opt-name">PackSize</td>
+    <td align="left" valign="top">Number of records to display at a time. </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" class="opt-name">CountSubRecord</td>
+    <td align="left" valign="top"><span class="opt-value">true</span> if the merged block have sub-blocks and you'd like sub-records to be counted for the <span class="opt-name">PackSize</span>. Defult value is <span class="opt-value">false</span>.</td>
+  </tr>
+</table>
+<br>
+Example :<br>
+<div class="decal txt-code">include_once(<span class="opt-value">'tbs_plugin_mergeonfly.php'</span>); <br>
+  $TBS-&gt;PlugIn(TBS_ONFLY, <span class="opt-value">100</span>);<br>
+  $TBS-&gt;MergeBlock(<span class="opt-value">'b1'</span>,<span class="opt-value">'mysql'</span>,<span class="opt-value">'SELECT * FROM t_table1'</span>);</div>
+</div>
+</body>
+</html>

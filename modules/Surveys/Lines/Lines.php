@@ -2,7 +2,17 @@
 
 function survey_questions_display(Surveys $focus, $field, $value, $view)
 {
-    $hasResponses = !empty($focus->id) && $focus->get_linked_beans('surveys_surveyresponses');
+    // STIC-Custom 20210729 - There is a bug when duplicating because the code always
+    // checks if the first survey has responses, which is not relevant on duplication.
+    // More info: STIC#367
+
+    // $hasResponses = !empty($focus->id) && $focus->get_linked_beans('surveys_surveyresponses');
+    if ($_POST["isDuplicate"] && $_POST["isDuplicate"] == "true") {
+        $hasResponses = false;
+    } else {
+        $hasResponses = !empty($focus->id) && $focus->get_linked_beans('surveys_surveyresponses');
+    }
+    // STIC End
     if ($view == 'EditView' && !$hasResponses) {
         return survey_questions_display_edit($focus, $field, $value, $view);
     }

@@ -1,0 +1,94 @@
+@import 'compass';
+
+@function get-color-mode($color) {
+    @if lightness($color) > 50 {
+        @return light;
+    } @else {
+        @return dark;
+    }
+}
+
+$base-color: blue !default;
+$neutral-color: #ccc !default;
+$base-gradient: matte !default;
+$default-text-contrast: 85%;
+$color-mode: get-color-mode($neutral-color) !default;
+
+@function color-offset($color, $contrast: 85%, $mode: $color-mode, $inverse: false) {
+    $flat_color: check-opacity($color);
+
+    @if $mode == inverse {
+        $mode: reverse-color-mode($color-mode);
+    }
+
+    @if $inverse == true {
+        $mode: reverse-color-mode($mode);
+    }
+    
+    @if ($mode == light) {
+        @return rgba(lighten($flat_color, $contrast), opacity($color));
+    } @else if ($mode == dark) {
+        @return rgba(darken($flat_color, $contrast), opacity($color));
+    } @else {
+        @debug $mode " is not a valid color mode. Use light, dark, or inverse.";
+        @return white;
+    }
+}
+
+@function reverse-color-mode($mode) {
+    @if $mode == dark {
+        @return light;
+    } @else {
+        @return dark;
+    }
+}
+
+@function check-opacity($color) {
+    @if (opacity($color) == 0) {
+        $color: opacify($color, 1);
+    }
+    @if $color == transparent {
+        $color: opacify($color, 1);
+    }
+    @return $color;
+}
+
+@function color-by-background($bg-color, $contrast: $default-text-contrast) {
+    $bg-color: check-opacity($bg-color);
+    $tmpmode: get-color-mode($bg-color);
+    
+    @return color-offset($bg-color, $contrast, $tmpmode, $inverse: true);
+}
+
+@function get-inset-offset($mode){
+    @if $mode == light {
+        @return 1px;
+    } @else {
+        @return -1px;
+    }
+}
+
+@mixin color-by-background($bg-color, $contrast: $default-text-contrast, $default-color: false, $inset-text: true) {
+    @if $default-color {
+        color: color-by-background(hsla(hue($default-color), saturation($default-color), lightness($bg-color), opacity($bg-color)), $contrast);
+    } @else {
+        color: color-by-background($bg-color, $contrast);
+    }
+    
+    @if $inset-text {
+        @include inset-by-background($bg-color);
+    }
+}
+
+
+@mixin inset-by-background($bg-color, $contrast: 10%, $box: false){
+    
+    $bg-color: check-opacity($bg-color);
+    $offset: get-inset-offset(get-color-mode($bg-color));
+
+    @if ($box == true) {
+        @include box-shadow(color-offset($bg-color, $contrast, $mode: get-color-mode($bg-color)) 0 $offset 0);
+    }
+    
+    @include text-shadow(color-offset($bg-color, $contrast, $mode: get-color-mode($bg-color)) 0 $offset 0);
+}

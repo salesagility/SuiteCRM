@@ -1,0 +1,101 @@
+{
+    "name": "consolidation/robo",
+    "description": "Modern task runner",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Davert",
+            "email": "davert.php@resend.cc"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Robo\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Robo\\": "tests/src",
+            "RoboExample\\": "examples/src"
+        }
+    },
+    "bin": [
+        "robo"
+    ],
+    "require": {
+        "php": ">=7.1.3",
+        "consolidation/annotated-command": "^4.3",
+        "consolidation/config": "^1.2.1 || ^2.0.1",
+        "consolidation/log": "^1.1.1 || ^2.0.2",
+        "consolidation/output-formatters": "^4.1.2",
+        "consolidation/self-update": "^2.0",
+        "league/container": "^3.3.1 || ^4.0",
+        "symfony/console": "^4.4.19 || ^5 || ^6",
+        "symfony/event-dispatcher": "^4.4.19 || ^5 || ^6",
+        "symfony/filesystem": "^4.4.9 || ^5 || ^6",
+        "symfony/finder": "^4.4.9 || ^5 || ^6",
+        "symfony/process": "^4.4.9 || ^5 || ^6",
+        "symfony/yaml": "^4.4 || ^5 || ^6"
+    },
+    "require-dev": {
+        "natxet/cssmin": "3.0.4",
+        "patchwork/jsqueeze": "^2",
+        "pear/archive_tar": "^1.4.4",
+        "squizlabs/php_codesniffer": "^3.6",
+        "phpunit/phpunit": "^7.5.20 || ^8",
+        "yoast/phpunit-polyfills": "^0.2.0"
+    },
+    "scripts": {
+        "cs": "./robo sniff",
+        "unit": "phpunit",
+        "lint": "find src tests/src -name '*.php' -print0 | xargs -0 -n1 -P4 -- php -l",
+        "test": [
+            "@lint",
+            "@unit",
+            "@cs"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "platform": {
+            "php": "7.2.28"
+        }
+    },
+    "extra": {
+        "scenarios": {
+            "symfony4": {
+                "require": {
+                    "symfony/console": "^4.4.11",
+                    "symfony/event-dispatcher": "^4.4.11",
+                    "symfony/filesystem": "^4.4.11",
+                    "symfony/finder": "^4.4.11",
+                    "symfony/process": "^4.4.11",
+                    "phpunit/phpunit": "^6",
+                    "nikic/php-parser": "^2"
+                },
+                "remove": [
+                    "codeception/phpunit-wrapper"
+                ],
+                "config": {
+                    "platform": {
+                        "php": "7.1.3"
+                    }
+                }
+            }
+        },
+        "branch-alias": {
+            "dev-master": "2.x-dev",
+            "dev-main": "2.x-dev"
+        }
+    },
+    "suggest": {
+        "pear/archive_tar": "Allows tar archives to be created and extracted in taskPack and taskExtract, respectively.",
+        "totten/lurkerlite": "For monitoring filesystem changes in taskWatch",
+        "patchwork/jsqueeze": "For minifying JS files in taskMinify",
+        "natxet/cssmin": "For minifying CSS files in taskMinify"
+    },
+    "conflict": {
+        "codegyre/robo": "*"
+    }
+}

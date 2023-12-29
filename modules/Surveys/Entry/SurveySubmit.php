@@ -64,6 +64,11 @@ function processSurvey(Surveys $survey, $trackerId, $contactId, $request)
     $response->happiness = -1;
     $response->happiness_text = '';
 
+    // STIC-Custom 20230116 AAM - Adding assigned user to response
+    // STIC#970
+    $response->assigned_user_id = $survey->assigned_user_id;
+    // END STIC-Custom
+
     foreach ($survey->get_linked_beans('surveys_surveyquestions', 'SurveyQuestions', 'sort_order') as $question) {
         $userResponse = $request['question'][$question->id];
         switch ($question->type) {

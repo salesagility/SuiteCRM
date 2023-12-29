@@ -1,0 +1,65 @@
+$include-button-highlights: $include-highlights !default;
+$include-button-uis: $include-default-uis !default;
+$include-default-button-icons: true !default;
+
+$button-arrow-size: 15px !default;
+$button-split-size: 19px !default;
+
+$button-icon-spacing: 4px !default;
+$button-border-radius: 3px !default;
+$button-border-width: 1px !default;
+$button-padding: 3px !default;
+$button-font-family: $font-family !default;
+$button-font-weight: bold !default;
+$button-font-size: $font-size !default;
+$button-font-weight: normal !default;
+$button-text-padding: 3px;
+
+$button-small-padding: 3px 6px 4px 6px !default;
+$button-small-text-padding: $button-padding !default;
+$button-small-icon-size: 16px !default;
+$button-medium-icon-size: 24px !default;
+$button-large-icon-size: 32px !default;
+
+$button-base-color: darken($base-color, 7%);
+$button-base-color-over: color-offset($button-base-color, 10%);
+$button-base-color-pressed: $button-base-color-over;
+$button-base-color-disabled: $button-base-color;
+
+$button-border-color: darken($button-base-color, 20%) !default; // Deprecated
+$button-border-color-over: darken($button-base-color, 25%) !default; // Deprecated
+$button-border-color-pressed: darken($button-base-color, 25%) !default; // Deprecated
+$button-border-color-disabled: $button-border-color !default; // Deprecated
+
+$button-background-gradient: $base-gradient !default;
+$button-background-gradient-over: $base-gradient !default;
+$button-background-gradient-pressed: $base-gradient !default;
+$button-background-gradient-disabled: $base-gradient !default;
+
+$button-color: color-by-background($button-base-color, 60%) !default; // Deprecated
+$button-color-disabled: lighten($button-color, 35) !default;
+
+/**
+ * Toolbar buttons
+ */
+$button-toolbar-arrow-size: 15px !default;
+$button-toolbar-split-size: 17px !default;
+
+$button-toolbar-base-color: $mixed-color !default;
+
+$button-toolbar-border-color: rgba($button-toolbar-base-color, 0) !default;
+$button-toolbar-border-color-over: desaturate(darken($button-toolbar-base-color, 15%), 15) !default;
+$button-toolbar-border-color-pressed: #002D71 !default;
+
+$button-toolbar-background-color: rgba($button-toolbar-base-color, 0) !default;
+$button-toolbar-background-color-over: $button-toolbar-base-color !default;
+$button-toolbar-background-color-pressed: $base-dark-color !default;
+
+$button-toolbar-background-gradient: null !default;
+$button-toolbar-background-gradient-over: $base-gradient !default;
+$button-toolbar-background-gradient-pressed: $base-gradient !default;
+
+$button-toolbar-font-weight: bold !default;
+$button-toolbar-font-family: $ui-font-family !default;
+
+$button-toolbar-font-size: $font-size-small !default;

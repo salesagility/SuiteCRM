@@ -1,0 +1,8 @@
+options:
+  progress-delay: 2
+  simulate: null
+command:
+  try:
+    config:
+      options:
+        opt: wow

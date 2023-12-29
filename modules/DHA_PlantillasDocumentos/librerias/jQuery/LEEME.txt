@@ -1,0 +1,2 @@
+
+A partir de la versión 6.5.0 ya no es necesario incluir la librería jQuery, ya que se ha introducido en SugarCRM

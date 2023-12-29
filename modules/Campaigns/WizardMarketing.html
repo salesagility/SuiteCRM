@@ -1128,55 +1128,96 @@
 			var ra = document.getElementById('reply_addr');
 
 			if(mailbox.value != '') {
-				if(oe_stored_options[mailbox.value]) {
-					var focusOe = oe_stored_options[mailbox.value];
-					// from name
-                                        
-                                        if(!fn.value) {
-                                            var fromName = focusOe.smtp_from_name ? focusOe.smtp_from_name : (
-                                                focusOe.from_name ? focusOe.from_name : (
-                                                    focusOe.name ? focusOe.name : ''
-                                                ));
-                                            if (fromName && fromName != "") {
-                                                fn.value = fromName;
-                                            } else {
-                                                fn.value = '';
-                                            }
-                                        }
+				// STIC 20210813 - Select the sender account of the inbound mailbox and not of the outbound mailbox
+				// STIC#379
+				// if(oe_stored_options[mailbox.value]) {
+				// 	var focusOe = oe_stored_options[mailbox.value];
+				// 	// from name
 
-					// from addr
-                                        if(!fa.value) {
-                                            var fromAddr = focusOe.smtp_from_addr ? focusOe.smtp_from_addr : (
-                                                focusOe.from_addr ? focusOe.from_addr : (
-                                                    focusOe.mail_smtpuser ? focusOe.mail_smtpuser : ''
-                                                ));
-                                            if (fromAddr && fromAddr != "") {
-                                                fa.value = fromAddr;
-                                            } else {
-                                                fa.value = '';
-                                            }
-                                        }
-                                }
-				if(ie_stored_options[mailbox.value]) {
+                //                         if(!fn.value) {
+                //                             var fromName = focusOe.smtp_from_name ? focusOe.smtp_from_name : (
+                //                                 focusOe.from_name ? focusOe.from_name : (
+                //                                     focusOe.name ? focusOe.name : ''
+                //                                 ));
+                //                             if (fromName && fromName != "") {
+                //                                 fn.value = fromName;
+                //                             } else {
+                //                                 fn.value = '';
+                //                             }
+                //                         }
+
+				// 	// from addr
+                //                         if(!fa.value) {
+                //                             var fromAddr = focusOe.smtp_from_addr ? focusOe.smtp_from_addr : (
+                //                                 focusOe.from_addr ? focusOe.from_addr : (
+                //                                     focusOe.mail_smtpuser ? focusOe.mail_smtpuser : ''
+                //                                 ));
+                //                             if (fromAddr && fromAddr != "") {
+                //                                 fa.value = fromAddr;
+                //                             } else {
+                //                                 fa.value = '';
+                //                             }
+                //                         }
+                //                 }
+				// if(ie_stored_options[mailbox.value]) {
+				// 	var focusIe = ie_stored_options[mailbox.value];
+				// 	// reply name
+                //                         if (!rn.value) {
+                //                             if (focusIe.from_name && focusIe.from_name != "") {
+                //                                 rn.value = focusIe.from_name;
+                //                             } else {
+                //                                 rn.value = '';
+                //                             }
+                //                         }
+
+                //                         // reply add
+                //                         if (!ra.value) {
+                //                             if(focusIe.from_addr && focusIe.from_addr != "") {
+                //                                 ra.value = focusIe.from_addr;
+                //                             } else {
+                //                                 ra.value = '';
+                //                             }
+                //                         }
+				// }
+				if (ie_stored_options[mailbox.value]) {
 					var focusIe = ie_stored_options[mailbox.value];
-					// reply name
-                                        if (!rn.value) {
-                                            if (focusIe.from_name && focusIe.from_name != "") {
-                                                rn.value = focusIe.from_name;
-                                            } else {
-                                                rn.value = '';
-                                            }
-                                        }
+					// from name
+					if (!fn.value) {
+						if (focusIe.from_name && focusIe.from_name != "") {
+							fn.value = focusIe.from_name;
+						} else {
+							fn.value = '';
+						}
+					}
 
-                                        // reply add
-                                        if (!ra.value) {
-                                            if(focusIe.from_addr && focusIe.from_addr != "") {
-                                                ra.value = focusIe.from_addr;
-                                            } else {
-                                                ra.value = '';
-                                            }
-                                        }
+					// from address
+					if (!fa.value) {
+						if (focusIe.from_addr && focusIe.from_addr != "") {
+							fa.value = focusIe.from_addr;
+						} else {
+							fa.value = '';
+						}
+					}
+
+					// reply name
+					if (!rn.value) {
+						if (focusIe.reply_to_name && focusIe.reply_to_name != "") {
+							rn.value = focusIe.reply_to_name;
+						} else {
+							rn.value = '';
+						}
+					}
+
+					// reply address
+					if (!ra.value) {
+						if (focusIe.reply_to_addr && focusIe.reply_to_addr != "") {
+							ra.value = focusIe.reply_to_addr;
+						} else {
+							ra.value = '';
+						}
+					}
 				}
+				// END STIC
 			} else {
 				fn.value = '';
 				fa.value = '';
@@ -1229,15 +1270,33 @@
 											if(marketingSelectValue == '' && typeof resp.selectedId != 'undefined' && resp.selectedId) {
 												marketingSelectValue = resp.selectedId;
 											}
-											for(var i=0; i<resp.data.length; i++) {
-												var elem = resp.data[i];
-												var selected = '';
-												if(elem.id == marketingSelectValue) {
-													selected = ' selected="selected"';
+											// STIC-Custom 20220112 MHP- Show the select input if there are active marketing emails
+											// STIC#539
+											// for(var i=0; i<resp.data.length; i++) {
+											// 	var elem = resp.data[i];
+											// 	var selected = '';
+											// 	if(elem.id == marketingSelectValue) {
+											// 		selected = ' selected="selected"';
 
-												}
-												$('#marketing_select').append('<option value="' + elem.id + '"' + selected + '>' + elem.name + '</option>');
+											// 	}
+											// 	$('#marketing_select').append('<option value="' + elem.id + '"' + selected + '>' + elem.name + '</option>');
+											// }
+											if (resp.data.length > 0) {
+												for(var i=0; i<resp.data.length; i++) {
+													var elem = resp.data[i];
+													var selected = '';
+													if(elem.id == marketingSelectValue) {
+														selected = ' selected="selected"';
+
+													}
+													$('#marketing_select').append('<option value="' + elem.id + '"' + selected + '>' + elem.name + '</option>');
+												} 
+											} else {
+												$('#marketing_select').hide();
+												$('#marketing_select').after("<div id='EmailInactiveText' style='color: red'>");
+												$('#EmailInactiveText').append(SUGAR.language.translate('Campaigns', 'LBL_CAMPAIGN_NO_ACTIVE_MARKETING_EMAILS'));
 											}
+											// END STIC-Custom
 											saveMarketingAndTemplate('getTemplateValidation');
 										}
 									});
@@ -1338,6 +1397,10 @@
 		</div>
 		<div class="template-panel-container panel-toolbar ">
 			<div class="template-container-full">
+				<!-- STIC-Custom 20220112 MHP- Add the if-else statement
+				STIC#539 -->
+				{if $CAMPAIGN_STATUS != 'Inactive'}	
+				<!-- END STIC -->
 				<div class="button-group">
 					<input type="hidden" name="wiz_home_next_step" value="1" />
 
@@ -1350,6 +1413,12 @@
 					</a>
 				</div>
 				<div class="button-group-separator"></div>
+				<!-- STIC-Custom 20220112 MHP- Add the if-else statement
+				STIC#539 -->
+				{else}
+					<div  class="button-group"> {$MOD.LBL_CAMPAIGN_INACTIVE_WIZARD} </div>
+				{/if}	
+				<!-- END STIC-Custom -->
 				<div class="button-group">
 					<a class="btn btn-primary btn-sm" href="index.php?module=Campaigns&action=DetailView&record={$CAMPAIGN_ID}" style="border-radius: 0px;">{$MOD.LBL_TODETAIL_BUTTON_TITLE}</a>
 				</div>

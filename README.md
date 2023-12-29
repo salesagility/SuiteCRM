@@ -1,74 +1,96 @@
 <a href="https://suitecrm.com">
-  <img width="180px" height="41px" src="https://suitecrm.com/wp-content/uploads/2017/12/logo.png" align="right" />
+  <img width="180px" height="60px" src="https://github.com/SinergiaTIC/SinergiaCRM-SuiteCRM/assets/125350097/af3300d0-1b17-427c-b681-1971d39a1528" align="right" />
 </a>
 
-# SuiteCRM 7.12.12
+# SinergiaCRM 1.0.0
 
-[![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=hotfix)](https://travis-ci.org/salesagility/SuiteCRM)
-[![codecov](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix/graph/badge.svg)](https://codecov.io/gh/salesagility/SuiteCRM/branch/hotfix)
-[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/suitecrm/Lobby)
-[![LICENSE](https://img.shields.io/github/license/suitecrm/suitecrm.svg)](https://github.com/salesagility/suitecrm/blob/hotfix/LICENSE.txt)
-[![GitHub contributors](https://img.shields.io/github/contributors/salesagility/suitecrm)](https://github.com/salesagility/SuiteCRM/graphs/contributors)
-[![Twitter](https://img.shields.io/twitter/follow/suitecrm.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=suitecrm)
+[![Wiki](https://img.shields.io/badge/Information-Wiki-lightgray)](https://wikisuite.sinergiacrm.org)
+[![LICENSE](https://img.shields.io/badge/License-AGPL_v3-orange.svg)](./LICENSE.txt)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5)](https://twitter.com/SinergiaCRM)
+[![Twitter](https://img.shields.io/twitter/follow/sinergiacrm?style=social&label=Follow)](https://twitter.com/SinergiaCRM)
+[![YouTube](https://img.shields.io/badge/Youtube-FF0000)](https://www.youtube.com/@SinergiaCRM)
 
-[Website](https://suitecrm.com) | 
-[Demo](https://suitecrm.com/demo/) |
-[Maintainers](https://salesagility.com) |
-[Contributors](https://github.com/salesagility/SuiteCRM/graphs/contributors) |
-[Community & Forum](https://suitecrm.com/suitecrm/forum) |
-[Partners](https://suitecrm.com/about/about-us/partners/) |
-[Extensions Directory](https://store.suitecrm.com/) |
-[Translations](https://crowdin.com/project/suitecrmtranslations) | [Code of Conduct](https://docs.suitecrm.com/community/code-of-conduct/)
+[Website](https://www.sinergiacrm.org) | 
+[Manual de uso](https://wikisuite.sinergiacrm.org/index.php?title=Manual_de_SinergiaCRM) |
+[Manual de instalación](https://github.com/SinergiaTIC/SinergiaCRM-SuiteCRM/wiki)
 
-[SuiteCRM](https://suitecrm.com) is the award-winning open-source, enterprise-ready Customer Relationship Management (CRM) software application.
-
-Our vision is to be the most adopted open source enterprise CRM in the world, giving users full control of their data and freedom to own and customise their business solution.
-
-Try out a free fully working [SuiteCRM demo available here](https://suitecrm.com/demo/)
-
-### Contribute [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/salesagility/SuiteCRM/issues)
-
-There are lots of ways to [contribute](https://docs.suitecrm.com/community/) to SuiteCRM
-
-* [Submit bug](https://docs.suitecrm.com/community/raising-issues/) reports and help us [verify fixes](https://docs.suitecrm.com/community/contributing-code/test-pull-requests/) as they are pushed up
-* Review and collaborate [source code](https://github.com/salesagility/SuiteCRM/pulls) changes
-* Join and engage with other SuiteCRM users and developers on the [forums](https://suitecrm.com/suitecrm/forum)
-* [Contribute bug fixes](https://docs.suitecrm.com/community/contributing-code/bugs/)
-* Help [translate](https://docs.suitecrm.com/community/contributing-to-docs/contributing-to-translation/) language packs
-* [Write and improve](https://docs.suitecrm.com/community/contributing-to-docs/) SuiteCRM documentation
-* Signing CLA - Only needs to be done once for all PRs and contributions.
+[Español](#Español) | [Català](#Català) | [English](#English)
 
 
-### Code Contributors
+# Español
 
-This project exists thanks to all the people who [contribute](https://github.com/salesagility/SuiteCRM/graphs/contributors) and more.
-<a href="https://github.com/salesagility/SuiteCRM/graphs/contributors"><img src="https://opencollective.com/SuiteCRM/contributors.svg?avatarHeight=36&width=890&button=false" /></a>
+## Acerca de SinergiaCRM
 
-You wanna buy the **core team** a coffee :coffee: or beer :beer:?
-Then consider a small [donation](https://opencollective.com/SuiteCRM/contribute) to help fuel our activities :heart:
+[SinergiaCRM](https://www.sinergiacrm.org/es) es una iniciativa de la Asociación SinergiaTIC, una entidad sin ánimo de lucro cuya misión es potenciar la capacidad de las organizaciones no lucrativas de adoptar estratégicamente y utilizar eficientemente las Tecnologías de la Información y la Comunicación (TIC). SinergiaCRM se basa en [SuiteCRM](https://github.com/suitecrm/suitecrm), que a su vez deriva de SugarCRM CE.
 
-### Security ###
+## Seguridad
 
-We take security seriously here at SuiteCRM so if you have discovered a security risk report it by
-emailing [security@suitecrm.com](mailto:security@suitecrm.com). This will be delivered to the product team who handle security issues.
-Please don't disclose security bugs publicly until they have been handled by the security team.
+#### Informar sobre vulnerabilidades
 
-Your email will be acknowledged within 24 hours during the business week (Mon - Fri), and you’ll receive a more
-detailed response to your email within 72 hours during the business week (Mon - Fri) indicating the next steps in
-handling your report.
+En SinergiaCRM la seguridad es una prioridad. Si has identificado una vulnerabilidad o algún riesgo para la seguridad en nuestro código, te agredeceremos que nos informes de ello lo antes posible enviando un correo electrónico a [info@sinergiacrm.org](mailto:info@sinergiacrm.org). En tu informe incluye, por favor, la siguiente información:
 
-### Roadmap ### 
+- Descripción detallada del problema.
+- Pasos para reproducir la vulnerabilidad.
+- Información adicional que pueda ser relevante.
 
-View the [Roadmap](https://suitecrm.com/roadmap/) and [LTS](https://suitecrm.com/lts/) for details on our planned features and future direction.
+En cuanto tengamos tu informe te confirmaremos su recepción, revisaremos la información proporcionada y adoptaremos las medidas necesarias. ¡Gracias por tu colaboración!
 
-### Support ###
+#### Divulgación responsable
 
-SuiteCRM is an open-source project. If you require help with support then please use our [support forum](https://suitecrm.com/suitecrm/forum/). By using the forums the knowledge is shared with everyone in the community. Our developer and community team members answer questions on the forum daily but it also allows the other members of the community to contribute. If you would like customisations to specifically fit your SuiteCRM needs then please visit the [website](https://suitecrm.com/).
+Por favor, evita divulgar públicamente detalles sobre cualquier vulnerabilidad hasta que hayamos tenido la oportunidad de abordarla y resolverla. Creemos en la divulgación responsable para garantizar la seguridad de aplicaciones, usuarios y datos y agradecemos tu contribución a preservar la seguridad de SinergiaCRM.
 
-### License [![AGPLv3](https://img.shields.io/github/license/suitecrm/suitecrm.svg)](./LICENSE.txt)
-
-SuiteCRM is published under the AGPLv3 license.
+## Licencia
+SinergiaCRM se distribuye bajo la [Licencia Pública General Affero de GNU (AGPLv3)](./LICENSE.txt). Consulta el archivo de licencia para obtener más detalles.
 
 
+# Català
+
+## Quant a SinergiaCRM
+
+[SinergiaCRM](https://www.sinergiacrm.org/ca) és una iniciativa de l'Associació SinergiaTIC, una entitat sense ànim de lucre que té per missió potenciar la capacitat de les organitzacions no lucratives d'adoptar estratègicament i utilitzar eficientment les Tecnologies de la Informació i la Comunicació (TIC). SinergiaCRM es basa en [SuiteCRM](https://github.com/suitecrm/suitecrm), que a la vegada deriva de SugarCRM CE.
+
+## Seguretat
+
+#### Informa'ns sobre vulnerabilitats
+
+A SinergiaCRM la seguretat és una prioritat. Si has identificat una vulnerabilitat o algun risc per a la seguretat al nostre codi, t'agrairem que ens n'informis tan aviat com puguis enviant-nos un correu electrònic a [info@sinergiacrm.org](mailto:info@sinergiacrm.org). Al teu informe inclou-hi, si us plau, la següent informació:
+
+- Descripció detallada del problema.
+- Passos per reproduir la vulnerabilitat.
+- Informació addicional que pugui ser rellevant.
+
+Un cop tinguem el teu informe et confirmarem la seva recepció, revisarem la informació proporcionada i adoptarem les mesures necessàries. Gràcies per la teva col·laboració!
+
+#### Divulgació responsable
+
+Si us plau, evita divulgar públicament detalls sobre qualsevol vulnerabilitat fins que haguem tingut l'oportunitat d'abordar-la i resoldre-la. Creiem en la divulgació responsable per garantir la seguretat d'aplicacions, usuaris i dades i agraïm la teva contribució a preservar la seguretat de SinergiaCRM.
+
+## Llicència
+SinergiaCRM es distribueix sota la [Llicència Pública General Affero de GNU (AGPLv3)](./LICENSE.txt). Consulta l'arxiu de llicència per obtenir-ne més detalls.
 
 
+# English
+
+## About SinergiaCRM
+
+[SinergiaCRM](https://www.sinergiacrm.org) is an initiative of the SinergiaTIC Association, a non-profit organization that seeks to enhance the capacity of non-profit organizations to strategically adopt and efficiently use Information and Communication Technologies (ICT). SinergiaCRM is based on [SuiteCRM](https://github.com/suitecrm/suitecrm), which in turn is derived from SugarCRM CE.
+
+## Security
+
+#### Vulnerability report
+
+In SinergiaCRM security is a priority. If you have identified any vulnerability or security risk in our code, we would appreciate it if you report it as soon as possible by sending an email to [info@sinergiacrm.org](mailto:info@sinergiacrm.org). Please include the following information in your report:
+
+- Detailed description of the issue.
+- Steps to reproduce the vulnerability.
+- Any additional information that may be relevant.
+
+Once we have your report we will confirm it to you, review the information provided and take necessary measures. Thank you for your collaboration!
+
+#### Responsible disclosure
+
+Please avoid publicly disclosing details about any vulnerability until we have had the opportunity to address and resolve it. We believe in responsible disclosure to ensure the security of applications, users and data and we appreciate your contribution to the security of SinergiaCRM.
+
+## License
+
+SinergiaCRM is distributed under the [GNU Affero General Public License (AGPLv3)](./LICENSE.txt). Refer to the license file for more details.

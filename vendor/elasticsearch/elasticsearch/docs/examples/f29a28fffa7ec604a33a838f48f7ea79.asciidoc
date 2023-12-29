@@ -1,0 +1,40 @@
+// query-dsl/query_filter_context.asciidoc:62
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'bool' => [
+                'must' => [
+                    [
+                        'match' => [
+                            'title' => 'Search',
+                        ],
+                    ],
+                    [
+                        'match' => [
+                            'content' => 'Elasticsearch',
+                        ],
+                    ],
+                ],
+                'filter' => [
+                    [
+                        'term' => [
+                            'status' => 'published',
+                        ],
+                    ],
+                    [
+                        'range' => [
+                            'publish_date' => [
+                                'gte' => '2015-01-01',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

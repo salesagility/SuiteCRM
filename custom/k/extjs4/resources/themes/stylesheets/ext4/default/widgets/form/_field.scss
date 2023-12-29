@@ -1,0 +1,146 @@
+/**
+ * Creates the base structure of form field.
+ * @member Ext.form.field.Base
+ */
+@mixin extjs-form-field {
+    .#{$prefix}form-field,
+    .#{$prefix}form-display-field {
+        margin: 0 0 0 0;
+
+        font: $form-field-font;
+        color: $form-field-color;
+    }
+
+    .#{$prefix}form-item-hidden {
+        margin: 0;
+    }
+
+    .#{$prefix}form-text,
+    textarea.#{$prefix}form-field {
+        padding: $form-field-padding;
+
+        background: repeat-x 0 0;
+        border: $form-field-border-width solid;
+
+        background-color: $form-field-background-color;
+        @if $form-field-background-image {
+            background-image: theme-background-image($theme-name, $form-field-background-image);
+        }
+
+        border-color: $form-field-border-color;
+    }
+
+    $form-field-content-height: $form-field-height - top($form-field-padding) - top($form-field-border-width) - bottom($form-field-padding) - bottom($form-field-border-width);
+    $form-field-line-height: $form-field-content-height - 3px;
+
+    .#{$prefix}form-text {
+        height: $form-field-content-height;
+        line-height: $form-field-line-height;
+        vertical-align: top;
+    }
+
+    .#{$prefix}ie8m {
+        .#{$prefix}form-text {
+            line-height: $form-field-line-height;
+        }
+    }
+
+    .#{$prefix}border-box .#{$prefix}form-text {
+        height: $form-field-height;
+    }
+
+    textarea.#{$prefix}form-field {
+        color: $form-field-color;
+        overflow: auto;
+        height: auto;
+        line-height: normal;
+        background: repeat-x 0 0;
+        background-color: $form-field-background-color;
+        @if $form-field-background-image {
+            background-image: theme-background-image($theme-name, $form-field-background-image);
+        }
+        resize: none; //Disable browser resizable textarea
+    }
+
+    .#{$prefix}border-box textarea.#{$prefix}form-field {
+        height: auto;
+    }
+
+    @if $include-safari {
+        .#{$prefix}safari.#{$prefix}mac textarea.#{$prefix}form-field {
+            margin-bottom: -2px; // another bogus margin bug, safari/mac only
+        }
+    }
+
+    .#{$prefix}form-focus,
+    textarea.#{$prefix}form-focus {
+        border-color: $form-field-focus-border-color;
+    }
+
+    .#{$prefix}form-invalid-field,
+    textarea.#{$prefix}form-invalid-field {
+        background-color: $form-field-invalid-background-color;
+        @if $form-field-invalid-background-image {
+            background-image: theme-background-image($theme-name, $form-field-invalid-background-image);
+            background-repeat: $form-field-invalid-background-repeat;
+            background-position: $form-field-invalid-background-position;
+        }
+        border-color: $form-field-invalid-border-color;
+    }
+
+    .#{$prefix}form-item {
+        font: $form-label-font;
+    }
+
+    .#{$prefix}form-empty-field, textarea.#{$prefix}form-empty-field {
+        color: $form-field-empty-color;
+    }
+
+    .#{$prefix}webkit {
+        .#{$prefix}form-empty-field {
+            line-height: $form-field-line-height;
+        }
+    }
+
+    .#{$prefix}form-display-field {
+        padding-top: 3px;
+    }
+
+    @if $include-ie {
+        /*
+        In oldIE, text inputs get a mysterious extra pixel of spacing above and below.
+        This is targeted at IE6-IE7 (all modes) and IE9+ Quirks mode.
+
+        IE8 quirks on Windows 7 requires this fix, but on
+        IE8 quirks on Windows XP, this is breaks the layout.
+        TODO: Check field input heights in IE8 quirks on Windows Vista.
+
+        Since we can't specifically target a specific version of Windows via CSS, we default to fixing it the XP way, for now.
+        */
+        .#{$prefix}quirks .#{$prefix}ie9p .#{$prefix}form-text,
+        .#{$prefix}ie7m .#{$prefix}form-text {
+            margin-top: -1px;
+            margin-bottom: -1px;
+        }
+
+        .#{$prefix}ie .#{$prefix}form-file {
+            height: $form-field-height + 1;
+
+            line-height: 18px;
+
+            vertical-align: middle;
+        }
+    }
+
+    .#{$prefix}field-default-toolbar .#{$prefix}form-text {
+        height: $form-toolbar-field-height - vertical($form-field-padding) - vertical($form-field-border-width);
+    }
+
+    .#{$prefix}border-box .#{$prefix}field-default-toolbar .#{$prefix}form-text {
+        height: $form-toolbar-field-height;
+    }
+
+    .#{$prefix}field-default-toolbar .#{$prefix}form-item-label-left {
+        padding-left: 4px;
+    }
+}

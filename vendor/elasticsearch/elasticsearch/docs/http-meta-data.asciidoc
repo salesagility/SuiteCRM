@@ -1,0 +1,70 @@
+[[http-meta-data]]
+=== HTTP Meta Data
+
+By default, the client sends some meta data about the HTTP connection using
+custom headers.
+
+You can disable or enable it using the following methods:
+
+
+==== Elastic Meta Header
+
+The client sends a `x-elastic-client-meta` header by default.
+This header is used to collect meta data about the versions of the components
+used by the client. For instance, a value of `x-elastic-client-meta` can be
+`es=7.14.0-s,php=7.4.11,t=7.14.0-s,a=0,cu=7.68.0`, where each value is the
+version of `es=Elasticsearch`, `t` is the transport version (same of client),
+`a` is asyncronouts (`0=false` by default) and `cu=cURL`.
+
+If you would like to disable it you can use the `setElasticMetaHeader()`
+method, as follows:
+
+[source,php]
+----
+$client = Elasticsearch\ClientBuilder::create()
+    ->setElasticMetaHeader(false)
+    ->build();
+----
+
+==== Include port number in Host header
+
+This is a special setting for the client that enables the port in the
+Host header. This setting has been introduced to prevent issues with
+HTTP proxy layers (see issue https://github.com/elastic/elasticsearch-php/issues/993[#993]).
+
+By default the port number is not included in the Host header.
+If you want you can enable it using the `includePortInHostHeader()` function,
+as follows:
+
+[source,php]
+----
+$client = Elasticsearch\ClientBuilder::create()
+    ->includePortInHostHeader(true)
+    ->build();
+----
+
+==== Send the API compatibility layer
+
+Starting from version 7.13, {es} supports a compatibility header in
+`Content-Type` and `Accept`. The PHP client can be configured to emit the following HTTP headers:
+
+[source]
+----
+Content-Type: application/vnd.elasticsearch+json; compatible-with=7
+Accept: application/vnd.elasticsearch+json; compatible-with=7
+----
+
+which signals to {es} that the client is requesting 7.x version of request and response
+bodies. This allows upgrading from 7.x to 8.x version of Elasticsearch without upgrading
+everything at once. {es} should be upgraded first after the compatibility header is
+configured and clients should be upgraded second.
+
+To enable this compatibility header, you need to create an `ELASTIC_CLIENT_APIVERSIONING`
+environment variable and set it to `true` or `1`, before the `Client` class initialization.
+
+In PHP you can set this environment variable as follows:
+
+[source,php]
+----
+putenv("ELASTIC_CLIENT_APIVERSIONING=true");
+----

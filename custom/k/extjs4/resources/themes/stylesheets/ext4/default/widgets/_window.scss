@@ -1,0 +1,232 @@
+/**
+ * Creates the base structure of an Ext.Window
+ * @member Ext.window.Window
+ */
+@mixin extjs-window {
+    .#{$prefix}window {
+        outline: none;
+        overflow: hidden;
+
+        .#{$prefix}window-wrap {
+            position: relative;
+        }
+    }
+
+    .#{$prefix}window-body {
+        position: relative;
+        border-style: $window-body-border-style;
+        overflow: hidden;
+    }
+
+    //maximized window
+    .#{$prefix}window-maximized {
+        .#{$prefix}window-wrap {
+            .#{$prefix}window-header {
+                @include important-no-border-radius;
+            }
+        }
+    }
+
+    .#{$prefix}window-header-top {
+        margin-bottom: -2px;
+    }
+    .#{$prefix}window-header-body-horizontal {
+        margin-top: -1px;
+    }
+
+    .#{$prefix}window-header-bottom {
+        margin-top: -1px;
+        margin-bottom: -1px;
+    }
+
+    .#{$prefix}window-header-left {
+        margin-right: -1px;
+    }
+
+    .#{$prefix}window-header-right {
+        margin-left: -1px;
+    }
+
+    .#{$prefix}window-header-vertical {
+        .#{$prefix}surface {
+            padding-left: 1px;
+        }
+    }
+
+    // collapsed window header styles
+    .#{$prefix}window-collapsed {
+        .#{$prefix}window-header-vertical {
+            @include border-radius(5px);
+        }
+        .#{$prefix}window-header-horizontal {
+            @include border-radius(5px);
+        }
+
+        // Padding changes for collapsed headers.
+        .#{$prefix}window-header-left {
+            padding-right: 5px !important;
+            margin-right: 0;
+        }
+
+        .#{$prefix}window-header-right {
+            padding-left: 5px !important;
+            margin-left: 0;
+        }
+
+        .#{$prefix}window-header-top {
+            padding-bottom: 5px !important;
+            margin-bottom: -1px;
+        }
+
+        .#{$prefix}window-header-bottom {
+            padding-top: 5px !important;
+            margin-top: 0;
+        }
+    }
+
+    .#{$prefix}window-header-left,
+    .#{$prefix}window-header-right {
+        .#{$prefix}vml-base {
+            left: -3px !important;
+        }
+    }
+
+    .#{$prefix}opera,
+    .#{$prefix}strict .#{$prefix}ie9 {
+        .#{$prefix}window-header-vertical {
+            .#{$prefix}surface {
+                padding-left: 2px;
+            }
+        }
+    }
+
+    .#{$prefix}window-header-text-container {
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+    }
+
+    .#{$prefix}window-header-text {
+        @include no-select;
+        white-space: nowrap;
+    }
+
+    @include extjs-window-ui(
+        'default',
+
+        $ui-border-radius: $window-border-radius,
+        $ui-border-color: $window-border-color,
+        $ui-inner-border-color: $window-inner-border-color,
+
+        $ui-header-color: $window-header-color,
+
+        $ui-body-border-color: $window-body-border-color,
+        $ui-body-background-color: $window-body-background-color,
+        $ui-body-color: $window-body-color,
+
+        $ui-background-color: $window-background-color
+    );
+
+    .#{$prefix}window-body-plain {
+        background: transparent;
+    }
+}
+
+/**
+ * Creates a visual theme for an Ext.Panel
+ * @member Ext.window.Window
+ */
+@mixin extjs-window-ui(
+    $ui-label,
+
+    $ui-padding: null,
+    $ui-border-radius: null,
+    $ui-border-color: null,
+    $ui-inner-border-color: null,
+
+    $ui-header-color: null,
+    $ui-header-font-size: $window-header-font-size,
+    $ui-header-font-weight: $window-header-font-weight,
+
+    $ui-body-border-color: null,
+    $ui-body-background-color: null,
+    $ui-body-color: null,
+
+    $ui-background-color: null
+){
+    $ui-header-text-height: $window-header-line-height;
+
+    .#{$prefix}window-#{$ui-label} {
+        @if $ui-border-color != null { border-color: $ui-border-color; }
+        @if $ui-border-radius != null { @include border-radius($ui-border-radius); }
+
+        @if $ui-inner-border-color != null { @include inner-border($window-inner-border-width, $ui-inner-border-color); }
+    }
+
+    @if $ui-border-radius != null {
+        @include x-frame(
+            'window',
+            $ui-label,
+
+            $border-radius: $ui-border-radius,
+            $border-width: $window-border-width,
+            $padding: $ui-padding,
+            $background-color: $ui-background-color
+        );
+    }
+
+    .#{$prefix}window-body-#{$ui-label} {
+        @if $ui-body-border-color !=null {
+            border-color: $ui-body-border-color;
+            border-width: $window-body-border-width;
+        }
+
+        @if $ui-body-background-color != null { background: $ui-body-background-color; }
+        @if $ui-body-color != null { color: $ui-body-color; }
+    }
+
+    .#{$prefix}window-header-#{$ui-label} {
+        @if $ui-header-font-size != null { font-size: $ui-header-font-size; }
+        @if $ui-border-color != null { border-color: $ui-border-color; }
+        zoom:1;
+    }
+
+    .#{$prefix}window-header-text-#{$ui-label} {
+        @if $ui-header-color != null { color: $ui-header-color; }
+        @if $ui-header-font-weight != null { font-weight: $ui-header-font-weight; }
+
+        line-height: $ui-header-text-height;
+
+        font-family: $font-family;
+        font-size: $ui-header-font-size;
+    }
+
+    @if $ui-border-radius != null {
+        @include x-frame('window-header', '#{$ui-label}-top',    top($ui-border-radius) right($ui-border-radius) 0 0, top($window-border-width) right($window-border-width) 0 left($window-border-width), 4px 5px 0, $ui-background-color);
+        @include x-frame('window-header', '#{$ui-label}-right',  0 right($ui-border-radius) bottom($ui-border-radius) 0, top($window-border-width) right($window-border-width) bottom($window-border-width) 0, 5px 4px 5px 0, $ui-background-color);
+        @include x-frame('window-header', '#{$ui-label}-bottom', 0 0 bottom($ui-border-radius) left($ui-border-radius), 0 right($window-border-width) bottom($window-border-width) left($window-border-width), 0 5px 4px, $ui-background-color);
+        @include x-frame('window-header', '#{$ui-label}-left',   top($ui-border-radius) 0 0 left($ui-border-radius), top($window-border-width) 0 bottom($window-border-width) left($window-border-width), 5px 0px 5px 4px, $ui-background-color);
+
+        // collapsed window header styles
+        @include x-frame('window-header', '#{$ui-label}-collapsed-top',    $ui-border-radius, $window-border-width, 4px 5px 4px, $ui-background-color);
+        @include x-frame('window-header', '#{$ui-label}-collapsed-right',  $ui-border-radius, $window-border-width, 5px 4px, $ui-background-color);
+        @include x-frame('window-header', '#{$ui-label}-collapsed-bottom', $ui-border-radius, $window-border-width, 4px 5px 4px, $ui-background-color);
+        @include x-frame('window-header', '#{$ui-label}-collapsed-left',   $ui-border-radius, $window-border-width, 5px 4px, $ui-background-color);
+    }
+
+    .#{$prefix}window-header-#{$ui-label}-top {
+        @include inner-border(1px 1px 0, $ui-inner-border-color);
+    }
+
+    .#{$prefix}window-header-#{$ui-label}-right {
+        @include inner-border(1px 1px 1px 0, $ui-inner-border-color);
+    }
+
+    .#{$prefix}window-header-#{$ui-label}-bottom {
+        @include inner-border(0px 1px 1px, $ui-inner-border-color);
+    }
+
+    .#{$prefix}window-header-#{$ui-label}-left {
+        @include inner-border(1px 0 1px 1px, $ui-inner-border-color);
+    }
+}

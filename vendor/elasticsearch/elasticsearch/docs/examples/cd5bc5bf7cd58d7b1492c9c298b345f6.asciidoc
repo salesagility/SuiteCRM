@@ -1,0 +1,27 @@
+// aggregations/bucket/terms-aggregation.asciidoc:806
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'aggs' => [
+            'actors' => [
+                'terms' => [
+                    'field' => 'actors',
+                    'size' => 10,
+                    'collect_mode' => 'breadth_first',
+                ],
+                'aggs' => [
+                    'costars' => [
+                        'terms' => [
+                            'field' => 'actors',
+                            'size' => 5,
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

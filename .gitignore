@@ -6,20 +6,20 @@ cache/*
 upload/*
 !upload/index.html
 # Ignore some files and directories from the custom directory.
-custom/
+# custom/
 custom/history/*
 custom/blowfish/*
 custom/modulebuilder/*
 custom/working/*
 custom/modules/*/Ext/
-custom/modules/unified_search_modules_display.php
+# custom/modules/unified_search_modules_display.php
 # Ignore AOD indexes
 modules/AOD_Index/Index/*
 install/status.json
 # Ignore PDF Fonts
 modules/AOS_PDF_Templates/PDF_Lib/ttfontdata/
 # Configuration files should be ignored.
-/config.php
+# /config.php
 /config_override.php
 /config_si.php
 tests/config.test.php
@@ -81,8 +81,8 @@ lang_cmp.php
 SuiteCRM.kdev4
 
 #Ignore composer vendor folder
-vendor/
-public/
+# vendor/
+# public/
 
 .php_cs.cache
 
@@ -104,7 +104,7 @@ tests/_output/*
 BrowserStackLocal
 browserstack.err
 cache/
-custom/**/
+# custom/**/
 .sass-cache/
 
 # Ignore testing environment
@@ -126,3 +126,6 @@ codeception.yml
 .env
 .env.test
 .env.dev
+
+# Ignore application concatenated files
+/custom/application/Ext/*

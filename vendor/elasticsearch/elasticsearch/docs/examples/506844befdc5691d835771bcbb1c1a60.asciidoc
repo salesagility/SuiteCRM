@@ -1,0 +1,20 @@
+// getting-started.asciidoc:392
+
+[source, php]
+----
+$params = [
+    'index' => 'bank',
+    'body' => [
+        'query' => [
+            'match_all' => [
+            ],
+        ],
+        'sort' => [
+            [
+                'account_number' => 'asc',
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

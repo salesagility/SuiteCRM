@@ -1,0 +1,7 @@
+site_name: Consolidation Output Formatters docs
+theme: readthedocs
+repo_url: https://github.com/consolidation/output-formatters
+include_search: true
+pages:
+- Home: index.md
+- API: api.md

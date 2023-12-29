@@ -1,0 +1,26 @@
+language: php
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 7.2
+    - php: 7.1
+    - php: 7.0.11
+    - php: 5.6
+
+sudo: false
+
+cache:
+  apt: true
+  directories:
+  - "$HOME/.composer/cache"
+  - "vendor"
+
+install:
+  - composer install
+
+script:
+  - composer test
+
+after_success:
+  - travis_retry php vendor/bin/coveralls -v

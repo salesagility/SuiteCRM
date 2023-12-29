@@ -187,6 +187,7 @@ $sugar_smarty->assign('SUBMIT_BUTTON', '<input title="' . $mod_strings['LBL_LOGI
 if (!empty($_REQUEST['guid'])) {
     $sugar_smarty->assign("GUID", $_REQUEST['guid']);
 }
+
 if (!empty($_REQUEST['key'])) {
     $sugar_smarty->assign("KEY", $_REQUEST['key']);
 }

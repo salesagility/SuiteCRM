@@ -1,0 +1,8 @@
+// $color-mode: get-color-mode($neutral-color) !default;
+$stroke-color: color-offset($neutral-color, 20%, dark) !default;
+
+$clear: rgba($base-color, 0);
+
+// $content-color: color-by-background($base-color, 100%);
+$content-color: color-offset($neutral-color, 30%);
+$mixed-color: hsla(hue($base-color), saturation($base-color), lightness($neutral-color), opacity($neutral-color));

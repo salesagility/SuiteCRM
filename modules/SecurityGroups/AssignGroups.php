@@ -238,15 +238,28 @@ function send_massassign(mode, no_record_txt, start_string, end_string, del) {
 							ar.push(document.MassUpdate.elements[wp].value);
 				}
 			}
-			if(document.MassUpdate.uid.value != '') { 
-                document.MassUpdate.uid.value += ',';
-                document.MassUpdate.uid.value += ar.join(',');
-                document.MassAssign_SecurityGroups.uid.value = document.MassUpdate.uid.value;
-                if(document.MassAssign_SecurityGroups.uid.value == '') {
-				alert(no_record_txt);
-				return false;
-                }
+			// STIC CUSTOM - JCH - 20231016 - Recover mass GS assign funcionality
+            // STIC#1259 
+            // if(document.MassUpdate.uid.value != '') { 
+            //     document.MassUpdate.uid.value += ',';
+            //     document.MassUpdate.uid.value += ar.join(',');
+            //     document.MassAssign_SecurityGroups.uid.value = document.MassUpdate.uid.value;
+            //     if(document.MassAssign_SecurityGroups.uid.value == '') {
+			// 	alert(no_record_txt);
+			// 	return false;
+            //     }
+            // }
+            if (document.MassAssign_SecurityGroups.uid.value !== '') {
+                document.MassAssign_SecurityGroups.uid.value += ',';
             }
+              
+            document.MassAssign_SecurityGroups.uid.value += ar.join(',');
+             
+            if (document.MassAssign_SecurityGroups.uid.value === '') {
+                alert(no_record_txt);
+                return false;
+            }
+            // END STIC
 			break;
 		case 'entire':
 			var entireInput = document.createElement('input');

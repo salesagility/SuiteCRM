@@ -411,6 +411,61 @@ class AOW_WorkFlow extends Basic
                     $condition_module,
                     $query
                 );
+            // STIC CUSTOM 20231120 JBL - Erroneus Query in Workflow when related fields are in other table but same module
+            // STIC#1306
+            } else if (isset($data['source']) && $data['source'] == 'non-db' && $data['type'] == 'relate' && !empty($data['link'])) {
+                $rel = $data['link'];
+                if (!isset($query['join'][$rel])) {
+                    if ($condition_module->load_relationship($rel)) {
+                        $join = $condition_module->$rel->getJoin([
+                            'join_type' => 'LEFT JOIN',
+                            'join_table_alias' => str_replace('.', '_', $rel),
+                            'left_join_table_alias' => $table_alias,
+                            'right_join_table_alias' => $table_alias
+                        ], true);
+                        $query['join'][$rel] = $join['join'];
+                        $query['select'][] = $join['select'] . " AS '" . str_replace('.', '_', $rel) . "_id'";
+                    }
+                }
+                $relObject = $condition_module->$rel;
+            
+                if (!empty($relObject)) {
+                    if ($relObject->getRelationshipObject()->type == 'one-to-many') {
+                        $field = $table_alias . '.' . $data['id_name'];
+                    } else {
+                        $targetTable = $relObject->getRelationshipObject()->getRelationshipTable();
+                        $field = $targetTable . '.' . $data['id_name'];
+                    }
+                } else {
+                    $field = $table_alias . '.' . $condition->field;
+                }
+            } else if (isset($data['source']) && $data['source'] == 'non-db' && $data['type'] == 'relate') {
+                $relModule = $data['module'];
+                $relBean = BeanFactory::getBean($relModule);
+                $relAlias = $data['id'];
+                $id_name = $data['id_name'];
+                $parentFieldDef = $condition_module->getFieldDefinition($data['id_name']);
+                if (!empty($parentFieldDef['source']) && $parentFieldDef['source'] == 'custom_fields') {
+                    $query = $this->build_flow_custom_query_join(
+                        $table_alias,
+                        $table_alias . '_cstm',
+                        $condition_module,
+                        $query
+                    );
+                    $table_alias = $table_alias . '_cstm';
+                }
+                $primaryKey = $relBean->getPrimaryFieldDefinition();
+                if (!isset($query['join'][$relAlias])) {
+                    $query['join'][$relAlias] = ' LEFT JOIN ' . $relBean->getTableName()
+                        . ' ' . $relAlias . ' ON ' . $table_alias . '.' . $id_name . ' = ' . $relAlias . '.' . $primaryKey['name'];
+                }
+                $field = $relAlias . '.' . $data['rname'];
+                $relFieldDef = $relBean->getFieldDefinition($data['rname']);
+            
+                if (isset($relFieldDef['db_concat_fields'])) {
+                    $field = $this->db->concat($relAlias, $relFieldDef['db_concat_fields']);
+                }
+            // End STIC CUSTOM
             } else {
                 $field = $table_alias.'.'.$condition->field;
             }
@@ -470,6 +525,24 @@ class AOW_WorkFlow extends Basic
                             $field = 'DATE('.$field.')';
                             $value = 'Curdate()';
                         }
+                    // STIC-Custom AAM 20210419 - Modification to add the condition Anniversary.
+                    // STIC#712
+                    } else if($params[0] == 'anniversary'){
+                        if($sugar_config['dbconfig']['db_type'] == 'mssql'){ 
+                            // We keep this condition, although SinergiaCRM doesn't use MSSQL
+                        } else { 
+                            // In order the "anniversary" option can be handled in a similar way
+                            // to the other date based cases (today, now, etc.) and being aware
+                            // that in order to detect an anniversary the year is not relevant (we only
+                            // need month and day), "we place in the same year" the two dates to compare.
+                            // We arbitrarily choose 1980 because it is a leap year and will allow 
+                            // working with 29/2 and will not cause errors in queries, 
+                            // although for "anniversary" purposes it will only detect it if the current year
+                            // is also a leap one. To always detect it additional code should be written.
+                            $value = 'DATE(date_format(curdate(),"1980-%m-%d"))'; 
+                            $field = 'DATE(date_format('.$field.',"1980-%m-%d"))'; 
+                        }
+                    // END STIC
                     } else {
                         if (isset($params[0]) && $params[0] == 'today') {
                             if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
@@ -694,7 +767,7 @@ class AOW_WorkFlow extends Basic
                     $condition->field = $data['id_name'];
                 }
                 $field = $condition_bean->$field;
-
+                
                 if (in_array($data['type'], $dateFields)) {
                     $field = strtotime($field);
                 }
@@ -746,6 +819,21 @@ class AOW_WorkFlow extends Basic
                             $dateType = 'date';
                             $value = date('Y-m-d');
                             $field = strtotime(date('Y-m-d', $field));
+                        // STIC-Custom AAM 20210419 - Modification to add the condition Anniversary.
+                        // STIC#712
+                        } else if($params[0] == 'anniversary'){
+                            $dateType = 'date'; 
+                            // In order the "anniversary" option can be handled in a similar way
+                            // to the other date based cases (today, now, etc.) and being aware
+                            // that in order to detect an anniversary the year is not relevant (we only
+                            // need month and day), "we place in the same year" the two dates to compare.
+                            // We arbitrarily choose 1980 because it is a leap year and will allow 
+                            // working with 29/2 and will not cause errors in queries, 
+                            // although for "anniversary" purposes it will only detect it if the current year
+                            // is also a leap one. To always detect it additional code should be written.
+                            $value = date('1980-m-d');
+                            $field = strtotime(date('1980-m-d', $field));
+                        // END STIC
                         } else {
                             if ($params[0] == 'today') {
                                 $dateType = 'date';
@@ -822,7 +910,8 @@ class AOW_WorkFlow extends Basic
                             $value = strtotime($value);
                         } elseif ($data['type'] == 'bool' && (!(bool)$value || strtolower($value) == 'false')) {
                             $value = 0;
-                        }
+                        } 
+
                         $type = $data['dbType'] ?? $data['type'];
                         if ((strpos($type, 'char') !== false || strpos($type, 'text') !== false) && !empty($field)) {
                             $field = from_html($field);
@@ -964,6 +1053,10 @@ class AOW_WorkFlow extends Basic
                     $action_name = $custom_action_name;
                 }
 
+                // STIC-Custom 20230922 JBL - Fix Multiple workflow executions for New_Records and Modified_Records
+                // STIC#1232
+                $oldDateEntered = $bean->date_entered;
+                // END STIC-Custom
 
                 $flow_action = new $action_name($action->id);
                 if (!$flow_action->run_action($bean, unserialize(base64_decode($action->parameters)), $in_save)) {
@@ -972,6 +1065,13 @@ class AOW_WorkFlow extends Basic
                 } else {
                     $processed->aow_actions->add($action->id, array('status' => 'Complete'));
                 }
+
+                // STIC-Custom 20230922 JBL - Fix Multiple workflow executions for New_Records and Modified_Records
+                // STIC#1232
+                if (!isset($bean->date_entered) && $bean->fetched_row == false) {
+                    $bean->date_entered = $oldDateEntered; 
+                }
+                // END STIC-Custom
             }
         }
 

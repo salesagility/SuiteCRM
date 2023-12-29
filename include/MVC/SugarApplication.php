@@ -1,11 +1,13 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
  * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -27,16 +29,20 @@
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
  *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ * 
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * SugarCRM" logo, "Supercharged by SuiteCRM" logo and “Nonprofitized by SinergiaCRM” logo. 
+ * If the display of the logos is not reasonably feasible for technical reasons, 
+ * the Appropriate Legal Notices must display the words "Powered by SugarCRM", 
+ * "Supercharged by SuiteCRM" and “Nonprofitized by SinergiaCRM”. 
  */
+
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
@@ -428,7 +434,11 @@ class SugarApplication
         }
 
         if (!is_null($theme) && !headers_sent()) {
-            self::setCookie('sugar_user_theme', $theme, time() + 31536000, null, null, isSSL(), true); // expires in a year
+            // STIC-Custom 20210903 AAM - PR #398 - Change default cookie store path
+            // STIC#398
+            // self::setCookie('sugar_user_theme', $theme, time() + 31536000, null, null, isSSL(), true); // expires in a year
+            self::setCookie('sugar_user_theme', $theme, time() + 31536000, "/", null, isSSL(), true); // expires in a year
+            // END STIC
         }
 
         SugarThemeRegistry::set($theme);
@@ -786,7 +796,11 @@ class SugarApplication
         $name,
         $value,
         $expire = 0,
-        $path = null,
+        // STIC-Custom 20210903 AAM - PR #398 - Change default cookie store path
+        // STIC#398
+        // $path = null,
+        $path = "/",
+        // END STIC
         $domain = null,
         $secure = false,
         $httponly = true

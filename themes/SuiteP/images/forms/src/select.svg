@@ -13,7 +13,7 @@
    height="32px"
    id="svg2985"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="select.svg"
    inkscape:export-filename="/var/www/html/sdk/instances/suitecrm-development-mysql/themes/SuiteP/images/forms/select.png"
    inkscape:export-xdpi="135"
@@ -27,17 +27,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="11.197802"
-     inkscape:cx="0.19332651"
-     inkscape:cy="16"
+     inkscape:zoom="9.1813396"
+     inkscape:cx="40.915342"
+     inkscape:cy="-9.8810316"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:grid-bbox="true"
      inkscape:document-units="px"
-     inkscape:window-width="1920"
-     inkscape:window-height="1056"
-     inkscape:window-x="1920"
-     inkscape:window-y="24"
+     inkscape:window-width="1874"
+     inkscape:window-height="1015"
+     inkscape:window-x="46"
+     inkscape:window-y="36"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata2990">
@@ -47,7 +47,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -56,7 +56,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
     <rect
-       style="fill:#a5e8d6;fill-opacity:1;stroke:none"
+       style="fill:#e2e69e;fill-opacity:1;stroke:none"
        id="rect3764"
        width="16"
        height="32"

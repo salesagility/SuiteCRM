@@ -269,7 +269,13 @@ class Calendar
                 $item['type'] = strtolower($act->sugar_bean->object_name);
                 $item['assigned_user_id'] = $act->sugar_bean->assigned_user_id;
                 $item['record'] = $act->sugar_bean->id;
-                $item['name'] = $act->sugar_bean->name . ' ' . $act->sugar_bean->assigned_user_name;
+
+                // STIC-Custom 20230918 - ART - Incorrect names with quotes in the Calendar
+                // STIC#1222
+                // $item['name'] = $act->sugar_bean->name . ' ' . $act->sugar_bean->assigned_user_name;
+                $item['name'] = html_entity_decode($act->sugar_bean->name, ENT_QUOTES) . ' ' . $act->sugar_bean->assigned_user_name;
+                // END STIC-Custom 20230919 - ART
+
                 $item['description'] = $act->sugar_bean->description;
 
                 if (isset($act->sugar_bean->duration_hours)) {

@@ -1,0 +1,147 @@
+@mixin extjs-form-htmleditor {
+    .#{$prefix}html-editor-wrap {
+//        border: 1px solid $html-editor-border-color;
+        
+        .#{$prefix}toolbar {
+            border-top-width: 0;
+            border-left-width: 0;
+            border-right-width: 0;
+        }
+        
+        textarea {
+            
+        }
+
+        iframe {
+            padding: $form-field-padding;
+
+            background: repeat-x 0 0;
+            border: $form-field-border-width solid;
+
+            background-color: $form-field-background-color;
+
+            // @todo Bring this back with proper gradient/slicing
+    /*        @if $form-field-background-image {
+                background-image: theme-background-image($theme-name, $form-field-background-image);
+            }*/
+
+            border-color: #BEC0C0 #E0E1E2 #E0E1E2 #E0E1E2;
+        }
+    }
+
+    // Icons
+//    .#{$prefix}html-editor-tb .#{$prefix}btn-text,
+//    .#{$prefix}html-editor-tb .#{$prefix}edit-bold,
+//    .#{$prefix}menu-item img.#{$prefix}edit-bold,
+//    .#{$prefix}html-editor-tb .#{$prefix}edit-italic,
+//    .#{$prefix}menu-item img.#{$prefix}edit-italic,
+//    .#{$prefix}html-editor-tb .#{$prefix}edit-underline,
+//    .#{$prefix}menu-item img.#{$prefix}edit-underline,
+//    .#{$prefix}html-editor-tb .#{$prefix}edit-forecolor,
+//    .#{$prefix}menu-item img.#{$prefix}edit-forecolor,
+//    .#{$prefix}html-editor-tb .#{$prefix}edit-backcolor,
+//    .#{$prefix}menu-item img.#{$prefix}edit-backcolor,
+//    .#{$prefix}html-editor-tb .#{$prefix}edit-justifyleft,
+//    .#{$prefix}menu-item img.#{$prefix}edit-justifyleft,
+//    .#{$prefix}html-editor-tb .#{$prefix}edit-justifycenter,
+//    .#{$prefix}menu-item img.#{$prefix}edit-justifycenter,
+//    .#{$prefix}html-editor-tb .#{$prefix}edit-justifyright,
+//    .#{$prefix}menu-item img.#{$prefix}edit-justifyright,
+//    .#{$prefix}html-editor-tb .#{$prefix}edit-insertorderedlist,
+//    .#{$prefix}menu-item img.#{$prefix}edit-insertorderedlist,
+//    .#{$prefix}html-editor-tb .#{$prefix}edit-insertunorderedlist,
+//    .#{$prefix}menu-item img.#{$prefix}edit-insertunorderedlist,
+//    .#{$prefix}html-editor-tb .#{$prefix}edit-increasefontsize,
+//    .#{$prefix}menu-item img.#{$prefix}edit-increasefontsize,
+//    .#{$prefix}html-editor-tb .#{$prefix}edit-decreasefontsize,
+//    .#{$prefix}menu-item img.#{$prefix}edit-decreasefontsize,
+//    .#{$prefix}html-editor-tb .#{$prefix}edit-sourceedit,
+//    .#{$prefix}menu-item img.#{$prefix}edit-sourceedit,
+//    .#{$prefix}html-editor-tb .#{$prefix}edit-createlink,
+//    .#{$prefix}menu-item img.#{$prefix}edit-createlink {
+//        background-image: theme-background-image($theme-name, 'WYSIWYG.png');
+//    }
+
+    .x-html-editor-tb {
+        span.x-btn-icon {
+            background-image: theme-background-image($theme-name, 'WYSIWYG.png');
+        }
+
+        .x-btn-over {
+            span.x-btn-icon {
+                background-position-y: -16px;
+            }
+        }
+
+        .x-btn-pressed {
+            span.x-btn-icon {
+                background-position-y: -48px;
+            }
+        }
+    }
+
+    .#{$prefix}html-editor-tb .#{$prefix}btn-text { background:transparent no-repeat; }
+
+    .#{$prefix}html-editor-tb .#{$prefix}edit-bold,
+    .#{$prefix}menu-item img.#{$prefix}edit-bold { background-position:0 0; }
+
+    .#{$prefix}html-editor-tb .#{$prefix}edit-italic,
+    .#{$prefix}menu-item img.#{$prefix}edit-italic { background-position:-16px 0; }
+
+    .#{$prefix}html-editor-tb .#{$prefix}edit-underline,
+    .#{$prefix}menu-item img.#{$prefix}edit-underline { background-position:-32px 0; }
+
+    .#{$prefix}html-editor-tb .#{$prefix}edit-forecolor,
+    .#{$prefix}menu-item img.#{$prefix}edit-forecolor { background-position:-160px 0; }
+
+    .#{$prefix}html-editor-tb .#{$prefix}edit-backcolor,
+    .#{$prefix}menu-item img.#{$prefix}edit-backcolor { background-position:-176px 0; }
+
+    .#{$prefix}html-editor-tb .#{$prefix}edit-justifyleft,
+    .#{$prefix}menu-item img.#{$prefix}edit-justifyleft { background-position:-80px 0; }
+
+    .#{$prefix}html-editor-tb .#{$prefix}edit-justifycenter,
+    .#{$prefix}menu-item img.#{$prefix}edit-justifycenter { background-position:-96px 0; }
+
+    .#{$prefix}html-editor-tb .#{$prefix}edit-justifyright,
+    .#{$prefix}menu-item img.#{$prefix}edit-justifyright { background-position:-112px 0; }
+
+    .#{$prefix}html-editor-tb .#{$prefix}edit-insertorderedlist,
+    .#{$prefix}menu-item img.#{$prefix}edit-insertorderedlist { background-position:-144px 0; }
+
+    .#{$prefix}html-editor-tb .#{$prefix}edit-insertunorderedlist,
+    .#{$prefix}menu-item img.#{$prefix}edit-insertunorderedlist { background-position:-160px 0; }
+
+    .#{$prefix}html-editor-tb .#{$prefix}edit-increasefontsize,
+    .#{$prefix}menu-item img.#{$prefix}edit-increasefontsize { background-position:-48px 0; }
+
+    .#{$prefix}html-editor-tb .#{$prefix}edit-decreasefontsize,
+    .#{$prefix}menu-item img.#{$prefix}edit-decreasefontsize { background-position:-64px 0; }
+
+    .#{$prefix}html-editor-tb .#{$prefix}edit-sourceedit,
+    .#{$prefix}menu-item img.#{$prefix}edit-sourceedit { background-position:-176px 0; }
+
+    .#{$prefix}html-editor-tb .#{$prefix}edit-createlink,
+    .#{$prefix}menu-item img.#{$prefix}edit-createlink { background-position: -128px 0; }
+
+
+    .#{$prefix}html-editor-tip .#{$prefix}tip-bd .#{$prefix}tip-bd-inner {
+        padding: 5px;
+        padding-bottom: 1px;
+    }
+
+    .#{$prefix}html-editor-tb {
+        .#{$prefix}toolbar {
+            position: static !important;
+        }
+        .#{$prefix}font-select {
+            font-size: 11px;
+        }
+    }
+
+    .#{$prefix}html-editor-wrap textarea {
+        border: 0;
+        padding: 3px 2px;
+        overflow: auto;
+    }
+}

@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="urn:http.ws.incinc.lacaixa.es" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="urn:http.ws.incinc.lacaixa.es" xmlns:intf="urn:http.ws.incinc.lacaixa.es" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns1="http://xml.apache.org/axis/wsdd/providers/java" xmlns:tns2="http://model.portal.liferay.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema targetNamespace="http://xml.apache.org/axis/wsdd/providers/java" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <import namespace="http://model.portal.liferay.com"/>
+   <import namespace="urn:http.ws.incinc.lacaixa.es"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="es.lacaixa.incinc.ws.to.ComunesEntrada">
+    <sequence>
+     <element name="clave" nillable="true" type="soapenc:string"/>
+     <element name="idUsuario" nillable="true" type="soapenc:string"/>
+     <element name="idioma" nillable="true" type="soapenc:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+  <schema targetNamespace="urn:http.ws.incinc.lacaixa.es" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xml.apache.org/axis/wsdd/providers/java"/>
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <import namespace="http://model.portal.liferay.com"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="ArrayOf_xsd_anyType">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:anyType[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+  </schema>
+  <schema targetNamespace="http://xml.apache.org/xml-soap" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xml.apache.org/axis/wsdd/providers/java"/>
+   <import namespace="http://model.portal.liferay.com"/>
+   <import namespace="urn:http.ws.incinc.lacaixa.es"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="Vector">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:anyType"/>
+    </sequence>
+   </complexType>
+  </schema>
+  <schema targetNamespace="http://model.portal.liferay.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://xml.apache.org/axis/wsdd/providers/java"/>
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <import namespace="urn:http.ws.incinc.lacaixa.es"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="salComun">
+    <sequence>
+     <element name="codRespuesta" nillable="true" type="soapenc:string"/>
+     <element name="fechaRespuesta" nillable="true" type="soapenc:string"/>
+     <element name="idUsuario" nillable="true" type="soapenc:string"/>
+     <element name="msgRespuesta" nillable="true" type="soapenc:string"/>
+     <element name="tipoRespuesta" nillable="true" type="soapenc:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="salidaConsultaEmpresaV1">
+    <sequence>
+     <element name="empresaAmbitoConvenio" nillable="true" type="soapenc:string"/>
+     <element name="empresaCIF" nillable="true" type="soapenc:string"/>
+     <element name="empresaCNAE_N1" nillable="true" type="soapenc:string"/>
+     <element name="empresaCNAE_N2" nillable="true" type="soapenc:string"/>
+     <element name="empresaCNAE_N3" nillable="true" type="soapenc:string"/>
+     <element name="empresaConvenioAmbito" nillable="true" type="soapenc:string"/>
+     <element name="empresaConvenioAportConceptos" nillable="true" type="soapenc:string"/>
+     <element name="empresaConvenioAportDisponible" nillable="true" type="soapenc:string"/>
+     <element name="empresaConvenioAportFecha" nillable="true" type="soapenc:string"/>
+     <element name="empresaConvenioAportImporte" nillable="true" type="soapenc:string"/>
+     <element name="empresaConvenioDisponible" nillable="true" type="soapenc:string"/>
+     <element name="empresaConvenioEmpFirmanteCargo" nillable="true" type="soapenc:string"/>
+     <element name="empresaConvenioEmpFirmanteNombre" nillable="true" type="soapenc:string"/>
+     <element name="empresaConvenioFechaInicio" nillable="true" type="soapenc:string"/>
+     <element name="empresaConvenioFirmadoCon" nillable="true" type="soapenc:string"/>
+     <element name="empresaConvenioIncorporaCargo" nillable="true" type="soapenc:string"/>
+     <element name="empresaConvenioIncorporaNombre" nillable="true" type="soapenc:string"/>
+     <element name="empresaDireccionBarrio" nillable="true" type="soapenc:string"/>
+     <element name="empresaDireccionCP" nillable="true" type="soapenc:string"/>
+     <element name="empresaDireccionEscalera" nillable="true" type="soapenc:string"/>
+     <element name="empresaDireccionMunicipio" nillable="true" type="soapenc:string"/>
+     <element name="empresaDireccionNombreVia" nillable="true" type="soapenc:string"/>
+     <element name="empresaDireccionNumA" nillable="true" type="soapenc:string"/>
+     <element name="empresaDireccionNumB" nillable="true" type="soapenc:string"/>
+     <element name="empresaDireccionPais" nillable="true" type="soapenc:string"/>
+     <element name="empresaDireccionPiso" nillable="true" type="soapenc:string"/>
+     <element name="empresaDireccionPoblacion" nillable="true" type="soapenc:string"/>
+     <element name="empresaDireccionProvincia" nillable="true" type="soapenc:string"/>
+     <element name="empresaDireccionPuerta" nillable="true" type="soapenc:string"/>
+     <element name="empresaDireccionTipoVia" nillable="true" type="soapenc:string"/>
+     <element name="empresaEmail" nillable="true" type="soapenc:string"/>
+     <element name="empresaEntidadReferencia" nillable="true" type="soapenc:string"/>
+     <element name="empresaEstado" nillable="true" type="soapenc:string"/>
+     <element name="empresaFax" nillable="true" type="soapenc:string"/>
+     <element name="empresaFechaContacto" nillable="true" type="soapenc:string"/>
+     <element name="empresaGrupo" nillable="true" type="soapenc:string"/>
+     <element name="empresaHorarioVisitas" nillable="true" type="soapenc:string"/>
+     <element name="empresaId" nillable="true" type="soapenc:string"/>
+     <element name="empresaIdiomaContacto" nillable="true" type="soapenc:string"/>
+     <element name="empresaModalidad" nillable="true" type="soapenc:string"/>
+     <element name="empresaMultigrupo" nillable="true" type="soapenc:string"/>
+     <element name="empresaNombreComercial" nillable="true" type="soapenc:string"/>
+     <element name="empresaNombreFiscal" nillable="true" type="soapenc:string"/>
+     <element name="empresaNumTrabajadores" nillable="true" type="soapenc:string"/>
+     <element name="empresaObservaciones" nillable="true" type="soapenc:string"/>
+     <element name="empresaOcupaciones" nillable="true" type="soapenc:string"/>
+     <element name="empresaOrigenCaptacion" nillable="true" type="soapenc:string"/>
+     <element name="empresaPersonaContactoCargo" nillable="true" type="soapenc:string"/>
+     <element name="empresaPersonaContactoNombre" nillable="true" type="soapenc:string"/>
+     <element name="empresaPersonaContactoTelefono" nillable="true" type="soapenc:string"/>
+     <element name="empresaSectorActividad" nillable="true" type="soapenc:string"/>
+     <element name="empresaTecnicoReferencia" nillable="true" type="soapenc:string"/>
+     <element name="empresaTelefono" nillable="true" type="soapenc:string"/>
+     <element name="empresaTipo" nillable="true" type="soapenc:string"/>
+     <element name="empresaZona" nillable="true" type="soapenc:string"/>
+     <element name="listaContactos" nillable="true" type="impl:ArrayOf_xsd_anyType"/>
+     <element name="salidaComun" nillable="true" type="tns2:salComun"/>
+    </sequence>
+   </complexType>
+   <complexType name="salidaAltaEmpresaV1">
+    <sequence>
+     <element name="idAltaEmpresa" nillable="true" type="soapenc:string"/>
+     <element name="salidaComun" nillable="true" type="tns2:salComun"/>
+    </sequence>
+   </complexType>
+   <complexType name="salidaModificacionEmpresaV1">
+    <sequence>
+     <element name="idModificacionEmpresa" nillable="true" type="soapenc:string"/>
+     <element name="salidaComun" nillable="true" type="tns2:salComun"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="consultaEmpresaV1Response">
+
+      <wsdl:part name="consultaEmpresaV1Return" type="tns2:salidaConsultaEmpresaV1"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="altaEmpresaV1Response">
+
+      <wsdl:part name="altaEmpresaV1Return" type="tns2:salidaAltaEmpresaV1"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="modificacionEmpresaV1Request">
+
+      <wsdl:part name="entrada" type="tns1:es.lacaixa.incinc.ws.to.ComunesEntrada"/>
+
+      <wsdl:part name="empresaCIF" type="xsd:string"/>
+
+      <wsdl:part name="empresaNombreComercial" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionTipoVia" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionNombreVia" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionCP" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionNumA" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionNumB" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionEscalera" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionPiso" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionPuerta" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionBarrio" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionPais" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionProvincia" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionMunicipio" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionPoblacion" type="xsd:string"/>
+
+      <wsdl:part name="empresaEstado" type="xsd:string"/>
+
+      <wsdl:part name="empresaGrupoReferencia" type="xsd:string"/>
+
+      <wsdl:part name="empresaEntidadReferencia" type="xsd:string"/>
+
+      <wsdl:part name="empresaTecnicoReferencia" type="xsd:string"/>
+
+      <wsdl:part name="empresaModalidad" type="xsd:string"/>
+
+      <wsdl:part name="empresaNumTrabajadores" type="xsd:string"/>
+
+      <wsdl:part name="empresaSectorActividad" type="xsd:string"/>
+
+      <wsdl:part name="empresaCNAE_N1" type="xsd:string"/>
+
+      <wsdl:part name="empresaCNAE_N2" type="xsd:string"/>
+
+      <wsdl:part name="empresaCNAE_N3" type="xsd:string"/>
+
+      <wsdl:part name="empresaOcupaciones" type="xsd:string"/>
+
+      <wsdl:part name="empresaTipo" type="xsd:string"/>
+
+      <wsdl:part name="empresaAmbitoConvenio" type="xsd:string"/>
+
+      <wsdl:part name="empresaObservaciones" type="xsd:string"/>
+
+      <wsdl:part name="empresaTelefono" type="xsd:string"/>
+
+      <wsdl:part name="empresaFax" type="xsd:string"/>
+
+      <wsdl:part name="empresaEmail" type="xsd:string"/>
+
+      <wsdl:part name="empresaIdiomaContacto" type="xsd:string"/>
+
+      <wsdl:part name="empresaOrigenCaptacion" type="xsd:string"/>
+
+      <wsdl:part name="empresaFechaContacto" type="xsd:string"/>
+
+      <wsdl:part name="empresaPersonaContactoTelefono" type="xsd:string"/>
+
+      <wsdl:part name="empresaPersonaContactoNombre" type="xsd:string"/>
+
+      <wsdl:part name="empresaPersonaContactoCargo" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioDisponible" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioFirmadoCon" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioFechaInicio" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioEmpFirmanteNombre" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioEmpFirmanteCargo" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioIncorporaNombre" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioIncorporaCargo" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioAmbito" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioAportDisponible" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioAportImporte" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioAportConceptos" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioAportFecha" type="xsd:string"/>
+
+      <wsdl:part name="idEmpresa" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="modificacionEmpresaV1Response">
+
+      <wsdl:part name="modificacionEmpresaV1Return" type="tns2:salidaModificacionEmpresaV1"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="altaEmpresaV1Request">
+
+      <wsdl:part name="entrada" type="tns1:es.lacaixa.incinc.ws.to.ComunesEntrada"/>
+
+      <wsdl:part name="empresaCIF" type="xsd:string"/>
+
+      <wsdl:part name="empresaNombreComercial" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionTipoVia" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionNombreVia" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionCP" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionNumA" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionNumB" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionEscalera" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionPiso" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionPuerta" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionBarrio" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionPais" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionProvincia" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionMunicipio" type="xsd:string"/>
+
+      <wsdl:part name="empresaDireccionPoblacion" type="xsd:string"/>
+
+      <wsdl:part name="empresaEstado" type="xsd:string"/>
+
+      <wsdl:part name="empresaGrupoReferencia" type="xsd:string"/>
+
+      <wsdl:part name="empresaEntidadReferencia" type="xsd:string"/>
+
+      <wsdl:part name="empresaTecnicoReferencia" type="xsd:string"/>
+
+      <wsdl:part name="empresaModalidad" type="xsd:string"/>
+
+      <wsdl:part name="empresaNumTrabajadores" type="xsd:string"/>
+
+      <wsdl:part name="empresaSectorActividad" type="xsd:string"/>
+
+      <wsdl:part name="empresaCNAE_N1" type="xsd:string"/>
+
+      <wsdl:part name="empresaCNAE_N2" type="xsd:string"/>
+
+      <wsdl:part name="empresaCNAE_N3" type="xsd:string"/>
+
+      <wsdl:part name="empresaOcupaciones" type="xsd:string"/>
+
+      <wsdl:part name="empresaTipo" type="xsd:string"/>
+
+      <wsdl:part name="empresaAmbitoConvenio" type="xsd:string"/>
+
+      <wsdl:part name="empresaObservaciones" type="xsd:string"/>
+
+      <wsdl:part name="empresaTelefono" type="xsd:string"/>
+
+      <wsdl:part name="empresaFax" type="xsd:string"/>
+
+      <wsdl:part name="empresaEmail" type="xsd:string"/>
+
+      <wsdl:part name="empresaIdiomaContacto" type="xsd:string"/>
+
+      <wsdl:part name="empresaOrigenCaptacion" type="xsd:string"/>
+
+      <wsdl:part name="empresaFechaContacto" type="xsd:string"/>
+
+      <wsdl:part name="empresaPersonaContactoTelefono" type="xsd:string"/>
+
+      <wsdl:part name="empresaPersonaContactoNombre" type="xsd:string"/>
+
+      <wsdl:part name="empresaPersonaContactoCargo" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioDisponible" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioFirmadoCon" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioFechaInicio" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioEmpFirmanteNombre" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioEmpFirmanteCargo" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioIncorporaNombre" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioIncorporaCargo" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioAmbito" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioAportDisponible" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioAportImporte" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioAportConceptos" type="xsd:string"/>
+
+      <wsdl:part name="empresaConvenioAportFecha" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="consultaEmpresaV1Request">
+
+      <wsdl:part name="entrada" type="tns1:es.lacaixa.incinc.ws.to.ComunesEntrada"/>
+
+      <wsdl:part name="idEmpresa" type="xsd:string"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="EmpresaServiceSoap">
+
+      <wsdl:operation name="consultaEmpresaV1" parameterOrder="entrada idEmpresa">
+
+         <wsdl:input message="impl:consultaEmpresaV1Request" name="consultaEmpresaV1Request"/>
+
+         <wsdl:output message="impl:consultaEmpresaV1Response" name="consultaEmpresaV1Response"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="altaEmpresaV1" parameterOrder="entrada empresaCIF empresaNombreComercial empresaDireccionTipoVia empresaDireccionNombreVia empresaDireccionCP empresaDireccionNumA empresaDireccionNumB empresaDireccionEscalera empresaDireccionPiso empresaDireccionPuerta empresaDireccionBarrio empresaDireccionPais empresaDireccionProvincia empresaDireccionMunicipio empresaDireccionPoblacion empresaEstado empresaGrupoReferencia empresaEntidadReferencia empresaTecnicoReferencia empresaModalidad empresaNumTrabajadores empresaSectorActividad empresaCNAE_N1 empresaCNAE_N2 empresaCNAE_N3 empresaOcupaciones empresaTipo empresaAmbitoConvenio empresaObservaciones empresaTelefono empresaFax empresaEmail empresaIdiomaContacto empresaOrigenCaptacion empresaFechaContacto empresaPersonaContactoTelefono empresaPersonaContactoNombre empresaPersonaContactoCargo empresaConvenioDisponible empresaConvenioFirmadoCon empresaConvenioFechaInicio empresaConvenioEmpFirmanteNombre empresaConvenioEmpFirmanteCargo empresaConvenioIncorporaNombre empresaConvenioIncorporaCargo empresaConvenioAmbito empresaConvenioAportDisponible empresaConvenioAportImporte empresaConvenioAportConceptos empresaConvenioAportFecha">
+
+         <wsdl:input message="impl:altaEmpresaV1Request" name="altaEmpresaV1Request"/>
+
+         <wsdl:output message="impl:altaEmpresaV1Response" name="altaEmpresaV1Response"/>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="modificacionEmpresaV1" parameterOrder="entrada empresaCIF empresaNombreComercial empresaDireccionTipoVia empresaDireccionNombreVia empresaDireccionCP empresaDireccionNumA empresaDireccionNumB empresaDireccionEscalera empresaDireccionPiso empresaDireccionPuerta empresaDireccionBarrio empresaDireccionPais empresaDireccionProvincia empresaDireccionMunicipio empresaDireccionPoblacion empresaEstado empresaGrupoReferencia empresaEntidadReferencia empresaTecnicoReferencia empresaModalidad empresaNumTrabajadores empresaSectorActividad empresaCNAE_N1 empresaCNAE_N2 empresaCNAE_N3 empresaOcupaciones empresaTipo empresaAmbitoConvenio empresaObservaciones empresaTelefono empresaFax empresaEmail empresaIdiomaContacto empresaOrigenCaptacion empresaFechaContacto empresaPersonaContactoTelefono empresaPersonaContactoNombre empresaPersonaContactoCargo empresaConvenioDisponible empresaConvenioFirmadoCon empresaConvenioFechaInicio empresaConvenioEmpFirmanteNombre empresaConvenioEmpFirmanteCargo empresaConvenioIncorporaNombre empresaConvenioIncorporaCargo empresaConvenioAmbito empresaConvenioAportDisponible empresaConvenioAportImporte empresaConvenioAportConceptos empresaConvenioAportFecha idEmpresa">
+
+         <wsdl:input message="impl:modificacionEmpresaV1Request" name="modificacionEmpresaV1Request"/>
+
+         <wsdl:output message="impl:modificacionEmpresaV1Response" name="modificacionEmpresaV1Response"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="Portlet_IncorporaWS_EmpresaSoapBinding" type="impl:EmpresaServiceSoap">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="consultaEmpresaV1">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="consultaEmpresaV1Request">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:http.ws.incinc.lacaixa.es" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="consultaEmpresaV1Response">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:http.ws.incinc.lacaixa.es" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="altaEmpresaV1">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="altaEmpresaV1Request">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:http.ws.incinc.lacaixa.es" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="altaEmpresaV1Response">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:http.ws.incinc.lacaixa.es" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="modificacionEmpresaV1">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="modificacionEmpresaV1Request">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:http.ws.incinc.lacaixa.es" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="modificacionEmpresaV1Response">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:http.ws.incinc.lacaixa.es" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="EmpresaServiceSoapService">
+
+      <wsdl:port binding="impl:Portlet_IncorporaWS_EmpresaSoapBinding" name="Portlet_IncorporaWS_Empresa">
+
+         <wsdlsoap:address location="https://pre.intranet.incorpora.org:445/Incorpora/services/Portlet_IncorporaWS_Empresa"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

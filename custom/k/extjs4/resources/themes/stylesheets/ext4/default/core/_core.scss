@@ -1,0 +1,256 @@
+.#{$prefix}body {
+    color: $color;
+    font-size: $font-size;
+    font-family: $font-family;
+}
+
+.#{$prefix}rtl {
+    direction: rtl;
+}
+
+.#{$prefix}ltr {
+    direction: ltr;
+}
+
+.#{$prefix}clear {
+    overflow: hidden;
+    clear: both;
+    font-size: 0;
+    line-height: 0;
+    display: table;
+}
+
+.#{$prefix}strict .#{$prefix}ie7 .#{$prefix}clear {
+    // In IE7 strict the clear element has to have both a height and width of 0, otherwise the height of its parent element gets
+    // increased by 1px.  We cannot simply add the zero height/width for all browsers, because in IE quirks the height
+    // of the clear element's parent element gets increased by 1px if the clear element has either height:0 or width:0.
+    height: 0;
+    width: 0;
+}
+
+.#{$prefix}layer {
+    position: absolute !important;
+    overflow: hidden;
+    zoom: 1;
+}
+
+.#{$prefix}shim {
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    @include opacity(0);
+}
+
+.#{$prefix}hide-display {
+    display: none !important;
+}
+
+.#{$prefix}hide-visibility {
+    visibility:hidden !important;
+}
+
+.#{$prefix}item-disabled .#{$prefix}form-item-label,
+.#{$prefix}item-disabled .#{$prefix}form-field,
+.#{$prefix}item-disabled .#{$prefix}form-cb-label,
+.#{$prefix}item-disabled .#{$prefix}form-trigger {
+    @include opacity(0.3);
+}
+
+.#{$prefix}ie6 .#{$prefix}item-disabled {
+    filter:none;
+}
+
+.#{$prefix}hidden,
+.#{$prefix}hide-offsets {
+    // to deal with inline elements that can't be position:absolute
+    display: block !important;
+    // ensure the browser disallows tabbing into this element
+    visibility: hidden !important;
+    position: absolute!important;
+    left: -10000px!important;
+    top: -10000px!important;
+}
+
+.#{$prefix}hide-nosize {
+    height: 0!important;
+    width: 0!important;
+}
+
+.#{$prefix}masked-relative {
+    position: relative;
+}
+
+@if $include-ie {
+    .#{$prefix}ie6 .#{$prefix}masked select,
+    .#{$prefix}ie6.#{$prefix}body-masked select {
+        visibility: hidden !important;
+    }
+}
+
+// Element shadows for browsers that support CSS3 box-shadow
+.#{$prefix}css-shadow {
+    position: absolute;
+    @include border-radius($window-border-radius);
+}
+
+// Element shadows for IE 8 and below
+.#{$prefix}ie-shadow {
+    background-color:#777;
+    display: none;
+    position: absolute;
+    overflow: hidden;
+    zoom: 1;
+}
+
+//box wrap - Ext.get("foo").boxWrap();
+.#{$prefix}box-tl {
+    background: transparent no-repeat 0 0;
+    zoom:1;
+}
+
+.#{$prefix}box-tc {
+    height: 8px;
+    background: transparent repeat-x 0 0;
+    overflow: hidden;
+}
+
+.#{$prefix}box-tr {
+    background: transparent no-repeat right -8px;
+}
+
+.#{$prefix}box-ml {
+    background: transparent repeat-y 0;
+    padding-left: 4px;
+    overflow: hidden;
+    zoom:1;
+}
+
+.#{$prefix}box-mc {
+    background: repeat-x 0 -16px;
+    padding: 4px 10px;
+}
+
+.#{$prefix}box-mc h3 {
+    margin: 0 0 4px 0;
+    zoom:1;
+}
+
+.#{$prefix}box-mr {
+    background: transparent repeat-y right;
+    padding-right: 4px;
+    overflow: hidden;
+}
+
+.#{$prefix}box-bl {
+    background: transparent no-repeat 0 -16px;
+    zoom:1;
+}
+
+.#{$prefix}box-bc {
+    background: transparent repeat-x 0 -8px;
+    height: 8px;
+    overflow: hidden;
+}
+
+.#{$prefix}box-br {
+    background: transparent no-repeat right -24px;
+}
+
+.#{$prefix}box-tl, .#{$prefix}box-bl {
+    padding-left: 8px;
+    overflow: hidden;
+}
+
+.#{$prefix}box-tr, .#{$prefix}box-br {
+    padding-right: 8px;
+    overflow: hidden;
+}
+
+.#{$prefix}box-tl {
+    background-image: theme-background-image($theme-name, 'box/corners.gif');
+}
+
+.#{$prefix}box-tc {
+    background-image: theme-background-image($theme-name, 'box/tb.gif');
+}
+
+.#{$prefix}box-tr {
+    background-image: theme-background-image($theme-name, 'box/corners.gif');
+}
+
+.#{$prefix}box-ml {
+    background-image: theme-background-image($theme-name, 'box/l.gif');
+}
+
+.#{$prefix}box-mc {
+    background-color: #eee;
+    background-image: theme-background-image($theme-name, 'box/tb.gif');
+    font-family: "Myriad Pro","Myriad Web","Tahoma","Helvetica","Arial",sans-serif;
+    color: #393939;
+    font-size: 15px;
+}
+
+.#{$prefix}box-mc h3 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.#{$prefix}box-mr {
+    background-image: theme-background-image($theme-name, 'box/r.gif');
+}
+
+.#{$prefix}box-bl {
+    background-image: theme-background-image($theme-name, 'box/corners.gif');
+}
+
+.#{$prefix}box-bc {
+    background-image: theme-background-image($theme-name, 'box/tb.gif');
+}
+
+.#{$prefix}box-br {
+    background-image: theme-background-image($theme-name, 'box/corners.gif');
+}
+
+.#{$prefix}box-blue .#{$prefix}box-bl, .#{$prefix}box-blue .#{$prefix}box-br, .#{$prefix}box-blue .#{$prefix}box-tl, .#{$prefix}box-blue .#{$prefix}box-tr {
+    background-image: theme-background-image($theme-name, 'box/corners-blue.gif');
+}
+
+.#{$prefix}box-blue .#{$prefix}box-bc, .#{$prefix}box-blue .#{$prefix}box-mc, .#{$prefix}box-blue .#{$prefix}box-tc {
+    background-image: theme-background-image($theme-name, 'box/tb-blue.gif');
+}
+
+.#{$prefix}box-blue .#{$prefix}box-mc {
+    background-color: #c3daf9;
+}
+
+.#{$prefix}box-blue .#{$prefix}box-mc h3 {
+    color: #17385b;
+}
+
+.#{$prefix}box-blue .#{$prefix}box-ml {
+    background-image: theme-background-image($theme-name, 'box/l-blue.gif');
+}
+
+.#{$prefix}box-blue .#{$prefix}box-mr {
+    background-image: theme-background-image($theme-name, 'box/r-blue.gif');
+}
+
+.#{$prefix}container {
+    // zoom:1 prevents margins of child elements from collapsing in old IE, this is needed to prevent
+    // the top margin of the first child element from collapsing.
+    zoom: 1;
+    // In modern browsers, we can use a pseudo :before element to prevent the top margin of the first child element from collapsing
+    &:before {
+        content: "";
+        clear: both;
+        display: table;
+    }
+}
+// when the container class is used on a table, tbody, or tr (form layout),
+// inserting content using the :before selector can cause problems
+table.#{$prefix}container:before,
+tbody.#{$prefix}container:before,
+tr.#{$prefix}container:before {
+    display: none;
+}

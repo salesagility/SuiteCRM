@@ -1,0 +1,18 @@
+// query-dsl/term-query.asciidoc:28
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'term' => [
+                'user' => [
+                    'value' => 'Kimchy',
+                    'boost' => 1,
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

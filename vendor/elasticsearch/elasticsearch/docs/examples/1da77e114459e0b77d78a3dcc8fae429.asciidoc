@@ -1,0 +1,24 @@
+// indices/put-mapping.asciidoc:109
+
+[source, php]
+----
+$params = [
+    'index' => 'twitter-1',
+];
+$response = $client->indices()->create($params);
+$params = [
+    'index' => 'twitter-2',
+];
+$response = $client->indices()->create($params);
+$params = [
+    'index' => 'twitter-1,twitter-2',
+    'body' => [
+        'properties' => [
+            'user_name' => [
+                'type' => 'text',
+            ],
+        ],
+    ],
+];
+$response = $client->indices()->putMapping($params);
+----

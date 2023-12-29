@@ -60,8 +60,11 @@ class ContactsViewDetail extends ViewDetail
 
         $this->ss->assign("AOP_PORTAL_ENABLED", $aop_portal_enabled);
 
-        require_once('modules/AOS_PDF_Templates/formLetter.php');
-        formLetter::DVPopupHtml('Contacts');
+        // STIC-Custom 20220124 MHP - Do not add the Print PDF logic in this module because it is added generically through include/DetailView/DetailView2.php
+        // STIC#564   
+        // require_once('modules/AOS_PDF_Templates/formLetter.php');
+        // formLetter::DVPopupHtml('Contacts');
+        // END STIC-Custom
 
         $admin = BeanFactory::newBean('Administration');
         $admin->retrieveSettings();

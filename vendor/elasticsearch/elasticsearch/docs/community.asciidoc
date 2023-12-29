@@ -1,0 +1,156 @@
+[[community_dsls]]
+=== Community DSLs
+
+[discrete]
+==== ElasticsearchDSL
+
+https://github.com/ongr-io/ElasticsearchDSL[Link: ElasticsearchDSL]
+[quote, ElasticsearchDSL]
+__________________________
+Introducing {es} DSL library to provide objective query builder for {es} bundle 
+and elasticsearch-php client. You can easily build any {es} query and transform 
+it to an array.
+__________________________
+
+[discrete]
+==== elasticsearcher
+
+https://github.com/madewithlove/elasticsearcher[Link: elasticsearcher]
+
+[quote, elasticsearcher]
+__________________________
+This agnostic package is a lightweight wrapper on top of the {es} PHP client. 
+Its main goal is to allow for easier structuring of queries and indices in your 
+application. It does not want to hide or replace functionality of the {es} PHP 
+client.
+__________________________
+
+[discrete]
+==== ElasticSearchQueryDSL
+
+https://github.com/gskema/elasticsearch-query-dsl-php[Link: ElasticSearchQueryDSL]
+
+[quote, ElasticSearchQueryDSL]
+__________________________
+Feature complete, object oriented, composable, extendable {es} query DSL builder 
+for PHP. Deliberately built to be as simple as possible, easily usable and with 
+explicit naming.
+__________________________
+
+
+[[community-integrations]]
+=== Community Integrations
+
+[discrete]
+==== Symfony
+
+[discrete]
+===== ONGR Elasticsearch Bundle
+
+https://github.com/ongr-io/ElasticsearchBundle[Link: ONGR {es} Bundle]
+
+[quote, ONGR {es} Bundle]
+__________________________
+{es} Bundle was created in order to serve the need for professional {es} 
+integration with enterprise level Symfony 2 systems. This bundle is:
+
+- Supported by ONGR.io development team.
+- Uses the official elasticsearch-php client.
+- Ensures full integration with Symfony 2 framework.
+
+Technical goodies:
+
+- Provides nestable and DSL query builder to be executed by type repository 
+  services.
+- Uses Doctrine-like document / entities document-object mapping using 
+  annotations.
+- Query results iterators are provided for your convenience.
+- Registers console commands for index and types management and data import / 
+  export.
+- Designed in an extensible way for all your custom needs.
+__________________________
+
+[discrete]
+===== FOS Elastica Bundle
+
+https://github.com/FriendsOfSymfony/FOSElasticaBundle[Link: FOS Elastica Bundle]
+
+[quote, FOS Elastica Bundle]
+__________________________
+This bundle provides integration with 
+https://github.com/ruflin/Elastica[Link: Elastica] for Symfony. Features 
+include:
+
+- Integrates the Elastica library into a Symfony environment.
+- Automatically generate mappings using a serializer.
+- Listeners for Doctrine events for automatic indexing.
+__________________________
+
+
+[discrete]
+==== Drupal
+
+[discrete]
+===== {es} Connector
+
+https://www.drupal.org/project/elasticsearch_connector[Link: {es} Connector]
+
+[quote, {es} Connector]
+__________________________
+{es} Connector is a set of modules designed to build a full {es} eco system in 
+Drupal.
+__________________________
+
+[discrete]
+==== Laravel
+
+[discrete]
+===== shift31/Laravel-Elasticsearch
+
+https://github.com/shift31/laravel-elasticsearch[Link: shift31/Laravel-Elasticsearch]
+
+[quote, Laravel-Elasticsearch]
+__________________________
+This is a Laravel (4+) Service Provider for the official {es} low-level client.
+__________________________
+
+
+[discrete]
+===== cviebrock/Laravel-Elasticsearch
+
+https://github.com/cviebrock/laravel-elasticsearch[Link: cviebrock/Laravel-Elasticsearch]
+
+[quote, Laravel-Elasticsearch]
+__________________________
+An easy way to use the official {es} client in your Laravel applications.
+__________________________
+
+
+[discrete]
+===== Plastic
+
+https://github.com/sleimanx2/plastic[Link: Plastic]
+
+[quote, Plastic]
+__________________________
+Plastic is an {es} ODM and mapper for Laravel. It renders the developer 
+experience more enjoyable while using {es} by providing a fluent syntax for 
+mapping, querying, and storing eloquent models.
+__________________________
+
+[discrete]
+==== Helper
+
+[discrete]
+===== Index Helper
+
+https://github.com/Nexucis/es-php-index-helper[Link: nexucis/es-php-index-helper]
+
+[quote, Index Helper]
+_____________________
+This helper is a light library which wrap the official client elasticsearch-php. 
+It will help you to manage your ES Indices with no downtime. This helper 
+implements the philosophy described in the 
+https://www.elastic.co/guide/en/elasticsearch/guide/master/index-aliases.html[official documentation]
+which can be summarized in a few words : *use alias instead of index directly*.
+_____________________

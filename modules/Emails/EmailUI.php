@@ -240,6 +240,10 @@ class EmailUI
             'showNumInList',
             get_select_options_with_id($app_list_strings['email_settings_num_dom'], $emailSettings['showNumInList'])
         );
+        // STIC-Custom 20220504 MHP - Assign the user id to the TPL template
+        // STIC#1056
+        $this->smarty->assign('user_id', $user->id);
+        // END STIC-Custom 
 
         ////	END USER SETTINGS
         ///////////////////////////////////////////////////////////////////////

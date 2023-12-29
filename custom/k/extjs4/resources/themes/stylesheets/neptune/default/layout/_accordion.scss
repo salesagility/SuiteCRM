@@ -1,0 +1,80 @@
+$include-accordion-highlights: $include-highlights !default;
+$accordion-header-background-color: $neutral-light-color !default;
+$accordion-header-color: color-by-background($accordion-header-background-color, 100%) !default;
+$accordion-header-background-gradient: $base-gradient !default;
+$accordion-border-color: $stroke-color !default;
+
+@mixin extjs-layout-accordion {
+    // Accordian layout
+
+    .#{$prefix}accordion-hd .#{$prefix}panel-header-text {
+        color: $accordion-header-color;
+        font-weight: bold;
+        font-size: $font-size;
+    }
+
+    .#{$prefix}accordion-hd {
+        padding: 5px 5px 7px 5px;
+        cursor: pointer;
+
+//        .#{$prefix}tool {
+//            div {
+//                background: transparent;
+//            }
+//        }
+
+        // @tag deleted Must be a way to auto sprite`
+//        .#{$prefix}tool-collapse-top,
+//        .#{$prefix}tool-collapse-right,
+//        .#{$prefix}tool-collapse-bottom,
+//        .#{$prefix}tool-collapse-left {
+//            background-position: 0 -255px;
+//        }
+
+//        .#{$prefix}tool-expand-top,
+//        .#{$prefix}tool-expand-right,
+//        .#{$prefix}tool-expand-bottom,
+//        .#{$prefix}tool-expand-left {
+//            background-position: 0 -240px;
+//        }
+
+        background-image: none;
+        background-color: $accordion-header-background-color;
+
+//        @todo this is not IE compat
+        &.#{$prefix}panel-header-over {
+            background-color: #A6DDFF;
+        }
+
+        &.#{$prefix}panel-header-pressed {
+            background-color: #0E4DAD;
+
+            .#{$prefix}panel-header-text {
+                color: #fff;
+            }
+        }
+    }
+
+    .x-accordion-body {
+//        padding-bottom: 5px;
+        border-bottom: 0;
+        background: #fff;
+    }
+
+    .x-accordion-item {
+        margin: 5px 5px 0 5px;
+    }
+
+    .#{$prefix}accordion-body {
+        border-width: 0 !important;
+    }
+
+    /*    .\#{$prefix}accordion-hd-sibling-expanded {
+        border-top-color: $accordion-border-color !important;
+        @include single-box-shadow($panel-header-inner-border-color, 0, 1px, 0, 0, true);
+    }*/
+
+    .#{$prefix}accordion-hd-last-collapsed {
+        border-bottom-color: $accordion-header-background-color !important;
+    }
+}

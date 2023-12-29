@@ -995,7 +995,10 @@ class EmailMan extends SugarBean
             if (empty($this->current_mailbox->id) or $this->current_mailbox->id !== $this->current_emailmarketing->inbound_email_id) {
                 $this->current_mailbox->retrieve($this->current_emailmarketing->inbound_email_id);
                 //extract the email address.
-                $this->mailbox_from_addr = $this->current_mailbox->get_stored_options('from_addr', 'nobody@example.com', null);
+                // STIC 20210813 - Select the sender account name of the marketing email and not of the inbound mailbox
+                // STIC#379
+                // $this->mailbox_from_addr = $this->current_mailbox->get_stored_options('from_addr', 'nobody@example.com', null);
+                $this->mailbox_from_addr = $this->current_emailmarketing->from_addr;
                 isValidEmailAddress($this->mailbox_from_addr);
             }
 

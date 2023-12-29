@@ -1,0 +1,35 @@
+// docs/reindex.asciidoc:191
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'source' => [
+            'index' => 'twitter',
+            'slice' => [
+                'id' => 0,
+                'max' => 2,
+            ],
+        ],
+        'dest' => [
+            'index' => 'new_twitter',
+        ],
+    ],
+];
+$response = $client->reindex($params);
+$params = [
+    'body' => [
+        'source' => [
+            'index' => 'twitter',
+            'slice' => [
+                'id' => 1,
+                'max' => 2,
+            ],
+        ],
+        'dest' => [
+            'index' => 'new_twitter',
+        ],
+    ],
+];
+$response = $client->reindex($params);
+----

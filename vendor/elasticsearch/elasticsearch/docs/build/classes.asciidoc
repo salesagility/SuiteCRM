@@ -1,0 +1,76 @@
+
+[[ElasticsearchPHP_Endpoints]]
+== Reference - Endpoints
+
+This is a complete list of namespaces and their associated endpoints.
+
+NOTE: This is auto-generated documentation
+
+* <<Elasticsearch_Client, Elasticsearch\Client>>
+* <<Elasticsearch_ClientBuilder, Elasticsearch\ClientBuilder>>
+* <<Elasticsearch_Namespaces_AsyncSearchNamespace, Elasticsearch\Namespaces\AsyncSearchNamespace>>
+* <<Elasticsearch_Namespaces_AutoscalingNamespace, Elasticsearch\Namespaces\AutoscalingNamespace>>
+* <<Elasticsearch_Namespaces_CatNamespace, Elasticsearch\Namespaces\CatNamespace>>
+* <<Elasticsearch_Namespaces_CcrNamespace, Elasticsearch\Namespaces\CcrNamespace>>
+* <<Elasticsearch_Namespaces_ClusterNamespace, Elasticsearch\Namespaces\ClusterNamespace>>
+* <<Elasticsearch_Namespaces_DanglingIndicesNamespace, Elasticsearch\Namespaces\DanglingIndicesNamespace>>
+* <<Elasticsearch_Namespaces_DataFrameTransformDeprecatedNamespace, Elasticsearch\Namespaces\DataFrameTransformDeprecatedNamespace>>
+* <<Elasticsearch_Namespaces_EnrichNamespace, Elasticsearch\Namespaces\EnrichNamespace>>
+* <<Elasticsearch_Namespaces_EqlNamespace, Elasticsearch\Namespaces\EqlNamespace>>
+* <<Elasticsearch_Namespaces_FeaturesNamespace, Elasticsearch\Namespaces\FeaturesNamespace>>
+* <<Elasticsearch_Namespaces_GraphNamespace, Elasticsearch\Namespaces\GraphNamespace>>
+* <<Elasticsearch_Namespaces_IlmNamespace, Elasticsearch\Namespaces\IlmNamespace>>
+* <<Elasticsearch_Namespaces_IndicesNamespace, Elasticsearch\Namespaces\IndicesNamespace>>
+* <<Elasticsearch_Namespaces_IngestNamespace, Elasticsearch\Namespaces\IngestNamespace>>
+* <<Elasticsearch_Namespaces_LicenseNamespace, Elasticsearch\Namespaces\LicenseNamespace>>
+* <<Elasticsearch_Namespaces_LogstashNamespace, Elasticsearch\Namespaces\LogstashNamespace>>
+* <<Elasticsearch_Namespaces_MigrationNamespace, Elasticsearch\Namespaces\MigrationNamespace>>
+* <<Elasticsearch_Namespaces_MlNamespace, Elasticsearch\Namespaces\MlNamespace>>
+* <<Elasticsearch_Namespaces_MonitoringNamespace, Elasticsearch\Namespaces\MonitoringNamespace>>
+* <<Elasticsearch_Namespaces_NodesNamespace, Elasticsearch\Namespaces\NodesNamespace>>
+* <<Elasticsearch_Namespaces_RollupNamespace, Elasticsearch\Namespaces\RollupNamespace>>
+* <<Elasticsearch_Namespaces_SearchableSnapshotsNamespace, Elasticsearch\Namespaces\SearchableSnapshotsNamespace>>
+* <<Elasticsearch_Namespaces_SecurityNamespace, Elasticsearch\Namespaces\SecurityNamespace>>
+* <<Elasticsearch_Namespaces_SlmNamespace, Elasticsearch\Namespaces\SlmNamespace>>
+* <<Elasticsearch_Namespaces_SnapshotNamespace, Elasticsearch\Namespaces\SnapshotNamespace>>
+* <<Elasticsearch_Namespaces_SqlNamespace, Elasticsearch\Namespaces\SqlNamespace>>
+* <<Elasticsearch_Namespaces_SslNamespace, Elasticsearch\Namespaces\SslNamespace>>
+* <<Elasticsearch_Namespaces_TasksNamespace, Elasticsearch\Namespaces\TasksNamespace>>
+* <<Elasticsearch_Namespaces_TextStructureNamespace, Elasticsearch\Namespaces\TextStructureNamespace>>
+* <<Elasticsearch_Namespaces_TransformNamespace, Elasticsearch\Namespaces\TransformNamespace>>
+* <<Elasticsearch_Namespaces_WatcherNamespace, Elasticsearch\Namespaces\WatcherNamespace>>
+* <<Elasticsearch_Namespaces_XpackNamespace, Elasticsearch\Namespaces\XpackNamespace>>
+include::Elasticsearch/Client.asciidoc[]
+include::Elasticsearch/ClientBuilder.asciidoc[]
+include::Elasticsearch/Namespaces/AsyncSearchNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/AutoscalingNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/CatNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/CcrNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/ClusterNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/DanglingIndicesNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/DataFrameTransformDeprecatedNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/EnrichNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/EqlNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/FeaturesNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/GraphNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/IlmNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/IndicesNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/IngestNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/LicenseNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/LogstashNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/MigrationNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/MlNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/MonitoringNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/NodesNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/RollupNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/SearchableSnapshotsNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/SecurityNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/SlmNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/SnapshotNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/SqlNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/SslNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/TasksNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/TextStructureNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/TransformNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/WatcherNamespace.asciidoc[]
+include::Elasticsearch/Namespaces/XpackNamespace.asciidoc[]

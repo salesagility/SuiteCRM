@@ -1,0 +1,41 @@
+// indices/templates.asciidoc:172
+
+[source, php]
+----
+$params = [
+    'name' => 'template_1',
+    'body' => [
+        'index_patterns' => [
+            '*',
+        ],
+        'order' => 0,
+        'settings' => [
+            'number_of_shards' => 1,
+        ],
+        'mappings' => [
+            '_source' => [
+                'enabled' => false,
+            ],
+        ],
+    ],
+];
+$response = $client->indices()->putTemplate($params);
+$params = [
+    'name' => 'template_2',
+    'body' => [
+        'index_patterns' => [
+            'te*',
+        ],
+        'order' => 1,
+        'settings' => [
+            'number_of_shards' => 1,
+        ],
+        'mappings' => [
+            '_source' => [
+                'enabled' => true,
+            ],
+        ],
+    ],
+];
+$response = $client->indices()->putTemplate($params);
+----

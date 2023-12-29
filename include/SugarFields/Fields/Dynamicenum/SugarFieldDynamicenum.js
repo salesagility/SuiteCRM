@@ -53,9 +53,30 @@ function addLoadEvent(func) {
 }
 
 function loadDynamicEnum(field, subfield) {
-
     if (field != '') {
-        var el = document.getElementById(field);
+
+        // STIC-Custom - JCH - 2022-09-26 - Add specific method for retrieving parent list value in view list.
+        // STIC#865
+        // Changing views and module variable
+        // STIC#907
+        // var el = document.getElementById(field);
+        // STIC-Custom - PCS - 2023-05-19 - Enabling massupdate for dynamicenum
+        // Adding recordId !== undefined condition to check if in ViewList we want to change one field or mass update
+        // STIC#1109
+        var moduleName = module_sugar_grp1;
+        var recordId = $('input.listview-checkbox',$('form#EditView').closest('tr')).val();
+        if(action_sugar_grp1 == 'index' && recordId !== undefined ){
+                var dynamicFieldName = $('form#EditView select').attr('id');
+                var el = $('<input></input>',{
+                id:recordId+dynamicFieldName,
+                type: 'hidden',
+                value: getParentValueFromDynamicEnum(moduleName, recordId, dynamicFieldName)
+            }).appendTo($('#'+subfield).parent());
+            updateDynamicEnum(recordId+dynamicFieldName, subfield)
+        } else {
+            var el = document.getElementById(field);
+        }      
+        // END STIC-Custom
 
         if (el) {
             if (el.addEventListener) {
@@ -69,10 +90,8 @@ function loadDynamicEnum(field, subfield) {
                 });
                 updateDynamicEnum(field, subfield)
             }
-
         }
     }
-
 }
 
 
@@ -98,11 +117,15 @@ function updateDynamicEnum(field, subfield) {
         document.getElementById(subfield).innerHTML = '';
 
         for (var key in de_entries[subfield]) {
-            if (key.indexOf(de_key + '_') == 0 || key == '') {
+            // STIC-Custom - PCS - 2023-05-19 - Enabling massupdate for dynamicenum
+            // STIC#1109
+            // if (key.indexOf(de_key + '_') == 0 || key == '') {
+            if (key.indexOf(de_key + '_') == 0 || key == '' || key == '__SugarMassUpdateClearField__') {
+            // END STIC-Custom
                 selector.options[selector.options.length] = new Option(de_entries[subfield][key], key);
             }
         }
-
+        
         for (var item in current) {
             for (var k = 0; k < selector.length; k++) {
                 if (selector.options[k].value == current[item])
@@ -117,5 +140,27 @@ function updateDynamicEnum(field, subfield) {
     }
     else
         selector.fireEvent("onchange");
+
+}
+
+/**
+ * 
+ * @param {module} 
+ * @param {*} id 
+ * @param {*} field 
+ * @returns 
+ */
+function getParentValueFromDynamicEnum(moduleName, recordId, dynamicFieldName){
+
+    $.ajaxSetup({ async: false });
+    var result = $.getJSON("index.php", {
+        module: "Home",
+        action: "getParentValueFromDynamicEnum",
+        dynamicFieldName: dynamicFieldName,
+        moduleName: moduleName,
+        recordId: recordId
+    });
+    $.ajaxSetup({ async: true });
+    return result.responseText;
 
 }

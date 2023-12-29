@@ -1,0 +1,20 @@
+
+<div class="filter-header">
+   <div class="row-fluid">
+      <div class="controls span4">
+         <strong>{{str "LBL_GENERAR_DOCUMENTO"}}</strong>
+      </div>
+      <div class="pull-right">
+         {{#each meta.buttons}}
+            {{#MMR_can_show_button name }}
+               {{field ../../this}}
+            {{/MMR_can_show_button}}
+         {{/each}}
+      </div>
+   </div>
+</div>
+<div class="filter-body clearfix">
+   <div class="row-fluid">
+      {{{massdocform_code}}}
+   </div>
+</div>

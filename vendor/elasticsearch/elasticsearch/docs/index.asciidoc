@@ -1,0 +1,22 @@
+
+= Elasticsearch PHP Client
+
+include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
+
+include::overview.asciidoc[]
+
+include::installation.asciidoc[]
+
+include::connecting.asciidoc[]
+
+include::configuration.asciidoc[]
+
+include::operations.asciidoc[]
+
+include::build/classes.asciidoc[]
+
+include::helpers.asciidoc[]
+
+include::release-notes.asciidoc[]
+
+include::redirects.asciidoc[]

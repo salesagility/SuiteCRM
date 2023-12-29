@@ -307,6 +307,14 @@ function export($type, $records = null, $members = false, $sample=false)
                         $value = str_replace('.', $dec_sep, $value);
                         break;
 
+                    // STIC-Custom AAM 20210609 - Adding decimal option for incorporating the user locale during export
+                    // STIC#307
+                    case 'decimal':
+                        $user_dec_sep = (!empty($current_user->id) ? $current_user->getPreference('dec_sep') : null);
+                        $dec_sep = empty($user_dec_sep) ? $sugar_config['default_decimal_seperator'] : $user_dec_sep;
+                        $value = str_replace('.', $dec_sep, $value);
+                        break;
+
                     //if our value is a datetime field, then apply the users locale
                     case 'datetime':
                     case 'datetimecombo':

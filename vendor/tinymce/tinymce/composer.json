@@ -1,0 +1,50 @@
+{
+	"name": "tinymce/tinymce",
+	"version": "5.10.7",
+	"description": "Web based JavaScript HTML WYSIWYG editor control.",
+	"license": [
+		"LGPL-2.1-only"
+	],
+	"keywords": [
+		"wysiwyg",
+		"tinymce",
+		"richtext",
+		"javascript",
+		"html",
+		"text",
+		"rich editor",
+		"rich text editor",
+		"rte",
+		"rich text",
+		"contenteditable",
+		"editing"
+	],
+	"homepage": "https://www.tiny.cloud/",
+	"type": "component",
+	"extra": {
+		"component": {
+			"scripts": [
+				"tinymce.js",
+				"plugins/*/plugin.js",
+				"themes/*/theme.js",
+				"themes/*/icons.js"
+			],
+			"files": [
+				"tinymce.min.js",
+				"plugins/*/plugin.min.js",
+				"themes/*/theme.min.js",
+				"skins/**",
+				"icons/*/icons.min.js"
+			]
+		}
+	},
+	"archive": {
+		"exclude": [
+			"README.md",
+			"bower.js",
+			"package.json",
+			".npmignore",
+			"CHANGELOG.md"
+		]
+	}
+}

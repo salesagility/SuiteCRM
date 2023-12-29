@@ -1,0 +1,1355 @@
+//Login Logo
+div.p_login .p_login_top a {
+  background-image: none, url("../../../../../custom/themes/SuiteP/images/p_login_logo.svg"),
+    url("../../../../../custom/themes/SuiteP/images/p_login_logo.png") !important;
+}
+
+// Icon customization
+.admin-panel .suitepicon {
+  color: $stic-complement;
+}
+
+.studiolink .suitepicon {
+  color: $stic-complement;
+}
+
+.suitepicon {
+  color: white;
+}
+
+.sub-panel .suitepicon {
+  color: $stic-text;
+}
+
+.sub-panel .footable-header .suitepicon {
+  color: #fff;
+}
+
+.suitepicon.suitepicon-favorite-star-outline,
+.suitepicon.suitepicon-favorite-star {
+  color: $stic-base;
+}
+
+.inlineEditIcon,
+#factory-module,
+.mbTable {
+  .suitepicon,
+  svg,
+  .icon {
+    color: $stic-complement;
+  }
+}
+
+#inlineEditSaveButton .suitepicon {
+  background-color: $stic-base;
+  color: bw($stic-base);
+  padding: 3px 8px;
+  border-radius: 4px;
+  &:hover {
+    background-color: $color-43;
+  }
+}
+
+// Fix line in save button hover
+.table-responsive.list > tbody > tr > td a#inlineEditSaveButton:hover {
+  color: transparent;
+}
+
+.listViewBody #inlineEditSaveButton {
+  .suitepicon {
+    padding: 0px 4.5px 5px;
+  }
+}
+
+.favoritesSidebar .suitepicon {
+  margin-right: 5px;
+}
+
+#recentlyViewedSidebar,
+#favoritesSidebar {
+  .suitepicon {
+    color: bw($stic-complement);
+  }
+}
+// General customization
+.selectActionsDisabled .selected-actions-label {
+  color: $stic-text;
+}
+
+/* Mailmerge generate document button fix */
+#tab-actions.dropdown,
+#globalLinks .dropdown-menu {
+  a,
+  input {
+    background-color: $stic-light !important;
+    color: bw($stic-light);
+    &:hover {
+      background-color: $stic-superlight !important;
+      color: bw($stic-superlight);
+    }
+  }
+  a.dropdown-toggle {
+    letter-spacing: 1px;
+    font-weight: 600 !important;
+    border-color: $stic-light;
+    background-color: $stic-light !important;
+    color: bw($stic-light);
+  }
+  .dropdown-menu {
+    background-color: $stic-light !important;
+    li {
+      background-color: $stic-light !important;
+      a#generate_document_button {
+        line-height: 12px;
+        padding-top: 10px;
+        margin-top: 0px;
+      }
+      a#generate_document_button,
+      input {
+        background-color: $stic-base;
+        color: bw($stic-base);
+        height: 32px;
+        border-radius: 4px;
+        &:hover {
+          background-color: $stic-light;
+          color: bw($stic-light);
+        }
+      }
+    }
+  }
+}
+/*user-menu-button color icon*/
+
+.user-menu-button .suitepicon {
+  background-color: transparent;
+  color: bw($stic-base);
+}
+
+// Fix for calendar icon in Stic Subtheme
+table#mass_update_table .suitepicon-module-calendar {
+  color: $stic-complement;
+}
+
+// Fix for module icons in dashlets addition
+#moduleDashletsList .suitepicon {
+  color: $stic-complement;
+}
+// Fix for truncates menus if numerous or larger
+.desktop-toolbar {
+  height: 60px;
+  position: absolute;
+  left: 20px;
+  // border: 1px solid blue;
+  display: flex;
+}
+
+.desktop-toolbar ul.navbar-nav {
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  height: 60px;
+  align-content: center;
+  margin-left: 10px;
+}
+
+.navbar > .container .navbar-brand,
+.navbar > .container-fluid .navbar-brand {
+  margin-left: 0px;
+  &.suitepicon {
+    color: bw($stic-base);
+  }
+}
+.desktop-toolbar ul.navbar-nav li.topnav {
+  display: inline !important;
+  line-height: 25px;
+  height: 30px;
+}
+
+li.navbar-brand-container {
+  position: absolute;
+  left: -20px;
+  top: 3px;
+  a.navbar-brand {
+    margin-left: 0px;
+  }
+}
+
+// Best visibility for current main module
+.topnav .currentTab {
+  font-weight: 800;
+}
+
+// Fix for select size & extra-large content in selects
+.edit-view-row select {
+  &:not([multiple]) {
+    height: 32px;
+  }
+  width: 90%;
+  &.datetimecombo_time {
+    width: 75px;
+    height: 32px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+// Equal width for date & date_time date input
+.col-sm-6 .edit-view-field input[type="text"].datetimecombo_date {
+  width: 98px;
+}
+
+// Improve visibility for sub-panel header text
+.sub-panel .panel-heading a {
+  div div {
+    font-weight: 600;
+    color: $stic-main-bg;
+    span.suitepicon.subpanel-icon {
+      color: $stic-main-bg;
+    }
+  }
+}
+
+// Improve visibility for massive actions disabled label
+.selectActionsDisabled .selected-actions-label {
+  color: $stic-main-bg;
+}
+
+// Improve visibility for data and datetime-local fields that are shown in web forms
+input[type="date"],
+input[type="datetime-local"] {
+  background: $input-bg;
+  padding: 5px;
+  border: 1px solid $input-select-bg;
+  border-radius: $border-radius-base;
+  line-height: $input-line-height;
+  min-height: $input-line-height;
+}
+
+/* Enable word wrap in listview columns labels*/
+.listViewBody .list tr th a {
+  white-space: initial;
+}
+
+.panel-body table tr th {
+  white-space: normal;
+}
+
+/* Fix for editable input in tinymce forms*/
+input.mce-textbox {
+  padding: 0px;
+}
+
+/* Set special views padding and bg (ej: emailTemplates, that dont use standard selectors) */
+form#EditView.custom-email-templates {
+  padding: 24px;
+  background-color: #fff;
+}
+
+/* Fix range search in popup view */
+form#popup_query_form {
+  display: none;
+  .dateTimeRangeChoice select {
+    display: block;
+    width: 190px;
+    margin-right: 60%;
+  }
+  .dateRangeInput {
+    width: 30%;
+  }
+}
+
+// Fix for range search error display STIC#252
+#popup_query_form {
+  .dateTimeRangeChoice {
+    // For date range
+    overflow: visible;
+    select {
+      margin-top: 1px;
+      height: 32px;
+      border-width: 1px;
+      border-radius: 4px;
+    }
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    .col-advanced-search {
+      .form-item {
+        min-height: 62px;
+        // For numeric range
+        input,
+        select {
+          margin-top: 1px;
+          min-height: 32px;
+          border-width: 1px;
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+}
+
+// Fix for textareas width when name is not "description" (col-sm-6 + col-sm-8 = 1 columns)
+.col-sm-6.edit-view-row-item .col-sm-8.edit-view-field textarea {
+  width: 90% !important;
+  resize: both;
+}
+
+// Fix for textareas width when name is not "description" (col-sm-12 + col-sm-8 = 2 columns)
+.col-sm-12.edit-view-row-item .col-sm-8.edit-view-field textarea {
+  width: 120% !important;
+  resize: both;
+}
+
+// Fix for detail view when large link is in a text field
+.detail-view-row-item .detail-view-field {
+  word-break: break-word;
+}
+
+// Improvement tabs visibility
+.detail-view,
+#EditView_tabs {
+  ul.nav.nav-tabs li {
+    a[data-toggle="tab"],
+    a[data-toggle="tab"]:hover {
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: $stic-text;
+      border-bottom: 1px solid transparent;
+      &:hover {
+        border-bottom: 1px solid $stic-text;
+      }
+    }
+    &.active {
+      a,
+      a:hover {
+        background-color: $stic-text;
+        color: $stic-main-bg;
+      }
+    }
+  }
+}
+
+// Improve textareas width when inline-edit
+.detail-view-row-item {
+  form#EditView {
+    textarea {
+      width: 100%;
+    }
+    #inlineEditSaveButton {
+      max-width: 9%;
+    }
+  }
+  #inline_edit_field {
+    width: 90%;
+  }
+}
+
+// Fix for STIC#376
+#wizard #step2 .wizard-box {
+  border: 1px solid #f5f5f5;
+  width: 45%;
+  min-width: 350px;
+  span.helpmsg {
+    position: inherit;
+    display: block;
+    bottom: unset !important;
+    line-height: normal;
+  }
+  div.validation-message {
+    margin: 0px;
+  }
+}
+
+// Different visibility for panels within the detail/editing view and the supanells of the detail view.
+.detail-view,
+#EditView_tabs {
+  background-color: #fff !important;
+  padding-bottom: 10px;
+  .panel-default {
+    border-bottom-color: #fff;
+    box-shadow: none;
+    .panel-heading {
+      width: 98%;
+      margin: auto;
+      a {
+        background-color: #c2c3c4 !important;
+        font-weight: 600;
+        letter-spacing: 1px;
+        color: $stic-text;
+      }
+    }
+  }
+}
+
+// Improve visibility of messagebox title
+#sugarMsgWindow {
+  .hd {
+    background-color: $stic-complement;
+  }
+  a.container-close {
+    font-size: 12px;
+    font-weight: bold;
+    color: $stic-main-bg;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Enable scroll bars in modal dashlet config screen
+.yui-skin-sam.masked #dlg.SuiteP-configureDashlet.yui-module.yui-overlay.yui-panel .bd {
+  overflow: auto;
+}
+
+// Fix for show calendar in same line and limit select width in inline edit
+.list.view #inline_edit_field {
+  span.dateTime {
+    white-space: nowrap;
+  }
+  select:not([multiple]) {
+    max-width: 150px;
+  }
+  select[multiple] {
+    max-width: calc(100% - 50px);
+  }
+}
+
+.detail-view #inline_edit_field {
+  select {
+    max-width: 100%;
+  }
+}
+
+// Fix for superposition of the title of the campaign types on the icon in the campaign assistant
+#wiz_stage .icon-btn a {
+  line-height: normal;
+  br {
+    display: none;
+  }
+  span {
+    display: block;
+    &:first-child {
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+// Fix appearance interlined and padding in some config pages (#445)
+table.edit.view {
+  td {
+    padding: 1em;
+    line-height: normal;
+  }
+  th h4 {
+    font-weight: bold;
+    border-bottom: 1px solid $stic-text;
+    font-size: 18px;
+    padding-bottom: 0;
+    color: $stic-text;
+  }
+}
+
+// hide blank line above configuration pages buttons bars
+form[name="ConfigureSettings"] span.error:empty {
+  display: none;
+}
+
+// fix #493
+div[field="action_lines"] table td.dateTimeComboColumn {
+  min-width: 200px;
+  & > input {
+    max-width: 100px !important;
+  }
+  & > button[type="button"] {
+    width: 32px;
+    height: 32px !important;
+  }
+}
+
+// fix #527 & fix #742
+.bodywrapper .wizard input.button#resetModule {
+  display: none;
+}
+
+// fix #537
+.ui-dialog.ui-widget.ui-resizable {
+  font-size: 12px;
+  a {
+    font-weight: bold;
+    color: $stic-text;
+    border-bottom-color: $stic-text;
+    border-bottom-style: dashed;
+    border-bottom-width: 1px;
+  }
+}
+
+// Fix #541
+.SuiteP-configureDashlet table.edit.view td {
+  padding: inherit;
+  line-height: normal;
+}
+
+// enhancements #562
+form#ChangePasswordForm {
+  table#main_table {
+    // background-color: pink;
+    margin-top: 3em;
+    td#company_logo {
+      text-align: center;
+      padding: 5px;
+      background-color: #fff;
+      img {
+        max-height: 75px;
+      }
+    }
+    span#post_error:empty {
+      display: none;
+    }
+  }
+}
+
+// enhancements #544
+.edit-view-field input[type="text"]#first_name {
+  width: 90% !important;
+}
+
+// fix STIC#607#issuecomment-1058944216 #1
+table.subpanel-table .pagination .SugarActionMenu {
+  li.single,
+  li.sugar_action_button {
+    ul.subnav.ddopen li a {
+      background-color: transparent;
+      &:hover {
+        background-color: lighten($stic-text, 4%);
+      }
+    }
+    a {
+      background-color: lighten($stic-text, 7%);
+      vertical-align: middle;
+      color: $stic-main-bg;
+
+      &:hover {
+        color: $stic-main-bg;
+        background-color: $stic-text;
+      }
+    }
+  }
+}
+
+// fix STIC#607#issuecomment-1058944216 #2
+#emailsMarketingTable > tbody > tr:nth-child(2) > td:nth-child(1) > label {
+  display: none !important;
+}
+
+// set best text contrast in menu
+.navbar ul.navbar-nav li.topnav {
+  a,
+  &.currentTab,
+  span.currentTab a {
+    color: bw($stic-base);
+  }
+
+  ul.dropdown-menu li a:hover {
+    // fix 667
+    background-color: $stic-superlight;
+    color: bw($stic-superlight);
+  }
+}
+
+.desktop-bar {
+  #desktop_notifications button,
+  #globalLinks * {
+    color: bw($stic-base);
+  }
+}
+
+// #645
+i.inline-help, span.inline-help {
+  position: relative;
+  color: $stic-dark;
+  font-weight: bolder;
+  display: inline-block;
+  &:hover {
+    color: $stic-text;
+  }
+}
+// #645
+.qtip {
+  .qtip-content {
+    background-color: lighten($stic-base, 40%);
+    color: bw(lighten($stic-base, 40%));
+    a {
+      color: darken($stic-base, 15%);
+      text-decoration: underline;
+      &:hover {
+        color: darken($stic-base, 30%);
+      }
+    }
+  }
+  .qtip-titlebar {
+    background-color: $stic-dark;
+    color: bw($stic-dark);
+    .glyphicon:hover {
+      color: darken($stic-base, 30%);
+    }
+  }
+  .qtip-tip {
+    border-color: $stic-dark;
+  }
+}
+
+// fix #718
+.error {
+  @include alert-variant($stic-base, darken($stic-base, 20%), $stic-text);
+  color: bw($stic-base);
+  a {
+    color: bw($stic-base);
+    &:hover {
+      color: $stic-text;
+    }
+  }
+}
+
+// fix #740
+// fix #810
+.detail-view-row-item {
+  display: flex;
+  align-items: center;
+  .label {
+    height: auto;
+    padding-right: 5px;
+    padding-bottom: 0px;
+
+    // border:1px solid green;
+    display: inline-flex;
+    align-content: flex-start;
+    align-items: center;
+    white-space: normal;
+    &::first-line {
+      line-height: 0px;
+    }
+    .inline-help {
+      margin-left: 3px;
+    }
+  }
+  .detail-view-field {
+    margin: 1px;
+    min-height: 42px;
+    &[field^="email"] {
+      min-height: 42px;
+      #email1_span {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+// Tunning css for popup search and edit view
+body.popupBody {
+  table.list.view {
+    width: 100%;
+    margin-top: 1em;
+  }
+  table.edit.view {
+    border: 0px;
+    td {
+      padding: 0px;
+    }
+  }
+  table.tableformHeader.h3Row {
+    margin-top: 1em;
+    display: none;
+  }
+  form#popup_query_form,
+  #addform {
+    display: none;
+    border: 2px solid $stic-base;
+    // margin-top: 1em;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #fff;
+  }
+  p#popupButtonBar {
+    margin-bottom: 1em;
+    button {
+      color: bw($stic-base);
+      font-weight: 700;
+      background-color: $stic-base;
+      &.inactive {
+        opacity: 0.5;
+        font-weight: 400;
+      }
+      &:focus {
+        opacity: 0.99;
+      }
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+  #addform {
+    .label {
+      font-size: 13px;
+    }
+    textarea {
+      max-width: 100%;
+    }
+    input:not(.button):not([type="checkbox"]),
+    select:not(.datetimecombo_time) {
+      margin-top: 0px;
+      width: calc(100% - 90px);
+    }
+    #EditView_tabs {
+      padding: 1em 0px;
+      .edit-view-row {
+        padding: 1em 0px;
+      }
+    }
+    div[type="datetimecombo"] {
+      td.dateTimeComboColumn {
+        padding: 0px;
+        input.datetimecombo_date {
+          min-width: 100px;
+
+          max-width: calc(100% - 40px);
+        }
+        button {
+          margin: 0px;
+          width: 32px;
+          height: 32px;
+          padding: 1px;
+        }
+      }
+    }
+  }
+  #addformlink input {
+    display: none;
+  }
+
+  // ensure color picker visibility
+  .cp-color-picker {
+    z-index: 9999 !important;
+  }
+}
+
+// fix buttons color contrast
+.action_buttons .button,
+input[type="submit"].button,
+input[type="button"].button,
+// button[type="button"],
+button[type="button"].btn,
+button[type="button"].button,
+button[type="button"].add-btn,
+#update_button,
+#cancel_button,
+#bigbutton,
+ul#reminder_view .button,
+ul#reminder_view .btn,
+.listViewButtons .button ,
+button.list-view-pagination-button,
+button.ist-view-pagination-button {
+  border: none;
+  background-color: $stic-light !important;
+  color: bw($stic-light) !important;
+  &:hover {
+    background-color: $stic-base !important;
+    color: bw($stic-base) !important;
+  }
+  .suitepicon {
+    color: bw($stic-light);
+  }
+}
+
+#btn_view_change_log {
+  color: bw($stic-complement);
+}
+
+// best constrast in mobile menu
+#mobile_menu {
+  li a {
+    color: bw($stic-base);
+  }
+}
+#mobileheader {
+  .modulename,
+  ul.mobileCurrentTab,
+  ul.recent-list,
+  ul.recent-list-title,
+  ul.favorite-list {
+    li a,
+    a,
+    span.suitepicon {
+      color: bw($stic-base);
+    }
+  }
+}
+
+// best constrast in select multiples
+select[multiple] option {
+  color: #000 !important;
+  &:active,
+  &:checked {
+    background-color: $stic-light;
+    color: bw($stic-base) !important;
+  }
+}
+
+// best constrast in filter column chooser
+#columnsFilterDialog .chooserList.red {
+  color: bw($stic-base);
+}
+
+// tunning email fields
+.edit-view-row-item[data-field="email1"] {
+  .email-address-lines-container,
+  .email-address-add-line-container,
+  .email-address-line-container,
+  .email-address-input-container {
+    padding-left: 0px;
+    &.email-address-input-container {
+      min-width: 280px;
+    }
+  }
+  span#email1_span > div.col-xs-12 {
+    // border: 1px solid Pink !important;
+    // padding-left: 0px;
+    button.email-address-add-button {
+      margin-bottom: 4px !important;
+    }
+
+    button.email-address-remove-button {
+      margin-left: 4px !important;
+    }
+
+    @include stic-suitepicon-button();
+
+    .email-address-input-group {
+      width: calc(100% - 35px);
+      vertical-align: top;
+    }
+  }
+}
+
+// some edit view fixes
+.edit-view-row-item {
+  margin-bottom: 15px;
+  .yui-ac {
+    button {
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+    input.sqsEnabled {
+      margin-top: 0px;
+    }
+  }
+  .edit-view-field {
+    padding: 0px;
+  }
+  .edit-view-field[type="date"],
+  .edit-view-field[type="relate"],
+  .edit-view-field[type="datetimecombo"],
+  .edit-view-field[type="parent"] {
+    padding-right: 0px !important;
+    @include stic-suitepicon-button();
+    &[type="relate"],
+    &[type="parent"] {
+      #parent_name,
+      [name="btn_parent_name"],
+      [name="btn_clr_parent_name"] {
+        margin-top: 5px;
+        margin-right: 0px;
+      }
+
+      .id-ff {
+        display: inline-block;
+        // background-color: pink;
+        width: 68px;
+        button {
+          &:last-child {
+            // border: 1px solid red;
+            margin-left: 3px;
+          }
+        }
+      }
+      input.yui-ac-input {
+        width: calc(90% - 70px);
+        vertical-align: top;
+        margin: 0px;
+      }
+    }
+    &[type="date"] {
+      input {
+        width: calc(90% - 35px);
+        vertical-align: top;
+      }
+    }
+    &[type="datetimecombo"] {
+      * {
+        margin: 0px;
+        height: 32px;
+      }
+      table {
+        table-layout: fixed;
+        display: table;
+        width: 90%;
+
+        tr {
+          td.dateTimeComboColumn {
+            margin-bottom: 5px;
+            &:first-child {
+              width: calc(100% - 133px) !important;
+              min-width: 145px;
+              input {
+                width: calc(100% - 38px) !important;
+              }
+            }
+            &:last-child {
+              width: 130px !important;
+              padding-left: 2px;
+              & > div {
+                width: 100%;
+                span {
+                  select.datetimecombo_time {
+                    width: 61px;
+                    &:last-child {
+                      margin-left: -4px !important; // hide wrong space
+                    }
+                  }
+                }
+              }
+            }
+          }
+          button {
+            margin-right: 4px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// fix #787
+.modal-footer button {
+  margin-bottom: 0px;
+}
+
+//fix 780 & best pagination contrast
+#pagecontent .dashboard ul.nav-tabs.nav-dashboard {
+  li {
+    a {
+      background-color: lighten($stic-complement, 50%);
+      color: bw(lighten($stic-complement, 50%));
+    }
+    &.active a,
+    a:hover {
+      background-color: $stic-complement;
+      color: bw($stic-complement);
+    }
+  }
+}
+
+table.list.view tr.pagination td:last-child,
+table.list.view td.paginationChangeButtons,
+table.list.view td.paginationActionButtons {
+  button.button,
+  button.list-view-pagination-button,
+  button.ist-view-pagination-button {
+    &:not([disabled]) {
+      background-color: rgba(0, 0, 0, 0.1) !important;
+      color: bw(rgba(0, 0, 0, 0.1));
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.2) !important;
+        color: bw(rgba(0, 0, 0, 0.2));
+      }
+    }
+    &[disabled] {
+      background-color: transparent !important;
+    }
+  }
+}
+
+.pageNumbers {
+  color: #000 !important;
+  vertical-align: middle;
+  top: 0 !important;
+}
+
+.dashletcontainer {
+  .pageNumbers {
+    color: #fff !important;
+  }
+  .list-view-data-icon .suitepicon {
+    color: $stic-complement !important;
+  }
+}
+
+// edit view labels align (same as detail view)
+.edit-view-row-item {
+  display: flex;
+  align-items: center;
+  .label {
+    height: auto;
+    padding-right: 5px;
+    padding-bottom: 0px;
+    line-height: 14px;
+    display: inline-flex;
+    align-content: flex-start;
+    align-items: center;
+    white-space: normal;
+    &::first-line {
+      line-height: 0px;
+    }
+    .inline-help {
+      margin-left: 3px;
+    }
+  }
+}
+
+.subpanel-table tbody td.footable-last-visible li a {
+  color: #fff !important;
+}
+
+// fix 814
+
+// general links
+table.list.view td[type="phone"],
+table.list.view td[type="relate"],
+table.list.view td[type="phone"],
+table.dashletPanel tbody tr td:not(:first-child)[scope="row"],
+table.list.view.subpanel-table tbody tr td:nth-child(n + 3) {
+  @include stic-link-normal();
+}
+
+// fixes for email links
+.table-responsive.list tbody tr td[field="email1"] a {
+  @include stic-link-base();
+  font-size: 12px;
+}
+
+.detail-view {
+  a.email-link,
+  [field="parent_name"] a span {
+    @include stic-link-base();
+    font-size: 14px;
+    font-weight: bold;
+  }
+}
+
+// bold links
+table.list.view td[type="name"],
+table.dashletPanel tbody tr td:first-child,
+.detail-view .detail-view-row-item,
+.detail-view-row-item a .sugar_field,
+table.list.view.subpanel-table tbody tr td:nth-child(2) {
+  @include stic-link-bold();
+}
+
+.detail-view-field[type="relate"] > a > span {
+  display: inherit; // mandatory to see links underline
+  @include stic-link-bold();
+}
+
+table.list.view {
+  td[type="decimal"],
+  td[type="int"],
+  td[type="currency"],
+  td[type="float"] {
+    text-align: right;
+  }
+}
+
+// MOVED FROM SticInclude/css/Custom.css
+/* Apply soft transition when an input changes its visibility*/
+.edit-view-row-item {
+  transition-duration: 0.4s;
+}
+
+/* Class for disabled form elements */
+.stic-disabled {
+  opacity: 0.3;
+}
+
+/* Class for form elements in which the required property has been activated dynamically */
+.conditional-required:not([disabled="true"]):after {
+  content: "*";
+  color: red;
+}
+
+/* Class for form elements in which they might be required for other pourposes */
+.conditional-required-alternative:not([disabled="true"]):after {
+  content: "#";
+  color: red;
+}
+
+/* No inline edit appearance*/
+.no-inlineEdit:hover:after {
+  content: "•";
+  color: red;
+  position: absolute;
+}
+
+.detail-view-field.no-inlineEdit:hover:after {
+  top: 10px;
+  right: 10px;
+}
+
+/* best inline edit visibility*/
+/* fix #565 */
+table.list.view tbody td.no-inlineEdit:hover,
+table.list.view tbody td.inlineEdit:hover {
+  filter: brightness(0.95);
+}
+
+/* Classes for SEPA XML generation log messages*/
+.msg-error {
+  color: red;
+}
+
+.msg-warning {
+  color: #f78c00;
+}
+
+.msg-success {
+  color: #099610;
+}
+
+.msg-fatal-lock {
+  color: white;
+  background-color: #ea5252;
+  border: 1px solid #7c0808;
+  display: block;
+  font-size: 1.3em;
+  text-align: center;
+  margin: 1em auto;
+  padding: 1em;
+}
+
+.msg-success-lock {
+  color: white;
+  background-color: #099610;
+  border: 1px solid #06570a;
+  display: block;
+  font-size: 1.3em;
+  text-align: center;
+  margin: 1em auto;
+  padding: 1em;
+}
+.msg-warning-lock {
+  color: white;
+  background-color: #f78c00;
+  border: 1px solid #854c02;
+  display: block;
+  font-size: 1.3em;
+  text-align: center;
+  margin: 1em auto;
+  padding: 1em;
+}
+
+/* Set style for autofill fields*/
+.label.autofill:after {
+  content: "⚡";
+  color: #a2a939;
+  font-size: larger;
+}
+
+/* Set styles for fields with validation dependencies unavailable*/
+/* detail */
+.detail-view-row-item.depend-not-exist .inlineEdit:before {
+  content: "⚠";
+  color: red;
+}
+
+/* list */
+table.view th.depend-not-exist div:before {
+  content: "⚠";
+  color: red;
+}
+
+/* edit */
+.edit-view-row-item.depend-not-exist .label:after {
+  content: " ⚠";
+  color: red;
+}
+
+/* Fixed search fields*/
+.search input[autocomplete] {
+  max-width: 70%;
+}
+
+/* */
+.detail-view-field[type="wysiwyg"] iframe {
+  height: auto !important;
+}
+
+/* CONVERT LEADS FIXED */
+/* Textarea width */
+.panel-convert-lead textarea {
+  width: 90% !important;
+}
+
+/* FIX xxx_address_street in contacts & leads edit */
+.edit-view-row-item input#primary_address_street,
+.edit-view-row-item input#alt_address_street,
+.edit-view-row-item input#billing_address_street,
+.edit-view-row-item input#shipping_address_street {
+  height: 32px !important;
+  width: 90% !important;
+}
+
+/* FIX xxx_address_street in contacts & leads detail */
+.detail-view-row-item [field="primary_address_street"],
+.detail-view-row-item [field="alt_address_street"],
+.detail-view-row-item [field="billing_address_street"],
+.detail-view-row-item [field="shipping_address_street"] {
+  height: 42px;
+  padding: 10px;
+}
+
+/* FIX xxx_address_street in contacts & leads detail */
+.detail-view-row-item .inlineEditActive[field="primary_address_street"],
+.detail-view-row-item .inlineEditActive[field="alt_address_street"],
+.detail-view-row-item .inlineEditActive[field="billing_address_street"],
+.detail-view-row-item .inlineEditActive[field="shipping_address_street"] {
+  height: 54px;
+}
+
+/* Fix for address_street in inline edit */
+/* input#billing_address_street, */
+input#billing_address_street,
+input#shipping_address_street,
+input#primary_address_street,
+input#alt_address_street {
+  height: 32px !important;
+  width: 100%;
+}
+
+/* Lowercase sub-panel titles */
+.panel-heading {
+  text-transform: none !important;
+  font-weight: bold !important;
+}
+
+/* Fix for wysiwyg iframe borders*/
+.detail-view-row-item iframe {
+  border: none !important;
+}
+
+.listViewBody td[align="right"] {
+  padding-right: 3em !important;
+}
+
+/* Mailmerge generate document button fix */
+#tab-actions .dropdown-menu li a {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+// END MOVED FROM SticInclude/css/Custom.css
+
+// fix #906
+table.list.view td.inlineEditActive {
+  &[type="date"],
+  &[type="datetimecombo"] {
+    button[type="button"] {
+      width: 32px;
+      height: 32px;
+      border: 1px solid $stic-light;
+      padding: 1px !important;
+      margin: auto;
+    }
+    &[type="date"] {
+      min-width: 160px;
+      max-width: 160px;
+      vertical-align: middle;
+      input {
+        width: calc(100% - 30px);
+      }
+    }
+  }
+}
+
+// fix #877
+#pagecontent[data-module="EmailMarketing"] {
+  .edit.view {
+    padding: 1em;
+    .suitepicon.suitepicon-module-calendar {
+      color: #000;
+    }
+    #all_prospect_lists {
+      margin-right: 0.5em;
+    }
+  }
+}
+
+// fix #787
+#searchDialog {
+  .modal-content {
+    #search_form {
+      .row > .col-advanced-search,
+      .row > .search_fields_basic {
+        padding: 5px;
+        margin: 0px !important;
+      }
+      .view select {
+        border: 1px solid $stic-base !important;
+      }
+      // .yui-ac {
+      input {
+        margin: 0px;
+        height: 32px;
+      }
+      span.id-ff.multiple {
+        position: initial;
+        top: 0px;
+      }
+      .form-item div button.btn {
+        margin-bottom: 0px;
+      }
+      label {
+        white-space: break-spaces;
+        line-height: normal;
+      }
+    }
+  }
+}
+
+// Fix: LineItems visualization (Issue: #1020)
+#lineItems {
+  .product_item_description {
+    width: 95% !important;
+  }
+  .product_description {
+    width: 95% !important;
+  }
+  .service_name {
+    width: 95% !important;
+  }
+  select {
+    width: revert;
+  }
+}
+
+// Fix: Calendar selectize visualization STIC#1269
+#pagecontent[data-module="Calendar"] {
+  .selectize-input.items.not-full{
+    min-width: 190px;
+  }
+}
+
+
+a#nonprofitized_by{
+  
+  font-size: 10px;
+  margin-right: 20px;
+  font-size: 12px;
+  color: $main-font-color;
+  cursor: pointer;
+  &:hover{
+    color: $danger-btn-bg-hover;
+    text-decoration: none;
+
+  }
+}

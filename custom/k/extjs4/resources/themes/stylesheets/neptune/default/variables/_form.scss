@@ -1,0 +1,128 @@
+/**
+ * @class Ext.form.*
+ */
+
+
+$include-form-highlights: $include-highlights !default;
+
+/**
+ * @class Ext.form.field.Base
+ */
+
+$form-field-height: $font-size-large + 8px !default;
+$form-toolbar-field-height: 22px !default;
+$form-error-icon-width: 20px !default;
+$form-error-icon-margin-left: 3px !default;
+
+//padding
+$form-field-padding: 1px 3px !default;
+
+//background
+$form-field-background-color: lighten($content-color, 5%) !default;
+$form-field-background-image: 'form/text-bg.gif' !default;
+
+//fonts
+$form-field-font-size: $font-size !default;
+$form-field-font-family: $font-family !default;
+$form-field-font-weight: normal !default;
+$form-field-font: $form-field-font-weight $form-field-font-size $form-field-font-family !default;
+$form-field-color: color-by-background($form-field-background-color) !default;
+
+//border
+$form-field-border-color: color-by-background($neutral-color, 15%) !default;
+$form-field-border-width: 1px !default;
+
+$form-field-focus-border-color: color-offset($base-color, 15%, light) color-offset($base-color, 30%, light) color-offset($base-color, 30%, light) !default;
+$form-field-invalid-border-color: #FF0000 !default;
+
+$form-field-empty-color: color-by-background($form-field-background-color, 25%) !default;
+
+$form-field-invalid-background-color: #FFEDE9 !default;
+$form-field-invalid-background-image: null !default;
+$form-field-invalid-background-repeat: null !default;
+$form-field-invalid-background-position: null !default;
+
+/**
+ * @class Ext.form.field.TextArea
+ */
+$form-textarea-padding: 2px 3px !default;
+
+/**
+ * @class Ext.form.Label
+ */
+$form-label-font-weight: normal !default;
+$form-label-font-size: $font-size !default;
+$form-label-font-family: $font-family !default;
+$form-label-font: $form-label-font-weight $form-label-font-size $form-label-font-family !default;
+
+/**
+ * @class Ext.form.field.Checkbox
+ */
+$form-checkbox-image: 'checkbox.gif' !default;
+$form-checkbox-size: 17px !default;
+
+/**
+ * @class Ext.form.field.Radio
+ */
+$form-radio-image: 'radio.gif' !default;
+$form-radio-size: 19px !default;
+
+/**
+ * Error messages
+ */
+//icons
+$form-exclamation-icon: 'invalid.gif' !default;
+
+//font
+$form-error-msg-color: $drastic-color !default;
+$form-error-msg-font-weight: normal !default;
+$form-error-msg-font-size: $font-size-small !default;
+$form-error-msg-font-family: $font-family !default;
+$form-error-msg-font: $form-error-msg-font-weight $form-error-msg-font-size $form-error-msg-font-family !default;
+$form-error-msg-line-height: 16px !default;
+
+/**
+ * Trigger Field
+ */
+$form-trigger-width: 17px !default;
+$form-trigger-margin-left: 2px !default;
+$form-trigger-height: 22px !default;
+$form-toolbar-trigger-height: $form-toolbar-field-height !default;
+
+$form-trigger-border-bottom-width: 1px !default;
+$form-trigger-border-bottom-style: solid !default;
+$form-trigger-border-bottom-color: $form-field-border-color !default;
+$form-trigger-border-bottom: $form-trigger-border-bottom-width $form-trigger-border-bottom-style $form-trigger-border-bottom-color !default;
+
+$form-trigger-border-bottom-color-over: adjust-color($base-color, $hue: -4.322deg, $saturation: -1.065%, $lightness: -16.863%) !default;
+$form-trigger-border-bottom-color-focus: adjust-color($base-color, $hue: -4.322deg, $saturation: -1.065%, $lightness: -16.863%) !default;
+$form-trigger-border-bottom-color-focus-over: null !default;
+$form-trigger-border-bottom-color-pressed: null !default;
+
+$form-trigger-icon-background-position: 7px 6px !default;
+
+/**
+ * Fieldsets
+ */
+$fieldset-header-font-size: $font-size !default;
+$fieldset-header-font-weight: bold !default;
+$fieldset-header-font-family: $font-family !default;
+$fieldset-header-font: $fieldset-header-font-size $fieldset-header-font-weight $fieldset-header-font-family !default;
+$fieldset-header-color: color-by-background($panel-frame-background-color, 50%) !default;
+
+$fieldset-border-width: 1px !default;
+$fieldset-border-style: solid !default;
+$fieldset-border-color: $form-field-border-color !default;
+$fieldset-border: $fieldset-border-width $fieldset-border-style $fieldset-border-color !default;
+
+$fieldset-padding: 10px !default;
+$fieldset-header-padding: 0 3px !default;
+
+/**
+ * Sliders
+ */
+$horizontal-slider-thumb-width: 14px !default;
+$horizontal-slider-thumb-height: 15px !default;
+
+$vertical-slider-thumb-width: 15px !default;
+$vertical-slider-thumb-height: 14px !default;

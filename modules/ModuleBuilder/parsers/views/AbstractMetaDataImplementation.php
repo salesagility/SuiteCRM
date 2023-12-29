@@ -461,9 +461,13 @@ abstract class AbstractMetaDataImplementation
         // BEGIN ASSERTIONS
         if ($type != MB_BASEMETADATALOCATION && $type != MB_HISTORYMETADATALOCATION) {
             // just warn rather than die
-            $GLOBALS ['log']->warning(
+            // STIC-Custom 20230703 MHP - Change inexistent warning() method for warn() method
+            // STIC#1150
+            // $GLOBALS ['log']->warning(
+            $GLOBALS ['log']->warn(
                 "UndeployedMetaDataImplementation->getFileName(): view type $type is not recognized"
             );
+            // END STIC-Custom
         }
         // END ASSERTIONS
 

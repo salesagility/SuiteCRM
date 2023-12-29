@@ -1,0 +1,19 @@
+// docs/update.asciidoc:177
+
+[source, php]
+----
+$params = [
+    'index' => 'test',
+    'id' => '1',
+    'body' => [
+        'script' => [
+            'source' => 'if (ctx._source.tags.contains(params.tag)) { ctx.op = \'delete\' } else { ctx.op = \'none\' }',
+            'lang' => 'painless',
+            'params' => [
+                'tag' => 'green',
+            ],
+        ],
+    ],
+];
+$response = $client->update($params);
+----

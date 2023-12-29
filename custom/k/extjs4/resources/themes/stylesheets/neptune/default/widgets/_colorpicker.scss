@@ -1,0 +1,35 @@
+$colorpicker-item-size: 10px;
+
+@mixin extjs-colorpicker {
+    .#{$prefix}color-picker {
+        width: 144px;
+        height: 90px;
+        @extend .mr-white-glove;
+    }
+
+    .#{$prefix}color-picker a {
+        border: 1px solid #fff;
+        float: left;
+        padding: 2px;
+        text-decoration: none;
+        @extend .outline-none;
+    }
+
+    .#{$prefix}color-picker a:hover,
+    .#{$prefix}color-picker a.#{$prefix}color-picker-selected {
+        border-color: $colorpicker-over-border-color;
+        background-color: $colorpicker-over-background-color;
+    }
+
+    .#{$prefix}color-picker em {
+        display: block;
+        border: 1px solid $colorpicker-item-border-color;
+    }
+
+    .#{$prefix}color-picker em span {
+        display: block;
+        height: $colorpicker-item-size;
+        width: $colorpicker-item-size;
+        line-height: $colorpicker-item-size;
+    }
+}

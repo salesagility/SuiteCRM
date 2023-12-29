@@ -1,0 +1,18 @@
+// docs/reindex.asciidoc:384
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'source' => [
+            'index' => 'source',
+            'size' => 100,
+        ],
+        'dest' => [
+            'index' => 'dest',
+            'routing' => '=cat',
+        ],
+    ],
+];
+$response = $client->reindex($params);
+----

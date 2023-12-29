@@ -1,11 +1,13 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
  * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -27,16 +29,20 @@
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
  *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ * 
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * SugarCRM" logo, "Supercharged by SuiteCRM" logo and “Nonprofitized by SinergiaCRM” logo. 
+ * If the display of the logos is not reasonably feasible for technical reasons, 
+ * the Appropriate Legal Notices must display the words "Powered by SugarCRM", 
+ * "Supercharged by SuiteCRM" and “Nonprofitized by SinergiaCRM”. 
  */
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -110,41 +116,69 @@ HTML;
         return $html;
     }
 
+// STIC-custom JCH 20220312 - Remove addition of JS content before download step, to avoid AntiXSS filter
+// STIC#633/files#
+//     private static function getFormFinishHTML($webFormRequiredFieldsMsg)
+//     {
+//         $html = <<<HTML
+// </form>
+// <script type='text/javascript'>
+//     // STIC-custom 20211122 - jch - Avoid multiple submission
+//     // STIC#489
+//     var formHasAlreadyBeenSent = false;
+//     /**
+//      * Prevent multiple form submissions
+//      *
+//      * @return void
+//      */
+//     function lockMultipleSubmissions() {
+//         if (formHasAlreadyBeenSent) {
+//             console.log("Form is locked because it has already been sent.");
+//             event.preventDefault();
+//         }
+//         formHasAlreadyBeenSent = true;
+//     }
+//     // Attach function to event
+//     document.getElementById("WebToLeadForm").addEventListener("submit", lockMultipleSubmissions);
+//     // END STIC-custom
+//     function submit_form() {
+//         if (typeof(validateCaptchaAndSubmit) != 'undefined') {
+//             validateCaptchaAndSubmit();
+//         } else {
+//             check_webtolead_fields();
+//             //document.WebToLeadForm.submit();
+//         }
+//     }
+//     function check_webtolead_fields() {
+//         if (document.getElementById('bool_id') != null) {
+//             var reqs = document.getElementById('bool_id').value;
+//             bools = reqs.substring(0, reqs.lastIndexOf(';'));
+//             var bool_fields = new Array();
+//             var bool_fields = bools.split(';');
+//             nbr_fields = bool_fields.length;
+//             for (var i = 0; i < nbr_fields; i++) {
+//                 if (document.getElementById(bool_fields[i]).value == 'on') {
+//                     document.getElementById(bool_fields[i]).value = 1;
+//                 } else {
+//                     document.getElementById(bool_fields[i]).value = 0;
+//                 }
+//             }
+//         }
+//     }
+// </script>
+// HTML;
+//         return $html;
+//     }
+
     private static function getFormFinishHTML($webFormRequiredFieldsMsg)
     {
         $html = <<<HTML
 </form>
-<script type='text/javascript'>
-    function submit_form() {
-        if (typeof(validateCaptchaAndSubmit) != 'undefined') {
-            validateCaptchaAndSubmit();
-        } else {
-            check_webtolead_fields();
-            //document.WebToLeadForm.submit();
-        }
-    }
 
-    function check_webtolead_fields() {
-        if (document.getElementById('bool_id') != null) {
-            var reqs = document.getElementById('bool_id').value;
-            bools = reqs.substring(0, reqs.lastIndexOf(';'));
-            var bool_fields = new Array();
-            var bool_fields = bools.split(';');
-            nbr_fields = bool_fields.length;
-            for (var i = 0; i < nbr_fields; i++) {
-                if (document.getElementById(bool_fields[i]).value == 'on') {
-                    document.getElementById(bool_fields[i]).value = 1;
-                } else {
-                    document.getElementById(bool_fields[i]).value = 0;
-                }
-            }
-        }
-    }
-</script>
 HTML;
         return $html;
     }
-
+// END STIC
     private static function getRowStartHTML()
     {
         return '<div class="row">';

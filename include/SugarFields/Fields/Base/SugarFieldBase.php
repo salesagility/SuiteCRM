@@ -639,7 +639,10 @@ class SugarFieldBase
      */
     protected function isRangeSearchView($vardef)
     {
-        return !empty($vardef['enable_range_search']) && !empty($_REQUEST['action']) && $_REQUEST['action'] != 'Popup';
+        // STIC-Custom AAM 20210315 - We comment the last request condition for adding range search on popup view
+        // STIC#218
+        // return !empty($vardef['enable_range_search']) && !empty($_REQUEST['action']) && $_REQUEST['action'] != 'Popup';
+        return !empty($vardef['enable_range_search']) && !empty($_REQUEST['action']); // && $_REQUEST['action']!='Popup';
     }
 
     /**

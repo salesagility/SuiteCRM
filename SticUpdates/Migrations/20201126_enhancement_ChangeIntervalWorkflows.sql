@@ -1,0 +1,1 @@
+UPDATE schedulers SET job_interval='0::0::*::*::*' WHERE id='555afabf-a050-da1b-4ab3-5e830d5282f9';

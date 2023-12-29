@@ -1,0 +1,2 @@
+coverage_clover: ./logs/coverage-clover.xml
+json_path: ./logs/coveralls-upload.json

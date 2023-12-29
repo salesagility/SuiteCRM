@@ -1,0 +1,69 @@
+[[set-retries]]
+=== Set retries
+
+By default, the client will retry `n` times, where `n = number of nodes` in your 
+cluster. A retry is only performed if the operation results in a "hard" 
+exception: connection refusal, connection timeout, DNS lookup timeout, etc. 4xx 
+and 5xx errors are not considered retriable events, since the node returns an 
+operational response.
+
+If you would like to disable retries, or change the number, you can do so with 
+the `setRetries()` method:
+
+[source,php]
+----------------------------
+
+$client = ClientBuilder::create()
+                    ->setRetries(2)
+                    ->build();
+----------------------------
+
+When the client runs out of retries, it will throw the last exception that it 
+received. For example, if you have ten alive nodes, and `setRetries(5)`, the 
+client attempts to execute the command up to five times. If all five nodes 
+result in a connection timeout (for example), the client will throw an 
+`OperationTimeoutException`. Depending on the Connection Pool being used, these 
+nodes may also be marked dead.
+
+To help in identification, exceptions that are thrown due to max retries wrap a 
+`MaxRetriesException`. For example, you can catch a specific curl exception then 
+check if it wraps a MaxRetriesException using `getPrevious()`:
+
+[source,php]
+----
+$client = Elasticsearch\ClientBuilder::create()
+    ->setHosts(["localhost:1"])
+    ->setRetries(0)
+    ->build();
+
+try {
+    $client->search($searchParams);
+} catch (Elasticsearch\Common\Exceptions\Curl\CouldNotConnectToHost $e) {
+    $previous = $e->getPrevious();
+    if ($previous instanceof 'Elasticsearch\Common\Exceptions\MaxRetriesException') {
+        echo "Max retries!";
+    }
+}
+----
+
+Alternatively, all "hard" curl exceptions (`CouldNotConnectToHost`, 
+`CouldNotResolveHostException`, `OperationTimeoutException`) extend the more 
+general `TransportException`. So you could instead catch the general 
+`TransportException` and then check it's previous value:
+
+[source,php]
+----
+$client = Elasticsearch\ClientBuilder::create()
+    ->setHosts(["localhost:1"])
+    ->setRetries(0)
+    ->build();
+
+try {
+    $client->search($searchParams);
+} catch (Elasticsearch\Common\Exceptions\TransportException $e) {
+    $previous = $e->getPrevious();
+    if ($previous instanceof 'Elasticsearch\Common\Exceptions\MaxRetriesException') {
+        echo "Max retries!";
+    }
+}
+----

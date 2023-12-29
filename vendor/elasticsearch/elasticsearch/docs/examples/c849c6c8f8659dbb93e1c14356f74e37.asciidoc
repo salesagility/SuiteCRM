@@ -1,0 +1,18 @@
+// indices/put-mapping.asciidoc:234
+
+[source, php]
+----
+$params = [
+    'index' => 'my_index',
+    'body' => [
+        'mappings' => [
+            'properties' => [
+                'city' => [
+                    'type' => 'text',
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->indices()->create($params);
+----

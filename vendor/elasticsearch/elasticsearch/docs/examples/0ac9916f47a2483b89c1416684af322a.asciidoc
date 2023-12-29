@@ -1,0 +1,19 @@
+// query-dsl/match-query.asciidoc:241
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'match' => [
+                'message' => [
+                    'query' => 'to be or not to be',
+                    'operator' => 'and',
+                    'zero_terms_query' => 'all',
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

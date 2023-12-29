@@ -331,7 +331,13 @@ class PopupSmarty extends ListViewSmarty
             $params['orderBy'] = $this->_popupMeta['orderBy'];
         }
 
-        if (file_exists('custom/modules/'.$this->module.'/metadata/metafiles.php')) {
+        // STIC-Custom AAM 20210315 - The following 3 lines (until the first elseif) are added to fix the bug that doesn't show range search in Popup view
+        // STIC#218
+        // if (file_exists('custom/modules/'.$this->module.'/metadata/metafiles.php')) {
+        if(file_exists('custom/modules/'.$this->module.'/metadata/SearchFields.php')) { 
+            require('custom/modules/'.$this->module.'/metadata/SearchFields.php'); 
+        } elseif (!empty($metafiles[$this->module]['searchfields'])) {
+        // END STIC
             require('custom/modules/'.$this->module.'/metadata/metafiles.php');
         } elseif (file_exists('modules/'.$this->module.'/metadata/metafiles.php')) {
             require('modules/'.$this->module.'/metadata/metafiles.php');

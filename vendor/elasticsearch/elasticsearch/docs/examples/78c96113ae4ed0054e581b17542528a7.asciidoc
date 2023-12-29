@@ -1,0 +1,22 @@
+// docs/reindex.asciidoc:359
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'source' => [
+            'index' => 'source',
+            'query' => [
+                'match' => [
+                    'company' => 'cat',
+                ],
+            ],
+        ],
+        'dest' => [
+            'index' => 'dest',
+            'routing' => '=cat',
+        ],
+    ],
+];
+$response = $client->reindex($params);
+----

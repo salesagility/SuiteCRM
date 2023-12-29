@@ -405,7 +405,11 @@
       for (i = 0; i < form.elements.length; i++) {
         if (form.elements[i].name == 'mail_smtpport') {
           form.elements[i].value = 25;
-        } else if (form.elements[i].type != 'button' && form.elements[i].type != 'checkbox') {
+        // STIC-Custom 20220504 MHP - Do not delete the value of hidden type fields
+        // STIC#1056
+        // } else if (form.elements[i].type != 'button' && form.elements[i].type != 'checkbox') {
+        } else if (form.elements[i].type != 'button' && form.elements[i].type != 'checkbox' && form.elements[i].type != 'hidden') {
+        // END STIC-Custom   
           form.elements[i].value = '';
         } else if (form.elements[i].type == 'checkbox') {
           form.elements[i].checked = false;

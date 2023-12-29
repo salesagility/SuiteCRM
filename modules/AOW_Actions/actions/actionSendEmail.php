@@ -511,8 +511,14 @@ class actionSendEmail extends actionBase
         //now create email
         if ($mail->Send()) {
             $emailObj->to_addrs= implode(',', $emailTo);
-            $emailObj->cc_addrs= implode(',', $emailCc);
-            $emailObj->bcc_addrs= implode(',', $emailBcc);
+            // STIC Custom 20230511 - JBL - Reducing use of deprecated code and warnings
+            // STIC#1066
+            //  - PHP Warning:  implode(): Invalid arguments passed
+            // $emailObj->cc_addrs= implode(',', $emailCc);
+            // $emailObj->bcc_addrs= implode(',', $emailBcc);
+            $emailObj->cc_addrs= is_array($emailCc)? implode(',', $emailCc) : null;
+            $emailObj->bcc_addrs= is_array($emailBcc)? implode(',', $emailBcc): null;
+            // End STIC Custom
             $emailObj->type= 'out';
             $emailObj->deleted = '0';
             $emailObj->name = $mail->Subject;

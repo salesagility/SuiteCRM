@@ -232,16 +232,29 @@ class actionCreateRecord extends actionBase
                             case 'short':
                             case 'tinyint':
                             case 'int':
-                                $value = format_number($bean->$fieldName);
+                                // STIC-Custom AAM 20220314 - Adding precision for decimal and float numbers
+                                // $value = format_number($bean->$fieldName);
+                                $value = format_number($bean->$fieldName, $data['precision'], $data['precision']);
+                                // END STIC
                                 break;
-                case 'relate':
-                    if (isset($data['id_name']) && $record_vardefs[$field]['type'] === 'relate') {
-                        $idName = $data['id_name'];
-                        $value = $bean->$idName;
-                    } else {
-                        $value = $bean->$fieldName;
-                    }
-                break;
+                            case 'relate':
+                                if (isset($data['id_name']) && $record_vardefs[$field]['type'] === 'relate') {
+                                    // STIC-Custom 20220712 AAM - Get the ID of the related record using the right way depeding on the context provided data.
+                                    // STIC#804
+                                    // $value = $bean->$idName;
+                                    $idName = $data['id_name'];
+                                    if ($bean->$idName instanceof Link2) {
+                                        $relationshipName = $bean->$idName->relationship->name;
+                                        $relatedBeans = $bean->$relationshipName->getBeans();
+                                        $value = array_pop($relatedBeans)->id;
+                                    } else {
+                                        $value = $bean->$idName;
+                                    }
+                                    // END STIC
+                                } else {
+                                    $value = $bean->$fieldName;
+                                }
+                            break;
                             default:
                                 $value = $bean->$fieldName;
                                 break;
@@ -285,7 +298,12 @@ class actionCreateRecord extends actionBase
                                     $date = $params['value'][$key][0];
                                 } else {
                                     $dateToUse = $params['value'][$key][0];
-                                    $date = $bean->$dateToUse;
+                                    // STIC-Custom 20230417 JBL - There is a an error with dates when a Scheduled Workflow creates a registry with dates from the original bean
+                                    // The following workaround uses the date of fetched_row if is set
+                                    // When a workflow is executed "after save", the date format is correct, and the fetched_row is empty
+                                    // STIC#1052
+                                    $date = (isset($bean->fetched_row) && isset($bean->fetched_row[$dateToUse])) ? $bean->fetched_row[$dateToUse] : $bean->$dateToUse;
+                                    // End STIC-Custom 20230417 JBL
                                 }
 
                                 if ($params['value'][$key][1] !== 'now') {
@@ -403,6 +421,10 @@ class actionCreateRecord extends actionBase
             $was_deleted = true;
         }
 
+        // STIC-Custom 20230110 AAM - Disabling $_REQUEST parameters for relationships updates of current bean
+        // STIC#960
+        $record->not_use_rel_in_req = true;
+        // END STIC-Custom
         $record->save($check_notify);
 
         if ($was_deleted) {
@@ -448,7 +470,18 @@ class actionCreateRecord extends actionBase
                 $def = $record_vardefs[$field];
                 if ($def['type'] == 'link' && !empty($def['relationship'])) {
                     $record->load_relationship($field);
-                    $record->$field->add($rel_id);
+                    // STIC-Custom 20220712 AAM - Get the ID of the related record using the right way depeding on the context provided data.
+                    // STIC#804
+                    // $record->$field->add($rel_id);
+                    if ($rel_id instanceof Link2) {
+                        $relationshipName = $rel_id->relationship->name;
+                        $relatedBeans = $bean->$relationshipName->getBeans();
+                        $relId = array_pop($relatedBeans)->id;
+                    } else {
+                        $relId = $rel_id;
+                    }
+                    $record->$field->add($relId);
+                    // END STIC
                 }
             }
         }

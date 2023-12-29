@@ -103,7 +103,7 @@ class actionComputeField extends actionBase
 
             $relateFields = $this->getAllRelatedFields($bean);
 
-             for ($i = 0; $i < count($formulas); $i++) {
+            for ($i = 0; $i < count($formulas); $i++) {
                 if (array_key_exists($formulas[$i], $relateFields) && isset($relateFields[$formulas[$i]]['id_name'])) {
                     $calcValue = $calculator->calculateFormula($formulaContents[$i]);
                     $bean->{$relateFields[$formulas[$i]]['id_name']} = ( is_numeric($calcValue) ? (float)$calcValue : $calcValue );
@@ -162,10 +162,31 @@ class actionComputeField extends actionBase
                     }
                 }
             } else {
-                $resolvedParameters[$i] = ($bean->{$parameters[$i]} == null) ? "" : $bean->{$parameters[$i]};
+                // STIC-Custom 20220812 MHP - Decode the HTML entities in parameters whose type or dbtype 
+                // contains "char", "text" or "enum". Otherwise, some functions like "uppercase" or "length"
+                // will provide wrong results.
+                // STIC#823
+                // $resolvedParameters[$i] = ($bean->{$parameters[$i]} == null) ? "" : $bean->{$parameters[$i]};
+                $type = '';
+                if (isset($bean->field_name_map[$parameters[$i]]['type'])) {
+                    $type = $bean->field_name_map[$parameters[$i]]['type'];
+                }
+                if (isset($bean->field_name_map[$parameters[$i]]['dbType'])) {
+                    $type .= $bean->field_name_map[$parameters[$i]]['dbType'];
+                }                
+                if ($bean->{$parameters[$i]} == null) {
+                    $resolvedParameters[$i] = "";
+                } elseif (
+                    (strpos($type, 'char') !== false || strpos($type, 'text') !== false || $type == 'enum') &&
+                    !empty($bean->{$parameters[$i]})
+                ) {
+                    $resolvedParameters[$i] = html_entity_decode($bean->{$parameters[$i]});
+                } else {
+                    $resolvedParameters[$i] = $bean->{$parameters[$i]};
+                }
+                // END STIC-Custom
             }
         }
-
         return $resolvedParameters;
     }
 
@@ -181,8 +202,13 @@ class actionComputeField extends actionBase
 
         array_walk(
             $displayFieldValues,
-            function ($val) use ($bean, $fieldName) {
-                $val = $GLOBALS['app_list_strings'][$bean->field_defs[$fieldName]['options'][$bean->$fieldName]];
+            // STIC-Custom AAM 20220314 - Wrong usage of function and Array
+            // STIC#635
+            // function ($val) use ($bean, $fieldName) {
+                // $val = $GLOBALS['app_list_strings'][$bean->field_defs[$fieldName]['options'][$bean->$fieldName]];
+            function (&$val) use ($bean, $fieldName) {
+                $val = $GLOBALS['app_list_strings'][$bean->field_defs[$fieldName]['options']][$val];
+            // END STIC
             }
         );
 
@@ -611,7 +637,10 @@ class actionComputeField extends actionBase
         $oneRelations = array();
 
         foreach ($linkedFields as $key => $value) {
-            if (!isset($value['link_type']) || $value['link_type'] != "one") {
+            // STIC-Custom 20211027 AAM - Adding exception for EmailAddress relationship, so email appears in calculated fields
+            // STIC#710
+            // if (!isset($value['link_type']) || $value['link_type'] != "one") {
+            if ((!isset($value['link_type']) || $value['link_type'] != "one") && $key != 'email_addresses') {
                 continue;
             }
 

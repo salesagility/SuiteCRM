@@ -1,0 +1,62 @@
+/* tables */
+table.tablesorter {
+   font-family: Segoe UI, Calibri, Arial, Verdana, Helvetica, sans-serif;  
+   background-color: #FFFFFF;
+   margin:10px 0pt 15px;
+   font-size: 8pt;
+   width: 100%;
+   text-align: left;
+   border: 1px solid #d3d3d3;
+   padding: 3px;
+   border-top-left-radius: 4px;
+   border-top-right-radius: 4px;
+   border-bottom-left-radius: 4px;
+   border-bottom-right-radius: 4px;
+}
+.tablesorter_anchor:hover {
+   text-decoration: none!important;
+}
+table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+   /*background: url("bg_glass.png") repeat-x scroll 50% 50% #e6e6e6;*/
+   background-color: #F4F9FC;
+   border: 1px solid #d3d3d3;
+   font-size: 8pt;
+   padding: 8px;
+   border-top-left-radius: 4px;
+   border-top-right-radius: 4px;
+   border-bottom-left-radius: 4px;
+   border-bottom-right-radius: 4px;    
+}
+table.tablesorter thead tr .header {
+   background-image: url(bg.gif);
+   background-repeat: no-repeat;
+   background-position: center right;
+   cursor: pointer;
+}
+table.tablesorter tbody td {
+   color: #3D3D3D;
+   padding: 4px;
+   background-color: #FFF;
+   vertical-align: top;
+}
+table.tablesorter tbody tr.odd td {
+   background-color: #F6F6F6;
+}
+table.tablesorter tbody tr.selected td {
+   background-color: #FEEEBD;
+}
+table.tablesorter thead tr .headerSortUp {
+   background-image: url(asc.gif);
+}
+table.tablesorter thead tr .headerSortDown {
+   background-image: url(desc.gif);
+}
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+   background-color: #4E8CCF;
+   border: 1px solid #4E8CCF;
+   color: #FFFFFF;
+   border-top-left-radius: 4px;
+   border-top-right-radius: 4px;
+   border-bottom-left-radius: 4px;
+   border-bottom-right-radius: 4px;   
+}

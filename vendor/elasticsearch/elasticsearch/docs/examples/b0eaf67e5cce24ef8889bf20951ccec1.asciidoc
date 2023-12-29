@@ -1,0 +1,27 @@
+// query-dsl/multi-match-query.asciidoc:130
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'dis_max' => [
+                'queries' => [
+                    [
+                        'match' => [
+                            'subject' => 'brown fox',
+                        ],
+                    ],
+                    [
+                        'match' => [
+                            'message' => 'brown fox',
+                        ],
+                    ],
+                ],
+                'tie_breaker' => 0.3,
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

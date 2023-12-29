@@ -1,0 +1,182 @@
+/**
+ * This file is part of KReporter. KReporter is an enhancement developed
+ * by Christian Knoll. All rights are (c) 2012 by Christian Knoll
+ *
+ * This file has been modified by SinergiaTIC in SinergiaCRM.
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * You can contact Christian Knoll at info@kreporter.org
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ */
+
+/* some enhnancement to correct what EXT overwrites and messes up the layout*/
+/*
+body {
+    -moz-box-sizing: content-box !important;
+}*/
+/*
+.x-form-trigger-input-cell{
+    -moz-box-sizing: border-box !important;
+}*/
+.x-body {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+}
+
+.x-grid-row-summary {
+    font-weight: bold;
+    font-style: italic;
+    border-top: 1px solid red;
+}
+.x-grid-group-title {
+    color: #862c7e;
+}
+
+/* CSS hacks to overcome the SUgar Classic Theme definitions for Checkboxes */
+input[type="button"] {
+    background-image: none;
+    background-position: left top;
+    background-color: transparent;
+    /* STIC: CSS hack to overcome the SuiteCRM SuiteP theme*/
+    padding: 0px !important;
+    height: 13px !important;
+}
+
+.x-form-radio {
+    background-image: url("../extjs4/resources/themes/images/gray/form/radio.gif") !important;
+}
+.x-form-checkbox {
+    background-image: url("../extjs4/resources/themes/images/gray/form/checkbox.gif") !important;
+}
+/* 2012-11-28 added for classic theme support */
+#subModuleList ul.cssmenu {
+    z-index: 1000;
+}
+/* 2013-01-25 hiode overflow so trigger icos are visible */
+.x-form-trigger-input-cell {
+    overflow: hidden;
+}
+
+/* show finger ponters based on Jason's feedback */
+#optionsArea .x-panel-header,
+#optionsArea .x-panel-header-text {
+    cursor: hand;
+    cursor: pointer;
+}
+
+.x-grid-cell-operator:hover,
+.x-grid-cell-value:hover,
+.x-grid-cell-valueto:hover {
+    cursor: hand;
+    cursor: pointer;
+}
+
+.x-toolbar-default,
+.x-panel-header-default,
+x-grid-header-ct,
+.x-tab-bar,
+.x-tab-default-top,
+.x-accordion-hd,
+.x-column-header,
+.x-grid-header-ct {
+    background-image: none;
+    background: #f5f5f5 !important;
+}
+
+.x-tab-default-top {
+    box-shadow: none;
+    border-radius: 0 !important;
+}
+
+.x-tree-icon-parent {
+    background-image: url("./images/folder.png");
+}
+.x-grid-tree-node-expanded .x-tree-icon-parent {
+    background-image: url("./images/folder_open.png");
+}
+.x-tree-icon-leaf {
+    background-image: url("./images/leaf.png");
+}
+
+.x-tab-bar-strip-default,
+.x-tab-bar-strip-default-plain {
+    background-color: transparent;
+}
+
+.x-docked-top {
+    border-bottom-width: 1px !important;
+}
+.x-grid-with-row-lines .x-grid-cell {
+    border-width: 1px;
+}
+
+/* styles for the bottom toolbar */
+.x-item-disabled .x-tbar-loading,
+.x-tbar-loading {
+    background-image: url("./images/refresh.gif") !important;
+}
+.x-item-disabled .x-tbar-page-last,
+.x-tbar-page-last {
+    background-image: url("./images/page-last.gif") !important;
+}
+.x-item-disabled .x-tbar-page-next,
+.x-tbar-page-next {
+    background-image: url("./images/page-next.gif") !important;
+}
+.x-item-disabled .x-tbar-page-prev,
+.x-tbar-page-prev {
+    background-image: url("./images/page-prev.gif") !important;
+}
+.x-item-disabled .x-tbar-page-first,
+.x-tbar-page-first {
+    background-image: url("./images/page-first.gif") !important;
+}
+
+.x-form-date-trigger {
+    background-image: url("./images/calendar.gif") !important;
+    background-repeat: no-repeat;
+    background-position: 0;
+    border-bottom: 0px;
+}
+.x-form-time-trigger {
+    background-image: url("./images/clock.gif") !important;
+    background-repeat: no-repeat;
+    background-position: 0;
+    border-bottom: 0px;
+}
+.x-form-trigger-wrap-focus .x-form-date-trigger,
+.x-form-trigger-wrap-focus .x-form-time-trigger {
+    background-position: 0;
+}
+
+/* extjs 4.2 overwrite 
+.x-btn-default-toolbar-small-menu-active, .x-btn-default-toolbar-small-pressed, .x-btn-default-toolbar-small-over, .x-menu-item-active {
+    background-image: none;
+}
+.x-btn-default-toolbar-small, .x-menu-item-active {
+    border-radius: 0px;
+}
+*/
+
+/*
+STIC CSS Hack: Removing the Action button and the extra blank line
+*/
+
+.detail-view #tab-actions, .detail-view .tab-content {
+    display: none;
+}

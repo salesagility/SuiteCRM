@@ -1,0 +1,13 @@
+// docs/index_.asciidoc:395
+
+[source, php]
+----
+$params = [
+    'index' => 'twitter',
+    'id' => '1',
+    'body' => [
+        'message' => 'elasticsearch now has versioning support, double cool!',
+    ],
+];
+$response = $client->index($params);
+----

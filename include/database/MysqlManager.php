@@ -110,7 +110,12 @@ class MysqlManager extends DBManager
     protected $maxNameLengths = array(
         'table' => 64,
         'column' => 64,
-        'index' => 64,
+        // STIC-Custom 20211227 JCH - As index names will have an additional 3-5 character suffix (_idb1, etc.), 
+	    // set here a shorter max length for them to prevent exceeding the db supported limit of 64 chars. 
+        // STIC#521
+        // 'index' => 64, 
+        'index' => 59, 
+        // END STIC
         'alias' => 256
     );
 

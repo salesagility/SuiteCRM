@@ -50,7 +50,12 @@ class TemplateDatetimecombo extends TemplateRange
     public $len = '';
     public $dateStrings = array(
         '-none-' => '',
-        'today'=>'now',
+        // STIC-Custom 20221229 AAM - Adding "now" option to default datetime values
+        // STIC#949
+        // 'today'=>'now',
+        'now' => 'now',
+        'today'=> 'today',
+        // END STIC-Custom
         'yesterday'=> '-1 day',
         'tomorrow'=>'+1 day',
         'next week'=> '+1 week',
@@ -166,6 +171,11 @@ class TemplateDatetimecombo extends TemplateRange
                 //lets format the string to make sure the leading 0's are added back in for hours and minutes
                 $_REQUEST['default'] = $_REQUEST['defaultDate'] . '&' . sprintf('%02d:%02d%s', $hours, $minutes, $meridiem);
             }
+        // STIC-Custom 20221229 AAM - Adding "now" option to default datetime values
+        // STIC#949
+        } elseif ($_REQUEST['defaultDate'] == 'now') {
+            $_REQUEST['default'] = 'now';
+        // END STIC-Custom
         } else {
             $_REQUEST['default'] = '';
         }

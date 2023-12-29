@@ -147,6 +147,14 @@ class Surveys extends Basic
      */
     public function save($check_notify = false)
     {
+        // STIC-Custom 20210729 - There is a bug when duplicating because the question ids 
+        // of the first survey are not removed when creating the duplicate one. More info: 
+        // STIC#367
+        if (($_POST["duplicateSave"] && $_POST["duplicateSave"]="true"))
+        {
+            unset($_REQUEST['survey_questions_ids']);
+        }
+        // STIC End
         $res = parent::save($check_notify);
         if (empty($_REQUEST['survey_questions_supplied'])) {
             return $res;
@@ -155,6 +163,13 @@ class Surveys extends Basic
         foreach ($_REQUEST['survey_questions_names'] as $key => $val) {
             if (!empty($_REQUEST['survey_questions_ids'][$key])) {
                 $question = BeanFactory::getBean('SurveyQuestions', $_REQUEST['survey_questions_ids'][$key]);
+                // STIC-Custom 20211110 AAM - With deleted questions, call mark_deleted and skip the loop
+                // STIC#457
+                if ($_REQUEST['survey_questions_deleted'][$key]) {
+                    $question->mark_deleted($question->id);
+                    continue;
+                }
+                // END STIC
             } else {
                 $question = BeanFactory::newBean('SurveyQuestions');
             }
@@ -164,11 +179,18 @@ class Surveys extends Basic
             $question->survey_id = $this->id;
             $question->deleted = $_REQUEST['survey_questions_deleted'][$key];
             $question->save();
-            if (!empty($_REQUEST['survey_questions_options'][$key])) {
+            // STIC-Custom 20211110 AAM - Removing the "s" from the word question(s)
+            // STIC#457
+            // if (!empty($_REQUEST['survey_questions_options'][$key])) {
+            //     $this->saveOptions(
+            //         $_REQUEST['survey_questions_options'][$key],
+            //         $_REQUEST['survey_questions_options_id'][$key],
+            //         $_REQUEST['survey_questions_options_deleted'][$key],
+            if (!empty($_REQUEST['survey_question_options'][$key])) {
                 $this->saveOptions(
-                    $_REQUEST['survey_questions_options'][$key],
-                    $_REQUEST['survey_questions_options_id'][$key],
-                    $_REQUEST['survey_questions_options_deleted'][$key],
+                    $_REQUEST['survey_question_options'][$key],
+                    $_REQUEST['survey_question_options_id'][$key],
+                    $_REQUEST['survey_question_options_deleted'][$key],
                     $question->id
                 );
             }
@@ -185,6 +207,15 @@ class Surveys extends Basic
      */
     private function saveOptions(array $options, array $ids, array $deleted, $questionId)
     {
+        // STIC-Custom 20210729 - There is a bug when duplicating because the question option ids 
+        // of the first survey are not removed when creating the duplicate one. More info: 
+        // STIC#367
+        if (($_POST["duplicateSave"] && $_POST["duplicateSave"] == "true"))
+        {
+            unset($ids);
+        }
+        // STIC End
+
         foreach ($options as $key => $option) {
             if (!empty($ids[$key])) {
                 $optionBean = BeanFactory::getBean('SurveyQuestionOptions', $ids[$key]);
@@ -224,4 +255,26 @@ class Surveys extends Basic
 
         return "Submit";
     }
+
+    // STIC-Custom 2021 AAM - Override mark_deleted function to delete all child records that won't be used anymore
+    // STIC#457
+    public function mark_deleted($id)
+    {
+        // If the survey is deleted and it doesn't have any response, the questions and the question options should be deleted.
+        // If the survey has any response then won't delete anything else (although the survey parent record is deleted) because
+        // questions and question options can still be accessed through survey responses and question responses.
+        if (!$this->get_linked_beans('surveys_surveyresponses')) {
+            $questionBeans = $this->get_linked_beans('surveys_surveyquestions');
+            foreach ($questionBeans as $questionBean) {
+                $optionQuestionBeans = $questionBean->get_linked_beans('surveyquestions_surveyquestionoptions');
+                foreach ($optionQuestionBeans as $optionQuestionBean) {
+                    $optionQuestionBean->mark_deleted($optionQuestionBean->id);
+                }
+                $questionBean->mark_deleted($questionBean->id);
+            }
+        }
+
+        parent::mark_deleted($id);
+    }
+    // END STIC
 }

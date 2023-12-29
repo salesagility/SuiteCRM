@@ -91,7 +91,11 @@
     {/if}
 
     {foreach from=$resultsAsBean item=beans key=module}
-    <h3>{$module}</h3>
+    {* STIC-Custom 20220407 AAM - Translating module name *}
+    {* STIC#696 *}
+    {* <h3>{$module}</h3> *}
+    <h3>{sugar_translate label='LBL_MODULE_NAME' module=$module}</h3>
+    {* END STIC *}
     <table class="list view">
         <thead>
             <tr>
@@ -110,8 +114,37 @@
                         // using php to access to a smarty template object 
                         // variable field by a dynamic indexed array element 
                         // because it's impossible only with smarty syntax 
-                        echo $this->get_template_vars('bean')->{$this->get_template_vars('header')['field']};
-                    {/php}</td>
+                        
+                        // STIC-Custom 20220407 AAM - Translate Dropdown field values
+                        // STIC#696
+                        // echo $this->get_template_vars('bean')->{$this->get_template_vars('header')['field']};
+                        $field = $this->get_template_vars('header')['field'];
+                        $bean = $this->get_template_vars('bean');
+                        $type = $bean->field_name_map[$field]['type'];
+                        $value = $bean->$field;
+                        if ($type == 'enum' || $type == 'dynamicenum') {
+                            global $app_list_strings;
+                            $list = $bean->field_name_map[$field]['options'];
+                            echo $app_list_strings[$list][$value];
+                            // echo 'enum';
+                        }
+                        else if ($type == 'multienum') {
+                            global $app_list_strings;
+                            $displayFieldValues = unencodeMultienum($value);
+                            $list = $bean->field_name_map[$field]['options'];
+                            array_walk(
+                                $displayFieldValues,
+                                function (&$val) use ($list, $app_list_strings) {
+                                    $val = $app_list_strings[$list][$val];
+                                }
+                            );
+                            echo implode(", ", $displayFieldValues);
+                        } else {
+                            echo $value;
+                        }
+                        // END STIC
+                    {/php}
+                    </td>
                 {/foreach}
             </tr>
             {/foreach}

@@ -458,15 +458,17 @@ $dictionary['Note'] = array(
                 'source'=>'non-db',
                 'vname'=>'LBL_CONTRACT',
               ],
-
-          'emails' =>
-              [
-                'name'=> 'emails',
-                'vname'=> 'LBL_EMAILS',
-                'type'=> 'link',
-                'relationship'=> 'emails_notes_rel',
-                'source'=> 'non-db',
-              ],
+          // STIC-Custom 20230511 Redefine relationship between notes and emails following the meeting-emails definition
+          // STIC#1081
+          // 'emails' =>
+          //     [
+          //       'name'=> 'emails',
+          //       'vname'=> 'LBL_EMAILS',
+          //       'type'=> 'link',
+          //       'relationship'=> 'emails_notes_rel',
+          //       'source'=> 'non-db',
+          //     ],
+          // END STIC-Custom
 
           'projects' =>
               [

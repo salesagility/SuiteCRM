@@ -1,0 +1,15 @@
+// docs/reindex.asciidoc:787
+
+[source, php]
+----
+$params = [
+    'index' => 'metricbeat-2016.05.30-1',
+    'id' => '1',
+];
+$response = $client->get($params);
+$params = [
+    'index' => 'metricbeat-2016.05.31-1',
+    'id' => '1',
+];
+$response = $client->get($params);
+----

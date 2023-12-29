@@ -1,0 +1,9 @@
+// indices/templates.asciidoc:241
+
+[source, php]
+----
+$params = [
+    'name' => 'template_1',
+];
+$response = $client->indices()->getTemplate($params);
+----

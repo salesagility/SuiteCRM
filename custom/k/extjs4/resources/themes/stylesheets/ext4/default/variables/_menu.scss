@@ -1,0 +1,23 @@
+//backgrounds
+$menu-background-color: #F0F0F0 !default;
+$menu-item-active-background-image: 'menu/menu-item-active-bg.gif' !default;
+$menu-item-active-background-color: adjust-color($base-color, $saturation: 25.397%, $lightness: 7.647%) !default;
+
+//border
+$menu-item-active-border-color: adjust-color($base-color, $saturation: 23%, $lightness: -3%) !default;
+$menu-separator-border-color: #E0E0E0 !default;
+$menu-separator-background-color: #FFF !default;
+
+//sizes
+$menu-item-indent: 27px !default;
+$menu-padding: 2px !default;
+$menu-link-padding: 6px 2px 3px 32px !default;
+
+//text
+$menu-text-color: #222 !default;
+
+//icons
+$menu-icon-arrow: 'menu/menu-parent.gif' !default;
+$menu-icon-checked: 'menu/checked.gif' !default;
+$menu-icon-group-checked: 'menu/group-checked.gif' !default;
+$menu-icon-unchecked: 'menu/unchecked.gif' !default;

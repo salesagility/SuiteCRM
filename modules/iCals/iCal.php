@@ -1,14 +1,13 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
  * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -30,21 +29,28 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
  *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ * 
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * SugarCRM" logo, "Supercharged by SuiteCRM" logo and “Nonprofitized by SinergiaCRM” logo. 
+ * If the display of the logos is not reasonably feasible for technical reasons, 
+ * the Appropriate Legal Notices must display the words "Powered by SugarCRM", 
+ * "Supercharged by SuiteCRM" and “Nonprofitized by SinergiaCRM”. 
  */
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/utils.php');
-require_once('modules/Calendar/Calendar.php');
+// STIC-Custom 20220314 AAM - Adding STIC modules to iCal
+// STIC#625
+// require_once('modules/Calendar/Calendar.php');
+require_once('custom/modules/Calendar/Calendar.php');
 require_once('modules/vCals/vCal.php');
 
 /**
@@ -151,7 +157,10 @@ class iCal extends vCal
             str_replace("Z", "", $this->getUtcDateTime($due_date_time))
         );
         $ical_array[] = array("DTSTAMP", $dtstamp);
-        $ical_array[] = array("SUMMARY", $task->name);
+        // STIC-Custom 20220315 AAM - Encoding the activity name to UTF8 in order to display special characters
+        // $ical_array[] = array("SUMMARY", $task->name);
+        $ical_array[] = array("SUMMARY", utf8_encode($task->name));
+        // END STIC
         $ical_array[] = array("UID", $task->id);
         if ($validDueDate) {
             $iCalDueDate = str_replace("-", "", $task->date_due);
@@ -163,10 +172,15 @@ class iCal extends vCal
         if ($moduleName == "ProjectTask") {
             $ical_array[] = array(
                 "DESCRIPTION:Project",
-                $task->project_name . vCal::EOL . vCal::EOL . $task->description
+                // STIC-Custom 20220315 AAM - Encoding the activity description to UTF8 in order to display special characters
+                // $task->project_name . vCal::EOL . vCal::EOL . $task->description
+                utf8_encode($task->project_name) . vCal::EOL . vCal::EOL . utf8_encode($task->description)
             );
         } else {
-            $ical_array[] = array("DESCRIPTION", $task->description);
+            // STIC-Custom 20220315 AAM - Encoding the activity description to UTF8 in order to display special characters
+            // $ical_array[] = array("DESCRIPTION", $task->description);
+            $ical_array[] = array("DESCRIPTION", utf8_encode($task->description));
+            // END STIC
         }
         $ical_array[] = array(
             "URL;VALUE=URI",
@@ -235,11 +249,27 @@ class iCal extends vCal
             "Tasks" => array(
                 "showCompleted" => true,
                 "start" =>  "date_due",
-                "end" => "date_due"
+                "end" => "date_due",
+            // STIC-Custom 20220314 AAM - Adding STIC modules to iCal
+            // STIC#625
+            ),
+            "stic_Sessions" => array(
+                "showCompleted" => true,
+                "start" =>  "start_date",
+                "end" => "end_date"
+            ),
+            "stic_FollowUps" => array(
+                "showCompleted" => true,
+                "start" =>  "start_date",
+                "end" => "end_date"
+            // END STIC
             )
         );
 
-        $acts_arr = CalendarActivity::get_activities(
+        // STIC-Custom 20220314 AAM - Adding STIC modules to iCal
+        // STIC#625
+        // $acts_arr = CalendarActivity::get_activities(
+        $acts_arr = CustomCalendarActivity::get_activities(
             $activityList,
             $user_bean->id,
             !$taskAsVTODO,
@@ -255,7 +285,10 @@ class iCal extends vCal
             $event = $act->sugar_bean;
             if (!$hide_calls || ($hide_calls && $event->object_name != "Call")) {
                 $ical_array[] = array("BEGIN", "VEVENT");
-                $ical_array[] = array("SUMMARY", $event->name);
+                // STIC-Custom 20220315 AAM - Encoding the activity name to UTF8 in order to display special characters
+                // $ical_array[] = array("SUMMARY", $event->name);
+                $ical_array[] = array("SUMMARY", utf8_encode($event->name));
+                // END STIC
                 $ical_array[] = array(
                     "DTSTART;TZID=" . $user_bean->getPreference('timezone'),
                     str_replace(
@@ -273,7 +306,10 @@ class iCal extends vCal
                     )
                 );
                 $ical_array[] = array("DTSTAMP", $dtstamp);
-                $ical_array[] = array("DESCRIPTION", $event->description);
+                // STIC-Custom 20220315 AAM - Encoding the activity description to UTF8 in order to display special characters
+                // $ical_array[] = array("DESCRIPTION", $event->description);
+                $ical_array[] = array("DESCRIPTION", utf8_encode($event->description));
+                // END STIC
                 $ical_array[] = array(
                     "URL;VALUE=URI",
                     $sugar_config['site_url']."/index.php?module=".
@@ -346,13 +382,15 @@ class iCal extends vCal
                     $ical_array[] = array("BEGIN", "VALARM");
                     $ical_array[] = array("TRIGGER", "-PT");
                     $ical_array[] = array("ACTION", "DISPLAY");
-                    $ical_array[] = array("DESCRIPTION", $event->name);
+                    // STIC-Custom 20220315 AAM - Encoding the activity description to UTF8 in order to display special characters
+                    // $ical_array[] = array("DESCRIPTION", $event->name);
+                    $ical_array[] = array("DESCRIPTION", utf8_encode($event->name));
+                    // END STIC
                     $ical_array[] = array("END", "VALARM");
                 }
                 $ical_array[] = array("END", "VEVENT");
             }
         }
-
         $str = vCal::create_ical_string_from_array($ical_array, true);
 
         require_once('include/TimeDate.php');
@@ -517,7 +555,10 @@ class iCal extends vCal
         $ical_array[] = array("BEGIN", "VCALENDAR");
         $ical_array[] = array("VERSION", "2.0");
         $ical_array[] = array("METHOD", "PUBLISH");
-        $ical_array[] = array("X-WR-CALNAME", "$cal_name (SugarCRM)");
+        // STIC-Custom 20220315 AAM - Changing calendar name
+        // $ical_array[] = array("X-WR-CALNAME", "$cal_name (SugarCRM)");
+        $ical_array[] = array("X-WR-CALNAME", "$cal_name (SinergiaCRM)");
+        // END STIC
         $ical_array[] = array("PRODID", "-//SugarCRM//SugarCRM Calendar//EN");
         $ical_array = array_merge($ical_array, vCal::create_ical_array_from_string($this->getTimezoneString()));
         $ical_array[] = array("CALSCALE", "GREGORIAN");

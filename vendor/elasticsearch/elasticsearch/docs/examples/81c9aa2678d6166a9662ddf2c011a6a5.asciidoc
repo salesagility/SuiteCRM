@@ -1,0 +1,14 @@
+// query-dsl/match-all-query.asciidoc:39
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'query' => [
+            'match_none' => [
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

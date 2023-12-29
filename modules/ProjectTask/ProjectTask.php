@@ -118,11 +118,23 @@ class ProjectTask extends SugarBean
 
     public function save($check_notify = false)
     {
+        // STIC-Custom 20220218 MHP - In SugarCRM times the three commented lines below where introduced by Sugar Inc. 
+	// to set project_task_id value when a project task (PT) was created through a workflow instead of the Gantt
+	// view. Anyway, there are other contexts where PT are created without project_task_id and they should: 
+	// standard edit view, etc. So this PR gets rid of "in_workflow" condition to extend project_task_id setting
+	// to any case of PT creation.
+        // STIC#606
+
         //Bug 46012.  When saving new Project Tasks instance in a workflow, make sure we set a project_task_id value
         //associated with the Project if there is no project_task_id specified.
-        if ($this->in_workflow && empty($this->id) && empty($this->project_task_id) && !empty($this->project_id)) {
+        // if ($this->in_workflow && empty($this->id) && empty($this->project_task_id) && !empty($this->project_id)) {
+        //     $this->project_task_id = $this->getNumberOfTasksInProject($this->project_id) + 1;
+        // }
+
+        if (empty($this->id) && empty($this->project_task_id) && !empty($this->project_id)) {
             $this->project_task_id = $this->getNumberOfTasksInProject($this->project_id) + 1;
         }
+        // END Stic-Custom
 
         $id = parent::save($check_notify);
         if ($this->_skipParentUpdate == false) {

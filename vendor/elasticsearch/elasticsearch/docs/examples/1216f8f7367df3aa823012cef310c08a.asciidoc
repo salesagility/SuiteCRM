@@ -1,0 +1,19 @@
+// docs/reindex.asciidoc:699
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'source' => [
+            'index' => 'test',
+        ],
+        'dest' => [
+            'index' => 'test2',
+        ],
+        'script' => [
+            'source' => 'ctx._source.tag = ctx._source.remove("flag")',
+        ],
+    ],
+];
+$response = $client->reindex($params);
+----

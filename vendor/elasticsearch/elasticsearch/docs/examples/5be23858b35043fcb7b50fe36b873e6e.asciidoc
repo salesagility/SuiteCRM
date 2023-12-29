@@ -1,0 +1,16 @@
+// indices/put-mapping.asciidoc:11
+
+[source, php]
+----
+$params = [
+    'index' => 'twitter',
+    'body' => [
+        'properties' => [
+            'email' => [
+                'type' => 'keyword',
+            ],
+        ],
+    ],
+];
+$response = $client->indices()->putMapping($params);
+----

@@ -145,12 +145,15 @@ EOF;
                 $script = parent::buildExportLink($id);
             }
         }
-
         $script .= "<a href='javascript:void(0)' id='map_listview_top' " .
                     " onclick=\"return sListView.send_form(true, 'jjwg_Maps', " .
                     "'index.php?entryPoint=jjwg_Maps&display_module={$_REQUEST['module']}', " .
                     "'{$app_strings['LBL_LISTVIEW_NO_SELECTED']}')\">{$app_strings['LBL_MAP']}</a>";
 
-        return formLetter::LVSmarty().$script;
+        // STIC-Custom 20220124 MHP - Do not add the Print PDF button in this module because it is added generically include/ListView/ListViewDisplay.php
+        // STIC#564   
+        //return formLetter::LVSmarty().$script;
+        return $script;
+        // END STIC-Custom
     }
 }

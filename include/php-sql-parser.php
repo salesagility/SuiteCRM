@@ -904,7 +904,11 @@ EOREGEX
                             ++$n;
                         }
 
-                        continue;
+                        // STIC Custom 20230511 - JBL - Reducing use of deprecated code
+                        // STIC#1066
+                        //  - PHP Warning:  "continue" targeting switch is equivalent to "break"
+                        // continue;
+                        // End STIC Custom
                     break;
 
                     case 'INDEX':
@@ -929,7 +933,11 @@ EOREGEX
                     case 'OUTER':
                     #	$expression .= $token;
                         $token_count++;
-                        continue;
+                        // STIC Custom 20230511 - JBL - Reducing use of deprecated code
+                        // STIC#1066
+                        //  - PHP Warning:  "continue" targeting switch is equivalent to "break"
+                        // continue;
+                        // End STIC Custom
                     break;
 
 
@@ -937,7 +945,11 @@ EOREGEX
                     case 'FOR':
                         $token_count++;
                         $skip_next = true;
-                        continue;
+                        // STIC Custom 20230511 - JBL - Reducing use of deprecated code
+                        // STIC#1066
+                        //  - PHP Warning:  "continue" targeting switch is equivalent to "break"
+                        // continue;
+                        // End STIC Custom
                     break;
 
                     case 'LEFT':
@@ -1002,7 +1014,12 @@ EOREGEX
 
                     default:
                         if ($token === false || empty($token) || $token === "") {
-                            continue;
+                            // STIC Custom 20230511 - JBL - Reducing use of deprecated code
+                            // STIC#1066
+                            //  - PHP Warning:  "continue" targeting switch is equivalent to "break"
+                            // continue;
+                            break;
+                            // End STIC Custom
                         }
 
                         if ($token_count == 0) {

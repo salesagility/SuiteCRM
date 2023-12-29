@@ -558,6 +558,10 @@ function addcheck(form){{/literal}
 	if(document.getElementById('SystemGeneratedPassword_checkbox').checked){literal}{{/literal}
 	addToValidate('ConfigurePasswordSettings', 'passwordsetting_systexpirationtime', 'int', form.required_sys_pwd_exp_time.checked,"{$MOD.ERR_PASSWORD_EXPIRE_TIME}" );
 	addToValidate('ConfigurePasswordSettings', 'passwordsetting_systexpirationlogin', 'int', form.required_sys_pwd_exp_login.checked,"{$MOD.ERR_PASSWORD_EXPIRE_LOGIN}" );
+	// STIC-Custom 20220523 MHP - Add validation to check that the email template is set
+	// STIC#737
+	addToValidate('ConfigurePasswordSettings', 'passwordsetting_generatepasswordtmpl', 'string', form.generatepasswordtmpl.value == '',"{$MOD.ERR_SYS_GEN_PWD_TPL_NOT_SELECTED}" );
+	// END STIC-Custom
    {literal}}{/literal}
 
 

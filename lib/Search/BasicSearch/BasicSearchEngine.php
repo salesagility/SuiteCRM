@@ -171,34 +171,41 @@ class BasicSearchEngine extends SearchEngine
 
                 $unifiedSearchFields = [];
                 $innerJoins = [];
-                foreach ($unifiedSearchModules[$moduleName]['fields'] as $field => $def) {
-                    $listViewCheckField = strtoupper($field);
-                    // Check to see if the field is in listview defs
-                    // Check to see if field is in original list view defs (in case we are using custom layout defs)
-                    if (empty($listViewDefs[$seed->module_dir][$listViewCheckField]['default']) &&
-                        !empty($origListViewDefs[$seed->module_dir][$listViewCheckField]['default'])) {
-                        // If we are here then the layout has been customized, but the field is still needed for query
-                        // creation
-                        $listViewDefs[$seed->module_dir][$listViewCheckField] = $origListViewDefs[$seed->module_dir][$listViewCheckField];
-                    }
-
-                    if (!empty($def['innerjoin'])) {
-                        if (empty($def['db_field'])) {
-                            continue;
+                // STIC Custom 20230511 - JBL - Reducing use of deprecated code
+                // STIC#1066
+                //  - "PHP Warning:  Invalid argument supplied for foreach()" -> foreach in a non iterable var
+                if (isset($unifiedSearchModules[$moduleName]['fields']) && 
+                    (is_array($unifiedSearchModules[$moduleName]['fields']) || is_object($unifiedSearchModules[$moduleName]['fields']))) {
+                    foreach ($unifiedSearchModules[$moduleName]['fields'] as $field => $def) {
+                        $listViewCheckField = strtoupper($field);
+                        // Check to see if the field is in listview defs
+                        // Check to see if field is in original list view defs (in case we are using custom layout defs)
+                        if (empty($listViewDefs[$seed->module_dir][$listViewCheckField]['default']) &&
+                            !empty($origListViewDefs[$seed->module_dir][$listViewCheckField]['default'])) {
+                            // If we are here then the layout has been customized, but the field is still needed for query
+                            // creation
+                            $listViewDefs[$seed->module_dir][$listViewCheckField] = $origListViewDefs[$seed->module_dir][$listViewCheckField];
                         }
-                        $def['innerjoin'] = str_replace('INNER', 'LEFT', $def['innerjoin']);
-                    }
 
-                    if (isset($seed->field_defs[$field]['type'])) {
-                        $type = $seed->field_defs[$field]['type'];
-                        if ($type === 'int' && !is_numeric($searchQuery)) {
-                            continue;
+                        if (!empty($def['innerjoin'])) {
+                            if (empty($def['db_field'])) {
+                                continue;
+                            }
+                            $def['innerjoin'] = str_replace('INNER', 'LEFT', $def['innerjoin']);
                         }
-                    }
 
-                    $unifiedSearchFields[$moduleName] [$field] = $def;
-                    $unifiedSearchFields[$moduleName] [$field]['value'] = $searchQuery;
+                        if (isset($seed->field_defs[$field]['type'])) {
+                            $type = $seed->field_defs[$field]['type'];
+                            if ($type === 'int' && !is_numeric($searchQuery)) {
+                                continue;
+                            }
+                        }
+
+                        $unifiedSearchFields[$moduleName] [$field] = $def;
+                        $unifiedSearchFields[$moduleName] [$field]['value'] = $searchQuery;
+                    }
                 }
+                // End STIC Custom
 
                 /*
                  * Use searchForm2->generateSearchWhere() to create the search query, as it can generate SQL for the full set of comparisons required
@@ -245,6 +252,7 @@ class BasicSearchEngine extends SearchEngine
                     $moduleResults[$moduleName][] = $hit['ID'];
                 }
             }
+        
         }
 
         return [

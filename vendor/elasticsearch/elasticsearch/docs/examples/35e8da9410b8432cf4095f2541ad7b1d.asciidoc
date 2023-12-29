@@ -1,0 +1,19 @@
+// aggregations/bucket/terms-aggregation.asciidoc:264
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'aggs' => [
+            'products' => [
+                'terms' => [
+                    'field' => 'product',
+                    'size' => 5,
+                    'show_term_doc_count_error' => true,
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

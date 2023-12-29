@@ -304,6 +304,15 @@ class MBPackage
     {
         $this->loadModules();
         require_once 'include/utils/php_zip_utils.php';
+
+        // STIC-Custom 20230329 MHP - Delete the package folder inside builds
+        // STIC#1000
+        $folder = $this->getBuildDir();
+        if (file_exists($folder) && !rmdir_recursive($folder)){
+            $GLOBALS['log']->error('Line '.__LINE__.': '.__METHOD__.':  Could not delete folder: ' . $folder);
+        };
+        // END STIC-Custom 
+
         $path = $this->getBuildDir() . '/SugarModules';
         if ($clean && file_exists($path)) {
             rmdir_recursive($path);

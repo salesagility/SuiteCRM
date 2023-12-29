@@ -1,0 +1,1 @@
+ALTER TABLE kreports MODIFY COLUMN unionlistfields MEDIUMTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL;

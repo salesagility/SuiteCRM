@@ -161,7 +161,10 @@ var plgBackground = {
                 'emoticons template paste textcolor colorpicker textpattern imagetools'
             ],
             toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
-            toolbar2: 'print preview media | forecolor backcolor | image | emoticons | table | link | fontsizeselect',
+            // STIC-Custom 20220221 - Adding fontselect option
+            // STIC#188
+            // toolbar2: 'print preview media | forecolor backcolor | image | emoticons | table | link | fontsizeselect',
+            toolbar2: 'print preview media | forecolor backcolor | image | emoticons | table | link | fontselect | fontsizeselect',
             table_toolbar: "",
             image_advtab: true,
             textcolor_map: [

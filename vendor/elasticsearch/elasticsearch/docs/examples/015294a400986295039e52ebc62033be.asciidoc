@@ -1,0 +1,16 @@
+// docs/update.asciidoc:251
+
+[source, php]
+----
+$params = [
+    'index' => 'test',
+    'id' => '1',
+    'body' => [
+        'doc' => [
+            'name' => 'new_name',
+        ],
+        'detect_noop' => false,
+    ],
+];
+$response = $client->update($params);
+----

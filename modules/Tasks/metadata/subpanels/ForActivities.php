@@ -69,6 +69,13 @@ $subpanel_layout = [
             'vname' => 'LBL_LIST_CONTACT',
             'width' => '11%',
         ],
+        // STIC-Custom 20230817 - ART - Add Start Date In Activities Subpanel
+        // STIC#1196
+        'date_start' => [
+            'vname' => 'LBL_LIST_DATE',
+            'width' => '10%',
+        ],
+        // END STIC-Custom 20230817 - ART
         'date_due' => [
             'vname' => 'LBL_LIST_DUE_DATE',
             'width' => '10%',

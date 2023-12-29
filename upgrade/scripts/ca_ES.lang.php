@@ -1,0 +1,240 @@
+<?php
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2019 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+$mod_strings = array(
+    'DEFAULT_CHARSET' => 'UTF-8',
+    'LBL_DISABLED_TITLE' => 'Instal·lació de SuiteCRM Deshabilitada',
+    'LBL_DISABLED_TITLE_2' => 'La Instal·lació de SuiteCRM ha estat Deshabilitada',
+    'LBL_DISABLED_DESCRIPTION' => 'L\'instal·lador ja ha estat executat. Com a mesura de seguretat, s\'ha deshabilitat perquè no sigui executat per segona vegada. Si està totalment segur que desitja executar-lo de nou, si us plau vagi al seu arxiu config.php i localitzi (o afegeixi) una variable cridada \'installer_locked\' i l\'estableixi a \'false\'. La línia hauria de quedar com el següent:',
+    'LBL_DISABLED_DESCRIPTION_2' => 'Després que s\'hagi realitzat aquest canvi, pot fer clic al botó "Iniciar" situat a baix, per iniciar la seva instal·lació. < i>Una vegada s\'hagi completat la instal·lació, és probable que desitgi canviar el valor per a la variable \'installer_locked\' a \'true\'.</i>',
+    'LBL_DISABLED_HELP_1' => 'Per a ajut sobre la instal·lació, si us plau visiti els fòrums de suport de SuiteCRM',
+    'LBL_DISABLED_HELP_2' => 'forum de suport',
+
+    'LBL_REG_TITLE' => 'Registre',
+    'LBL_REG_CONF_1' => 'Si us plau prengui un moment per registrar-se a SuiteCRM. Per deixar-nos saber una mica sobre com la seva companyia planeja utilitzar SuiteCRM, podem assegurar que sempre estem lliurant el producte adequat per a les seves necessitats empresarials.',
+    'LBL_REG_CONF_2' => 'El seu nom i adreça de correu electrònic són els únics camps requerits per al registre. La resta de camps són opcionals, però de molt valor. No venem, lloguem, compartim, o en distribuïm en manera algun la informació aquí recollida a tercers.',
+    'LBL_REG_CONF_3' => 'Gràcies per registrar-se. Faci clic al botó Finalitzar per iniciar una sessió en SuiteCRM. Necessitarà iniciar la sessió per primera vegada utilitzant el nom d\'usuari "admin" i la contrasenya que va introduir al pas 2.',
+
+
+    'ERR_ADMIN_PASS_BLANK' => 'La contrasenya d\'administrador de SuiteCRM no pot ser vuida.',
+    'ERR_CHECKSYS_CALL_TIME' => 'EL permís de la trucada de temps per referència està inhabilitada (si us plau habilitar en php.ini)',
+    'ERR_CHECKSYS_CURL' => 'No trobat: El Planificador de SuiteCRM tindrà funcionalitat limitada.',
+    'ERR_CHECKSYS_MEM_LIMIT_1' => 'Advertencia: $memory_limit(Modifica-ho a ',
+    'ERR_CHECKSYS_MEM_LIMIT_2' => 'M o més al seu arxiu your php.ini)',
+    'ERR_CHECKSYS_NO_SESSIONS' => 'Ha ocorregut un error en escriure i llegir les variables de sessió. No s\'ha pogut procedir amb la instal·lació.',
+    'ERR_CHECKSYS_NOT_VALID_DIR' => 'No és un Directori Vàlid',
+    'ERR_CHECKSYS_NOT_WRITABLE' => 'Avís: No és pot escriure',
+    'ERR_CHECKSYS_PHP_INVALID_VER' => 'Versió instal·lada de PHP no vàlida: ( ver',
+    'ERR_CHECKSYS_PHP_UNSUPPORTED' => 'Versió de PHP Instalada No Suportada: ( veure',
+    'ERR_CHECKSYS_SAFE_MODE' => 'El mode segur està activat (si us plau, desactivi-ho a php.ini)',
+    'ERR_DB_ADMIN' => 'L\'usuari administrador de la base de dades i/o la contrasenya són invàlides (Error',
+    'ERR_DB_EXISTS_NOT' => 'La base de dades especificada no existeix.',
+    'ERR_DB_EXISTS_WITH_CONFIG' => 'La base de dades ja existeix amb informació de configuració. Per executar una instal·lació amb la base de dades seleccionada torneu a executar la instal·lació i seleccioneu "Eliminar les taules existents i tornar a crear?". Per actualitzar utilitzi l\'Auxiliar d\'actualitzacions a la Consola d\'administració. Si us plau llegiu la documentació d\'actualització <a href="https://docs.suitecrm.com/admin/installation-guide/upgrading/" target="_new">aquí</a>.',
+    'ERR_DB_EXISTS' => 'El nom de la base de dades ja existeix--no es pot crear una altra amb el mateix nom.',
+    'ERR_DB_HOSTNAME' => 'El nom d\'equip no pot ser buit.',
+    'ERR_DB_INVALID' => 'El tipus de base de dades seleccionada no és vàlida.',
+    'ERR_DB_LOGIN_FAILURE_MYSQL' => 'L\'usuari i/o la contrasenya de la base de dades de SuiteCRM és invàlida (Error',
+    'ERR_DB_MYSQL_VERSION1' => 'Versió de MySQL',
+    'ERR_DB_MYSQL_VERSION2' => 'no és suportat. Només MySQL 4.1.x o superior és suportat.',
+    'ERR_DB_NAME' => 'El nom de base de dades no pot ser buit.',
+    'ERR_DB_NAME2' => "El nom de base de dades no pot contenir els caràcters '\\', / ', o '. '",
+    'ERR_DB_PASSWORD' => 'Les contrasenyes per a SuiteCRM no coincideixen.',
+    'ERR_DB_PRIV_USER' => 'L\'usuari administrador de la base de dades és requerit.',
+    'ERR_DB_USER_EXISTS' => 'En nom d\'usuari per a SuiteCRM ja exiteix--no se\'n pot crear un altre amb el mateix nom.',
+    'ERR_DB_USER' => 'El nom d\'usuari de SuiteCRM no pot ser blan.',
+    'ERR_DBCONF_VALIDATION' => 'Si us plau, corregeixi els següents errors abans de continuar:',
+    'ERR_ERROR_GENERAL' => 'S\'han trobat els següents errors:',
+    'ERR_LICENSE_MISSING' => 'Falten Camps Requerits',
+    'ERR_LICENSE_NOT_FOUND' => 'No s\'ha trobat l\'arxiu de llicència!',
+    'ERR_LOG_DIRECTORY_NOT_EXISTS' => 'El directori de traces indicat no és un directori vàlid.',
+    'ERR_LOG_DIRECTORY_NOT_WRITABLE' => 'El directori de traces indicat no és un directori escribible.',
+    'ERR_LOG_DIRECTORY_REQUIRED' => 'Es requereix un directori de traces si desitja indicar-ne un de personalitzat.',
+    'ERR_NO_DIRECT_SCRIPT' => 'No s\'ha pogut processar el script directament.',
+    'ERR_PASSWORD_MISMATCH' => 'Les contrasenyes per l\'administrador de SuiteCRM no coincideixen.',
+    'ERR_PERFORM_CONFIG_PHP_1' => 'No ha pogut escriure\'s a l\'arxiu <span class=stop>config.php</span >.',
+    'ERR_PERFORM_CONFIG_PHP_2' => 'Pot continuar aquesta instal·lació creant manualment l\'arxiu config.php i pegant la informació de configuració indicada a continuació a l\'arxiu config.php. Sense embargament, < strong>te que </strong>crear l\'arxiu config.php abans d\'avançar al següent pas.',
+    'ERR_PERFORM_CONFIG_PHP_3' => 'Va recordar crear l\'arxiu config.php?',
+    'ERR_PERFORM_CONFIG_PHP_4' => 'Avís: No ha pogut escriure\'s a l\'arxiu config.php. Si us plau, asseguri\'s que existeix.',
+    'ERR_PERFORM_HTACCESS_1' => 'No ha pogut escriure\'s a l\'arxiu ',
+    'ERR_PERFORM_HTACCESS_2' => ' .',
+    'ERR_PERFORM_HTACCESS_3' => 'Si vol securitzar el seu arxiu de traces, per evitar que sigui accessible mitjançant el navegador web, crei un arxiu .htaccess en el seu directori de traces amb la línia:',
+    'ERR_PERFORM_NO_TCPIP' => '<b>No hem pogut detectar una connexió a Internet.</b> Quan tingui una connexió, si us plau visiti <a href=\\"http://www.suitecrm.com\\">http://www.suitecrm.com</a> per registrar-se amb SuiteCRM. Si ens explica una mica com la seva companyia planeja utilitzar SuiteCRM podrem assegurar-nos de lliurar-li l\'aplicació correcta per a les necessitats del seu negoci.',
+    'ERR_SESSION_DIRECTORY_NOT_EXISTS' => 'El directori de sessió indicat no és un directori vàlid.',
+    'ERR_SESSION_DIRECTORY' => 'El directori de sessió indicat no és un directori escribible.',
+    'ERR_SESSION_PATH' => 'Es requereix un directori de sessió si desitja indicar-ne un de personalitzat.',
+    'ERR_SI_NO_CONFIG' => 'No ha inclòs config_si.php a la carpeta arrel de documents, o no ha definit $sugar_config_si en config.php',
+    'ERR_SITE_GUID' => 'Es requereix un ID d\'Aplicació si desitja indicar-ne un personalitzat.',
+    'ERR_URL_BLANK' => 'La URL no pot estar en blanc.',
+    'LBL_BACK' => 'Enrere',
+    'LBL_CHECKSYS_1' => 'Per a instal·lar les funcions de SuiteCRM correctament, si us plau assegurat de que tots els items llistats a sota del sistema estan en verd. Si n\'hi ha algun que està en vermell, segueix els següents passos per a solucionar-los.',
+    'LBL_CHECKSYS_CACHE' => 'Subdirectoris de Caché Escribibles',
+    'LBL_CHECKSYS_CALL_TIME' => 'PHP permet fer trucades de temps per referència',
+    'LBL_CHECKSYS_COMPONENT' => 'Component',
+    'LBL_CHECKSYS_CONFIG' => 'Arxiu de Configuració de SuiteCRM (config.php) Escribible',
+    'LBL_CHECKSYS_CURL' => 'Llibreria cURL',
+    'LBL_CHECKSYS_CUSTOM' => 'Escriptura personalitzada en directori',
+    'LBL_CHECKSYS_DATA' => 'Subdirectoris de Dades Escribibles',
+    'LBL_CHECKSYS_MEM_OK' => 'Correcte (Sense Límit)',
+    'LBL_CHECKSYS_MEM_UNLIMITED' => 'Correcte (Sense Límit)',
+    'LBL_CHECKSYS_MEM' => 'Límit de memòria de PHP >=',
+    'LBL_CHECKSYS_MODULE' => 'Subdirectoris i Arxius de Mòduls Escribibles',
+    'LBL_CHECKSYS_NOT_AVAILABLE' => 'No Disponible',
+    'LBL_CHECKSYS_OK' => 'Acceptar',
+    'LBL_CHECKSYS_PHP_INI' => '<b>Nota:</b> El seu fitxer de configuració de PHP (php.ini) està localitzat a:',
+    'LBL_CHECKSYS_PHP_OK' => 'Correcte (veure ',
+    'LBL_CHECKSYS_PHPVER' => 'Versió de PHP',
+    'LBL_CHECKSYS_RECHECK' => 'Comprovar de nou',
+    'LBL_CHECKSYS_SAFE_MODE' => 'Manera Segura de PHP Deshabilitat',
+    'LBL_CHECKSYS_SESSION' => 'Ruta d\'Emmagatzemament de Sessió Escribible (',
+    'LBL_CHECKSYS_STATUS' => 'Estat',
+    'LBL_CHECKSYS_TITLE' => 'Acceptació de Comprovacions del Sistema',
+    'LBL_CHECKSYS_XML' => 'Anàlisis XML',
+    'LBL_CLOSE' => 'Tancar',
+    'LBL_CONFIRM_BE_CREATED' => 'serà creat',
+    'LBL_CONFIRM_DB_TYPE' => 'Tipus de Base de Dades',
+    'LBL_CONFIRM_DIRECTIONS' => 'Si us plau, confirmi la següent configuració. Si desitja canviar qualsevol dels valors, faci clic en "Enrere" per editar-los. En un altre cas, faci clic en "Següent" per iniciar la instal·lació.',
+    'LBL_CONFIRM_LICENSE_TITLE' => 'Informació de Llicència',
+    'LBL_CONFIRM_NOT' => 'no',
+    'LBL_CONFIRM_TITLE' => 'Confirmació de configuració',
+    'LBL_CONFIRM_WILL' => 'serà',
+    'LBL_DBCONF_CREATE_DB' => 'Crear Base de dades',
+    'LBL_DBCONF_CREATE_USER' => 'Crear Usuari',
+    'LBL_DBCONF_DB_DROP_CREATE_WARN' => 'Advertència: Tots les dades de SuiteCRM seran eliminados<br>si es marca aquesta opció.',
+    'LBL_DBCONF_DB_DROP_CREATE' => 'Esborrar les taules de SuiteCRM actuals i crear-les de nou?',
+    'LBL_DBCONF_DB_NAME' => 'Nom de Base de dades',
+    'LBL_DBCONF_DB_PASSWORD' => 'Contrasenya de la base de dades',
+    'LBL_DBCONF_DB_PASSWORD2' => 'Torni a introduïr la contrasenya de la base de dades',
+    'LBL_DBCONF_DB_USER' => 'Nom d\'usuari de la base de dades',
+    'LBL_DBCONF_DEMO_DATA' => 'Introduir Dades de Demostració en la Base de Dades?',
+    'LBL_DBCONF_HOST_NAME' => 'Nom de Equip',
+    'LBL_DBCONF_INSTRUCTIONS' => 'Si us plau, introdueixi la informació de configuració de la seva base de dades a continuació. Si no està segur de quines dades utilitzar, li suggerim que utilitzi els valors per defecte.',
+    'LBL_DBCONF_MB_DEMO_DATA' => 'Utilitzar text multibyte en dades de demostració?',
+    'LBL_DBCONF_PRIV_PASS' => 'Contrasenya d\'Usuari Privilegiat de Base de dades',
+    'LBL_DBCONF_PRIV_USER_2' => 'Correspon al Compte de Base de dades Anterior a un Usuari Privilegiat?',
+    'LBL_DBCONF_PRIV_USER_DIRECTIONS' => 'Aquest usuari privilegiat de base de dades ha de tenir els permisos adequats per crear una base de dades, eliminar/crear taules|posts, i crear un usuari. Aquest usuari privilegiat de base de dades només s\'utilitzarà per realitzar aquestes tasques segons siguin necessàries durant el procés d\'instal·lació. També pot utilitzar el mateix usuari de base de dades anterior si té els privilegis suficients.',
+    'LBL_DBCONF_PRIV_USER' => 'Nom de l\'Usuari Privilegiat de Base de dades',
+    'LBL_DBCONF_TITLE' => 'Configuració de Base de dades',
+    'LBL_HELP' => 'Ajuda',
+    'LBL_LICENSE_ACCEPTANCE' => 'Aceptació de Llicència',
+    'LBL_LICENSE_DIRECTIONS' => 'Si té informació sobre el seu llicència, si us plau introdueixi-la en els següents camps.',
+    'LBL_LICENSE_DOWNLOAD_KEY' => 'Clau de Descarrega',
+    'LBL_LICENSE_EXPIRY' => 'Data de Caducitat',
+    'LBL_LICENSE_I_ACCEPT' => 'Accepto',
+    'LBL_LICENSE_NUM_USERS' => 'Número d\'Usuaris',
+    'LBL_LICENSE_OC_DIRECTIONS' => 'Si us plau, introdueixi el nom de clients desconnectats adquirits.',
+    'LBL_LICENSE_OC_NUM' => 'Número de Llicències de Client sense connexió',
+    'LBL_LICENSE_OC' => 'Llicències de Client Desconectat',
+    'LBL_LICENSE_PRINTABLE' => ' Vista Imprimible ',
+    'LBL_LICENSE_TITLE' => 'Informació de Llicència',
+    'LBL_LICENSE_TITLE_2' => 'Llicència de SuiteCRM',
+    'LBL_LICENSE_USERS' => 'Usuaris amb Llicència',
+    'LBL_MYSQL' => 'MySQL',
+    'LBL_NEXT' => 'Següent',
+    'LBL_NO' => 'No',
+    'LBL_ORACLE' => 'Oracle',
+    'LBL_PERFORM_ADMIN_PASSWORD' => 'Establint la clau de pas de l\'admin del lloc',
+    'LBL_PERFORM_AUDIT_TABLE' => 'taula d\'auditoria / ',
+    'LBL_PERFORM_CONFIG_PHP' => 'Creant l\'arxiu de configuració de SuiteCRM',
+    'LBL_PERFORM_CREATE_DB_1' => 'Creant la base de dades',
+    'LBL_PERFORM_CREATE_DB_2' => 'en',
+    'LBL_PERFORM_CREATE_DB_USER' => 'Creant l\'usuari i la clau de pas de Base de Dades...',
+    'LBL_PERFORM_CREATE_DEFAULT' => 'Creant dades de SuiteCRM predeterminats',
+    'LBL_PERFORM_CREATE_LOCALHOST' => 'Creant l\'usuari i la contrasenya de Base de Dades per a localhost...',
+    'LBL_PERFORM_CREATE_RELATIONSHIPS' => 'Creant taules de relacions de SuiteCRM',
+    'LBL_PERFORM_CREATING' => 'creant / ',
+    'LBL_PERFORM_DEFAULT_REPORTS' => 'Creant informes predefinits',
+    'LBL_PERFORM_DEFAULT_SCHEDULER' => 'Creant treballs del planificador per defecte',
+    'LBL_PERFORM_DEFAULT_SETTINGS' => 'Inserint configuració per defecte',
+    'LBL_PERFORM_DEFAULT_USERS' => 'Creant usuaris per defecte',
+    'LBL_PERFORM_DEMO_DATA' => 'Poblant les taules de la base de dades amb dades de demostració (això pot tardar una estona)...',
+    'LBL_PERFORM_DONE' => 'fet<br>',
+    'LBL_PERFORM_DROPPING' => 'esborrant / ',
+    'LBL_PERFORM_FINISH' => 'Fi',
+    'LBL_PERFORM_LICENSE_SETTINGS' => 'Actualizant informació de llicència',
+    'LBL_PERFORM_OUTRO_1' => 'La instal·lació de SuiteCRM ',
+    'LBL_PERFORM_OUTRO_2' => 'està completat.',
+    'LBL_PERFORM_OUTRO_3' => 'Temps total: ',
+    'LBL_PERFORM_OUTRO_4' => ' segons.',
+    'LBL_PERFORM_OUTRO_5' => 'Memòria utilitza aproximadament: ',
+    'LBL_PERFORM_OUTRO_6' => ' bytes.',
+    'LBL_PERFORM_OUTRO_7' => 'El seu sistema ha estat instal·lat i configurat per al seu ús.',
+    'LBL_PERFORM_REL_META' => 'metadades de relacions... ',
+    'LBL_PERFORM_SUCCESS' => 'Èxit!',
+    'LBL_PERFORM_TABLES' => 'Creació de taules s\'aplicacion SuiteCRM, taules d\'auditoria...',
+    'LBL_PERFORM_TITLE' => 'Realitza la instal·lació',
+    'LBL_PRINT' => 'Imprimir',
+    'LBL_REQUIRED' => '* Camp requerit',
+    'LBL_SITECFG_ADMIN_PASS_2' => 'Torni a introduir la contrasenya <em>d\'administrador</em> de SuiteCRM',
+    'LBL_SITECFG_ADMIN_PASS_WARN' => 'Precaució: Això substituirà la contrasenya d\'admin de qualsevol instal·lació prèvia.',
+    'LBL_SITECFG_ADMIN_PASS' => 'Contrasenya <em>d\'administrador</em> de SuiteCRM',
+    'LBL_SITECFG_APP_ID' => 'ID d\'Aplicació',
+    'LBL_SITECFG_CUSTOM_ID_DIRECTIONS' => 'Si està seleccionat, ha d\'introduir un ID d\'aplicació per substituir a l\'ID autogenerat. L\'ID assegura que les sessions d\'una instància de SuiteCRM no són utilitzades per altres instàncies. Si té un clúster|grup de sectors d\'instal·lacions SuiteCRM, totes han de compartir el mateix ID d\'aplicació.',
+    'LBL_SITECFG_CUSTOM_ID' => 'Proveir el Seu Propi ID d\'Aplicació',
+    'LBL_SITECFG_CUSTOM_LOG_DIRECTIONS' => 'Sobrescriu el directori per defecte on el lod de SuiteCRM resideix. No importa on estigui el log file, accedir-hi vie navegador estarà restringit via un redireccionament .htacces',
+    'LBL_SITECFG_CUSTOM_LOG' => 'Usar un Directori Personalitzat de Traces',
+    'LBL_SITECFG_CUSTOM_SESSION_DIRECTIONS' => 'Proporcionar una carpeta segura per emmagatzemar la sessió d\'informació de SuiteCRM per prevenirr que la informació sigui vulnerable o que sigui compartida amb altres servidors.',
+    'LBL_SITECFG_CUSTOM_SESSION' => 'Utilitzar un Directori Personalitzat de Sessions per a SuiteCRM',
+    'LBL_SITECFG_DIRECTIONS' => 'Si us plau, introdueixi la informació de configuració del seu lloc a continuació. Si no està segur del significat dels camps, li suggerim que utilitzi els valors per defecte.',
+    'LBL_SITECFG_FIX_ERRORS' => 'Si us plau, corregeixi els següents errors abans de continuar:',
+    'LBL_SITECFG_LOG_DIR' => 'Directori de Traces',
+    'LBL_SITECFG_SESSION_PATH' => 'Ruta al Directori de Sessions<br>(te que ser escribible)',
+    'LBL_SITECFG_SITE_SECURITY' => 'Seguretat avançada del lloc',
+    'LBL_SITECFG_SUGAR_UP_DIRECTIONS' => 'Quan això està activat el sistema enviarà periòdicament a SuiteCRM Inc. unes estadístiques anònimes sobre la seva instal·lació que l\'ajudaran a entendre els patrons d\'ús i millorar el producte. A canvi d\'aquesta informació, els administradors reben avisos d\'actualització quan les noves versions o actualitzacions disponibles.',
+    'LBL_SITECFG_SUGAR_UP' => 'Habilitar les actualitzacions de SuiteCRM?',
+    'LBL_SITECFG_SUGAR_UPDATES' => 'Configuració d\'Actualizacions de SuiteCRM',
+    'LBL_SITECFG_TITLE' => 'Configuració del Lloc',
+    'LBL_SITECFG_URL' => 'URL de la Instància de SuiteCRM',
+    'LBL_SITECFG_USE_DEFAULTS' => 'Usar valors per defecte?',
+    'LBL_START' => 'Inici',
+    'LBL_STEP' => 'Pas',
+    'LBL_TITLE_WELCOME' => 'Benvingut a SuiteCRM ',
+    'LBL_WELCOME_1' => 'Aquest instal·lador crea les taules de base de dades de SuiteCRM i estableix les variables de configuració necessàries per iniciar. El procés complet hauria de tardar uns deu minuts.',
+    'LBL_WELCOME_2' => 'Per ajuda sobre la instal·lació, si us plau, visiti els <a href="https://suitecrm.com/suitecrm/forum/suite-forum" target="_blank">fòrums de suport</a> de SuiteCRM.',
+    'LBL_WELCOME_CHOOSE_LANGUAGE' => 'Triï el seu idioma',
+    'LBL_WELCOME_SETUP_WIZARD' => 'Assistent de Instal·lació',
+    'LBL_WELCOME_TITLE_WELCOME' => 'Benvingut a SuiteCRM ',
+    'LBL_WELCOME_TITLE' => 'Assistent de Instal·lació de SuiteCRM',
+    'LBL_WIZARD_TITLE' => 'Assistent d\'instal·lació de SuiteCRM: Pas',
+    'LBL_YES' => 'Sí',
+);

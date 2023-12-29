@@ -1,0 +1,9 @@
+// search/search.asciidoc:409
+
+[source, php]
+----
+$params = [
+    'index' => '_all',
+];
+$response = $client->search($params);
+----

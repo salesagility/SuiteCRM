@@ -251,11 +251,17 @@ function getModuleRelationships($module, $view='EditView', $value = '')
                     } else {
                         $sort_fields[$name] = $relModuleName.' : '. $name;
                     }
-                    if ($arr['type'] == 'relate' && isset($arr['id_name']) && $arr['id_name'] != '') {
-                        if (isset($fields[$arr['id_name']])) {
-                            unset($fields[$arr['id_name']]);
-                        }
-                    }
+                    // STIC-Custom 20220504 MHP - Remove labels related to the _ida fields to avoid duplicate relationships in the list
+                    // STIC#726
+                    // if ($arr['type'] == 'relate' && isset($arr['id_name']) && $arr['id_name'] != '') {
+                    //     if (isset($fields[$arr['id_name']])) {
+                    //         unset($fields[$arr['id_name']]);
+                    //     }
+                    // }
+                    if ($arr['type'] == 'link' && (strpos($arr['name'], '_ida') || strpos($arr['name'], '_idb'))  && isset($sort_fields[$arr['name']])){
+                        unset($sort_fields[$arr['name']]);
+                    }        
+                    // END STIC-Custom            
                 }
             } //End loop.
             array_multisort($sort_fields, SORT_ASC, $sort_fields);
@@ -388,7 +394,27 @@ function getModuleField(
             unset($vardef['precision']);
         }
 
-        //$vardef['precision'] = $locale->getPrecedentPreference('default_currency_significant_digits', $current_user);
+        // STIC-Custom 20220414 AAM - If value is a number, it should display all the decimals the user wrote on wf creation.
+        // This needs to be here cause the field is formatted by the template function sugar_number_format.
+        // If that function is modified, it could affect mistakenly in other areas of the system.
+        // STIC#636
+        switch ($vardef['type']) {
+            case 'double':
+            case 'decimal':
+            case 'currency':
+            case 'float':
+            case 'uint':
+            case 'ulong':
+            case 'long':
+            case 'short':
+            case 'tinyint':
+            case 'int':
+                $vardef['precision'] = (int) strpos(strrev($value), ".");
+                break;
+        }
+        // END STIC
+
+        // $vardef['precision'] = $locale->getPrecedentPreference('default_currency_significant_digits', $current_user);
 
         if ($vardef['type'] == 'datetime') {
             $vardef['type'] = 'datetimecombo';
@@ -532,12 +558,14 @@ function getModuleField(
         if (isset($fieldlist[$name]['options']) && is_array($fieldlist[$name]['options']) && !isset($fieldlist[$name]['options'][''])) {
             $fieldlist[$name]['options'][''] = '';
         }
-
+        // STIC 20210728 AAM - The editview of a workflow is built using a Smarty template. When editing an existing workflow with an action
+        // that sets to blank an enum field which has a not blank default value, the template does not show the blank value (as expected)
+        // but the default value. In order to properly show the expected blank value, we hack the vardef definition overriding default value 
+        // with blank value when the stored workflow value (now in $value) is blank. STIC#366
         if ($fieldlist[$name]['type'] == 'enum' || $fieldlist[$name]['type'] == 'multienum' || $fieldlist[$name]['type'] == 'dynamicenum') {
-            if ($params['value_set'] === true && $value === "") {
-                $fieldlist[$name]['default'] = $value;
-            }
+            $fieldlist[$name]['default'] = $value === "" ? $value : $fieldlist[$name]['default'];
         }
+        // END STIC
     }
 
     // fill in function return values
@@ -910,7 +938,10 @@ function getRelatedEmailableFields($module)
                 if (!isset($field['module']) || !in_array($field['module'], $emailableModules) || (isset($field['dbType']) && $field['dbType'] == "id")) {
                     continue;
                 }
-                $relEmailFields[$field['name']] = translate($field['module']) . ": "
+                // STIC 20210720 AAM - Fix regarding the Emailable modules returned in Send Email Action
+                // STIC#362
+                // $relEmailFields[$field['name']] = translate($field['module']) . ": "
+                $relEmailFields[$field['link'] ? $field['link'] : $field['name']] = translate($field['module']) . ": "
                     . trim(translate($field['vname'], $mod->module_name), ":");
             }
 

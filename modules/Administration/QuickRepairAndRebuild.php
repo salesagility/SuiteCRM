@@ -1,11 +1,13 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2019 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -27,21 +29,23 @@
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
  *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ * 
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * SugarCRM" logo, "Supercharged by SuiteCRM" logo and “Nonprofitized by SinergiaCRM” logo. 
+ * If the display of the logos is not reasonably feasible for technical reasons, 
+ * the Appropriate Legal Notices must display the words "Powered by SugarCRM", 
+ * "Supercharged by SuiteCRM" and “Nonprofitized by SinergiaCRM”. 
  */
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-
-use Api\Core\Config\ApiConfig;
 
 class RepairAndClear
 {
@@ -51,14 +55,14 @@ class RepairAndClear
     public $execute;
     protected $module_list_from_cache;
 
-    public function repairAndClearAll($selected_actions, $modules, $autoexecute=false, $show_output=true)
+    public function repairAndClearAll($selected_actions, $modules, $autoexecute = false, $show_output = true)
     {
         global $mod_strings;
-        $this->module_list= $modules;
+        $this->module_list = $modules;
         $this->show_output = $show_output;
         $this->actions = $selected_actions;
         $this->actions[] = 'repairDatabase';
-        $this->execute=$autoexecute;
+        $this->execute = $autoexecute;
 
         //clear vardefs always..
         $this->clearVardefs();
@@ -66,77 +70,97 @@ class RepairAndClear
         $this->clearLanguageCache();
         foreach ($this->actions as $current_action) {
             switch ($current_action) {
-            case 'repairDatabase':
-                if (isset($mod_strings['LBL_ALL_MODULES']) && in_array($mod_strings['LBL_ALL_MODULES'], $this->module_list)) {
+                case 'repairDatabase':
+                    if (isset($mod_strings['LBL_ALL_MODULES']) && in_array($mod_strings['LBL_ALL_MODULES'], $this->module_list)) {
+                        $this->repairDatabase();
+                    } else {
+                        $this->repairDatabaseSelectModules();
+                    }
+                    break;
+                case 'rebuildExtensions':
+                    $this->rebuildExtensions();
+                    break;
+                case 'clearTpls':
+                    $this->clearTpls();
+                    break;
+                case 'clearJsFiles':
+                    $this->clearJsFiles();
+                    break;
+                case 'clearDashlets':
+                    $this->clearDashlets();
+                    break;
+                case 'clearSugarFeedCache':
+                    $this->clearSugarFeedCache();
+                    break;
+                case 'clearThemeCache':
+                    $this->clearThemeCache();
+                    break;
+                case 'clearVardefs':
+                    $this->clearVardefs();
+                    break;
+                case 'clearJsLangFiles':
+                    $this->clearJsLangFiles();
+                    break;
+                case 'rebuildAuditTables':
+                    $this->rebuildAuditTables();
+                    break;
+                case 'clearSearchCache':
+                    $this->clearSearchCache();
+                    break;
+                case 'clearAll':
+                    $this->clearTpls();
+                    $this->clearJsFiles();
+                    $this->clearVardefs();
+                    $this->clearJsLangFiles();
+                    $this->clearLanguageCache();
+                    $this->clearDashlets();
+                    $this->clearSugarFeedCache();
+                    $this->clearSmarty();
+                    $this->clearThemeCache();
+                    $this->clearXMLfiles();
+                    $this->clearSearchCache();
+                    $this->clearExternalAPICache();
+                    $this->rebuildExtensions();
+                    $this->rebuildAuditTables();
                     $this->repairDatabase();
-                } else {
-                    $this->repairDatabaseSelectModules();
-                }
-                break;
-            case 'rebuildExtensions':
-                $this->rebuildExtensions();
-                break;
-            case 'clearTpls':
-                $this->clearTpls();
-                break;
-            case 'clearJsFiles':
-                $this->clearJsFiles();
-                break;
-            case 'clearDashlets':
-                $this->clearDashlets();
-                break;
-            case 'clearSugarFeedCache':
-                $this->clearSugarFeedCache();
-                break;
-            case 'clearThemeCache':
-                $this->clearThemeCache();
-                break;
-            case 'clearVardefs':
-                $this->clearVardefs();
-                break;
-            case 'clearJsLangFiles':
-                $this->clearJsLangFiles();
-                break;
-            case 'rebuildAuditTables':
-                $this->rebuildAuditTables();
-                break;
-            case 'clearSearchCache':
-                $this->clearSearchCache();
-                break;
-            case 'clearAll':
-                $this->clearTpls();
-                $this->clearJsFiles();
-                $this->clearVardefs();
-                $this->clearJsLangFiles();
-                $this->clearLanguageCache();
-                $this->clearDashlets();
-                $this->clearSugarFeedCache();
-                $this->clearSmarty();
-                $this->clearThemeCache();
-                $this->clearXMLfiles();
-                $this->clearSearchCache();
-                $this->clearExternalAPICache();
-                $this->rebuildExtensions();
-                $this->rebuildAuditTables();
-                $this->repairDatabase();
-                break;
+                    break;
+            }
         }
+
+        // STIC-Custom - 20230901 - jch - STIC#1204
+        //               20230919 - jch - STIC#1223
+        // Rebuild SinergiaDA views to avoid incorrect table references and errors in mysqldump if SDA is enabled
+        $sdaEnabled = $sugar_config['stic_sinergiada']['enabled'] ?? false;
+        $rebuildSDAFile = 'SticInclude/SinergiaDARebuild.php';
+
+        if (file_exists($rebuildSDAFile) && $sdaEnabled) {
+            if (
+                // It is necessary to assess whether $_REQUEST['silent'] == True, since by erase a field, the pass flow
+                // twice here with different values and we want the code to be one time. In the case of deleting relationships
+                // This value is true and only passes once.
+                isset($_REQUEST['silent']) && $_REQUEST['silent'] == 'true' &&
+                isset($_REQUEST['action']) && in_array($_REQUEST['action'], ['DeleteField', 'DeleteRelationship'])
+            ) {
+                $GLOBALS['log']->info('Line ' . __LINE__ . ': ' . __METHOD__ . ': ' . "Action {$_REQUEST['action']}. Rebuilding SinergiaDA");
+                require_once 'SticInclude/SinergiaDARebuild.php';
+                SinergiaDARebuild::callApiRebuildSDA(true, 'views');
+            }
         }
+        // EN STIC
     }
 
     /////////////OLD
-
 
     public function repairDatabase()
     {
         global $dictionary, $mod_strings;
         if (false == $this->show_output) {
-            $_REQUEST['repair_silent']='1';
+            $_REQUEST['repair_silent'] = '1';
         }
-        $_REQUEST['execute']=$this->execute;
+        $_REQUEST['execute'] = $this->execute;
         $GLOBALS['reload_vardefs'] = true;
         $hideModuleMenu = true;
-        include_once('modules/Administration/repairDatabase.php');
+        include_once 'modules/Administration/repairDatabase.php';
     }
 
     public function repairDatabaseSelectModules()
@@ -144,7 +168,7 @@ class RepairAndClear
         global $current_user, $mod_strings, $dictionary;
         set_time_limit(3600);
 
-        include('include/modules.php'); //bug 15661
+        include 'include/modules.php'; //bug 15661
         $db = DBManagerFactory::getInstance();
 
         if (is_admin($current_user) || is_admin_for_any_module($current_user)) {
@@ -164,16 +188,15 @@ class RepairAndClear
                 $GLOBALS['sugar_config']['developerMode'] = true;
                 foreach ($this->module_list as $bean_name) {
                     if (isset($beanFiles[$bean_name]) && file_exists($beanFiles[$bean_name])) {
-                        require_once($beanFiles[$bean_name]);
+                        require_once $beanFiles[$bean_name];
                         $GLOBALS['reload_vardefs'] = true;
                         $focus = new $bean_name();
                         #30273
                         if ($focus->disable_vardefs == false) {
-                            include('modules/' . $focus->module_dir . '/vardefs.php');
-
+                            include 'modules/' . $focus->module_dir . '/vardefs.php';
 
                             if ($this->show_output) {
-                                print_r("<p>" .$mod_strings['LBL_REPAIR_DB_FOR'].' '. $bean_name . "</p>");
+                                print_r("<p>" . $mod_strings['LBL_REPAIR_DB_FOR'] . ' ' . $bean_name . "</p>");
                             }
                             $sql .= $db->repairTable($focus, $this->execute);
                         }
@@ -200,7 +223,7 @@ class RepairAndClear
 
                         echo "<form method=\"post\" action=\"index.php?module=Administration&amp;action=repairDatabase\">";
                         echo "<textarea name=\"sql\" rows=\"24\" cols=\"150\" id=\"repairsql\">$qry_str</textarea>";
-                        echo "<br /><input type=\"submit\" value=\"".$mod_strings['LBL_REPAIR_DATABASE_EXECUTE']."\" name=\"raction\" /> <input type=\"submit\" name=\"raction\" value=\"".$mod_strings['LBL_REPAIR_DATABASE_EXPORT']."\" />";
+                        echo "<br /><input type=\"submit\" value=\"" . $mod_strings['LBL_REPAIR_DATABASE_EXECUTE'] . "\" name=\"raction\" /> <input type=\"submit\" name=\"raction\" value=\"" . $mod_strings['LBL_REPAIR_DATABASE_EXPORT'] . "\" />";
                     }
                 } else {
                     if ($this->show_output) {
@@ -220,7 +243,7 @@ class RepairAndClear
             echo $mod_strings['LBL_QR_REBUILDEXT'];
         }
         global $current_user;
-        require_once('ModuleInstall/ModuleInstaller.php');
+        require_once 'ModuleInstall/ModuleInstaller.php';
         $mi = new ModuleInstaller();
         $mi->rebuild_all(!$this->show_output);
 
@@ -286,7 +309,7 @@ class RepairAndClear
         }
         if (!empty($this->module_list) && !in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
             foreach ($this->module_list as $module_name_singular) {
-                $this->_clearCache(sugar_cached('modules/').$this->_getModuleNamePlural($module_name_singular), '.tpl');
+                $this->_clearCache(sugar_cached('modules/') . $this->_getModuleNamePlural($module_name_singular), '.tpl');
             }
         } else {
             $this->_clearCache(sugar_cached('modules/'), '.tpl');
@@ -301,7 +324,7 @@ class RepairAndClear
         }
         if (!empty($this->module_list) && is_array($this->module_list) && !in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
             foreach ($this->module_list as $module_name_singular) {
-                $this->_clearCache(sugar_cached('modules/').$this->_getModuleNamePlural($module_name_singular), 'vardefs.php');
+                $this->_clearCache(sugar_cached('modules/') . $this->_getModuleNamePlural($module_name_singular), 'vardefs.php');
             }
         } else {
             $this->_clearCache(sugar_cached('modules/'), 'vardefs.php');
@@ -316,7 +339,7 @@ class RepairAndClear
 
         if (!empty($this->module_list) && !in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
             foreach ($this->module_list as $module_name_singular) {
-                $this->_clearCache(sugar_cached('modules/').$this->_getModuleNamePlural($module_name_singular), '.js');
+                $this->_clearCache(sugar_cached('modules/') . $this->_getModuleNamePlural($module_name_singular), '.js');
             }
         } else {
             $this->_clearCache(sugar_cached('modules/'), '.js');
@@ -330,7 +353,7 @@ class RepairAndClear
         }
         if (!empty($this->module_list) && !in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
             foreach ($this->module_list as $module_name_singular) {
-                $this->_clearCache(sugar_cached('jsLanguage/').$this->_getModuleNamePlural($module_name_singular), '.js');
+                $this->_clearCache(sugar_cached('jsLanguage/') . $this->_getModuleNamePlural($module_name_singular), '.js');
             }
         } else {
             $this->_clearCache(sugar_cached('jsLanguage'), '.js');
@@ -350,7 +373,8 @@ class RepairAndClear
         if (!empty($this->module_list) && is_array($this->module_list)) {
             if (in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
                 LanguageManager::clearLanguageCache();
-            } else { //use the modules selected thrut the select list.
+            } else {
+                //use the modules selected thrut the select list.
                 foreach ($this->module_list as $module_name) {
                     LanguageManager::clearLanguageCache($module_name);
                 }
@@ -363,8 +387,8 @@ class RepairAndClear
             $languages = array($GLOBALS['current_language'] => $GLOBALS['current_language']);
         }
         foreach (array_keys($languages) as $language) {
-            sugar_cache_clear('app_strings.'.$language);
-            sugar_cache_clear('app_list_strings.'.$language);
+            sugar_cache_clear('app_strings.' . $language);
+            sugar_cache_clear('app_list_strings.' . $language);
         }
     }
 
@@ -377,10 +401,10 @@ class RepairAndClear
         if ($this->show_output) {
             echo "<h3>{$mod_strings['LBL_QR_CLEARSEARCH']}</h3>";
         }
-        $search_dir=sugar_cached('');
+        $search_dir = sugar_cached('');
         $src_file = $search_dir . 'modules/unified_search_modules.php';
         if (file_exists($src_file)) {
-            unlink((string)$src_file);
+            unlink((string) $src_file);
         }
     }
     public function clearExternalAPICache()
@@ -389,7 +413,7 @@ class RepairAndClear
         if ($this->show_output) {
             echo "<h3>{$mod_strings['LBL_QR_CLEAR_EXT_API']}</h3>";
         }
-        require_once('include/externalAPI/ExternalAPIFactory.php');
+        require_once 'include/externalAPI/ExternalAPIFactory.php';
         ExternalAPIFactory::clearCache();
     }
 
@@ -398,7 +422,7 @@ class RepairAndClear
     public function rebuildAuditTables()
     {
         global $mod_strings;
-        include('include/modules.php');	//bug 15661
+        include 'include/modules.php'; //bug 15661
         if ($this->show_output) {
             echo "<h3> {$mod_strings['LBL_QR_REBUILDAUDIT']}</h3>";
         }
@@ -406,7 +430,7 @@ class RepairAndClear
         if (!empty($this->module_list) && !in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
             foreach ($this->module_list as $bean_name) {
                 if (isset($beanFiles[$bean_name]) && file_exists($beanFiles[$bean_name])) {
-                    require_once($beanFiles[$bean_name]);
+                    require_once $beanFiles[$bean_name];
                     $this->_rebuildAuditTablesHelper(new $bean_name());
                 }
             }
@@ -414,7 +438,7 @@ class RepairAndClear
             if (in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
                 foreach ($beanFiles as $bean => $file) {
                     if (file_exists($file)) {
-                        require_once($file);
+                        require_once $file;
                         $this->_rebuildAuditTablesHelper(new $bean());
                     }
                 }
@@ -437,18 +461,18 @@ class RepairAndClear
         if ($focus->is_AuditEnabled()) {
             if (!$focus->db->tableExists($focus->get_audit_table_name())) {
                 if ($this->show_output) {
-                    echo $mod_strings['LBL_QR_CREATING_TABLE']." ".$focus->get_audit_table_name().' '.$mod_strings['LBL_FOR'].' '. $focus->object_name.'.<br/>';
+                    echo $mod_strings['LBL_QR_CREATING_TABLE'] . " " . $focus->get_audit_table_name() . ' ' . $mod_strings['LBL_FOR'] . ' ' . $focus->object_name . '.<br/>';
                 }
                 $focus->create_audit_table();
             } else {
                 if ($this->show_output) {
-                    $echo=str_replace('%1$', $focus->object_name, $mod_strings['LBL_REBUILD_AUDIT_SKIP']);
+                    $echo = str_replace('%1$', $focus->object_name, $mod_strings['LBL_REBUILD_AUDIT_SKIP']);
                     echo $echo;
                 }
             }
         } else {
             if ($this->show_output) {
-                echo $focus->object_name.$mod_strings['LBL_QR_NOT_AUDIT_ENABLED'];
+                echo $focus->object_name . $mod_strings['LBL_QR_NOT_AUDIT_ENABLED'];
             }
         }
     }
@@ -470,7 +494,6 @@ class RepairAndClear
             LoggerManager::getLogger()->warn('QRR: it is not a directory: ' . $thedir);
             return false;
         }
-
 
         if ($current = opendir($thedir)) {
             while (false !== ($children = readdir($current))) {

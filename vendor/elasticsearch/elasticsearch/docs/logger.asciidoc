@@ -1,0 +1,45 @@
+[[enabling_logger]]
+=== Enabling the Logger
+
+Elasticsearch-PHP supports logging, but it is not enabled by default for 
+performance reasons. If you wish to enable logging, you need to select a logging 
+implementation, install it, then enable the logger in the Client. The 
+recommended logger is https://github.com/Seldaek/monolog[Monolog], but any 
+logger that implements the `PSR/Log` interface works.
+
+You might have noticed that Monolog was suggested during installation. To begin 
+using Monolog, add it to your `composer.json`:
+
+[source,json]
+----------------------------
+{
+    "require": {
+        ...
+        "elasticsearch/elasticsearch" : "~5.0",
+        "monolog/monolog": "~1.0"
+    }
+}
+----------------------------
+
+And then update your Composer installation:
+
+[source,shell]
+----------------------------
+php composer.phar update
+----------------------------
+
+Once Monolog (or another logger) is installed, you need to create a log object 
+and inject it into the client:
+
+[source,php]
+----
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+$logger = new Logger('name');
+$logger->pushHandler(new StreamHandler('path/to/your.log', Logger::WARNING));
+
+$client = ClientBuilder::create()       // Instantiate a new ClientBuilder
+            ->setLogger($logger)        // Set your custom logger
+            ->build();                  // Build the client object
+----

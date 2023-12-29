@@ -1,0 +1,14 @@
+// indices/create-index.asciidoc:190
+
+[source, php]
+----
+$params = [
+    'index' => 'test',
+    'body' => [
+        'settings' => [
+            'index.write.wait_for_active_shards' => '2',
+        ],
+    ],
+];
+$response = $client->indices()->create($params);
+----

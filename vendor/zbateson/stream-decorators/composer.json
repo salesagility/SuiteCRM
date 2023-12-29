@@ -1,0 +1,29 @@
+{
+    "name": "zbateson/stream-decorators",
+    "description": "PHP psr7 stream decorators for mime message part streams",
+    "keywords": ["psr7", "stream", "decorators", "mail", "mime", "base64", "quoted-printable", "uuencode", "charset"],
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "Zaahid Bateson"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "guzzlehttp/psr7": "^1.7.0|^2.0",
+        "zbateson/mb-wrapper": "^1.0.0"
+    },
+    "require-dev": {
+        "sanmai/phpunit-legacy-adapter": "^6.3 || ^8"
+    },
+    "autoload": {
+        "psr-4": {
+            "ZBateson\\StreamDecorators\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ZBateson\\StreamDecorators\\": "tests/StreamDecorators"
+        }
+    }
+}

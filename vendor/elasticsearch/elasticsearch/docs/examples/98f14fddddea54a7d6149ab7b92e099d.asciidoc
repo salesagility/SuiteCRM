@@ -1,0 +1,9 @@
+// indices/delete-index.asciidoc:10
+
+[source, php]
+----
+$params = [
+    'index' => 'twitter',
+];
+$response = $client->indices()->delete($params);
+----

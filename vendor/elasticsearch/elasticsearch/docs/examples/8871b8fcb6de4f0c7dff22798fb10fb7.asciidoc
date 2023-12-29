@@ -1,0 +1,21 @@
+// docs/reindex.asciidoc:833
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'source' => [
+            'index' => 'twitter',
+        ],
+        'dest' => [
+            'index' => 'new_twitter',
+            'version_type' => 'external',
+        ],
+        'script' => [
+            'source' => 'if (ctx._source.foo == \'bar\') {ctx._version++; ctx._source.remove(\'foo\')}',
+            'lang' => 'painless',
+        ],
+    ],
+];
+$response = $client->reindex($params);
+----

@@ -1,0 +1,27 @@
+// getting-started.asciidoc:544
+
+[source, php]
+----
+$params = [
+    'index' => 'bank',
+    'body' => [
+        'query' => [
+            'bool' => [
+                'must' => [
+                    'match_all' => [
+                    ],
+                ],
+                'filter' => [
+                    'range' => [
+                        'balance' => [
+                            'gte' => 20000,
+                            'lte' => 30000,
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

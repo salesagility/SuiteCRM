@@ -1,0 +1,25 @@
+// docs/update.asciidoc:296
+
+[source, php]
+----
+$params = [
+    'index' => 'sessions',
+    'id' => 'dh3sgudg8gsrgl',
+    'body' => [
+        'scripted_upsert' => true,
+        'script' => [
+            'id' => 'my_web_session_summariser',
+            'params' => [
+                'pageViewEvent' => [
+                    'url' => 'foo.com/bar',
+                    'response' => 404,
+                    'time' => '2014-01-01 12:32',
+                ],
+            ],
+        ],
+        'upsert' => [
+        ],
+    ],
+];
+$response = $client->update($params);
+----

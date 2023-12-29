@@ -1,0 +1,13 @@
+// docs/update.asciidoc:164
+
+[source, php]
+----
+$params = [
+    'index' => 'test',
+    'id' => '1',
+    'body' => [
+        'script' => 'ctx._source.remove(\'new_field\')',
+    ],
+];
+$response = $client->update($params);
+----

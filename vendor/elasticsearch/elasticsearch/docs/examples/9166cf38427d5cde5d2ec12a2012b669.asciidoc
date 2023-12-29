@@ -1,0 +1,19 @@
+// indices/templates.asciidoc:223
+
+[source, php]
+----
+$params = [
+    'name' => 'template_1',
+    'body' => [
+        'index_patterns' => [
+            '*',
+        ],
+        'order' => 0,
+        'settings' => [
+            'number_of_shards' => 1,
+        ],
+        'version' => 123,
+    ],
+];
+$response = $client->indices()->putTemplate($params);
+----

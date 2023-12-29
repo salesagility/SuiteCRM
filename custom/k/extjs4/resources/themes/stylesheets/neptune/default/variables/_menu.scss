@@ -1,0 +1,20 @@
+$menu-background-color: #fff !default;//color-offset($neutral-color, 10%) !default;
+$menu-item-active-background-image: 'menu/menu-item-active-bg.gif';
+$menu-item-active-background-color: $base-light-color !default; //color-offset($base-color, 15%) !default;
+$menu-item-active-color: null;
+
+$menu-item-active-border-color: transparent !default;
+$menu-separator-border-color: transparent !default;
+$menu-separator-background-color: transparent !default;
+
+$menu-item-indent: 0 !default;
+$menu-padding: 0 !default;
+$menu-link-padding: 3px 30px 3px 8px !default;
+
+$menu-text-color: $base-dark-color !default; //color-by-background($menu-background-color, 80%) !default;
+
+//icons
+$menu-icon-arrow: 'menu/menu-parent.gif';
+$menu-icon-checked: 'menu/checked.gif';
+$menu-icon-group-checked: 'menu/group-checked.gif';
+$menu-icon-unchecked: 'menu/unchecked.gif';

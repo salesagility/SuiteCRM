@@ -1,0 +1,26 @@
+{
+	"name": "zf1/zend-locale",
+	"description": "Zend Framework 1 Locale package",
+	"keywords": [
+		"framework",
+		"zf1",
+		"zend",
+		"locale"
+	],
+	"homepage": "http://framework.zend.com/",
+	"license": "BSD-3-Clause",
+	"require": {
+		"php": ">=5.2.11",
+		"zf1/zend-exception": "self.version",
+		"zf1/zend-xml": "self.version",
+		"zf1/zend-cache": "self.version"
+	},
+	"autoload": {
+		"psr-0": {
+			"Zend_Locale": "library/"
+		}
+	},
+	"suggest": {
+		"zf1/zend-registry": "Used in special situations or with special adapters"
+	}
+}

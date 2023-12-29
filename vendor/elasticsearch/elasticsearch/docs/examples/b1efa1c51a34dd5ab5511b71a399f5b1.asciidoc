@@ -1,0 +1,17 @@
+// docs/reindex.asciidoc:403
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'source' => [
+            'index' => 'source',
+        ],
+        'dest' => [
+            'index' => 'dest',
+            'pipeline' => 'some_ingest_pipeline',
+        ],
+    ],
+];
+$response = $client->reindex($params);
+----

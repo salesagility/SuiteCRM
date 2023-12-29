@@ -101,11 +101,22 @@ class HomeController extends SugarController
                     } else {
                         $GLOBALS['log']->warn("Unknown text label in a fielddef: {$fielddef['vname']}");
                         if (!isset($fielddef['label'])) {
-                            $fielddef['label'] = null;
+                            // STIC Custom - JBL - 20230425 - Try to set label when is not defined in app_strings or mod_strings 
+                            // STIC#1062
+                            $fielddef['label'] = $fielddef['labelValue'] ?? null;
+                            // End STIC Custom
                         }
                     }
                 }
                 $validate_array = array('type' => $fielddef['type'], 'required' => $fielddef['required'],'label' => $fielddef['label']);
+                // STIC Custom - JBL - 20230424 - Set Validation for inline Range edition
+                // STIC#1062
+                if (isset($fielddef['validation']) && isset($fielddef['validation']['type']) && $fielddef['validation']['type']=='range') {
+                    $validate_array['type'] = $fielddef['validation']['type'];
+                    $validate_array['min'] = $fielddef['validation']['min'] ?? null;
+                    $validate_array['max'] = $fielddef['validation']['max'] ?? null;
+                }
+                // End STIC Custom
 
                 echo json_encode($validate_array);
             }
@@ -138,4 +149,35 @@ class HomeController extends SugarController
 
         echo $quicksearch_js;
     }
+
+    // STIC-Custom - JCH - 2022-09-26 - Add specific method function for retrieving parent list value
+    // STIC#865
+
+    /**
+     * Return the field value from the parent list of current field, attending to the values of Request moduleName, recordId and dynamicFieldname
+     * It's used for retrieving value of the parent dropdown from dynamicenum fields, in view list context.
+     *
+     * @return void
+     */
+    public function action_getParentValueFromDynamicEnum(){
+        $moduleName = $_REQUEST['moduleName'];
+        $recordId = $_REQUEST['recordId'];
+        $dynamicFieldName = $_REQUEST['dynamicFieldName'];
+
+        $focusBean = BeanFactory::getBean($_REQUEST['moduleName']);
+        
+        // ensure current user has access
+        if (!$focusBean->ACLAccess('view')) {
+            return false;
+        }
+
+        // recovery parent name field
+        $parentFieldName = $focusBean->field_name_map[$dynamicFieldName]['parentenum'];
+
+        echo getFieldValueFromModule($parentFieldName, $moduleName, $recordId);
+        
+        die();
+    }
+    // END STIC-Custom
+
 }

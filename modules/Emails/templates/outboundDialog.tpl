@@ -40,10 +40,13 @@
 *}
 <div id="outboundServers">
 	<form id="outboundEmailForm">
-		<input type="hidden" id="mail_id" name="mail_id">
-		<input type="hidden" id="type" name="type" value="user">
-		<input type="hidden" id="mail_sendtype" name="mail_sendtype" value="SMTP">
-
+		<input type="hidden" id="mail_id" name="mail_id" />
+		<input type="hidden" id="type" name="type" value="user" />
+		<input type="hidden" id="mail_sendtype" name="mail_sendtype" value="SMTP" />
+        {* STIC-Custom 20220504 MHP - STIC#1056
+           Create hidden field with the value of the user id being created or edited *}
+        <input type="hidden" id="user_id" name="user_id" value={$user_id} />        
+        {* END STIC-Custom  *}
 		<table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 		    <tr>
 				<td scope="row" width="15%" NOWRAP>

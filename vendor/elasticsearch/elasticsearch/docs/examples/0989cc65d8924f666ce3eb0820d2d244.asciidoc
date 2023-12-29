@@ -1,0 +1,19 @@
+// indices/put-mapping.asciidoc:427
+
+[source, php]
+----
+$params = [
+    'index' => 'users',
+    'body' => [
+        'user_id' => 12345,
+    ],
+];
+$response = $client->index($params);
+$params = [
+    'index' => 'users',
+    'body' => [
+        'user_id' => 12346,
+    ],
+];
+$response = $client->index($params);
+----

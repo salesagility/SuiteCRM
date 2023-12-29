@@ -1,0 +1,14 @@
+---
+- job:
+    name: elastic+elasticsearch-php+master
+    display-name: 'elastic / elasticsearch-php # master'
+    description: Testing the elasticsearch-php master branch.
+    parameters:
+    - string:
+        name: branch_specifier
+        default: refs/heads/master
+        description: the Git branch specifier to build (&lt;branchName&gt;, &lt;tagName&gt;,
+          &lt;commitId&gt;, etc.)
+    triggers:
+    - github
+    - timed: 'H */12 * * *'

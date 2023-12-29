@@ -1,0 +1,39 @@
+[[http-handler-config]]
+=== Configure the HTTP Handler
+
+Elasticsearch-PHP uses an interchangeable HTTP transport layer called 
+https://github.com/guzzle/RingPHP/[RingPHP]. This allows the client to construct 
+a generic HTTP request, then pass it to the transport layer to execute. The 
+actual execution details are hidden from the client and modular, so that you can 
+choose from several HTTP handlers depending on your needs.
+
+The default handler that the client uses is a combination handler. When 
+executing in synchronous mode, the handler uses `CurlHandler`, which executes 
+single curl calls. These are very fast for single requests. When asynchronous 
+(future) mode is enabled, the handler switches to `CurlMultiHandler`, which uses 
+the curl_multi interface. This involves a bit more overhead, but allows batches 
+of HTTP requests to be processed in parallel.
+
+You can configure the HTTP handler with one of several helper functions, or 
+provide your own custom handler:
+
+[source,php]
+----
+$defaultHandler = ClientBuilder::defaultHandler();
+$singleHandler  = ClientBuilder::singleHandler();
+$multiHandler   = ClientBuilder::multiHandler();
+$customHandler  = new MyCustomHandler();
+
+$client = ClientBuilder::create()
+            ->setHandler($defaultHandler)
+            ->build();
+----
+
+For details on creating your own custom Ring handler, please see the 
+http://guzzle.readthedocs.org/en/latest/handlers.html[RingPHP Documentation].
+
+The default handler is recommended in almost all cases. This allows fast 
+synchronous execution, while retaining flexibility to invoke parallel batches 
+with async future mode. You may consider using just the `singleHandler` if you 
+know you will never need async capabilities, since it will save a small amount 
+of overhead by reducing indirection.

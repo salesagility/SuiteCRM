@@ -1,0 +1,27 @@
+$include-toolbar-uis: $include-default-uis !default;
+
+$toolbar-font-size: $font-size-small !default;
+
+$toolbar-background-color: $content-color;
+
+$toolbar-background-gradient: flat !default;
+$toolbar-inner-border-width: 0px !default;
+$toolbar-inner-border-color: lighten($toolbar-background-color, 10%) !default;
+
+$toolbar-horizontal-spacing: 5px;
+$toolbar-vertical-spacing: 5px;
+$toolbar-footer-horizontal-spacing: 6px;
+$toolbar-footer-vertical-spacing: 2px;
+
+$toolbar-border-color: transparent !default;
+$toolbar-spacer-width: 4px !default;
+$toolbar-separator-color: darken($toolbar-background-color, 7%) !default;
+$toolbar-separator-highlight-color: lighten($toolbar-background-color, 7%) !default;
+
+//text
+$toolbar-text-font-family: $ui-font-family;
+$toolbar-text-font-size: $toolbar-font-size !default; //11px
+$toolbar-text-font-weight: normal !default;
+$toolbar-text-color: color-by-background($toolbar-background-color, 50%) !default;
+$toolbar-text-padding: 3px 4px 0 4px !default;
+$toolbar-text-line-height: 16px !default;

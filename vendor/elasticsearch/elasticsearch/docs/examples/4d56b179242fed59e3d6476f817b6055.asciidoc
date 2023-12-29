@@ -1,0 +1,23 @@
+// indices/create-index.asciidoc:143
+
+[source, php]
+----
+$params = [
+    'index' => 'test',
+    'body' => [
+        'aliases' => [
+            'alias_1' => [
+            ],
+            'alias_2' => [
+                'filter' => [
+                    'term' => [
+                        'user' => 'kimchy',
+                    ],
+                ],
+                'routing' => 'kimchy',
+            ],
+        ],
+    ],
+];
+$response = $client->indices()->create($params);
+----

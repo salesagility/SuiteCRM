@@ -1,0 +1,92 @@
+[[installation]]
+== Installation
+
+Elasticsearch-php only has three requirements that you need to pay attention:
+
+* PHP 7.1.0 or higher
+* http://getcomposer.org[Composer]
+* http://php.net/manual/en/book.curl.php[ext-curl]: the Libcurl extension for 
+  PHP (see note below)
+* Native JSON Extensions (`ext-json`) 1.3.7 or higher
+
+The rest of the dependencies are automatically downloaded and installed by 
+Composer. Composer is a package and dependency manager for PHP and makes it easy 
+to install Elasticsearch-php.
+
+[NOTE]
+.Libcurl can be replaced
+====
+The default HTTP handlers that ship with Elasticsearch-php require the PHP 
+libcurl extension, but it is not technically required for the client to operate. 
+If you have a host that does not have libcurl installed, you can use an 
+alternate HTTP handler based on PHP streams. Performance _will_ suffer, as the 
+libcurl extension is much faster.
+====
+
+[discrete]
+=== Version Matrix
+
+You need to match your version of {es} to the appropriate version of this 
+library.
+
+The master branch will always track {es} master, but it is not recommended to 
+use `dev-master` in your production code.
+
+[width="40%",options="header",frame="topbot"]
+|============================
+|Elasticsearch Version | Elasticsearch-PHP Branch
+| >= 7.0, < 8.0        | `7.0`
+| >= 6.6, <= 6.7       | `6.7.x`
+| >= 6.0, <= 6.5       | `6.5.c`
+| >= 5.0, < 6.0        | `5.0`
+| >= 1.0, < 5.0        | `1.0`, `2.0`
+| <= 0.90.*            | `0.4`
+|============================
+
+
+[discrete]
+=== Composer Installation
+
+* Include elasticsearch-php in your `composer.json` file.  If you are starting a 
+  new project, paste the following JSON snippet into a new file called 
+  `composer.json`. If you have an existing project, include this requirement 
+  under the rest of requirements already present:
++
+[source,json]
+--------------------------
+{
+    "require": {
+        "elasticsearch/elasticsearch": "~7.0"
+    }
+}
+--------------------------
+
+* Install the client with Composer.  The first command downloads the 
+  `composer.phar` PHP package, the second command invokes the installation. 
+  Composer automatically downloads any dependencies, store them in a /vendor/ 
+  directory and build an autoloader:
++
+[source,shell]
+--------------------------
+curl -s http://getcomposer.org/installer | php
+php composer.phar install
+--------------------------
++
+More information about 
+http://getcomposer.org/[Composer can be found at their website].
+
+* Include the generated autoloader in your main project. If your project is 
+  already based on Composer, the autoloader is likely already included somewhere 
+  and you don't need to add it again. Finally, instantiate a new client:
++
+[source,php]
+--------------------------
+require 'vendor/autoload.php';
+
+$client = Elasticsearch\ClientBuilder::create()->build();
+--------------------------
++
+Client instantiation is performed with a static helper function `create()`. This 
+creates a ClientBuilder object, which helps you to set custom configurations. 
+When you are done configuring, call the `build()` method to generate a `Client` 
+object. For further info, consult the <<configuration>> section.

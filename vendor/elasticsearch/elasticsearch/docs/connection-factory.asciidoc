@@ -1,0 +1,57 @@
+[[connection-factory]]
+=== Setting a custom ConnectionFactory
+
+The ConnectionFactory instantiates new Connection objects when requested by the 
+<<connection_pool>>. A single Connection represents a single node. Since the 
+client hands actual networking work over to RingPHP, the Connection's main job 
+is book-keeping: Is this node alive? Did it fail a ping request? What is the 
+host and port?
+
+There is little reason to provide your own ConnectionFactory, but if you need to 
+do so, you need to supply an intact ConnectionFactory object to the 
+`setConnectionFactory()` method. The object should implement the 
+`ConnectionFactoryInterface` interface.
+
+[source,php]
+----
+
+class MyConnectionFactory implements ConnectionFactoryInterface
+{
+
+    public function __construct($handler, array $connectionParams,
+                                SerializerInterface $serializer,
+                                LoggerInterface $logger,
+                                LoggerInterface $tracer)
+    {
+       // Code here
+    }
+
+
+    /**
+     * @param $hostDetails
+     *
+     * @return ConnectionInterface
+     */
+    public function create($hostDetails)
+    {
+        // Code here...must return a Connection object
+    }
+}
+
+
+$connectionFactory = new MyConnectionFactory(
+    $handler,
+    $connectionParams,
+    $serializer,
+    $logger,
+    $tracer
+);
+
+$client = ClientBuilder::create()
+            ->setConnectionFactory($connectionFactory);
+            ->build();
+----
+
+As you can see, if you decide to inject your own ConnectionFactory, you take 
+over the responsibility of wiring it correctly. The ConnectionFactory requires a 
+working HTTP handler, serializer, logger and tracer.

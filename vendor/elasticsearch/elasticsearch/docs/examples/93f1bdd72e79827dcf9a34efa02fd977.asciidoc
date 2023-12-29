@@ -1,0 +1,20 @@
+// aggregations/bucket/terms-aggregation.asciidoc:358
+
+[source, php]
+----
+$params = [
+    'body' => [
+        'aggs' => [
+            'genres' => [
+                'terms' => [
+                    'field' => 'genre',
+                    'order' => [
+                        '_key' => 'asc',
+                    ],
+                ],
+            ],
+        ],
+    ],
+];
+$response = $client->search($params);
+----

@@ -1,0 +1,255 @@
+[[connection_pool]]
+=== Connection Pool
+
+The connection pool is an object inside the client that is responsible for 
+maintaining the current list of nodes. Theoretically, nodes are either dead or 
+alive. However, in the real world, things are never so clear. Nodes are 
+sometimes in a gray-zone of _"probably dead but not confirmed"_, _"timed-out but 
+unclear why"_ or _"recently dead but now alive"_. The job of the connection pool 
+is to manage this set of unruly connections and try to provide the best behavior 
+to the client.
+
+If a connection pool is unable to find an alive node to query against, it 
+returns a `NoNodesAvailableException`. This is distinct from an exception due to 
+maximum retries. For example, your cluster may have 10 nodes. You execute a 
+request and 9 out of the 10 nodes fail due to connection timeouts. The tenth 
+node succeeds and the query executes. The first nine nodes are marked dead 
+(depending on the connection pool being used) and their "dead" timers begin 
+ticking.
+
+When the next request is sent to the client, nodes 1-9 are still considered 
+"dead", so they are skipped. The request is sent to the only known alive node 
+(#10), if this node fails, a `NoNodesAvailableException` is returned. You 
+will note this much less than the `retries` value, because `retries` only 
+applies to retries against alive nodes. In this case, only one node is known to 
+be alive, so `NoNodesAvailableException` is returned.
+
+There are several connection pool implementations that you can choose from:
+
+
+[discrete]
+==== staticNoPingConnectionPool (default)
+
+This connection pool maintains a static list of hosts which are assumed to be 
+alive when the client initializes. If a node fails a request, it is marked as 
+`dead` for 60 seconds and the next node is tried. After 60 seconds, the node is 
+revived and put back into rotation. Each additional failed request causes the 
+dead timeout to increase exponentially.
+
+A successful request resets the "failed ping timeout" counter.
+
+If you wish to explicitly set the `StaticNoPingConnectionPool` implementation, 
+you may do so with the `setConnectionPool()` method of the ClientBuilder object:
+
+[source,php]
+----
+$client = ClientBuilder::create()
+            ->setConnectionPool('\Elasticsearch\ConnectionPool\StaticNoPingConnectionPool', [])
+            ->build();
+----
+
+Note that the implementation is specified via a namespace path to the class.
+
+
+[discrete]
+==== staticConnectionPool
+
+Identical to the `StaticNoPingConnectionPool`, except it pings nodes before they 
+are used to determine if they are alive. This may be useful for long-running 
+scripts but tends to be additional overhead that is unnecessary for average PHP 
+scripts.
+
+To use the `StaticConnectionPool`:
+
+[source,php]
+----
+$client = ClientBuilder::create()
+            ->setConnectionPool('\Elasticsearch\ConnectionPool\StaticConnectionPool', [])
+            ->build();
+----
+
+Note that the implementation is specified via a namespace path to the class.
+
+
+[discrete]
+==== simpleConnectionPool
+
+The `SimpleConnectionPool` returns the next node as specified by the selector; 
+it does not track node conditions. It returns nodes either they are dead or 
+alive. It is a simple pool of static hosts.
+
+The `SimpleConnectionPool` is recommended where the Elasticsearch deployment
+is located behnd a (reverse-) proxy or load balancer, where the individual
+Elasticsearch nodes are not visible to the client. This should be used when
+running Elasticsearch deployments on Cloud.
+
+To use the `SimpleConnectionPool`:
+
+[source,php]
+----
+$client = ClientBuilder::create()
+            ->setConnectionPool('\Elasticsearch\ConnectionPool\SimpleConnectionPool', [])
+            ->build();
+----
+
+Note that the implementation is specified via a namespace path to the class.
+
+
+[discrete]
+==== sniffingConnectionPool
+
+Unlike the two previous static connection pools, this one is dynamic. The user 
+provides a seed list of hosts, which the client uses to "sniff" and discover the 
+rest of the cluster by using the Cluster State API. As new nodes are added or 
+removed from the cluster, the client updates its pool of active connections.
+
+To use the `SniffingConnectionPool`:
+
+[source,php]
+----
+$client = ClientBuilder::create()
+            ->setConnectionPool('\Elasticsearch\ConnectionPool\SniffingConnectionPool', [])
+            ->build();
+----
+
+Note that the implementation is specified via a namespace path to the class.
+
+
+[discrete]
+==== Custom Connection Pool
+
+If you wish to implement your own custom Connection Pool, your class must 
+implement `ConnectionPoolInterface`:
+
+[source,php]
+----
+class MyCustomConnectionPool implements ConnectionPoolInterface
+{
+
+    /**
+     * @param bool $force
+     *
+     * @return ConnectionInterface
+     */
+    public function nextConnection($force = false)
+    {
+        // code here
+    }
+
+    /**
+     * @return void
+     */
+    public function scheduleCheck()
+    {
+        // code here
+    }
+}
+----
+
+
+You can then instantiate an instance of your ConnectionPool and inject it into 
+the ClientBuilder:
+
+[source,php]
+----
+$myConnectionPool = new MyCustomConnectionPool();
+
+$client = ClientBuilder::create()
+            ->setConnectionPool($myConnectionPool, [])
+            ->build();
+----
+
+If your connection pool only makes minor changes, you may consider extending 
+`AbstractConnectionPool` which provides some helper concrete methods. If you 
+choose to go down this route, you need to make sure your ConnectionPool 
+implementation has a compatible constructor (since it is not defined in the 
+interface):
+
+[source,php]
+----
+class MyCustomConnectionPool extends AbstractConnectionPool implements ConnectionPoolInterface
+{
+
+    public function __construct($connections, SelectorInterface $selector, ConnectionFactory $factory, $connectionPoolParams)
+    {
+        parent::__construct($connections, $selector, $factory, $connectionPoolParams);
+    }
+
+    /**
+     * @param bool $force
+     *
+     * @return ConnectionInterface
+     */
+    public function nextConnection($force = false)
+    {
+        // code here
+    }
+
+    /**
+     * @return void
+     */
+    public function scheduleCheck()
+    {
+        // code here
+    }
+}
+----
+
+
+If your constructor matches AbstractConnectionPool, you may use either object 
+injection or namespace instantiation:
+
+[source,php]
+----
+$myConnectionPool = new MyCustomConnectionPool();
+
+$client = ClientBuilder::create()
+            ->setConnectionPool($myConnectionPool, [])                                      // object injection
+            ->setConnectionPool('/MyProject/ConnectionPools/MyCustomConnectionPool', [])    // or namespace
+            ->build();
+----
+
+
+[discrete]
+==== Which connection pool to choose? PHP and connection pooling
+
+At first glance, the `sniffingConnectionPool` implementation seems superior. For 
+many languages, it is. In PHP, the conversation is a bit more nuanced.
+
+Because PHP is a share-nothing architecture, there is no way to maintain a 
+connection pool across script instances. This means that every script is 
+responsible for creating, maintaining, and destroying connections everytime the 
+script is re-run.
+
+Sniffing is a relatively lightweight operation (one API call to 
+`/_cluster/state`, followed by pings to each node) but it may be a 
+non-negligible overhead for certain PHP applications. The average PHP script 
+likely loads the client, executes a few queries and then closes. Imagine that 
+this script being called 1000 times per second: the sniffing connection pool 
+performS the sniffing and pinging process 1000 times per second. The sniffing 
+process eventually adds a large amount of overhead.
+
+In reality, if your script only executes a few queries, the sniffing concept is 
+_too_ robust. It tends to be more useful in long-lived processes which 
+potentially "out-live" a static list.
+
+For this reason the default connection pool is currently the 
+`staticNoPingConnectionPool`. You can, of course, change this default - but we 
+strongly recommend you to perform load test and to verify that the change does 
+not negatively impact the performance.
+
+
+[discrete]
+==== Quick setup
+
+As you see above, there are several connection pool implementations available, 
+and each has slightly different behavior (pinging vs no pinging, and so on). 
+Connection pools are configured via the `setConnectionPool()` method:
+
+[source,php]
+----
+$connectionPool = '\Elasticsearch\ConnectionPool\StaticNoPingConnectionPool';
+$client = ClientBuilder::create()
+            ->setConnectionPool($connectionPool)
+            ->build();
+----

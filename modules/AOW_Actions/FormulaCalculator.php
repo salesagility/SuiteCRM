@@ -477,6 +477,7 @@ class FormulaCalculator
         return $text;
     }
 
+
     /**
      * @param $obj
      */
@@ -849,7 +850,7 @@ class FormulaCalculator
     {
         return sprintf("%0" . $digits . "d", $value);
     }
-
+    
     /**
      * Outputs date and datetime values in DB format
      *
@@ -857,7 +858,7 @@ class FormulaCalculator
      * @return String
      */
     private function getDBFormat($date) {
-        // 1) If WF is thrown by the after_save LH, the bean is already loaded and the date/datetime value 
+        // 1) If WF is thrown by the after_save LH, the bean is already loaded and the date/datetime value
         // is properly formatted, so will only change the timezone value from UTC to user's one.
         // 2) If WF is run by the scheduler task, will change date/datetime value to DB format.
         $formatDate = 'Y-m-d';
