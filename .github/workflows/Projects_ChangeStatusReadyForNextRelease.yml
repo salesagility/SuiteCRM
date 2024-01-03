@@ -1,4 +1,4 @@
-name: Projects Change Status Ready for Next Release
+name: Projects - Change Status Ready for Next Release
 on:
   pull_request_target:
       types:

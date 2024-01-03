@@ -1,9 +1,5 @@
-name: Develop - Create Instance on Opened or Reopened PR
+name: Develop - Reinstall Instance on User Action
 on:
-    pull_request:
-        types: [opened, reopened]
-        branches: # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#onpushpull_requestbranchestags
-            - '**' # matches every branch
     workflow_dispatch:
 env:
     DEVELOP_HOST: ${{ secrets.DEVELOP_HOST}}
@@ -12,8 +8,8 @@ env:
     MAIN_HOST: ${{ secrets.MAIN_HOST}}
     MAIN_SSH_USERNAME: ${{ secrets.MAIN_SSH_USERNAME}}
 jobs:
-    create_instance:
-        name: Create Instance on Opened or Reopened PR
+    reinstall_instance:
+        name: Reinstall Instance on User Action
         runs-on: ubuntu-latest
         steps:
             - name: Extract branch name
@@ -27,24 +23,10 @@ jobs:
               run: ssh-keyscan -H $DEVELOP_HOST  >> ~/.ssh/known_hosts
             - name: Adding Known Hosts Main
               run: ssh-keyscan -H $MAIN_HOST  >> ~/.ssh/known_hosts
-            - name: Get Available database name
-              run: 
-                DATABASE_NAME=$(ssh $DEVELOP_SSH_USERNAME@$DEVELOP_HOST "mysql -h 127.0.0.1 -u '${{ secrets.DEVELOP_DB_USERNAME }}' --password='${{ secrets.DEVELOP_DB_PASSWORD }}' -N -e 'select schema_name
-                from information_schema.schemata
-                where
-                  SCHEMA_NAME not in (
-                  SELECT
-                    TABLE_SCHEMA
-                  from information_schema.tables
-                  where table_name like \"stic%\"
-                  group by TABLE_SCHEMA
-                  )
-                and SCHEMA_NAME like \"mydevelop%\"
-                order by SCHEMA_NAME LIMIT 1'") &&
-                echo $DATABASE_NAME &&
-                (echo "DATABASE_NAME=$DATABASE_NAME" >> $GITHUB_ENV)
             - name: Extract branch clean
               run: echo 'BRANCH_CLEAN='`echo ${{ env.BRANCH }} | sed -e 's/[^a-zA-Z0-9_/]//g'` >> $GITHUB_ENV
+            - name: Get Develop instance database name
+              run: echo 'DATABASE_NAME='`ssh $DEVELOP_SSH_USERNAME@$DEVELOP_HOST grep "db_name" /web/${{ env.BRANCH_CLEAN }}/config_override.php | sed "s/.*=.'//g" | sed "s/';.*//g"` >> $GITHUB_ENV
             - name: Set current date as env variable
               run: echo 'NOW='$(date +'%Y-%m-%d %H:%M:%S') >> $GITHUB_ENV
             - name: echo environment variables

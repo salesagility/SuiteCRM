@@ -23,7 +23,7 @@ jobs:
             - name: Adding Known Hosts Develop
               run: ssh-keyscan -H $DEVELOP_HOST  >> ~/.ssh/known_hosts
             - name: Extract branch name
-              run: echo 'BRANCH='${{ github.head_ref }} >> $GITHUB_ENV
+              run: echo ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}} && echo 'BRANCH='${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}} >> $GITHUB_ENV
             - name: Extract branch clean
               run: echo 'BRANCH_CLEAN='`echo ${{ env.BRANCH }} | sed -e 's/[^a-zA-Z0-9_/]//g'` >> $GITHUB_ENV
             - name: Get Develop instance database name

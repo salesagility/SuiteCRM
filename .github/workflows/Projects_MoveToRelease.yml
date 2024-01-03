@@ -1,5 +1,5 @@
 
-name: Projects Move to release
+name: Projects - Move to release
 on:
   release:
       types: [published]
