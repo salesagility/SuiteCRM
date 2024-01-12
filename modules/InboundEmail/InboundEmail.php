@@ -6339,18 +6339,16 @@ class InboundEmail extends SugarBean
      */
     public function getConnectString($service = '', $mbox = '', $includeMbox = true)
     {
-        $service = empty($service) ? $this->getServiceString() : $service;
-        $mbox = empty($mbox) ? $this->mailbox : $mbox;
-
-        $protocol = $this->protocol ?? 'imap';
-        $port = $this->port ?? '143';
-
-        $connectString = '{' . $this->server_url . ':' . $port . '/service=' . $protocol . $service . '}';
-
         if (!empty($this->connection_string)){
             $connectString = '{' . $this->connection_string . '}';
+        } else {
+            $service = empty($service) ? $this->getServiceString() : $service;
+            $protocol = $this->protocol ?? 'imap';
+            $port = $this->port ?? '143';
+            $connectString = '{' . $this->server_url . ':' . $port . '/service=' . $protocol . $service . '}';
         }
-
+        
+        $mbox = empty($mbox) ? $this->mailbox : $mbox;
         $connectString .= ($includeMbox) ? $mbox : "";
 
         return $connectString;
