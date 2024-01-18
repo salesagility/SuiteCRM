@@ -60,6 +60,21 @@ $searchFields[$module_name] = array(
         'enable_range_search' => true,
         'is_date_field' => true
     ),
+    'range_intake_date' => array(
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ),
+    'start_range_intake_date' => array(
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ),
+    'end_range_intake_date' => array(
+        'query_type' => 'default',
+        'enable_range_search' => true,
+        'is_date_field' => true,
+    ),
     //Range Search Support
     'favorites_only' => array(
         'query_type' => 'format',

@@ -46,7 +46,8 @@ $dictionary['stic_Prescription'] = array(
     'unified_search' => false,
     'merge_filter' => 'disabled',
     'size' => '20',
-    'enable_range_search' => false,
+    'options' => 'date_range_search_dom',
+    'enable_range_search' => 1,
   ),
   'end_date' => 
   array (
@@ -67,7 +68,8 @@ $dictionary['stic_Prescription'] = array(
     'unified_search' => false,
     'merge_filter' => 'disabled',
     'size' => '20',
-    'enable_range_search' => false,
+    'options' => 'date_range_search_dom',
+    'enable_range_search' => 1,
   ),
   'active' => 
   array (
