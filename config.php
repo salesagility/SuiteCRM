@@ -59,6 +59,10 @@ $sugar_config = array(
         // STIC#1086 - Do not apply Ajax in this module, the same as in Import module.
         2 => 'stic_Import_Validation',
         // END STIC
+        // STIC - JCH - 20240118 - Avoid Ajax in module Rules
+        // https://github.com/SinergiaTIC/SinergiaCRM/pull/66
+        3 => 'stic_Security_Groups_Rules',
+        // END STIC
     ),
     'admin_access_control' => false,
     'admin_export_only' => false,
