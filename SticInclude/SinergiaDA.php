@@ -11,12 +11,6 @@ class ExternalReporting
     // It is important during the development phase to not use previously used versions in order to avoid breaking existing reports.
     private $versionPrefix = 'sda';
 
-    // Sets the field visibility configuration:
-    // true: Includes only the available fields in the detail views for each module.
-    // false: Includes all the fields of the modules. Sets the sda_hidden=1 property in sda_def_columns
-    //        to initially hide the fields in the detail view and prevent user management.
-    private $showOnlyFieldsInDetailView = false;
-
     // Fields that we always exclude in our operations
     private $evenExcludedFields = ['template_ddown_c', 'currency_name', 'assigned_user_id', 'parent_name', 'deleted', 'created_by', 'created_by_name', 'created_by_link', 'modified_user_link', 'modified_by_name', 'jjwg_maps_address_c', 'jjwg_maps_geocode_status_c', 'jjwg_maps_lat_c', 'jjwg_maps_lng_c'];
 
@@ -297,20 +291,11 @@ class ExternalReporting
                     continue;
                 }
 
-                if ($this->showOnlyFieldsInDetailView) {
-                    if (!in_array($fieldV['name'], $detailViewVisibleFields)
-                        // If the field is not in the detailview we exclude it, except the ID & name & full_name fields, which must always be included. Array EventincludedModules modules are always included too.
-                        && !in_array($fieldV['type'], ['id', 'fullname', 'name'])
-                    ) {
-                        continue;
-                    }
+                // If field is in detailview, set as visible, hidden if not.
+                if (in_array($fieldV['name'], $detailViewVisibleFields) || $fieldV['name'] == 'id') {
+                    $sdaHiddenField = false;
                 } else {
-                    if (in_array($fieldV['name'], $detailViewVisibleFields) || $fieldV['name'] == 'id') {
-                        $sdaHiddenField = false;
-                    } else {
-                        $sdaHiddenField = true;
-                    }
-
+                    $sdaHiddenField = true;
                 }
 
                 $fieldV['label'] = $this->sanitizeText($modStrings[$fieldV['vname']]);
