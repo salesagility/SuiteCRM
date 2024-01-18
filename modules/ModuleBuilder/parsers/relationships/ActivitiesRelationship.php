@@ -261,7 +261,11 @@ class ActivitiesRelationship extends OneToManyRelationship
             'order' => 20 ,
             'sort_order' => 'desc' ,
             'sort_by' => 'date_modified' ,
-            'title_key' => 'LBL_HISTORY' ,
+            // STIC-Custom 20240116 MHP - Assign the correct label to the titel_key field
+            // https://github.com/SinergiaTIC/SinergiaCRM/pull/64
+            // 'title_key' => 'LBL_HISTORY' ,
+            'title_key' => 'LBL_HISTORY_SUBPANEL_TITLE' ,
+            // END STIC-Custom
             'type' => 'collection' ,
             'subpanel_name' => 'history' , //this values is not associated with a physical file.
             'module' => 'History' ,
