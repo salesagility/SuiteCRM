@@ -180,7 +180,11 @@ if (!$test) {
             ON plp.prospect_list_id = plc.prospect_list_id 
             WHERE plp.deleted = 0 AND plc.deleted = 0
             AND pl.deleted = 0 AND pl.list_type = 'exempt'
-            AND plc.campaign_id = '{$campaign->id}') em
+            AND plc.campaign_id = '{$campaign->id}'
+            -- STIC-Custom 12/01/2024 MHP - Do not remove messages from the queue that do not belong to the campaign with exempt LPO
+            -- https://github.com/SinergiaTIC/SinergiaCRM/pull/61
+            AND emailman.campaign_id = '{$campaign->id}') em
+            -- END STIC-Custom
     )";
     $campaign->db->query($delete_query);
 }
