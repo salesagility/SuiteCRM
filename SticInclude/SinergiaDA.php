@@ -1531,7 +1531,7 @@ class ExternalReporting
                  '{$listElement['code']}' as 'code'
                  FROM
                     {$multiField['source_table']}
-                 WHERE {$multiField['source_column']} LIKE '%^{$listElement['code']}^%'
+                 WHERE ({$multiField['source_column']} LIKE '%^{$listElement['code']}^%' OR {$multiField['source_column']} = '{$listElement['code']}') 
                  ";
             }
 
