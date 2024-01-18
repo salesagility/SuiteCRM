@@ -103,15 +103,36 @@ class actionComputeField extends actionBase
 
             $relateFields = $this->getAllRelatedFields($bean);
 
-            for ($i = 0; $i < count($formulas); $i++) {
+            // STIC-Custom 20240110 - ART - Error in formula to calculate month
+            // https://github.com/SinergiaTIC/SinergiaCRM/pull/49
+            // for ($i = 0; $i < count($formulas); $i++) {
+            //     if (array_key_exists($formulas[$i], $relateFields) && isset($relateFields[$formulas[$i]]['id_name'])) {
+            //         $calcValue = $calculator->calculateFormula($formulaContents[$i]);
+            //         $bean->{$relateFields[$formulas[$i]]['id_name']} = ( is_numeric($calcValue) ? (float)$calcValue : $calcValue );
+            //     } else {
+            //         $calcValue = $calculator->calculateFormula($formulaContents[$i]);
+            //         $bean->{$formulas[$i]} = ( is_numeric($calcValue) ? (float)$calcValue : $calcValue );
+            //     }
+            // }
+
+            $formulasCount = is_countable($formulas) ? count($formulas) : 0;
+
+            for ($i = 0; $i < $formulasCount; $i++) {
                 if (array_key_exists($formulas[$i], $relateFields) && isset($relateFields[$formulas[$i]]['id_name'])) {
-                    $calcValue = $calculator->calculateFormula($formulaContents[$i]);
-                    $bean->{$relateFields[$formulas[$i]]['id_name']} = ( is_numeric($calcValue) ? (float)$calcValue : $calcValue );
+                    $bean->{$relateFields[$formulas[$i]]['id_name']} = $calculator->calculateFormula($formulaContents[$i]);
                 } else {
-                    $calcValue = $calculator->calculateFormula($formulaContents[$i]);
-                    $bean->{$formulas[$i]} = ( is_numeric($calcValue) ? (float)$calcValue : $calcValue );
+                    $value = $calculator->calculateFormula($formulaContents[$i]);
+                    $fieldType = $bean->field_defs[$formulas[$i]]['type'] ?? 'string';
+                    if (in_array($fieldType, ['float', 'decimal', 'currency', 'double'])) {
+                        $value = (float) $value;
+                    }
+                    elseif (in_array($fieldType, ['int', 'uint', 'ulong', 'long', 'short', 'tinyint'])) {
+                        $value = (int) $value;
+                    }
+                    $bean->{$formulas[$i]} = $value;
                 }
             }
+            // End STIC-Custom 20240118
 
             if ($in_save) {
                 global $current_user;
