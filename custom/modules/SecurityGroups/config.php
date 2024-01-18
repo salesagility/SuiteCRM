@@ -132,6 +132,15 @@ if (isset($sugar_config['securitysuite_inherit_assigned']) && $sugar_config['sec
 }
 $xtpl->assign('securitysuite_inherit_assigned', $securitysuite_inherit_assigned);
 
+// STIC CUSTOM - JCH - 20240104 - Set config for activate/deactivate custom modules inherit
+// https://github.com/SinergiaTIC/SinergiaCRM/pull/3
+$stic_security_groups_rules_enabled = '';
+if (isset($sugar_config['stic_security_groups_rules_enabled']) && $sugar_config['stic_security_groups_rules_enabled'] == true) {
+    $stic_security_groups_rules_enabled = 'CHECKED';
+}
+$xtpl->assign('stic_security_groups_rules_enabled', $stic_security_groups_rules_enabled);
+// END STIC CUSTOM
+
 
 // securitysuite_inbound_email
 $securitysuite_inbound_email = '';

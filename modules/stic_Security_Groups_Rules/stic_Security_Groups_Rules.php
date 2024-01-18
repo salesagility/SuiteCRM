@@ -20,19 +20,44 @@
  *
  * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
  */
-$mod_strings['LBL_ASSIGNED_TO_ID'] = 'Assigned to (ID)';
-$mod_strings['LBL_ASSIGNED_TO_NAME'] = 'Assigned to';
-$mod_strings['LBL_ASSIGNED_TO'] = 'Assigned to';
-$mod_strings['LBL_LIST_ASSIGNED_TO_NAME'] = 'Assigned to';
-$mod_strings['LBL_LIST_ASSIGNED_USER'] = 'Assigned to';
-$mod_strings['LBL_CREATED'] = 'Created By';
-$mod_strings['LBL_CREATED_USER'] = 'Created By';
-$mod_strings['LBL_CREATED_ID'] = 'Created By (ID)';
-$mod_strings['LBL_MODIFIED'] = 'Modified By';
-$mod_strings['LBL_MODIFIED_NAME'] = 'Modified By';
-$mod_strings['LBL_MODIFIED_USER'] = 'Modified By';
-$mod_strings['LBL_MODIFIED_ID'] = 'Modified By (ID)';
-$mod_strings['LBL_STIC_PANEL_RECORD_DETAILS'] = 'Record details';
-$mod_strings['LBL_STIC_GENERAL_INFORMATION'] = 'Overview';
-$mod_strings['LBL_STIC_SECURITY_GROUPS_RULES_ENABLED'] = 'Enable module rules';
-$mod_strings['LBL_STIC_SECURITY_GROUPS_RULES_ENABLED_INFO'] = 'The rules defined for each module will take precedence over the general rules defined here.';
+
+class stic_Security_Groups_Rules extends Basic
+{
+    public $new_schema = true;
+    public $module_dir = 'stic_Security_Groups_Rules';
+    public $object_name = 'stic_Security_Groups_Rules';
+    public $table_name = 'stic_security_groups_rules';
+    public $importable = false;
+
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $assigned_user_link;
+    public $SecurityGroups;
+    public $modulo;
+    public $rules;
+
+    public function bean_implements($interface)
+    {
+        switch ($interface) {
+            case 'ACL':
+                return true;
+        }
+
+        return false;
+    }
+
+   
+
+}

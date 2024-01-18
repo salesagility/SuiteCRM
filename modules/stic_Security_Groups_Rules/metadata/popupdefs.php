@@ -20,19 +20,21 @@
  *
  * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
  */
-$mod_strings['LBL_ASSIGNED_TO_ID'] = 'Assigned to (ID)';
-$mod_strings['LBL_ASSIGNED_TO_NAME'] = 'Assigned to';
-$mod_strings['LBL_ASSIGNED_TO'] = 'Assigned to';
-$mod_strings['LBL_LIST_ASSIGNED_TO_NAME'] = 'Assigned to';
-$mod_strings['LBL_LIST_ASSIGNED_USER'] = 'Assigned to';
-$mod_strings['LBL_CREATED'] = 'Created By';
-$mod_strings['LBL_CREATED_USER'] = 'Created By';
-$mod_strings['LBL_CREATED_ID'] = 'Created By (ID)';
-$mod_strings['LBL_MODIFIED'] = 'Modified By';
-$mod_strings['LBL_MODIFIED_NAME'] = 'Modified By';
-$mod_strings['LBL_MODIFIED_USER'] = 'Modified By';
-$mod_strings['LBL_MODIFIED_ID'] = 'Modified By (ID)';
-$mod_strings['LBL_STIC_PANEL_RECORD_DETAILS'] = 'Record details';
-$mod_strings['LBL_STIC_GENERAL_INFORMATION'] = 'Overview';
-$mod_strings['LBL_STIC_SECURITY_GROUPS_RULES_ENABLED'] = 'Enable module rules';
-$mod_strings['LBL_STIC_SECURITY_GROUPS_RULES_ENABLED_INFO'] = 'The rules defined for each module will take precedence over the general rules defined here.';
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
+$module_name = 'stic_Security_Groups_Rules';
+$object_name = 'stic_Security_Groups_Rules';
+$_module_name = 'stic_security_groups_rules';
+$popupMeta = array(
+    'moduleMain' => $module_name,
+    'varName' => $object_name,
+    'orderBy' => $_module_name . '.name',
+    'whereClauses' => array(
+        'name' => $_module_name . '.name',
+    ),
+    'searchInputs' => array($_module_name . '_number', 'name', 'priority', 'status'),
+
+);

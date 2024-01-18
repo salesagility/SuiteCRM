@@ -77,6 +77,12 @@ if (!empty($_REQUEST['remove_default_id'])) {
     $cfg->config['securitysuite_inherit_assigned'] = ($_REQUEST['securitysuite_inherit_assigned'] == 1) ? true : false;
     // save securitysuite_inbound_email setting
     $cfg->config['securitysuite_inbound_email'] = ($_REQUEST['securitysuite_inbound_email'] == 1) ? true : false;
+    
+    // STIC CUSTOM - JCH - 20240104 - Set config for activate/deactivate custom modules inherit
+    // https://github.com/SinergiaTIC/SinergiaCRM/pull/3
+    // save stic_security_groups_rules_enabled setting
+    $cfg->config['stic_security_groups_rules_enabled'] = ($_REQUEST['stic_security_groups_rules_enabled'] == 1) ? true : false;
+    // END STIC CUSTOM
 
     if (!isset($cfg->config['addAjaxBannedModules'])) {
         $cfg->config['addAjaxBannedModules'] = array();

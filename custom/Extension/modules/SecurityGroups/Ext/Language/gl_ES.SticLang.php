@@ -34,3 +34,5 @@ $mod_strings['LBL_MODIFIED_USER'] = 'Modificado por';
 $mod_strings['LBL_MODIFIED_ID'] = 'Modificado por (ID)';
 $mod_strings['LBL_STIC_PANEL_RECORD_DETAILS'] = 'Detalles do rexistro';
 $mod_strings['LBL_STIC_GENERAL_INFORMATION'] = 'Datos xerais';
+$mod_strings['LBL_STIC_SECURITY_GROUPS_RULES_ENABLED'] = 'Habilitar as regras por módulos';
+$mod_strings['LBL_STIC_SECURITY_GROUPS_RULES_ENABLED_INFO'] = 'Las reglas definidas para cada módulo tendrán preferencia sobre las reglas generales definidas aquí.';

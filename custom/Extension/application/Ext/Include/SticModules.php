@@ -52,6 +52,7 @@ $moduleList[] = 'stic_Resources';
 $moduleList[] = 'stic_Medication_Log';
 $moduleList[] = 'stic_Medication';
 $moduleList[] = 'stic_Prescription';
+$moduleList[] = 'stic_Security_Groups_Rules';
 $moduleList[] = 'stic_Grants';
 $moduleList[] = 'stic_Centers';
 
@@ -87,6 +88,7 @@ $beanList['stic_Resources'] = 'stic_Resources';
 $beanList['stic_Medication_Log'] = 'stic_Medication_Log';
 $beanList['stic_Medication'] = 'stic_Medication';
 $beanList['stic_Prescription'] = 'stic_Prescription';
+$beanList['stic_Security_Groups_Rules'] = 'stic_Security_Groups_Rules';
 $beanList['stic_Grants'] = 'stic_Grants';
 $beanList['stic_Centers'] = 'stic_Centers';
 
@@ -121,9 +123,9 @@ $beanFiles['stic_Resources'] = 'modules/stic_Resources/stic_Resources.php';
 $beanFiles['stic_Medication_Log'] = 'modules/stic_Medication_Log/stic_Medication_Log.php';
 $beanFiles['stic_Medication'] = 'modules/stic_Medication/stic_Medication.php';
 $beanFiles['stic_Prescription'] = 'modules/stic_Prescription/stic_Prescription.php';
+$beanFiles['stic_Security_Groups_Rules'] = 'modules/stic_Security_Groups_Rules/stic_Security_Groups_Rules.php';
 $beanFiles['stic_Grants'] = 'modules/stic_Grants/stic_Grants.php';
 $beanFiles['stic_Centers'] = 'modules/stic_Centers/stic_Centers.php';
-
 
 // Modules in $modInvisList are hidden in the main menu, in reporting and as subpanels
 $modInvisList[] = 'stic_Settings';
@@ -132,6 +134,7 @@ $modInvisList[] = 'stic_Web_Forms';
 $modInvisList[] = 'stic_Incorpora';
 $modInvisList[] = 'stic_Import_Validation';
 $modInvisList[] = 'stic_Validation_Results';
+$modInvisList[] = 'stic_Security_Groups_Rules';
 
 // Modules that have been hidden with $modInvisList, but have to be shown as subpanels
 $modules_exempt_from_availability_check['stic_Validation_Actions'] = 'stic_Validation_Actions';
@@ -143,6 +146,7 @@ $modules_exempt_from_availability_check['stic_Incorpora'] = 'stic_Incorpora';
 // Modules that should be accessed only by administrators through the Admin page
 $adminOnlyList['stic_Settings'] = array('all' => 1);
 $adminOnlyList['stic_Validation_Actions'] = array('all' => 1);
+$adminOnlyList['stic_Security_Groups_Rules'] = array('all' => 1);
 
 // Totally hide FP_Events because it can be confused with stic_Events
 $modInvisList[] = 'FP_events';
