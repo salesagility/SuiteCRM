@@ -38,7 +38,7 @@ INSERT INTO stic_validation_actions (id, name, date_entered, date_modified, modi
 ('d49627f2-3623-44e3-bdb2-d5af0f8c5165', 'Relacións con Persoas - Revisión dos datos principais', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, 'd49627f2-3623-44e3-bdb2-d5af0f8c5165', 0, 75),
 ('b07eefb3-20fb-4993-abea-66ce0aa71649', 'Remesas - Revisión das relacións', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, 'b07eefb3-20fb-4993-abea-66ce0aa71649', 0, 20),
 ('375431dc-a6bb-4c0b-ab4c-af1a06229ee4', 'Remesas - Revisión dos datos principais', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, '375431dc-a6bb-4c0b-ab4c-af1a06229ee4', 0, 25),
-('10fff3d4-5dc5-ef7a-3d7f-636bae661c14', 'Unidades familiares - Cálculo de rexistro activo/inactivo', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, '10fff3d4-5dc5-ef7a-3d7f-636bae661c14', 0, 30);
+('10fff3d4-5dc5-ef7a-3d7f-636bae661c14', 'Unidades familiares - Cálculo de rexistro activo/inactivo', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, '10fff3d4-5dc5-ef7a-3d7f-636bae661c14', 0, 30),
 ('b53a08c5-23dc-96b7-2b31-6582cf7dbebc', 'Ayudas - Cálculo de rexistro activo/inactivo', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, 'b53a08c5-23dc-96b7-2b31-6582cf7dbebc', 0, 30);
 
 INSERT INTO stic_validation_actions_schedulers_c (id, date_modified, deleted, stic_validation_actions_schedulersstic_validation_actions_ida, stic_validation_actions_schedulersschedulers_idb) VALUES
@@ -65,5 +65,5 @@ INSERT INTO stic_validation_actions_schedulers_c (id, date_modified, deleted, st
 ('529f2cd9-b277-11eb-b5ab-0242ac1e0002', NOW(), 0, '8cd4b3ba-b273-11eb-b5ab-0242ac1e0002', 'b05bde8a-1309-4789-993b-bf85be389f07'),
 ('583981c3-b277-11eb-b5ab-0242ac1e0002', NOW(), 0, '23d660da-b276-11eb-b5ab-0242ac1e0002', 'b05bde8a-1309-4789-993b-bf85be389f07'),
 ('6f82c1d8-d481-09b5-9bfb-618955029780', NOW(), 0, 'ac28533e-40ad-11ec-b2f2-0242ac150002', 'b05bde8a-1309-4789-993b-bf85be389f07'),
-('d0d59fed-6419-a8eb-a7e2-636b906e5f36', NOW(), 0, '10fff3d4-5dc5-ef7a-3d7f-636bae661c14', 'b05bde8a-1309-4789-993b-bf85be389f07');
+('d0d59fed-6419-a8eb-a7e2-636b906e5f36', NOW(), 0, '10fff3d4-5dc5-ef7a-3d7f-636bae661c14', 'b05bde8a-1309-4789-993b-bf85be389f07'),
 ('d0d59ped-6cd9-areb-a77a-6361606e5f36', NOW(), 0, 'b53a08c5-23dc-96b7-2b31-6582cf7dbebc', 'b05bde8a-1309-4789-993b-bf85be389f07');
