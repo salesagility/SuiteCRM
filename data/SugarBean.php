@@ -4347,7 +4347,7 @@ class SugarBean
                 $next_offset--;
                 $previous_offset++;
             }
-        } elseif (!isset($rows_found)) {
+        } elseif ($rows_found == 0) {
             $rows_found = $row_offset + count($list);
         }
 

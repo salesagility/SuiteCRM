@@ -382,7 +382,7 @@ class ElasticSearchIndexer extends AbstractIndexer
             return null;
         }
 
-        return $results[$lowercaseModule]['mappings']['_meta'];
+        return $results[$lowercaseModule]['mappings']['_meta'] ?? array();
     }
 
     /**
