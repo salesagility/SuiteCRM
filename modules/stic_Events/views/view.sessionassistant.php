@@ -20,14 +20,28 @@
  *
  * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
  */
+
+require_once 'SticInclude/Views.php';
+
 class stic_EventsViewsessionassistant extends SugarView
 {
+    public function preDisplay() {
+
+        parent::preDisplay();
+
+        SticViews::preDisplay($this);
+
+    }
 
     public function display()
     {
-        global $sugar_config;
+
+        global $sugar_config, $current_language, $app_list_strings, $current_user;
 
         parent::display();
+
+        SticViews::display($this);
+
         $repeat_intervals = array();
         for ($i = 1; $i <= 30; $i++) {
             $repeat_intervals[$i] = $i;
@@ -44,21 +58,26 @@ class stic_EventsViewsessionassistant extends SugarView
             $repeat_minutes[] = str_pad($m, 2, '0', STR_PAD_LEFT);
         } while ($m < (60 - $minutesInterval));
 
-        $fdow = $GLOBALS['current_user']->get_first_day_of_week();
+        $fdow = $current_user->get_first_day_of_week();
         $dow = array();
         for ($i = $fdow; $i < $fdow + 7; $i++) {
             $day_index = $i % 7;
-            $dow[] = array("index" => $day_index, "label" => $GLOBALS['app_list_strings']['dom_cal_day_short'][$day_index + 1]);
+            $dow[] = array("index" => $day_index, "label" => $app_list_strings['dom_cal_day_short'][$day_index + 1]);
         }
 
-        $this->ss->assign('REQUEST', $_REQUEST);
-        $this->ss->assign('APPLIST', $GLOBALS['app_list_strings']);
-        $this->ss->assign("repeat_intervals", $repeat_intervals);
-        $this->ss->assign("repeat_hours", $repeat_hours);
-        $this->ss->assign("repeat_minutes", $repeat_minutes);
-        $this->ss->assign("minutes_interval", $sugar_config['stic_datetime_combo_minute_interval'] ?: 15);
-        $this->ss->assign("dow", $dow);
-        $this->ss->display('modules/stic_Events/tpls/SessionWizard.tpl'); //call tpl file
+        $sessionBean = BeanFactory::getBean('stic_Sessions');
+        // $activityType = $sessionBean->field_name_map['activity_type'];
 
+        $this->ss->assign('ACTIVITY_TYPE', $app_list_strings[$sessionBean->field_name_map['activity_type']['options']]);
+        $this->ss->assign('COLOR', $app_list_strings[$sessionBean->field_name_map['color']['options']]);
+        $this->ss->assign('REQUEST', $_REQUEST);
+        $this->ss->assign('APPLIST', $app_list_strings);
+        $this->ss->assign('repeat_intervals', $repeat_intervals);
+        $this->ss->assign('repeat_hours', $repeat_hours);
+        $this->ss->assign('repeat_minutes', $repeat_minutes);
+        $this->ss->assign('minutes_interval', $sugar_config['stic_datetime_combo_minute_interval'] ?: 15);
+        $this->ss->assign('dow', $dow);
+        $this->ss->assign('MOD_SESSION', return_module_language($current_language, 'stic_Sessions'));
+        $this->ss->display('modules/stic_Events/tpls/SessionWizard.tpl'); //call tpl file
     }
 }

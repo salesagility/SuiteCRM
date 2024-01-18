@@ -24,6 +24,10 @@
 		#cal-repeat-block table {
 			background: transparent;
 		}
+
+		.selectize-control {
+			width: 290px !important;
+		}
 	</style>
 {/literal}
 
@@ -180,7 +184,87 @@
 					{/foreach}
 				</td>
 			</tr>
-
+		</table>
+		<table class="edit view" border="0" cellpadding="0" cellspacing="0" width="50%">
+			<tr id="enable_fields_row">
+				<td width="12.5%" valign="top" scope="row">
+					{$MOD.LBL_SESSION_ENABLE_FIELDS}
+					<span id="session_enable_fields_info" style='position: relative;'
+						class="inline-help glyphicon glyphicon-info-sign"></span>
+					:
+				</td>
+				<td width="37.5%" valign="top">
+					<input type="checkbox" id="enable_fields">
+				</td>
+			</tr>
+			<tr id="session_name_row">
+				<td width="12.5%" valign="top" scope="row">
+					{$MOD_SESSION.LBL_NAME}
+					<span id="session_name_info" style='position: relative;'
+						class="inline-help glyphicon glyphicon-info-sign"></span>
+					:
+				</td>
+				<td width="37.5%" valign="top">
+					<input style="width: 290px" type='text' name='session_name' id='session_name' value='' title=''>
+				</td>
+			</tr>
+			<tr id="activity_type_row">
+				<td width="12.5%" valign="top" scope="row">{$MOD_SESSION.LBL_ACTIVITY_TYPE}:</td>
+				<td width="37.5%" valign="top">
+					<select multiple=true class='sqsEnabled' name='activity_type[]' id='activity_type' value=''
+						title=''>
+						{html_options options=$ACTIVITY_TYPE}
+				</td>
+			</tr>
+			<tr id="color_row">
+				<td width="12.5%" valign="top" scope="row">{$MOD_SESSION.LBL_COLOR}:</td>
+				<td width="37.5%" valign="top">
+					<select class='sqsEnabled' name='color' id='color' value='' title=''>
+						{html_options options=$COLOR}
+				</td>
+			</tr>
+			<tr id="responsible_row">
+				<td width="12.5%" valign="top" scope="row">{$MOD_SESSION.LBL_STIC_RESPONSIBLE}:</td>
+				<td width="37.5%" valign="top">
+					<input style="width: 210px" type='text' class='sqsEnabled' name='responsible_name'
+						id='responsible_name' autocomplete='new-password' value='' title=''>
+					<input type='hidden' name='responsible_id' id='responsible_id' value=''>
+					<span class='id-ff multiple'>
+						<button title='SUGAR.language.get("app_strings", "LBL_SELECT_BUTTON_TITLE")' type='button'
+							class='button' name='btn_1' onclick='openSelectPopup("Contacts", "responsible")'>
+							<span class='suitepicon suitepicon-action-select' /></span>
+					</button>
+					<button type='button' name='btn_1' class='button lastChild'
+						onclick='clearRow(this.form, "responsible");'>
+						<span class='suitepicon suitepicon-action-clear'></span>
+						</span>
+				</td>
+			</tr>
+			<tr id="assigned_user_row">
+				<td width="12.5%" valign="top" scope="row">{$MOD_SESSION.LBL_ASSIGNED_TO}:</td>
+				<td width="37.5%" valign="top">
+					<input style="width: 210px" type='text' class='sqsEnabled yui-ac-input assigned_user_data_name'
+						name='assigned_user_name' id='assigned_user_name' autocomplete='new-password' value='' title=''>
+					<input type='hidden' name='assigned_user_id' id='assigned_user_id' value=''>
+					<span class='id-ff multiple'>
+						<button title='SUGAR.language.get("app_strings", "LBL_SELECT_BUTTON_TITLE")' type='button'
+							class='button' name='btn_1' onclick='openSelectPopup("Users", "assigned_user")'>
+							<span class='suitepicon suitepicon-action-select' /></span>
+					</button>
+					<button type='button' name='btn_1' class='button lastChild'
+						onclick='clearRow(this.form, "assigned_user");'>
+						<span class='suitepicon suitepicon-action-clear'></span>
+						</span>
+				</td>
+			</tr>
+			<tr id="description_row">
+				<td width="12.5%" valign="top" scope="row">
+					{$MOD_SESSION.LBL_DESCRIPTION}:
+				</td>
+				<td width="37.5%" valign="top">
+					<textarea style="width: 290px; resize: 'both';" rows="4" cols="50" name='description' id='description' value='' title=''></textarea>
+				</td>
+			</tr>		
 		</table>
 		<div id="cal-edit-buttons" class="ft">
 			<input title="grabar" class="button" type="submit" name="button" value="{$MOD.LBL_SAVE_BUTTON}">
@@ -193,6 +277,119 @@
 
 <script type="text/javascript">
 	{literal}
+
+		addQtipFunctionality('#session_enable_fields_info', 'stic_Events', 'LBL_SESSION_ENABLE_FIELDS_INFO');
+		addQtipFunctionality('#session_name_info', 'stic_Events', 'LBL_SESSION_NAME_INFO');
+
+
+
+		buildEditableColorFieldSelectize('color');
+		$(document).ready(function() {
+			$('#activity_type').selectize();
+			$("#session_name_row").hide();
+			$("#assigned_user_row").hide();
+			$("#responsible_row").hide();
+			$("#activity_type_row").hide();
+			$("#color_row").hide();
+			$("#description_row").hide();
+			$("#enable_fields").on("change", function() {
+				if ($(this).is(":checked")) {
+					$("#session_name_row").show();
+					$("#assigned_user_row").show();
+					$("#activity_type_row").show();
+					$("#color_row").show();
+					$("#responsible_row").show();
+					$("#description_row").show();
+				} else {
+					$("#session_name_row").hide();
+					$("#assigned_user_row").hide();
+					$("#activity_type_row").hide();
+					$("#color_row").hide();
+					$("#responsible_row").hide();
+					$("#description_row").hide();
+
+					$('#session_name').val('');
+					$('#description').val('');
+					$('#color')[0].selectize.clear();
+					$('#activity_type')[0].selectize.clear();
+					clearRow(this.form, "responsible");
+					clearRow(this.form, "assigned_user")
+				}
+			});
+		});
+		// Filters array
+		relatedFields = {
+			'stic_Sessions_responsible': {
+				elementId: 'responsible',
+				module: 'Contacts',
+			},
+			'stic_Sessions_assigned_user': {
+				elementId: 'assigned_user',
+				module: 'Users',
+			},
+		};
+
+		// The SQS functions add the autocompletion functionality for the related input records
+		if (typeof sqs_objects == 'undefined') {
+			var sqs_objects = new Array;
+		}
+
+		for (var key in relatedFields) {
+			sqs_objects["CalendarRepeatForm_" + relatedFields[key].elementId + "_name"] = {
+				id: relatedFields[key].elementId,
+				form: "CalendarRepeatForm",
+				method: "query",
+				modules: [relatedFields[key].module],
+				group: "or",
+				field_list: ["name", "id"],
+				populate_list: [relatedFields[key].elementId + "_name", relatedFields[key].elementId + "_id"],
+				conditions: [{
+					name: "name",
+					op: "like_custom",
+					begin: "%",
+					end: "%",
+					value: "",
+				}, ],
+				order: "name",
+				limit: "30",
+				no_match_text: "No Match",
+			};
+			QSProcessedFieldsArray["CalendarRepeatForm_" + relatedFields[key].elementId + "_name"] = false;
+		}
+
+		SUGAR.util.doWhen(
+			"typeof(sqs_objects) != 'undefined'",
+			enableQS
+		);
+		// callback function used in the Popup that select events
+		function openSelectPopup(module, field) {
+			var popupRequestData = {
+				call_back_function: "callbackSelectPopup",
+				form_name: "CalendarRepeatForm",
+				field_to_name_array: {
+					id: field + "_id",
+					name: field + "_name",
+				},
+			};
+			open_popup(module, 600, 400, "", true, false, popupRequestData);
+		}
+
+		var fromPopupReturn = false;
+		// callback function used after the Popup that select events
+		function callbackSelectPopup(popupReplyData) {
+			fromPopupReturn = true;
+			var nameToValueArray = popupReplyData.name_to_value_array;
+			// It fills the data of the events
+			Object.keys(nameToValueArray).forEach(function(key, index) {
+				$('#' + key).val(nameToValueArray[key]);
+			}, nameToValueArray);
+		}
+
+		// Clear related field
+		function clearRow(form, field) {
+			SUGAR.clearRelateField(form, field + '_name', field + '_id');
+		}
+
 		function toggle_repeat_type() {
 
 			if (typeof validate != "undefined" && typeof validate['CalendarRepeatForm'] != "undefined")
