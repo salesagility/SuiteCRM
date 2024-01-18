@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 use Elasticsearch\Common\Exceptions\NoNodesAvailableException;
+use Elasticsearch\Common\Exceptions\Missing404Exception;
 use Exception;
 use SuiteCRM\Search\Exceptions\SearchEngineNotFoundException;
 use SuiteCRM\Search\Exceptions\SearchException;
@@ -130,6 +131,9 @@ class SearchThrowableHandler
                 break;
             case SearchException::class:
                 $message = $mod_strings['LBL_ELASTIC_SEARCH_EXCEPTION_SEARCH'];
+                break;
+            case Missing404Exception::class:
+                $message = $mod_strings['LBL_ELASTIC_SEARCH_EXCEPTION_MISSING_INDEX'];
                 break;
             default:
                 $message = $mod_strings['LBL_ELASTIC_SEARCH_EXCEPTION_DEFAULT'];

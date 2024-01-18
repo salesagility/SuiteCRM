@@ -186,6 +186,11 @@ class Controller extends AbstractController
         /** @var Scheduler[]|null $schedulers */
         $schedulers = BeanFactory::getBean('Schedulers')->get_full_list(null, $where);
 
+        foreach ($schedulers as &$scheduler) {
+            $scheduler->check_date_relationships_load();
+        }
+        unset($scheduler);
+
         return $schedulers;
     }
 

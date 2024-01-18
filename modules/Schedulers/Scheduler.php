@@ -988,6 +988,18 @@ class Scheduler extends SugarBean
         $sched16->modified_user_id = '1';
         $sched16->catch_up = '0';
         $sched16->save();
+
+        $sched17 = new Scheduler;
+        $sched17->name = $mod_strings['LBL_OOTB_ELASTIC_INDEX'];
+        $sched17->job = 'function::runElasticSearchIndexerScheduler';
+        $sched17->date_time_start = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
+        $sched17->date_time_end = null;
+        $sched17->job_interval = '30::4::*::*::*';
+        $sched17->status = 'Active';
+        $sched17->created_by = '1';
+        $sched17->modified_user_id = '1';
+        $sched17->catch_up = '0';
+        $sched17->save();
     }
 
     ////	END SCHEDULER HELPER FUNCTIONS
