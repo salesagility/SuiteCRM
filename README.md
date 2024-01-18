@@ -12,7 +12,7 @@
 
 [Website](https://www.sinergiacrm.org) | 
 [Manual de uso](https://wikisuite.sinergiacrm.org/index.php?title=Manual_de_SinergiaCRM) |
-[Manual de instalación](https://github.com/SinergiaTIC/SinergiaCRM-SuiteCRM/wiki)
+[Manual de instalación](https://github.com/SinergiaTIC/SinergiaCRM/wiki)
 
 [Español](#Español) | [Català](#Català) | [English](#English)
 
