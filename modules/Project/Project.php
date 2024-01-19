@@ -331,6 +331,7 @@ class Project extends SugarBean
         global $current_user;
         $db = DBManagerFactory::getInstance();
         $focus = $this;
+        $enddate_array = [];
 
         //--- check if project template is same or changed.
         $new_template_id = property_exists($focus, 'am_projecttemplates_project_1am_projecttemplates_ida') ?
@@ -610,7 +611,6 @@ class Project extends SugarBean
 
                 //----------------------------------
 
-                $enddate_array = [];
 
                 if ($count == '1') {
                     $project_task->date_start = $start;
