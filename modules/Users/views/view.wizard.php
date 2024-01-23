@@ -51,6 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/Users/Forms.php');
 require_once('modules/Configurator/Configurator.php');
 
+#[\AllowDynamicProperties]
 class ViewWizard extends SugarView
 {
     /**

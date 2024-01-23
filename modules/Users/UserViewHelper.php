@@ -46,6 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * This helper handles the rest of the fields for the Users Edit and Detail views.
  * There are a lot of fields on those views that do not map directly to being used on the metadata based UI, so they are handled here.
  */
+#[\AllowDynamicProperties]
 class UserViewHelper
 {
 
@@ -354,7 +355,7 @@ class UserViewHelper
         } else {
             $this->ss->assign("THEMES", get_select_options_with_id(SugarThemeRegistry::availableThemes(), $GLOBALS['sugar_config']['default_theme']));
         }
-        $this->ss->assign("SHOW_THEMES", count(SugarThemeRegistry::availableThemes()) > 1);
+        $this->ss->assign("SHOW_THEMES", (is_countable(SugarThemeRegistry::availableThemes()) ? count(SugarThemeRegistry::availableThemes()) : 0) > 1);
         $this->ss->assign("USER_THEME_COLOR", $this->bean->getPreference('user_theme_color'));
         $this->ss->assign("USER_THEME_FONT", $this->bean->getPreference('user_theme_font'));
         $this->ss->assign("USER_THEME", $user_theme);
@@ -400,6 +401,9 @@ class UserViewHelper
     {
         global $current_user, $locale, $app_strings, $app_list_strings, $sugar_config;
         // This is for the "Advanced" tab, it's not controlled by the metadata UI so we have to do more for it.
+
+        $admin = BeanFactory::newBean('Administration');
+        $admin->retrieveSettings();
 
         $this->ss->assign('EXPORT_DELIMITER', $this->bean->getPreference('export_delimiter'));
 
@@ -562,6 +566,8 @@ class UserViewHelper
     protected function setupAdvancedTabNavSettings()
     {
         global $app_list_strings;
+
+        $ss = null;
 
         // Grouped tabs?
         $useGroupTabs = $this->bean->getPreference('navigation_paradigm');

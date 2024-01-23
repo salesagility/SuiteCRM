@@ -235,8 +235,10 @@
                     </slot>&nbsp;{sugar_help text=$MOD.LBL_RECEIVE_NOTIFICATIONS_TEXT}
                 </td>
                 <td width="33%">
-                    <slot><input name='receive_notifications' class="checkbox" tabindex='12' type="checkbox"
-                                 value="12" {$RECEIVE_NOTIFICATIONS}></slot>
+                    <slot>
+                        <input type='hidden' value='0' name='receive_notifications'>
+                        <input name='receive_notifications' class="checkbox" tabindex='12' type="checkbox" value="1" {$RECEIVE_NOTIFICATIONS}>
+                    </slot>
                 </td>
             </tr>
 
@@ -473,7 +475,7 @@
                     <slot>{$MOD.LBL_GOOGLE_API_TOKEN}:</slot>&nbsp;{sugar_help text=$MOD.LBL_GOOGLE_API_TOKEN_HELP}
                 </td>
                     <td width="20%">
-                    <slot>Current API Token is: <span style="color:{$GOOGLE_API_TOKEN_COLOR}">{$GOOGLE_API_TOKEN}</span> &nbsp;&nbsp;<input style="display:{$GOOGLE_API_TOKEN_ENABLE_NEW}" class="btn btn-primary btn-sm" id="google_gettoken" type="button" value="{$GOOGLE_API_TOKEN_BTN}" onclick="window.open('{$GOOGLE_API_TOKEN_NEW_URL}', '_self')" /></slot>
+                    <slot>Current API Token is: <span style="color:{$GOOGLE_API_TOKEN_COLOR}">{$GOOGLE_API_TOKEN}</span> &nbsp;&nbsp;<input style="display:{$GOOGLE_API_TOKEN_ENABLE_NEW}" class="btn btn-primary btn-sm" id="google_gettoken" type="button" value="{$GOOGLE_API_TOKEN_BTN}" onclick="window.open('{$GOOGLE_API_TOKEN_NEW_URL}', '_blank')" /></slot>
                 </td>
                 <td width="63%">
                     <slot>&nbsp;</slot>

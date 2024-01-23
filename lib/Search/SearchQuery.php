@@ -66,6 +66,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @see    fromArray()
  * @author Vittorio Iocolano
  */
+#[\AllowDynamicProperties]
 class SearchQuery implements JsonSerializable
 {
     public const DEFAULT_SEARCH_SIZE = 10;
@@ -109,7 +110,7 @@ class SearchQuery implements JsonSerializable
      * @param int $size The number of results
      * @param int $from The results offset (for pagination)
      * @param string|null $engine Name of the search engine to use. Use default if `null`
-     * @param array|null $options Array with options (optional)
+     * @param mixed[] $options Array with options (optional)
      *
      * @return SearchQuery a fully built query
      */
@@ -363,7 +364,14 @@ class SearchQuery implements JsonSerializable
      */
     public function convertEncoding(): void
     {
-        $this->query = mb_convert_encoding($this->query, 'UTF-8', 'HTML-ENTITIES');
+        $string = $this->query;
+        preg_match_all("/&#?\w+;/", $string, $entities, PREG_SET_ORDER);
+        $entities = array_unique(array_column($entities, 0));
+        foreach ($entities as $entity) {
+            $decoded = mb_convert_encoding($entity, 'UTF-8', 'HTML-ENTITIES');
+            $string = str_replace($entity, $decoded, $string);
+        }
+        $this->query = $string;
     }
 
     /** @inheritdoc */

@@ -46,6 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/SugarObjects/templates/person/Person.php');
 
 // Employee is used to store customer information.
+#[\AllowDynamicProperties]
 class Employee extends Person
 {
     // Stored fields
@@ -143,7 +144,7 @@ class Employee extends Person
 
     public function retrieve_employee_id($employee_name)
     {
-        $query = "SELECT id from users where user_name='$user_name' AND deleted=0";
+        $query = "SELECT id from users where user_name='$employee_name' AND deleted=0";
         $result  = $this->db->query($query, false, "Error retrieving employee ID: ");
         $row = $this->db->fetchByAssoc($result);
         return $row['id'];
@@ -318,6 +319,9 @@ class Employee extends Person
             throw new RuntimeException('Not authorized');
         }
 
+        // If the current user is not an admin, reset the admin flag to the original value.
+        $this->setIsAdmin();
+
         return parent::save($check_notify);
     }
 
@@ -340,5 +344,37 @@ class Employee extends Person
         $sameUser = $current_user->id === $this->id;
 
         return $sameUser || is_admin($current_user);
+    }
+
+    /**
+     * Reset is_admin if current user is not an admin user
+     * @return void
+     */
+    protected function setIsAdmin(): void
+    {
+        global $current_user;
+
+        if (!isset($this->is_admin)) {
+            return;
+        }
+
+        $originalIsAdminValue = $this->is_admin ?? false;
+        if ($this->isUpdate() && isset($this->fetched_row['is_admin'])) {
+            $originalIsAdminValue = isTrue($this->fetched_row['is_admin'] ?? false);
+        }
+
+        $currentUserReloaded = BeanFactory::getReloadedBean('Users', $current_user->id);
+        if (!is_admin($currentUserReloaded)) {
+            $this->is_admin = $originalIsAdminValue;
+        }
+
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isUpdate(): bool
+    {
+        return !empty($this->id) && !$this->new_with_id;
     }
 }
