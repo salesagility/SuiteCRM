@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2023 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,7 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-#[\AllowDynamicProperties]
 class AOW_WorkFlow extends Basic
 {
     public $new_schema = true;
@@ -68,7 +67,6 @@ class AOW_WorkFlow extends Basic
     public $run_when;
     public $flow_run_on;
     public $multiple_runs;
-    public static $doNotRunInSaveLogic = false;
 
     /**
      * return an SQL operator
@@ -77,7 +75,6 @@ class AOW_WorkFlow extends Basic
      */
     private function getSQLOperator($key)
     {
-        $sqlOperatorList = [];
         $sqlOperatorList['Equal_To'] = '=';
         $sqlOperatorList['Not_Equal_To'] = '!=';
         $sqlOperatorList['Greater_Than'] = '>';
@@ -177,7 +174,7 @@ class AOW_WorkFlow extends Basic
             }
         }
 
-        $app_list_strings['aow_moduleList'] = array_merge(array(''=>''), (array)($app_list_strings['aow_moduleList'] ?? []));
+        $app_list_strings['aow_moduleList'] = array_merge((array)array(''=>''), (array)$app_list_strings['aow_moduleList']);
 
         asort($app_list_strings['aow_moduleList']);
     }
@@ -188,7 +185,7 @@ class AOW_WorkFlow extends Basic
      */
     public function run_flows()
     {
-        $flows = $this->get_full_list('', " aow_workflow.status = 'Active'  AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'In_Scheduler' OR aow_workflow.run_when = 'Create') ");
+        $flows = AOW_WorkFlow::get_full_list('', " aow_workflow.status = 'Active'  AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'In_Scheduler' OR aow_workflow.run_when = 'Create') ");
 
         if (empty($flows)) {
             LoggerManager::getLogger()->warn('There is no any workflow to run');
@@ -206,7 +203,6 @@ class AOW_WorkFlow extends Basic
      */
     public function run_flow()
     {
-        AOW_WorkFlow::$doNotRunInSaveLogic = true;
         $beans = $this->get_flow_beans();
         if (!empty($beans)) {
             foreach ($beans as $bean) {
@@ -214,7 +210,6 @@ class AOW_WorkFlow extends Basic
                 $this->run_actions($bean);
             }
         }
-        AOW_WorkFlow::$doNotRunInSaveLogic = false;
     }
 
     /**
@@ -222,10 +217,6 @@ class AOW_WorkFlow extends Basic
      */
     public function run_bean_flows(SugarBean $bean)
     {
-        if (AOW_WorkFlow::$doNotRunInSaveLogic) {
-            return;
-        }
-
         $query = "SELECT id FROM aow_workflow WHERE aow_workflow.flow_module = '" . $bean->module_dir . "' AND aow_workflow.status = 'Active' AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'On_Save' OR aow_workflow.run_when = 'Create') AND aow_workflow.deleted = 0 ";
 
         $result = $this->db->query($query, false);
@@ -309,8 +300,7 @@ class AOW_WorkFlow extends Basic
         SugarBean $module,
         $query = array()
     ) {
-     global $db;
-     $params = [];
+	    global $db;
         if (!isset($query['join'][$name])) {
             if ($module->load_relationship($name)) {
                 $params['join_type'] = 'LEFT JOIN';
@@ -405,8 +395,6 @@ class AOW_WorkFlow extends Basic
             }
         }
 
-        $value = '';
-
         if ($this->isSQLOperator($condition->operator)) {
             $where_set = false;
 
@@ -419,10 +407,12 @@ class AOW_WorkFlow extends Basic
                 $field = $table_alias.'_cstm.'.$condition->field;
                 $query = $this->build_flow_custom_query_join(
                     $table_alias,
-                    $table_alias . '_cstm',
+                    $table_alias.'_cstm',
                     $condition_module,
                     $query
                 );
+            // STIC CUSTOM 20231120 JBL - Erroneus Query in Workflow when related fields are in other table but same module
+            // STIC#1306
             } else if (isset($data['source']) && $data['source'] == 'non-db' && $data['type'] == 'relate' && !empty($data['link'])) {
                 $rel = $data['link'];
                 if (!isset($query['join'][$rel])) {
@@ -438,7 +428,7 @@ class AOW_WorkFlow extends Basic
                     }
                 }
                 $relObject = $condition_module->$rel;
-
+            
                 if (!empty($relObject)) {
                     if ($relObject->getRelationshipObject()->type == 'one-to-many') {
                         $field = $table_alias . '.' . $data['id_name'];
@@ -471,16 +461,17 @@ class AOW_WorkFlow extends Basic
                 }
                 $field = $relAlias . '.' . $data['rname'];
                 $relFieldDef = $relBean->getFieldDefinition($data['rname']);
-
+            
                 if (isset($relFieldDef['db_concat_fields'])) {
                     $field = $this->db->concat($relAlias, $relFieldDef['db_concat_fields']);
                 }
+            // End STIC CUSTOM
             } else {
-                $field = $table_alias . '.' . $condition->field;
+                $field = $table_alias.'.'.$condition->field;
             }
 
             if ($condition->operator == 'is_null') {
-                $query['where'][] = '(' . $field . ' ' . $this->getSQLOperator($condition->operator) . ' OR ' . $field . ' ' . $this->getSQLOperator('Equal_To') . " '')";
+                $query['where'][] = '('.$field.' '.$this->getSQLOperator($condition->operator).' OR '.$field.' '.$this->getSQLOperator('Equal_To')." '')";
                 return $query;
             }
 
@@ -534,6 +525,24 @@ class AOW_WorkFlow extends Basic
                             $field = 'DATE('.$field.')';
                             $value = 'Curdate()';
                         }
+                    // STIC-Custom AAM 20210419 - Modification to add the condition Anniversary.
+                    // STIC#712
+                    } else if($params[0] == 'anniversary'){
+                        if($sugar_config['dbconfig']['db_type'] == 'mssql'){ 
+                            // We keep this condition, although SinergiaCRM doesn't use MSSQL
+                        } else { 
+                            // In order the "anniversary" option can be handled in a similar way
+                            // to the other date based cases (today, now, etc.) and being aware
+                            // that in order to detect an anniversary the year is not relevant (we only
+                            // need month and day), "we place in the same year" the two dates to compare.
+                            // We arbitrarily choose 1980 because it is a leap year and will allow 
+                            // working with 29/2 and will not cause errors in queries, 
+                            // although for "anniversary" purposes it will only detect it if the current year
+                            // is also a leap one. To always detect it additional code should be written.
+                            $value = 'DATE(date_format(curdate(),"1980-%m-%d"))'; 
+                            $field = 'DATE(date_format('.$field.',"1980-%m-%d"))'; 
+                        }
+                    // END STIC
                     } else {
                         if (isset($params[0]) && $params[0] == 'today') {
                             if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
@@ -758,7 +767,7 @@ class AOW_WorkFlow extends Basic
                     $condition->field = $data['id_name'];
                 }
                 $field = $condition_bean->$field;
-
+                
                 if (in_array($data['type'], $dateFields)) {
                     $field = strtotime($field);
                 }
@@ -783,8 +792,7 @@ class AOW_WorkFlow extends Basic
                             && isset($condition_bean->rel_fields_before_value[$condition->field])) {
                             $value = $condition_bean->rel_fields_before_value[$condition->field];
                         } else {
-                            $conditionField = $condition_bean->fetched_row[$condition->field] ?? '';
-                            $value = from_html($conditionField);
+                            $value = from_html($condition_bean->fetched_row[$condition->field]);
                             // Bug - on delete bean action CRM load bean in a different way and bean can contain html characters
                             $field = from_html($field);
                         }
@@ -811,6 +819,21 @@ class AOW_WorkFlow extends Basic
                             $dateType = 'date';
                             $value = date('Y-m-d');
                             $field = strtotime(date('Y-m-d', $field));
+                        // STIC-Custom AAM 20210419 - Modification to add the condition Anniversary.
+                        // STIC#712
+                        } else if($params[0] == 'anniversary'){
+                            $dateType = 'date'; 
+                            // In order the "anniversary" option can be handled in a similar way
+                            // to the other date based cases (today, now, etc.) and being aware
+                            // that in order to detect an anniversary the year is not relevant (we only
+                            // need month and day), "we place in the same year" the two dates to compare.
+                            // We arbitrarily choose 1980 because it is a leap year and will allow 
+                            // working with 29/2 and will not cause errors in queries, 
+                            // although for "anniversary" purposes it will only detect it if the current year
+                            // is also a leap one. To always detect it additional code should be written.
+                            $value = date('1980-m-d');
+                            $field = strtotime(date('1980-m-d', $field));
+                        // END STIC
                         } else {
                             if ($params[0] == 'today') {
                                 $dateType = 'date';
@@ -887,27 +910,16 @@ class AOW_WorkFlow extends Basic
                             $value = strtotime($value);
                         } elseif ($data['type'] == 'bool' && (!(bool)$value || strtolower($value) == 'false')) {
                             $value = 0;
-                        } elseif($data['type'] == 'multienum') {
-                            $value = unencodeMultienum($value);
-                            $field = unencodeMultienum($field);
-                            switch ($condition->operator) {
-                                case 'Not_Equal_To':
-                                    $condition->operator = 'Not_One_of';
-                                    break;
-                                case 'Equal_To':
-                                default:
-                                    $condition->operator = 'One_of';
-                                    break;
-                            }
-                        }
+                        } 
+
                         $type = $data['dbType'] ?? $data['type'];
-                        if ((strpos((string) $type, 'char') !== false || strpos((string) $type, 'text') !== false) && !empty($field)) {
+                        if ((strpos($type, 'char') !== false || strpos($type, 'text') !== false) && !empty($field)) {
                             $field = from_html($field);
                         }
                         break;
                 }
 
-                if (!($this->compare_condition($field, $value, $condition->operator))) {
+                if (!($this->compare_condition($field, $value, $condition->operator, $type))) {
                     return false;
                 }
             }
@@ -938,8 +950,16 @@ class AOW_WorkFlow extends Basic
         return true;
     }
 
-    public function compare_condition($var1, $var2, $operator = 'Equal_To')
+    // STIC-Custom 20231228 EPS - numeric null condition does not work properly
+    // https://github.com/SinergiaTIC/SinergiaCRM/pull/8
+    // public function compare_condition($var1, $var2, $operator = 'Equal_To')
+    // {
+    public function compare_condition($var1, $var2, $operator = 'Equal_To', $type= '')
     {
+        
+        $numericTypes = array('double','decimal','currency','float','uint','ulong','long','short','tinyint','int');
+    // END STIC-Custom 
+
         switch ($operator) {
             case "Not_Equal_To": return $var1 != $var2;
             case "Greater_Than":  return $var1 >  $var2;
@@ -947,9 +967,17 @@ class AOW_WorkFlow extends Basic
             case "Greater_Than_or_Equal_To": return $var1 >= $var2;
             case "Less_Than_or_Equal_To": return $var1 <= $var2;
             case "Contains": return strpos(strtolower($var1), strtolower($var2)) !== false;
-            case "Starts_With": return substr(strtolower($var1), 0, strlen((string) $var2) ) === strtolower($var2);
-            case "Ends_With": return substr(strtolower($var1), -strlen((string) $var2) ) === strtolower($var2);
-            case "is_null": return $var1 == '';
+            case "Starts_With": return substr(strtolower($var1), 0, strlen($var2) ) === strtolower($var2);
+            case "Ends_With": return substr(strtolower($var1), -strlen($var2) ) === strtolower($var2);
+            // STIC-Custom 20231228 EPS - numeric null condition does not work properly
+            // https://github.com/SinergiaTIC/SinergiaCRM/pull/8
+            // case "is_null": return $var1 == '';
+            case "is_null": 
+                if (in_array($type, $numericTypes) && $var1 == 'NULL') {
+                    $var1 = "";
+                }
+                return $var1 == '';
+            // END STIC-Custom
             case "One_of":
                 if (is_array($var1)) {
                     foreach ($var1 as $var) {
@@ -1041,6 +1069,10 @@ class AOW_WorkFlow extends Basic
                     $action_name = $custom_action_name;
                 }
 
+                // STIC-Custom 20230922 JBL - Fix Multiple workflow executions for New_Records and Modified_Records
+                // STIC#1232
+                $oldDateEntered = $bean->date_entered;
+                // END STIC-Custom
 
                 $flow_action = new $action_name($action->id);
                 if (!$flow_action->run_action($bean, unserialize(base64_decode($action->parameters)), $in_save)) {
@@ -1049,6 +1081,13 @@ class AOW_WorkFlow extends Basic
                 } else {
                     $processed->aow_actions->add($action->id, array('status' => 'Complete'));
                 }
+
+                // STIC-Custom 20230922 JBL - Fix Multiple workflow executions for New_Records and Modified_Records
+                // STIC#1232
+                if (!isset($bean->date_entered) && $bean->fetched_row == false) {
+                    $bean->date_entered = $oldDateEntered; 
+                }
+                // END STIC-Custom
             }
         }
 
