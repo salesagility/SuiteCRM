@@ -1299,6 +1299,8 @@ EOQ;
     public function addDatetime($displayname, $varname)
     {
         global $timedate, $app_strings, $app_list_strings, $theme, $current_user;
+        $displayname = addslashes($displayname);
+        
         $userformat = $timedate->get_user_time_format();
         $cal_dateformat = $timedate->get_cal_date_format();
 	$cal_fdow = $current_user->get_first_day_of_week() ? $current_user->get_first_day_of_week() : '0';
