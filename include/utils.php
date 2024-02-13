@@ -6153,7 +6153,15 @@ function isSelfRequest($endpoint) : bool {
         $siteUrl = '';
     }
 
-    return stripos((string) $endpoint, (string) $domain) !== false || stripos((string) $endpoint, (string) $siteUrl) !== false;
+     // Get the list of valid custom entry points
+    $customEntryPoints = getCustomEntryPoints();
+    // Check if the endpoint matches a URL of the form "$siteURL/index.php?entryPoint={entry_point_name}"
+    $entryPointPattern = "/^" . preg_quote($siteUrl, '/') . "\/index.php\?entryPoint=(" . implode('|', $customEntryPoints) . ")$/i";
+    if (preg_match($entryPointPattern, $endpoint)) {
+        return false; // It matches a valid custom entry point URL
+    }
+    // Check if the endpoint contains the domain or site URL
+    return stripos($endpoint, $domain) !== false || stripos($endpoint, $siteUrl) !== false;
 }
 
 /**
@@ -6166,4 +6174,25 @@ function getCurrencyId($module, $id)
 {
     global $locale;
     return BeanFactory::getBean($module, $id)->currency_id ?? $locale->getPrecedentPreference('currency');
+}
+/**
+* Output list of entry points
+*/
+function getCustomEntryPoints() {
+    $customEntryPoints = [];
+    // Specify the path to the entry_point_registry.ext.php file
+    $entryPointRegistryPath = 'custom/application/Ext/EntryPointRegistry/entry_point_registry.ext.php';
+    if (file_exists($entryPointRegistryPath)) {
+        // Include the file
+        include($entryPointRegistryPath);
+        // Check if $entry_point_registry is an array
+        if (isset($entry_point_registry) && is_array($entry_point_registry)) {
+            // Iterate through each entry point definition
+            foreach ($entry_point_registry as $entryPointName => $entryPointData) {
+                // Add the entry point name to the custom entry points list
+                $customEntryPoints[] = $entryPointName;
+            }
+        }
+    }
+    return $customEntryPoints;
 }
