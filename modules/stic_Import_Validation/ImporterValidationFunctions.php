@@ -24,11 +24,10 @@
 require_once 'SticInclude/Utils.php';
 
 /**
- * 
+ * Checks the value entered in the file identification number column with the import data of a person or an organization
  */
 function identificationNumberValidation($module, $rowValue, $row)
 {
-    $returnValue = false;
     switch ($module) 
     {
         case 'Accounts':
@@ -36,10 +35,24 @@ function identificationNumberValidation($module, $rowValue, $row)
             break;
 
         case 'Contacts':
-            // If the stic_identification_type_c field is mapped and its value is NIF or NIE
-            if ((in_array('NIF', $row) || in_array('nif', $row) || in_array('NIE', $row) || in_array('nie', $row))){
-                return SticUtils::isValidNIForNIE($rowValue) ? $rowValue : 'LBL_ERROR_INVALID_IDENTIFICATION_NUMBER';
-            } else {
+            // We check if any of the possible values of the Identification Type field exist in the user's language 
+            // since in $row we have the label and not the key
+            global $app_list_strings;
+            $identification_types_list = $app_list_strings['stic_contacts_identification_types_list'];
+            $existLabel = false;
+            foreach ($identification_types_list as $key => $value) {
+                if (!empty($value) && in_array($value, $row)){
+                    $existLabel = true;   
+                    // If the stic_identification_type_c field is mapped and its value is NIF or NIE
+                    if ($value == $identification_types_list['nif'] || $value == $identification_types_list['nie']) {
+                        return SticUtils::isValidNIForNIE($rowValue) ? $rowValue : 'LBL_ERROR_INVALID_IDENTIFICATION_NUMBER';
+                    } else {
+                        return true;
+                    } 
+                }
+            }
+            // If there is no label, it means that the Identification type field has not been mapped
+            if (!$existLabel) {
                 return 'LBL_ERROR_INVALID_IDENTIFICATION_NUMBER_MISSING_TYPE_FIELD';
             }
             break;
@@ -52,7 +65,7 @@ function identificationNumberValidation($module, $rowValue, $row)
 
 
 /**
- * 
+ * Checks the value entered in the bank account number column of the file with the import data
  */
 function bankAccountValidation($rowValue)
 {
