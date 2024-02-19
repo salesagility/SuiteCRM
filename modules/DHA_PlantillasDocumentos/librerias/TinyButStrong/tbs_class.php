@@ -2369,6 +2369,11 @@ function meth_Merge_BlockSections(&$Txt,&$LocR,&$Src,&$RecSpe) {
 	// Main loop
 	$Src->DataFetch();
 
+	// STIC-Custom 20230903 EPS - Only one tag w:body will be used in the document
+	// https://github.com/SinergiaTIC/SinergiaCRM/pull/29
+	$bodyPresent = false;
+	// END STIC-Custom
+
 	while($Src->CurrRec!==false) {
 
 		// Headers and Footers
@@ -2478,7 +2483,15 @@ function meth_Merge_BlockSections(&$Txt,&$LocR,&$Src,&$RecSpe) {
 				}
 			}
 			if ($piOMS) $this->meth_PlugIn_RunAll($this->_piOnMergeSection,$ArgLst);
+
+			// STIC-Custom 20230903 EPS - Only one tag w:body will be used in the document
+			if ($bodyPresent){
+				$SecSrc = str_replace('<w:body>', '', $SecSrc);
+				$BlockRes = str_replace('</w:body>', '', $BlockRes);
+			}
 			$BlockRes .= $SecSrc;
+			$bodyPresent = true;
+			//END STIC-Custom
 		}
 
 		// Next row
