@@ -674,7 +674,11 @@ eoq;
                             break;
                         case "datetimecombo":
                             $even = !$even;
-                            $newhtml .= $this->addDatetime($displayname, $field["name"]);
+                            // STIC-Custom 20240122 PCS - Mass update datetime sensitivity same as EditView
+                            // https://github.com/SinergiaTIC/SinergiaCRM/pull/79
+                            // $newhtml .= $this->addDatetime($displayname, $field["name"]);
+                            $newhtml .= $this->addDatetime($displayname, $field["name"],$field["display_default"]);
+                            // END STIC-Custom
                             break;
                         case "datetime":
                         case "date":
@@ -1428,13 +1432,17 @@ EOQ;
      * @param displayname Name to display in the popup window
      * @param varname name of the variable
      */
-    public function addDatetime($displayname, $varname)
+    // STIC-Custom 20240122 PCS - Mass update datetime sensitivity same as EditView
+    // https://github.com/SinergiaTIC/SinergiaCRM/pull/79
+    // public function addDatetime($displayname, $varname)
+    public function addDatetime($displayname, $varname, $fieldtimeformat)
     {
+    // END STIC-Custom
         global $timedate, $app_strings, $app_list_strings, $theme, $current_user;
         // STIC-Custom 20220224 AAM - Adding slashes to avoid sintax error with single quotes. Replicating solution as in addDate() function
         // STIC#617/
         $displayname = addslashes($displayname);
-        // END STIC
+        // END STIC-Custom
         $userformat = $timedate->get_user_time_format();
         $cal_dateformat = $timedate->get_cal_date_format();
 	    $cal_fdow = $current_user->get_first_day_of_week() ? $current_user->get_first_day_of_week() : '0';
@@ -1443,7 +1451,11 @@ EOQ;
 		 
 	<span id="{$varname}_trigger" class="suitepicon suitepicon-module-calendar" onclick="return false;"></span>
 EOQ;
-        $dtscript = getVersionedScript('include/SugarFields/Fields/Datetimecombo/Datetimecombo.js');
+        // STIC-Custom 20240122 PCS - Mass update datetime sensitivity same as EditView
+        // https://github.com/SinergiaTIC/SinergiaCRM/pull/79
+        // $dtscript = getVersionedScript('include/SugarFields/Fields/Datetimecombo/Datetimecombo.js');
+        $dtscript = getVersionedScript('custom/include/SugarFields/Fields/Datetimecombo/Datetimecombo.js');
+        // END STIC-Custom
         $html = <<<EOQ
 		<td scope="row" width="20%">$displayname</td>
 		<td class='dataField' width="30%"><input onblur="parseDate(this, '$cal_dateformat')" type="text" name='$varname' size="12" id='{$varname}_date' maxlength='10' value="">
@@ -1454,7 +1466,11 @@ EOQ;
 		<input type="hidden" id="{$varname}" name="{$varname}">
 		$dtscript
 		<script type="text/javascript">
-		var combo_{$varname} = new Datetimecombo(" ", "$varname", "$userformat", '','','',1);
+        // STIC-Custom 20240122 PCS - Mass update datetime sensitivity same as EditView
+        // https://github.com/SinergiaTIC/SinergiaCRM/pull/79
+        // var combo_{$varname} = new Datetimecombo(" ", "$varname", "$userformat", '','','',1,);
+		var combo_{$varname} = new Datetimecombo(" ", "$varname", "$userformat", '','','',1,"$fieldtimeformat");
+        // END STIC-Custom
 		//Render the remaining widget fields
 		text = combo_{$varname}.html('');
 		document.getElementById('{$varname}_time_section').innerHTML = text;
