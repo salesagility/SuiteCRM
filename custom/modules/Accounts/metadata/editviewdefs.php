@@ -96,10 +96,6 @@ array (
           array (
             'name' => 'name',
             'label' => 'LBL_NAME',
-            'displayParams' => 
-            array (
-              'required' => true,
-            ),
           ),
           1 => 
           array (
