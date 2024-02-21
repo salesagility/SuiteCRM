@@ -2,6 +2,10 @@
 /**
  * This file is part of KReporter. KReporter is an enhancement developed
  * by Christian Knoll. All rights are (c) 2012 by Christian Knoll
+ *
+ * This file has been modified by SinergiaTIC in SinergiaCRM.
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
@@ -19,6 +23,7 @@
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
  * You can contact Christian Knoll at info@kreporter.org
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
  */
 if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
@@ -38,7 +43,16 @@ $dictionary['KReport'] = array('table' => 'kreports',
             'type' => 'enum',
             'options' => 'kreportstatus',
             'len' => '1',
-            'vname' => 'LBL_REPORT_STATUS'
+            'vname' => 'LBL_REPORT_STATUS',
+            'massupdate' => 1,
+        ),
+        'report_segmentation' => array(
+            'name' => 'report_segmentation',
+            'type' => 'enum',
+            'options' => 'stic_kreports_segmentations_list',
+            'len' => 100,
+            'vname' => 'LBL_REPORT_SEGMENTATION',
+            'massupdate' => 1,
         ),
         'union_modules' => array(
             'name' => 'union_modules',

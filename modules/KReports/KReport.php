@@ -290,6 +290,7 @@ class KReport extends SugarBean {
    var $report_module = '';
    var $reportoptions = '';
    var $report_status ;
+   var $report_segmentation ;
    var $team_id;
    var $description;
    var $name;

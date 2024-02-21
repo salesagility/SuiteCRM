@@ -22,10 +22,11 @@
  */ 
 $app_list_strings['moduleList']['KReports'] = 'KReports';
 
-$app_list_strings['kreportstatus'] = array(
-	'1' => 'Borrador',
-	'2' => 'Distribución limitada',
-	'3' => 'Distribución xeral'
-);
+$app_list_strings['kreportstatus'][''] = '';
+$app_list_strings['kreportstatus']['1'] = 'Borrador';
+$app_list_strings['kreportstatus']['2'] = 'Distribución limitada';
+$app_list_strings['kreportstatus']['3'] = 'Distribución xeral';
 
-?>
+$app_list_strings['stic_kreports_segmentations_list'][''] = '';
+$app_list_strings['stic_kreports_segmentations_list']['sample_value_1'] = 'Valor de exemplo 1';
+$app_list_strings['stic_kreports_segmentations_list']['sample_value_2'] = 'Valor de exemplo 2';

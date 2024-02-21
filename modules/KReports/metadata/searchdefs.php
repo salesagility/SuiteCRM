@@ -48,6 +48,20 @@ $searchdefs['KReports'] = array(
                 'label' => 'LBL_MODULE',
                 'width' => '10%',
             ),
+            'report_status' => array(
+                'type' => 'enum',
+                'name' => 'report_status', 
+                'default' => true,
+                'label' => 'LBL_REPORT_STATUS',
+                'width' => '10%',
+            ),
+            'report_segmentation' => array(
+                'type' => 'enum',
+                'name' => 'report_segmentation', 
+                'default' => true,
+                'label' => 'LBL_REPORT_SEGMENTATION',
+                'width' => '10%',
+            ),
             'date_entered' => array(
                 'type' => 'datetime',
                 'label' => 'LBL_DATE_ENTERED',

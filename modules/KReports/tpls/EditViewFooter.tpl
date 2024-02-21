@@ -43,6 +43,7 @@
 <input type='hidden' name='name' id='name' value='{$fields.name.value}'>
 <input type='hidden' name='description' id='description' value='{$fields.description.value}'>
 <input type='hidden' name='report_status' id='report_status' value='{$fields.report_status.value}'>
+<input type='hidden' name='report_segmentation' id='report_segmentation' value='{$fields.report_segmentation.value}'>
 <input type='hidden' name='assigned_user_name' id='assigned_user_name' value='{$fields.assigned_user_name.value}'>
 <input type='hidden' name='assigned_user_id' id='assigned_user_id' value='{$fields.assigned_user_id.value}'>
 <input type='hidden' name='team_name' id='team_name' value='{$team_name}'>

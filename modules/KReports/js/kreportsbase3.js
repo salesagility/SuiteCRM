@@ -2436,6 +2436,7 @@ K.kreports.mainEditToolbar.statusCombo = new Ext.form.ComboBox({
   }),
   valueField: "key",
   displayField: "displayText",
+  fieldLabel: bi("LBL_REPORT_STATUS"),
   listeners: {
     beforerender: function() {
       if (document.getElementById("report_status").value != "")
@@ -2443,6 +2444,34 @@ K.kreports.mainEditToolbar.statusCombo = new Ext.form.ComboBox({
     },
     change: function() {
       document.getElementById("report_status").value = this.getValue();
+    }
+  }
+});
+if (bi("report_segmentation_options") != "") {
+  eval(
+    "K.kreports.mainEditToolbar.scopeComboOptions = " +
+      Ext.util.Format.htmlDecode(bi("report_segmentation_options"))
+  );
+} else K.kreports.mainEditToolbar.scopeComboOptions = [];
+K.kreports.mainEditToolbar.scopeCombo = new Ext.form.ComboBox({
+  typeAhead: true,
+  triggerAction: "all",
+  lazyRender: true,
+  mode: "local",
+  store: new Ext.data.ArrayStore({
+    fields: ["key", "displayText"],
+    data: K.kreports.mainEditToolbar.scopeComboOptions
+  }),
+  valueField: "key",
+  displayField: "displayText",
+  fieldLabel: bi("LBL_REPORT_SEGMENTATION"),
+  listeners: {
+    beforerender: function() {
+      if (document.getElementById("report_segmentation").value != "")
+        this.setValue(document.getElementById("report_segmentation").value);
+    },
+    change: function() {
+      document.getElementById("report_segmentation").value = this.getValue();
     }
   }
 });
@@ -2528,6 +2557,7 @@ K.kreports.mainEditToolbar.Toolbar = new Ext.Toolbar({
     },
     "-",
     K.kreports.mainEditToolbar.statusCombo,
+    K.kreports.mainEditToolbar.scopeCombo,
     "-",
     K.kreports.mainEditToolbar.username,
     K.kreports.mainEditToolbar.kauthCombo,
