@@ -26,13 +26,18 @@
  * 
  * It is in charge of running any SugraCRM PHP script that will find in SticUpdates/Scripts folder
  * 
- * If you want to run just one script, you can specify the file name in the argument list, withouth the PHP extension. Like this:
- * http://xxxxxxxxxx.sinergiacrm.org/SticRunScripts.php?file=FixPersonalEnvironmentModuleDisplay
+ * If you want to run just one script, you can specify the path and file name (with the extension) in the argument list . Like this:
+ * http://xxxxxxxxxx.sinergiacrm.org/SticRunScripts.php?file=SticUpdates/Scripts/FixPersonalEnvironmentModuleDisplay.php
+ * http://xxxxxxxxxx.sinergiacrm.org/SticRunScripts.php?file=SticUpdates/Migrations/20200803_hotfix_34_RemovingMailMergeExampleTemplates.sql
  * 
  */
 
+
+
 /**
  * Check if the folder exists and has files to run
+ * @params : $folderPath - a String containing the path to the folder.
+ * @returns: Boolean     - true if empty, false otherwise
 */
 function isEmptyFolder($folderPath)
 {
@@ -47,43 +52,12 @@ function isEmptyFolder($folderPath)
     return true; 
 }
 
-include ('include/MVC/preDispatch.php');
-$startTime = microtime(true);
-require_once('include/entryPoint.php');
-ob_start();
-
-// Check if the scripts need to be executed
-if (!isEmptyFolder("SticUpdates/Scripts/")) {
-    // Run only the script indicated in the request or all the scripts in the SticUpdates/Scripts/ folder
-    if ($file = $_REQUEST['file']) {
-        if (file_exists($file)) {
-            if (is_dir($file)) {
-                echo "It's a folder, retrieving files: <br>";
-                $files = glob($file.'/*.php');
-                foreach ($files as $file) {
-                    echo "$file <br>";
-                    require($file);   
-                }
-            } else {
-                echo "$file <br>";
-                require($file);   
-            }
-        } else {
-            echo "File ".$file." doesn't exist in server";
-        }
-    } else {
-        echo "File isn't specified in URL, executing all files from SticUpdates/Scripts/ <br>";
-        $files = glob('SticUpdates/Scripts/*.php');
-        foreach ($files as $file) {
-            echo "$file <br>";
-            require($file);   
-        }
-    }
-}
-
-// Check if the migrations need to be executed
-if (!isEmptyFolder("SticUpdates/Migrations/")) {
-    // Run all general migrations files from the SticUpdates/Migrations/ folder
+/**
+ * Connect to the database through PDO to be able to execute files that contain multiple SQL statements
+ * @returns: PDO Object representing the connection to the database
+*/
+function connectToDBWithPDO()
+{
     echo "Connecting to the database <br />";
     global $sugar_config;
     $mysqlHost = $sugar_config["dbconfig"]["db_host_name"];
@@ -94,43 +68,102 @@ if (!isEmptyFolder("SticUpdates/Migrations/")) {
         $connection = new PDO("mysql:host=$mysqlHost;dbname=$mysqlDatabase", $mysqlUser, $mysqlPassword);
         $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $connection->exec("SET NAMES 'utf8'"); // Setting codification
+        return $connection;
     } catch (PDOException $e) {
         die("Connection Error: " . $e->getMessage());
     }
-
-    echo "Executing all SQL files from SticUpdates/Migrations/ <br>";
-    $files = glob('SticUpdates/Migrations/*.sql');
-    foreach ($files as $file) 
-    {
-        $sqlFileContent = file_get_contents($file);
-        echo "<br> -- $file <br>";
-    
-        // Execute SQL statements
-        try {
-            $connection->exec($sqlFileContent);
-            echo "Sql statements executed correctly. <br />";
-        } catch (PDOException $e) {
-            echo "Error when executing sql statements: " . $e->getMessage() . "<br />";
-        }
-    }
-
-    // Run all languages migrations files from the SticUpdates/Migrations/<language> folder
-    $language = substr($sugar_config["default_language"], 0, 2);
-    $files = glob("SticUpdates/Migrations/$language/*.sql");
-    foreach ($files as $file) 
-    {
-        $sqlFileContent = file_get_contents($file);
-        echo "<br> -- $file <br>";
-    
-        // Execute SQL statements
-        try {
-            $connection->exec($sqlFileContent);
-            echo "Sql statements executed correctly. <br />";
-        } catch (PDOException $e) {
-            echo "Error when executing sql statements: " . $e->getMessage() . "<br />";
-        }
-    }
-
-    // Dereferencing the PDO instance, allowing the PHP garbage collector to free the resources associated with the connection
-    $connection = null;
 }
+
+/**
+ * Executes a file with SQL statements through a PDO connection
+ * @params : $connection - PDO Object representing the connection to the database
+ * @params : $file       - File with SQL statements
+ * @returns: boolean     - True if the execution was successful, false otherwise.
+*/
+function executeSQLFile($connection, $file)
+{
+    $sqlFileContent = file_get_contents($file);
+    echo "<br> -- $file <br>";
+    
+    // Execute SQL statements
+    try {
+        $connection->exec($sqlFileContent);
+        echo "Sql statements executed correctly. <br />";
+        return true;
+    } catch (PDOException $e) {
+        echo "Error when executing sql statements: " . $e->getMessage() . "<br />";
+        return false;
+    }
+}
+
+
+
+// ******* SCRIPT *******
+// This script runs either the script indicated in the request 
+// or all scripts and migrations in the SticUpdates/Scripts/ and SticUpdates/Migrations/ folders.
+
+include ('include/MVC/preDispatch.php');
+$startTime = microtime(true);
+require_once('include/entryPoint.php');
+ob_start();
+
+// Checks if a file has been indicated in the request, if it exists in the file system and executes it
+if ($file = $_REQUEST['file']) 
+{
+    if (file_exists($file)) {
+        $ext = substr($file, -3);
+        if ($ext === "php") {
+            echo "$file <br>";
+            require($file);   
+        } else if ($ext === "sql") {
+            $connection = connectToDBWithPDO();
+            executeSQLFile($connection,$file);
+            // Dereferencing the PDO instance, allowing the PHP garbage collector to free the resources associated with the connection
+            $connection = null;
+        } else {
+            echo "File: ".$file.". The file extension must be php or sql";    
+        }
+    } else {
+        echo "File ".$file." doesn't exist in server";
+    }
+
+} else {
+
+    echo "File isn't specified in URL";
+
+    // SCRIPTS - Check if there are files in the scripts folder and run them
+    if (!isEmptyFolder("SticUpdates/Scripts/")) 
+    {
+        echo "Executing all files from SticUpdates/Scripts/ <br>";
+        $files = glob('SticUpdates/Scripts/*.php');
+        foreach ($files as $file) {
+            echo "$file <br>";
+            require($file);   
+        }
+    }
+    
+    // MIGRATIONS - Check if there are files in the migrations folder and run them
+    if (!isEmptyFolder("SticUpdates/Migrations/")) 
+    {
+        echo "Executing all SQL files from SticUpdates/Migrations/, both general and language files <br>";
+        $connection = connectToDBWithPDO();
+
+        // Run all general migrations files from the SticUpdates/Migrations/ folder
+        $files = glob('SticUpdates/Migrations/*.sql');
+        foreach ($files as $file) 
+        {
+            executeSQLFile($connection,$file);
+        }
+        
+        // Run all languages migrations files from the SticUpdates/Migrations/<language> folder
+        $language = substr($sugar_config["default_language"], 0, 2);
+        $files = glob("SticUpdates/Migrations/$language/*.sql");
+        foreach ($files as $file) 
+        {
+            executeSQLFile($connection,$file);
+        }
+        
+        // Dereferencing the PDO instance, allowing the PHP garbage collector to free the resources associated with the connection
+        $connection = null;
+    }
+} 
