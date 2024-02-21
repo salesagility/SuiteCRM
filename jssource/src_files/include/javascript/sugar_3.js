@@ -821,8 +821,16 @@ function add_error_style(formname, input, txt, flash) {
       // }
       if (typeof window[formname + "_tabs"] != "undefined") {
         if ($(".validation-message")) {
+          // STIC-Custom - 20240215 - JBL - Do not show hidden tabs without errors
+          // https://github.com/SinergiaTIC/SinergiaCRM/pull/119
           // Reset tab error styles
-          $("#EditView_tabs li a").removeAttr("style");
+          // $("#EditView_tabs li a").removeAttr("style");
+          $("#EditView_tabs li a").each(function() {
+            if($(this).css("background-color")=="rgb(255, 0, 0)") {
+              $(this).css("background-color","");
+            }
+          })
+          // END STIC-Custom
           counter = 0;
           $(".validation-message").each(function () {
             // Get error validation tabs ids

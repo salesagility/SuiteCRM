@@ -160,7 +160,8 @@ else{inputHandle.parentNode.appendChild(errorTextNode);}
 if(flash)
 inputHandle.style.backgroundColor="#FF0000";inputsWithErrors.push(inputHandle);}
 if(flash){if(inputsWithErrors.length==1){for(var wp=1;wp<=10;wp++){window.setTimeout('fade_error_style(style, '+wp*10+')',1000+(wp*50));}}
-if(typeof window[formname+"_tabs"]!="undefined"){if($(".validation-message")){$("#EditView_tabs li a").removeAttr("style");counter=0;$(".validation-message").each(function(){CurrentValidationTabId=$(this).closest(".tab-pane-NOBOOTSTRAPTOGGLER").attr("id").split('-').slice(-1);$CurrentValidationTabA=$("#EditView_tabs a#tab"+CurrentValidationTabId);$CurrentValidationTabA.attr("style","background-color:red;").closest("li");if(counter==0){$CurrentValidationTabA.click();$CurrentValidationTabA.addClass("active");}
+if(typeof window[formname+"_tabs"]!="undefined"){if($(".validation-message")){$("#EditView_tabs li a").each(function(){if($(this).css("background-color")=="rgb(255, 0, 0)"){$(this).css("background-color","");}})
+counter=0;$(".validation-message").each(function(){CurrentValidationTabId=$(this).closest(".tab-pane-NOBOOTSTRAPTOGGLER").attr("id").split('-').slice(-1);$CurrentValidationTabA=$("#EditView_tabs a#tab"+CurrentValidationTabId);$CurrentValidationTabA.attr("style","background-color:red;").closest("li");if(counter==0){$CurrentValidationTabA.click();$CurrentValidationTabA.addClass("active");}
 counter++;});}}
 window.setTimeout("inputsWithErrors["+(inputsWithErrors.length-1)+"].style.backgroundColor = '';",2000);}}catch(e){}}
 function clear_all_errors(){for(var wp=0;wp<inputsWithErrors.length;wp++){if(typeof(inputsWithErrors[wp])!='undefined'&&typeof inputsWithErrors[wp].parentNode!='undefined'&&inputsWithErrors[wp].parentNode!=null){if(inputsWithErrors[wp].parentNode.className.indexOf('x-form-field-wrap')!=-1){inputsWithErrors[wp].parentNode.parentNode.removeChild(inputsWithErrors[wp].parentNode.parentNode.lastChild);}
