@@ -84,4 +84,4 @@ $mod_strings['LBL_CLOSED_WON_OPPORTUNITIES'] = 'Subvencións gañadas';
 $mod_strings['LNK_IMPORT_OPPORTUNITIES'] = 'Importar Subvencións';
 
 // Cadeas Ayudas
-$mod_strings['LBL_STIC_GRANTS_OPPORTUNITIES_FROM_STIC_GRANTS_TITLE'] = 'Ayudas';
+$mod_strings['LBL_STIC_GRANTS_OPPORTUNITIES_FROM_STIC_GRANTS_TITLE'] = 'Axudas';

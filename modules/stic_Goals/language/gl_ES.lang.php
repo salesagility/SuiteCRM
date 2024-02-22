@@ -53,7 +53,7 @@ $mod_strings = array(
     'LBL_LIST_FORM_TITLE' => 'Lista de Obxectivos',
     'LBL_MODULE_NAME' => 'Obxectivos',
     'LBL_MODULE_TITLE' => 'Obxectivos',
-    'LBL_HOMEPAGE_TITLE' => 'Mis Obxectivos',
+    'LBL_HOMEPAGE_TITLE' => 'Os meus Obxectivos',
     'LNK_NEW_RECORD' => 'Crear un Obxectivo',
     'LNK_LIST' => 'Ver Obxectivos',
     'LNK_IMPORT_STIC_GOALS' => 'Importar Obxectivos',
@@ -86,5 +86,5 @@ $mod_strings = array(
     'LBL_ACTUAL_END_DATE_ERROR' => 'A data final real debe ser posterior á data inicial.',
     'LBL_STIC_FAMILIES_STIC_GOALS_FROM_STIC_FAMILIES_TITLE' => 'Unidade familiar',
     'LBL_MUST_RELATE_TO_A_FAMILY_OR_A_CONTACT' => 'Hai que indicar unha persoa ou unha unidade familiar.',
-    'LBL_CONTACT_OR_FAMILY_CHANGED' => "La persona / familia de la valoración no concuerdan con los actuales: desea actualizar  la persona / familia asociada al objectivo?",
+    'LBL_CONTACT_OR_FAMILY_CHANGED' => "A persoa / familia da valoración non concorda cos actuais: desexa actualizar a persoa / familia asociada ao obxectivo?",
 );

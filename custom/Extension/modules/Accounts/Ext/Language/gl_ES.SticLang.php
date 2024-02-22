@@ -172,4 +172,4 @@ $mod_strings['MSG_SHOW_DUPLICATES'] = 'O rexistro que está a punto de crear pod
 $mod_strings['LBL_ACCOUNTS_SUBPANEL_TITLE'] = 'Organizacións';
 
 // Cadeas Ayudas
-$mod_strings['LBL_STIC_GRANTS_ACCOUNTS_FROM_STIC_GRANTS_TITLE'] = 'Ayudas';
+$mod_strings['LBL_STIC_GRANTS_ACCOUNTS_FROM_STIC_GRANTS_TITLE'] = 'Axudas';

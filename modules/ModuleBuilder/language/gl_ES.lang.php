@@ -599,7 +599,7 @@ $mod_strings = array(
     'LBL_JS_VALIDATE_REL_LABEL' => 'Etiqueta - por favor, agregue a etiqueta que será mostrada sobre o subpanel',
 
 //CONFIRM
-    'LBL_CONFIRM_FIELD_DELETE' => 'Ao eliminar este campo personalizado, eliminará tanto o campo como todos sus datos da base de datos. O campo xa non aparecerá en ningún dos deseño de módulo.\n\n¿Desexa continuar?',
+    'LBL_CONFIRM_FIELD_DELETE' => 'Ao eliminar este campo personalizado, eliminará tanto o campo como todos os seus datos da base de datos. O campo xa non aparecerá en ningún dos deseño de módulo.\n\n¿Desexa continuar?',
 
     'LBL_CONFIRM_RELATIONSHIP_DELETE' => '¿Está seguro de que desexa eliminar esta relación?',
     'LBL_CONFIRM_DONT_SAVE' => 'Hai cambios pendentes de ser gardados, ¿desexa gardalos agora?',
