@@ -492,7 +492,9 @@ class EventInscriptionBO extends WebFormDataBO
         if ($ret == self::ACCOUNT_ERROR) // This indicates that it has not been found yet.
         {
             $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ":  Retrieving list of named organizations = [{$name}] ...");
-            $objCandidates = $accounts->get_full_list("name", "accounts.name = '{$name}'");
+            $db = DBManagerFactory::getInstance();
+            $sqlName = $db->quote($name);
+            $objCandidates = $accounts->get_full_list("name", "accounts.name = '{$sqlName}'");
 
             $nCandidates = count($objCandidates); // Count the number of results obtained
             $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ":  Found {$nCandidates} candidates.");
