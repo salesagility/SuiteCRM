@@ -1500,6 +1500,10 @@ $app_strings = array(
     'LBL_DATE_ENTERED' => 'Date Created:',
     'LBL_DATE_MODIFIED' => 'Date Modified:',
     'LBL_EDIT_BUTTON' => 'Edit',
+    // STIC-Custom 20240214 JBL - QuickEdit view
+    // https://github.com/SinergiaTIC/SinergiaCRM/pull/93
+    'LBL_QUICKEDIT_BUTTON' => '↙ Edit',
+    // END STIC-Custom
     'LBL_DUPLICATE_BUTTON' => 'Duplicate',
     'LBL_DELETE_BUTTON' => 'Delete',
     'LBL_DELETE' => 'Delete',

@@ -87,7 +87,11 @@ $mod_strings = array(
     'LBL_SALE_INFORMATION' => 'Informació sobre la Venta',
     'LBL_CURRENCY_NAME' => 'Nom de Moneda',
     'LBL_CURRENCY_SYMBOL' => 'Símbol de Moneda',
-    'LBL_EDIT_BUTTON' => 'Editar',
-    'LBL_REMOVE' => 'Eliminar',
+    'LBL_EDIT_BUTTON' => 'Edita',
+    // STIC-Custom 20240214 JBL - QuickEdit view
+    // https://github.com/SinergiaTIC/SinergiaCRM/pull/93
+    'LBL_QUICKEDIT_BUTTON' => '↙ Edita',
+    // END STIC-Custom
+    'LBL_REMOVE' => 'Desvincula',
 
 );

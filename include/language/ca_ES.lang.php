@@ -1553,10 +1553,14 @@ $app_strings = array(
     'LBL_DOCUMENTS' => 'Documents',
     'LBL_DATE_ENTERED' => 'Data de Creació:',
     'LBL_DATE_MODIFIED' => 'Última Modificació:',
-    'LBL_EDIT_BUTTON' => 'Editar',
-    'LBL_DUPLICATE_BUTTON' => 'Duplicar',
-    'LBL_DELETE_BUTTON' => 'Esborrar',
-    'LBL_DELETE' => 'Esborrar',
+    'LBL_EDIT_BUTTON' => 'Edita',
+    // STIC-Custom 20240214 JBL - QuickEdit view
+    // https://github.com/SinergiaTIC/SinergiaCRM/pull/93
+    'LBL_QUICKEDIT_BUTTON' => '↙ Edita',
+    // END STIC-Custom
+    'LBL_DUPLICATE_BUTTON' => 'Duplica',
+    'LBL_DELETE_BUTTON' => 'Esborra',
+    'LBL_DELETE' => 'Esborra',
     'LBL_DELETED' => 'Esborrat',
     'LBL_DIRECT_REPORTS' => 'Informa a',
     'LBL_DONE_BUTTON_LABEL' => 'Fet',

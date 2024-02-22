@@ -85,7 +85,16 @@ $subpanel_layout = array(
             'module' => $module_name,
             'width' => '4%',
         ),
-        'amount_usdollar' => array(
+        // STIC-Custom 20240214 JBL - QuickEdit view
+        // https://github.com/SinergiaTIC/SinergiaCRM/pull/93
+        'quickedit_button' => array(
+            'vname' => 'LBL_QUICKEDIT_BUTTON',
+            'widget_class' => 'SubPanelQuickEditButton',
+            'module' => $module_name,
+            'width' => '4%',
+        ),
+        // END STIC-Custom
+       'amount_usdollar' => array(
             'usage' => 'query_only',
         ),
         'remove_button' => array(

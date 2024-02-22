@@ -112,19 +112,23 @@ $mod_strings = array(
     'LBL_SHIPPING_ADDRESS' => 'Adreça d\'enviament:',
 
     'LBL_STATE' => 'Estat o regió:',
-    'LBL_TICKER_SYMBOL' => 'Sigla Bursàtil:',
+    'LBL_TICKER_SYMBOL' => 'Sigla bursàtil:',
     'LBL_TYPE' => 'Tipus:',
-    'LBL_WEBSITE' => 'Lloc Web:',
+    'LBL_WEBSITE' => 'Lloc web:',
 
     'LNK_ACCOUNT_LIST' => 'Comptes',
     'LNK_NEW_ACCOUNT' => 'Nou Compte',
 
-    'MSG_DUPLICATE' => 'La creació d\'aquest compte pot produir un compte duplicat. Pot elegir un compte existent de la llista inferior o fer clic a Desar per continuar la creació d\'un nou compte amb les dades introduïdes prèviament.',
-    'MSG_SHOW_DUPLICATES' => 'La creació d\'aquest compte pot crear un duplicat. Pot fer clic a Desar per continuar amb la creació d\'aquest nou compte amb les dades prèviament introduïdes o pot fer clic en Cancel·lar.',
+    'MSG_DUPLICATE' => 'La creació d\'aquest compte pot produir un compte duplicat. Podeu escollir un compte existent de la llista següent o fer clic a Desa per continuar la creació d\'un nou compte amb les dades introduïdes prèviament.',
+    'MSG_SHOW_DUPLICATES' => 'La creació d\'aquest compte pot crear un compte duplicat. Podeu fer clic a Desa per continuar amb la creació d\'un nou compte amb les dades prèviament introduïdes o podeu fer clic a Cancel·la.',
 
-    'NTC_DELETE_CONFIRMATION' => 'Està segur de que vol suprimir aquest registre?',
+    'NTC_DELETE_CONFIRMATION' => 'Segur que voleu suprimir aquest registre?',
 
-    'LBL_EDIT_BUTTON' => 'Editar',
-    'LBL_REMOVE' => 'Eliminar',
+    'LBL_EDIT_BUTTON' => 'Edita',
+    // STIC-Custom 20240214 JBL - QuickEdit view
+    // https://github.com/SinergiaTIC/SinergiaCRM/pull/93
+    'LBL_QUICKEDIT_BUTTON' => '↙ Edita',
+    // END STIC-Custom
+    'LBL_REMOVE' => 'Desvincula',
 
 );

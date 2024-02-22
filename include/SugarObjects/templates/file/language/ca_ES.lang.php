@@ -104,14 +104,18 @@ $mod_strings = array(
     'DEF_CREATE_LOG' => 'Document Creat',
 
     //error messages
-    'ERR_DOC_NAME' => 'Nom de Document',
+    'ERR_DOC_NAME' => 'Nom del Document',
     'ERR_DOC_ACTIVE_DATE' => 'Data de Publicació',
     'ERR_FILENAME' => 'Nom d\'Arxiu',
 
     //sub-panel vardefs.
-    'LBL_LIST_DOCUMENT_NAME' => 'Nom de Document',
+    'LBL_LIST_DOCUMENT_NAME' => 'Nom del Document',
 
-    'LBL_EDIT_BUTTON' => 'Editar',
-    'LBL_REMOVE' => 'Eliminar',
+    'LBL_EDIT_BUTTON' => 'Edita',
+    // STIC-Custom 20240214 JBL - QuickEdit view
+    // https://github.com/SinergiaTIC/SinergiaCRM/pull/93
+    'LBL_QUICKEDIT_BUTTON' => '↙ Edita',
+    // END STIC-Custom
+    'LBL_REMOVE' => 'Desvincula',
 
 );

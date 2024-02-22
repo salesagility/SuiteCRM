@@ -91,6 +91,10 @@ $mod_strings = array(
     'LBL_EMAIL_NON_PRIMARY' => 'Non Primary E-mails',
     'LBL_PHOTO' => 'Photo',
     'LBL_EDIT_BUTTON' => 'Edit',
+    // STIC-Custom 20240214 JBL - QuickEdit view
+    // https://github.com/SinergiaTIC/SinergiaCRM/pull/93
+    'LBL_QUICKEDIT_BUTTON' => '↙ Edit',
+    // END STIC-Custom
     'LBL_REMOVE' => 'Remove',
 
     //Lawful Basis labels

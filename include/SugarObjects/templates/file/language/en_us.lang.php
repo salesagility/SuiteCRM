@@ -112,6 +112,10 @@ $mod_strings = array(
     'LBL_LIST_DOCUMENT_NAME' => 'Document Name',
 
     'LBL_EDIT_BUTTON' => 'Edit ',
+    // STIC-Custom 20240214 JBL - QuickEdit view
+    // https://github.com/SinergiaTIC/SinergiaCRM/pull/93
+    'LBL_QUICKEDIT_BUTTON' => '↙ Edit',
+    // END STIC-Custom
     'LBL_REMOVE' => 'Remove',
 
 );

@@ -90,8 +90,12 @@ $mod_strings = array(
     'LBL_ANY_EMAIL' => 'Qualsevol correu electrònic',
     'LBL_EMAIL_NON_PRIMARY' => 'Correus electrònics no principals',
     'LBL_PHOTO' => 'Foto',
-    'LBL_EDIT_BUTTON' => 'Editar',
-    'LBL_REMOVE' => 'Eliminar',
+    'LBL_EDIT_BUTTON' => 'Edita',
+    // STIC-Custom 20240214 JBL - QuickEdit view
+    // https://github.com/SinergiaTIC/SinergiaCRM/pull/93
+    'LBL_QUICKEDIT_BUTTON' => '↙ Edita',
+    // END STIC-Custom
+    'LBL_REMOVE' => 'Desvincula',
 
     //Lawful Basis labels
     'LBL_LAWFUL_BASIS' => 'Base legal',

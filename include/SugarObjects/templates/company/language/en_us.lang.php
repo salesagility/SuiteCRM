@@ -125,6 +125,10 @@ $mod_strings = array(
     'NTC_DELETE_CONFIRMATION' => 'Are you sure you want to delete this record?',
 
     'LBL_EDIT_BUTTON' => 'Edit  ',
+    // STIC-Custom 20240214 JBL - QuickEdit view
+    // https://github.com/SinergiaTIC/SinergiaCRM/pull/93
+    'LBL_QUICKEDIT_BUTTON' => '↙ Edit',
+    // END STIC-Custom
     'LBL_REMOVE' => 'Remove',
 
 );
