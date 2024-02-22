@@ -1,10 +1,10 @@
 @font-face {
     font-family: "suitepicon";
-    src: url("suitepicon.eot?2c6ddfe25e907c60150077b1725589f2?#iefix") format("embedded-opentype"),
-url("suitepicon.woff2?2c6ddfe25e907c60150077b1725589f2") format("woff2"),
-url("suitepicon.woff?2c6ddfe25e907c60150077b1725589f2") format("woff"),
-url("suitepicon.ttf?2c6ddfe25e907c60150077b1725589f2") format("truetype"),
-url("suitepicon.svg?2c6ddfe25e907c60150077b1725589f2#suitepicon") format("svg");
+    src: url("suitepicon.eot?f00b514b5e8b047fc4f1fbe085abc98a?#iefix") format("embedded-opentype"),
+url("suitepicon.woff2?f00b514b5e8b047fc4f1fbe085abc98a") format("woff2"),
+url("suitepicon.woff?f00b514b5e8b047fc4f1fbe085abc98a") format("woff"),
+url("suitepicon.ttf?f00b514b5e8b047fc4f1fbe085abc98a") format("truetype"),
+url("suitepicon.svg?f00b514b5e8b047fc4f1fbe085abc98a#suitepicon") format("svg");
 }
 
 i[class^="suitepicon-"]:before, i[class*=" suitepicon-"]:before {
@@ -321,10 +321,10 @@ i[class^="suitepicon-"]:before, i[class*=" suitepicon-"]:before {
 .suitepicon-admin-module-loader:before {
     content: "\f165";
 }
-.suitepicon-admin-oauth2:before {
+.suitepicon-admin-oauth-keys:before {
     content: "\f166";
 }
-.suitepicon-admin-oauth-keys:before {
+.suitepicon-admin-oauth2:before {
     content: "\f167";
 }
 .suitepicon-admin-outbound-email:before {
@@ -483,16 +483,16 @@ i[class^="suitepicon-"]:before, i[class*=" suitepicon-"]:before {
 .suitepicon-module-campaigntrackers:before {
     content: "\f19b";
 }
-.suitepicon-module-cases:before {
+.suitepicon-module-case-updates:before {
     content: "\f19c";
 }
-.suitepicon-module-case-updates:before {
+.suitepicon-module-cases:before {
     content: "\f19d";
 }
-.suitepicon-module-companyc:before {
+.suitepicon-module-company:before {
     content: "\f19e";
 }
-.suitepicon-module-company:before {
+.suitepicon-module-companyc:before {
     content: "\f19f";
 }
 .suitepicon-module-contacts:before {
@@ -516,10 +516,10 @@ i[class^="suitepicon-"]:before, i[class*=" suitepicon-"]:before {
 .suitepicon-module-editview:before {
     content: "\f1a6";
 }
-.suitepicon-module-email-marketing2:before {
+.suitepicon-module-email-marketing:before {
     content: "\f1a7";
 }
-.suitepicon-module-email-marketing:before {
+.suitepicon-module-email-marketing2:before {
     content: "\f1a8";
 }
 .suitepicon-module-emails:before {
@@ -663,78 +663,81 @@ i[class^="suitepicon-"]:before, i[class*=" suitepicon-"]:before {
 .suitepicon-module-stic-job-offers:before {
     content: "\f1d7";
 }
-.suitepicon-module-stic-medication-log:before {
+.suitepicon-module-stic-journal:before {
     content: "\f1d8";
 }
-.suitepicon-module-stic-medication:before {
+.suitepicon-module-stic-medication-log:before {
     content: "\f1d9";
 }
-.suitepicon-module-stic-payment-commitments:before {
+.suitepicon-module-stic-medication:before {
     content: "\f1da";
 }
-.suitepicon-module-stic-payments-aggregated:before {
+.suitepicon-module-stic-payment-commitments:before {
     content: "\f1db";
 }
-.suitepicon-module-stic-payments:before {
+.suitepicon-module-stic-payments-aggregated:before {
     content: "\f1dc";
 }
-.suitepicon-module-stic-personal-environment:before {
+.suitepicon-module-stic-payments:before {
     content: "\f1dd";
 }
-.suitepicon-module-stic-prescription:before {
+.suitepicon-module-stic-personal-environment:before {
     content: "\f1de";
 }
-.suitepicon-module-stic-registrations:before {
+.suitepicon-module-stic-prescription:before {
     content: "\f1df";
 }
-.suitepicon-module-stic-remittances:before {
+.suitepicon-module-stic-registrations:before {
     content: "\f1e0";
 }
-.suitepicon-module-stic-resources:before {
+.suitepicon-module-stic-remittances:before {
     content: "\f1e1";
 }
-.suitepicon-module-stic-security-groups-rules:before {
+.suitepicon-module-stic-resources:before {
     content: "\f1e2";
 }
-.suitepicon-module-stic-sepe-actions:before {
+.suitepicon-module-stic-security-groups-rules:before {
     content: "\f1e3";
 }
-.suitepicon-module-stic-sepe-files:before {
+.suitepicon-module-stic-sepe-actions:before {
     content: "\f1e4";
 }
-.suitepicon-module-stic-sepe-incidents:before {
+.suitepicon-module-stic-sepe-files:before {
     content: "\f1e5";
 }
-.suitepicon-module-stic-sessions:before {
+.suitepicon-module-stic-sepe-incidents:before {
     content: "\f1e6";
 }
-.suitepicon-module-stic-validation-actions:before {
+.suitepicon-module-stic-sessions:before {
     content: "\f1e7";
 }
-.suitepicon-module-subpanels:before {
+.suitepicon-module-stic-validation-actions:before {
     content: "\f1e8";
 }
-.suitepicon-module-survey-responses:before {
+.suitepicon-module-subpanels:before {
     content: "\f1e9";
 }
-.suitepicon-module-surveys:before {
+.suitepicon-module-survey-responses:before {
     content: "\f1ea";
 }
-.suitepicon-module-targets:before {
+.suitepicon-module-surveys:before {
     content: "\f1eb";
 }
-.suitepicon-module-tasks:before {
+.suitepicon-module-targets:before {
     content: "\f1ec";
 }
-.suitepicon-module-users:before {
+.suitepicon-module-tasks:before {
     content: "\f1ed";
 }
-.suitepicon-template-company:before {
+.suitepicon-module-users:before {
     content: "\f1ee";
 }
-.suitepicon-template-file:before {
+.suitepicon-template-company:before {
     content: "\f1ef";
 }
-.suitepicon-template-issue:before {
+.suitepicon-template-file:before {
     content: "\f1f0";
+}
+.suitepicon-template-issue:before {
+    content: "\f1f1";
 }

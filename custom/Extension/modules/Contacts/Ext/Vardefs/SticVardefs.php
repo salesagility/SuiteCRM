@@ -2437,6 +2437,17 @@ $dictionary["Contact"]["fields"]["stic_centers_contactsstic_centers_ida"] = arra
     'vname' => 'LBL_STIC_CENTERS_CONTACTS_FROM_CONTACTS_TITLE',
 );
 
+// Journal Relationships
+$dictionary["Contact"]["fields"]["stic_journal_contacts"] = array(
+    'name' => 'stic_journal_contacts',
+    'type' => 'link',
+    'relationship' => 'stic_journal_contacts',
+    'source' => 'non-db',
+    'module' => 'stic_Journal',
+    'bean_name' => false,
+    'vname' => 'LBL_STIC_JOURNAL_CONTACTS_FROM_STIC_JOURNAL_TITLE',
+);
+
 // Modified properties in native fields
 $dictionary['Contact']['fields']['first_name']['massupdate'] = 0;
 $dictionary['Contact']['fields']['first_name']['merge_filter'] = 'selected';

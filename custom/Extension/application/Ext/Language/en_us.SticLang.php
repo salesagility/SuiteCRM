@@ -109,6 +109,7 @@ $app_list_strings['moduleList']['stic_Medication'] = 'Medicines';
 $app_list_strings['moduleList']['stic_Prescription'] = 'Prescriptions';
 $app_list_strings['moduleList']['stic_Grants'] = 'Grants';
 $app_list_strings['moduleList']['stic_Centers'] = 'Centers';
+$app_list_strings['moduleList']['stic_Journal'] = 'Journal';
 $app_list_strings['moduleList']['stic_Security_Groups_Rules'] = 'Security Groups Module Rules';
 $app_list_strings['moduleListSingular']['Accounts'] = 'Account';
 $app_list_strings['moduleListSingular']['Contacts'] = 'Contact';
@@ -142,6 +143,7 @@ $app_list_strings['moduleListSingular']['stic_Resources'] = 'Resource';
 $app_list_strings['moduleListSingular']['stic_Medication_Log'] = 'Medication Log';
 $app_list_strings['moduleListSingular']['stic_Medication'] = 'Medicine';
 $app_list_strings['moduleListSingular']['stic_Prescription'] = 'Prescription';
+$app_list_strings['moduleListSingular']['stic_Journal'] = 'Journal';
 $app_list_strings['moduleListSingular']['stic_Security_Groups_Rules'] = 'Security Groups Module Rule';
 $app_list_strings['parent_type_display']['Accounts'] = 'Accounts';
 $app_list_strings['parent_type_display']['Contacts'] = 'Contacts';
@@ -173,6 +175,7 @@ $app_list_strings['parent_type_display']['stic_Medication_Log'] = 'Medication Lo
 $app_list_strings['parent_type_display']['stic_Medication'] = 'Medicines';
 $app_list_strings['parent_type_display']['stic_Prescription'] = 'Prescriptions';
 $app_list_strings['parent_type_display']['stic_Centers'] = 'Centers';
+$app_list_strings['parent_type_display']['stic_Journal'] = 'Journal';
 $app_list_strings['record_type_display']['Accounts'] = 'Accounts';
 $app_list_strings['record_type_display']['Contacts'] = 'Contacts';
 $app_list_strings['record_type_display']['Leads'] = 'Leads';
@@ -204,6 +207,7 @@ $app_list_strings['record_type_display']['stic_Medication'] = 'Medicines';
 $app_list_strings['record_type_display']['stic_Prescription'] = 'Prescriptions';
 $app_list_strings['record_type_display']['stic_Grants'] = 'Grants';
 $app_list_strings['record_type_display']['stic_Centers'] = 'Centers';
+$app_list_strings['record_type_display']['stic_Journal'] = 'Journal';
 $app_list_strings['record_type_display_notes']['Accounts'] = 'Accounts';
 $app_list_strings['record_type_display_notes']['Contacts'] = 'Contacts';
 $app_list_strings['record_type_display_notes']['Leads'] = 'Leads';
@@ -235,6 +239,7 @@ $app_list_strings['record_type_display_notes']['stic_Medication'] = 'Medicines';
 $app_list_strings['record_type_display_notes']['stic_Prescription'] = 'Prescriptions';
 $app_list_strings['record_type_display_notes']['stic_Grants'] = 'Grants';
 $app_list_strings['record_type_display_notes']['stic_Centers'] = 'Centers';
+$app_list_strings['record_type_display_notes']['stic_Journal'] = 'Journal';
 
 // Current VAT percentages (IVA)
 $app_list_strings['vat_list']['21'] = '21%';
@@ -3170,6 +3175,51 @@ $app_list_strings['stic_centers_types_list']['residential'] = 'Residential';
 $app_list_strings['stic_centers_types_list']['attention_point'] = 'Attention point';
 $app_list_strings['stic_centers_types_list']['training'] = 'Training';
 $app_list_strings['stic_centers_types_list']['other'] = 'Other';
+
+// Journal: Type
+$app_list_strings['stic_journal_types_list'][''] = '';
+$app_list_strings['stic_journal_types_list']['journal'] = 'Journal';
+$app_list_strings['stic_journal_types_list']['incidence'] = 'Incidence';
+$app_list_strings['stic_journal_types_list']['followup'] = 'Follow up';
+$app_list_strings['stic_journal_types_list']['task'] = 'Task';
+$app_list_strings['stic_journal_types_list']['educational_measure'] = 'Educational measure';
+$app_list_strings['stic_journal_types_list']['infringement'] = 'Infringement';
+$app_list_strings['stic_journal_types_list']['other'] = 'Other';
+
+// Journal: Turns
+$app_list_strings['stic_journal_turns_list'][''] = '';
+$app_list_strings['stic_journal_turns_list']['morning'] = 'Morning';
+$app_list_strings['stic_journal_turns_list']['afternoon'] = 'Afternoon';
+$app_list_strings['stic_journal_turns_list']['night'] = 'Night';
+$app_list_strings['stic_journal_turns_list']['weekend'] = 'Weekend';
+
+// Journal: Tasks
+$app_list_strings['stic_journal_tasks_list']['house_cleaning'] = 'LHouse cleaning';
+$app_list_strings['stic_journal_tasks_list']['bathroom_cleaning'] = 'Bathroom cleaning';
+$app_list_strings['stic_journal_tasks_list']['shopping'] = 'Shopping';
+$app_list_strings['stic_journal_tasks_list']['homeworks'] = 'Do homeworks';
+$app_list_strings['stic_journal_tasks_list']['study'] = 'Study';
+$app_list_strings['stic_journal_tasks_list']['project'] = 'Do a project';
+$app_list_strings['stic_journal_tasks_list']['training'] = 'Training';
+$app_list_strings['stic_journal_tasks_list']['cash_count'] = 'Cash count';
+$app_list_strings['stic_journal_tasks_list']['invoices'] = 'Do invoices';
+
+// Journal: Scopes
+$app_list_strings['stic_journal_task_scopes_list']['household'] = 'Household';
+$app_list_strings['stic_journal_task_scopes_list']['educational'] = 'Educational';
+$app_list_strings['stic_journal_task_scopes_list']['workplace'] = 'Workplace';
+
+// Journal: Task Fulfillments
+$app_list_strings['stic_journal_task_fulfillments_list'][''] = '';
+$app_list_strings['stic_journal_task_fulfillments_list']['yes'] = 'Yes';
+$app_list_strings['stic_journal_task_fulfillments_list']['no'] = 'No';
+$app_list_strings['stic_journal_task_fulfillments_list']['partial'] = 'Partial';
+
+// Journal: Seriousness
+$app_list_strings['stic_journal_seriousness_list'][''] = '';
+$app_list_strings['stic_journal_seriousness_list']['slight'] = 'Slight';
+$app_list_strings['stic_journal_seriousness_list']['average'] = 'Average';
+$app_list_strings['stic_journal_seriousness_list']['serious'] = 'Serious';
 
 // SuiteCRM Core modifications
 

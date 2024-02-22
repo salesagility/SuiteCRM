@@ -84,6 +84,7 @@ $GLOBALS['tabStructure'] = array(
             6 => 'stic_Medication',
             7 => 'stic_Prescription',
             8 => 'stic_Medication_Log',
+            9 => 'stic_Journal',
         ),
     ),
     'LBL_GROUPTAB_LABOURINSERTION' => array(
