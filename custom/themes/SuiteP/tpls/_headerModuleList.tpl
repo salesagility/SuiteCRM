@@ -976,6 +976,69 @@
                             {/foreach}
                         </ul>
                     </div>
+
+                    {* 
+                        STIC-Custom - ART - 20240216 - Sidebar Admin Actions
+                        https://github.com/SinergiaTIC/SinergiaCRM/pull/124
+                    *}
+                    {literal}
+                        <script>
+                            $(document).ready(function() {
+                                if($('#admin_link').length == 1) {
+                                    $('#admin_actions').show();
+                                } else {
+                                    $('#admin_actions').hide();
+                                }
+                            });
+                        </script>
+                    {/literal}
+                        <div id='admin_actions' class="actionMenuSidebar" hidden>
+                        <h2 class="admin_actions_title">{sugar_translate module="Administration" label="LBL_ADMIN_ACTIONS"}</h2>
+                            <ul>
+                                <li class="actionmenulinks" role="presentation">
+                                    <a href="./index.php?module=Administration">
+                                        <div class="side-bar-action-icon">
+                                            <span class="suitepicon suitepicon-module-administration"></span>
+                                        </div>
+                                        <div class="actionmenulink">
+                                            {sugar_translate module="Administration" label="LBL_MODULE_NAME"}
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="actionmenulinks" role="presentation">
+                                    <a href="./index.php?module=ModuleBuilder&action=index&type=studio" target="_blank" >
+                                        <div class="side-bar-action-icon">
+                                            <span class="suitepicon suitepicon-admin-studio"></span>
+                                        </div>
+                                        <div class="actionmenulink">
+                                            {sugar_translate module="Administration" label="LBL_STUDIO"}
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="actionmenulinks" role="presentation">
+                                    <a href="./index.php?module=Administration&action=Upgrade" target="_blank">
+                                        <div class="side-bar-action-icon">
+                                            <span class="suitepicon suitepicon-admin-repair"></span>
+                                        </div>
+                                        <div class="actionmenulink">
+                                            {sugar_translate module="Administration" label="LBL_UPGRADE_TITLE"}
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="actionmenulinks" role="presentation">
+                                    <a href="./index.php?module=Configurator&action=EditView">
+                                        <div class="side-bar-action-icon">
+                                            <span class="suitepicon suitepicon-admin-system-settings"></span>
+                                        </div>
+                                        <div class="actionmenulink">
+                                            {sugar_translate module="Configurator" label="LBL_MODULE_NAME"}
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    {* END STIC-Custom *}
+
                 </div>
                 <!--</div>-->
             </div>

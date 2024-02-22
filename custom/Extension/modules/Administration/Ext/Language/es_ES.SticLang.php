@@ -45,3 +45,4 @@ $mod_strings['LBL_STIC_TEST_DATA_REMOVE_LINK_TITLE'] = 'Eliminar el conjunto de 
 $mod_strings['LBL_STIC_TEST_DATA_REMOVE_DESCRIPTION'] = 'Eliminar el conjunto de datos de prueba previamente cargado.';
 $mod_strings['LBL_STIC_TEST_DATA_REMOVE_SUCCESS'] = 'Se han eliminado los datos de prueba correctamente.';
 $mod_strings['LBL_STIC_TEST_DATA_REMOVE_ERROR'] = 'Se han producido errores al eliminar los datos de prueba. Revise el <a target="_blank" href="index.php?action=LogView&module=Configurator&doaction=all&filter=action_removeSticData">log</a>.';
+$mod_strings['LBL_ADMIN_ACTIONS'] = 'Acciones de Administración';
