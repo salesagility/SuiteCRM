@@ -90,7 +90,7 @@ function set_{{$idname}}_values(form) {ldelim}
 {{/if}}
 <script type="text/javascript" src="{sugar_getjspath file="include/SugarFields/Fields/Datetimecombo/Datetimecombo.js"}"></script>
 <script type="text/javascript">
-var combo_{{$idname}} = new Datetimecombo("{$fields[{{sugarvar key='name' stringFormat=true}}].value}", "{{$idname}}", "{$TIME_FORMAT}", "{{$tabindex}}", '{{$displayParams.showNoneCheckbox}}', false, true);
+var combo_{{$idname}} = new Datetimecombo("{$fields[{{sugarvar key='name' stringFormat=true}}].value}", "{{$idname}}", "{$TIME_FORMAT}", "{{$tabindex}}", '{{$displayParams.showNoneCheckbox}}', false, true, "{$fields[{{sugarvar key='name' stringFormat=true}}].display_default}");
 //Render the remaining widget fields
 text = combo_{{$idname}}.html('{{$displayParams.updateCallback}}');
 document.getElementById('{{$idname}}_time_section').innerHTML = text;

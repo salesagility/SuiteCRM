@@ -117,5 +117,29 @@
 addToValidateBinaryDependency('popup_form',"defaultDate_date", 'alpha', false, "{$APP.ERR_MISSING_REQUIRED_FIELDS} {$APP.LBL_DATE} {$APP.LBL_OR} {$APP.LBL_HOURS}" ,"defaultTime_hours");
 addToValidateBinaryDependency('popup_form',"defaultTime_hours", 'alpha', false, "{$APP.ERR_MISSING_REQUIRED_FIELDS} {$APP.LBL_HOURS} {$APP.LBL_OR} {$APP.LBL_MINUTES}" ,"defaultTime_minutes");
 addToValidateBinaryDependency('popup_form', "defaultTime_minutes", 'alpha', false, "{$APP.ERR_MISSING_REQUIRED_FIELDS} {$APP.LBL_MINUTES} {$APP.LBL_OR} {$APP.LBL_MERIDIEM}","defaultTime_meridiem");
+
+{literal}
+	toggleDateValidation();
+	$('#defaultDate_date', 'form').on("change", function() {
+		toggleDateValidation();
+	});
+	function toggleDateValidation() {
+		if ($('#defaultDate_date', 'form').val() == 'now' || $('#defaultDate_date', 'form').val() == '') {
+			removeFromValidate('popup_form', "defaultDate_date");
+			$('#defaultTime_hours').parent().closest('tr').hide();
+			$('#defaultTime_hours').val('');
+			$('#defaultTime_minutes').val('');
+			$('#defaultTime').val('');
+		} else {
+			$('#defaultTime_hours').parent().closest('tr').show();
+			{/literal}
+			addToValidateBinaryDependency('popup_form',"defaultDate_date", 'alpha', false, "{$APP.ERR_MISSING_REQUIRED_FIELDS} {$APP.LBL_DATE} {$APP.LBL_OR} {$APP.LBL_HOURS}" ,"defaultTime_hours");
+			addToValidateBinaryDependency('popup_form',"defaultTime_hours", 'alpha', false, "{$APP.ERR_MISSING_REQUIRED_FIELDS} {$APP.LBL_HOURS} {$APP.LBL_OR} {$APP.LBL_MINUTES}" ,"defaultTime_minutes");
+			addToValidateBinaryDependency('popup_form', "defaultTime_minutes", 'alpha', false, "{$APP.ERR_MISSING_REQUIRED_FIELDS} {$APP.LBL_MINUTES} {$APP.LBL_OR} {$APP.LBL_MERIDIEM}","defaultTime_meridiem");
+			{literal}
+		}
+	}
+{/literal}
+
 </script>
 {include file="modules/DynamicFields/templates/Fields/Forms/coreBottom.tpl"}
