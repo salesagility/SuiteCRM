@@ -696,6 +696,18 @@ class AOR_Report extends Basic
             $fields[$label]['total'] = $field->total;
             $fields[$label]['format'] = $field->format;
             $fields[$label]['params'] = [];
+            // calculate total of all rows for use in summary
+            if(!empty($field->total)&&$field->total!='COUNT'){
+                $count_sql = explode('ORDER BY', $report_sql);
+                $count_query = "SELECT sum(n.`$label`) c FROM (" . $count_sql[0] . ') as n';
+                $result = $this->db->query($count_query);
+                $assoc = $this->db->fetchByAssoc($result);
+                if (!empty($assoc['c'])) {
+                    $fields[ $label]['field_total']= $assoc['c'];
+                }
+            }
+            // count is same as all rows count
+            $fields[ $label]['field_count']=$total_rows;
 
 
             if ($fields[$label]['display']) {
@@ -964,7 +976,19 @@ class AOR_Report extends Basic
             }
             if ($field['total'] && isset($totals[$label])) {
                 $type = $field['total'];
-                $total = $this->calculateTotal($type, $totals[$label]);
+                //$total = $this->calculateTotal($type, $totals[$label]);
+                //Calculating summary based on all rows
+                switch ($type) {
+                    case 'SUM':
+                        $total= $field['field_total'];
+                        break;
+                    case 'COUNT':
+                        $total= $field['field_count'];
+                        break;
+                    case 'AVG':
+                        $total= $field['field_total']/$field['field_count'];
+                        break;
+                }
                 $params = isset($field['params']) ? $field['params'] : [];
                 switch ($type) {
                     case 'SUM':
