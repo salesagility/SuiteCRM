@@ -246,11 +246,25 @@ class BeanManager
      */
     public function countRecords($module, $where)
     {
+        $table_name = $this->newBeanSafe($module)->getTableName();
+        $table_name_cstm = $this->newBeanSafe($module)->get_custom_table_name();
+
+        $join = '';
+        if ($this->db->tableExists($table_name_cstm)) {
+            $join = sprintf(
+                'LEFT JOIN %s on (%s.id = %s.id_c)',
+                $table_name_cstm,
+                $table_name,
+                $table_name_cstm,
+            );
+        }
+
         $rowCount = $this->db->fetchRow(
             $this->db->query(
                 sprintf(
-                    "SELECT COUNT(*) AS cnt FROM %s %s",
-                    $this->newBeanSafe($module)->getTableName(),
+                    "SELECT COUNT(*) AS cnt FROM %s %s %s",
+                    $table_name,
+                    $join,
                     $where === '' ? '' : 'WHERE ' .  $where
                 )
             )
