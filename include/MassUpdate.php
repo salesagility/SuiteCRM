@@ -601,7 +601,7 @@ eoq;
                             break;
                         case "datetimecombo":
                             $even = !$even;
-                            $newhtml .= $this->addDatetime($displayname, $field["name"]);
+                            $newhtml .= $this->addDatetime($displayname, $field["name"],$field["display_default"]);
                             break;
                         case "datetime":
                         case "date":
@@ -1296,7 +1296,7 @@ EOQ;
      * @param displayname Name to display in the popup window
      * @param varname name of the variable
      */
-    public function addDatetime($displayname, $varname)
+    public function addDatetime($displayname, $varname, $fieldtimeformat)
     {
         global $timedate, $app_strings, $app_list_strings, $theme, $current_user;
         $userformat = $timedate->get_user_time_format();
@@ -1318,7 +1318,7 @@ EOQ;
 		<input type="hidden" id="{$varname}" name="{$varname}">
 		$dtscript
 		<script type="text/javascript">
-		var combo_{$varname} = new Datetimecombo(" ", "$varname", "$userformat", '','','',1);
+        var combo_{$varname} = new Datetimecombo(" ", "$varname", "$userformat", '','','',1,"$fieldtimeformat");
 		//Render the remaining widget fields
 		text = combo_{$varname}.html('');
 		document.getElementById('{$varname}_time_section').innerHTML = text;

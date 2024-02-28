@@ -54,7 +54,8 @@
  * @param tabindex
  * @allowEmptyHM - if this param was set true , the hour and minute select field will has an empty option.
  */
-function Datetimecombo (datetime, field, timeformat, tabindex, showCheckbox, checked, allowEmptyHM) {
+function Datetimecombo (datetime, field, timeformat, tabindex, showCheckbox, checked, allowEmptyHM, defaultValue = "") {
+    this.defaultValue = defaultValue;
     this.datetime = datetime;
     this.allowEmptyHM = allowEmptyHM;
     if(typeof this.datetime == "undefined" || datetime == '' || trim(datetime).length < 10) {
@@ -92,36 +93,6 @@ function Datetimecombo (datetime, field, timeformat, tabindex, showCheckbox, che
     this.showCheckbox = showCheckbox;
     this.checked = parseInt(checked);
     YAHOO.util.Selector.query('input#' + this.fieldname + '_date')[0].value = this.datetime;
-
-    //A safety scan to make sure hrs and minutes are formatted correctly
-	if (this.mins > 0 && this.mins < 15) {
-		this.mins = 15;
-	} else if (this.mins > 15 && this.mins < 30) {
-		this.mins = 30;
-	} else if (this.mins > 30 && this.mins < 45) {
-		this.mins = 45;
-	} else if (this.mins > 45) {
-		this.hrs += 1;
-		this.mins = 0;
-		if(this.hasMeridiem && this.hrs == 12) {
-			if(this.meridiem == "pm" || this.meridiem == "am") {
-				if(this.meridiem == "pm") {
-					this.meridiem = "am";
-				} else {
-					this.meridiem = "pm";
-				}
-			} else {
-				if(this.meridiem == "PM") {
-					this.meridiem = "AM";
-				} else {
-					this.meridiem = "PM";
-				}
-			}
-		}
-		if (this.hasMeridiem && this.hrs > 12) {
-			this.hrs = this.hrs - 12;
-		}
-	} //if-else
 
 }
 
@@ -185,10 +156,17 @@ Datetimecombo.prototype.html = function(callback) {
 	if(this.allowEmptyHM){
 		text += '\n<option></option>';
 	}
-	text += '\n<option value="00" ' + (this.mins == 0 ? "SELECTED" : "") + '>00</option>';
-	text += '\n<option value="15" ' + (this.mins == 15 ? "SELECTED" : "") + '>15</option>';
-	text += '\n<option value="30" ' + (this.mins == 30 ? "SELECTED" : "") + '>30</option>';
-	text += '\n<option value="45" ' + (this.mins == 45 ? "SELECTED" : "") + '>45</option>';
+    var minuteSteps = 15; 
+
+	if (typeof SUGAR.config.datetime_combo_minute_interval !== 'undefined') {
+		minuteSteps = parseInt(SUGAR.config.datetime_combo_minute_interval);   
+	}
+    if (this.defaultValue.includes('now')) {
+        minuteSteps = 1;
+   }
+    for (i = 0; i < 60; i += minuteSteps) {
+        text += '\n<option value="' + (i < 10 ? '0' : '') + i + '" ' + (this.mins == i ? "SELECTED" : "") + '>' + (i < 10 ? '0' : '') + i + '</option>';
+    }
 	text += '\n</select>';
 	
 	if(this.hasMeridiem) {
