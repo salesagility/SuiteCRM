@@ -22,6 +22,7 @@ class AORReportsDashlet extends Dashlet
         parent::__construct($id);
         $this->isConfigurable = true;
         $this->def = $def;
+
         if (empty($def['dashletTitle'])) {
             $this->title = translate('LBL_AOR_REPORTS_DASHLET', 'AOR_Reports');
         } else {
@@ -29,6 +30,7 @@ class AORReportsDashlet extends Dashlet
         }
 
         $this->params = array();
+
         if (!empty($def['parameter_id'])) {
             foreach ($def['parameter_id'] as $key => $parameterId) {
                 $this->params[$parameterId] = array(
@@ -39,10 +41,16 @@ class AORReportsDashlet extends Dashlet
                 );
             }
         }
+
         if (!empty($def['aor_report_id'])) {
-            $this->report = BeanFactory::getBean('AOR_Reports', $def['aor_report_id']);
-            $this->report->user_parameters = $this->params;
+            $report = BeanFactory::getBean('AOR_Reports', $def['aor_report_id']);
+
+            if ($report) {
+                $this->report = $report;
+                $this->report->user_parameters = $this->params;
+            }
         }
+
         $this->onlyCharts = !empty($def['onlyCharts']);
         $this->charts = !empty($def['charts']) ? $def['charts'] : array();
     }
@@ -55,7 +63,7 @@ class AORReportsDashlet extends Dashlet
         $dashletTemplate = get_custom_file_if_exists('modules/AOR_Reports/Dashlets/AORReportsDashlet/dashlet.tpl');
         $dashletSmarty->assign('MOD', $mod_strings);
         $dashletSmarty->assign('dashlet_id', $this->id);
-        $dashletSmarty->assign('report_id', $this->report->id);
+        $dashletSmarty->assign('report_id', $this->report ? $this->report->id : null);
         $dashletSmarty->assign('chartHTML', $this->getChartHTML());
         $dashletSmarty->assign('onlyCharts', $this->onlyCharts);
         $dashletSmarty->assign('parameters', json_encode(array(
@@ -70,12 +78,11 @@ class AORReportsDashlet extends Dashlet
 
     public function getChartHTML()
     {
-        if (!empty($this->report->id)) {
-            //return $this->report->build_report_chart($this->charts, AOR_Report::CHART_TYPE_CHARTJS);
-            return $this->report->build_report_chart($this->charts, AOR_Report::CHART_TYPE_RGRAPH);
-        } else {
+        if (!$this->report) {
             return '';
         }
+
+        return $this->report->build_report_chart($this->charts, AOR_Report::CHART_TYPE_RGRAPH);
     }
 
     public function process()
@@ -91,8 +98,8 @@ class AORReportsDashlet extends Dashlet
         $optionsSmarty->assign('MOD', $mod_strings);
         $optionsSmarty->assign('id', $this->id);
         $optionsSmarty->assign('dashletTitle', $this->title);
-        $optionsSmarty->assign('aor_report_id', $this->report->id);
-        $optionsSmarty->assign('aor_report_name', $this->report->name);
+        $optionsSmarty->assign('aor_report_id', $this->report ? $this->report->id : null);
+        $optionsSmarty->assign('aor_report_name', $this->report ? $this->report->name : '');
         $optionsSmarty->assign('onlyCharts', $this->onlyCharts);
         $optionsSmarty->assign('aor_date_options', $app_list_strings['aor_date_options']);
         $optionsSmarty->assign('aor_condition_type_list', $app_list_strings['aor_condition_type_list']);
@@ -101,22 +108,28 @@ class AORReportsDashlet extends Dashlet
         $optionsSmarty->assign('date_time_period_list', $app_list_strings['date_time_period_list']);
 
         $charts = array();
-        if (!empty($this->report->id)) {
+        $conditions = array();
+
+        if ($this->report) {
             foreach ($this->report->get_linked_beans('aor_charts', 'AOR_Charts') as $chart) {
                 $charts[$chart->id] = $chart->name;
             }
-        }
-        $conditions = getConditionsAsParameters($this->report, $this->params);
-        $i = 0;
-        foreach ($conditions as $condition) {
-            if ($condition["value_type"] == "Date") {
-                if ($condition["additionalConditions"][0] == "now") {
+
+            $conditions = getConditionsAsParameters($this->report, $this->params);
+            $i = 0;
+
+            foreach ($conditions as $condition) {
+                if (
+                    ($condition["value_type"] == "Date")
+                    && ($condition["additionalConditions"][0] == "now")
+                ) {
                     $conditions[$i]["value"] = date("d/m/Y");
                 }
-            }
 
-            $i++;
+                $i++;
+            }
         }
+
         $optionsSmarty->assign('parameters', $conditions);
         $chartOptions = get_select_options_with_id($charts, $this->charts);
         $optionsSmarty->assign('chartOptions', $chartOptions);
