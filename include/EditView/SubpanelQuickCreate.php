@@ -60,6 +60,19 @@ class SubpanelQuickCreate
 
     public function __construct($module, $view='QuickCreate', $proccessOverride = false)
     {
+        echo <<<EOHTML
+    <script>
+        $(document).ready(function() {
+            $('#form_SubpanelQuickCreate_{$module} input[title="Save"]').on('click', function(event) {
+                $('#form_SubpanelQuickCreate_{$module} input[title="Save"]').css({
+                    'height': '32px',
+                    'background-color': '#F08377',
+                    'margin-top': 'auto'
+                });
+            });
+        });
+    </script>
+EOHTML;
         $this->viewType = $view;
 
         //treat quickedit and quickcreate views as the same
