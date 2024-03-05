@@ -99,7 +99,8 @@ class SugarFieldCurrency extends SugarFieldFloat
 
         if (isset($vardef['len'])) {
             // check for field length
-            $value = sugar_substr($value, $vardef['len']);
+            $length = explode(',', $vardef['len']);
+            $value = sugar_substr($value, $length[0]);
         }
 
         return $value;
