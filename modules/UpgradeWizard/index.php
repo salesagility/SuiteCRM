@@ -294,6 +294,7 @@ if ($upgradeStepFile == 'end') {
     //}
 }
 
+$additionalStep = $_REQUEST['additional_step'] ?? false;
 if (!isset($additionalStep) || !$additionalStep) {
     require('modules/UpgradeWizard/' . $upgradeStepFile . '.php');
 }
@@ -506,7 +507,6 @@ function getSelectedModulesForLayoutMerge()
 eoq;
 
 // If we are on step  4 then force a redirect to run again to pick up changes to smarty before setting the template.
-$additionalStep = $_REQUEST['additional_step'] ?? false;
 if ($_REQUEST['step'] === '4' && !$additionalStep) {
     // Set session variables
     $_SESSION['UW_MAIN'] = $uwMain;
