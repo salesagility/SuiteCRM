@@ -141,7 +141,13 @@ class SearchResultsController extends Controller
         $smarty->assign('results', $this->results);
         $smarty->assign('APP', $app_strings);
         try {
-            $smarty->assign('resultsAsBean', $this->results->getHitsAsBeans());
+            $hitsAsBeans = $this->results->getHitsAsBeans();
+            foreach($hitsAsBeans as $module => $bean){
+                $moduleName[$bean[0]->module_name] = translate('LBL_MODULE_NAME', $bean[0]->module_name);
+            }
+            $smarty->assign('moduleLabel', $moduleName);
+
+            $smarty->assign('resultsAsBean', $hitsAsBeans);
         } catch (\SuiteCRM\Exception\Exception $e) {
             LoggerManager::getLogger()->fatal("Failed to retrieve ElasticSearch options");
         }
