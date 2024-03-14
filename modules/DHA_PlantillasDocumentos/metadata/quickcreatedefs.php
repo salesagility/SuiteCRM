@@ -21,8 +21,8 @@
  * You can contact Izertis at email address info@izertis.com.
  */
 
-// Tiene que ser un require, no require_once para que funcione en el studio (si no es asi, al pinchar en etiquetas da un error). 
-// Ver la funcion __construct de GridLayoutMetaDataParser.php y la funcion _loadFromFile de AbstractMetaDataImplementation.php
+// It has to be a require and not a require_once for it to work in studio (if not, clicking on labels gives an error).
+// See the __construct function of GridLayoutMetaDataParser.php and the _loadFromFile function of AbstractMetaDataImplementation.php
 require ('modules/DHA_PlantillasDocumentos/metadata/editviewdefs.php');
 
 $viewdefs ['DHA_PlantillasDocumentos']['QuickCreate'] = $viewdefs ['DHA_PlantillasDocumentos']['EditView'];  

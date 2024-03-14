@@ -52,3 +52,4 @@ $dictionary['Campaign']['fields']['status']['massupdate'] = 1;
 $dictionary['Campaign']['fields']['campaign_type']['massupdate'] = 1;
 $dictionary['Campaign']['fields']['frequency']['massupdate'] = 1;
 
+$dictionary['Campaign']['unified_search_default_enabled'] = true;

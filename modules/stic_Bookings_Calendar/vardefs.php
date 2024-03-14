@@ -29,7 +29,8 @@ $dictionary['stic_Bookings_Calendar'] = array(
     'relationships' => array(
     ),
     'optimistic_locking' => true,
-    'unified_search' => true,
+    'unified_search' => false,
+    'unified_search_default_enabled' => false,
 );
 if (!class_exists('VardefManager')) {
     require_once 'include/SugarObjects/VardefManager.php';

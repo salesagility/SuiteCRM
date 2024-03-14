@@ -135,6 +135,7 @@ $dictionary['stic_Validation_Actions'] = array(
     ),
     'optimistic_locking' => 1,
     'unified_search' => 1,
+    'unified_search_default_enabled' => false,
 );
 if (!class_exists('VardefManager')) {
     require_once 'include/SugarObjects/VardefManager.php';

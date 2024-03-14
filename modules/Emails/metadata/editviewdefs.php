@@ -1,11 +1,13 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
  * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -27,42 +29,100 @@
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
  *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ * 
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * SugarCRM" logo, "Supercharged by SuiteCRM" logo and “Nonprofitized by SinergiaCRM” logo. 
+ * If the display of the logos is not reasonably feasible for technical reasons, 
+ * the Appropriate Legal Notices must display the words "Powered by SugarCRM", 
+ * "Supercharged by SuiteCRM" and “Nonprofitized by SinergiaCRM”. 
  */
 
 $module_name = 'Emails';
-$viewdefs[$module_name]['EditView'] = array(
-    'templateMeta' => array(
-        'maxColumns' => '2',
-        'widths' => array(
-            array('label' => '10', 'field' => '30'),
-            array('label' => '10', 'field' => '30')
+
+// STIC-Custom - MHP - 20240201 - Override the core metadata files with the custom metadata files 
+// https://github.com/SinergiaTIC/SinergiaCRM/pull/105 
+// $viewdefs[$module_name]['EditView'] = array(
+//     'templateMeta' => array(
+//         'maxColumns' => '2',
+//         'widths' => array(
+//             array('label' => '10', 'field' => '30'),
+//             array('label' => '10', 'field' => '30')
+//         ),
+//     ),
+//     'panels' => array(
+//         'LBL_EMAIL_INFORMATION' => array(
+//             array(
+//                 'assigned_user_name' => array(
+//                     'name' => 'assigned_user_name',
+//                     'label' => 'LBL_ASSIGNED_TO',
+//                 )
+//             ),
+//             array(
+//                 'parent_name'
+//             ),
+//             array(
+//                 'category_id',
+//             ),
+//         )
+//     )
+// );
+
+$viewdefs [$module_name] = 
+array (
+  'EditView' => 
+  array (
+    'templateMeta' => 
+    array (
+      'maxColumns' => '2',
+      'widths' => 
+      array (
+        0 => 
+        array (
+          'label' => '10',
+          'field' => '30',
         ),
+        1 => 
+        array (
+          'label' => '10',
+          'field' => '30',
+        ),
+      ),
+      'useTabs' => true,
+      'tabDefs' => 
+      array (
+        'LBL_EMAIL_INFORMATION' => 
+        array (
+          'newTab' => true,
+          'panelDefault' => 'expanded',
+        ),
+      ),
     ),
-    'panels' => array(
-
-        'LBL_EMAIL_INFORMATION' => array(
-            array(
-                'assigned_user_name' => array(
-                    'name' => 'assigned_user_name',
-                    'label' => 'LBL_ASSIGNED_TO',
-                )
-            ),
-            array(
-                'parent_name'
-            ),
-            array(
-                'category_id',
-            ),
-        )
-    )
-
+    'panels' => 
+    array (
+      'LBL_EMAIL_INFORMATION' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'assigned_user_name',
+            'label' => 'LBL_ASSIGNED_TO',
+          ),
+          1 => 'parent_name',
+        ),
+        1 => 
+        array (
+          0 => 'category_id',
+          1 => '',
+        ),
+      ),
+    ),
+  ),
 );
+// END STIC-Custom

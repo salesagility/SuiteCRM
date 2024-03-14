@@ -167,5 +167,6 @@ $dictionary['Project']['fields']['estimated_end_date']['massupdate'] = 1;
 $dictionary['Project']['fields']['status']['massupdate'] = 1;
 $dictionary['Project']['fields']['priority']['massupdate'] = 1;
 $dictionary['Project']['fields']['override_business_hours']['massupdate'] = 1;
-
 $dictionary['Project']['fields']['assigned_user_id']['massupdate'] = 1;
+
+$dictionary['Project']['unified_search_default_enabled'] = true;

@@ -442,6 +442,8 @@ $dictionary['stic_Prescription'] = array(
 ),
     'optimistic_locking' => true,
     'unified_search' => true,
+    'full_text_search' => false,    
+    'unified_search_default_enabled' => false,    
 );
 if (!class_exists('VardefManager')) {
         require_once('include/SugarObjects/VardefManager.php');

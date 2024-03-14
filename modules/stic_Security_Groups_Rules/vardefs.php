@@ -224,6 +224,7 @@ $dictionary['stic_Security_Groups_Rules'] = array(
     ),
     'optimistic_locking' => true,
     'unified_search' => true,
+    'unified_search_default_enabled' => false,
 );
 if (!class_exists('VardefManager')) {
     require_once 'include/SugarObjects/VardefManager.php';

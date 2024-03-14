@@ -277,6 +277,7 @@ $dictionary['stic_Validation_Results'] = array(
     ),
     'optimistic_locking' => true,
     'unified_search' => true,
+    'unified_search_default_enabled' => false,
 );
 
 if (!class_exists('VardefManager')) {

@@ -30,3 +30,5 @@ $dictionary['ProspectList']['fields']['marketing_id']['massupdate'] = false;
 $dictionary['ProspectList']['fields']['marketing_name']['massupdate'] = false;
 $dictionary['ProspectList']['fields']['name']['massupdate'] = false;
 $dictionary['ProspectList']['fields']['description']['rows'] = 2;
+
+$dictionary['ProspectList']['unified_search_default_enabled'] = false;

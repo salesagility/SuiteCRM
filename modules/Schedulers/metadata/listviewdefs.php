@@ -3,12 +3,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
  * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -30,47 +32,94 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
  *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ * 
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * SugarCRM" logo, "Supercharged by SuiteCRM" logo and “Nonprofitized by SinergiaCRM” logo. 
+ * If the display of the logos is not reasonably feasible for technical reasons, 
+ * the Appropriate Legal Notices must display the words "Powered by SugarCRM", 
+ * "Supercharged by SuiteCRM" and “Nonprofitized by SinergiaCRM”. 
  */
 
+// STIC-Custom - MHP - 20240201 - Override the core metadata files with the custom metadata files 
+// https://github.com/SinergiaTIC/SinergiaCRM/pull/105 
+// $listViewDefs ['Schedulers'] =
+// array(
+//   'NAME' =>
+//   array(
+//     'width' => '35%',
+//     'label' => 'LBL_LIST_NAME',
+//     'link' => true,
+//     'sortable' => true,
+//     'default' => true,
+//   ),
+//   'JOB_INTERVAL' =>
+//   array(
+//     'width' => '20%',
+//     'label' => 'LBL_LIST_JOB_INTERVAL',
+//     'default' => true,
+//     'sortable' => false,
+//   ),
+//   'DATE_TIME_START' =>
+//   array(
+//     'width' => '25%',
+//     'label' => 'LBL_LIST_RANGE',
+//     'customCode' => '{$DATE_TIME_START} - {$DATE_TIME_END}',
+//     'default' => true,
+//     'related_fields' => array('date_time_end'),
+//   ),
+//   'STATUS' =>
+//   array(
+//     'width' => '15%',
+//     'label' => 'LBL_LIST_STATUS',
+//     'default' => true,
+//   ),
+// );
 
-$listViewDefs ['Schedulers'] =
-array(
-  'NAME' =>
-  array(
+$listViewDefs['Schedulers'] = array (
+  'NAME' => 
+  array (
     'width' => '35%',
     'label' => 'LBL_LIST_NAME',
     'link' => true,
     'sortable' => true,
     'default' => true,
   ),
-  'JOB_INTERVAL' =>
-  array(
+  'JOB_INTERVAL' => 
+  array (
     'width' => '20%',
     'label' => 'LBL_LIST_JOB_INTERVAL',
     'default' => true,
     'sortable' => false,
   ),
-  'DATE_TIME_START' =>
-  array(
+  'DATE_TIME_START' => 
+  array (
     'width' => '25%',
     'label' => 'LBL_LIST_RANGE',
     'customCode' => '{$DATE_TIME_START} - {$DATE_TIME_END}',
     'default' => true,
-    'related_fields' => array('date_time_end'),
+    'related_fields' => 
+    array (
+      0 => 'date_time_end',
+    ),
   ),
-  'STATUS' =>
-  array(
+  'STATUS' => 
+  array (
     'width' => '15%',
     'label' => 'LBL_LIST_STATUS',
     'default' => true,
   ),
+  'LAST_RUN' => 
+  array (
+    'type' => 'datetime',
+    'label' => 'LBL_LAST_RUN',
+    'width' => '10%',
+    'default' => true,
+  ),
 );
+// END STIC-Custom

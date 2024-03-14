@@ -52,3 +52,5 @@ $dictionary['Task']['fields']['date_start']['massupdate']='1';
 $dictionary['Task']['fields']['date_due']['massupdate']='1';
 $dictionary['Task']['fields']['contact_name']['massupdate']='1';
 $dictionary['Task']['fields']['priority']['massupdate']='1';
+
+$dictionary['Task']['unified_search_default_enabled'] = true;

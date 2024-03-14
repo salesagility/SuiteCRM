@@ -3,12 +3,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
  * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -30,126 +32,244 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
  *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ * 
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * SugarCRM" logo, "Supercharged by SuiteCRM" logo and “Nonprofitized by SinergiaCRM” logo. 
+ * If the display of the logos is not reasonably feasible for technical reasons, 
+ * the Appropriate Legal Notices must display the words "Powered by SugarCRM", 
+ * "Supercharged by SuiteCRM" and “Nonprofitized by SinergiaCRM”. 
  */
 
+// STIC-Custom - MHP - 20240201 - Override the core metadata files with the custom metadata files 
+// https://github.com/SinergiaTIC/SinergiaCRM/pull/105 
+// $popupMeta = array(
+//     'moduleMain' => 'Lead',
+//     'varName' => 'LEAD',
+//     'orderBy' => 'last_name, first_name',
+//     'whereClauses' => array(
+//         'first_name' => 'leads.first_name',
+//         'last_name' => 'leads.last_name',
+//         'lead_source' => 'leads.lead_source',
+//         'status' => 'leads.status',
+//         'account_name' => 'leads.account_name',
+//         'assigned_user_id' => 'leads.assigned_user_id',
+//     ),
+//     'searchInputs' => array(
+//       0 => 'first_name',
+//       1 => 'last_name',
+//       2 => 'lead_source',
+//       3 => 'status',
+//       4 => 'account_name',
+//       5 => 'assigned_user_id',
+//     ),
+//     'searchdefs' => array(
+//       'first_name' =>
+//       array(
+//         'name' => 'first_name',
+//         'width' => '10%',
+//       ),
+//       'last_name' =>
+//       array(
+//         'name' => 'last_name',
+//         'width' => '10%',
+//       ),
+//       'email',
+//       'account_name' =>
+//       array(
+//         'type' => 'varchar',
+//         'label' => 'LBL_ACCOUNT_NAME',
+//         'width' => '10%',
+//         'name' => 'account_name',
+//       ),
+//       'lead_source' =>
+//       array(
+//         'name' => 'lead_source',
+//         'width' => '10%',
+//       ),
+//       'status' =>
+//       array(
+//         'name' => 'status',
+//         'width' => '10%',
+//       ),
+//       'assigned_user_id' =>
+//       array(
+//         'name' => 'assigned_user_id',
+//         'type' => 'enum',
+//         'label' => 'LBL_ASSIGNED_TO',
+//         'function' =>
+//         array(
+//           'name' => 'get_user_array',
+//           'params' =>
+//           array(
+//             0 => false,
+//           ),
+//         ),
+//         'width' => '10%',
+//       ),
+//     ),
+//     'listviewdefs' => array(
+//       'NAME' =>
+//       array(
+//         'width' => '30%',
+//         'label' => 'LBL_LIST_NAME',
+//         'link' => true,
+//         'default' => true,
+//         'related_fields' =>
+//         array(
+//           0 => 'first_name',
+//           1 => 'last_name',
+//           2 => 'salutation',
+//         ),
+//         'name' => 'name',
+//       ),
+//       'ACCOUNT_NAME' =>
+//       array(
+//         'type' => 'varchar',
+//         'label' => 'LBL_ACCOUNT_NAME',
+//         'width' => '10%',
+//         'default' => true,
+//         'name' => 'account_name',
+//       ),
+//       'STATUS' =>
+//       array(
+//         'width' => '10%',
+//         'label' => 'LBL_LIST_STATUS',
+//         'default' => true,
+//         'name' => 'status',
+//       ),
+//       'LEAD_SOURCE' =>
+//       array(
+//         'width' => '10%',
+//         'label' => 'LBL_LEAD_SOURCE',
+//         'default' => true,
+//         'name' => 'lead_source',
+//       ),
+//       'ASSIGNED_USER_NAME' =>
+//       array(
+//         'width' => '10%',
+//         'label' => 'LBL_LIST_ASSIGNED_USER',
+//         'default' => true,
+//         'name' => 'assigned_user_name',
+//       ),
+//     ),
+// );
 
 $popupMeta = array(
-    'moduleMain' => 'Lead',
-    'varName' => 'LEAD',
-    'orderBy' => 'last_name, first_name',
-    'whereClauses' => array(
-        'first_name' => 'leads.first_name',
-        'last_name' => 'leads.last_name',
-        'lead_source' => 'leads.lead_source',
-        'status' => 'leads.status',
-        'account_name' => 'leads.account_name',
-        'assigned_user_id' => 'leads.assigned_user_id',
-    ),
-    'searchInputs' => array(
-      0 => 'first_name',
-      1 => 'last_name',
-      2 => 'lead_source',
+  'moduleMain' => 'Lead',
+  'varName' => 'LEAD',
+  'orderBy' => 'last_name, first_name',
+  'whereClauses' => array(
+      'status' => 'leads.status',
+      'assigned_user_id' => 'leads.assigned_user_id',
+      'name' => 'leads.name',
+      'email' => 'leads.email',
+      'phone_mobile' => 'leads.phone_mobile',
+      'phone_home' => 'leads.phone_home',
+  ),
+  'searchInputs' => array(
       3 => 'status',
-      4 => 'account_name',
       5 => 'assigned_user_id',
-    ),
-    'searchdefs' => array(
-      'first_name' =>
-      array(
-        'name' => 'first_name',
-        'width' => '10%',
+      6 => 'name',
+      7 => 'email',
+      8 => 'phone_mobile',
+      9 => 'phone_home',
+  ),
+  'searchdefs' => array(
+      'name' => array(
+          'type' => 'name',
+          'link' => true,
+          'label' => 'LBL_NAME',
+          'width' => '10%',
+          'name' => 'name',
       ),
-      'last_name' =>
-      array(
-        'name' => 'last_name',
-        'width' => '10%',
+      'status' => array(
+          'name' => 'status',
+          'width' => '10%',
       ),
-      'email',
-      'account_name' =>
-      array(
-        'type' => 'varchar',
-        'label' => 'LBL_ACCOUNT_NAME',
-        'width' => '10%',
-        'name' => 'account_name',
+      'email' => array(
+          'name' => 'email',
+          'width' => '10%',
       ),
-      'lead_source' =>
-      array(
-        'name' => 'lead_source',
-        'width' => '10%',
+      'phone_mobile' => array(
+          'type' => 'phone',
+          'label' => 'LBL_MOBILE_PHONE',
+          'width' => '10%',
+          'name' => 'phone_mobile',
       ),
-      'status' =>
-      array(
-        'name' => 'status',
-        'width' => '10%',
+      'phone_home' => array(
+          'type' => 'phone',
+          'label' => 'LBL_HOME_PHONE',
+          'width' => '10%',
+          'name' => 'phone_home',
       ),
-      'assigned_user_id' =>
-      array(
-        'name' => 'assigned_user_id',
-        'type' => 'enum',
-        'label' => 'LBL_ASSIGNED_TO',
-        'function' =>
-        array(
-          'name' => 'get_user_array',
-          'params' =>
-          array(
-            0 => false,
+      'assigned_user_id' => array(
+          'name' => 'assigned_user_id',
+          'type' => 'enum',
+          'label' => 'LBL_ASSIGNED_TO',
+          'function' => array(
+              'name' => 'get_user_array',
+              'params' => array(
+                  0 => false,
+              ),
           ),
-        ),
-        'width' => '10%',
+          'width' => '10%',
       ),
-    ),
-    'listviewdefs' => array(
-      'NAME' =>
-      array(
-        'width' => '30%',
-        'label' => 'LBL_LIST_NAME',
-        'link' => true,
-        'default' => true,
-        'related_fields' =>
-        array(
-          0 => 'first_name',
-          1 => 'last_name',
-          2 => 'salutation',
-        ),
-        'name' => 'name',
+  ),
+  'listviewdefs' => array(
+      'NAME' => array(
+          'width' => '30%',
+          'label' => 'LBL_LIST_NAME',
+          'link' => true,
+          'default' => true,
+          'related_fields' => array(
+              0 => 'first_name',
+              1 => 'last_name',
+              2 => 'salutation',
+          ),
+          'name' => 'name',
       ),
-      'ACCOUNT_NAME' =>
-      array(
-        'type' => 'varchar',
-        'label' => 'LBL_ACCOUNT_NAME',
-        'width' => '10%',
-        'default' => true,
-        'name' => 'account_name',
+      'STATUS' => array(
+          'width' => '10%',
+          'label' => 'LBL_LIST_STATUS',
+          'default' => true,
+          'name' => 'status',
       ),
-      'STATUS' =>
-      array(
-        'width' => '10%',
-        'label' => 'LBL_LIST_STATUS',
-        'default' => true,
-        'name' => 'status',
+      'EMAIL1' => array(
+          'type' => 'varchar',
+          'studio' => array(
+              'editview' => true,
+              'editField' => true,
+              'searchview' => false,
+              'popupsearch' => false,
+          ),
+          'label' => 'LBL_EMAIL_ADDRESS',
+          'width' => '10%',
+          'default' => true,
       ),
-      'LEAD_SOURCE' =>
-      array(
-        'width' => '10%',
-        'label' => 'LBL_LEAD_SOURCE',
-        'default' => true,
-        'name' => 'lead_source',
+      'PHONE_MOBILE' => array(
+          'type' => 'phone',
+          'label' => 'LBL_MOBILE_PHONE',
+          'width' => '10%',
+          'default' => true,
       ),
-      'ASSIGNED_USER_NAME' =>
-      array(
-        'width' => '10%',
-        'label' => 'LBL_LIST_ASSIGNED_USER',
-        'default' => true,
-        'name' => 'assigned_user_name',
+      'PHONE_HOME' => array(
+          'type' => 'phone',
+          'label' => 'LBL_HOME_PHONE',
+          'width' => '10%',
+          'default' => true,
       ),
-    ),
+      'ASSIGNED_USER_NAME' => array(
+          'width' => '10%',
+          'label' => 'LBL_LIST_ASSIGNED_USER',
+          'default' => true,
+          'name' => 'assigned_user_name',
+      ),
+  ),
 );
+// END STIC-Custom

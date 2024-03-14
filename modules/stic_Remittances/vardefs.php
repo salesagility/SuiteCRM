@@ -152,7 +152,7 @@ $dictionary['stic_Remittances'] = array(
     'relationships' => array(
     ),
     'optimistic_locking' => 1,
-    'unified_search' => 1,
+    'unified_search' => true,
     'unified_search_default_enabled' => true,
 );
 if (!class_exists('VardefManager')) {

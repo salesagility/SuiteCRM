@@ -1,11 +1,13 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
  * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -27,143 +29,250 @@
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
  *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ * 
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * SugarCRM" logo, "Supercharged by SuiteCRM" logo and “Nonprofitized by SinergiaCRM” logo. 
+ * If the display of the logos is not reasonably feasible for technical reasons, 
+ * the Appropriate Legal Notices must display the words "Powered by SugarCRM", 
+ * "Supercharged by SuiteCRM" and “Nonprofitized by SinergiaCRM”. 
  */
 
-$viewdefs ['Tasks'] =
+// STIC-Custom - MHP - 20240201 - Override the core metadata files with the custom metadata files 
+// https://github.com/SinergiaTIC/SinergiaCRM/pull/105 
+// $viewdefs ['Tasks'] =
+// array(
+//   'QuickCreate' =>
+//   array(
+//     'templateMeta' =>
+//     array(
+//       'form' =>
+//       array(
+//         'hidden' =>
+//         array(
+//            '<input type="hidden" name="isSaveAndNew" value="false">',
+//         ),
+//         'buttons' =>
+//         array(
+//            'SAVE',
+//            'CANCEL',
+           
+//           array(
+//             'customCode' => '{if $fields.status.value != "Completed"}<input title="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_TITLE}" class="button" onclick="document.getElementById(\'status\').value=\'Completed\'; this.form.action.value=\'Save\'; this.form.return_module.value=\'Tasks\'; this.form.isDuplicate.value=true; this.form.isSaveAndNew.value=true; this.form.return_action.value=\'EditView\'; this.form.return_id.value=\'{$fields.id.value}\'; return check_form(\'EditView\');" type="submit" name="button" value="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_LABEL}">{/if}',
+//           ),
+//         ),
+//       ),
+//       'maxColumns' => '2',
+//       'widths' =>
+//       array(
+         
+//         array(
+//           'label' => '10',
+//           'field' => '30',
+//         ),
+         
+//         array(
+//           'label' => '10',
+//           'field' => '30',
+//         ),
+//       ),
+//       'useTabs' => false,
+//     ),
+//     'panels' =>
+//     array(
+//       'default' =>
+//       array(
+         
+//         array(
+           
+//           array(
+//             'name' => 'name',
+//             'displayParams' =>
+//             array(
+//               'required' => true,
+//             ),
+//           ),
+           
+//           array(
+//             'name' => 'status',
+//             'displayParams' =>
+//             array(
+//               'required' => true,
+//             ),
+//           ),
+//         ),
+         
+//         array(
+           
+//           array(
+//             'name' => 'date_start',
+//             'type' => 'datetimecombo',
+//             'displayParams' =>
+//             array(
+//               'showNoneCheckbox' => true,
+//               'showFormats' => true,
+//             ),
+//           ),
+           
+//           array(
+//             'name' => 'parent_name',
+//             'label' => 'LBL_LIST_RELATED_TO',
+//           ),
+//         ),
+         
+//         array(
+           
+//           array(
+//             'name' => 'date_due',
+//             'type' => 'datetimecombo',
+//             'displayParams' =>
+//             array(
+//               'showNoneCheckbox' => true,
+//               'showFormats' => true,
+//             ),
+//           ),
+           
+//           array(
+//             'name' => 'contact_name',
+//             'label' => 'LBL_CONTACT_NAME',
+//           ),
+//         ),
+         
+//         array(
+           
+//           array(
+//             'name' => 'priority',
+//             'displayParams' =>
+//             array(
+//               'required' => true,
+//             ),
+//           ),
+//         ),
+//          array(
+//           array(
+//             'name' => 'assigned_user_name',
+//             'label' => 'LBL_ASSIGNED_TO_NAME',
+//           ),
+//         ),
+//         array(
+           
+//           array(
+//             'name' => 'description',
+//             'displayParams' =>
+//             array(
+//               'rows' => 8,
+//               'cols' => 60,
+//             ),
+//           ),
+//         ),
+//       ),
+//     ),
+//   ),
+// );
+
+$viewdefs['Tasks'] =
 array(
-  'QuickCreate' =>
-  array(
-    'templateMeta' =>
-    array(
-      'form' =>
-      array(
-        'hidden' =>
-        array(
-           '<input type="hidden" name="isSaveAndNew" value="false">',
+    'QuickCreate' => array(
+        'templateMeta' => array(
+            'form' => array(
+                'hidden' => array(
+                    0 => '<input type="hidden" name="isSaveAndNew" value="false">',
+                ),
+                'buttons' => array(
+                    0 => 'SAVE',
+                    1 => 'CANCEL',
+                    2 => array(
+                        'customCode' => '{if $fields.status.value != "Completed"}<input title="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_TITLE}" class="button" onclick="document.getElementById(\'status\').value=\'Completed\'; this.form.action.value=\'Save\'; this.form.return_module.value=\'Tasks\'; this.form.isDuplicate.value=true; this.form.isSaveAndNew.value=true; this.form.return_action.value=\'EditView\'; this.form.return_id.value=\'{$fields.id.value}\'; return check_form(\'EditView\');" type="submit" name="button" value="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_LABEL}">{/if}',
+                    ),
+                ),
+            ),
+            'maxColumns' => '2',
+            'widths' => array(
+                0 => array(
+                    'label' => '10',
+                    'field' => '30',
+                ),
+                1 => array(
+                    'label' => '10',
+                    'field' => '30',
+                ),
+            ),
+            'useTabs' => true,
+            'tabDefs' => array(
+                'LBL_TASK_INFORMATION' => array(
+                    'newTab' => true,
+                    'panelDefault' => 'expanded',
+                ),
+            ),
         ),
-        'buttons' =>
-        array(
-           'SAVE',
-           'CANCEL',
-           
-          array(
-            'customCode' => '{if $fields.status.value != "Completed"}<input title="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_TITLE}" class="button" onclick="document.getElementById(\'status\').value=\'Completed\'; this.form.action.value=\'Save\'; this.form.return_module.value=\'Tasks\'; this.form.isDuplicate.value=true; this.form.isSaveAndNew.value=true; this.form.return_action.value=\'EditView\'; this.form.return_id.value=\'{$fields.id.value}\'; return check_form(\'EditView\');" type="submit" name="button" value="{$APP.LBL_CLOSE_AND_CREATE_BUTTON_LABEL}">{/if}',
-          ),
+        'panels' => array(
+            'lbl_task_information' => array(
+                0 => array(
+                    0 => array(
+                        'name' => 'name',
+                        'displayParams' => array(
+                            'required' => true,
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'assigned_user_name',
+                        'label' => 'LBL_ASSIGNED_TO_NAME',
+                    ),
+                ),
+                1 => array(
+                    0 => array(
+                        'name' => 'status',
+                        'displayParams' => array(
+                            'required' => true,
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'priority',
+                        'displayParams' => array(
+                            'required' => true,
+                        ),
+                    ),
+                ),
+                2 => array(
+                    0 => array(
+                        'name' => 'date_start',
+                        'type' => 'datetimecombo',
+                        'displayParams' => array(
+                            'showNoneCheckbox' => true,
+                            'showFormats' => true,
+                        ),
+                    ),
+                    1 => array(
+                        'name' => 'date_due',
+                        'type' => 'datetimecombo',
+                        'displayParams' => array(
+                            'showNoneCheckbox' => true,
+                            'showFormats' => true,
+                        ),
+                    ),
+                ),
+                3 => array(
+                    0 => array(
+                        'name' => 'parent_name',
+                        'label' => 'LBL_LIST_RELATED_TO',
+                    ),
+                    1 => array(
+                        'name' => 'contact_name',
+                        'label' => 'LBL_CONTACT_NAME',
+                    ),
+                ),
+                4 => array(
+                    0 => array(
+                        'name' => 'description',
+                    ),
+                ),
+            ),
         ),
-      ),
-      'maxColumns' => '2',
-      'widths' =>
-      array(
-         
-        array(
-          'label' => '10',
-          'field' => '30',
-        ),
-         
-        array(
-          'label' => '10',
-          'field' => '30',
-        ),
-      ),
-      'useTabs' => false,
     ),
-    'panels' =>
-    array(
-      'default' =>
-      array(
-         
-        array(
-           
-          array(
-            'name' => 'name',
-            'displayParams' =>
-            array(
-              'required' => true,
-            ),
-          ),
-           
-          array(
-            'name' => 'status',
-            'displayParams' =>
-            array(
-              'required' => true,
-            ),
-          ),
-        ),
-         
-        array(
-           
-          array(
-            'name' => 'date_start',
-            'type' => 'datetimecombo',
-            'displayParams' =>
-            array(
-              'showNoneCheckbox' => true,
-              'showFormats' => true,
-            ),
-          ),
-           
-          array(
-            'name' => 'parent_name',
-            'label' => 'LBL_LIST_RELATED_TO',
-          ),
-        ),
-         
-        array(
-           
-          array(
-            'name' => 'date_due',
-            'type' => 'datetimecombo',
-            'displayParams' =>
-            array(
-              'showNoneCheckbox' => true,
-              'showFormats' => true,
-            ),
-          ),
-           
-          array(
-            'name' => 'contact_name',
-            'label' => 'LBL_CONTACT_NAME',
-          ),
-        ),
-         
-        array(
-           
-          array(
-            'name' => 'priority',
-            'displayParams' =>
-            array(
-              'required' => true,
-            ),
-          ),
-        ),
-         array(
-          array(
-            'name' => 'assigned_user_name',
-            'label' => 'LBL_ASSIGNED_TO_NAME',
-          ),
-        ),
-        array(
-           
-          array(
-            'name' => 'description',
-            'displayParams' =>
-            array(
-              'rows' => 8,
-              'cols' => 60,
-            ),
-          ),
-        ),
-      ),
-    ),
-  ),
 );
+// END STIC-Custom

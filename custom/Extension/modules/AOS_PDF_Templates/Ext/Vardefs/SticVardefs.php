@@ -21,3 +21,5 @@
  * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
  */
 $dictionary['AOS_PDF_Templates']['fields']['sample']['studio'] = false;
+
+$dictionary['AOS_PDF_Templates']['unified_search_default_enabled'] = false;

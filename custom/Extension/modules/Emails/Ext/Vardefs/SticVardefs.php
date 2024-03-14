@@ -39,3 +39,5 @@ $dictionary["Email"]["fields"]["stic_job_offers_activities_emails"] = array (
 
 $dictionary["Email"]["fields"]["name"]["link"] = true;
 $dictionary["Email"]["fields"]["parent_name"]["inline_edit"] = 0;
+
+$dictionary["Email"]['unified_search_default_enabled'] = false;
