@@ -1,0 +1,3 @@
+REPLACE INTO stic_validation_actions_schedulers_c (id, date_modified, deleted, stic_validation_actions_schedulersstic_validation_actions_ida, stic_validation_actions_schedulersschedulers_idb) VALUES ('a58bba60-c60f-11ee-98c0-0242ac140002', NOW(), 0, 'a8d6cdff-ff13-4a2d-b5af-dba7ed47f29c', '4d0ac999-2bcb-cc4f-f65d-6192a21c4aff');
+
+UPDATE schedulers SET status = 'Active' WHERE id = '4d0ac999-2bcb-cc4f-f65d-6192a21c4aff';

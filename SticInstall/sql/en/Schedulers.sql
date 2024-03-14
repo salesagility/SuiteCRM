@@ -10,7 +10,7 @@ INSERT INTO schedulers (id, deleted, date_entered, date_modified, created_by, mo
 ('1f4425d5-e576-4785-bb9a-5b3c3b0784b2', 0, NOW(), NOW(), '1', '1', 'SinergiaCRM - Update people age', 'function::calculateContactsAge', NOW(), NULL, '*::1::*::*::*', NULL, NULL, NULL, 'Active', 0),
 ('511fda77-4b76-4b8e-b44f-ff78489b1e5f', 0, NOW(), NOW(), '1', '1', 'SinergiaCRM - Reset optimal settings', 'function::sticCleanConfig', NOW(), NULL, '*::18::*::*::5', NULL, NULL, NULL, 'Active', 0),
 ('98eb0c26-99dd-d656-ee73-611cc6994570', 0, NOW(), NOW(), '1', '1', 'SinergiaCRM - Purge database', 'function::sticPurgeDatabase', NOW(), NULL, '*::2::*::*::0', NULL, NULL, NULL, 'Active', 0),
-('4d0ac999-2bcb-cc4f-f65d-6192a21c4aff', 0, NOW(), NOW(), '1', '1', 'SinergiaCRM - Monthly data validation and updating', 'function::validationActions', NOW(), NULL, '*::3::1::*::*', NULL, NULL, NULL, 'Inactive', 0),
+('4d0ac999-2bcb-cc4f-f65d-6192a21c4aff', 0, NOW(), NOW(), '1', '1', 'SinergiaCRM - Monthly data validation and updating', 'function::validationActions', NOW(), NULL, '*::3::1::*::*', NULL, NULL, NULL, 'Active', 0),
 ('ca564b47-9a06-987d-a115-6442356ca768', 0, NOW(), NOW(), '1', '1', 'SinergiaCRM - Create medication logs', 'function::createMedicationLogs', NOW(), NULL, '*::1::*::*::*', NULL, NULL, NULL, 'Active', 0),
 ('c5f7d492-5a02-6fe1-1d6e-6540b28a4b21', 0, NOW(), NOW(), '1', '1', 'SinergiaCRM - Rebuild SinergiaDA data sources', 'function::rebuildSDASources', NOW(), NULL, '*::2::*::*::*', NULL, NULL, NULL, 'Active', 0);
 
@@ -59,7 +59,7 @@ INSERT INTO stic_validation_actions_schedulers_c (id, date_modified, deleted, st
 ('51973ce8-dce3-41f9-9e39-5b406a37226a', NOW(), 0, 'b738e9b4-c025-4a96-86c1-c2c6f657d3cf', 'a9bebf7f-8896-46dd-8d06-77e2b5256c83'),
 ('521b0d1c-800e-f0a2-e36e-5b406a145158', NOW(), 0, '375431dc-a6bb-4c0b-ab4c-af1a06229ee4', 'a9bebf7f-8896-46dd-8d06-77e2b5256c83'),
 ('54461dbd-2ad4-8536-af64-5b406a2821ff', NOW(), 0, 'b07eefb3-20fb-4993-abea-66ce0aa71649', 'a9bebf7f-8896-46dd-8d06-77e2b5256c83'),
-('a58bba60-c60f-11ee-98c0-0242ac140002', NOW(), 0, 'a8d6cdff-ff13-4a2d-b5af-dba7ed47f29c', 'a9bebf7f-8896-46dd-8d06-77e2b5256c83'),
+('a58bba60-c60f-11ee-98c0-0242ac140002', NOW(), 0, 'a8d6cdff-ff13-4a2d-b5af-dba7ed47f29c', '4d0ac999-2bcb-cc4f-f65d-6192a21c4aff'),
 ('a2b96791-1f65-ee15-18ba-5db9d5e016d3', NOW(), 0, '9b975af1-34c9-8cae-1f60-5db9d528c22a', '7386c4b1-bcc2-4f6f-be88-7e2a2e5778b5'),
 ('b60f8629-0fb7-ccd6-358e-5b406aecfa9f', NOW(), 0, '2fede90f-5df5-44a2-8c8a-bc1a1813dc70', 'b05bde8a-1309-4789-993b-bf85be389f07'),
 ('b7cdff60-6c50-7059-3c60-5b406a81e407', NOW(), 0, 'e126ec69-2a9e-4bb9-a731-a05f95b3e4c7', 'b05bde8a-1309-4789-993b-bf85be389f07'),
