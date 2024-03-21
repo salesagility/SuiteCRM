@@ -3236,7 +3236,7 @@ $app_list_strings['stic_journal_task_scopes_list']['workplace'] = 'Laboral';
 
 // Diario: Cumprimento da tarefa
 $app_list_strings['stic_journal_task_fulfillments_list'][''] = '';
-$app_list_strings['stic_journal_task_fulfillments_list']['yes'] = 'Sí';
+$app_list_strings['stic_journal_task_fulfillments_list']['yes'] = 'Si';
 $app_list_strings['stic_journal_task_fulfillments_list']['no'] = 'Non';
 $app_list_strings['stic_journal_task_fulfillments_list']['partial'] = 'Parcial';
 

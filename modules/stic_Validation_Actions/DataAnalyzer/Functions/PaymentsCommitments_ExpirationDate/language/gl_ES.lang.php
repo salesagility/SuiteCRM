@@ -21,7 +21,7 @@
  * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
  */
 $func_strings = array (
-    'NAME' => 'Compromisos de pago - Revisión de las fechas de caducidad de las tarjetas',
-    'NO_ROWS' => 'No hay tarjetas próximas a su vencimiento.',
-    'RESULT_INFO' => "La tarjeta de este compromiso de pago recurrente está próxima a su vencimiento: @expiring_date@",
+    'NAME' => 'Compromisos de pago - Revisión das datas de caducidade das tarxetas',
+    'NO_ROWS' => 'Non hai tarxetas próximas ao seu vencemento.',
+    'RESULT_INFO' => "A tarxeta deste compromiso de pago recurrente está próxima ao seu vencemento: @expiring_date@",
 );
