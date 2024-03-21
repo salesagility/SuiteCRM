@@ -84,8 +84,17 @@ require_once('modules/Contacts/ContactFormBase.php');
 $contactForm = new ContactFormBase();
 $GLOBALS['check_notify'] = false;
 
-
 $query = 'select contacts.id, first_name, last_name, title, accounts.name, primary_address_city from contacts LEFT JOIN accounts_contacts ON contacts.id=accounts_contacts.contact_id and accounts_contacts.deleted = 0 LEFT JOIN accounts ON accounts_contacts.account_id=accounts.id AND accounts_contacts.deleted=0 AND accounts.deleted=0 where contacts.deleted=0 ';
+// STIC-Custom 20240312 JBL - Allow Custom duplicate Queries
+// https://github.com/SinergiaTIC/SinergiaCRM/pull/164
+if(file_exists("custom/modules/Contacts/sticContactsDuplicateQueries.php")) {
+    require_once("custom/modules/Contacts/sticContactsDuplicateQueries.php");
+    if(method_exists("sticContactsDuplicateQueries", "getShowDuplicateQuery")) {
+        $query = sticContactsDuplicateQueries::getShowDuplicateQuery();
+    }
+}
+// END STIC-Custom
+
 $duplicates = $_POST['duplicate'];
 $count = count($duplicates);
 $db = DBManagerFactory::getInstance();

@@ -93,6 +93,17 @@ class AccountFormBase
             $query .= (empty($query)) ? $baseQuery : ' AND ';
             $query .=   ' ('. $tempQuery . ' ) ';
         }
+        // STIC-Custom 20240312 JBL - Allow Custom duplicate Queries
+        // https://github.com/SinergiaTIC/SinergiaCRM/pull/164
+        $focus = SugarModule::get($this->moduleName)->loadBean();        
+        if(file_exists("custom/modules/Accounts/sticAccountsDuplicateQueries.php")) {
+            require_once("custom/modules/Accounts/sticAccountsDuplicateQueries.php");
+            if(method_exists("sticAccountsDuplicateQueries", "getDuplicateQuery")) {
+                $query = sticAccountsDuplicateQueries::getDuplicateQuery($focus, $prefix);
+            }
+        }
+        // END STIC-Custom
+
 
         if (!empty($query)) {
             $rows = array();
