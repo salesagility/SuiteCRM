@@ -34,4 +34,8 @@ class DonationPaymentController extends PaymentController
         parent::__construct($version);
         $this->bo = new DonationPaymentBO();
     }
+
+    public function getObjectsCreated() {
+        return $this->bo->getObjectsCreated();
+    }
 }

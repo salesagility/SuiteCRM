@@ -54,6 +54,15 @@ class EventInscriptionBO extends WebFormDataBO
     protected $accountCandidates = null;
     protected $accountResult = self::ACCOUNT_NO_DATA;
 
+
+    public function getObjectsCreated() {
+        return array(
+            'Contacts' => $this->contactObject,
+            'stic_Registrations' => $this->inscription,
+            'Accounts' => $this->accountObject
+        );
+    }
+
     /**
      * Property access methods
      */
@@ -298,6 +307,7 @@ class EventInscriptionBO extends WebFormDataBO
         } else {
             $this->contactResult = $this->getContact($this->contactObject, $this->contactCandidates);
         }
+
         /*
          * If information about the organization is incorporated, the data is recovered
          * The organization can be included in the form as an optional data, therefore, even if it is included
@@ -306,7 +316,6 @@ class EventInscriptionBO extends WebFormDataBO
          */
         if ($this->defParams['include_organization'] && !empty($this->formParams['Accounts___name'])) {
             $this->accountResult = $this->getAccount($this->accountObject, $this->accountCandidates);
-
             // If it is a new contact try to link the organization
             if ($this->contactResult == self::CONTACT_NEW &&
                 $this->accountResult != self::ACCOUNT_ERROR) {

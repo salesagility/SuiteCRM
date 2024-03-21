@@ -38,6 +38,8 @@ $GLOBALS['log']->debug('Entrypoint File: Save.php: Processing WebFormDataControl
 global $current_user;
 $current_user->getSystemUser();
 
+$_REQUEST['stic_send_feedBackErrors'] = 1;
+
 require_once __DIR__ . '/../Catcher/WebFormDataController.php';
 $controller = new WebFormDataController();
 $controller->manage();

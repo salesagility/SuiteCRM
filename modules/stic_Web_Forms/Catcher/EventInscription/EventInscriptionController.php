@@ -39,6 +39,12 @@ class EventInscriptionController extends WebFormDataController
         $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ":  The builder is called");
     }
 
+    public function getObjectsCreated() {
+        return $this->bo->getObjectsCreated();
+    }
+
+
+
     /**
      * Parent method overload
      * Execute the necessary operations to manage the operation.

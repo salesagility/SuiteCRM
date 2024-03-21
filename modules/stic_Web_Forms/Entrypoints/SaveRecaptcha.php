@@ -24,6 +24,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+$_REQUEST['stic_send_feedBackErrors'] = 1;
+
 // Access the variable created by the entity in SinergiaCRM
 $recaptchaSetting = 'GENERAL_RECAPTCHA';
 if (isset($_POST['stic-recaptcha-id']) && !empty($_POST['stic-recaptcha-id'])) {

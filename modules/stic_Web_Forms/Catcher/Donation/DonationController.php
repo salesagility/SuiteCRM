@@ -39,6 +39,10 @@ class DonationController extends WebFormDataController
         $this->bo = new DonationBO();
     }
 
+    public function getObjectsCreated() {
+        return array_merge($this->bo->getObjectsCreated(), $this->fp->getObjectsCreated());
+    }
+
     /**
      * Overload of the parent method.
      * Retrieve the form parameters and populate the formParams array with it

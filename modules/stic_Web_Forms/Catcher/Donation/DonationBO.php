@@ -282,6 +282,8 @@ class DonationBO extends WebFormDataBO
             }
         }
 
+        $this->objectsCreated[$this->defParams['web_module']] = $objToLink;
+
         // Link the campaign
         $this->linkToCampaign($objToLink);
 
@@ -367,6 +369,7 @@ class DonationBO extends WebFormDataBO
                     // STIC#1209
                     // $objToLink->$relName->add($rel->id);
                     // END EPS
+                    $this->objectsCreated[$relType] = $rel;
                 }
             }
             return $rel;

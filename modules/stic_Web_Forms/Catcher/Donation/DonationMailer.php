@@ -42,6 +42,14 @@ class DonationMailer extends WebFormMailer
      */
     public function sendAdminMail($objWeb, $payment, $formParams, $donator, $candidates, $donatorResult)
     {
+
+        // If found parameter on REQUEST to avoid sending administrator emails, return without sending mail
+        if (isset($_REQUEST['stic_skip_admin_emails']) && !empty($_REQUEST['stic_skip_admin_emails']) 
+            && $_REQUEST['stic_skip_admin_emails'] == 1) {
+            return true;
+        }
+
+
         $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ":  Sending notice email to the administrator...");
         // Send an email with the result of the operation
         switch ($donatorResult) {

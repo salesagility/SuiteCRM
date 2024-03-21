@@ -55,6 +55,13 @@ class EventInscriptionMailer extends WebFormMailer
      */
     public function sendAdminMail()
     {
+
+        // If found parameter on REQUEST to avoid sending administrator emails, return without sending mail
+        if (isset($_REQUEST['stic_skip_admin_emails']) && !empty($_REQUEST['stic_skip_admin_emails']) 
+            && $_REQUEST['stic_skip_admin_emails'] == 1) {
+            return true;
+        }
+
         // Reset the recipient list
         $this->resetDest();
 

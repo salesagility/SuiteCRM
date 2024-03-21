@@ -175,6 +175,12 @@ class WebFormDataController
         return $this->responseData;
     }
 
+    public function getObjectsCreated() {
+        $GLOBALS['log']->fatal('Line ' . __LINE__ . ': ' . __METHOD__ . ' If this placeholder function is called, something web wrong ');
+        return array();
+    }
+
+
     /**
      *  Load the specific driver, if there is no specific driver, the class itself will be used
      */
@@ -209,7 +215,8 @@ class WebFormDataController
         // to form manager. Errors related to other entrypoints like stic_Web_Forms_tpv_response
         // can be ignored for notification purposes.
         
-        if ($_REQUEST['entryPoint'] == 'stic_Web_Forms_save') {
+        if (isset($_REQUEST['stic_send_feedBackErrors']) && $_REQUEST['stic_send_feedBackErrors'] == 1) {
+        // if ($_REQUEST['entryPoint'] == 'stic_Web_Forms_save') {
             
             $msg = array();
             $msg['subject'] = $this->getMsgString('LBL_' . $lastError);
@@ -223,6 +230,11 @@ class WebFormDataController
             $formData = array();
             $formParams = array();
             $reqIdFields = explode(";", $_REQUEST['req_id']);
+
+
+            if (isset($_REQUEST['stic_origin_form']) && !empty($_REQUEST['stic_origin_form'])) {
+                $formParams['URL'] = $_REQUEST['stic_origin_form'];
+            }
 
             // Received fields
             foreach ($_REQUEST as $key => $value) {
@@ -328,6 +340,7 @@ class WebFormDataController
                     // Perform the operation management
                     $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ":  Managing the request..");
                     $response = $controller->doAction();
+                    $response['objects'] = $controller->getObjectsCreated();
                 }
             }
         }

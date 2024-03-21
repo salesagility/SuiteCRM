@@ -58,6 +58,12 @@ class WebFormDataBO
     protected $app_strings = null; // Application labels
     protected $defaultModule = 'stic_Web_Forms'; // Default module to search for labels
 
+    protected $objectsCreated = array();
+
+    public function getObjectsCreated() {
+        return $this->objectsCreated;
+    }
+
     /**
      * Class constructor
      */
