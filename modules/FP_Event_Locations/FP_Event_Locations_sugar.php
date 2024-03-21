@@ -51,7 +51,11 @@ class FP_Event_Locations_sugar extends Basic
     public $module_dir = 'FP_Event_Locations';
     public $object_name = 'FP_Event_Locations';
     public $table_name = 'fp_event_locations';
-    public $importable = false;
+    // STIC 20240312 ART - Error importing Locations module
+    // https://github.com/SinergiaTIC/SinergiaCRM/pull/163
+    // public $importable = false;
+    public $importable = true;
+    // End STIC
     public $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
     public $id;
     public $name;
