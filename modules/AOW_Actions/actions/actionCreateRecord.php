@@ -244,6 +244,14 @@ class actionCreateRecord extends actionBase
                         $value = $bean->$fieldName;
                     }
                 break;
+                            case 'enum':
+                                if($record->field_defs[$field]["type"] === 'enum'){
+                                    //when setting enum field to another use key rather than label value
+                                    $value = $bean->$fieldName;
+                                }else{
+                                    $value = $app_list_strings[$data["options"]][$bean->$fieldName];
+                                }
+
                             default:
                                 $value = $bean->$fieldName;
                                 break;
