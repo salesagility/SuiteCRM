@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of SinergiaCRM.
  * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
@@ -61,11 +62,10 @@ class stic_Payments extends Basic
     public $rejection_date;
     public $c19_rejected_reason;
     public $payment_date;
-	
+
     public function bean_implements($interface)
     {
-        switch($interface)
-        {
+        switch ($interface) {
             case 'ACL':
                 return true;
         }
@@ -82,14 +82,15 @@ class stic_Payments extends Basic
      * @param boolean $check_notify
      * @return void
      */
-    public function save($check_notify = false) {
-        
+    public function save($check_notify = false)
+    {
+
         include_once 'SticInclude/Utils.php';
         include_once 'modules/stic_Payments/Utils.php';
 
         // Get payment commitment bean. Depending on the context (editview, subpanel, workflow, etc.)
-	// stic_paymebfe2itments_ida will be an string that contains the id of the related payment 
-	// commitment or will be an object of type Link2, so let's manage it properly. 
+        // stic_paymebfe2itments_ida will be an string that contains the id of the related payment
+        // commitment or will be an object of type Link2, so let's manage it properly.
         if ($this->stic_paymebfe2itments_ida instanceof Link2) {
             $PCBean = SticUtils::getRelatedBeanObject($this, 'stic_payments_stic_payment_commitments');
         } else {
@@ -97,13 +98,13 @@ class stic_Payments extends Basic
         }
 
         if ($PCBean) {
+            global $timedate, $current_user;
+            $userDate = $timedate->fromUserDate($this->payment_date, false, $current_user);
             // Create name if empty
             if (empty($this->name)) {
-                global $timedate, $current_user;
-                $userDate = $timedate->fromUserDate($this->payment_date, false, $current_user);
                 if ($userDate) {
                     $this->name = $PCBean->name . ' - ' . $userDate->asDBDate();
-                } else { 
+                } else {
                     // The payment is created from the pop-up view where the format of the date type fields is from the database
                     $this->name = $PCBean->name . ' - ' . $this->payment_date;
                 }
@@ -119,13 +120,37 @@ class stic_Payments extends Basic
                 stic_PaymentsUtils::generateCallFromUnpaid($this);
             }
         }
-        
+
+        // Since the value of `fetched_row` is reset in the case of audited fields, 
+        // we will save its contents in a variable to be used after running the `Save` method.
+        $tempFetchedRow = $this->fetched_row;
+
+
         // Call the generic save() function from the SugarBean class
         parent::save();
+
+
+        if ($PCBean) {
+        
+            // Recalculate the field paid_annualized_fee if applicable.
+            require_once 'SticInclude/Utils.php';
+           
+            // Check if the status, amount, or payment_date fields have changed or if it is a new record.            
+            if (
+                $this->status != $tempFetchedRow['status']
+                || SticUtils::unformatDecimal($this->amount) != SticUtils::unformatDecimal($tempFetchedRow['amount'])
+                || $userDate->asDBDate() != $tempFetchedRow['payment_date']
+                || empty($this->fetched_row)
+            ) {
+                // Recalculate the paid_annualized_fee field.
+                require_once 'modules/stic_Payment_Commitments/Utils.php';
+                stic_Payment_CommitmentsUtils::setPaidAnnualizedFee($PCBean);
+            }
+        }
     }
 
     /**
-     * Overriding SugarBean save_relationship_changes function to insert additional logic: 
+     * Overriding SugarBean save_relationship_changes function to insert additional logic:
      * 1) Remove previous relationship with contact/account when needed
      * 2) Get the contact/account from the payment commitment and set it in the payment
      *
@@ -144,7 +169,7 @@ class stic_Payments extends Basic
             // Get payment commmitment related contact (usual case)
             $contactId = SticUtils::getRelatedBeanObject($PCBean, 'stic_payment_commitments_contacts')->id;
             if (!empty($contactId)) {
-                // Remove previous relationship with an account, if any 
+                // Remove previous relationship with an account, if any
                 // (a payment can only be related with a single contact or account, not both)
                 $this->stic_payments_accountsaccounts_ida = '';
                 // Set the relationship between payment and contact
@@ -164,5 +189,26 @@ class stic_Payments extends Basic
 
         // Call the generic save_relationship_changes() function from the SugarBean class
         parent::save_relationship_changes($is_update, $exclude);
+    }
+
+
+
+    /**
+     * overrides SugarBean's method.
+     * @param string id ID
+     */
+    public function call_custom_logic($event, $arguments = null)
+    {
+        // Recalculate the field paid_annualized_fee if applicable.
+        // capture before_relationship_delete & after_relationship_add events
+        if (in_array($event, ['after_relationship_delete', 'after_relationship_add'])) {
+            if (isset($arguments['related_module']) && $arguments['related_module'] == 'stic_Payment_Commitments') {
+                $PCBean = $arguments['related_bean'];
+                require_once 'modules/stic_Payment_Commitments/Utils.php';
+                stic_Payment_CommitmentsUtils::setPaidAnnualizedFee($PCBean, $this);
+            }
+        }
+
+        parent::call_custom_logic($event, $arguments);
     }
 }

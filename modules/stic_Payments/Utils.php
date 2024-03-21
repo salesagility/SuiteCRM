@@ -52,7 +52,7 @@ class stic_PaymentsUtils
         $callBean->parent_type = 'stic_Payments';
 
         // STIC NOTE - $_REQUEST variable is not the same when saving a record from EDIT_VIEW as from INLINE_EDIT.
-        // In order to generate the relationship between the contact and the call, it is necessary to enter the following properties ​​in $_REQUEST
+        // In order to generate the relationship between the contact and the call, it is necessary to enter the following properties in $_REQUEST
         if ($_REQUEST['action'] == 'saveHTMLField') {
             $_REQUEST['relate_to'] = 'Contacts';
             $_REQUEST['relate_id'] = $paymentBean->stic_payments_contactscontacts_ida;
@@ -68,7 +68,7 @@ class stic_PaymentsUtils
 
         $monthGenerationPaymentSetting = stic_SettingsUtils::getSetting('GENERAL_PAYMENT_GENERATION_MONTH') == 1 ? 1 : 0;
 
-        // Creating values ​​of all the DATE variables and assign them to use later
+        // Creating values of all the DATE variables and assign them to use later
         if ($monthGenerationPaymentSetting == '1') {
             $month = date('m') + 1;
             $year = date('Y');
@@ -192,6 +192,23 @@ class stic_PaymentsUtils
             $paymentBean->stic_paymebfe2itments_ida = $PCBean->id;
 
             $paymentBean->save();
+        }
+
+        // Recalculate pending_annualized_fee for all payment commitments
+        require_once 'modules/stic_Payment_Commitments/Utils.php';
+        stic_Payment_CommitmentsUtils::recalculateAllFuturePaymentsViaSQL();
+
+        // Empty the 'paid_annualized_fee' field if the execution corresponds to the month of January (1)
+        if (date('n') == 1) {
+            $emptyPaidAnnualizedFeeSQL = "UPDATE stic_payment_commitments SET paid_annualized_fee = NULL WHERE 1";
+            $result = $db->query($emptyPaidAnnualizedFeeSQL);
+
+            if ($result === false) {
+                $GLOBALS['log']->error(__METHOD__ . ": Error executing SQL query [{$emptyPaidAnnualizedFeeSQL}]");
+            } else {
+                $updatedRows = $db->getAffectedRowCount($result);
+                $GLOBALS['log']->info(__METHOD__ . ": Successfully emptied 'paid_annualized_fee' for [{$updatedRows}] payment commitments.");
+            }
         }
         return true;
     }

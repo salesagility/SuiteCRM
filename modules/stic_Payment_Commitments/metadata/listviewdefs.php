@@ -175,6 +175,20 @@ array(
         'width' => '10%',
         'default' => false,
     ),
+    'PENDING_ANNUALIZED_FEE' => array(
+        'type' => 'decimal',
+        'align' => 'right',
+        'label' => 'LBL_PENDING_ANNUALIZED_FEE',
+        'width' => '10%',
+        'default' => false,
+    ),
+    'PAID_ANNUALIZED_FEE' => array(
+        'type' => 'decimal',
+        'align' => 'right',
+        'label' => 'LBL_PAID_ANNUALIZED_FEE',
+        'width' => '10%',
+        'default' => false,
+    ),
     'SIGNATURE_DATE' => array(
         'type' => 'date',
         'label' => 'LBL_SIGNATURE_DATE',

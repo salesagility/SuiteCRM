@@ -596,4 +596,28 @@ EOQ;
         // Return the new ID
         return $newId;
     }
+    /**
+     * unformatDecimal - Function to convert formatted decimal number to float value
+     * @param mixed $number The formatted decimal number as string or float
+     * @param int $precision The number of decimal places in the input number (default is 2)
+     * @return float The float value of the input number after removing formatting
+     */
+    public static function unformatDecimal($number, $precision = 2)
+    {
+        if (is_float($number)) {
+            // If the input number is already a float value, return it
+            return $number;
+        } elseif (is_string($number)) {
+            // If the input number is a string, remove formatting and convert to float
+            if (!ctype_punct(substr($number, -$precision - 1, 1))) {
+                // If the last character before the decimal is not a punctuation mark, remove all non-numeric characters
+                $number = floatval(preg_replace("/[^0-9]/", "", $number));
+            } else {
+                // If the last character before the decimal is a punctuation mark, remove all non-numeric characters and format the decimal places
+                $number = preg_replace("/[^0-9]/", "", $number);
+                $number = floatval(substr($number, 0, -2) . '.' . substr($number, -2));
+            }
+            return $number; // Return the float value of the input number after removing formatting
+        }
+    }
 }

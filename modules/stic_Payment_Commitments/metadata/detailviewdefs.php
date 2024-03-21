@@ -156,6 +156,16 @@ array(
                 ),
                 10 => array(
                     0 => array(
+                        'name' => 'paid_annualized_fee',
+                        'label' => 'LBL_PAID_ANNUALIZED_FEE',
+                    ),
+                    1 => array(
+                        'name' => 'pending_annualized_fee',
+                        'label' => 'LBL_PENDING_ANNUALIZED_FEE',
+                    ),
+                ),
+                11 => array(
+                    0 => array(
                         'name' => 'destination',
                         'studio' => 'visible',
                         'label' => 'LBL_DESTINATION',
@@ -165,7 +175,7 @@ array(
                         'label' => 'LBL_STIC_PAYMENT_COMMITMENTS_PROJECT_FROM_PROJECT_TITLE',
                     ),
                 ),
-                11 => array(
+                12 => array(
                     0 => array(
                         'name' => 'stic_payment_commitments_contacts_1_name',
                         'label' => 'LBL_STIC_PAYMENT_COMMITMENTS_CONTACTS_1_FROM_CONTACTS_TITLE',
@@ -175,7 +185,7 @@ array(
                         'label' => 'LBL_STIC_PAYMENT_COMMITMENTS_ACCOUNTS_1_FROM_ACCOUNTS_TITLE',
                     ),
                 ),
-                12 => array(
+                13 => array(
                     0 => array(
                         'name' => 'in_kind_donation',
                         'label' => 'LBL_IN_KIND_DONATION',
@@ -186,7 +196,7 @@ array(
                         'label' => 'LBL_TRANSACTION_TYPE',
                     ),
                 ),
-                13 => array(
+                14 => array(
                     0 => 'description',
                 ),
             ),

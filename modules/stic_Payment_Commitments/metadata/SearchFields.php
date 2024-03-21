@@ -136,6 +136,30 @@ $searchFields['stic_Payment_Commitments'] = array(
         'query_type' => 'default',
         'enable_range_search' => true,
     ),
+    'range_pending_annualized_fee' => array(
+        'query_type' => 'default',
+        'enable_range_search' => true,
+    ),
+    'start_range_pending_annualized_fee' => array(
+        'query_type' => 'default',
+        'enable_range_search' => true,
+    ),
+    'end_range_pending_annualized_fee' => array(
+        'query_type' => 'default',
+        'enable_range_search' => true,
+    ),
+    'range_paid_annualized_fee' => array(
+        'query_type' => 'default',
+        'enable_range_search' => true,
+    ),
+    'start_range_paid_annualized_fee' => array(
+        'query_type' => 'default',
+        'enable_range_search' => true,
+    ),
+    'end_range_paid_annualized_fee' => array(
+        'query_type' => 'default',
+        'enable_range_search' => true,
+    ),
     'favorites_only' => array(
         'query_type' => 'format',
         'operator' => 'subquery',

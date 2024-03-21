@@ -21,14 +21,16 @@
  * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
  */
 
-class stic_RemittancesUtils {
+class stic_RemittancesUtils
+{
     /**
-     * Mark all payments related to the remittance as paid, by changing its status to "sent"
-     *
+     * 1) Mark all payments related to the remittance as paid, by changing its status to "sent"
+     * 2) Calculate the value of the paid_annualized_fee field of the payment commitments involved in the remittance.Changes them via SQL
      * @param Object $remittanceBean Then bean with remittance
      * @return void
      */
-    public static function markPaymentsAsPaidIfRemittanceIsSent($remittanceBean) {
+    public static function managePaymentsIfRemittanceIsSent($remittanceBean)
+    {
 
         // In card payments remittances the payment status should not be globally updated as it will be managed on individual payment execution
         if ($remittanceBean->type == 'cards') {
@@ -48,7 +50,7 @@ class stic_RemittancesUtils {
                     stic_payments
                 SET
                     status = 'paid',
-                    date_modified = NOW(),
+                    date_modified = DATE_FORMAT(UTC_TIMESTAMP(), '%Y-%m-%d %H:%i:%s'),
                     modified_user_id = '{$current_user->id}'
                 WHERE
                     id IN (
@@ -69,10 +71,55 @@ class stic_RemittancesUtils {
             $GLOBALS['log']->debug(__METHOD__ . ": Updating payment status ...");
             $res = $db->query($sql);
             if ($res === false) {
-                $GLOBALS['log']->ERROR(__METHOD__ . ": An error occurred updating the status of payments linked to the remittance [{$remittanceBean->id} - {$remittanceBean->name}]");
+                $GLOBALS['log']->error(__METHOD__ . ": An error occurred updating the status of payments linked to the remittance [{$remittanceBean->id} - {$remittanceBean->name}]");
             } else {
-                $GLOBALS['log']->INFO(__METHOD__ . ": [" . $db->getAffectedRowCount($res) . "] payments linked to the remittance [{$remittanceBean->id} - {$remittanceBean->name}] have been updated to paid status.");
+                $GLOBALS['log']->info(__METHOD__ . ": [" . $db->getAffectedRowCount($res) . "] payments linked to the remittance [{$remittanceBean->id} - {$remittanceBean->name}] have been updated to paid status.");
             }
+
+            // Recalculate the 'paid_annualized_fee' for all Payment Commitments involved in a remittance status change.
+            require_once 'modules/stic_Payment_Commitments/Utils.php';
+
+            $GLOBALS['log']->debug(__METHOD__ . ": Started recalculation of 'paid_annualized_fee' for all Payment Commitments involved in remittance status change.");
+
+            // create subquery statement
+            $selectIdSubquery = "SELECT
+                    spspcc.stic_paymebfe2itments_ida AS id
+                FROM
+                    stic_payments_stic_remittances_c spsrc
+                JOIN stic_payments_stic_payment_commitments_c spspcc ON
+                    spsrc.stic_payments_stic_remittancesstic_payments_idb = spspcc.stic_payments_stic_payment_commitmentsstic_payments_idb
+                WHERE
+                    spsrc.stic_payments_stic_remittancesstic_remittances_ida = '{$remittanceBean->id}'
+                    AND spspcc.deleted = 0
+                    AND spsrc.deleted = 0";
+            // create update query
+            $paidAnnualizedFeeSQL = "UPDATE stic_payment_commitments pc
+            JOIN (
+            SELECT rel.stic_paymebfe2itments_ida, SUM(sp.amount) AS total
+                FROM stic_payments sp
+                JOIN stic_payments_stic_payment_commitments_c rel
+                    ON rel.stic_payments_stic_payment_commitmentsstic_payments_idb = sp.id
+                WHERE sp.status = 'paid'
+                    AND sp.deleted = 0
+                    AND rel.deleted = 0
+                    AND YEAR(sp.payment_date) = YEAR(CURDATE())
+                    AND rel.stic_paymebfe2itments_ida IN ($selectIdSubquery)
+                GROUP BY rel.stic_paymebfe2itments_ida
+            ) pay_sum
+            ON pc.id = pay_sum.stic_paymebfe2itments_ida
+            SET pc.date_modified = DATE_FORMAT(UTC_TIMESTAMP(), '%Y-%m-%d %H:%i:%s'),
+                pc.paid_annualized_fee = pay_sum.total
+            WHERE pc.id IN ($selectIdSubquery) ;";
+
+            $res2 = $db->query($paidAnnualizedFeeSQL);
+
+            if ($res2 === false) {
+                $GLOBALS['log']->error(__METHOD__ . ": An error occurred while updating the 'paid_annualized_fee' of Payment Commitments related to the remittance [{$remittanceBean->id} - {$remittanceBean->name}].");
+            } else {
+                $updatedRows2 = $db->getAffectedRowCount($res2);
+                $GLOBALS['log']->info(__METHOD__ . ": Successfully updated 'paid_annualized_fee' for [{$updatedRows2}] payment commitment(s) related to the remittance [{$remittanceBean->id} - {$remittanceBean->name}].");
+            }
+
         }
 
     }
@@ -85,7 +132,8 @@ class stic_RemittancesUtils {
  * @param String $text
  * @return String  The link to formatted edition to use
  */
-    public static function goToEdit($module, $record, $text) {
+    public static function goToEdit($module, $record, $text)
+    {
 
         return '<i>' . $text . '</i> - <a target="_blank" href="index.php?module=' . $module . '&action=EditView&record=' . $record . '" ><b>' . translate('LBL_SEPA_FIX_REMITTANCE_ERROR') . '</b></a>';
 

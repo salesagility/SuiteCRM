@@ -285,6 +285,84 @@ $dictionary['stic_Payment_Commitments'] = array(
                 'quickcreate' => false,
                 'editview' => false,
             ),
+            'popupHelp' => 'LBL_ANNUALIZED_FEE_INFO',
+        ),
+        'pending_annualized_fee' => array(
+            'required' => 0,
+            'name' => 'pending_annualized_fee',
+            'vname' => 'LBL_PENDING_ANNUALIZED_FEE',
+            'duplicate_merge' => 'enabled',
+            'merge_filter' => 'enabled',
+            'type' => 'decimal',
+            'massupdate' => 0,
+            'no_default' => 0,
+            'comments' => '',
+            'help' => '',
+            'importable' => 0,
+            'audited' => 0,
+            'inline_edit' => 0, // autocalc
+            'reportable' => 1,
+            'unified_search' => 0,
+            'len' => 26,
+            'size' => '20',
+            'options' => 'numeric_range_search_dom',
+            'enable_range_search' => 1,
+            'precision' => 2,
+            'studio' => array(
+                'quickcreate' => false,
+                'editview' => false,
+            ),
+            'popupHelp' => 'LBL_PENDING_ANNUALIZED_FEE_INFO',
+        ),
+        'paid_annualized_fee' => array(
+            'required' => 0,
+            'name' => 'paid_annualized_fee',
+            'vname' => 'LBL_PAID_ANNUALIZED_FEE',
+            'duplicate_merge' => 'enabled',
+            'merge_filter' => 'enabled',
+            'type' => 'decimal',
+            'massupdate' => 0,
+            'no_default' => 0,
+            'comments' => '',
+            'help' => '',
+            'importable' => 0,
+            'audited' => 0,
+            'inline_edit' => 0, // autocalc
+            'reportable' => 1,
+            'unified_search' => 0,
+            'len' => 26,
+            'size' => '20',
+            'options' => 'numeric_range_search_dom',
+            'enable_range_search' => 1,
+            'precision' => 2,
+            'studio' => array(
+                'quickcreate' => false,
+                'editview' => false,
+            ),
+            'popupHelp' => 'LBL_PAID_ANNUALIZED_FEE_INFO',
+        ),
+        'expected_payments_detail' => array(
+            'required' => 0,
+            'name' => 'expected_payments_detail',
+            'vname' => 'LBL_EXPECTED_PAYMENTS_DETAIL',
+            'duplicate_merge' => 'enabled',
+            'merge_filter' => 'enabled',
+            'type' => 'varchar',
+            'massupdate' => 0,
+            'no_default' => 0,
+            'comments' => '',
+            'help' => '',
+            'importable' => 0,
+            'audited' => 0,
+            'inline_edit' => 0,
+            'reportable' => 1,
+            'unified_search' => 0,
+            'len' => '255',
+            'size' => '20',
+            'studio' => array(
+                'quickcreate' => false,
+                'editview' => false,
+            ),
         ),
         'segmentation' => array(
             'required' => 0,
@@ -777,3 +855,41 @@ VardefManager::createVardef('stic_Payment_Commitments', 'stic_Payment_Commitment
 $dictionary['stic_Payment_Commitments']['fields']['name']['required'] = '0'; // Name is not required in this module
 $dictionary['stic_Payment_Commitments']['fields']['name']['importable'] = true; // Name is importable but not required in this module
 $dictionary['stic_Payment_Commitments']['fields']['description']['rows'] = '2'; // Make textarea fields shorter
+
+// Kreporter fields are added to display the payment forecast for each of the next 12 months in an itemized manner,
+// using the information contained in the expected_payments_detail field.
+$i = 1;
+
+while ($i <= 12) {
+    // fix length for first position
+    $positions = $i == 1 ? 1 : 2;
+
+    $mainQuery = "CAST(SUBSTRING(SUBSTRING_INDEX(expected_payments_detail, '|', {$i}), LENGTH(SUBSTRING_INDEX(expected_payments_detail, '|', {$i} - 1)) + {$positions}) AS DECIMAL(10,2))";
+    
+    $dictionary['stic_Payment_Commitments']['fields']['expected_payments_month_' . $i] = array(
+        'name' => 'expected_payments_month_' . $i,
+        'vname' => 'LBL_KREPORTER_EXPECTED_PAYMENTS_MONTH_' . $i,
+        'type' => 'kreporter',
+        'source' => 'non-db',
+        'kreporttype' => 'decimal',
+        'evalSQLFunction' => 'X', // This strange parameter is required by https://github.com/SinergiaTIC/SinergiaCRM/blob/master/modules/KReports/KReportQuery.php#L1230 so that, on this field of type 'kreporter', the aggregations are applied in case they are used in the report.
+        'eval' => array(
+            'presentation' => array(
+                'eval' => $mainQuery,
+            ),
+            'selection' => array(
+                'contains' => '(' . $mainQuery . ') LIKE \'%{p1}%\'',
+                'notcontains' => '(' . $mainQuery . ') NOT LIKE \'%{p1}%\'',
+                'equals' => '(' . $mainQuery . ') = \'{p1}\'',
+                'notequal' => '(' . $mainQuery . ') <> \'{p1}\'',
+                'starts' => '(' . $mainQuery . ') LIKE \'{p1}%\'',
+                'notstarts' => '(' . $mainQuery . ') NOT LIKE \'{p1}%\'',
+                'isnull' => '(' . $mainQuery . ') IS NULL',
+                'isempty' => '(' . $mainQuery . ') = \'\'',
+                'isemptyornull' => '(' . $mainQuery . ') = \'\' OR (' . $mainQuery . ') IS NULL',
+                'isnotempty' => '(' . $mainQuery . ') <> \'\' AND (' . $mainQuery . ') IS NOT NULL',
+            ),
+        ),
+    );
+    $i++;
+}

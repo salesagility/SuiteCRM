@@ -289,6 +289,20 @@ array(
                 'default' => true,
                 'name' => 'annualized_fee',
             ),
+            'pending_annualized_fee' => array(
+                'type' => 'decimal',
+                'label' => 'LBL_PENDING_ANNUALIZED_FEE',
+                'width' => '10%',
+                'default' => true,
+                'name' => 'pending_annualized_fee',
+            ),
+            'paid_annualized_fee' => array(
+                'type' => 'decimal',
+                'label' => 'LBL_PAID_ANNUALIZED_FEE',
+                'width' => '10%',
+                'default' => true,
+                'name' => 'paid_annualized_fee',
+            ),
             'channel' => array(
                 'type' => 'enum',
                 'studio' => 'visible',
