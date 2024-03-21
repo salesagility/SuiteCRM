@@ -94,8 +94,9 @@ $mod_strings = array(
     'LBL_SEPA_CREDIT_INVALID_TYPE' => 'El fichero no se puede generar porque su tipo debería ser <b>transferencias emitidas</b>.',
 
     // Mensajes SEPA para recibos
+    'LBL_SEPA_DEBIT_INVALID_PAYMENT_COMMITMENT' => 'El pago no está relacionado con ningún compromiso de pago: ',
     'LBL_SEPA_DEBIT_INVALID_SIGNATURE_DATE' => 'La <b>fecha de firma</b> del compromiso de pago está vacía: ',
-    'LBL_SEPA_DEBIT_INVALID_MANDATE' => 'El <b>mandato</b> del pago es inválido. Está vacío o supera los 35 caracteres (verifique también el compromiso de pago): ',
+    'LBL_SEPA_DEBIT_INVALID_MANDATE' => 'El <b>mandato</b> del pago es inválido. Está vacío, supera los 35 caracteres o contiene espacios en blanco (verifique también el compromiso de pago): ',
     'LBL_SEPA_DEBIT_INVALID_NIF' => 'El <b>número de identificación</b> (NIF, NIE...) de la persona/organización está vacío: ',
     'LBL_SEPA_DEBIT_INVALID_TYPE' => 'El fichero no se puede generar porque su tipo debería ser <b>recibos domiciliados</b>.',
 

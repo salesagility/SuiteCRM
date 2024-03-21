@@ -27,7 +27,8 @@
  * @param Object $remittance Corresponds to the $this object of the corresponding action of the module controller.php file, from which this function is invoked, including the View and the Bean of the remittance
  * @return void
  */
-function generateSEPACreditTransfers($remittance) {
+function generateSEPACreditTransfers($remittance)
+{
     /**
      * This function generates a remittance of SEPA bank transfers in XML format.
      * Based on the Credit Transfer SEPA library:
@@ -79,6 +80,9 @@ function generateSEPACreditTransfers($remittance) {
     if (count($missingSettings) > 0) {
         SticUtils::showErrorMessagesAndDie($remittance, $mod_strings['LBL_MISSING_SEPA_VARIABLES'] . ' <br>' . join('<br>', $missingSettings));
     }
+
+    // Truncate & clean GENERAL_ORGANIZATION_NAME to 70 characters as allowed
+    $directCreditsVars['GENERAL_ORGANIZATION_NAME'] = mb_substr(trim(SticUtils::cleanText($directCreditsVars['GENERAL_ORGANIZATION_NAME'])), 0, 70, 'UTF-8');
 
     // We start variables to count and add the total payments to be made (and then indicate them in the header)
     $controlSum = 0;
@@ -193,7 +197,7 @@ function generateSEPACreditTransfers($remittance) {
                 ->setCreditorIBAN(trim($paymentResult['bank_account']))
                 ->setCreditorName($receptorName)
                 ->setEndToEndId(str_replace('-', '', $paymentResult['id']))
-                ->setRemittanceInformation(SticUtils::cleanText(trim($finalConcept)));
+                ->setRemittanceInformation(SticUtils::cleanText(trim(mb_substr($finalConcept, 0, 140))));
             $paymentInformation->addPayments($paymentXML);
 
             // We update totals of amount and number of operations
@@ -213,7 +217,7 @@ function generateSEPACreditTransfers($remittance) {
         // Group Header
         $groupHeader = new \Sepa\CreditTransfer\GroupHeader();
         $groupHeader->setControlSum(number_format($controlSum, 2, '.', ''))
-            ->setInitiatingPartyName(mb_substr(trim(SticUtils::cleanText($directCreditsVars['GENERAL_ORGANIZATION_NAME'])), 0, 70, 'UTF-8'))
+            ->setInitiatingPartyName($directCreditsVars['GENERAL_ORGANIZATION_NAME'])
             ->setMessageIdentification('SEPACREDIT' . time())
             ->setInitiatingPartyOrgIdOthrId(SticUtils::cleanText($directCreditsVars['SEPA_TRANSFER_DEBITOR_IDENTIFIER']))
             ->setNumberOfTransactions($controlNumOperations);
@@ -224,7 +228,7 @@ function generateSEPACreditTransfers($remittance) {
         // We add the total number of operations and the total amount in the header of the consignment
         $paymentInformation
             ->setDebtorIBAN(trim($remittance->bean->bank_account))
-            ->setDebtorName(trim(SticUtils::cleanText($directCreditsVars['GENERAL_ORGANIZATION_NAME'])))
+            ->setDebtorName($directCreditsVars['GENERAL_ORGANIZATION_NAME'])
             ->setPaymentInformationIdentification(str_replace('-', '', $remittance->bean->id))
             ->setRequestedExecutionDate(date('Y-m-d', strtotime(str_replace('/', '-', $remittance->bean->charge_date))))
             ->setControlSum(number_format($controlSum, 2, '.', ''))
