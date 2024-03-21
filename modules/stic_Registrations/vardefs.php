@@ -272,7 +272,7 @@ $dictionary['stic_Registrations'] = array(
             'duplicate_merge' => 'enabled',
             'duplicate_merge_dom_value' => 1,
             'merge_filter' => 'enabled',
-            'popupHelp'=> 'LBL_DISABLED_WEEKDAYS_INFO',
+            'popupHelp' => 'LBL_DISABLED_WEEKDAYS_INFO',
         ),
         'session_amount' => array(
             'required' => 0,
@@ -546,7 +546,7 @@ $dictionary['stic_Registrations'] = array(
             'bean_name' => 'Task',
             'vname' => 'LBL_STIC_REGISTRATIONS_ACTIVITIES_TASKS_FROM_TASKS_TITLE',
         ),
-        'stic_payment_commitments_stic_registrations' => array (
+        'stic_payment_commitments_stic_registrations' => array(
             'name' => 'stic_payment_commitments_stic_registrations',
             'type' => 'link',
             'relationship' => 'stic_payment_commitments_stic_registrations',
@@ -556,7 +556,7 @@ $dictionary['stic_Registrations'] = array(
             'vname' => 'LBL_STIC_PAYMENT_COMMITMENTS_STIC_REGISTRATIONS_FROM_STIC_PAYMENT_COMMITMENTS_TITLE',
             'id_name' => 'stic_payme96d2itments_ida',
         ),
-        'stic_payment_commitments_stic_registrations_name' => array (
+        'stic_payment_commitments_stic_registrations_name' => array(
             'name' => 'stic_payment_commitments_stic_registrations_name',
             'type' => 'relate',
             'source' => 'non-db',
@@ -568,7 +568,7 @@ $dictionary['stic_Registrations'] = array(
             'module' => 'stic_Payment_Commitments',
             'rname' => 'name',
         ),
-        'stic_payme96d2itments_ida' => array (
+        'stic_payme96d2itments_ida' => array(
             'name' => 'stic_payme96d2itments_ida',
             'type' => 'link',
             'relationship' => 'stic_payment_commitments_stic_registrations',
@@ -577,6 +577,38 @@ $dictionary['stic_Registrations'] = array(
             'side' => 'right',
             'vname' => 'LBL_STIC_PAYMENT_COMMITMENTS_STIC_REGISTRATIONS_FROM_STIC_REGISTRATIONS_TITLE',
         ),
+        'stic_training_stic_registrations' => array(
+            'name' => 'stic_training_stic_registrations',
+            'type' => 'link',
+            'relationship' => 'stic_training_stic_registrations',
+            'source' => 'non-db',
+            'module' => 'stic_Training',
+            'bean_name' => 'stic_Training',
+            'vname' => 'LBL_STIC_TRAINING_STIC_REGISTRATIONS_FROM_STIC_TRAINING_TITLE',
+            'id_name' => 'stic_training_stic_registrationsstic_training_ida',
+        ),
+        'stic_training_stic_registrations_name' => array(
+            'name' => 'stic_training_stic_registrations_name',
+            'type' => 'relate',
+            'source' => 'non-db',
+            'vname' => 'LBL_STIC_TRAINING_STIC_REGISTRATIONS_FROM_STIC_TRAINING_TITLE',
+            'save' => true,
+            'id_name' => 'stic_training_stic_registrationsstic_training_ida',
+            'link' => 'stic_training_stic_registrations',
+            'table' => 'stic_training',
+            'module' => 'stic_Training',
+            'rname' => 'name',
+        ),
+        'stic_training_stic_registrationsstic_training_ida' => array(
+            'name' => 'stic_training_stic_registrationsstic_training_ida',
+            'type' => 'link',
+            'relationship' => 'stic_training_stic_registrations',
+            'source' => 'non-db',
+            'reportable' => false,
+            'side' => 'left',
+            'vname' => 'LBL_STIC_TRAINING_STIC_REGISTRATIONS_FROM_STIC_TRAINING_TITLE',
+        ),
+
     ),
     'relationships' => array(
     ),

@@ -312,7 +312,7 @@ $layout_defs["Contacts"]["subpanel_setup"]['stic_bookings_contacts'] = array(
 );
 
 // Medication subpanels
-$layout_defs["Contacts"]["subpanel_setup"]['stic_medication_log_contacts'] = array (
+$layout_defs["Contacts"]["subpanel_setup"]['stic_medication_log_contacts'] = array(
     'order' => 100,
     'module' => 'stic_Medication_Log',
     'subpanel_name' => 'default',
@@ -320,15 +320,13 @@ $layout_defs["Contacts"]["subpanel_setup"]['stic_medication_log_contacts'] = arr
     'sort_by' => 'id',
     'title_key' => 'LBL_STIC_MEDICATION_LOG_CONTACTS_FROM_STIC_MEDICATION_LOG_TITLE',
     'get_subpanel_data' => 'stic_medication_log_contacts',
-    'top_buttons' => 
-    array (
-      0 => 
-      array (
-        'widget_class' => 'SubPanelTopButtonQuickCreate',
-      ),
+    'top_buttons' => array(
+        0 => array(
+            'widget_class' => 'SubPanelTopButtonQuickCreate',
+        ),
     ),
-  );
-$layout_defs["Contacts"]["subpanel_setup"]['stic_prescription_contacts'] = array (
+);
+$layout_defs["Contacts"]["subpanel_setup"]['stic_prescription_contacts'] = array(
     'order' => 100,
     'module' => 'stic_Prescription',
     'subpanel_name' => 'default',
@@ -336,17 +334,15 @@ $layout_defs["Contacts"]["subpanel_setup"]['stic_prescription_contacts'] = array
     'sort_by' => 'id',
     'title_key' => 'LBL_STIC_PRESCRIPTION_CONTACTS_FROM_STIC_PRESCRIPTION_TITLE',
     'get_subpanel_data' => 'stic_prescription_contacts',
-    'top_buttons' => 
-    array (
-      0 => 
-      array (
-        'widget_class' => 'SubPanelTopButtonQuickCreate',
-      ),
+    'top_buttons' => array(
+        0 => array(
+            'widget_class' => 'SubPanelTopButtonQuickCreate',
+        ),
     ),
 );
 
 //Grants subpanel
-$layout_defs["Contacts"]["subpanel_setup"]['stic_grants_contacts'] = array (
+$layout_defs["Contacts"]["subpanel_setup"]['stic_grants_contacts'] = array(
     'order' => 100,
     'module' => 'stic_Grants',
     'subpanel_name' => 'default',
@@ -354,19 +350,16 @@ $layout_defs["Contacts"]["subpanel_setup"]['stic_grants_contacts'] = array (
     'sort_by' => 'id',
     'title_key' => 'LBL_STIC_GRANTS_CONTACTS_FROM_STIC_GRANTS_TITLE',
     'get_subpanel_data' => 'stic_grants_contacts',
-    'top_buttons' => 
-    array (
-      0 => 
-      array (
-        'widget_class' => 'SubPanelTopButtonQuickCreate',
-      ),
-      1 => 
-      array (
-        'widget_class' => 'SubPanelTopSelectButton',
-        'mode' => 'MultiSelect',
-      ),
+    'top_buttons' => array(
+        0 => array(
+            'widget_class' => 'SubPanelTopButtonQuickCreate',
+        ),
+        1 => array(
+            'widget_class' => 'SubPanelTopSelectButton',
+            'mode' => 'MultiSelect',
+        ),
     ),
-  );
+);
 
 // Journal subpanel
 $layout_defs["Contacts"]["subpanel_setup"]['stic_journal_contacts'] = array(
@@ -384,6 +377,54 @@ $layout_defs["Contacts"]["subpanel_setup"]['stic_journal_contacts'] = array(
         1 => array(
             'widget_class' => 'SubPanelTopSelectButton',
             'mode' => 'MultiSelect',
+        ),
+    ),
+);
+
+// Training subpanel
+$layout_defs["Contacts"]["subpanel_setup"]['stic_training_contacts'] = array(
+    'order' => 100,
+    'module' => 'stic_Training',
+    'subpanel_name' => 'default',
+    'sort_order' => 'asc',
+    'sort_by' => 'id',
+    'title_key' => 'LBL_STIC_TRAINING_CONTACTS_FROM_STIC_TRAINING_TITLE',
+    'get_subpanel_data' => 'stic_training_contacts',
+    'top_buttons' => array(
+        0 => array(
+            'widget_class' => 'SubPanelTopButtonQuickCreate',
+        ),
+    ),
+);
+
+// Work Experience subpanel
+$layout_defs["Contacts"]["subpanel_setup"]['stic_work_experience_contacts'] = array(
+    'order' => 100,
+    'module' => 'stic_Work_Experience',
+    'subpanel_name' => 'default',
+    'sort_order' => 'asc',
+    'sort_by' => 'id',
+    'title_key' => 'LBL_STIC_WORK_EXPERIENCE_CONTACTS_FROM_STIC_WORK_EXPERIENCE_TITLE',
+    'get_subpanel_data' => 'stic_work_experience_contacts',
+    'top_buttons' => array(
+        0 => array(
+            'widget_class' => 'SubPanelTopButtonQuickCreate',
+        ),
+    ),
+);
+
+// Skills subpanel
+$layout_defs["Contacts"]["subpanel_setup"]['stic_skills_contacts'] = array(
+    'order' => 100,
+    'module' => 'stic_Skills',
+    'subpanel_name' => 'default',
+    'sort_order' => 'asc',
+    'sort_by' => 'id',
+    'title_key' => 'LBL_STIC_SKILLS_CONTACTS_FROM_STIC_SKILLS_TITLE',
+    'get_subpanel_data' => 'stic_skills_contacts',
+    'top_buttons' => array(
+        0 => array(
+            'widget_class' => 'SubPanelTopButtonQuickCreate',
         ),
     ),
 );

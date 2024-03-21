@@ -173,3 +173,9 @@ $mod_strings['LBL_ACCOUNTS_SUBPANEL_TITLE'] = 'Organizacións';
 
 // Cadeas Ayudas
 $mod_strings['LBL_STIC_GRANTS_ACCOUNTS_FROM_STIC_GRANTS_TITLE'] = 'Axudas';
+
+// Cadeas Formación
+$mod_strings['LBL_STIC_TRAINING_ACCOUNTS_FROM_STIC_TRAINING_TITLE'] = 'Formación';
+
+// Cadeas Experiencia laboral
+$mod_strings['LBL_STIC_WORK_EXPERIENCE_ACCOUNTS_FROM_STIC_WORK_EXPERIENCE_TITLE'] = 'Experiencia laboral';

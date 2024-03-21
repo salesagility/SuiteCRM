@@ -160,6 +160,14 @@ array(
                     ),
                 ),
                 10 => array(
+                    0 => array(
+                        'name' => 'stic_training_stic_registrations_name',
+                        'label' => 'LBL_STIC_TRAINING_STIC_REGISTRATIONS_FROM_STIC_TRAINING_TITLE',
+                    ),
+                    1 => '',
+                ),
+
+                11 => array(
                     0 => 'description',
                 ),
             ),

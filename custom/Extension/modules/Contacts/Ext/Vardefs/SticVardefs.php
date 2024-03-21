@@ -2448,6 +2448,42 @@ $dictionary["Contact"]["fields"]["stic_journal_contacts"] = array(
     'vname' => 'LBL_STIC_JOURNAL_CONTACTS_FROM_STIC_JOURNAL_TITLE',
 );
 
+// Training Relationships
+$dictionary["Contact"]["fields"]["stic_training_contacts"] = array(
+    'name' => 'stic_training_contacts',
+    'type' => 'link',
+    'relationship' => 'stic_training_contacts',
+    'source' => 'non-db',
+    'module' => 'stic_Training',
+    'bean_name' => false,
+    'side' => 'right',
+    'vname' => 'LBL_STIC_TRAINING_CONTACTS_FROM_STIC_TRAINING_TITLE',
+);
+
+// Work Experience Relationships
+$dictionary["Contact"]["fields"]["stic_work_experience_contacts"] = array(
+    'name' => 'stic_work_experience_contacts',
+    'type' => 'link',
+    'relationship' => 'stic_work_experience_contacts',
+    'source' => 'non-db',
+    'module' => 'stic_Work_Experience',
+    'bean_name' => false,
+    'side' => 'right',
+    'vname' => 'LBL_STIC_WORK_EXPERIENCE_CONTACTS_FROM_STIC_WORK_EXPERIENCE_TITLE',
+);
+
+// Skills Relationships
+$dictionary["Contact"]["fields"]["stic_skills_contacts"] = array(
+    'name' => 'stic_skills_contacts',
+    'type' => 'link',
+    'relationship' => 'stic_skills_contacts',
+    'source' => 'non-db',
+    'module' => 'stic_Skills',
+    'bean_name' => false,
+    'side' => 'right',
+    'vname' => 'LBL_STIC_SKILLS_CONTACTS_FROM_STIC_SKILLS_TITLE',
+);
+
 // Modified properties in native fields
 $dictionary['Contact']['fields']['first_name']['massupdate'] = 0;
 $dictionary['Contact']['fields']['first_name']['merge_filter'] = 'selected';

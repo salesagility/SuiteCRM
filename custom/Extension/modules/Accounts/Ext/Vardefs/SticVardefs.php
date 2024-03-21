@@ -1946,6 +1946,30 @@ $dictionary["Account"]["fields"]["stic_centers_accounts"] = array (
     'vname' => 'LBL_STIC_CENTERS_ACCOUNTS_FROM_STIC_CENTERS_TITLE',
 );
 
+// Training relationship Vardef
+$dictionary["Account"]["fields"]["stic_training_accounts"] = array(
+    'name' => 'stic_training_accounts',
+    'type' => 'link',
+    'relationship' => 'stic_training_accounts',
+    'source' => 'non-db',
+    'module' => 'stic_Training',
+    'bean_name' => false,
+    'side' => 'right',
+    'vname' => 'LBL_STIC_TRAINING_ACCOUNTS_FROM_STIC_TRAINING_TITLE',
+);
+
+// Work experience relationship Vardef
+$dictionary["Account"]["fields"]["stic_work_experience_accounts"] = array(
+    'name' => 'stic_work_experience_accounts',
+    'type' => 'link',
+    'relationship' => 'stic_work_experience_accounts',
+    'source' => 'non-db',
+    'module' => 'stic_Work_Experience',
+    'bean_name' => false,
+    'side' => 'right',
+    'vname' => 'LBL_STIC_WORK_EXPERIENCE_ACCOUNTS_FROM_STIC_WORK_EXPERIENCE_TITLE',
+);
+
 $dictionary['Account']['fields']['account_type']['massupdate'] = 0;
 $dictionary['Account']['fields']['account_type']['studio'] = false;
 
@@ -2012,10 +2036,10 @@ $dictionary['Account']['fields']['website']['massupdate'] = 0;
 
 // Add custom index for duplicates detection in import process
 $dictionary['Account']['indices'][] = array(
-	'name' => 'SticIdentificationNumberIndex',
-	'type' => 'index',
-	'source' => 'non-db',
-	'fields' => array('stic_identification_number_c')
+    'name' => 'SticIdentificationNumberIndex',
+    'type' => 'index',
+    'source' => 'non-db',
+    'fields' => array('stic_identification_number_c')
 );
 
 // Virtual fields for Kreporter

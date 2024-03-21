@@ -190,7 +190,7 @@ $layout_defs["Accounts"]["subpanel_setup"]['stic_bookings_accounts'] = array(
 );
 
 // Centers subpanel
-$layout_defs["Accounts"]["subpanel_setup"]['stic_centers_accounts'] = array (
+$layout_defs["Accounts"]["subpanel_setup"]['stic_centers_accounts'] = array(
     'order' => 100,
     'module' => 'stic_Centers',
     'subpanel_name' => 'ForAccounts',
@@ -198,19 +198,48 @@ $layout_defs["Accounts"]["subpanel_setup"]['stic_centers_accounts'] = array (
     'sort_by' => 'name',
     'title_key' => 'LBL_STIC_CENTERS_ACCOUNTS_FROM_STIC_CENTERS_TITLE',
     'get_subpanel_data' => 'stic_centers_accounts',
-    'top_buttons' => 
-    array (
-      0 => 
-      array (
-        'widget_class' => 'SubPanelTopButtonQuickCreate',
-      ),
-      1 => 
-      array (
-        'widget_class' => 'SubPanelTopSelectButton',
-        'mode' => 'MultiSelect',
-      ),
+    'top_buttons' => array(
+        0 => array(
+            'widget_class' => 'SubPanelTopButtonQuickCreate',
+        ),
+        1 => array(
+            'widget_class' => 'SubPanelTopSelectButton',
+            'mode' => 'MultiSelect',
+        ),
     ),
-  );
+);
+
+// Training subpanel
+$layout_defs["Accounts"]["subpanel_setup"]['stic_training_accounts'] = array(
+    'order' => 100,
+    'module' => 'stic_Training',
+    'subpanel_name' => 'default',
+    'sort_order' => 'asc',
+    'sort_by' => 'id',
+    'title_key' => 'LBL_STIC_TRAINING_ACCOUNTS_FROM_STIC_TRAINING_TITLE',
+    'get_subpanel_data' => 'stic_training_accounts',
+    'top_buttons' => array(
+        0 => array(
+            'widget_class' => 'SubPanelTopButtonQuickCreate',
+        ),
+    ),
+);
+
+// Work experience subpanel
+$layout_defs["Accounts"]["subpanel_setup"]['stic_work_experience_accounts'] = array(
+    'order' => 100,
+    'module' => 'stic_Work_Experience',
+    'subpanel_name' => 'default',
+    'sort_order' => 'asc',
+    'sort_by' => 'id',
+    'title_key' => 'LBL_STIC_WORK_EXPERIENCE_ACCOUNTS_FROM_STIC_WORK_EXPERIENCE_TITLE',
+    'get_subpanel_data' => 'stic_work_experience_accounts',
+    'top_buttons' => array(
+        0 => array(
+            'widget_class' => 'SubPanelTopButtonQuickCreate',
+        ),
+    ),
+);
 
 $layout_defs['Accounts']['subpanel_setup']['contacts']['override_subpanel_name'] = 'SticDefault';
 $layout_defs['Accounts']['subpanel_setup']['leads']['override_subpanel_name'] = 'SticDefault';
@@ -238,7 +267,7 @@ $layout_defs['Accounts']['subpanel_setup']['leads']['sort_by'] = 'last_name, fir
 unset($layout_defs["Accounts"]["subpanel_setup"]['project']);
 
 //Grants subpanel
-$layout_defs["Accounts"]["subpanel_setup"]['stic_grants_accounts'] = array (
+$layout_defs["Accounts"]["subpanel_setup"]['stic_grants_accounts'] = array(
     'order' => 100,
     'module' => 'stic_Grants',
     'subpanel_name' => 'default',
@@ -246,16 +275,13 @@ $layout_defs["Accounts"]["subpanel_setup"]['stic_grants_accounts'] = array (
     'sort_by' => 'id',
     'title_key' => 'LBL_STIC_GRANTS_ACCOUNTS_FROM_STIC_GRANTS_TITLE',
     'get_subpanel_data' => 'stic_grants_accounts',
-    'top_buttons' => 
-    array (
-      0 => 
-      array (
-        'widget_class' => 'SubPanelTopButtonQuickCreate',
-      ),
-      1 => 
-      array (
-        'widget_class' => 'SubPanelTopSelectButton',
-        'mode' => 'MultiSelect',
-      ),
+    'top_buttons' => array(
+        0 => array(
+            'widget_class' => 'SubPanelTopButtonQuickCreate',
+        ),
+        1 => array(
+            'widget_class' => 'SubPanelTopSelectButton',
+            'mode' => 'MultiSelect',
+        ),
     ),
-  );
+);

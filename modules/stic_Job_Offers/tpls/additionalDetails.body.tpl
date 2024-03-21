@@ -55,6 +55,36 @@
         {$FIELD.OFFERED_POSITIONS}
     </div>
 {/if}
+{if !empty($FIELD.POSITION_TYPE)}
+    <div>
+        <strong>{$PARAM.LBL_POSITION_TYPE}:</strong>
+        {$FIELD.POSITION_TYPE}
+    </div>
+{/if}
+{if !empty($FIELD.CONTRACT_TYPE)}
+    <div>
+        <strong>{$PARAM.LBL_CONTRACT_TYPE}:</strong>
+        {$FIELD.CONTRACT_TYPE}
+    </div>
+{/if}
+{if !empty($FIELD.WORKDAY_TYPE)}
+    <div>
+        <strong>{$PARAM.LBL_WORKDAY_TYPE}:</strong>
+        {$FIELD.WORKDAY_TYPE}
+    </div>
+{/if}
+{if !empty($FIELD.SECTOR)}
+    <div>
+        <strong>{$PARAM.LBL_SECTOR}:</strong>
+        {$FIELD.SECTOR}
+    </div>
+{/if}
+{if !empty($FIELD.SUBSECTOR)}
+    <div>
+        <strong>{$PARAM.LBL_SUBSECTOR}:</strong>
+        {$FIELD.SUBSECTOR}
+    </div>
+{/if}
 {if !empty($FIELD.DESCRIPTION)}
     <div>
         <strong>{$PARAM.LBL_DESCRIPTION}:</strong>
@@ -66,6 +96,11 @@
     || !empty($FIELD.PROCESS_START_DATE) 
     || !empty($FIELD.RETRIBUTION) 
     || !empty($FIELD.HOURS_PER_WEEK)
+    || !empty($FIELD.POSITION_TYPE) 
+    || !empty($FIELD.CONTRACT_TYPE) 
+    || !empty($FIELD.WORKDAY_TYPE)
+    || !empty($FIELD.SECTOR) 
+    || !empty($FIELD.SUBSECTOR)
     || !empty($FIELD.CONTRACT_DESCRIPTION)}
     <br>
 {/if}

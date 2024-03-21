@@ -183,6 +183,9 @@ $GLOBALS['tabStructure'] = array(
             2 => 'stic_Sepe_Actions',
             3 => 'stic_Sepe_Incidents',
             4 => 'stic_Sepe_Files',
+            5 => 'stic_Training',
+            6 => 'stic_Skills',
+            7 => 'stic_Work_Experience',
         ),
     ),
     'LBL_GROUPTAB_BOOKINGS' => array(

@@ -1,0 +1,91 @@
+{* 
+ * This file is part of SinergiaCRM.
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ *}
+{if !empty($FIELD.NAME)}
+    <div>
+        <a href="index.php?action=DetailView&module={$MODULE_NAME}&record={$FIELD.ID}">{$FIELD.NAME}</a>
+    </div>
+{/if}
+<br>
+{if !empty($FIELD.SUBSECTOR)}
+    <div>
+        <strong>{$PARAM.LBL_SUBSECTOR}:</strong>
+        {$FIELD.SUBSECTOR}
+    </div>
+{/if}
+
+{if !empty($FIELD.WORKDAY_TYPE)}
+    <div>
+        <strong>{$PARAM.LBL_WORKDAY_TYPE}:</strong>
+        {$FIELD.WORKDAY_TYPE}
+    </div>
+{/if}
+{if !empty($FIELD.SCHEDULE)}
+    <div>
+        <strong>{$PARAM.LBL_SCHEDULE}:</strong>
+        {$FIELD.SCHEDULE}
+    </div>
+{/if}
+{if ($FIELD.ACHIEVED)==1}
+    <div>
+        <strong>{$PARAM.LBL_ACHIEVED}</strong>
+    </div>
+{/if}
+    
+{if !empty($FIELD.END_DATE)}
+    <div>
+        <strong>{$PARAM.LBL_END_DATE}:</strong>
+        {$FIELD.END_DATE}
+    </div>
+{/if}
+
+{if !empty($FIELD.START_DATE)}
+<div>
+    <strong>{$PARAM.LBL_START_DATE}:</strong>
+    {$FIELD.START_DATE}
+</div>
+{/if}
+{if !empty($FIELD.DESCRIPTION)}
+    <div>
+        <strong>{$PARAM.LBL_DESCRIPTION}:</strong>
+        {$FIELD.DESCRIPTION}
+    </div>
+{/if}
+{if !empty($FIELD.DESCRIPTION)
+    || !empty($FIELD.SUBSECTOR)
+    || !empty($FIELD.WORKDAY_TYPE)
+    || !empty($FIELD.SCHEDULE)
+    || !empty($FIELD.END_DATE)
+    || !empty($FIELD.START_DATE)}
+    <br>
+{/if}
+{if !empty($FIELD.DATE_ENTERED)}
+    <div>
+        <strong>{$PARAM.LBL_DATE_ENTERED}:</strong>
+        {$FIELD.DATE_ENTERED}
+    </div>
+{/if}
+{if !empty($FIELD.DATE_MODIFIED)}
+    <div>
+        <strong>{$PARAM.LBL_DATE_MODIFIED}:</strong>
+        {$FIELD.DATE_MODIFIED}
+    </div>
+{/if}

@@ -174,3 +174,10 @@ $mod_strings['LBL_ACCOUNTS_SUBPANEL_TITLE'] = 'Organitzacions';
 
 // Cadenes Ajuts
 $mod_strings['LBL_STIC_GRANTS_ACCOUNTS_FROM_STIC_GRANTS_TITLE'] = 'Ajuts';
+
+// Cadenes Formació
+$mod_strings['LBL_STIC_TRAINING_ACCOUNTS_FROM_STIC_TRAINING_TITLE'] = 'Formació';
+
+// Cadenes Experiència laboral
+$mod_strings['LBL_STIC_WORK_EXPERIENCE_ACCOUNTS_FROM_STIC_WORK_EXPERIENCE_TITLE'] = 'Experiència laboral';
+

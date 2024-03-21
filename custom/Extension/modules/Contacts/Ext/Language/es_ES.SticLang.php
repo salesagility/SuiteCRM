@@ -225,3 +225,12 @@ $mod_strings['LBL_STIC_GRANTS_CONTACTS_FROM_STIC_GRANTS_TITLE'] = 'Ayudas';
 
 // Cadenas de Diario
 $mod_strings['LBL_STIC_JOURNAL_CONTACTS_FROM_STIC_JOURNAL_TITLE'] = 'Diario';
+
+// Cadenas Formación
+$mod_strings['LBL_STIC_TRAINING_CONTACTS_FROM_STIC_TRAINING_TITLE'] = 'Formación';
+
+// Cadenas Experiencia laboral
+$mod_strings['LBL_STIC_WORK_EXPERIENCE_CONTACTS_FROM_STIC_WORK_EXPERIENCE_TITLE'] = 'Experiencia laboral';
+
+// Cadenas Competencias
+$mod_strings['LBL_STIC_SKILLS_CONTACTS_FROM_STIC_SKILLS_TITLE'] = 'Competencias';

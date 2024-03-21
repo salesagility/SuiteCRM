@@ -56,6 +56,9 @@ $moduleList[] = 'stic_Security_Groups_Rules';
 $moduleList[] = 'stic_Grants';
 $moduleList[] = 'stic_Centers';
 $moduleList[] = 'stic_Journal';
+$moduleList[] = 'stic_Training';
+$moduleList[] = 'stic_Work_Experience';
+$moduleList[] = 'stic_Skills';
 
 // Bean names for custom modules
 // Although they should be singular ModuleBuilder outputs them in plural and we keep them this way
@@ -93,6 +96,9 @@ $beanList['stic_Security_Groups_Rules'] = 'stic_Security_Groups_Rules';
 $beanList['stic_Grants'] = 'stic_Grants';
 $beanList['stic_Centers'] = 'stic_Centers';
 $beanList['stic_Journal'] = 'stic_Journal';
+$beanList['stic_Training'] = 'stic_Training';
+$beanList['stic_Work_Experience'] = 'stic_Work_Experience';
+$beanList['stic_Skills'] = 'stic_Skills';
 
 // Location of custom modules main class files
 $beanFiles['stic_Accounts_Relationships'] = 'modules/stic_Accounts_Relationships/stic_Accounts_Relationships.php';
@@ -129,6 +135,9 @@ $beanFiles['stic_Security_Groups_Rules'] = 'modules/stic_Security_Groups_Rules/s
 $beanFiles['stic_Grants'] = 'modules/stic_Grants/stic_Grants.php';
 $beanFiles['stic_Centers'] = 'modules/stic_Centers/stic_Centers.php';
 $beanFiles['stic_Journal'] = 'modules/stic_Journal/stic_Journal.php';
+$beanFiles['stic_Training'] = 'modules/stic_Training/stic_Training.php';
+$beanFiles['stic_Work_Experience'] = 'modules/stic_Work_Experience/stic_Work_Experience.php';
+$beanFiles['stic_Skills'] = 'modules/stic_Skills/stic_Skills.php';
 
 // Modules in $modInvisList are hidden in the main menu, in reporting and as subpanels
 $modInvisList[] = 'stic_Settings';

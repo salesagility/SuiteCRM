@@ -225,3 +225,12 @@ $mod_strings['LBL_STIC_GRANTS_CONTACTS_FROM_STIC_GRANTS_TITLE'] = 'Ajuts';
 
 // Diari
 $mod_strings['LBL_STIC_JOURNAL_CONTACTS_FROM_STIC_JOURNAL_TITLE'] = 'Diari';
+
+// Formació
+$mod_strings['LBL_STIC_TRAINING_CONTACTS_FROM_STIC_TRAINING_TITLE'] = 'Formació';
+
+// Experiència laboral
+$mod_strings['LBL_STIC_WORK_EXPERIENCE_CONTACTS_FROM_STIC_WORK_EXPERIENCE_TITLE'] = 'Experiència laboral';
+
+// Competències
+$mod_strings['LBL_STIC_SKILLS_CONTACTS_FROM_STIC_SKILLS_TITLE'] = 'Competències';
