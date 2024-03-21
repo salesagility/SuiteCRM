@@ -236,7 +236,7 @@ $mod_strings = array(
     'LBL_HEADER_REQUIRED' => 'És obligatori que la <span style="font-weight:bold;">primera fila del fitxer d\'importació sigui una capçalera</span> amb el nom dels diferents camps que s\'importaran.',
     'LBL_EMPTY_PUBLISH' => 'No hi ha cap mapatge de camps disponible.',
     'LBL_REQUIRED_FIELDS' => 'Manquen camps obligatoris',
-    'LBL_GENERATE_ID_HELP' => "Si el fitxer conté dades de diferents mòduls, es recomana generar per a cadascun dels registres un ID que pugui ser utilitzat en la importació de resgistrs de mòduls relacionats.",
+    'LBL_GENERATE_ID_HELP' => "Si el fitxer conté dades de diferents mòduls, es recomana generar per a cadascun dels registres un ID que pugui ser utilitzat en la importació de registres de mòduls relacionats.",
     'LBL_GENERATE_ID_HELP_2' => "Aquest ID pot ser generat en una columna nova o en alguna de les columnes del fitxer. Si seleccioneu una columna existent, l'ID es crearà per als registres que no tinguin valor a la columna seleccionada.",
     'LBL_GENERATE_ID_HELP_3' => "Per últim, si a la pantalla següent se seleccionen filtres per a la cerca de duplicats, en cas de detectar que un registre està duplicat s'assignarà l'ID del primer registre trobat en comptes de generar-se un ID nou.",
     'LBL_GENERATE_ID_HELP_4' => "EXEMPLE: En la validació d'un fitxer que contingui dades de Persones, Relacions amb Persones i Compromisos de Pagament, es pot generar un ID durant la validació de les dades de Persones i fer-lo servir a la validació i/o a la importació de les dades dels altres dos mòduls.",

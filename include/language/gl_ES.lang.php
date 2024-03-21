@@ -3806,5 +3806,13 @@ $app_strings['LBL_SEARCH_PREV'] = 'Anterior';
 $app_strings['LBL_SEARCH_NEXT'] = 'Seguinte';
 $app_strings['LBL_SEARCH_PAGE'] = 'Páxina ';
 $app_strings['LBL_SEARCH_OF'] = ' de '; // Usage: Page 1 of 5
+$app_strings['LBL_USE_ADVANCED_SEARCH'] = 'Utilizar la búsqueda avanzada';
+$app_strings['LBL_USE_BASIC_SEARCH'] = 'Utilizar la búsqueda básica';
 
-$app_list_strings['LBL_REPORTS_RESTRICTED'] = 'Un dos informes que seleccionaches apunta a un módulo ao que non tes acceso. Por favor, selecciona un informe que apunte a un módulo ao que si teñas acceso.';
+// PDF Engines
+$app_strings['LBL_LEGACY_MPDF_ENGINE'] = 'Motor MPDF obsoleto';
+$app_strings['LBL_TCPDF_ENGINE'] = 'Motor TCPDF';
+
+$app_strings['ERR_INVALID_FILE_NAME'] = 'El nombre del fichero no es válido:';
+$app_strings['LBL_LOGGER_VALID_FILENAME_CHARACTERS'] = 'Solo puede contener caracteres alfanuméricos, el punto (.), el guion (-) o el guion bajo (_).';
+$app_strings['LBL_LOGGER_INVALID_FILENAME'] = 'El nombre del fichero de importación no es válido';

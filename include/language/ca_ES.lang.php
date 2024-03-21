@@ -3784,9 +3784,9 @@ $app_strings['LBL_THERE_WAS_AN_ERR'] = 'S\'ha produït un error: ';
 $app_strings['LBL_CLICK_HERE'] = 'Cliqui aquí';
 $app_strings['LBL_TO_CONTINUE'] = ' per continuar.';
 
-$app_strings['IMAP_HANDLER_ERROR'] = 'ERROR: {error}; la clau es: "{key}".';
+$app_strings['IMAP_HANDLER_ERROR'] = 'ERROR: {error}; la clau és: "{key}".';
 $app_strings['IMAP_HANDLER_SUCCESS'] = 'OK: paràmetres de prova canviats a "{key}"';
-$app_strings['IMAP_HANDLER_ERROR_INVALID_REQUEST'] = 'Petició incorrecte, utilitzi valor "{var}".';
+$app_strings['IMAP_HANDLER_ERROR_INVALID_REQUEST'] = 'Petició incorrecta, utilitzeu el valor "{var}".';
 $app_strings['IMAP_HANDLER_ERROR_UNKNOWN_BY_KEY'] = 'Ha ocorregut un error desconegut, la clau "{key}" no s\'ha guardat.';
 $app_strings['IMAP_HANDLER_ERROR_NO_TEST_SET'] = 'Els paràmetres de prova no existeixen.';
 $app_strings['IMAP_HANDLER_ERROR_NO_KEY'] = 'Clau no trobada.';
@@ -3799,10 +3799,18 @@ $app_strings['LBL_SEARCH_SUBMIT_FIELD_VALUE']      = 'Cerca';
 $app_strings['LBL_SEARCH_QUERY']                   = 'Consulta a cercar: ';
 $app_strings['LBL_SEARCH_RESULTS_PER_PAGE']        = 'Resultats per pàgina: ';
 $app_strings['LBL_SEARCH_ENGINE']                  = 'Motor: ';
-$app_strings['LBL_SEARCH_TOTAL'] = 'Total de resultat(s): ';
+$app_strings['LBL_SEARCH_TOTAL'] = 'Total de resultats: ';
 $app_strings['LBL_SEARCH_PREV'] = 'Anterior';
 $app_strings['LBL_SEARCH_NEXT'] = 'Següent';
 $app_strings['LBL_SEARCH_PAGE'] = 'Pàgina ';
 $app_strings['LBL_SEARCH_OF'] = ' de '; // Usage: Page 1 of 5
+$app_strings['LBL_USE_ADVANCED_SEARCH'] = 'Fes servir la cerca avançada';
+$app_strings['LBL_USE_BASIC_SEARCH'] = 'Fes servir la cerca bàsica';
 
-$app_list_strings['LBL_REPORTS_RESTRICTED'] = 'Un informe que heu seleccionat està apuntant un mòdul que no teniu accés a ell. Si us plau, seleccioni un informe amb un mòdul de destinació que tingueu accés.';
+// PDF Engines
+$app_strings['LBL_LEGACY_MPDF_ENGINE'] = 'Motor MPDF obsolet';
+$app_strings['LBL_TCPDF_ENGINE'] = 'Motor TCPDF';
+
+$app_strings['ERR_INVALID_FILE_NAME'] = 'El nom del fitxer no és vàlid:';
+$app_strings['LBL_LOGGER_VALID_FILENAME_CHARACTERS'] = 'Només pot contenir caràcters alfanumèrics, el punt (.), el guionet (-) o el guió baix (_).';
+$app_strings['LBL_LOGGER_INVALID_FILENAME'] = "El nom del fitxer d'importació no és vàlid";
