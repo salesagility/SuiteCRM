@@ -187,7 +187,6 @@ div.sub-panel {
 
 .sub-panel tbody tr td .sugar_action_button > a:link {
   border-bottom: none;
-  color: $list-view-button-color;
   padding-top: 0px;
   padding-bottom: 0px;
 }
@@ -199,12 +198,12 @@ div.sub-panel {
 
 
 .sub-panel .table-responsive.list > tbody > tr > td ul.subnav a {
-  color: $list-view-button-color;
+  color: $list-view-header-color;
   width: 100%;
 }
 
 .sub-panel .table-responsive.list > tbody > tr > td ul.subnav a:hover {
-  color: $list-view-button-color;
+  color: $text-hover-listview;
   width: 100%;
 }
 
