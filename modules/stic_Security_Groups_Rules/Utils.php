@@ -403,7 +403,7 @@ class stic_Security_Groups_RulesUtils
                     // In such cases, retrieve the id in one of the three following ways, or continue.
 
                     // 1) Check if the related field is present in the subpanel's form
-                    if (!is_string($relatedId)) {
+                    if (!is_string($relatedId) && !empty($relatedId)) {
                         $relatedId = key($bean->{$value['field']}->rows);
                     }
 
@@ -419,13 +419,15 @@ class stic_Security_Groups_RulesUtils
 
                     }
                     
-                    $currentRecordGroups = self::getRelatedSecurityGroupIDs($relatedId);
-
-                    foreach ($currentRecordGroups as $val2) {
-                        $securityGroupsCandidatesToInherit = array_merge(
-                            $securityGroupsCandidatesToInherit,
-                            [['record_id' => $bean->id, 'securitygroup_id' => $val2]]
-                        );
+                    if (!empty($relatedId)) {
+                        $currentRecordGroups = self::getRelatedSecurityGroupIDs($relatedId);
+    
+                        foreach ($currentRecordGroups as $val2) {
+                            $securityGroupsCandidatesToInherit = array_merge(
+                                $securityGroupsCandidatesToInherit,
+                                [['record_id' => $bean->id, 'securitygroup_id' => $val2]]
+                            );
+                        }
                     }
                 }
             }
