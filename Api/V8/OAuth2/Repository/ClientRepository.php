@@ -5,6 +5,7 @@ use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\OAuth2\Entity\ClientEntity;
 use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
 
+#[\AllowDynamicProperties]
 class ClientRepository implements ClientRepositoryInterface
 {
     /**
@@ -30,18 +31,24 @@ class ClientRepository implements ClientRepositoryInterface
     /**
      * @inheritdoc
      */
-    public function getClientEntity($clientIdentifier, $grantType, $clientSecret = null, $mustValidateSecret = true)
+    public function getClientEntity($clientIdentifier)
     {
         /** @var \OAuth2Clients $client */
         $client = $this->beanManager->getBeanSafe(\OAuth2Clients::class, $clientIdentifier);
-        if ($mustValidateSecret && hash('sha256', $clientSecret) !== $client->secret) {
-            return null;
-        }
 
         $this->clientEntity->setIdentifier($clientIdentifier);
         $this->clientEntity->setName($client->name);
-        $this->clientEntity->setRedirectUri(isset($client->redirect_uri) ? $client->redirect_uri : '');
+        $this->clientEntity->setRedirectUri($client->redirect_uri ?? '');
+		$this->clientEntity->setIsConfidential($client->is_confidential ?? false);
 
         return $this->clientEntity;
+    }
+
+    public function validateClient($clientIdentifier, $clientSecret, $grantType)
+    {
+        /** @var \OAuth2Clients $client */
+        $client = $this->beanManager->getBeanSafe(\OAuth2Clients::class, $clientIdentifier);
+
+        return hash('sha256', $clientSecret) === $client->secret && $grantType === $client->allowed_grant_type;
     }
 }

@@ -74,7 +74,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
 
         //test for record ID to verify that record is saved
         self::assertTrue(isset($aowWorkFlow->id));
-        self::assertEquals(36, strlen($aowWorkFlow->id));
+        self::assertEquals(36, strlen((string) $aowWorkFlow->id));
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $aowWorkFlow->mark_deleted($aowWorkFlow->id);
@@ -278,15 +278,15 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
         self::assertTrue($aowWorkFlow->compare_condition('test2', array('test1', 'test2'), 'One_of'));
         self::assertTrue($aowWorkFlow->compare_condition('test', array('test1', 'test2'), 'Not_One_of'));
 
-        //These do not return bool but 'strpos' result
+
         //$this->assertNotFalse($aowWorkFlow->compare_condition('test1', 'test', 'Contains'));
-        self::assertEquals(0, $aowWorkFlow->compare_condition('test1', 'test', 'Contains'));
+        self::assertEquals(true, $aowWorkFlow->compare_condition('test1', 'test', 'Contains'));
 
         //$this->assertNotFalse($aowWorkFlow->compare_condition('test1', 'test', 'Starts_With'));
-        self::assertEquals(0, $aowWorkFlow->compare_condition('test1', 'test', 'Starts_With'));
+        self::assertEquals(true, $aowWorkFlow->compare_condition('test1', 'test', 'Starts_With'));
 
         //$this->assertNotFalse($aowWorkFlow->compare_condition('test1', '1', 'Ends_With'));
-        self::assertEquals(4, $aowWorkFlow->compare_condition('test1', '1', 'Ends_With'));
+        self::assertEquals(true, $aowWorkFlow->compare_condition('test1', '1', 'Ends_With'));
     }
 
     public function testcheck_in_group(): void
@@ -317,7 +317,7 @@ class AOW_WorkFlowTest extends SuitePHPUnitFrameworkTestCase
 
         //test for record ID to verify that record is saved
         self::assertTrue(isset($processed->id));
-        self::assertEquals(36, strlen($processed->id));
+        self::assertEquals(36, strlen((string) $processed->id));
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $processed->mark_deleted($processed->id);

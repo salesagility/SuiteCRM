@@ -90,7 +90,7 @@ class SearchFormView extends View
     /**
      * Makes an array with the page size from the sugar config.
      *
-     * @return array
+     * @return mixed[]|null
      */
     protected function makeSizesFromConfig(): ?array
     {

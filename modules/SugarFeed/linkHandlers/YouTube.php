@@ -43,6 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('modules/SugarFeed/linkHandlers/Link.php');
 
+#[\AllowDynamicProperties]
 class FeedLinkHandlerYoutube extends FeedLinkHandlerLink
 {
     public function getDisplay(&$data)
@@ -53,7 +54,7 @@ class FeedLinkHandlerYoutube extends FeedLinkHandlerLink
     public function handleInput($feed, $link_type, $link_url)
     {
         $match = array();
-        preg_match('/v=([^\&]+)/', $link_url, $match);
+        preg_match('/v=([^\&]+)/', (string) $link_url, $match);
         
         if (!empty($match[1])) {
             $feed->link_type = $link_type;

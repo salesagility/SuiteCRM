@@ -98,6 +98,7 @@ class SearchResultsController extends Controller
 
     public function display(): void
     {
+        global $app_strings;
         $headers = [];
 
         try {
@@ -111,7 +112,8 @@ class SearchResultsController extends Controller
             $size = $this->query->getSize();
             if ($size) {
                 $from = $this->query->getFrom();
-                $string = $this->query->getSearchString();
+                $queryString = $_REQUEST['query_string'] ?? '';
+                $string = !empty($_REQUEST['search-query-string']) ? $_REQUEST['search-query-string'] : $queryString;
 
                 $page = (int)($from / $size) + 1;
                 $prev = $page > 1;
@@ -137,6 +139,7 @@ class SearchResultsController extends Controller
         $smarty->assign('total', $total);
         $smarty->assign('headers', $headers);
         $smarty->assign('results', $this->results);
+        $smarty->assign('APP', $app_strings);
         try {
             $smarty->assign('resultsAsBean', $this->results->getHitsAsBeans());
         } catch (\SuiteCRM\Exception\Exception $e) {

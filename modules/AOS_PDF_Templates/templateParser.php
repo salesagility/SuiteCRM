@@ -27,6 +27,7 @@
 
 use SuiteCRM\Utility\SuiteValidator as SuiteValidator;
 
+#[\AllowDynamicProperties]
 class templateParser
 {
     public static function parse_template($string, $bean_arr)
@@ -100,7 +101,7 @@ class templateParser
                     if (!file_exists('public')) {
                         sugar_mkdir('public', 0777);
                     }
-                    if (!copy($file_location, "public/{$focus->id}".  '_' . (string)$fieldName)) {
+                    if (!copy($file_location, "public/{$focus->id}".  '_' . $fieldName)) {
                         $secureLink = $sugar_config['site_url'] . '/'. $file_location;
                     }
 
@@ -111,9 +112,9 @@ class templateParser
                         $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="' . $field_def['width'] . '" height="' . $field_def['height'] . '"/>';
                     }
                 } elseif ($field_def['type'] == 'wysiwyg') {
-                    $repl_arr[$key . "_" . $field_def['name']] = html_entity_decode($focus->$field_def['name'],
+                    $repl_arr[$key . "_" . $field_def['name']] = html_entity_decode((string) $focus->$field_def['name'],
                         ENT_COMPAT, 'UTF-8');
-                    $repl_arr[$key . "_" . $fieldName] = html_entity_decode($focus->{$fieldName},
+                    $repl_arr[$key . "_" . $fieldName] = html_entity_decode((string) $focus->{$fieldName},
                         ENT_COMPAT, 'UTF-8');
                 } else {
                     $repl_arr[$key . "_" . $fieldName] = $focus->{$fieldName};
@@ -167,13 +168,13 @@ class templateParser
                 }
             }
             if ($value != '' && is_string($value)) {
-                $string = str_replace("\$$name", $value, $string);
+                $string = str_replace("\$$name", $value, (string) $string);
             } elseif (strpos($name, 'address') > 0) {
-                $string = str_replace("\$$name<br />", '', $string);
+                $string = str_replace("\$$name<br />", '', (string) $string);
                 $string = str_replace("\$$name <br />", '', $string);
                 $string = str_replace("\$$name", '', $string);
             } else {
-                $string = str_replace("\$$name", '&nbsp;', $string);
+                $string = str_replace("\$$name", '&nbsp;', (string) $string);
             }
         }
 
