@@ -1545,7 +1545,7 @@ function http_fetch_async(url, callback, request_id, post_data) {
         callback.call(document, args);
       }
       else {
-        alert("There was a problem retrieving the XML data:\n" + global_xmlhttp.statusText);
+        alert(SUGAR.language.get('app_strings', 'LBL_RETRIEVING_XML_DATA') + global_xmlhttp.statusText);
       }
     }
   }
@@ -4091,7 +4091,7 @@ SUGAR.tabChooser = function () {
       }
 
       if (max_left != '' && (display_columns_ref.length + selected_right.length) > max_left) {
-        alert('Maximum of ' + max_left + ' columns can be displayed.');
+        alert(SUGAR.language.interpolate(SUGAR.language.get('app_strings', 'LBL_MAX_DASHLET_COLUMNS'), [max_left]));
         return;
       }
 
@@ -4244,6 +4244,14 @@ SUGAR.language = function () {
     translate: function (module, str) {
       text = this.get(module, str);
       return text != 'undefined' ? text : this.get('app_strings', str);
+    },
+
+    interpolate: function (labelString, argumentsArray) {
+      var regexExpression = /%s/;
+      var replace = function (string, replaceValue) {
+        return string.replace(regexExpression, replaceValue);
+      }
+      return argumentsArray.reduce(replace, labelString);
     }
   }
 }();
