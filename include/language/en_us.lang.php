@@ -1936,6 +1936,8 @@ $app_strings = array(
     'LBL_REMOVE_DASHLET_CONFIRM' => 'Are you sure you want to remove this SuiteCRM Dashlet?',
     'LBL_REMOVING_DASHLET' => 'Removing SuiteCRM Dashlet...',
     'LBL_REMOVED_DASHLET' => 'SuiteCRM Dashlet Removed',
+    'LBL_MAX_DASHLET_COLUMNS' => "Maximum of %s columns can be displayed.",
+    'LBL_RETRIEVING_XML_DATA' => "There was a problem retrieving the XML data:\n",
 
     // MySugar Menu Options
 
