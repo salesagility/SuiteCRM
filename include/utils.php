@@ -594,8 +594,10 @@ function getRunningUser()
 {
     // works on Windows and Linux, but might return null on systems that include "exec" in
     // disabled_functions in php.ini (typical in shared hosting)
-    $runningUser = @exec('whoami');
-
+    $runningUser = null;
+    if (function_exists('exec') {
+        $runningUser = exec('whoami');
+    }
     if ($runningUser == null) {  // matches null, false and ""
         if (is_windows()) {
             $runningUser = getenv('USERDOMAIN').'\\'.getenv('USERNAME');
