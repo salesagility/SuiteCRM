@@ -1,5 +1,4 @@
--- Active: 1632214630318@@localhost@2002@sinergiacrm
--- Update the expected_payments_detail and pending_annualized_fee fields in all active payment commitments
+-- Re-Update the expected_payments_detail and pending_annualized_fee fields in all active payment commitments
 UPDATE
     stic_payment_commitments AS t1
     JOIN (

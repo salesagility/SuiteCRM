@@ -98,14 +98,17 @@ class stic_Payments extends Basic
         }
 
         if ($PCBean) {
-            global $timedate, $current_user;
-            $userDate = $timedate->fromUserDate($this->payment_date, false, $current_user);
+            global $timedate;
+            
+            // Get userDate object from user format or from database format 
+            $userDate = $timedate->fromDBDate(SticUtils::formatDateForDatabase($this->payment_date));
+            
             // Create name if empty
             if (empty($this->name)) {
                 if ($userDate) {
                     $this->name = $PCBean->name . ' - ' . $userDate->asDBDate();
                 } else {
-                    // The payment is created from the pop-up view where the format of the date type fields is from the database
+                    // The payment is created in any context where the format of the date-type fields is bad formed.
                     $this->name = $PCBean->name . ' - ' . $this->payment_date;
                 }
             }
@@ -130,11 +133,9 @@ class stic_Payments extends Basic
         parent::save();
 
 
-        if ($PCBean) {
+        if ($PCBean && $userDate) {
         
             // Recalculate the field paid_annualized_fee if applicable.
-            require_once 'SticInclude/Utils.php';
-           
             // Check if the status, amount, or payment_date fields have changed or if it is a new record.            
             if (
                 $this->status != $tempFetchedRow['status']
