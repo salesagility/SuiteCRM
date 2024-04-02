@@ -95,7 +95,14 @@ class SugarFieldCurrency extends SugarFieldFloat
         ) {
         $value = str_replace($settings->currency_symbol, "", $value);
         
-        return $settings->float($value, $vardef, $focus);
+        $value = str_replace($settings->num_grp_sep, "", $value);       
+
+        if (isset($vardef['len'])) {
+            // check for field length
+            $value = sugar_substr($value, $vardef['len']);
+        }
+
+        return $value;
     }
 
     /**

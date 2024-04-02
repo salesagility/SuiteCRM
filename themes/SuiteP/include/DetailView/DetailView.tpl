@@ -333,7 +333,7 @@
                         $('#content div.panel-content div.panel.tab-panel-' + tab).show();
                     };
 
-                    let selectTabOnError = function(tab) {
+                    var selectTabOnError = function(tab) {
                         selectTabDetailView(tab);
                         $('#content ul.nav.nav-tabs > li').removeClass('active');
                         $('#content ul.nav.nav-tabs > li a').css('color', '');

@@ -191,5 +191,6 @@ if (!empty($_REQUEST['key'])) {
     $sugar_smarty->assign("KEY", $_REQUEST['key']);
 }
 
-$sugar_smarty->display('modules/Users/Changenewpassword.tpl');
+$sugar_smarty->display(get_custom_file_if_exists('modules/Users/Changenewpassword.tpl'));
+
 $view->displayFooter();

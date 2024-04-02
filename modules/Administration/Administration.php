@@ -45,6 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('data/SugarBean.php');
 require_once('include/OutboundEmail/OutboundEmail.php');
 
+#[\AllowDynamicProperties]
 class Administration extends SugarBean
 {
     public $settings = array();
@@ -159,10 +160,10 @@ class Administration extends SugarBean
                     $this->settings[$def] = '';
                 }
 
-                if (strpos($def, "mail_") !== false) {
+                if (strpos((string) $def, "mail_") !== false) {
                     $this->settings[$def] = $oe->$def;
                 }
-                if (strpos($def, "smtp") !== false) {
+                if (strpos((string) $def, "smtp") !== false) {
                     $this->settings[$def] = $oe->$def;
                 }
             }
@@ -186,11 +187,11 @@ class Administration extends SugarBean
                 if (is_array($val)) {
                     $val = implode(",", $val);
                 }
-                $this->saveSetting($prefix[0], $prefix[1], $val);
+                $this->saveSetting($prefix[0], $prefix[1], trim($val));
             }
             if (strpos($key, "mail_") !== false) {
                 if (in_array($key, $oe->field_defs)) {
-                    $oe->$key = $val;
+                    $oe->$key = trim($val);
                 }
             }
         }
@@ -236,6 +237,6 @@ class Administration extends SugarBean
 
     public function get_config_prefix($str)
     {
-        return $str ? array(substr($str, 0, strpos($str, "_")), substr($str, strpos($str, "_") + 1)) : array(false, false);
+        return $str ? array(substr((string) $str, 0, strpos((string) $str, "_")), substr((string) $str, strpos((string) $str, "_") + 1)) : array(false, false);
     }
 }

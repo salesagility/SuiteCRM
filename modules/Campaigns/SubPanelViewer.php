@@ -62,7 +62,7 @@ if (!isset($beanList[$_REQUEST['module']])) {
     die("'".$_REQUEST['module']."' is not defined in \$beanList");
 }
 
-$subpanel = $_REQUEST['subpanel'];
+$subpanel = $_REQUEST['subpanel'] ?? '';
 $record = $_REQUEST['record'];
 $module = $_REQUEST['module'];
 

@@ -52,6 +52,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
+#[\AllowDynamicProperties]
 class ProspectList extends SugarBean
 {
     public $field_name_map;
@@ -426,7 +427,7 @@ FROM prospect_lists_prospects plp
 
     public function mark_deleted($id)
     {
-        $query = "UPDATE prospect_lists_prospects SET deleted = 1 WHERE prospect_list_id = '{$id}' ";
+        $query = "UPDATE prospect_lists_prospects SET deleted = 1, date_modified = NOW() WHERE prospect_list_id = '{$id}' AND deleted = 0";
         $this->db->query($query);
         return parent::mark_deleted($id);
     }

@@ -84,6 +84,7 @@ $mod_strings = array(
     'ERR_RECIPIENT_EMAIL' => 'Recipient Email Address',
     'ERR_SERVER_STATUS' => 'Your server status',
     'ERR_SERVER_SMTP_EMPTY' => 'The system is unable to send an email to the user. Please check the Outgoing Mail Configuration in <a href="index.php?module=EmailMan&action=config">Email Settings</a>.',
+    'ERR_DELETE_USER' => 'It is not allowed to delete logged in user.',
     'LBL_ADDRESS_CITY' => 'Address City',
     'LBL_ADDRESS_COUNTRY' => 'Address Country',
     'LBL_ADDRESS_INFORMATION' => 'Address Information',
@@ -96,6 +97,7 @@ $mod_strings = array(
     'LBL_REGULAR_DESC' => 'User can access modules and records based on roles.',
     'LBL_PHOTO' => 'Photo',
     'LBL_ADMIN' => 'System Administrator',
+    'LBL_LAST_ADMIN_NOTICE' => 'Current selection could include yourself. You cannot change your own type of user or status.',
     'LBL_ADVANCED' => 'Advanced',
     'LBL_ANY_ADDRESS' => 'Any Address:',
     'LBL_ANY_EMAIL' => 'Any Email',
@@ -689,5 +691,9 @@ $mod_strings = array(
     'LBL_GOOGLE_API_TOKEN_BTN' => 'Get Token',
     'LBL_GSYNC_CAL' => 'Enable Calendar Sync',
     // END Google Token/Synchronization settings
+
+    'LNK_LIST_OUTBOUND_EMAIL_ACCOUNTS' => 'Outbound Email Accounts',
+    'LNK_LIST_INBOUND_EMAIL_ACCOUNTS' => 'Inbound Email Accounts',
+    'LNK_EXTERNAL_OAUTH_CONNECTIONS' => 'External OAuth Connections',
 
 ); // END STRINGS DEFS
