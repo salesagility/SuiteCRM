@@ -99,7 +99,10 @@
      } else {
          //since we do not have a default value then we should assign the first one.
          $key = $dropdowns[0];
-         $default_dropdowns = $my_list_strings[$key];
+         // condition is check if my_list_strings is set then continue   : Fixed By HENILCODES
+        if (isset($my_list_strings[$key])) {
+            $default_dropdowns = $my_list_strings[$key];
+        }
      }
     
      $selected_dropdown = '';
