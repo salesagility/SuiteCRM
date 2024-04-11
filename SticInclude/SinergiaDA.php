@@ -392,7 +392,12 @@ class ExternalReporting
                                     continue 2;
                                 }
 
-                                $res = $this->createRelateLeftJoin($fieldV, $tableName);
+                                // Build and obtain the translated value from the other side of the relationship so it can be properly displayed in SinergiaDA
+                                $joinModuleRelLabel = 'LBL_' . strtoupper($fieldV['link']) . '_FROM_' . strtoupper($moduleName) . '_TITLE';
+                                $joinLabel = translate($joinModuleRelLabel, $fieldV['module']);
+                                $joinLabel = empty($joinLabel) || $joinLabel == $joinModuleRelLabel ? $txModuleName : $joinLabel;
+
+                                $res = $this->createRelateLeftJoin($fieldV, $tableName, $joinLabel);
 
                                 if (empty($res)) {
                                     continue 2;
@@ -495,7 +500,7 @@ class ExternalReporting
                                         'target_table' => "{$this->viewPrefix}_{$fieldV['targetModule']}",
                                         'target_column' => 'id',
                                         'info' => 'relate',
-                                        'label' => $fieldV['label'],
+                                        'label' => "{$fieldV['label']}|{$txModuleName}",
                                     ]
                                 );
                             }
@@ -593,7 +598,7 @@ class ExternalReporting
                     case 'ColorPicker':
                     case 'email':
                         $fieldV['alias'] = $fieldV['name'];
-                        if ($fieldV['name'] == 'email1') {
+                        if ($fieldV['name'] == 'email1' && $fieldV['type'] == 'varchar' && $fieldV['source'] == 'non-db') {
                             // Special field for main email
                             $fieldSrc = "ea.email_address AS {$fieldV['name']}";
 
@@ -671,10 +676,10 @@ class ExternalReporting
 
                 if (isset($fieldSrc)) {
                     // Add to the array of normal base and custom fields
-                    if ($fieldV['source'] == 'custom_fields' || $fieldV['name'] == 'email1') {
+                    if ($fieldV['source'] == 'custom_fields') {
                         $fieldList['custom'][$fieldK] = $fieldSrc;
                         $addColumnToMetadata = 1;
-                    } else if ($fieldV['source'] == 'non-db' && $fieldV['name'] != 'full_name') {
+                    } else if ($fieldV['source'] == 'non-db' && $fieldV['name'] != 'full_name' && $fieldV['name'] != 'email1') {
                         // This source is not processed, so we are moving them away
                         $fieldList['non-db'][$fieldK] = $fieldSrc;
                         $addColumnToMetadata = 0;
@@ -936,8 +941,16 @@ class ExternalReporting
         $token = md5($token);
         $this->info .= "<li>Token md5: $token";
 
-        // Specify the URL to fetch content from.
-        $url = $sugar_config['stic_sinergiada_public']['url'] ?? "https://{$this->baseHostname}.sinergiada.org/edapi/updatemodel/update?tks=$token";
+        // Builds the URL to be called to execute the updateModel method in SinergiaDA,
+        // depending on whether a specific URL has been indicated or if a standard location will be used.
+        if ($sugar_config['stic_sinergiada_public']['url'] ?? null) {
+            $url = "{$sugar_config['stic_sinergiada_public']['url']}/edapi/updatemodel/update?tks=$token";
+        } else {
+            $url = "https://{$this->baseHostname}.sinergiada.org/edapi/updatemodel/update?tks=$token";
+        }
+        
+        
+        
         $link = "<a href='$url' target='_blank'>$url</a>";
         $link2 = addslashes("Retry <a href='$url' target='_blank'>&#9842;</a>");
 
@@ -991,17 +1004,19 @@ class ExternalReporting
      *
      * @param array $field The field array containing information about the current field
      * @param string $tableName The name of the table being processed
+     * @param string $tableLabel The label of the other side relationships
      *
      * @return array|null An array containing the 'field' and 'leftJoin' information, or null if no join is created
      */
 
-    private function createRelateLeftJoin($field, $tableName)
+    private function createRelateLeftJoin($field, $tableName, $tableLabel)
     {
-                $db = DBManagerFactory::getInstance();
+        $db = DBManagerFactory::getInstance();
 
+        $tableLabel = empty($tableLabel) ? '-' : $tableLabel;
         // **Retrieve relationship information:**
         $rel = $db->fetchOne("select * from relationships where relationship_name='{$field['link']}'");
-
+        
         // **Check if necessary information is present for standard join:**
         if (!empty($rel['join_table']) && !empty($rel['join_key_lhs']) && !empty($rel['join_key_rhs'])) {
             // Standard join using join table
@@ -1020,7 +1035,7 @@ class ExternalReporting
                         'target_table' => "{$this->viewPrefix}_{$field['table']}",
                         'target_column' => 'id',
                         'info' => 'link_lhs',
-                        'label' => $field['label'],
+                        'label' => "{$field['label']}|{$tableLabel}",
                     ]
                 );
 
@@ -1041,7 +1056,7 @@ class ExternalReporting
                         'target_table' => "{$this->viewPrefix}_{$field['table']}",
                         'target_column' => 'id',
                         'info' => 'link_rhs',
-                        'label' => $field['label'],
+                        'label' => "{$field['label']}|{$tableLabel}",
                     ]
                 );
 
@@ -1072,7 +1087,7 @@ class ExternalReporting
                         'target_table' => "{$this->viewPrefix}_{$field['table']}",
                         'target_column' => 'id',
                         'info' => 'no-join-table-relationship ',
-                        'label' => $field['label'],
+                        'label' => "{$field['label']}|{$tableLabel}",
                     ]
                 );
 
@@ -1651,7 +1666,7 @@ class ExternalReporting
                             $userGroupsRes = $db->query("SELECT distinct(name) as 'group' FROM sda_def_user_groups ug WHERE user_name='{$u['user_name']}';");
                             while ($userGroups = $db->fetchByAssoc($userGroupsRes, false)) {
                                 $userModuleAccessMode["{$u['user_name']}_{$aclSource}_{$userGroups['group']}_{$currentTable}"] = [
-                                    'user_name' => $u['user_name'],
+                                    'user_name' => null,
                                     'group' => $userGroups['group'],
                                     'table' => $currentTable,
                                     'column' => 'id',
