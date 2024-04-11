@@ -400,7 +400,12 @@ class FormulaCalculator
         }
 
         if (($params = $this->evaluateFunctionParams("date", $text, $childItems)) != null) {
-            return date($params[0], strtotime($params[1]));
+            // STIC-Custom 20240321 JBL - Unformat datetime fields to extract parts
+            // https://github.com/SinergiaTIC/SinergiaCRM/pull/174
+            // return date($params[0], strtotime($params[1]));
+            $date = $this->getDBFormat($params[1]);
+            return date($params[0], strtotime($date));
+            // END STIC-Custom
         }
 
         if (($params = $this->evaluateFunctionParams("datediff", $text, $childItems)) != null) { 
