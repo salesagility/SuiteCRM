@@ -576,9 +576,9 @@ $sugar_config = array(
     
     // STIC Custom 20231124 JBL - SemVer in SinergiaCRM
     // STIC#1319
-    'sinergiacrm_version' => '1.3.1',
-    'js_custom_version' => 4,
-    'stic_show_update_alert' => 0,
+    'sinergiacrm_version' => '1.4.0',
+    'js_custom_version' => 5,
+    'stic_show_update_alert' => 1,
     // END STIC
 
     // STIC-Custom 20240117 JCH - Security Groups Module Rules activation config
