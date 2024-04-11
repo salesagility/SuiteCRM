@@ -370,6 +370,22 @@ function setUnrequiredStatus(fieldId) {
 }
 
 /**
+ * Returns true if the field is required
+ * 
+ * @param {*} fieldId id of field
+ */
+function getRequiredStatus(fieldId) {
+  var validateFields = validate[getFormName()];
+  for (i = 0; i < validateFields.length; i++) {
+    // Array(name, type, required, msg);
+    if (validateFields[i][0] == fieldId) {
+      return validateFields[i][2];
+    }
+  }
+  return false;
+}
+
+/**
  * Mark fields that will be autofilled
  */
 function setAutofill(fieldList) {

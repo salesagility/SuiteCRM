@@ -113,6 +113,11 @@ $app_list_strings['moduleList']['stic_Journal'] = 'Diari';
 $app_list_strings['moduleList']['stic_Training'] = 'Formació';
 $app_list_strings['moduleList']['stic_Work_Experience'] = 'Experiència laboral';
 $app_list_strings['moduleList']['stic_Skills'] = 'Competències';
+$app_list_strings['moduleList']['stic_Custom_Views'] = 'Vistes personalitzades';
+$app_list_strings['moduleList']['stic_Custom_View_Actions'] = 'Accions';
+$app_list_strings['moduleList']['stic_Custom_View_Customizations'] = 'Personalitzacions';
+$app_list_strings['moduleList']['stic_Custom_View_Conditions'] = 'Condicions';
+
 $app_list_strings['moduleListSingular']['Accounts'] = 'Organització';
 $app_list_strings['moduleListSingular']['Contacts'] = 'Persona';
 $app_list_strings['moduleListSingular']['Leads'] = 'Interessat';
@@ -152,6 +157,11 @@ $app_list_strings['moduleListSingular']['stic_Journal'] = 'Diari';
 $app_list_strings['moduleListSingular']['stic_Training'] = 'Formació';
 $app_list_strings['moduleListSingular']['stic_Work_Experience'] = 'Experiència laboral';
 $app_list_strings['moduleListSingular']['stic_Skills'] = 'Competència';
+$app_list_strings['moduleListSingular']['stic_Custom_Views'] = 'Vista personalitzada';
+$app_list_strings['moduleListSingular']['stic_Custom_View_Actions'] = 'Acció';
+$app_list_strings['moduleListSingular']['stic_Custom_View_Customizations'] = 'Personalització';
+$app_list_strings['moduleListSingular']['stic_Custom_View_Conditions'] = 'Condició';
+
 $app_list_strings['parent_type_display']['Accounts'] = 'Organitzacions';
 $app_list_strings['parent_type_display']['Contacts'] = 'Persones';
 $app_list_strings['parent_type_display']['Leads'] = 'Interessats';
@@ -3396,6 +3406,81 @@ $app_list_strings['stic_skills_language_certificates_list']['french_delf'] = "DE
 $app_list_strings['stic_skills_language_certificates_list']['french_dalf'] = 'DALF - Diplôme Approfondi de Langue Française';
 $app_list_strings['stic_skills_language_certificates_list']['german_goethe'] = 'GZ - Goethe-Zertifikat';
 $app_list_strings['stic_skills_language_certificates_list']['chinese_hsk'] = 'HSK - Hanyu Shuiping Kaoshi';
+
+// Vistes personalitzades: Tipus d'usuari
+$app_list_strings['stic_custom_views_user_type_list']['regular_user'] = 'Usuari regular';
+$app_list_strings['stic_custom_views_user_type_list']['administrator'] = 'Administrador';
+$app_list_strings['stic_custom_views_user_type_list']['all'] = 'Tots';
+
+// Vistes personalitzades: Vistes
+$app_list_strings['stic_custom_views_views_list']['detailview'] = 'Vista de detall';
+$app_list_strings['stic_custom_views_views_list']['editview'] = "Vista d'edició";
+$app_list_strings['stic_custom_views_views_list']['quickcreate'] = 'Vista de creació ràpida';
+
+// Vistes personalitzades: Tipus d'Accions
+$app_list_strings['stic_custom_views_action_type_list']['field_modification'] = 'Modificació de camp';
+$app_list_strings['stic_custom_views_action_type_list']['panel_modification'] = 'Modificació de panell';
+$app_list_strings['stic_custom_views_action_type_list']['tab_modification'] = 'Modificació de pestanya';
+
+// Vistes personalitzades: Accions
+$app_list_strings['stic_custom_views_action_list']['visible'] = 'Visible';
+$app_list_strings['stic_custom_views_action_list']['readonly'] = 'Només lectura';
+$app_list_strings['stic_custom_views_action_list']['required'] = 'Obligat';
+$app_list_strings['stic_custom_views_action_list']['inline'] = 'Edició en línia';
+$app_list_strings['stic_custom_views_action_list']['fixed_value'] = 'Valor per defecte';
+$app_list_strings['stic_custom_views_action_list']['color'] = 'Color del text';
+$app_list_strings['stic_custom_views_action_list']['background'] = 'Color del fons';
+$app_list_strings['stic_custom_views_action_list']['bold'] = 'Negreta';
+$app_list_strings['stic_custom_views_action_list']['italic'] = 'Cursiva';
+$app_list_strings['stic_custom_views_action_list']['underline'] = 'Subratllat';
+$app_list_strings['stic_custom_views_action_list']['css_style'] = 'Estil CSS';
+$app_list_strings['stic_custom_views_action_list']['fixed_text'] = "Text de l'etiqueta";
+
+// Vistes personalitzades: Seccions d'elements
+$app_list_strings['stic_custom_views_element_list']['field'] = 'Tot el camp';
+$app_list_strings['stic_custom_views_element_list']['field_label'] = "Només l'etiqueta";
+$app_list_strings['stic_custom_views_element_list']['field_input'] = 'Només la casella';
+$app_list_strings['stic_custom_views_element_list']['panel'] = 'Tot el panell';
+$app_list_strings['stic_custom_views_element_list']['panel_header'] = 'Només la capçalera del panell';
+$app_list_strings['stic_custom_views_element_list']['panel_content'] = 'Només el contingut del panell';
+$app_list_strings['stic_custom_views_element_list']['tab'] = 'Tota la pestanya';
+$app_list_strings['stic_custom_views_element_list']['tab_header'] = 'Només la capçalera de la pestanya';
+$app_list_strings['stic_custom_views_element_list']['tab_content'] = 'Només el contingut de la pestanya';
+
+// Vistes personalitzades: Estat
+$app_list_strings['stic_custom_views_status_list']['active'] = 'Actiu';
+$app_list_strings['stic_custom_views_status_list']['inactive'] = 'Inactiu';
+
+// Vistes personalitzades: Operadors
+$app_list_strings['stic_custom_views_operator_list']['Equal_To'] = 'Igual a';
+$app_list_strings['stic_custom_views_operator_list']['Not_Equal_To'] = 'No igual a';
+$app_list_strings['stic_custom_views_operator_list']['Greater_Than'] = 'Més gran que';
+$app_list_strings['stic_custom_views_operator_list']['Less_Than'] = 'Més petit que';
+$app_list_strings['stic_custom_views_operator_list']['Greater_Than_or_Equal_To'] = 'Més gran o igual que';
+$app_list_strings['stic_custom_views_operator_list']['Less_Than_or_Equal_To'] = 'Més petit o igual que';
+$app_list_strings['stic_custom_views_operator_list']['Contains'] = 'Conté';
+$app_list_strings['stic_custom_views_operator_list']['Not_Contains'] = 'No conté';
+$app_list_strings['stic_custom_views_operator_list']['Starts_With'] = 'Comença amb';
+$app_list_strings['stic_custom_views_operator_list']['Not_Starts_With'] = 'No comença amb';
+$app_list_strings['stic_custom_views_operator_list']['Ends_With'] = 'Finalitza amb';
+$app_list_strings['stic_custom_views_operator_list']['Not_Ends_With'] = 'No finalitza amb';
+$app_list_strings['stic_custom_views_operator_list']['is_null'] = 'És nul';
+$app_list_strings['stic_custom_views_operator_list']['is_not_null'] = 'No és nul';
+
+// Vistes personalitzades: Tipus Condicions
+$app_list_strings['stic_custom_views_condition_type_list']['value'] = 'Valor';
+$app_list_strings['stic_custom_views_condition_type_list']['date'] = 'Data';
+$app_list_strings['stic_custom_views_condition_type_list']['user'] = 'Usuari';
+$app_list_strings['stic_custom_views_condition_type_list']['field'] = 'Camp';
+
+// Vistes personalitzades: Valors definits
+$app_list_strings['stic_custom_views_condition_values_list']['now'] = 'Ara';
+$app_list_strings['stic_custom_views_condition_values_list']['today'] = 'Avui';
+$app_list_strings['stic_custom_views_condition_values_list']['tomorrow'] = 'Demà';
+$app_list_strings['stic_custom_views_condition_values_list']['yesterday'] = 'Ahir';
+$app_list_strings['stic_custom_views_condition_values_list']['anniversary'] = 'Aniversari';
+$app_list_strings['stic_custom_views_condition_values_list']['current_user'] = 'Usuari actual';
+
 
 // Modificacions del core de SuiteCRM
 

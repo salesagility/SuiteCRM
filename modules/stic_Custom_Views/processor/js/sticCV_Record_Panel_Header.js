@@ -1,0 +1,56 @@
+/**
+ * This file is part of SinergiaCRM.
+ * SinergiaCRM is a work developed by SinergiaTIC Association, based on SuiteCRM.
+ * Copyright (C) 2013 - 2023 SinergiaTIC Association
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
+ */
+
+/**
+ * This file contains logic and functions needed to manage custom views behaviour
+ *
+ */
+var sticCV_Record_Panel_Header = class sticCV_Record_Panel_Header extends sticCV_Element_Label {
+  constructor(panel) {
+    super(panel.customView, panel.container.$element.children(".panel-heading"));
+
+    this.$label = this.$element.find('[data-label="' + panel.name + '"]');
+  }
+
+  applyAction(action) {
+    switch (action.action) {
+      case "color":
+        sticCVUtils.color(this.$label.parent(), this.customView, action.value);
+        return this;
+      case "background":
+        sticCVUtils.background(this.$label.parent(), this.customView, action.value, true);
+        return this;
+      case "bold":
+        sticCVUtils.bold(this.$label, this.customView, action.value);
+        return this;
+      case "italic":
+        sticCVUtils.italic(this.$label, this.customView, action.value);
+        return this;
+      case "underline":
+        sticCVUtils.underline(this.$label, this.customView, action.value);
+        return this;
+      case "fixed_text":
+        return sticCVUtils.text(this.$label, this.customView, action.value);
+    }
+    return super.applyAction(action);
+  }
+};

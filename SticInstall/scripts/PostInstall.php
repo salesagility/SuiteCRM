@@ -117,6 +117,10 @@ $hiddenModules = array(
     27 => 'stic_Settings',
     28 => 'AOR_Reports',
     29 => 'stic_Validation_Results',
+    30 => 'stic_Custom_Views',
+    31 => 'stic_Custom_View_Customizations',
+    32 => 'stic_Custom_View_Conditions',
+    33 => 'stic_Custom_View_Actions',
 );
 
 // Remove $hiddenModules if present

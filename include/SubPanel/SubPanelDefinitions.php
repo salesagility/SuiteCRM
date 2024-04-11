@@ -262,7 +262,13 @@ class aSubPanel
         $relationshipType = $dictionary[$this->name]['true_relationship_type'];
         // if($relationshipType == 'one-to-many') {
         if($relationshipType == 'one-to-many' || $relationshipType == 'many-to-one') {
-            $buttons[] = array('widget_class' => 'SubPanelTopButtonListView');
+            // STIC-Custom JBL 20240123: Don't show button in Custom views
+            // https://github.com/SinergiaTIC/SinergiaCRM/pull/73
+            // $buttons[] = array('widget_class' => 'SubPanelTopButtonListView');
+            if(!isset($this->parent_bean->show_SubPanelTopButtonListView) || $this->parent_bean->show_SubPanelTopButtonListView) {
+                $buttons[] = array('widget_class' => 'SubPanelTopButtonListView');
+            }
+            // END STIC-Custom
         }
         // END STIC-Custom
 

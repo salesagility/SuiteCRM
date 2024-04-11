@@ -1027,6 +1027,19 @@
                                         </div>
                                     </a>
                                 </li>
+                                {* STIC-Custom - JBL - 20240405 -  Custom Views link *}
+                                {* https://github.com/SinergiaTIC/SinergiaCRM/pull/73 *}
+                                <li class="actionmenulinks" role="presentation">
+                                    <a href="./index.php?module=stic_Custom_Views&action=index" target="_blank" >
+                                        <div class="side-bar-action-icon">
+                                            <span class="suitepicon suitepicon-admin-stic-custom-views"></span>
+                                        </div>
+                                        <div class="actionmenulink">
+                                            {sugar_translate module="Administration" label="LBL_STIC_CUSTOM_VIEWS_LINK_TITLE"}
+                                        </div>
+                                    </a>
+                                </li>
+                                {* END STIC-Custom *}
                                 <li class="actionmenulinks" role="presentation">
                                     <a href="./index.php?module=Administration&action=Upgrade" target="_blank">
                                         <div class="side-bar-action-icon">

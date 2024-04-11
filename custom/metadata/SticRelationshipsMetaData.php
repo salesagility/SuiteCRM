@@ -6454,3 +6454,256 @@ $dictionary["stic_skills_contacts"] = array(
         ),
     ),
 );
+
+$dictionary["stic_custom_view_customizations_stic_custom_view_actions"] = array (
+    'true_relationship_type' => 'one-to-many',
+    'relationships' => 
+    array (
+      'stic_custom_view_customizations_stic_custom_view_actions' => 
+      array (
+        'lhs_module' => 'stic_Custom_View_Customizations',
+        'lhs_table' => 'stic_custom_view_customizations',
+        'lhs_key' => 'id',
+        'rhs_module' => 'stic_Custom_View_Actions',
+        'rhs_table' => 'stic_custom_view_actions',
+        'rhs_key' => 'id',
+        'relationship_type' => 'many-to-many',
+        'join_table' => 'stic_custom_view_customizations_stic_custom_view_actions_c',
+        'join_key_lhs' => 'stic_custo077ezations_ida',
+        'join_key_rhs' => 'stic_custo6c56actions_idb',
+      ),
+    ),
+    'table' => 'stic_custom_view_customizations_stic_custom_view_actions_c',
+    'fields' => 
+    array (
+      0 => 
+      array (
+        'name' => 'id',
+        'type' => 'varchar',
+        'len' => 36,
+      ),
+      1 => 
+      array (
+        'name' => 'date_modified',
+        'type' => 'datetime',
+      ),
+      2 => 
+      array (
+        'name' => 'deleted',
+        'type' => 'bool',
+        'len' => '1',
+        'default' => '0',
+        'required' => true,
+      ),
+      3 => 
+      array (
+        'name' => 'stic_custo077ezations_ida',
+        'type' => 'varchar',
+        'len' => 36,
+      ),
+      4 => 
+      array (
+        'name' => 'stic_custo6c56actions_idb',
+        'type' => 'varchar',
+        'len' => 36,
+      ),
+    ),
+    'indices' => 
+    array (
+      0 => 
+      array (
+        'name' => 'stic_custom_view_customizations_stic_custom_view_actionsspk',
+        'type' => 'primary',
+        'fields' => 
+        array (
+          0 => 'id',
+        ),
+      ),
+      1 => 
+      array (
+        'name' => 'stic_custom_view_customizations_stic_custom_view_actions_ida1',
+        'type' => 'index',
+        'fields' => 
+        array (
+          0 => 'stic_custo077ezations_ida',
+        ),
+      ),
+      2 => 
+      array (
+        'name' => 'stic_custom_view_customizations_stic_custom_view_actions_alt',
+        'type' => 'alternate_key',
+        'fields' => 
+        array (
+          0 => 'stic_custo6c56actions_idb',
+        ),
+      ),
+    ),
+);
+$dictionary["stic_custom_view_customizations_stic_custom_view_conditions"] = array (
+    'true_relationship_type' => 'one-to-many',
+    'relationships' => 
+    array (
+      'stic_custom_view_customizations_stic_custom_view_conditions' => 
+      array (
+        'lhs_module' => 'stic_Custom_View_Customizations',
+        'lhs_table' => 'stic_custom_view_customizations',
+        'lhs_key' => 'id',
+        'rhs_module' => 'stic_Custom_View_Conditions',
+        'rhs_table' => 'stic_custom_view_conditions',
+        'rhs_key' => 'id',
+        'relationship_type' => 'many-to-many',
+        'join_table' => 'stic_custom_view_customizations_stic_custom_view_conditions_c',
+        'join_key_lhs' => 'stic_custo233dzations_ida',
+        'join_key_rhs' => 'stic_custo7221ditions_idb',
+      ),
+    ),
+    'table' => 'stic_custom_view_customizations_stic_custom_view_conditions_c',
+    'fields' => 
+    array (
+      0 => 
+      array (
+        'name' => 'id',
+        'type' => 'varchar',
+        'len' => 36,
+      ),
+      1 => 
+      array (
+        'name' => 'date_modified',
+        'type' => 'datetime',
+      ),
+      2 => 
+      array (
+        'name' => 'deleted',
+        'type' => 'bool',
+        'len' => '1',
+        'default' => '0',
+        'required' => true,
+      ),
+      3 => 
+      array (
+        'name' => 'stic_custo233dzations_ida',
+        'type' => 'varchar',
+        'len' => 36,
+      ),
+      4 => 
+      array (
+        'name' => 'stic_custo7221ditions_idb',
+        'type' => 'varchar',
+        'len' => 36,
+      ),
+    ),
+    'indices' => 
+    array (
+      0 => 
+      array (
+        'name' => 'stic_custom_view_customizations_stic_custom_view_conditionsspk',
+        'type' => 'primary',
+        'fields' => 
+        array (
+          0 => 'id',
+        ),
+      ),
+      1 => 
+      array (
+        'name' => 'stic_custom_view_customizations_stic_custom_view_conditions_ida1',
+        'type' => 'index',
+        'fields' => 
+        array (
+          0 => 'stic_custo233dzations_ida',
+        ),
+      ),
+      2 => 
+      array (
+        'name' => 'stic_custom_view_customizations_stic_custom_view_conditions_alt',
+        'type' => 'alternate_key',
+        'fields' => 
+        array (
+          0 => 'stic_custo7221ditions_idb',
+        ),
+      ),
+    ),
+);
+$dictionary["stic_custom_views_stic_custom_view_customizations"] = array (
+    'true_relationship_type' => 'one-to-many',
+    'relationships' => 
+    array (
+      'stic_custom_views_stic_custom_view_customizations' => 
+      array (
+        'lhs_module' => 'stic_Custom_Views',
+        'lhs_table' => 'stic_custom_views',
+        'lhs_key' => 'id',
+        'rhs_module' => 'stic_Custom_View_Customizations',
+        'rhs_table' => 'stic_custom_view_customizations',
+        'rhs_key' => 'id',
+        'relationship_type' => 'many-to-many',
+        'join_table' => 'stic_custom_views_stic_custom_view_customizations_c',
+        'join_key_lhs' => 'stic_custo45d1m_views_ida',
+        'join_key_rhs' => 'stic_custobdd5zations_idb',
+      ),
+    ),
+    'table' => 'stic_custom_views_stic_custom_view_customizations_c',
+    'fields' => 
+    array (
+      0 => 
+      array (
+        'name' => 'id',
+        'type' => 'varchar',
+        'len' => 36,
+      ),
+      1 => 
+      array (
+        'name' => 'date_modified',
+        'type' => 'datetime',
+      ),
+      2 => 
+      array (
+        'name' => 'deleted',
+        'type' => 'bool',
+        'len' => '1',
+        'default' => '0',
+        'required' => true,
+      ),
+      3 => 
+      array (
+        'name' => 'stic_custo45d1m_views_ida',
+        'type' => 'varchar',
+        'len' => 36,
+      ),
+      4 => 
+      array (
+        'name' => 'stic_custobdd5zations_idb',
+        'type' => 'varchar',
+        'len' => 36,
+      ),
+    ),
+    'indices' => 
+    array (
+      0 => 
+      array (
+        'name' => 'stic_custom_views_stic_custom_view_customizationsspk',
+        'type' => 'primary',
+        'fields' => 
+        array (
+          0 => 'id',
+        ),
+      ),
+      1 => 
+      array (
+        'name' => 'stic_custom_views_stic_custom_view_customizations_ida1',
+        'type' => 'index',
+        'fields' => 
+        array (
+          0 => 'stic_custo45d1m_views_ida',
+        ),
+      ),
+      2 => 
+      array (
+        'name' => 'stic_custom_views_stic_custom_view_customizations_alt',
+        'type' => 'alternate_key',
+        'fields' => 
+        array (
+          0 => 'stic_custobdd5zations_idb',
+        ),
+      ),
+    ),
+);

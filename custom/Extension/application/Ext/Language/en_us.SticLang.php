@@ -114,6 +114,11 @@ $app_list_strings['moduleList']['stic_Security_Groups_Rules'] = 'Security Groups
 $app_list_strings['moduleList']['stic_Training'] = 'Training';
 $app_list_strings['moduleList']['stic_Work_Experience'] = 'Work experience';
 $app_list_strings['moduleList']['stic_Skills'] = 'Skills';
+$app_list_strings['moduleList']['stic_Custom_Views'] = 'Custom Views';
+$app_list_strings['moduleList']['stic_Custom_View_Actions'] = 'Actions';
+$app_list_strings['moduleList']['stic_Custom_View_Customizations'] = 'Customizations';
+$app_list_strings['moduleList']['stic_Custom_View_Conditions'] = 'Conditions';
+
 $app_list_strings['moduleListSingular']['Accounts'] = 'Account';
 $app_list_strings['moduleListSingular']['Contacts'] = 'Contact';
 $app_list_strings['moduleListSingular']['Leads'] = 'Lead';
@@ -151,6 +156,11 @@ $app_list_strings['moduleListSingular']['stic_Security_Groups_Rules'] = 'Securit
 $app_list_strings['moduleListSingular']['stic_Training'] = 'Training';
 $app_list_strings['moduleListSingular']['stic_Work_Experience'] = 'Work experience';
 $app_list_strings['moduleListSingular']['stic_Skills'] = 'Skill';
+$app_list_strings['moduleListSingular']['stic_Custom_Views'] = 'Custom View';
+$app_list_strings['moduleListSingular']['stic_Custom_View_Actions'] = 'Action';
+$app_list_strings['moduleListSingular']['stic_Custom_View_Customizations'] = 'Customization';
+$app_list_strings['moduleListSingular']['stic_Custom_View_Conditions'] = 'Condition';
+
 $app_list_strings['parent_type_display']['Accounts'] = 'Accounts';
 $app_list_strings['parent_type_display']['Contacts'] = 'Contacts';
 $app_list_strings['parent_type_display']['Leads'] = 'Leads';
@@ -3395,6 +3405,81 @@ $app_list_strings['stic_skills_language_certificates_list']['french_delf'] = "DE
 $app_list_strings['stic_skills_language_certificates_list']['french_dalf'] = 'DALF - Diplôme Approfondi de Langue Française';
 $app_list_strings['stic_skills_language_certificates_list']['german_goethe'] = 'GZ - Goethe-Zertifikat';
 $app_list_strings['stic_skills_language_certificates_list']['chinese_hsk'] = 'HSK - Hanyu Shuiping Kaoshi';
+
+// Custom Views: User Types
+$app_list_strings['stic_custom_views_user_type_list']['regular_user'] = 'Regular user';
+$app_list_strings['stic_custom_views_user_type_list']['administrator'] = 'Administrator';
+$app_list_strings['stic_custom_views_user_type_list']['all'] = 'All';
+
+// Custom Views: Views
+$app_list_strings['stic_custom_views_views_list']['detailview'] = 'Detail view';
+$app_list_strings['stic_custom_views_views_list']['editview'] = 'Edit view';
+$app_list_strings['stic_custom_views_views_list']['quickcreate'] = 'Quickcreate view';
+
+// Custom Views: Action Types
+$app_list_strings['stic_custom_views_action_type_list']['field_modification'] = 'Field modification';
+$app_list_strings['stic_custom_views_action_type_list']['panel_modification'] = 'Panel modification';
+$app_list_strings['stic_custom_views_action_type_list']['tab_modification'] = 'Tab modification';
+
+// Custom Views: Actions
+$app_list_strings['stic_custom_views_action_list']['visible'] = 'Visible';
+$app_list_strings['stic_custom_views_action_list']['readonly'] = 'Read only';
+$app_list_strings['stic_custom_views_action_list']['required'] = 'Required';
+$app_list_strings['stic_custom_views_action_list']['inline'] = 'Inline edit';
+$app_list_strings['stic_custom_views_action_list']['fixed_value'] = 'Default value';
+$app_list_strings['stic_custom_views_action_list']['color'] = 'Text color';
+$app_list_strings['stic_custom_views_action_list']['background'] = 'Background color';
+$app_list_strings['stic_custom_views_action_list']['bold'] = 'Bold';
+$app_list_strings['stic_custom_views_action_list']['italic'] = 'Italic';
+$app_list_strings['stic_custom_views_action_list']['underline'] = 'Underline';
+$app_list_strings['stic_custom_views_action_list']['css_style'] = 'CSS style';
+$app_list_strings['stic_custom_views_action_list']['fixed_text'] = 'Label text';
+
+// Custom Views: Element's sections
+$app_list_strings['stic_custom_views_element_list']['field'] = 'Whole field';
+$app_list_strings['stic_custom_views_element_list']['field_label'] = 'Only label';
+$app_list_strings['stic_custom_views_element_list']['field_input'] = 'Only input';
+$app_list_strings['stic_custom_views_element_list']['panel'] = 'Whole panel';
+$app_list_strings['stic_custom_views_element_list']['panel_header'] = 'Panel header';
+$app_list_strings['stic_custom_views_element_list']['panel_content'] = 'Panel content';
+$app_list_strings['stic_custom_views_element_list']['tab'] = 'Whole tab';
+$app_list_strings['stic_custom_views_element_list']['tab_header'] = 'Tab header';
+$app_list_strings['stic_custom_views_element_list']['tab_content'] = 'Tab content';
+
+// Custom Views: Status
+$app_list_strings['stic_custom_views_status_list']['active'] = 'Active';
+$app_list_strings['stic_custom_views_status_list']['inactive'] = 'Inactive';
+
+// Custom Views: Operators
+$app_list_strings['stic_custom_views_operator_list']['Equal_To'] = 'Equal to';
+$app_list_strings['stic_custom_views_operator_list']['Not_Equal_To'] = 'Not equal To';
+$app_list_strings['stic_custom_views_operator_list']['Greater_Than'] = 'Greater than';
+$app_list_strings['stic_custom_views_operator_list']['Less_Than'] = 'Less than';
+$app_list_strings['stic_custom_views_operator_list']['Greater_Than_or_Equal_To'] = 'Greater than or equal to';
+$app_list_strings['stic_custom_views_operator_list']['Less_Than_or_Equal_To'] = 'Less than or equal to';
+$app_list_strings['stic_custom_views_operator_list']['Contains'] = 'Contains';
+$app_list_strings['stic_custom_views_operator_list']['Not_Contains'] = 'Does not contain';
+$app_list_strings['stic_custom_views_operator_list']['Starts_With'] = 'Starts with';
+$app_list_strings['stic_custom_views_operator_list']['Not_Starts_With'] = 'Does not start with';
+$app_list_strings['stic_custom_views_operator_list']['Ends_With'] = 'Ends with';
+$app_list_strings['stic_custom_views_operator_list']['Not_Ends_With'] = 'Does not end with';
+$app_list_strings['stic_custom_views_operator_list']['is_null'] = 'Is null';
+$app_list_strings['stic_custom_views_operator_list']['is_not_null'] = 'Is not null';
+
+// Custom Views: Condition Types
+$app_list_strings['stic_custom_views_condition_type_list']['value'] = 'Value';
+$app_list_strings['stic_custom_views_condition_type_list']['date'] = 'Date';
+$app_list_strings['stic_custom_views_condition_type_list']['user'] = 'User';
+$app_list_strings['stic_custom_views_condition_type_list']['field'] = 'Field';
+
+// Custom Views: Defined values
+$app_list_strings['stic_custom_views_condition_values_list']['now'] = 'Now';
+$app_list_strings['stic_custom_views_condition_values_list']['today'] = 'Today';
+$app_list_strings['stic_custom_views_condition_values_list']['tomorrow'] = 'Tomorrow';
+$app_list_strings['stic_custom_views_condition_values_list']['yesterday'] = 'Yesterday';
+$app_list_strings['stic_custom_views_condition_values_list']['anniversary'] = 'Anniversary';
+$app_list_strings['stic_custom_views_condition_values_list']['current_user'] = 'Current user';
+
 
 // SuiteCRM Core modifications
 
