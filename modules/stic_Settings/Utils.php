@@ -79,32 +79,54 @@ class stic_SettingsUtils
     }
 
     /**
-     * Return TPV settings for the provided payment_method
+     * Return TPV (Redsys) OR TPVCECA settings for the provided payment_method
      *
      * @param [String] $paymentMethod
      * @return void
      */
     public static function getTPVSettings($paymentMethod)
     {
-        // Get all TPV settings
-        $settingsTPV = self::getSettingsByType('TPV');
+        $tpvType = $paymentMethod == 'ceca_card' || substr($paymentMethod, 0, 10) == 'ceca_card_' ? 'TPVCECA' : 'TPV';
 
-        // In case of secondary POS/TPV (payment method begins with "card_"), get the proper settings
-        if (substr($paymentMethod, 0, 5) == 'card_' || substr($paymentMethod, 0, 6) == 'bizum_') {
+        // Get all TPV|TPVCECA settings
+        $settingsTPV = self::getSettingsByType($tpvType);
 
-            // Replace "card_" prefix by "ALT_" in payment method in order to find secondary POS/TPV settings
-            $paymentMethodFilter = strtoupper(str_ireplace(['card_','bizum_'], 'ALT_', $paymentMethod));
+        
+        if ($tpvType == 'TPV') {
+            // In case of secondary REDSYS POS/TPV (payment method begins with "card_"), get the proper settings
+            if (substr($paymentMethod, 0, 5) == 'card_' || substr($paymentMethod, 0, 6) == 'bizum_') {
 
-            // POS settings that match the current payment method will overwrite the original settings
-            foreach ($settingsTPV as $key => $value) {
-                if (preg_match('/^TPV_' . $paymentMethodFilter . '/', $key)) {
-                    $settingToOverwrite = str_replace('_' . $paymentMethodFilter, '', $key);
-                    $settingsTPV[$settingToOverwrite] = $value;
+                // Replace "card_" prefix by "ALT_" in payment method in order to find secondary POS/TPV settings
+                $paymentMethodFilter = strtoupper(str_ireplace(['card_', 'bizum_'], 'ALT_', $paymentMethod));
 
-                    $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ': TPV Setting ' . $settingToOverwrite . ' has been overwritten with ' . $key . '[' . $value . ']');
+                // POS settings that match the current payment method will overwrite the original settings
+                foreach ($settingsTPV as $key => $value) {
+                    if (preg_match('/^TPV_' . $paymentMethodFilter . '/', $key)) {
+                        $settingToOverwrite = str_replace('_' . $paymentMethodFilter, '', $key);
+                        $settingsTPV[$settingToOverwrite] = $value;
+
+                        $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ': TPV Setting ' . $settingToOverwrite . ' has been overwritten with ' . $key . '[' . $value . ']');
+                    }
+                }
+            }
+        } elseif ($tpvType == 'TPVCECA') {
+            // In case of secondary CECA POS/TPV (payment method begins with "ceca_card_"), get the proper settings
+            if (substr($paymentMethod, 0, 10) == 'ceca_card_') {
+
+                // Replace "ceca_card_" prefix by "ALT_" in payment method in order to find secondary POS/TPV settings
+                $paymentMethodFilter = strtoupper(str_ireplace(['ceca_card_'], 'ALT_', $paymentMethod));
+
+                // POS settings that match the current payment method will overwrite the original settings
+                foreach ($settingsTPV as $key => $value) {
+                    if (preg_match('/^TPVCECA_' . $paymentMethodFilter . '/', $key)) {
+                        $settingToOverwrite = str_replace('_' . $paymentMethodFilter, '', $key);
+                        $settingsTPV[$settingToOverwrite] = $value;
+
+                        $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ': TPVCECA Setting ' . $settingToOverwrite . ' has been overwritten with ' . $key . '[' . $value . ']');
+                    }
                 }
             }
         }
         return $settingsTPV;
-    }   
+    }
 }

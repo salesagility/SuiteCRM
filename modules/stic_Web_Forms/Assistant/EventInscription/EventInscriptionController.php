@@ -438,6 +438,7 @@ class EventInscriptionController extends stic_Web_FormsAssistantController {
                 '' => $optionList[''],
                 'direct_debit' => $optionList['direct_debit'],
                 'card' => $optionList['card'],
+                'ceca_card' => $optionList['ceca_card'],
                 'transfer_received' => $optionList['transfer_received'],
                 'paypal' => $optionList['paypal'],
                 'bizum' => $optionList['bizum'],
@@ -446,7 +447,7 @@ class EventInscriptionController extends stic_Web_FormsAssistantController {
 
             // Add payment method for alternative TPV if exist
             foreach ($optionList as $key => $value) {
-                if (substr($key, 0, 5) == 'card_' || substr($key, 0, 6) == 'bizum_') {
+                if (substr($key, 0, 5) == 'card_' || substr($key, 0, 10) == 'ceca_card_' || substr($key, 0, 6) == 'bizum_') {
                     $restrictedOptionList[$key] = $optionList[$key];
                 }
             }

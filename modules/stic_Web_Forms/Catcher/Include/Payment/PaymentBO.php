@@ -81,8 +81,13 @@ class PaymentBO extends WebFormDataBO
                 $this->defFields = array('payment_method', 'payment_type');
                 $this->requiredDefFields = $this->defFields;
                 break;
-            // If it is a POS response, we do not need a definition field
+            // If it is a POS Redsys response, we do not need a definition field
             case PaymentController::RESPONSE_TYPE_TPV_RESPONSE:
+                $this->defFields = array();
+                $this->requiredDefFields = array();
+                break;
+            // If it is a POS CECA response, we do not need a definition field
+            case PaymentController::RESPONSE_TYPE_TPVCECA_RESPONSE:
                 $this->defFields = array();
                 $this->requiredDefFields = array();
                 break;
@@ -136,6 +141,12 @@ class PaymentBO extends WebFormDataBO
                 $this->requiredFormFields = $this->formFields;
                 break;
 
+            // Set the required fields for a POS payment answer
+            case PaymentController::RESPONSE_TYPE_TPVCECA_RESPONSE:
+                $this->formFields = array('MerchantID', 'AcquirerBIN', 'TerminalID', 'Num_operacion', 'Importe', 'Firma');
+                $this->requiredFormFields = $this->formFields;
+                break;
+
             // Set the required fields for a Paypal payment answer
             case PaymentController::RESPONSE_TYPE_PAYPAL_RESPONSE:
                 $this->formFields = array('custom');
@@ -182,10 +193,10 @@ class PaymentBO extends WebFormDataBO
         // 1) In recurring card payments, first payment date can't be in the past
         // 2) In single card payments and in PayPal, first payment date must be today
         // If prior conditions are not verified, then set first payment date to current date
-        $paymentMethodIsCard = $fp->payment_method == 'card' || substr($fp->payment_method, 0, 5) == 'card_' ? true : false;
+        $paymentMethodIsCard = $fp->payment_method == 'ceca_card' || substr($fp->payment_method, 0, 10) == 'ceca_card_' || $fp->payment_method == 'card' || substr($fp->payment_method, 0, 5) == 'card_' ? true : false;
         if (
-            ( $paymentMethodIsCard == true && $fp->first_payment_date < date('Y-m-d'))
-            || ( $paymentMethodIsCard == true && $fp->first_payment_date != date('Y-m-d') && $fp->periodicity == 'punctual')
+            ($paymentMethodIsCard == true && $fp->first_payment_date < date('Y-m-d'))
+            || ($paymentMethodIsCard == true && $fp->first_payment_date != date('Y-m-d') && $fp->periodicity == 'punctual')
             || ($fp->payment_method == 'paypal')
         ) {
             $fp->first_payment_date = date('Y-m-d');
@@ -258,7 +269,7 @@ class PaymentBO extends WebFormDataBO
     }
 
     /**
-     * Get the TPV settings
+     * Get the TPV(redsys) settings
      */
     public static function getTPVSettings($paymentMethod)
     {
@@ -301,6 +312,76 @@ class PaymentBO extends WebFormDataBO
                     break;
                 default:
                     $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": POS/TPV operating in mode [{$mode}]. Invalid value, please check TPV_TEST setting.");
+                    return null;
+            }
+
+            // Start the return array with the values set outside the database
+            $filteredConst = array();
+            foreach ($fixedSettings as $key => $value) {
+                $filteredConst[$key] = $value;
+                $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": Adding virtual setting [{$key}] = [{$value}]...");
+            }
+
+            // Add settings not dependent on the execution mode
+            foreach ($nonTestDependentConst as $key) {
+                $filteredConst[$key] = $settingsTPV[$key];
+                $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": Adding setting independent of mode [{$key}] = [{$settingsTPV[$key]}]...");
+            }
+
+            // Add the environment dependent settings
+            foreach ($dependentTestConst as $key) {
+                $setting = $settingsTPV[$key . $test];
+                $newKey = str_replace($test, '', $key);
+                $filteredConst[$newKey] = $setting;
+                $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": Filtered setting [{$newKey}] = [{$setting}].");
+            }
+
+            return $filteredConst;
+        }
+    }
+    /**
+     * Get the TPVCECA settings
+     */
+    public static function getTPVCECASettings($paymentMethod)
+    {
+        // Add variable TPVCECA values from settings (filtered by payment_method)
+        require_once "modules/stic_Settings/Utils.php";
+        $settingsTPV = stic_SettingsUtils::getTPVSettings($paymentMethod);
+
+        // Add permanent TPV values
+        $settingsTPV['TPVCECA_SERVER_URL'] = 'https://pgw.ceca.es/tpvweb/tpv/compra.action';
+        $settingsTPV['TPVCECA_SERVER_URL_TEST'] = 'https://tpv.ceca.es/tpvweb/tpv/compra.action';
+        $settingsTPV['TPVCECA_VERSION'] = 'HMAC_SHA256_V1';
+        $settingsTPV['TPVCECA_VERSION_TEST'] = 'HMAC_SHA256_V1';
+
+        if ($settingsTPV == null) {
+            $GLOBALS['log']->fatal('Line ' . __LINE__ . ': ' . __METHOD__ . ":  Could not load TPV related settings.");
+            return null;
+        } else {
+            // Generates the array with settings that are not in the CRM
+            $fixedSettings = array(
+                'TPVCECA_MERCHANT_URL' => self::getMerchantURL('TPVCECA'),
+            );
+
+            // Execution mode-dependent settings (TEST / PRODUCTION)
+            $dependentTestConst = array('TPVCECA_VERSION', 'TPVCECA_PASSWORD', 'TPVCECA_SERVER_URL');
+
+            // Settings that are in the CRM and do not depend on the execution environment
+            $nonTestDependentConst = array('TPVCECA_MERCHANT_CODE', 'TPVCECA_CURRENCY', 'TPVCECA_ACQUIRER_BIN', 'TPVCECA_TERMINAL', 'TPVCECA_TEST');
+
+            // Get execution mode (TEST / PRODUCTION)
+            $mode = $settingsTPV['TPVCECA_TEST'];
+            $test = "";
+            switch ($mode) {
+                case '0':
+                    $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": POS/TPV operating in mode [{$mode}] PRODUCTION.");
+                    break;
+                case '1':
+                    $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": POS/TPV operating in mode [{$mode}] TEST.");
+                    $test = "_TEST";
+                    break;
+                default:
+                    $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": POS/TPV operating in mode [{$mode}]. Invalid value, please check TPVCECA_TEST setting.");
                     return null;
             }
 
@@ -440,11 +521,14 @@ class PaymentBO extends WebFormDataBO
     /**
      * Generate the response address of a POS request
      */
-    private static function getMerchantURL()
+    private static function getMerchantURL($tpvType = 'TPV')
     {
+
+        $entryPoint = $tpvType == 'TPVCECA' ? 'stic_Web_Forms_tpv_ceca_response' : 'stic_Web_Forms_tpv_response';
+
         require_once 'modules/stic_Web_Forms/controller.php';
         $server = stic_Web_FormsController::getServerURL();
-        $url = "{$server}/index.php?entryPoint=stic_Web_Forms_tpv_response";
+        $url = "{$server}/index.php?entryPoint={$entryPoint}";
         $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ":  {$url}");
         return $url;
     }
@@ -551,6 +635,45 @@ class PaymentBO extends WebFormDataBO
 
         $payment->save();
 
+        return $this->returnCode($ret);
+    }
+
+    // Processes the CECA TPV response after verifying the signature's validity and the presence of all required data.
+    public function proccessTPVCECAResponse($tpvParams)
+    {
+        // Ensure that the operation number and payment ID are present in the request.
+        if (!isset($_REQUEST['Num_operacion']) || !isset($_REQUEST['paymentId'])) {
+            // Return an error code if any required data is missing from the request.
+            return $this->returnCode('UNEXPECTED_ERROR');
+        }
+
+        // Retrieve the payment information based on the payment ID provided in the TPV parameters.
+        $paymentBean = BeanFactory::getBean('stic_Payments', $tpvParams['paymentId']);
+
+        // If payment data retrieval fails, log the error and return an error code.
+        if ($paymentBean == null) {
+            return $this->returnCode('UNEXPECTED_ERROR');
+        }
+
+        // Determine the payment status based on the presence of a reference or an error code in the TPV parameters.
+        if (!empty($tpvParams['Referencia'])) {
+            // If a reference is present, mark the payment as successful.
+            $paymentBean->status = 'paid';
+            $ret = '';
+        } elseif (!empty($tpvParams['Codigo_error'])) {
+            // If an error code is present, mark the payment as rejected and specify the rejection reason.
+            require_once 'modules/stic_Web_Forms/Catcher/Include/Payment/lib/CecaResponseCodes.php';
+            $paymentBean->status = 'rejected_gateway';
+            $paymentBean->gateway_rejection_reason = $tpvParams['Codigo_error'] . ' - ' . $cecaResponseCode[$tpvParams['Codigo_error']];
+            $ret = 'TPVCECA_REJECTED';
+        } else {
+            return $this->returnCode('UNEXPECTED_ERROR');
+        }
+
+        // Save the updated payment information.
+        $paymentBean->save();
+
+        // Return a code indicating the outcome of the processing.
         return $this->returnCode($ret);
     }
 

@@ -25,6 +25,7 @@
 $entry_point_registry['stic_Web_Forms_save'] = array('file' => 'modules/stic_Web_Forms/Entrypoints/Save.php', 'auth' => false);
 $entry_point_registry['stic_Web_Forms_saveRecaptcha'] = array('file' => 'modules/stic_Web_Forms/Entrypoints/SaveRecaptcha.php', 'auth' => false);
 $entry_point_registry['stic_Web_Forms_tpv_response'] = array('file' => 'modules/stic_Web_Forms/Entrypoints/TPVResponse.php', 'auth' => false);
+$entry_point_registry['stic_Web_Forms_tpv_ceca_response'] = array('file' => 'modules/stic_Web_Forms/Entrypoints/TPVCecaResponse.php', 'auth' => false);
 $entry_point_registry['stic_Web_Forms_paypal_response'] = array('file' => 'modules/stic_Web_Forms/Entrypoints/PaypalResponse.php', 'auth' => false);
 $entry_point_registry['stic_Web_Forms_stripe_response'] = array('file' => 'modules/stic_Web_Forms/Entrypoints/StripeResponse.php', 'auth' => false);
 $entry_point_registry['stic_Web_Forms_attachment_limits_response'] = array('file' => 'modules/stic_Web_Forms/Entrypoints/AttachmentLimitsResponse.php', 'auth' => false);

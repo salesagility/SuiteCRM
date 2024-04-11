@@ -54,6 +54,7 @@ function adaptPeriodicity() {
   // If the periodicity has a value and is not punctual mark the means of payment as 'Direct debit'
   if (vPeriodicity && vPeriodicity != "punctual" && (
       (vPaymentMethod == "card" && allowCardRecurringPayments == 0) || 
+      (vPaymentMethod == "ceca_card" && allowCardRecurringPayments == 0) || 
       (vPaymentMethod == "paypal" && allowPaypalRecurringPayments == 0) || 
       (vPaymentMethod == "stripe" && allowStripeRecurringPayments == 0) || 
        vPaymentMethod == "bizum")) {
@@ -81,6 +82,7 @@ function adaptPaymentMethod() {
 
   // If the payment method has changed to card or bizum, check the periodicity
   if (((vPaymentMethod == "card" && allowCardRecurringPayments == 0)
+    || (vPaymentMethod == "ceca_card" && allowPaypalRecurringPayments == 0)
     || (vPaymentMethod == "paypal" && allowPaypalRecurringPayments == 0)
     || (vPaymentMethod == "stripe" && allowStripeRecurringPayments == 0)
     || vPaymentMethod == "bizum")

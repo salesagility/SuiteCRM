@@ -283,6 +283,9 @@ class EventInscriptionMailer extends WebFormMailer
             case PaymentController::RESPONSE_TYPE_TPV_RESPONSE:
                 $this->sendAdminConfirmation($this->deferredData['payment'], $this->deferredData['adminId'], $response);
                 break;
+            case PaymentController::RESPONSE_TYPE_TPVCECA_RESPONSE:
+                $this->sendAdminConfirmation($this->deferredData['payment'], $this->deferredData['adminId'], $response);
+                break;
             case PaymentController::RESPONSE_TYPE_PAYPAL_RESPONSE:
                 $this->sendAdminPaypalConfirmation($this->deferredData['payment'], $this->deferredData['adminId'], $response);
                 break;

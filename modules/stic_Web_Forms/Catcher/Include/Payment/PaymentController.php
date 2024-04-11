@@ -30,6 +30,7 @@ require_once __DIR__ . '/../../WebFormDataController.php';
 class PaymentController extends WebFormDataController {
     const RESPONSE_TYPE_NEW_PAYMENT = '';
     const RESPONSE_TYPE_TPV_RESPONSE = 'TPV_RESPONSE';
+    const RESPONSE_TYPE_TPVCECA_RESPONSE = 'TPV_CECA_RESPONSE';
     const RESPONSE_TYPE_PAYPAL_RESPONSE = 'PAYPAL_RESPONSE';
     const RESPONSE_TYPE_STRIPE_RESPONSE = 'STRIPE_RESPONSE';
 
@@ -67,6 +68,10 @@ class PaymentController extends WebFormDataController {
             case self::RESPONSE_TYPE_TPV_RESPONSE:
                 $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": Managing the response of a POS payment...");
                 $response = $this->actionTPVResponse();
+                break;
+            case self::RESPONSE_TYPE_TPVCECA_RESPONSE:
+                $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": Managing the response of a POS CECA payment...");
+                $response = $this->actionCECAResponse();
                 break;
             case self::RESPONSE_TYPE_PAYPAL_RESPONSE:
                 $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": Managing the response of a Paypal payment...");
@@ -140,8 +145,13 @@ class PaymentController extends WebFormDataController {
             $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": A direct debit payment has been created.");
             $response = $this->createResponse(self::RESPONSE_STATUS_OK, self::RESPONSE_TYPE_TXT, $this->getMsgString('LBL_THANKS_FOR_DONATION'));
         } else if ($payment->payment_method == 'card' || $payment->payment_method == 'bizum' || substr($payment->payment_method, 0, 5) == 'card_' || substr($payment->payment_method, 0, 6) == 'bizum_') {
+            // TVP REDSYS
             $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": A {$payment->payment_method} payment has begun.");
             $response = $this->redsysPrepareFirstStep($payment);
+        } else if ($payment->payment_method == 'ceca_card' || substr($payment->payment_method, 0, 10) == 'ceca_card_') {
+            // TVP CECA
+            $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": A {$payment->payment_method} payment has begun.");
+            $response = $this->cecaPrepareFirstStep($payment);
 
         } else if ($payment->payment_method == 'paypal') {
             $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": A paypal payment has been initiated.");
@@ -221,6 +231,88 @@ class PaymentController extends WebFormDataController {
             return $this->feedBackError($this);
         } else {
             $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": POS response processed successfully.");
+            return $this->createResponse(self::RESPONSE_STATUS_OK, self::RESPONSE_TYPE_TXT, $this->getMsgString('LBL_THANKS_FOR_DONATION'));
+        }
+    }
+
+    /**
+     * Manage the response from CECA's TPV system following a payment attempt.
+     * It validates the payment authorization based on CECA's response parameters and handles
+     * the business logic for both successful and unsuccessful payments.
+     */
+    private function actionCECAResponse()
+    {
+        global $db;
+
+        // Retrieve payment details using the operation number provided by CECA's response.
+        // This is crucial for linking the response to the corresponding payment record.
+        $payment = $db->fetchOne("select id, payment_method from stic_payments where transaction_code = CONVERT('{$_REQUEST['Num_operacion']}', UNSIGNED INTEGER)");
+
+        // Verification of the existence of payment details to ensure the operation can be linked to an existing payment.
+        if (empty($payment['id']) || empty($payment['payment_method'])) {
+            $this->returnCode('UNEXPECTED_ERROR');
+            return $this->feedBackError($this);
+        }
+
+        // Save the payment ID for later processing steps. This bridges the current response handling with subsequent actions.
+        $_REQUEST['paymentId'] = $payment['id'];
+
+        // Retrieve payment method settings, particularly looking for the encryption key to validate the response signature.
+        // This step is critical for ensuring the integrity and authenticity of the response from CECA.
+        $settings = PaymentBO::getTPVCECASettings($payment['payment_method']);
+
+        // Fill in 0 on the left
+        $settings['TPVCECA_MERCHANT_CODE']=str_pad($settings['TPVCECA_MERCHANT_CODE'],9,'0', STR_PAD_LEFT);
+        $settings['TPVCECA_ACQUIRER_BIN']=str_pad($settings['TPVCECA_ACQUIRER_BIN'], 10, '0', STR_PAD_LEFT);
+        $settings['TPVCECA_TERMINAL']=str_pad($settings['TPVCECA_TERMINAL'], 8, '0', STR_PAD_LEFT);
+
+        if (empty($settings['TPVCECA_PASSWORD'])) {
+            $this->returnCode('UNEXPECTED_ERROR');
+            return $this->feedBackError($this);
+        }
+
+        // Construct the signature string from response and settings, a step required to authenticate the response.
+        // The choice between 'Referencia' and 'Codigo_error' for signature computation is based on whether the payment was successful or not.
+        $receivedSignature = $this->bo->getParam("Firma");
+        $newSignSourceString = 
+            $settings['TPVCECA_PASSWORD'] 
+            . $_REQUEST['MerchantID'] 
+            . $_REQUEST['AcquirerBIN'] 
+            . $_REQUEST['TerminalID'] 
+            . $_REQUEST['Num_operacion'] 
+            . $_REQUEST['Importe'] 
+            . $settings['TPVCECA_CURRENCY'] 
+            . $_REQUEST['Exponente'] 
+            . ($_REQUEST['Referencia'] ?? $_REQUEST['Codigo_error']);
+
+        if (strlen(trim($newSignSourceString)) > 0) {
+            $newSign = strtolower(hash('sha256', $newSignSourceString));
+        } else {
+            $this->returnCode('INVALID_CECA_SIGNATURE');
+            return $this->feedBackError($this);
+        }
+
+        // Signature verification to confirm the response's integrity. Mismatched signatures indicate potential tampering or issues in the communication.
+        if ($newSign != $receivedSignature) {
+            $this->returnCode('UNEXPECTED_ERROR');
+            return $this->feedBackError($this);
+        }
+
+        // Process the verified response according to the business logic, which might involve updating payment status, sending notifications, etc.
+        $retCode = $this->bo->proccessTPVCECAResponse($_REQUEST);
+
+        // Handling email notifications based on the processing outcome. This is part of the post-processing steps to inform relevant parties of the payment status.
+        require_once __DIR__ . "/PaymentMailer.php";
+        $mailer = WebFormMailer::readDataToDeferredMail(intval($_REQUEST['Num_operacion']));
+        if ($mailer) {
+            $mailer->sendDeferredMails($retCode, self::RESPONSE_TYPE_TPV_RESPONSE);
+        }
+
+        // Final handling based on the overall processing outcome, including error management and success acknowledgments.
+        if ($retCode) {
+            $this->returnCode($this->bo->getLastError());
+            return $this->feedBackError($this);
+        } else {
             return $this->createResponse(self::RESPONSE_STATUS_OK, self::RESPONSE_TYPE_TXT, $this->getMsgString('LBL_THANKS_FOR_DONATION'));
         }
     }
@@ -336,6 +428,158 @@ class PaymentController extends WebFormDataController {
         $xtpl->parse('main');
         $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": Returning answer...");
 
+        return $this->createResponse(self::RESPONSE_STATUS_PENDING, self::RESPONSE_TYPE_TEMPLATE, $xtpl);
+    }
+    /**
+     * Generate the answer for the first step in CECA payment methods
+     * Returns the Response generated to initiate CECA payment methods
+     */
+    private function cecaPrepareFirstStep($payment)
+    {
+        // Retrieve application settings
+        $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": Retrieving CECA settings...");
+
+        // Obtaining CECA settings
+        $settings = $this->bo->getTPVCECASettings($payment->payment_method);
+        if ($settings == null) {
+            $GLOBALS['log']->fatal('Line ' . __LINE__ . ': ' . __METHOD__ . ": Cannot continue because the POS settings cannot be retrieved.");
+            $this->returnCode('UNEXPECTED_ERROR');
+            return $this->feedBackError($this);
+        }
+        
+        // Fill in 0 on the left
+        $settings['TPVCECA_MERCHANT_CODE']=str_pad($settings['TPVCECA_MERCHANT_CODE'],9,'0', STR_PAD_LEFT);
+        $settings['TPVCECA_ACQUIRER_BIN']=str_pad($settings['TPVCECA_ACQUIRER_BIN'], 10, '0', STR_PAD_LEFT);
+        $settings['TPVCECA_TERMINAL']=str_pad($settings['TPVCECA_TERMINAL'], 8, '0', STR_PAD_LEFT);
+           
+        // Check that the settings are complete and if so, add it to the parameters
+        $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": Assigning CECA settings to request parameters...");
+        $requiredConsts = [
+            'TPVCECA_MERCHANT_CODE',
+            'TPVCECA_ACQUIRER_BIN',
+            'TPVCECA_TERMINAL',
+            'TPVCECA_CURRENCY',
+            'TPVCECA_MERCHANT_URL',
+            'TPVCECA_PASSWORD',
+            'TPVCECA_VERSION',
+            'TPVCECA_TEST',
+            'TPVCECA_SERVER_URL',
+        ];
+
+        foreach ($requiredConsts as $key) {
+            if (empty($settings[$key])) {
+                $GLOBALS['log']->fatal('Line ' . __LINE__ . ': ' . __METHOD__ . ": The setting {$key} is missing or empty.");
+                $this->returnCode('UNEXPECTED_ERROR');
+                return $this->feedBackError($this);
+            } else {
+                // If the parameter exists it adds it to the parameters
+                $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": {$key} = {$settings[$key]}.");
+            }
+        }
+
+        // Convert the amount to cents
+        $amount = ($payment->amount * 100);
+        $koURL = $this->bo->getKOURL();
+        $okURL = $this->bo->getOKURL();
+
+        // The order number must have between 4 and 12 characters, fill with 0 on the left in case there are missing positions.
+        // str_pad($payment->transaction_code, 12, '0', STR_PAD_LEFT);
+        $id = $payment->transaction_code;
+
+        $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": Adding non-constant parameters [{$amount}] [{$id}] [{$payment->transaction_code}] [{$okURL}] [{$koURL}] ...");
+
+        // Get the last PC
+        $PCBean = $this->bo->getLastPC();
+
+        // Configuration data
+        if ($PCBean->periodicity == 'punctual') {
+            $xtpl = self::getNewTemplate(__DIR__ . '/tpls/CecaFirstStep.html');
+        } else {
+            $GLOBALS['log']->error('Line ' . __LINE__ . ': ' . __METHOD__ . ': ' . "CECA Recurring payments are not enabled.");
+        }
+
+        // Define language
+        switch ($this->getLanguage()) {
+            case 'es_ES':
+                $idioma = 1;
+                break;
+            case 'ca_ES':
+                $idioma = 2;
+                break;
+            case 'eu_ES':
+                $idioma = 3;
+                break;
+            case 'gl_ES':
+                $idioma = 4;
+                break;
+            case 'en_us':
+                $idioma = 6;
+                break;
+            case 'fr_FR':
+                $idioma = 7;
+                break;
+            case 'de_DE':
+                $idioma = 8;
+                break;
+            case 'pt_PT':
+                $idioma = 9;
+                break;
+            case 'it_IT':
+                $idioma = 10;
+                break;
+            case 'ru_RU':
+                $idioma = 14;
+                break;
+            case 'no_NO':
+                $idioma = 15;
+                break;
+            default:
+                $idioma = 1;
+                break;
+        }
+
+        // Calculate the signature value required to include in the form
+        $firma = $settings['TPVCECA_PASSWORD']
+        . $settings['TPVCECA_MERCHANT_CODE']
+        . $settings['TPVCECA_ACQUIRER_BIN']
+        . $settings['TPVCECA_TERMINAL']
+        . $id
+        . $amount
+        . $settings['TPVCECA_CURRENCY']
+        . '2'
+        . 'SHA2'
+        . $okURL
+        . $koURL;
+
+
+        if (strlen(trim($firma)) > 0) {
+            // SHA256 calculation
+            $firma = strtolower(hash('sha256', $firma));
+        } else {
+            $this->returnCode('INVALID_CECA_SIGNATURE');
+            return $this->feedBackError($this);
+            $GLOBALS['log']->error('Line ' . __LINE__ . ': ' . __METHOD__ . ': ' . "Invalid CECA signature ");
+        }
+        // Retrieve template
+        $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": Retrieving template...");
+        $xtpl->assign('server_url', $settings["TPVCECA_SERVER_URL"]);
+        $xtpl->assign('merchant_id', $settings['TPVCECA_MERCHANT_CODE']);
+        $xtpl->assign('acquirer_bin', $settings['TPVCECA_ACQUIRER_BIN']);
+        $xtpl->assign('terminal_id', $settings['TPVCECA_TERMINAL']);
+        $xtpl->assign('koURL', $koURL);
+        $xtpl->assign('okURL', $okURL);
+        $xtpl->assign('num_operation', $id);
+        $xtpl->assign('importe', $amount);
+        $xtpl->assign('tipomoneda', $settings['TPVCECA_CURRENCY']);
+        $xtpl->assign('description', $PCBean->banking_concept);
+        $xtpl->assign('idioma', $idioma);
+        $xtpl->assign('firma', $firma);
+        $xtpl->assign('LOADING_MESSAGE', $this->getMsgString('LBL_TPV_LOADING_MESSAGE'));
+        $xtpl->parse('main');
+
+        $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": Returning answer...");
+
+        // Create response
         return $this->createResponse(self::RESPONSE_STATUS_PENDING, self::RESPONSE_TYPE_TEMPLATE, $xtpl);
     }
 
