@@ -31,7 +31,7 @@ INSERT INTO stic_validation_actions (id, name, date_entered, date_modified, modi
 ('0b5b5d41-ae84-11eb-9b56-0242ac180004', 'Payment commitments - Set active/inactive records', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, '0b5b5d41-ae84-11eb-9b56-0242ac180004', 0, 30),
 ('14875de6-ed5e-443a-abbc-54d57dec100e', 'Payment commitments - Main data validation', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, '14875de6-ed5e-443a-abbc-54d57dec100e', 0, 45),
 ('d2baf24e-cd27-47c5-8ee1-84c905b9198d', 'Payment commitments - Relationships validation', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, 'd2baf24e-cd27-47c5-8ee1-84c905b9198d', 0, 40),
-('ac28533e-40ad-11ec-b2f2-0242ac150002', 'Payment commitments - Incomplete recurring authorizations validation', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, '8eeed951-4090-11ec-bd41-0242ac150002', 0, 30),
+('ac28533e-40ad-11ec-b2f2-0242ac150002', 'Payment commitments - Incomplete recurring authorizations validation', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, 'ac28533e-40ad-11ec-b2f2-0242ac150002', 0, 30),
 ('a8d6cdff-ff13-4a2d-b5af-dba7ed47f29c', 'Payment commitments - Card expirancy date validation', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, 'a8d6cdff-ff13-4a2d-b5af-dba7ed47f29c', 0, 65),
 ('e39516bb-9acf-4c6f-8e25-d3af9aac0a95', 'Payments - Main data validation', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, 'e39516bb-9acf-4c6f-8e25-d3af9aac0a95', 0, 35),
 ('b738e9b4-c025-4a96-86c1-c2c6f657d3cf', 'Payments - Relationships validation', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, 'b738e9b4-c025-4a96-86c1-c2c6f657d3cf', 0, 30),

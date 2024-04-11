@@ -18,7 +18,7 @@ INSERT INTO stic_validation_actions (id, name, date_entered, date_modified, modi
 ('0b5b5d41-ae84-11eb-9b56-0242ac180004', 'Compromisos de pago - Cálculo de rexistro activo/inactivo', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, '0b5b5d41-ae84-11eb-9b56-0242ac180004', 0, 30),
 ('d2baf24e-cd27-47c5-8ee1-84c905b9198d', 'Compromisos de pago - Revisión das relaciones', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, 'd2baf24e-cd27-47c5-8ee1-84c905b9198d', 0, 40),
 ('14875de6-ed5e-443a-abbc-54d57dec100e', 'Compromisos de pago - Revisión dos datos principais', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, '14875de6-ed5e-443a-abbc-54d57dec100e', 0, 45),
-('ac28533e-40ad-11ec-b2f2-0242ac150002', 'Compromisos de pago - Revisión das autorizaciones recurrentes incompletas', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, '8eeed951-4090-11ec-bd41-0242ac150002', 0, 30),
+('ac28533e-40ad-11ec-b2f2-0242ac150002', 'Compromisos de pago - Revisión das autorizaciones recurrentes incompletas', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, 'ac28533e-40ad-11ec-b2f2-0242ac150002', 0, 30),
 ('a8d6cdff-ff13-4a2d-b5af-dba7ed47f29c', 'Compromisos de pago - Revisión de la fecha de caducidad de las tarjetas', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, 'a8d6cdff-ff13-4a2d-b5af-dba7ed47f29c', 0, 65),
 ('88aa01ca-94a1-4313-a24e-a0a637dcf029', 'Inscricións - Revisión das relacións', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, '88aa01ca-94a1-4313-a24e-a0a637dcf029', 0, 10),
 ('28874faf-7465-43a4-ad31-357769af3f6f', 'Inscricións - Revisión dos datos principais', NOW(), NOW(), '1', '1', NULL, 0, '1', NULL, '28874faf-7465-43a4-ad31-357769af3f6f', 0, 15),

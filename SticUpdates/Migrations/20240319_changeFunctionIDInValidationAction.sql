@@ -1,0 +1,1 @@
+UPDATE `stic_validation_actions` SET `function` = 'ac28533e-40ad-11ec-b2f2-0242ac150002' WHERE `stic_validation_actions`.`id` = 'ac28533e-40ad-11ec-b2f2-0242ac150002';
