@@ -103,7 +103,7 @@ tests/_output/*
 BrowserStackLocal
 browserstack.err
 cache/
-custom/**/
+#custom/**/
 .sass-cache/
 
 # Ignore testing environment
