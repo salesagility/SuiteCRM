@@ -6,3 +6,5 @@ $mod_strings['MSG_SHOW_DUPLICATES'] = 'Creating this account may potentially cre
 $mod_strings['LBL_LIST_FORM_TITLE'] = 'Order List';
 $mod_strings['LBL_SEARCH_FORM_TITLE'] = 'Search Order';
 $mod_strings['LBL_HOMEPAGE_TITLE'] = 'My Orders';
+$mod_strings['LBL_CONVERT_TO_ORDER_SUPPLIER'] = 'Convert to Order Supplier';
+
