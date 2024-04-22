@@ -41,7 +41,9 @@ class AORReportsDashlet extends Dashlet
         }
         if (!empty($def['aor_report_id'])) {
             $this->report = BeanFactory::getBean('AOR_Reports', $def['aor_report_id']);
-            $this->report->user_parameters = $this->params;
+            if($this->report !== false) {
+                $this->report->user_parameters = $this->params;
+            }
         }
         $this->onlyCharts = !empty($def['onlyCharts']);
         $this->charts = !empty($def['charts']) ? $def['charts'] : array();
