@@ -36,6 +36,7 @@
     $quote = BeanFactory::newBean('AOS_Quotes');
     $quote->retrieve($_REQUEST['record']);
     $quote->invoice_status = 'Invoiced';
+    $quote->stage = 'Closed Accepted';
     $quote->total_amt = format_number($quote->total_amt);
     $quote->discount_amount = format_number($quote->discount_amount);
     $quote->subtotal_amount = format_number($quote->subtotal_amount);
