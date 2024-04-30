@@ -67,6 +67,8 @@
         $rawRow['shipping_amount'] = format_number($rawRow['shipping_amount']);
     }
     $rawRow['total_amount'] = format_number($rawRow['total_amount']);
+    $_REQUEST['parent_id'] = $quote->id;
+    $_REQUEST['parent_type'] = 'AOS_Quotes';
     $invoice->populateFromRow($rawRow);
     $invoice->process_save_dates =false;
     $invoice->save();

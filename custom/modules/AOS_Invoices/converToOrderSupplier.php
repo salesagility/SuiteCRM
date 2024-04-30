@@ -66,6 +66,8 @@
         $rawRow['shipping_amount'] = format_number($rawRow['shipping_amount']);
     }
     $rawRow['total_amount'] = format_number($rawRow['total_amount']);
+    $_REQUEST['parent_id'] = $invoice->id;
+    $_REQUEST['parent_type'] = 'AOS_Invoices';
     $ordertosupplier->populateFromRow($rawRow);
     
     $ordertosupplier->process_save_dates =false;
@@ -131,6 +133,7 @@
         $row['id'] = '';
         $row['parent_id'] = $ordertosupplier->id;
         $row['parent_type'] = 'UT_OrderSupplier';
+        
         if ($row['total_amt'] != null) {
             $row['total_amt'] = format_number($groupTotalAmt);
         }
