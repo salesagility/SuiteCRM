@@ -234,11 +234,42 @@ array(
         array(
           0 =>
           array(
+            'name' => 'overall_discount_amount',
+            'label' => 'LBL_OVERALL_DISCOUNT_AMOUNT',
+            'displayParams' =>
+            array(
+              'field' =>
+              array(
+                'onblur' => 'calculateTotal(\'lineItems\');',
+              ),
+            ),
+          ),
+        ),
+        
+        6 => 
+        array (
+          0 => 
+          array (
             'name' => 'subtotal_amount',
             'label' => 'LBL_SUBTOTAL_AMOUNT',
           ),
         ),
-        6 =>
+        7 =>
+        array(
+          0 =>
+          array(
+            'name' => 'other_charges_amount',
+            'label' => 'LBL_OTHER_CHARGES_AMOUNT',
+            'displayParams' =>
+            array(
+              'field' =>
+              array(
+                'onblur' => 'calculateTotal(\'lineItems\');',
+              ),
+            ),
+          ),
+        ),
+        8 =>
         array(
           0 =>
           array(
@@ -253,7 +284,7 @@ array(
             ),
           ),
         ),
-        7 =>
+        9 =>
         array(
           0 =>
           array(
@@ -261,7 +292,7 @@ array(
             'label' => 'LBL_SHIPPING_TAX_AMT',
           ),
         ),
-        8 =>
+        10 =>
         array(
           0 =>
           array(
@@ -269,7 +300,7 @@ array(
             'label' => 'LBL_TAX_AMOUNT',
           ),
         ),
-        9 =>
+        11 =>
         array(
           0 =>
           array(

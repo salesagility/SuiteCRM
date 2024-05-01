@@ -5,7 +5,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 #[\AllowDynamicProperties]
-class UT_OrderSupplierViewEdit extends ViewEdit
+class CustomAOS_InvoicesViewEdit extends ViewEdit
 {
     public function __construct()
     {
@@ -26,7 +26,7 @@ class UT_OrderSupplierViewEdit extends ViewEdit
     {
         global $app_list_strings;
 
-        $sql = "SELECT id, name FROM aos_pdf_templates WHERE deleted='0' AND type='UT_OrderSupplier'";
+        $sql = "SELECT id, name FROM aos_pdf_templates WHERE deleted='0' AND type='AOS_Invoices'";
         $res = $this->bean->db->query($sql);
 
         $app_list_strings['template_ddown_c_list'] = array();

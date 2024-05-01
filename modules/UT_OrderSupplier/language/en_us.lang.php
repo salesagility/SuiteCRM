@@ -200,4 +200,8 @@ $mod_strings = array(
     'LBL_AOS_LINE_ITEM_GROUPS' => 'Line Item Groups',
     'LBL_AOS_PRODUCT_QUOTES' => 'Product Quotes',
     'LBL_AOS_INVOICES_UT_ORDERSUPPLIER' => 'Invoice: Order Supplier',
+    'LBL_OVERALL_DISCOUNT_AMOUNT' => 'Overall Discount',
+    'LBL_OVERALL_DISCOUNT_AMOUNT_USDOLLAR' => 'Overall Discount US Dollar',
+    'LBL_OTHER_CHARGES_AMOUNT' => 'Other Charges',
+    'LBL_OTHER_CHARGES_AMOUNT_USDOLLAR' => 'Other Charges US Dollar',
 );

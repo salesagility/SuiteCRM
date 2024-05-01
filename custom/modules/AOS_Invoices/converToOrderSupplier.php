@@ -60,12 +60,16 @@
     $rawRow['discount_amount'] = format_number($rawRow['discount_amount']);
     $rawRow['subtotal_amount'] = format_number($rawRow['subtotal_amount']);
     $rawRow['tax_amount'] = format_number($rawRow['tax_amount']);
+    $rawRow['overall_discount_amount'] = format_number($rawRow['overall_discount_amount']);
+    $rawRow['other_charges_amount'] = format_number($rawRow['other_charges_amount']);
     $rawRow['date_entered'] = '';
     $rawRow['date_modified'] = '';
     if ($rawRow['shipping_amount'] != null) {
         $rawRow['shipping_amount'] = format_number($rawRow['shipping_amount']);
     }
     $rawRow['total_amount'] = format_number($rawRow['total_amount']);
+    
+    
     $_REQUEST['parent_id'] = $invoice->id;
     $_REQUEST['parent_type'] = 'AOS_Invoices';
     $ordertosupplier->populateFromRow($rawRow);
@@ -77,7 +81,6 @@
     require_once('modules/Relationships/Relationship.php');
     $key = Relationship::retrieve_by_modules('AOS_Invoices', 'UT_OrderSupplier', $GLOBALS['db']);
     
-     $GLOBALS['log']->fatal(print_r($key,true));
     if (!empty($key)) {
         $invoice->load_relationship($key);
         $invoice->$key->add($ordertosupplier->id);
@@ -173,12 +176,14 @@
         $row['parent_id'] = $ordertosupplier->id;
         $row['parent_type'] = 'UT_OrderSupplier';
         $row['group_id'] = $invoiceToInvoiceGroupIds[$row['group_id']];
+       
         if ($row['product_cost_price'] != null) {
-            $row['product_cost_price'] = format_number($row['product_cost_price']);
+            //$row['product_cost_price'] = format_number($row['product_cost_price']);
             $row['product_list_price'] = format_number($row['product_cost_price']);
         }
         else
             $row['product_list_price'] = format_number($row['product_list_price']);
+            
         //Set unit price    
         if(!empty($row['product_discount'])) {
             if($row['product_discount'] === "Percentage") {
@@ -189,6 +194,9 @@
                 $row['product_unit_price']  = ($row['product_list_price'] - $row['product_discount']);
                 $row['product_discount_amount'] = -($row['product_discount']);
             }
+            else {
+                $row['product_unit_price'] = $row['product_list_price'];
+            }
         }
         else {
             $row['product_unit_price'] = $row['product_list_price'];
@@ -197,21 +205,34 @@
             $row['product_discount'] = format_number($row['product_discount']);
             $row['product_discount_amount'] = format_number($row['product_discount_amount']);
         }
-        $row['product_unit_price'] = format_number($row['product_unit_price']);
-        $row['vat_amt'] = format_number($row['vat_amt']);
-        $row['product_total_price'] = format_number($row['product_total_price']);
-        $row['product_qty'] = format_number($row['product_qty']);
+        $row['product_unit_price'] = ($row['product_unit_price']);
+
+        $row['vat_amt'] = ($row['vat_amt']);
+        $row['product_total_price'] = ($row['product_total_price']);
+        $row['product_qty'] = ($row['product_qty']);
         
         $prod_invoice = BeanFactory::newBean('AOS_Products_Quotes');
         $prod_invoice->populateFromRow($row);
         $prod_invoice->save();
+        $qty = 1; 
+        if(!empty($prod_invoice->product_qty))
+            $qty = $prod_invoice->product_qty;
+
+        $prod_invoice->product_total_price = ($qty * $prod_invoice->product_unit_price);
+        $prod_invoice->vat_amt = ($qty * (($prod_invoice->product_unit_price * $prod_invoice->field_defs['vat']['default'])/100));
+                        
+        $parentTotalAmt += $prod_invoice->product_total_price;
+        $parentDiscountAmount += abs($prod_invoice->product_discount_amount);
+        $parentSubtotalAmount += $prod_invoice->product_total_price;
+        $parentTaxAmount += $prod_invoice->vat_amt;
+        $parentTotalAmount += ($prod_invoice->product_total_price + $prod_invoice->vat_amt);
     }
     //Update Final Total
     $ordertosupplier->total_amt = $parentTotalAmt;
     $ordertosupplier->discount_amount = $parentDiscountAmount;    
-    $ordertosupplier->subtotal_amount = $parentSubtotalAmount;
+    $ordertosupplier->subtotal_amount = $parentSubtotalAmount - $ordertosupplier->overall_discount_amount;
     $ordertosupplier->tax_amount = $parentTaxAmount;
-    $ordertosupplier->total_amount = $parentTotalAmount;
+    $ordertosupplier->total_amount = $parentTotalAmount + $rawRow['other_charges_amount'];
     $ordertosupplier->save();
     ob_clean();
     header('Location: index.php?module=UT_OrderSupplier&action=EditView&record='.$ordertosupplier->id);
