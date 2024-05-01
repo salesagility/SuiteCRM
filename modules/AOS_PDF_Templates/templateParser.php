@@ -126,7 +126,7 @@ class templateParser
         reset($repl_arr);
 
         foreach ($repl_arr as $name => $value) {
-            if (strpos($name, 'product_discount') !== false || strpos($name, 'quotes_discount') !== false) {
+            if (strpos($name, 'product_discount') !== false && strpos($name, '_amount') === false) {
                 if ($value !== '' && isset($repl_arr['aos_products_quotes_discount'])) {
                     if ($isValidator->isPercentageField($repl_arr['aos_products_quotes_discount'])) {
                         $sep = get_number_separators();
