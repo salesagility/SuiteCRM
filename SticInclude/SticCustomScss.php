@@ -21,7 +21,7 @@ if(empty($color)){
     $color = '#b5bc31';
 }
 
-if($settingSidebarColor != '0'){
+if( $settingSidebarColor !== '0' && $settingSidebarColor !== 0 ){
     $settingSidebarColor = '1';
 }
 
