@@ -255,7 +255,7 @@ class DonationController extends stic_Web_FormsAssistantController {
             ),
             array(
                 'NAME' => 'stripe_payment_method_types',
-                'VALUE' => 'card,paypal,sepa_debit,sofort',
+                'VALUE' => 'card,sepa_debit',
             ),
             array(
                 'NAME' => 'assigned_user_id',
