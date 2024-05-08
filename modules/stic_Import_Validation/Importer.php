@@ -554,15 +554,16 @@ class Importer
 
             case 'relate':
             case 'parent':
-                $returnValue = $this->ifs->relate($rowValue, $fieldDef, $focus, empty($defaultRowValue));
-                if (!$returnValue && !empty($defaultRowValue)) {
-                    $returnValue = $this->ifs->relate($defaultRowValue, $fieldDef, $focus);
-                }
-                // Bug 33623 - Set the id value found from the above method call as an importColumn
-                if ($returnValue !== false) {
-                    $this->importColumns[] = $fieldDef['id_name'];
-                }
-                return $rowValue;
+                // Prevent the related record from being created
+                // $returnValue = $this->ifs->relate($rowValue, $fieldDef, $focus, empty($defaultRowValue));
+                // if (!$returnValue && !empty($defaultRowValue)) {
+                //     $returnValue = $this->ifs->relate($defaultRowValue, $fieldDef, $focus);
+                // }
+                // // Bug 33623 - Set the id value found from the above method call as an importColumn
+                // if ($returnValue !== false) {
+                //     $this->importColumns[] = $fieldDef['id_name'];
+                // }
+                // return $rowValue;
                 break;
             case 'teamset':
                 $this->ifs->teamset($rowValue, $fieldDef, $focus);
