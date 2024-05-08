@@ -37,7 +37,7 @@ array(
                 'label' => 'LBL_TYPE',
                 'width' => '10%',
                 'default' => true,
-                'name' => 'amount',
+                'name' => 'type',
             ),
             'subtype' => array(
                 'type' => 'dynamicenum',
@@ -45,7 +45,7 @@ array(
                 'label' => 'LBL_SUBTYPE',
                 'width' => '10%',
                 'default' => true,
-                'name' => 'amount',
+                'name' => 'subtype',
             ),
             'amount' => array(
                 'type' => 'decimal',
