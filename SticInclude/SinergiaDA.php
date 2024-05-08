@@ -187,14 +187,6 @@ class ExternalReporting
             $modulesList['SurveyQuestionResponses'] = 'SurveyQuestionResponses';
         }
 
-        // If Surveys module is enabled, we automatically activate the related Surveys modules
-        if (in_array('Surveys', $modulesList)) {
-            $modulesList['SurveyResponses'] = 'SurveyResponses';
-            $modulesList['SurveyQuestions'] = 'SurveyQuestions';
-            $modulesList['SurveyQuestionOptions'] = 'SurveyQuestionOptions';
-            $modulesList['SurveyQuestionResponses'] = 'SurveyQuestionResponses';
-        }
-
         natsort($modulesList);
 
         // Get & populate users ACL metadata (must run after $modulesList is created)
@@ -282,9 +274,9 @@ class ExternalReporting
                 // We reset certain variables to avoid errors
                 unset($fieldSrc, $relatedModuleName, $secureName, $edaAggregations, $sdaHiddenField, $excludeColumnFromMetadada);
 
-                // To avoid exceptional cases where the table name is defined in uppercase 
+                // To avoid exceptional cases where the table name is defined in uppercase
                 // (like in the relationship between Contacts and Cases) we convert the table name to lowercase
-                $fieldV['table']= strtolower($fieldV['table']);
+                $fieldV['table'] = strtolower($fieldV['table']);
 
                 $fieldName = $fieldV['name'];
 
@@ -403,7 +395,7 @@ class ExternalReporting
                                     continue 2;
                                 }
 
-                                $fieldSrc = $res['field'];
+                                $fieldSrc = " IFNULL({$res['field']},'') ";
                                 $leftJoins .= "\n\t{$res['leftJoin']} ";
 
                                 $fieldV['alias'] = substr($fieldV['id_name'], 0, 64);
@@ -453,7 +445,7 @@ class ExternalReporting
                                 $leftJoinAlias = "{$fieldV['name']}_{$relatedTableName}";
 
                                 // Add id field
-                                $fieldSrc = " {$fieldPrefix}.{$fieldV['id_name']} AS {$fieldV['alias']}, ";
+                                $fieldSrc = " IFNULL({$fieldPrefix}.{$fieldV['id_name']},'') AS {$fieldV['alias']}, ";
 
                                 // add column to index list
                                 $indexesToCreate[] = "{$fieldV['id_name']}";
@@ -461,7 +453,7 @@ class ExternalReporting
                                 //Add relate record name
                                 $relatedName = in_array($fieldV['module'], ['Contacts', 'Leads', 'Users']) ? " concat_ws(' ', {$leftJoinAlias}.first_name, {$leftJoinAlias}.last_name) " : "{$leftJoinAlias}.name";
 
-                                $fieldSrc .= " $relatedName AS {$fieldV['name']}";
+                                $fieldSrc .= " IFNULL($relatedName,'') AS {$fieldV['name']}";
 
                                 $leftJoins .= " \n\tLEFT JOIN {$relatedTableName} AS {$leftJoinAlias} ON {$leftJoinAlias}.id = {$fieldPrefix}.{$fieldV['id_name']} AND {$leftJoinAlias}.deleted=0";
 
@@ -523,7 +515,7 @@ class ExternalReporting
 
                         $fieldV['alias'] = $fieldV['name'];
                         $fieldV['bridgeTableName'] = mb_strcut("{$this->viewPrefix}_{$tableName}__{$fieldV['name']}", 0, 64);
-                        $fieldSrc = "{$fieldPrefix}.{$fieldV['name']} AS {$fieldName}";
+                        $fieldSrc = "IFNULL({$fieldPrefix}.{$fieldV['name']},'') AS {$fieldName}";
 
                         $this->addMetadataRecord(
                             'sda_def_enumerations',
@@ -551,7 +543,7 @@ class ExternalReporting
                         // Create listViewName for use in metadata & view creation
                         $listViewName = substr(join('_', [$tableName, $fieldV['name'], $listName]), 0, 58);
 
-                        $fieldSrc = " CAST({$fieldPrefix}.{$fieldV['name']} AS CHAR) AS {$fieldName}";
+                        $fieldSrc = " IFNULL(CAST({$fieldPrefix}.{$fieldV['name']} AS CHAR),'') AS {$fieldName}";
 
                         $createdListView = $this->createEnumView($listName, $listViewName);
 
@@ -578,7 +570,7 @@ class ExternalReporting
                     case 'datetimecombo':
                         $fieldV['alias'] = $fieldV['name'];
                         $tzDateValue = "CONVERT_TZ({$fieldPrefix}.{$fieldV['name']}, 'UTC', 'Europe/Madrid')";
-                        $fieldSrc = "{$tzDateValue} AS {$fieldName}";
+                        $fieldSrc = "IFNULL({$tzDateValue},'') AS {$fieldName}";
                         break;
 
                     case 'date':
@@ -600,21 +592,21 @@ class ExternalReporting
                         $fieldV['alias'] = $fieldV['name'];
                         if ($fieldV['name'] == 'email1' && $fieldV['type'] == 'varchar' && $fieldV['source'] == 'non-db') {
                             // Special field for main email
-                            $fieldSrc = "ea.email_address AS {$fieldV['name']}";
+                            $fieldSrc = "IFNULL(ea.email_address,'') AS {$fieldV['name']}";
 
                             // add left join for email field
                             $leftJoins .= " LEFT JOIN email_addr_bean_rel eabr ON m.id = eabr.bean_id AND eabr.bean_module = '{$moduleName}' AND eabr.deleted = 0 AND eabr.primary_address = 1 LEFT JOIN email_addresses ea ON eabr.email_address_id = ea.id AND ea.deleted = 0 ";
                         } elseif ($fieldV['name'] == 'full_name') {
                             // special query for full_name
-                            $fieldSrc = "CONCAT_WS(' ',m.first_name, m.last_name) as {$fieldV['name']}";
+                            $fieldSrc = "IFNULL(CONCAT_WS(' ',m.first_name, m.last_name),'') as {$fieldV['name']}";
                         } else {
-                            $fieldSrc = "{$fieldPrefix}.{$fieldV['name']} AS {$fieldName}";
+                            $fieldSrc = "IFNULL({$fieldPrefix}.{$fieldV['name']},'') AS {$fieldName}";
                         }
                         break;
 
                     default:
-                    $this->info .= "<div class='error' style='color:red;'>ERROR: [FATAL: Unprocessed field type. {$fieldV['type']} | Módule: {$moduleName} - Field: {$fieldV['name']}] </div>";    
-                    $this->info .= "[FATAL: Unprocessed field type. {$fieldV['type']} | Módule: {$moduleName} - Field: {$fieldV['name']}]";
+                        $this->info .= "<div class='error' style='color:red;'>ERROR: [FATAL: Unprocessed field type. {$fieldV['type']} | Módule: {$moduleName} - Field: {$fieldV['name']}] </div>";
+                        $this->info .= "[FATAL: Unprocessed field type. {$fieldV['type']} | Módule: {$moduleName} - Field: {$fieldV['name']}]";
                         $this->info .= print_r($fieldV, true);
 
                         break;
@@ -948,9 +940,7 @@ class ExternalReporting
         } else {
             $url = "https://{$this->baseHostname}.sinergiada.org/edapi/updatemodel/update?tks=$token";
         }
-        
-        
-        
+
         $link = "<a href='$url' target='_blank'>$url</a>";
         $link2 = addslashes("Retry <a href='$url' target='_blank'>&#9842;</a>");
 
@@ -1016,7 +1006,7 @@ class ExternalReporting
         $tableLabel = empty($tableLabel) ? '-' : $tableLabel;
         // **Retrieve relationship information:**
         $rel = $db->fetchOne("select * from relationships where relationship_name='{$field['link']}'");
-        
+
         // **Check if necessary information is present for standard join:**
         if (!empty($rel['join_table']) && !empty($rel['join_key_lhs']) && !empty($rel['join_key_rhs'])) {
             // Standard join using join table
@@ -1178,6 +1168,8 @@ class ExternalReporting
      */
     private function resetMetadataViews()
     {
+        global $sugar_config;
+
         $db = DBManagerFactory::getInstance();
 
         $sqlMetadata = [];
@@ -1205,17 +1197,16 @@ class ExternalReporting
                                     1
                             ) email,
                             u.user_hash AS password,
-                            if(u.status='Active' AND uc.sda_allowed_c=1 AND is_admin=1 ,1,0) as 'active'
+                            if(u.status='Active' AND uc.sda_allowed_c=1 ,1,0) as 'active'
                         FROM
                             users u
                             INNER JOIN users_cstm uc on u.id =uc.id_c
-
                         WHERE
                             deleted = 0;";
 
         // 2) eda_def_groups
         $sqlMetadata[] = "CREATE or REPLACE VIEW `sda_def_groups` AS
-                                  SELECT name FROM securitygroups WHERE deleted=0
+                                  SELECT CONCAT('SDA_',name) as name FROM securitygroups WHERE deleted=0
                                   UNION SELECT 'EDA_ADMIN'
                                   UNION SELECT 'NO_SINERGIACRM_USERS'
                                   ;";
@@ -1224,7 +1215,7 @@ class ExternalReporting
                             -- Normal users are assigned to their own security groups.
                             SELECT
                                 user_name,
-                                s.name
+                                CONCAT('SDA_',s.name) as name
                             FROM
                                 users u
                             JOIN securitygroups_users su ON
@@ -1248,17 +1239,25 @@ class ExternalReporting
                                 AND u.deleted = 0;";
 
         // 4) eda_def_security_group_records
+
+        // Set a switch to determine whether to populate the sda_def_security_group_records view based
+        // on the value of $sugar_config['stic_sinergiada']['group_permissions_enabled']
+        if (($sugar_config['stic_sinergiada']['group_permissions_enabled'] ?? null) != true) {
+            $limitQueryClause = ' limit 0 ';
+        } else {
+            $limitQueryClause = '';
+        }
+
         $sqlMetadata[] = "CREATE or REPLACE VIEW `sda_def_security_group_records` AS
                             SELECT
                                 CONCAT('{$this->viewPrefix}_', LCASE(module)) as `table`,
                                 record_id,
-                                s.name as `group`
+                                CONCAT('SDA_',s.name) as `group`
                             FROM
                                 securitygroups_records sr
                                 JOIN securitygroups s on sr.securitygroup_id=s.id
                             WHERE sr.deleted=0
-                            -- limite temporal para evitar problemas de colapso al existir un número muy grande de registros
-                            limit 1;
+                            {$limitQueryClause};
                             ";
 
         // run sql queries
@@ -1622,6 +1621,8 @@ class ExternalReporting
      */
     public function getAndSaveUserACL($modules)
     {
+        global $sugar_config;
+
         $db = DBManagerFactory::getInstance();
         include_once 'modules/ACLActions/ACLAction.php';
 
@@ -1643,8 +1644,17 @@ class ExternalReporting
 
             $allModulesACL = array_intersect_key(ACLAction::getUserActions($u['id'], true), $modules);
             foreach ($allModulesACL as $key => $value) {
+                unset($aclSource);
+                // Access to the users module is allowed only for administrator users
+                if ($u['is_admin'] == 0 && $key == 'Users') {
+                    continue;
+                }
 
                 $aclSource = $aclSourcesList[$value['module']['view']['aclaccess']];
+
+                // Fix for special cases when the module name is different from the table name
+                $key = $key == 'ProjectTask' ? 'Project_Task' : $key;
+                $key = $key == 'CampaignLog' ? 'Campaign_Log' : $key;
 
                 $currentTable = $this->viewPrefix . '_' . strtolower($key);
                 if ($u['is_admin'] == 1) {
@@ -1661,6 +1671,13 @@ class ExternalReporting
                     // first we'll add them to the $userModuleAccessMode array with a unique key to avoid duplicates
                     switch ($value['module']['view']['aclaccess']) {
                         case '80': // Security groups
+
+                            // If $sugar_config['stic_sinergiada']['group_permissions_enabled'] is disabled, access is also disabled to 
+                            // modules where the user has restricted access to their group's records.
+                            if (($sugar_config['stic_sinergiada']['group_permissions_enabled'] ?? null) != true) {
+                                continue 2;
+                            }
+
                             // In the case of Secutity Groups we add a unique entry for each of the groups the user belongs to,
                             // ensuring that it does not exist previously for each module.
                             $userGroupsRes = $db->query("SELECT distinct(name) as 'group' FROM sda_def_user_groups ug WHERE user_name='{$u['user_name']}';");
@@ -1677,6 +1694,9 @@ class ExternalReporting
                             break;
 
                         case '75': // Owner case
+                            // In this phase, access to modules where the user has restricted access to their own/assigned records is disabled.
+                            continue 2;
+
                             $userModuleAccessMode["{$aclSource}_{$u['user_name']}_{$currentTable}"] = [
                                 'user_name' => $u['user_name'],
                                 'table' => $currentTable,
