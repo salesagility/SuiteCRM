@@ -9,6 +9,7 @@ $current_user->getSystemUser();
 // We always extract the pain of Stic_Setting, to avoid any discordance between what is shown and defined in setting
 $db = DBManagerFactory::getInstance();
 $color = $db->getOne("select value from stic_settings where name='GENERAL_CUSTOM_THEME_COLOR' and deleted=0");
+$settingSidebarColor = $db->getOne("select value from stic_settings where name='GENERAL_CUSTOM_SUBTHEME_MODE' and deleted=0");
 
 if (!preg_match('/#([a-fA-F0-9]{3}){1,2}\b/m', $color)) {
     $GLOBALS['log']->error('Line ' . __LINE__ . ': ' . __METHOD__ . ': ' . "Color [$color] is empty. Aborting SticCustom subtheme base color change.");
@@ -16,8 +17,8 @@ if (!preg_match('/#([a-fA-F0-9]{3}){1,2}\b/m', $color)) {
     return;
 }
 
-if ($color == '#b5bc31') {
-    // If $color is color default, simply clone compiled Stic css
+// If $color is the default color and the sidebar retains the original dark theme, simply clone the precompiled CSS
+if ($color == '#b5bc31' && $settingSidebarColor == 1) {
     copy('themes/SuiteP/css/Stic/style.css', 'themes/SuiteP/css/SticCustom/style.css');
     echo '<li> $color is defaulf. Cloned from Stic subtheme. Compiled unnecessary.';
     // Remove cache/themes/SuiteP/css/SticCustom/style.css to force reload css theme
@@ -28,9 +29,25 @@ if ($color == '#b5bc31') {
 $GLOBALS['log']->info('Line ' . __LINE__ . ': ' . __METHOD__ . ': ' . "Starting SticCustom subtheme base color change to {$color}");
 
 $file = 'themes/SuiteP/css/SticCustom/CustomPalette.scss';
-$data = file_get_contents($file); // reads an array of lines
-$re = '/\$stic-base:.*;/m';
-file_put_contents($file, preg_replace($re, '\\$stic-base: ' . $color . ';', $data));
+
+if ($settingSidebarColor == 0) {
+    $sidebarColor = "#D9DEE3";
+    $sidebarTextColor = "#001E40";
+} else {
+    $sidebarColor = "#353535";
+    $sidebarTextColor = "#F5F5F5";
+}
+
+$data = "
+\$stic-base: $color;
+\$stic-dark: darken(\$stic-base, 7%);
+\$stic-light: lighten(\$stic-base, 7%);
+\$stic-superlight: lighten(\$stic-base, 35%);
+\$stic-sidebar: $sidebarColor;
+\$stic-sidebar-text: $sidebarTextColor;
+";
+
+file_put_contents($file, $data);
 
 $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ': ' . "SticCustom color palette is :" . print_r(file_get_contents($file), true));
 
@@ -54,7 +71,7 @@ unlink('cache/themes/SuiteP/css/SticCustom/style.css');
 $GLOBALS['log']->info('Line ' . __LINE__ . ': ' . __METHOD__ . ': ' . "End SticCustom subtheme base color change to {$color}");
 echo "<li>End SticCustom subtheme base color change to {$color}";
 
-if (isset($_REQUEST['keepUserTheme']) && $_REQUEST['keepUserTheme'] == true ) {
+if (isset($_REQUEST['keepUserTheme']) && $_REQUEST['keepUserTheme'] == true) {
     $GLOBALS['log']->info('Line ' . __LINE__ . ': ' . __METHOD__ . ': ' . "Do not set SticCustom subtheme to all users");
     echo "<li>Do not set SticCustom subtheme to all users";
 } else {
@@ -66,7 +83,7 @@ if (isset($_REQUEST['keepUserTheme']) && $_REQUEST['keepUserTheme'] == true ) {
 
     // Set the config params for each user
     foreach ($userBeanArray as $userBean) {
-        
+
         // Reload user preferences before saving subtheme
         $userBean->reloadPreferences();
 

@@ -14,7 +14,7 @@ div.p_login .p_login_top a {
 }
 
 .suitepicon {
-  color: white;
+  color: $stic-sidebar-text;
 }
 
 .sub-panel .suitepicon {
@@ -68,7 +68,7 @@ div.p_login .p_login_top a {
 #recentlyViewedSidebar,
 #favoritesSidebar {
   .suitepicon {
-    color: bw($stic-complement);
+    color: $stic-sidebar-text;
   }
 }
 // General customization
@@ -1352,14 +1352,26 @@ a#nonprofitized_by {
   }
 }
 
+#actionMenuSidebar {
+  background-color: $stic-sidebar;
+}
+.adminMenuSidebar li a {
+  background-color: $stic-sidebar !important;
+  border-top: 1px solid darken($stic-sidebar, 7%); /* Change orange to your desired color */
+}
+
+.adminMenuSidebar ul li a:hover {
+  background-color: darken($stic-sidebar, 7%) !important;
+  color: $sidebar-btn-color;
+}
 // styles for admin sidebar https://github.com/SinergiaTIC/SinergiaCRM/pull/124
 #admin_actions {
   display: block;
   margin-top: 20px;
   padding-top: 10px;
-  background-color: #232323;
+  background-color: $stic-sidebar;
+  border-top: 5px solid darken($stic-sidebar, 7%);
   h2.admin_actions_title {
-    background-color: #232323;
     font-size: 16px;
     font-weight: bold;
     color: $side-bar-header-color;

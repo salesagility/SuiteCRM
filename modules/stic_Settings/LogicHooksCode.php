@@ -33,7 +33,9 @@ class stic_SettingsLogicHooks
     public function after_save(&$bean, $event, $arguments)
     {
         // If color changes, compile subtheme css
-        if ($bean->name == 'GENERAL_CUSTOM_THEME_COLOR' && $bean->fetched_row['value'] != $bean->value) {
+        if (($bean->name == 'GENERAL_CUSTOM_THEME_COLOR' && $bean->fetched_row['value'] != $bean->value)
+            || ($bean->name == 'GENERAL_CUSTOM_SUBTHEME_MODE' && $bean->fetched_row['value'] != $bean->value)
+        ) {
             include_once 'SticInclude/SticCustomScss.php';
         }
     }

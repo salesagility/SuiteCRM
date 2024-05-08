@@ -7,7 +7,7 @@ $md-breakpoint: 1024px;
 $lg-breakpoint: 1200px;
 
 /// Colors
-$main-bg: $color-51;
+$main-bg: $color-80;
 
 // All panels
 $main-alternate-bg: $color-80;
@@ -23,7 +23,7 @@ $selection-color: $color-80;
 $selection-bg: $stic-base; // STIC-Custom
 
 //
-$page-content-spacing: 20px;
+$page-content-spacing: 0px;
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
@@ -1035,8 +1035,8 @@ $confirm-opt-in-tick-color-in-confirmed: $color-16;
 
 // List View
 $list-view-toolbar-bg: $color-39;
-$list-view-header-bg: $stic-text; // STIC-Custom
-$list-view-header-color: $color-80;
+$list-view-header-bg: $stic-sidebar; // STIC-Custom
+$list-view-header-color: $stic-sidebar-text;
 $list-view-pagination-color: $color-80;
 $list-view-button-color: $color-80;
 $list-view-text-color: lighten($stic-text, 5%); // STIC-Custom
@@ -1111,7 +1111,7 @@ $add-dashlet-tab-color: $color-80;
 // Campaigns
 $campaign-type-color: $stic-text; // STIC-Custom
 $campaign-type-bg: $stic-base; // STIC-Custom
-$campaign-type-bg-hover: darken($stic-base,7.5%); // STIC-Custom
+$campaign-type-bg-hover: darken($stic-base, 7.5%); // STIC-Custom
 $campaign-progression-color-hover: $color-50;
 $campaign-progression-color: $color-50;
 $campaign-progression-bg: $danger-btn-bg;

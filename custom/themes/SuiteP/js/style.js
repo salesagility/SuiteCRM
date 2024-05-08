@@ -56,7 +56,9 @@ SUGAR.measurements = {
 SUGAR.loaded_once = false;
 
 $(document).ready(function () {
-  loadSidebar();
+  // STIC-Custom 20240417 PCS - Sidebar theme options
+  // https://github.com/SinergiaTIC/SinergiaCRM/pull/193
+  // loadSidebar();
   $("ul.clickMenu").each(function (index, node) {
     $(node).sugarActionMenu();
   });
