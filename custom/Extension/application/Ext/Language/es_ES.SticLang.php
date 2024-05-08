@@ -67,6 +67,7 @@ $app_strings['LBL_SUBTHEME_OPTIONS_STIC_CUSTOM'] = 'SticCustom';
 $app_strings['LBL_STIC_FORUMS_LINK'] = 'Foros de SinergiaCRM';
 $app_strings['LBL_STIC_WIKI_LINK'] = 'Wiki de SinergiaCRM';
 $app_strings['LBL_STIC_VIDEOS_LINK'] = 'Vídeos de SinergiaCRM';
+$app_strings['LBL_STIC_SINERGIADA'] = 'SinergiaDA';
 
 // Módulos propios de SinergiaCRM y módulos de SuiteCRM renombrados
 $app_list_strings['moduleList']['Accounts'] = 'Organizaciones';

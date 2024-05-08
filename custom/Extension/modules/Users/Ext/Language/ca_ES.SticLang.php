@@ -38,6 +38,8 @@ $mod_strings['LBL_INC_REFERENCE_ENTITY'] = 'Entitat de referència (Incorpora)';
 $mod_strings['LBL_INC_REFERENCE_OFFICER'] = 'Tècnic de referència (Incorpora)';
 $mod_strings['LBL_INC_INCORPORA_USER'] = 'Identificador (Incorpora)';
 $mod_strings['LBL_INCORPORA_CONNECTION_PARAMS'] = 'Paràmetres de connexió amb Incorpora';
+$mod_strings['LBL_SDA_ALLOWED'] = 'Accés a SinergiaDA';
+$mod_strings['LBL_SDA_ALLOWED_INFO'] = "Indica si l'usuari disposa d'accés a Sinergia Data Analytics";
 
 // Virtual Field Kreporter
 $mod_strings['LBL_KREPORTER_EMAILS_LIST'] = "Llista d'adreces de correu";
