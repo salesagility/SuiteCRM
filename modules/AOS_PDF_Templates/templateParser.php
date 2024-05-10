@@ -59,7 +59,7 @@ class templateParser
      */
     public static function parse_template_bean($string, $key, &$focus)
     {
-        global $app_strings, $sugar_config;
+        global $app_strings, $sugar_config, $locale, $current_user;
         $repl_arr = array();
         $isValidator = new SuiteValidator();
 
@@ -151,7 +151,17 @@ class templateParser
 
             if ($isValidator->isPercentageField($name)) {
                 $sep = get_number_separators();
-                $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
+
+                $precision = $locale->getPrecision($current_user);
+
+                if ($precision === '0') {
+                    $params = [
+                        'percentage' => true,
+                    ];
+                    $value = format_number($value, $precision, $precision, $params);
+                } else {
+                    $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
+                }
             }
             if (!empty($focus->field_defs[$name]['dbType'])
                 && $focus->field_defs[$name]['dbType'] === 'datetime'
