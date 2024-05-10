@@ -4862,7 +4862,7 @@ class InboundEmail extends SugarBean
     public function handleMimeHeaderDecode($subject)
     {
         $subjectDecoded = '';
-        if (function_exists('imap_mime_header_decode')) {   // function_exists() should be moved to MimeHeaderDecode().
+        if (function_exists('imap_mime_header_decode') && in_array('imap', get_loaded_extensions(), true)) {   // function_exists() should be moved to MimeHeaderDecode().
             $subjectDecoded = $this->getImap()->MimeHeaderDecode($subject); // returns array or string.
         } else {
             // imap_mime_header_decode() is not installed on bitnami docker container! Fall back to iconv_mime_decode().
