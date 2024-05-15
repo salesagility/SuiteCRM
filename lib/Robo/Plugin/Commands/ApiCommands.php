@@ -174,13 +174,8 @@ class ApiCommands extends Tasks
     public function apiCreateClient($name)
     {
         $count = $this->getNameCount($name, 'oauth2clients', 'name');
-        $dateTime = new DateTime();
 
-        $clientSecret = base_convert(
-            $dateTime->getTimestamp() * 4096,
-            10,
-            16
-        );
+        $clientSecret = bin2hex(random_bytes(50));
 
         $clientBean = $this->beanManager->newBeanSafe(
             OAuth2Clients::class

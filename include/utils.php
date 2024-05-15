@@ -282,7 +282,9 @@ function make_sugar_config(&$sugar_config)
         'legacy_email_behaviour' => false,
         'valid_imap_ports' => [
             '110', '143', '993', '995'
-        ]
+        ],
+        'web_to_lead_allowed_redirect_hosts' => [],
+        'trusted_hosts' => []
     );
 }
 
@@ -575,7 +577,9 @@ function get_sugar_config_defaults(): array
         'legacy_email_behaviour' => false,
         'valid_imap_ports' => [
             '110', '143', '993', '995'
-        ]
+        ],
+        'web_to_lead_allowed_redirect_hosts' => [],
+        'trusted_hosts' => []
     ];
 
     if (!is_object($locale)) {
@@ -5390,6 +5394,23 @@ function getUrls($string)
  */
 function verify_image_file($path, $jpeg = false)
 {
+    // check image manually
+    $fp = fopen($path, 'rb');
+    if (!$fp) {
+        return false;
+    }
+    $data = '';
+    // read the whole file in chunks
+    while (!feof($fp)) {
+        $data .= fread($fp, 8192);
+    }
+    fclose($fp);
+    if (preg_match("/<(\?php|html|!doctype|script|body|head|plaintext|table|img |pre(>| )|frameset|iframe|object|link|base|style|font|applet|meta|center|form|isindex)/i", $data, $m)) {
+        $GLOBALS['log']->fatal("Found {$m[0]} in $path, not allowing upload");
+
+        return false;
+    }
+
     if (function_exists('imagepng') && function_exists('imagejpeg') && function_exists('imagecreatefromstring')) {
         $img = imagecreatefromstring(file_get_contents($path));
         if (!$img) {
@@ -5420,26 +5441,9 @@ function verify_image_file($path, $jpeg = false)
             return false;
         }
     } else {
-        // check image manually
-        $fp = fopen($path, 'rb');
-        if (!$fp) {
-            return false;
-        }
-        $data = '';
-        // read the whole file in chunks
-        while (!feof($fp)) {
-            $data .= fread($fp, 8192);
-        }
-
-        fclose($fp);
-        if (preg_match("/<(\?php|html|!doctype|script|body|head|plaintext|table|img |pre(>| )|frameset|iframe|object|link|base|style|font|applet|meta|center|form|isindex)/i", $data, $m)) {
-            $GLOBALS['log']->fatal("Found {$m[0]} in $path, not allowing upload");
-
-            return false;
-        }
-
         return true;
     }
+
 
     return false;
 }
@@ -5453,7 +5457,9 @@ function verify_image_file($path, $jpeg = false)
  */
 function verify_uploaded_image($path, $jpeg_only = false)
 {
-    $supportedExtensions = array('jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'tmp' => 'tmp');
+    global $sugar_config;
+    $supportedExtensions = $sugar_config['image_ext'] ?? ['image/jpeg', 'image/png', 'image/gif' , 'tmp' => 'tmp'];
+
     if (!$jpeg_only) {
         $supportedExtensions['png'] = 'image/png';
     }
@@ -5463,9 +5469,14 @@ function verify_uploaded_image($path, $jpeg_only = false)
     }
 
     $img_size = getimagesize($path);
-    $filetype = $img_size['mime'];
+    $filetype = $img_size['mime'] ?? '';
     $tmpArray = explode('.', $path);
     $ext = end($tmpArray);
+
+    if (!has_valid_image_mime_type($filetype)) {
+        return false;
+    }
+
     if (substr_count('..', $path) > 0 || ($ext !== $path && !isset($supportedExtensions[strtolower($ext)])) ||
             !in_array($filetype, array_values($supportedExtensions))
     ) {
@@ -6007,6 +6018,52 @@ function has_valid_image_extension($fieldName, $name)
 }
 
 /**
+ * Check if has valid image mime type
+ * @param string $mimeType
+ * @return bool
+ */
+function has_valid_image_mime_type(string $mimeType): bool
+{
+    global $sugar_config;
+
+    if (empty($mimeType) || !is_string($mimeType)) {
+        return false;
+    }
+
+    $validExtensions = [
+        'gif',
+        'png',
+        'jpg',
+        'jpeg',
+        'svg'
+    ];
+
+    if (isset($sugar_config['valid_image_ext']) && is_array($sugar_config['valid_image_ext'])){
+        $validExtensions = $sugar_config['valid_image_ext'];
+    }
+
+    $parts = explode('/', $mimeType) ?? [];
+    $mimeMap = [
+        'svg+xml' => 'svg'
+    ];
+
+    $type = '';
+    if (!empty($parts) && count($parts) > 1) {
+        $type = $parts[1];
+
+        if (isset($mimeMap[$type])) {
+            $type = $mimeMap[$type];
+        }
+    }
+
+    if (empty($type)) {
+        return false;
+    }
+
+    return in_array($type, array_values($validExtensions), true);
+}
+
+/**
  * Check if has valid extension
  * @param string $fieldName
  * @param string $name
@@ -6157,6 +6214,62 @@ function isSelfRequest($endpoint) : bool {
 }
 
 /**
+ * Get currently configured trusted hosts, if none configured uses site_url
+ * @return array
+ */
+function get_trusted_hosts(): array {
+
+    $trustedHosts = SugarConfig::getInstance()->get('trusted_hosts', []);
+
+    if (!empty($trustedHosts) && is_array($trustedHosts)){
+        return $trustedHosts;
+    }
+
+    return [];
+}
+
+/**
+ * Check currently set trusted hosts
+ */
+function check_trusted_hosts(): void {
+
+    $trustedHostPatterns = get_trusted_hosts();
+    if (empty($trustedHostPatterns)) {
+        return;
+    }
+
+    $host = '';
+    if (!empty($_SERVER["HTTP_HOST"])) {
+        $host = $_SERVER["HTTP_HOST"];
+    }
+
+    if (empty($host)) {
+        $host = $_SERVER['SERVER_NAME'] ?? '';
+    }
+
+    if (empty($host)) {
+        $host = $_SERVER['SERVER_ADDR'] ?? '';
+    }
+
+    $host = strtolower(preg_replace('/:\d+$/', '', trim($host)));
+
+    if ($host && '' !== preg_replace('/(?:^\[)?[a-zA-Z0-9-:\]_]+\.?/', '', $host)) {
+        throw new BadMethodCallException(sprintf('Invalid Host "%s".', $host));
+    }
+
+    if (\count($trustedHostPatterns) > 0) {
+
+        foreach ($trustedHostPatterns as $pattern) {
+            if (preg_match("/".$pattern."/", $host)) {
+                return;
+            }
+        }
+
+        throw new BadMethodCallException(sprintf('Untrusted Host "%s".', $host));
+    }
+}
+
+/**
  * Get currency ID directly from the record, if property is empty -> use default currency ID
  * @param $module
  * @param $id
@@ -6166,4 +6279,63 @@ function getCurrencyId($module, $id)
 {
     global $locale;
     return BeanFactory::getBean($module, $id)->currency_id ?? $locale->getPrecedentPreference('currency');
+}
+
+/**
+ * Get host from url
+ * @param string $url
+ * @return string
+ */
+function getHostFromUrl(string $url): string {
+
+    if (empty($url)) {
+        return '';
+    }
+
+    $reDirectHost = '';
+
+    $urlParts = parse_url($url);
+    if (isset($urlParts['host'])) {
+        $reDirectHost = $urlParts['host'];
+    }
+
+    return $reDirectHost;
+}
+
+
+/**
+ * Check if is string is an allowed redirect host
+ * @param string $url
+ * @return bool
+ */
+function isWebToLeadAllowedRedirectHost(string $url): bool {
+
+    global $sugar_config;
+
+    $redirectHost = getHostFromUrl($url);
+
+    $allowedRedirectHosts = $sugar_config['web_to_lead_allowed_redirect_hosts'] ?? [];
+
+    if (empty($allowedRedirectHosts)) {
+        return true;
+    }
+
+    foreach ($allowedRedirectHosts as $allowedRedirectHost) {
+
+        if ($allowedRedirectHost === ''){
+            continue;
+        }
+
+        if (substr($allowedRedirectHost, 0, 7 ) !== 'http://' &&  substr($allowedRedirectHost, 0, 8 ) !== 'https://') {
+            $allowedRedirectHost = 'http://' . $allowedRedirectHost;
+        }
+
+        $allowedHost = getHostFromUrl($allowedRedirectHost);
+
+        if ($redirectHost === $allowedHost) {
+            return true;
+        }
+    }
+
+    return false;
 }

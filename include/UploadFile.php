@@ -316,6 +316,11 @@ class UploadFile
         $this->temp_file_location = $_FILES[$this->field_name]['tmp_name'];
         $this->uploaded_file_name = $_FILES[$this->field_name]['name'];
 
+        if (has_valid_image_mime_type($this->mime_type) && !verify_uploaded_image($this->temp_file_location)) {
+            LoggerManager::getLogger()->security("Image Malware found, unable to save file: {$_FILES[$this->field_name]['name']}");
+            return false;
+        }
+
         return true;
     }
 

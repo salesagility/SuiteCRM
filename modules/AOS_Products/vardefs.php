@@ -281,6 +281,7 @@ $dictionary['AOS_Products'] = array(
                 'type' => 'varchar',
                 'len' => '255',
                 'reportable' => true,
+                'inline_edit' => false,
                 'comment' => 'File name associated with the note (attachment)'
             ),
         'file_url' =>

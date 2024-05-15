@@ -266,14 +266,14 @@ function display_single_update(AOP_Case_Updates $update)
         if ($update->internal) {
             $html = "<div id='caseStyleInternal'>" . getUpdateDisplayHead($update);
             $html .= "<div id='caseUpdate" . $update->id . "' class='caseUpdate'>";
-            $html .= nl2br(html_entity_decode((string) $update->description));
+            $html .= nl2br(html_entity_decode(purify_html((string) $update->description, ['HTML.ForbiddenElements' => ['iframe' => true]])));
             $html .= '</div></div>';
 
             return $html;
         } /*if standard update*/ else {
             $html = "<div id='lessmargin'><div id='caseStyleUser'>" . getUpdateDisplayHead($update);
             $html .= "<div id='caseUpdate" . $update->id . "' class='caseUpdate'>";
-            $html .= nl2br(html_entity_decode((string) $update->description));
+            $html .= nl2br(html_entity_decode(purify_html((string) $update->description, ['HTML.ForbiddenElements' => ['iframe' => true]])));
             $html .= '</div></div></div>';
 
             return $html;
@@ -283,7 +283,7 @@ function display_single_update(AOP_Case_Updates $update)
     /*if contact user*/
     $html = "<div id='extramargin'><div id='caseStyleContact'>" . getUpdateDisplayHead($update);
     $html .= "<div id='caseUpdate" . $update->id . "' class='caseUpdate'>";
-    $html .= html_entity_decode((string) $update->description);
+    $html .= html_entity_decode(purify_html((string) $update->description, ['HTML.ForbiddenElements' => ['iframe' => true]]));
     $html .= '</div></div></div>';
 
     return $html;

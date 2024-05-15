@@ -178,7 +178,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 $sea->AddUpdateEmailAddress($lead->email2, 0, 1);
             }
         }
-        if (isset($_POST['redirect_url']) && !empty($_POST['redirect_url'])) {
+        if (isset($_POST['redirect_url']) && !empty($_POST['redirect_url']) && isWebToLeadAllowedRedirectHost($_POST['redirect_url'] ?? '')) {
             // Get the redirect url, and make sure the query string is not too long
             $redirect_url = $_POST['redirect_url'];
             $query_string = '';
@@ -247,7 +247,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     }
 }
 
-if (!empty($_POST['redirect'])) {
+if (!empty($_POST['redirect']) && isWebToLeadAllowedRedirectHost($_POST['redirect'] ?? '')) {
     if (headers_sent()) {
         echo '<html ' . get_language_header() . '><head><title>SugarCRM</title></head><body>';
         echo '<form name="redirect" action="' .$_POST['redirect']. '" method="GET">';

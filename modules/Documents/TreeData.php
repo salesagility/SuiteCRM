@@ -125,13 +125,13 @@ function get_documents($cat_id, $subcat_id, $href=true)
     $href_string = "javascript:select_document('doctree')";
     $query="select * from documents where deleted=0";
     if ($cat_id != 'null') {
-        $query.=" and category_id='$cat_id'";
+        $query.=" and category_id='" . DBManagerFactory::getInstance()->quote($cat_id) . "'";
     } else {
         $query.=" and category_id is null";
     }
         
     if ($subcat_id != 'null') {
-        $query.=" and subcategory_id='$subcat_id'";
+        $query.=" and subcategory_id='" . DBManagerFactory::getInstance()->quote($subcat_id) . "'";
     } else {
         $query.=" and subcategory_id is null";
     }

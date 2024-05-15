@@ -758,7 +758,7 @@ class InboundEmail extends SugarBean
         global $app_strings;
 
         if (empty($this->id)) {
-            $q = "SELECT raw_source FROM emails_text WHERE email_id = '{$uid}'";
+            $q = "SELECT raw_source FROM emails_text WHERE email_id = '" . $this->db->quote($uid) . "'";
             $r = $this->db->query($q);
             $a = $this->db->fetchByAssoc($r);
             $ret = array();
@@ -938,7 +938,7 @@ class InboundEmail extends SugarBean
      */
     public function getCacheUnreadCount($mbox)
     {
-        $q = "SELECT count(*) c FROM email_cache WHERE mbox = '{$mbox}' AND seen = 0 AND ie_id = '{$this->id}'";
+        $q = "SELECT count(*) c FROM email_cache WHERE mbox = '" . $this->db->quote($mbox) . "' AND seen = 0 AND ie_id = '" . $this->db->quote($this->id) . "'";
         $r = $this->db->query($q);
         $a = $this->db->fetchByAssoc($r);
 
@@ -952,7 +952,7 @@ class InboundEmail extends SugarBean
      */
     public function getCacheCount($mbox)
     {
-        $q = "SELECT count(*) c FROM email_cache WHERE mbox = '{$mbox}' AND ie_id = '{$this->id}'";
+        $q = "SELECT count(*) c FROM email_cache WHERE mbox = '" . $this->db->quote($mbox) . "' AND ie_id = '" . $this->db->quote($this->id) . "'";
         $r = $this->db->query($q);
         $a = $this->db->fetchByAssoc($r);
 
@@ -961,7 +961,7 @@ class InboundEmail extends SugarBean
 
     public function getCacheUnread($mbox)
     {
-        $q = "SELECT count(*) c FROM email_cache WHERE mbox = '{$mbox}' AND ie_id = '{$this->id}' AND seen = '0'";
+        $q = "SELECT count(*) c FROM email_cache WHERE mbox = '" . $this->db->quote($mbox) . "' AND ie_id = '" . $this->db->quote($this->id) . "' AND seen = '0'";
         $r = $this->db->query($q);
         $a = $this->db->fetchByAssoc($r);
 
@@ -974,7 +974,7 @@ class InboundEmail extends SugarBean
      */
     public function deleteCache()
     {
-        $q = "DELETE FROM email_cache WHERE ie_id = '{$this->id}'";
+        $q = "DELETE FROM email_cache WHERE ie_id = '" . $this->db->quote($this->id) . "'";
 
         $GLOBALS['log']->info("INBOUNDEMAIL: deleting cache using query [ {$q} ]");
 

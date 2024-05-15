@@ -103,7 +103,7 @@ class AlertsController extends SugarController
             $bean = BeanFactory::getBean('Alerts');
             $result = $bean->get_full_list(
                 "",
-                "alerts.assigned_user_id = '" . $current_user->id . "' AND reminder_id = '" . $reminder_id . "'"
+                "alerts.assigned_user_id = '" . $current_user->id . "' AND reminder_id = '" . $bean->db->quote($reminder_id) . "'"
             );
             if (empty($result)) {
                 $bean = BeanFactory::newBean('Alerts');

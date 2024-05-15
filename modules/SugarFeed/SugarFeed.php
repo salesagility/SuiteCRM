@@ -361,6 +361,8 @@ class SugarFeed extends Basic
 
         if (file_exists('custom/modules/SugarFeed/linkHandlers/'.$linkName.'.php')) {
             require_once('custom/modules/SugarFeed/linkHandlers/'.$linkName.'.php');
+        } elseif(!file_exists('modules/SugarFeed/linkHandlers/'.$linkName.'.php')) {
+            return false;
         } else {
             require_once('modules/SugarFeed/linkHandlers/'.$linkName.'.php');
         }
@@ -488,7 +490,7 @@ class SugarFeed extends Basic
         else{
             $first=$first->getTimestamp();
         }
-		
+
         $second=date_create_from_format($user_format,$startDate);
         if(empty($second)){
             LoggerManager::getLogger()->warn('SugarFeed getTimeLapse: Could not fetch startDate ');

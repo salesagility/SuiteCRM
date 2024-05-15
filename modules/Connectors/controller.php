@@ -86,6 +86,10 @@ class ConnectorsController extends SugarController
 
         $search_source = $_REQUEST['source_id'];
         $source_instance = ConnectorFactory::getInstance($search_source);
+
+        if ($source_instance === null) {
+            return;
+        }
         $source_map = $source_instance->getModuleMapping($merge_module);
         $module_fields = array();
         foreach ($_REQUEST as $search_term => $val) {
@@ -269,32 +273,6 @@ class ConnectorsController extends SugarController
     public function action_CallRest()
     {
         $this->view = 'ajax';
-
-        $url = $_REQUEST['url'];
-
-        if (!preg_match('/^http[s]{0,1}\:\/\//', (string) $url)) {
-            throw new RuntimeException('Illegal request');
-        }
-
-        if (!$this->remoteFileExists($url)) {
-            throw new RuntimeException('Requested URL is not exists.');
-        }
-
-
-        if (false === ($result = @file_get_contents($_REQUEST['url']))) {
-            echo '';
-        } else {
-            if (!empty($_REQUEST['xml'])) {
-                $values = array();
-                $p = xml_parser_create();
-                xml_parse_into_struct($p, $result, $values);
-                xml_parser_free($p);
-                $json = getJSONobj();
-                echo $json->encode($values);
-            } else {
-                echo $result;
-            }
-        }
     }
 
     public function action_CallSoap()
