@@ -1,14 +1,11 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2024 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,6 +38,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
  #[\AllowDynamicProperties]
  class ListCurrency
@@ -115,18 +115,22 @@ if (!defined('sugarEntry') || !sugarEntry) {
 					function get_rate(id){
 						return ConversionRates[id];
 					}
+					
 					function ConvertToDollar(amount, rate){
 						return amount / rate;
 					}
+					
 					function ConvertFromDollar(amount, rate){
 						return amount * rate;
 					}
+					
 					function ConvertRate(id,fields){
-							for(var i = 0; i < fields.length; i++){
-								fields[i].value = toDecimal(ConvertFromDollar(toDecimal(ConvertToDollar(toDecimal(fields[i].value), lastRate)), ConversionRates[id]));
-							}
-							lastRate = ConversionRates[id];
+						for(var i = 0; i < fields.length; i++){
+							fields[i].value = toDecimal(ConvertFromDollar(toDecimal(ConvertToDollar(toDecimal(fields[i].value), lastRate)), ConversionRates[id]));
 						}
+						lastRate = ConversionRates[id];
+					}
+					
 					function ConvertRateSingle(id,field){
 						var temp = field.innerHTML.substring(1, field.innerHTML.length);
 						unformattedNumber = unformatNumber(temp, num_grp_sep, dec_sep);
@@ -134,31 +138,31 @@ if (!defined('sugarEntry') || !sugarEntry) {
 						field.innerHTML = CurrencySymbols[id] + formatNumber(toDecimal(ConvertFromDollar(ConvertToDollar(unformattedNumber, lastRate), ConversionRates[id])), num_grp_sep, dec_sep, 2, 2);
 						lastRate = ConversionRates[id];
 					}
+					
 					function CurrencyConvertAll(form){
                         try {
-                        var id = form.currency_id.options[form.currency_id.selectedIndex].value;
-						var fields = new Array();
+                            var id = form.currency_id.options[form.currency_id.selectedIndex].value;
+						    var fields = new Array();
 
-						for(i in currencyFields){
-							var field = currencyFields[i];
-							if(typeof(form[field]) != 'undefined'){
-								form[field].value = unformatNumber(form[field].value, num_grp_sep, dec_sep);
-								fields.push(form[field]);
-							}
-
-						}
-
-							ConvertRate(id, fields);
-						for(i in fields){
-							fields[i].value = formatNumber(fields[i].value, num_grp_sep, dec_sep);
-
-						}
-
+						    for(i in currencyFields){
+							    var field = currencyFields[i];
+							    if(typeof(form[field]) != 'undefined'){
+								    form[field].value = unformatNumber(form[field].value, num_grp_sep, dec_sep);
+								    fields.push(form[field]);
+							    }
+                            }
+						    
+						    ConvertRate(id, fields);
+                            
+                            for(i in fields){
+							    fields[i].value = formatNumber(fields[i].value, num_grp_sep, dec_sep);
+						    }
+					                         
+                            calculateAllLines();
 						} catch (err) {
                             // Do nothing, if we can't find the currency_id field we will just not attempt to convert currencies
                             // This typically only happens in lead conversion and quick creates, where the currency_id field may be named somethnig else or hidden deep inside a sub-form.
                         }
-
 					}
 				</script>
 EOQ;
