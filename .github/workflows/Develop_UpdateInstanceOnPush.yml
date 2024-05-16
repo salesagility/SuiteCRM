@@ -21,26 +21,26 @@ jobs:
               with:
                 key: ${{ secrets.SSH_PRIVATE_KEY }}
                 known_hosts: unnecessary
-            - name: Adding Known Hosts Develop
-              run: ssh-keyscan -H $DEVELOP_HOST  >> ~/.ssh/known_hosts
-            - name: Adding Known Hosts Main
-              run: ssh-keyscan -H $MAIN_HOST  >> ~/.ssh/known_hosts
+            # - name: Adding Known Hosts Develop
+            #   run: ssh-keyscan -H $DEVELOP_HOST  >> ~/.ssh/known_hosts
+            # - name: Adding Known Hosts Main
+            #   run: ssh-keyscan -H $MAIN_HOST  >> ~/.ssh/known_hosts
             - name: Extract branch name
               run: echo ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}} && echo 'BRANCH='${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}} >> $GITHUB_ENV
             - name: Extract branch clean
               run: echo 'BRANCH_CLEAN='`echo ${{ env.BRANCH }} | sed -e 's/[^a-zA-Z0-9_/]//g'` >> $GITHUB_ENV
             - name: Get Develop instance database name
-              run: echo 'DATABASE_NAME='`ssh $DEVELOP_SSH_USERNAME@$DEVELOP_HOST grep "db_name" /web/${{ env.BRANCH_CLEAN }}/config_override.php | sed "s/.*=.'//g" | sed "s/';.*//g"` >> $GITHUB_ENV
+              run: echo 'DATABASE_NAME='`ssh -o "StrictHostKeyChecking no" $DEVELOP_SSH_USERNAME@$DEVELOP_HOST grep "db_name" /web/${{ env.BRANCH_CLEAN }}/config_override.php | sed "s/.*=.'//g" | sed "s/';.*//g"` >> $GITHUB_ENV
             - name: Set current date as env variable
               run: echo 'NOW='$(date +'%Y-%m-%d %H:%M:%S') >> $GITHUB_ENV
             - name: echo environment variables
               run: echo ${{ env }}
             - name: Update develop instance
-              run: ssh $DEVELOP_SSH_USERNAME@$DEVELOP_HOST "test -e /web/${{ env.BRANCH_CLEAN }}" && (echo "Directory branch exists" && ssh $DEVELOP_SSH_USERNAME@$DEVELOP_HOST "cd /web/${{ env.BRANCH_CLEAN }} && git stash && git pull && rm -rf /web/${{ env.BRANCH_CLEAN }}/cache") || echo "Branch doesn't exist in develop"
+              run: ssh -o "StrictHostKeyChecking no" $DEVELOP_SSH_USERNAME@$DEVELOP_HOST "test -e /web/${{ env.BRANCH_CLEAN }}" && (echo "Directory branch exists" && ssh -o "StrictHostKeyChecking no" $DEVELOP_SSH_USERNAME@$DEVELOP_HOST "cd /web/${{ env.BRANCH_CLEAN }} && git stash && git pull && rm -rf /web/${{ env.BRANCH_CLEAN }}/cache") || echo "Branch doesn't exist in develop"
             - name: Repair develop instance
-              run: ssh $MAIN_SSH_USERNAME@$MAIN_HOST "scp ~/scripts/common/SticRepair.php $DEVELOP_SSH_USERNAME@$DEVELOP_HOST:/web/${{ env.BRANCH_CLEAN }}/SticRepair.php" && 
+              run: ssh -o "StrictHostKeyChecking no" $MAIN_SSH_USERNAME@$MAIN_HOST "scp ~/scripts/common/SticRepair.php $DEVELOP_SSH_USERNAME@$DEVELOP_HOST:/web/${{ env.BRANCH_CLEAN }}/SticRepair.php" && 
                    wget -O - --no-check-certificate https://$DEVELOP_DOMAIN_NAME/${{ env.BRANCH_CLEAN }}/SticRepair.php &&
-                   ssh $DEVELOP_SSH_USERNAME@$DEVELOP_HOST "rm -rf /web//${{ env.BRANCH_CLEAN }}/SticRepair.php"
+                   ssh -o "StrictHostKeyChecking no" $DEVELOP_SSH_USERNAME@$DEVELOP_HOST "rm -rf /web//${{ env.BRANCH_CLEAN }}/SticRepair.php"
             - name: Create or Edit PR comment
               uses: thollander/actions-comment-pull-request@v1
               with:
