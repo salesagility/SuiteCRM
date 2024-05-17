@@ -131,7 +131,7 @@ $mod_strings = array(
     'LBL_PRODUCT_DESCRIPTION' => 'Description',
     'LBL_LIST_PRICE' => 'List',
     'LBL_UNIT_PRICE' => 'Sale Price',
-    'LNK_LIST' => 'View Opportunities'
+    'LNK_LIST' => 'View Opportunities',
 
     // SNIP
 
