@@ -367,14 +367,16 @@ class Opportunity extends SugarBean
                 $this->probability = $prob_arr[$this->sales_stage];
             }
         }
+          require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
 
         require_once('modules/Opportunities/SaveOverload.php');
 
         perform_save($this);
+        $return_id = parent::save($check_notify);
         require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');
         $productQuoteGroup = BeanFactory::newBean('AOS_Line_Item_Groups');
         $productQuoteGroup->save_groups($_POST, $this, 'group_');
-        return parent::save($check_notify);
+        return $return_id;
     }
 
     public function save_relationship_changes($is_update, $exclude = array())
