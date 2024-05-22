@@ -4861,18 +4861,34 @@ class InboundEmail extends SugarBean
      */
     public function handleMimeHeaderDecode($subject)
     {
-        $subjectDecoded = $this->getImap()->MimeHeaderDecode($subject);
-
-        $ret = '';
-        foreach ($subjectDecoded as $object) {
-            if ($object->charset != 'default') {
-                $ret .= $this->handleCharsetTranslation($object->text, $object->charset);
-            } else {
-                $ret .= $object->text;
+        $subjectDecoded = '';
+        if (function_exists('imap_mime_header_decode') && in_array('imap', get_loaded_extensions(), true)) {   // function_exists() should be moved to MimeHeaderDecode().
+            $subjectDecoded = $this->getImap()->MimeHeaderDecode($subject); // returns array or string.
+        } else {
+            // imap_mime_header_decode() is not installed on bitnami docker container! Fall back to iconv_mime_decode().
+            if (function_exists('iconv_mime_decode')) {
+                $subjectDecoded = iconv_mime_decode($subject, 0, 'UTF-8');  // returns string or false.
+                if ($subjectDecoded == false) { // error occurred in iconv_mime_decode().
+                    $subjectDecoded = $subject;  // possibly still mime encoded.
+                }
+            } else {  // iconv module not installed or enabled!
+                $subjectDecoded = $subject;
             }
         }
 
-        return $ret;
+        if (is_array($subjectDecoded)) {
+            $ret = '';
+            foreach ($subjectDecoded as $object) {
+                if ($object->charset != 'default') {
+                    $ret .= $this->handleCharsetTranslation($object->text, $object->charset);
+                } else {
+                    $ret .= $object->text;
+                }
+            }
+            $subjectDecoded = $ret;
+        }
+
+        return $subjectDecoded;  //should be plain US-ASCII, compatible with UTF-8.
     }
 
     /**

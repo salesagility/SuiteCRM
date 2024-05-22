@@ -149,7 +149,7 @@ class LegacyMPDFEngine extends PDFEngine
 
         @$this->pdf = new mPDF(
             $configOptions['mode'],
-            $configOptions['page_size'],
+            $configOptions['page_size'].'-'.$configOptions['orientation'],
             $configOptions['default_font_size'],
             $configOptions['default_font'],
             $configOptions['margin_left'],
