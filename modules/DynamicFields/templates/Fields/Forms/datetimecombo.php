@@ -82,6 +82,8 @@ function get_body(&$ss, $vardef)
             }
         }
         $ss->assign('default_date', $date);
+    } elseif($vardef['display_default'] == 'now') {
+        $ss->assign('default_date', $vardef['display_default']);
     }
     $ss->assign('default_hours', $hours);
     $ss->assign('default_minutes', $minitues);

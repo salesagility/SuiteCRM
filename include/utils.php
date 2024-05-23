@@ -575,7 +575,11 @@ function get_sugar_config_defaults(): array
         'legacy_email_behaviour' => false,
         'valid_imap_ports' => [
             '110', '143', '993', '995'
-        ]
+        ],
+        'datetime_combo_minute_interval' => 15,
+        'js_available' => array(
+            0 => 'datetime_combo_minute_interval',
+        )
     ];
 
     if (!is_object($locale)) {
