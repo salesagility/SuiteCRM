@@ -207,7 +207,6 @@ var sticCV_Record_Field_Content = class sticCV_Record_Field_Content extends stic
   }
 
   checkCondition_value(condition) {
-    debugger;
     switch (condition.operator) {
       case "Not_Equal_To":
         condition.operator = "Equal_To";

@@ -482,11 +482,18 @@ var sticCVUtils = class sticCVUtils {
     return field;
   }
   static getRequiredStatus(field) {
-    var validateFields = validate[field.customView.formName];
-    for (var i = 0; i < validateFields.length; i++) {
-      // Array(name, type, required, msg);
-      if (validateFields[i][0] == field.name) {
-        return validateFields[i][2];
+    if (
+      field.customView &&
+      field.customView.formName &&
+      validate[field.customView.formName] &&
+      validate[field.customView.formName].length
+    ) {
+      var validateFields = validate[field.customView.formName];
+      for (var i = 0; i < validateFields.length; i++) {
+        // Array(name, type, required, msg);
+        if (validateFields[i][0] == field.name) {
+          return validateFields[i][2];
+        }
       }
     }
     return false;
