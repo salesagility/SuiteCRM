@@ -90,4 +90,14 @@ $mod_strings = array(
     'LBL_COMPUTEFIELD_RAW_VALUE' => 'Valor original',
     'LBL_COMPUTEFIELD_FORMATTED_VALUE' => 'Valor con formato',
     'LBL_COPY_EMAIL_ADDRESSES_WORKFLOW' => 'Copiar mensajes de correo electrónico del módulo de flujo de trabajo',
+    // STIC-Custom 20240307 EPS - Improve send mail action
+    'LBL_FROM_EMAIL' => 'Remitente (dirección)',
+    'LBL_FROM_NAME' => 'Remitente (nombre)',
+    'LBL_REPLY_TO_EMAIL' => 'Responder a (dirección)',
+    'LBL_REPLY_TO_NAME' => 'Responder a (nombre)',
+    'LBL_OUTPUT_SMTP' => 'Correo saliente',
+    'LBL_SHOW_ADVANCED'=> 'Mostrar la configuración avanzada',
+    'LBL_ADVANCED_TOOLTIP_HEADER' => 'Opciones avazadas',
+    'LBL_ADVANCED_TOOLTIP_BODY' => 'Estas opciones permiten indicar la cuenta de correo saliente y el nombre y la dirección del remitente.',
+    // END STIC-Custom
 );
