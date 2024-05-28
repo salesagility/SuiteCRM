@@ -32,6 +32,7 @@ if (isset($global_control_links['admin'])) {
     $adminElement['admin'] = $global_control_links['admin'];
     unset($global_control_links['admin']);
 }
+global $current_user;
 
 // Prepare common Stic links (wiki, videos, forums)
 $sticElements = array(
@@ -49,7 +50,6 @@ $sticElements = array(
     ),
 );
 
-global $current_user;
 
 // Prepare custom links if defined in stic_Settings
 include_once 'modules/stic_Settings/Utils.php';
@@ -68,19 +68,26 @@ foreach ($settingLinks as $key => $value) {
 // Set the final array: STIC elements + Custom links + Admin + Other core links. The Profile element is always added later at the top place.
 $global_control_links = array_merge($sticElements, $customLinks, $adminElement, $global_control_links);
 $sdaEnabled = $sugar_config['stic_sinergiada']['enabled'] ?? false;
-if ($sdaEnabled && is_admin($current_user)) {
+if ($sdaEnabled) {
+    $db = DBManagerFactory::getInstance();
 
-    // Generate sdaUrl
-    $currentDomain = $_SERVER['HTTP_HOST'];
-    $lang = explode('_', $sugar_config['default_language'])[0];
-    $sdaUrl = $sugar_config['stic_sinergiada_public']['url'] ?? "https://" . str_replace("sinergiacrm", "sinergiada", $currentDomain);
-    $sdaUrl .= "/{$lang}/#";
+    $q = "SELECT sda_allowed_c FROM users_cstm WHERE id_c='" . $current_user->id . "'";
+    $r = $db->query($q);
+    $a = $db->fetchByAssoc($r);
 
-    $sinergiaDA = array(
-        'sda_link' => array(
-            'linkinfo' => array($app_strings['LBL_STIC_SINERGIADA'] => "javascript:void(window.open('{$sdaUrl}'))"),
-            'submenu' => '',
-        ),
-    );
-    $global_control_links = array_merge($global_control_links, $sinergiaDA);
+    if ($a['sda_allowed_c'] == 1) {
+        // Generate sdaUrl
+        $currentDomain = $_SERVER['HTTP_HOST'];
+        $lang = explode('_', $sugar_config['default_language'])[0];
+        $sdaUrl = $sugar_config['stic_sinergiada_public']['url'] ?? "https://" . str_replace("sinergiacrm", "sinergiada", $currentDomain);
+        $sdaUrl .= "/{$lang}/#";
+
+        $sinergiaDA = array(
+            'sda_link' => array(
+                'linkinfo' => array($app_strings['LBL_STIC_SINERGIADA'] => "javascript:void(window.open('{$sdaUrl}'))"),
+                'submenu' => '',
+            ),
+        );
+        $global_control_links = array_merge($global_control_links, $sinergiaDA);
+    }
 }
