@@ -1,14 +1,12 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2024 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,9 +39,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
-
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/utils/activity_utils.php');
 require_once('modules/Calendar/CalendarUtils.php');
@@ -52,13 +50,24 @@ require_once('modules/Calendar/CalendarActivity.php');
 #[\AllowDynamicProperties]
 class Calendar
 {
-    public $activityList = array("FP_events" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
-                                 "Meetings" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
-                                 "Calls" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
-                                 "Tasks" => array("showCompleted" => true,"start" =>  "date_due", "end" => "date_due"),
-//								 "ProjectTask" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_finish"),
-    //							 "Project" => array("showCompleted" => true,"start" =>  "estimated_start_date", "end" => "estimated_end_date")
-                                 );
+    public $activityList = [
+        "Meetings" => [
+            "showCompleted" => true,
+            "start" => "date_start",
+            "end" => "date_end",
+            ],
+        "Calls" => [
+            "showCompleted" => true,
+            "start" => "date_start",
+            "end" => "date_end",
+            ],
+        "Tasks" => [
+            "showCompleted" => true,
+            "start" => "date_due",
+            "end" => "date_due",
+            ]
+        ];
+
     public $views = array("agendaDay" => array(),"basicDay" => array(), "basicWeek" => array(), "agendaWeek" => array(),"month" => array(), "sharedMonth" => array(), "sharedWeek" => array());
 
     public $view = 'agendaWeek'; // current view
