@@ -26,7 +26,11 @@
  */
 var sticCV_Record_Field_Content = class sticCV_Record_Field_Content extends sticCV_Element_Label {
   constructor(field, $fieldElement, fieldName) {
-    super(field.customView, $fieldElement.children('[field="' + fieldName + '"]'));
+    var $contentElement = $fieldElement.children('[field="' + fieldName + '"]');
+    if ($contentElement.length == 0) {
+      $contentElement = $fieldElement.children(".stic-FieldContent").children('[field="' + fieldName + '"]');
+    }
+    super(field.customView, $contentElement);
 
     this.field = field;
     this.fieldName = fieldName;
@@ -56,25 +60,42 @@ var sticCV_Record_Field_Content = class sticCV_Record_Field_Content extends stic
     this.$fieldText = this.$element.find(".sugar_field");
 
     this.$readonlyLabel = this.$element.parent().find(".stic-ReadonlyInput");
+    var classes = this.$element.attr("class").replace(/\bhidden\b/g, "").replace(/\s+/g, " ").trim();
     if (this.$readonlyLabel.length == 0 && this.$element.length > 0) {
-      var classes = this.$element.attr("class").replaceAll("hidden", "");
-
       this.$element
         .parent()
         .append(
           '<div class="' +
             classes +
             ' stic-ReadonlyInput hidden" ' +
-            'style="min-height:20px; height:30px; display:inline-flex; align-items:center; padding-left:5px; border-radius:0.25em;">' +
+            'style="min-height:30px; align-items:center; padding-left:5px; border-radius:0.25em; width:90%">' +
             "</div>"
         );
       this.$readonlyLabel = this.$element.parent().find(".stic-ReadonlyInput");
-      this.$readonlyLabel.text(this.text());
+      sticCVUtils.fillReadonlyText(this);
 
       // Update label when value is changed
       var self = this;
       this.onChange(function() {
-        self.$readonlyLabel.text(self.text());
+        sticCVUtils.fillReadonlyText(self);
+      });
+    }
+
+    // Move $element and $readonlyLabel inside new $element div
+    this.$elementEditor = this.$element;
+    this.$element = $fieldElement.find(".stic-FieldContent");
+    if (this.$element.length == 0 && this.$elementEditor.length > 0) {
+      this.$element = $('<div class="' + classes + ' stic-FieldContent" ' + "></div>");
+      this.$elementEditor.after(this.$element);
+      this.$element.append(this.$readonlyLabel);
+      this.$element.append(this.$elementEditor);
+
+      // Remove "col-" classes
+      this.$elementEditor.removeClass(function(index, className) {
+        return (className.match(/\bcol-\S+/g) || []).join(" ");
+      });
+      this.$readonlyLabel.removeClass(function(index, className) {
+        return (className.match(/\bcol-\S+/g) || []).join(" ");
       });
     }
   }
@@ -165,7 +186,7 @@ var sticCV_Record_Field_Content = class sticCV_Record_Field_Content extends stic
           return false;
         }
         var readonly = sticCVUtils.isTrue(action.value);
-        this.applyAction({ action: "visible", value: !readonly });
+        sticCVUtils.show(this.$elementEditor, this.customView, !readonly);
         sticCVUtils.show(this.$readonlyLabel, this.customView, readonly);
         return this;
       case "inline":
@@ -176,6 +197,9 @@ var sticCV_Record_Field_Content = class sticCV_Record_Field_Content extends stic
         return this;
       case "fixed_value":
         return this.value(action.value);
+      case "visible":
+        sticCVUtils.show(this.$element, this.customView, action.value);
+        return this;
     }
     return super.applyAction(action);
   }

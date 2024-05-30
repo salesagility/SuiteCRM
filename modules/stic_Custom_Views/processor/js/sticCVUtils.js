@@ -544,4 +544,19 @@ var sticCVUtils = class sticCVUtils {
     }
     return value;
   }
+
+  static fillReadonlyText(fieldContent) {
+    fieldContent.$readonlyLabel.empty();
+
+    var lines = fieldContent.text().split("\n");
+    var first = true;
+    lines.forEach(function(line) {
+      if (first) {
+        first = false;
+      } else {
+        fieldContent.$readonlyLabel.append("<br />");
+      }
+      fieldContent.$readonlyLabel.append(line);
+    });
+  }
 };
