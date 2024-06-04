@@ -129,3 +129,6 @@ codeception.yml
 
 # Ignore application concatenated files
 /custom/application/Ext/*
+
+# Ignore SDA check rebuild errors
+sdaRebuildError.txt

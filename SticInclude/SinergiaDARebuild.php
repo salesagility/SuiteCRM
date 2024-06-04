@@ -63,10 +63,13 @@ class SinergiaDARebuild
                 $msg .= $match . "<br>";
             }
 
+            unlink('sdaRebuildError');
+            
             // Return 'ok' or the error message
             if (empty($msg)) {
                 return 'ok';
             } else {
+                sugar_file_put_contents('sdaRebuildError.txt', $msg);
                 return $msg;
             }
             die();

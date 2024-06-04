@@ -377,13 +377,6 @@ class ExternalReporting
 
                             if (isset($fieldV['link']) && !empty($fieldV['link']) && $fieldV['name'] != 'assigned_user_name') {
 
-                                //*********************** */
-                                // Es una relación 1:n normal,
-                                if ($fieldV['module'] == $moduleName) {
-                                    // The standar relationships between the same module are directly excluded, because they cannot be represented in EDA
-                                    continue 2;
-                                }
-
                                 // Build and obtain the translated value from the other side of the relationship so it can be properly displayed in SinergiaDA
                                 $joinModuleRelLabel = 'LBL_' . strtoupper($fieldV['link']) . '_FROM_' . strtoupper($moduleName) . '_TITLE';
                                 $joinLabel = translate($joinModuleRelLabel, $fieldV['module']);
@@ -621,12 +614,6 @@ class ExternalReporting
                         $edaType = 'numeric';
                         $edaPrecision = $fieldV['type'] == 'currency' ? 2 : 0;
                         $edaPrecision = $fieldV['precision'] ? $fieldV['precision'] : $edaPrecision;
-                        break;
-                    case 'id':
-                        // set id as numeric to allow counts and distinct counts
-                        $edaType = 'numeric';
-                        $edaPrecision = 0;
-                        $edaAggregations = 'count,count_distinct,none';
                         break;
                     case 'date':
                     case 'datetime':
