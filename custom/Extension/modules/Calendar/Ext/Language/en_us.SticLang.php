@@ -39,3 +39,12 @@ $mod_strings['LBL_FILTERS_STIC_FOLLOWUPS_COLOR'] = 'Color';
 $mod_strings['LBL_FILTERS_STIC_FOLLOWUPS_TYPE'] = 'Type';
 $mod_strings['LBL_FILTERS_STIC_FOLLOWUPS_CONTACTS'] = 'Followed contact';
 $mod_strings['LBL_FILTERS_STIC_FOLLOWUPS_PROJECTS'] = 'Related project';
+
+$mod_strings['LBL_FILTERS_STIC_WORK_CALENDAR_TITLE'] = 'Work calendar';
+$mod_strings['LBL_FILTERS_STIC_WORK_CALENDAR_TYPE'] = 'Type';
+$mod_strings['LBL_FILTERS_STIC_WORK_CALENDAR_DEPARTMENT'] = 'Department';
+
+$mod_strings['LBL_SETTINGS_SHARED_CALENDAR_SEPARATE_INFO'] = 'If the option is set the work calendars of the different users may overlap. To optimize the display it is recommended to show the calendars separately.';
+$mod_strings['LBL_SETTINGS_STIC_WORK_CALENDAR_DISPLAY'] = 'Show Work calendar records';
+$mod_strings['LBL_SETTINGS_STIC_WORK_CALENDAR_WORKING'] = 'Work calendar - Available';
+$mod_strings['LBL_SETTINGS_STIC_WORK_CALENDAR_NOWORKING'] = 'Work calendar - Not available';

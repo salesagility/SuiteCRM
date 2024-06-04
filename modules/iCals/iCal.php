@@ -255,12 +255,17 @@ class iCal extends vCal
             ),
             "stic_Sessions" => array(
                 "showCompleted" => true,
-                "start" =>  "start_date",
+                "start" => "start_date",
                 "end" => "end_date"
             ),
             "stic_FollowUps" => array(
                 "showCompleted" => true,
-                "start" =>  "start_date",
+                "start" => "start_date",
+                "end" => "end_date"
+            ),
+            "stic_Work_Calendar" => array(
+                "showCompleted" => true,
+                "start" => "start_date",
                 "end" => "end_date"
             // END STIC
             )

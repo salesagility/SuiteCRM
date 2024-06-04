@@ -48,6 +48,14 @@
         {$FIELD.EMPLOYEE_STATUS}
     </div>
 {/if}
+<div>
+    <strong>{$PARAM.LBL_STIC_WORK_CALENDAR}:</strong>
+    {$FIELD.STIC_WORK_CALENDAR_C}
+</div>
+<div>
+    <strong>{$PARAM.LBL_STIC_CLOCK}:</strong>
+    {$FIELD.STIC_CLOCK_C}
+</div>
 {if !empty($FIELD.PSW_MODIFIED)}
     <div>
         <strong>{$PARAM.LBL_PSW_MODIFIED}:</strong>

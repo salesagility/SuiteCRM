@@ -199,4 +199,6 @@ INSERT INTO `fields_meta_data` (`id`, `custom_module`, `name`) VALUES
 ('Usersinc_reference_group_c', 'Users', 'inc_reference_group_c'),
 ('Usersinc_reference_officer_c', 'Users', 'inc_reference_officer_c'),
 ('Usersinc_incorpora_user_c', 'Users', 'inc_incorpora_user_c'),
-('Userssda_allowed_c', 'Users', 'sda_allowed_c');
+('Userssda_allowed_c', 'Users', 'sda_allowed_c'),
+('Usersstic_work_calendar_c', 'Users', 'stic_work_calendar_c'),
+('Usersstic_clock_c', 'Users', 'stic_clock_c');

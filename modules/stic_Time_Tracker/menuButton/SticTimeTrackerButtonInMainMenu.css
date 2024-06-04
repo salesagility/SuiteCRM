@@ -1,0 +1,138 @@
+
+/* GENERAL */
+
+/* Time Tracker Button */
+.no-show-time-tracker-button {
+    display:none !important;
+}
+
+.time-tracker-start {
+    background-color:green;
+    font-size:2rem;
+}
+
+.time-tracker-stop {
+    background: red;
+    font-size:2rem;
+}
+
+
+/* Time Tracker Dialog box */
+.time-tracker-dialog-row {
+    list-style: circle !important;
+    padding-left: 5%;
+}
+
+/* Time Tracker Dialog box */  
+#time-tracker-dialog-box {
+    display: none;
+    position: fixed;
+    left: 78%;
+    width: 20%;
+    color:black;
+    background-color: #eee;
+    border: 1px solid #000;
+    line-height: normal;
+    padding: 20px;
+    z-index: 1000;
+}
+
+#time-tracker-dialog-description {
+    display: inline-block;
+    width: 95%;
+    height: 100px;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    overflow: hidden; 
+    overflow-wrap: break-word;
+}
+
+#time-tracker-dialog-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+#time-tracker-dialog-button-confirm {
+    margin-right:10%;
+}
+
+
+
+/* MEDIA QUERIES */
+ 
+/* Extra small screen / phone */
+@media (min-width: 300px) {
+    /* Time Tracker Button */    
+    .time-tracker-start {
+        margin-left: 1.5rem;
+    }
+    
+    .time-tracker-stop {
+        margin-left: 1.5rem;    
+    }
+
+    /* Time Tracker Dialog box */
+    #time-tracker-dialog-box {
+        top: 115px;
+        left: 38%;
+        width: 60%;
+    }
+
+    .time-tracker-dialog-row {
+        float: left !important;
+    }
+
+    .time-tracker-dialog-row li {
+        display:list-item !important;
+    }
+
+    .time-tracker-dialog-info {
+        text-align: left;
+        font-size: 1.1rem !important;
+    }
+}
+
+/* Small screen / tablet */
+@media (min-width: 751px) {
+    /* Time Tracker Dialog box */
+    #time-tracker-dialog-box {
+        top: 65px;        
+        left: 45%;
+        width: 53%;
+    }
+    .time-tracker-dialog-info {
+        text-align: left;
+        font-size: 1.2rem !important;  
+    }    
+}
+
+/* Medium screen / desktop */
+@media (min-width: 992px) {
+    /* Time Tracker Dialog box */
+    #time-tracker-dialog-box {     
+        left: 60%;
+        width: 38%;
+    }
+
+    .time-tracker-dialog-info {
+        text-align: left;
+        font-size: 1.3rem !important;  
+    }
+}
+
+/* Large screen / wide desktop */
+@media (min-width: 1200px) {  
+    /* Time Tracker Dialog box */  
+    #time-tracker-dialog-box {       
+        left: 68%;
+        width: 30%;
+    }
+
+    .time-tracker-dialog-info {
+        text-align: left;
+        font-size: 1.4rem !important;  
+    }
+}

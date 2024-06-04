@@ -86,7 +86,58 @@ class CustomCalendarDisplay extends CalendarDisplay
             'body' => 'AD645E',
             'text' => 'E5E5EE',
         ),
+        // STIC-Custom 20240222 MHP - Adding colors to Work Calendar items
+        // https://github.com/SinergiaTIC/SinergiaCRM/pull/114
+        'stic_Work_Calendar' => array(
+            'border_working' => '0A2407',
+            'body_working' => '1C6114',
+            'text_working' => 'E5E5EE',
+            'border_noworking' => '170000',
+            'body_noworking' => 'D60000',
+            'text_noworking' => 'E5E5EE',        
+        ),
+        // END STIC-Custom      
     );
+
+    // STIC-Custom 20240222 MHP - Overriding to add the stic_Work_Calendar properties
+    // https://github.com/SinergiaTIC/SinergiaCRM/pull/114
+    public function checkActivity($activity = "")
+    {
+        global $current_user, $mod_strings;
+        if (empty($activity)) {
+            $activity = $this->activity_colors;
+        }
+        $newActivities = unserialize(base64_decode($current_user->getPreference("CalendarActivities")));
+        if ($newActivities) {
+            $activity = array_merge($activity, $newActivities);
+        }
+        foreach ($activity as $key => $activityItem) {
+            if (isset($GLOBALS['app_list_strings']['moduleList'][ $key ]) && !empty($GLOBALS['app_list_strings']['moduleList'][ $key ]) && !empty($this->cal->activityList[ $key ])) {
+                if ($key != 'stic_Work_Calendar') {
+                    $activity[ $key ]['label'] = $GLOBALS['app_list_strings']['moduleList'][ $key ];
+                } else {
+                    $activity[ $key ]['label_working'] = $mod_strings['LBL_SETTINGS_STIC_WORK_CALENDAR_WORKING'];
+                    $activity[ $key ]['label_noworking'] = $mod_strings['LBL_SETTINGS_STIC_WORK_CALENDAR_NOWORKING'];
+                }
+            } else {
+                unset($activity[ $key ]);
+            }
+        }
+        if (isset($activity) && !empty($activity)) {
+            $this->activity_colors = $activity;
+        }
+        if (!empty($this->cal->activityList)) {
+            foreach ($this->cal->activityList as $key=>$value) {
+                if (isset($GLOBALS['beanList'][$key]) && !empty($GLOBALS['beanList'][$key]) && !isset($this->activity_colors[ $key ])) {
+                    $this->activity_colors[ $key ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
+                    $activity[ $key ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
+                }
+            }
+        }
+
+        return $activity;
+    }
+    // END STIC-Custom
 
     // Overriding the array to add Shared Day option
     public function get_date_info($view, $date_time)
@@ -237,6 +288,8 @@ class CustomCalendarDisplay extends CalendarDisplay
         $sticFollowUpsType = $current_user->getPreference('calendar_stic_followups_type');
         $sticFollowUpsContactId = $current_user->getPreference('calendar_stic_followups_contacts_id');
         $sticFollowUpsProjectId = $current_user->getPreference('calendar_stic_followups_projects_id');
+        $sticWorkCalendarType = $current_user->getPreference('calendar_stic_work_calendar_type');
+        $sticWorkCalendarUsersDepartament = $current_user->getPreference('calendar_stic_work_calendar_assigned_user_department');
 
         $sticSessionsColorOptions = get_select_options_with_id($app_list_strings[$dictionary['stic_Sessions']['fields']['color']['options']], $sticSessionsColor);
         $ss->assign('stic_sessions_color', $sticSessionsColorOptions);
@@ -289,13 +342,26 @@ class CustomCalendarDisplay extends CalendarDisplay
             $ss->assign('stic_followups_projects_name', $projectBean->name);
             $ss->assign('stic_followups_projects_id', $sticFollowUpsProjectId);
         }
+        $sticWorkCalendarTypeOptions = get_select_options_with_id($app_list_strings['stic_work_calendar_types_list'], $sticWorkCalendarType);
+        $ss->assign('stic_work_calendar_type', $sticWorkCalendarTypeOptions);
+        
+        $ss->assign('stic_work_calendar_assigned_user_department', $sticWorkCalendarUsersDepartament);
+
         if (
             $sticSessionsSticEventsType || $sticSessionsSticEventId || $sticSessionsSticCenterId || $sticSessionsResponsibleId || $sticSessionsContactId || $sticSessionsProjectId ||
-            $sticSessionsColor || $sticSessionsActivityType || $sticFollowUpsColor || $sticFollowUpsContactId || $sticFollowUpsProjectId || $sticFollowUpsType
+            $sticSessionsColor || $sticSessionsActivityType || $sticFollowUpsColor || $sticFollowUpsContactId || $sticFollowUpsProjectId || $sticFollowUpsType ||
+            $sticWorkCalendarType || $sticWorkCalendarUsersDepartament
         ) {
             $ss->assign('applied_filters', true);
         }
         $filters = get_custom_file_if_exists("modules/Calendar/tpls/filters.tpl");
         $ss->assign("filters", $filters);
+
+        // STIC-Custom 20240222 MHP - Adding Work Calendar record in Calendar
+        // https://github.com/SinergiaTIC/SinergiaCRM/pull/114
+        $show_work_calendar = $GLOBALS['current_user']->getPreference('show_work_calendar');
+        $show_work_calendar = $show_work_calendar ?: false;
+        $ss->assign('show_work_calendar', $show_work_calendar);
+        // END STIC-Custom
     }
 }

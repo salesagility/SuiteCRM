@@ -172,6 +172,20 @@ array (
     'label' => 'LBL_SDA_ALLOWED',
     'width' => '10%',
   ),
+  'STIC_WORK_CALENDAR_c' => 
+  array (
+    'width' => '10%',
+    'label' => 'LBL_STIC_WORK_CALENDAR',
+    'link' => true,
+    'default' => false,
+  ),
+  'STIC_CLOCK_C' => 
+  array (
+    'width' => '10%',
+    'label' => 'LBL_STIC_CLOCK',
+    'link' => true,
+    'default' => false,
+  ),  
   'IS_GROUP' => 
   array (
     'width' => '10%',

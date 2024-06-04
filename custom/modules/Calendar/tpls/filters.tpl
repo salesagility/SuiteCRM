@@ -290,6 +290,45 @@
                                     </tr>
                                 </table>
                             </div>
+                            <div class="panel-heading  panel-heading-collapse">
+                                <a id="subpanel_title_activities" class="" role="button" data-toggle="collapse"
+                                    href="#subpanel_filters_work_calendar">
+                                    <div class="col-xs-10 col-sm-11 col-md-11">
+                                        <div>
+                                            {$MOD.LBL_FILTERS_STIC_WORK_CALENDAR_TITLE}
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div id="subpanel_filters_work_calendar" class="panel-body panel-collapse collapse in">
+                                <table class='table-responsive' >
+                                    <input type="hidden" name="view" value="{$view}">
+                                    <input type="hidden" name="day" value="{$day}">
+                                    <input type="hidden" name="month" value="{$month}">
+                                    <input type="hidden" name="year" value="{$year}">
+                                    <tr>                            
+                                    <tr>
+                                        <td scope="row" style="width:60%;">
+                                            {$MOD.LBL_FILTERS_STIC_WORK_CALENDAR_TYPE}
+                                        </td>
+                                        <td>
+                                            <select multiple id="stic_work_calendar_type" name="stic_work_calendar_type[]" tabindex="102">
+                                                {$stic_work_calendar_type}
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row" style="width:60%;">
+                                            {$MOD.LBL_FILTERS_STIC_WORK_CALENDAR_DEPARTMENT}
+                                        </td>
+                                        <td>
+                                            <input type='text' name='stic_work_calendar_assigned_user_department'
+                                                id='stic_work_calendar_assigned_user_department' autocomplete='off'
+                                                value='{$stic_work_calendar_assigned_user_department}' title='' tabindex='3'>                                        
+                                        </td>
+                                    </tr>                                                                    
+                                </table>
+                            </div>                            
                         </div>
                 </div>
                 </form>

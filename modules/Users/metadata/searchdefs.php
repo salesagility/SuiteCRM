@@ -177,6 +177,24 @@
           'width' => '10%',
           'name' => 'sda_allowed_c',
         ),
+        'stic_work_calendar_c' => 
+        array (
+          'type' => 'bool',
+          'default' => true,
+          'studio' => 'visible',
+          'label' => 'LBL_STIC_WORK_CALENDAR',
+          'width' => '10%',
+          'name' => 'stic_work_calendar_c',
+        ),
+        'stic_clock_c' => 
+        array (
+          'type' => 'bool',
+          'default' => true,
+          'studio' => 'visible',
+          'label' => 'LBL_STIC_CLOCK',
+          'width' => '10%',
+          'name' => 'stic_clock_c',
+        ),        
         'title' => 
         array (
           'name' => 'title',

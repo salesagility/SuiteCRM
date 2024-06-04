@@ -45,6 +45,8 @@ class CustomUsersViewDetail extends UsersViewDetail
         parent::display();
 
         SticViews::display($this);
+
         // Write here the SinergiaCRM code that must be executed for this module and view
+        echo getVersionedScript("custom/modules/Users/SticUtils.js");
     }
 }

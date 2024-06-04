@@ -49,7 +49,8 @@ if ($('#applied_filters').val()) {
 }
 
 // Removes all filters and submit changes
-function handleCrossRemoveFilters() {
+function handleCrossRemoveFilters() 
+{
     for (var key in relatedFilters) {
         clearRow(document.getElementById('form_filters'), relatedFilters[key].elementId);
     }
@@ -71,6 +72,8 @@ fieldFilters = [
     'stic_sessions_stic_events_type',
     'stic_followups_color',
     'stic_followups_type',
+    'stic_work_calendar_type',
+    'stic_work_calendar_assigned_user_department',
 ];
 
 // Filters array
@@ -102,7 +105,7 @@ relatedFilters = {
     'stic_FollowUps_Project': {
         elementId: 'stic_followups_projects',
         module: 'Project',
-    },
+    } 
 };
 
 // The SQS functions add the autocompletion functionality for the related input records
@@ -173,7 +176,13 @@ function callbackSelectPopup(popupReplyData) {
 // selectizing filters
 emptyString = "[" + SUGAR.language.get("app_strings", "LBL_STIC_EMPTY") + "]";
 $("select").each(function () {
-    if (this.id != 'stic_sessions_color' && this.id != 'stic_followups_color') { 
+    if (this.id != 'stic_sessions_color' && 
+        this.id != 'stic_followups_color' && 
+        this.name != document.getElementsByName('show_work_calendar')[0].name &&
+        this.name != document.getElementsByName('show_calls')[0].name &&
+        this.name != document.getElementsByName('show_tasks')[0].name &&
+        this.name != document.getElementsByName('show_completed')[0].name
+    ) { 
         var selectizeOptions = {
             plugins: ["remove_button"],
             allowEmptyOption: true

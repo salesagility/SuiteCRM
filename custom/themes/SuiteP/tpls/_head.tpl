@@ -93,5 +93,19 @@
     <script type="text/javascript" src='{sugar_getjspath file="themes/SuiteP/js/jscolor.js"}'></script>
     <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
     <script type="text/javascript" src='{sugar_getjspath file="vendor/tinymce/tinymce/tinymce.min.js"}'></script>
+    {* STIC-Custom 20240222 MHP - Add CSS and JS for efficient registration button handling *}     
+    <link href="modules/stic_Time_Tracker/menuButton/SticTimeTrackerButtonInMainMenu.css" rel="stylesheet" type="text/css"/>    
+    <script type="text/javascript" src='{sugar_getjspath file="modules/stic_Time_Tracker/menuButton/SticTimeTrackerButtonInMainMenu.js"}'></script>
+    {literal}
+        <script>
+            // Checks whether to show the time tracker button based on whether the time tracker module is being used
+            // If used, updates the button color based on whether or not there is an active time record for today
+            $(document).ready(function() 
+            {
+                checkTimeTrackerButtonStatus();
+            });
+        </script>
+    {/literal}
+    {* END STIC-Custom *}
 </head>
 

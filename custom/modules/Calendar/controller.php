@@ -43,6 +43,9 @@ class CustomCalendarController extends CalendarController
         $current_user->setPreference('calendar_stic_followups_type', $_POST['stic_followups_type']);
         $current_user->setPreference('calendar_stic_followups_contacts_id', $_POST['stic_followups_contacts_id']);
         $current_user->setPreference('calendar_stic_followups_projects_id', $_POST['stic_followups_projects_id']);
+        $current_user->setPreference('calendar_stic_work_calendar_type', $_POST['stic_work_calendar_type']);
+        $current_user->setPreference('calendar_stic_work_calendar_assigned_user_department', $_POST['stic_work_calendar_assigned_user_department']);
+        
         if (isset($_REQUEST['day']) && !empty($_REQUEST['day'])) {
             header("Location: index.php?module=Calendar&action=index&view=".$_REQUEST['view']."&hour=0&day=".$_REQUEST['day']."&month=".$_REQUEST['month']."&year=".$_REQUEST['year']);
         } else {

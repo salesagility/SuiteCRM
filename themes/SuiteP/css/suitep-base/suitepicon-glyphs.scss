@@ -1,10 +1,10 @@
 @font-face {
     font-family: "suitepicon";
-    src: url("suitepicon.eot?f0c3c527c0b031710e8c2ed12b6c7c9d?#iefix") format("embedded-opentype"),
-url("suitepicon.woff2?f0c3c527c0b031710e8c2ed12b6c7c9d") format("woff2"),
-url("suitepicon.woff?f0c3c527c0b031710e8c2ed12b6c7c9d") format("woff"),
-url("suitepicon.ttf?f0c3c527c0b031710e8c2ed12b6c7c9d") format("truetype"),
-url("suitepicon.svg?f0c3c527c0b031710e8c2ed12b6c7c9d#suitepicon") format("svg");
+    src: url("suitepicon.eot?3b21e84212a2fb8705fb79843b46e28d?#iefix") format("embedded-opentype"),
+url("suitepicon.woff2?3b21e84212a2fb8705fb79843b46e28d") format("woff2"),
+url("suitepicon.woff?3b21e84212a2fb8705fb79843b46e28d") format("woff"),
+url("suitepicon.ttf?3b21e84212a2fb8705fb79843b46e28d") format("truetype"),
+url("suitepicon.svg?3b21e84212a2fb8705fb79843b46e28d#suitepicon") format("svg");
 }
 
 i[class^="suitepicon-"]:before, i[class*=" suitepicon-"]:before {
@@ -663,10 +663,10 @@ i[class^="suitepicon-"]:before, i[class*=" suitepicon-"]:before {
 .suitepicon-module-stic-grants:before {
     content: "\f1d7";
 }
-.suitepicon-module-stic-job-applications:before {
+.suitepicon-module-stic-group-opportunities:before {
     content: "\f1d8";
 }
-.suitepicon-module-stic-job-offers:before {
+.suitepicon-module-stic-job-applications:before {
     content: "\f1d9";
 }
 .suitepicon-module-stic-journal:before {
@@ -720,39 +720,45 @@ i[class^="suitepicon-"]:before, i[class*=" suitepicon-"]:before {
 .suitepicon-module-stic-skills:before {
     content: "\f1ea";
 }
-.suitepicon-module-stic-training:before {
+.suitepicon-module-stic-time-tracker:before {
     content: "\f1eb";
 }
-.suitepicon-module-stic-validation-actions:before {
+.suitepicon-module-stic-training:before {
     content: "\f1ec";
 }
-.suitepicon-module-stic-work-experience:before {
+.suitepicon-module-stic-validation-actions:before {
     content: "\f1ed";
 }
-.suitepicon-module-subpanels:before {
+.suitepicon-module-stic-work-calendar:before {
     content: "\f1ee";
 }
-.suitepicon-module-survey-responses:before {
+.suitepicon-module-stic-work-experience:before {
     content: "\f1ef";
 }
-.suitepicon-module-surveys:before {
+.suitepicon-module-subpanels:before {
     content: "\f1f0";
 }
-.suitepicon-module-targets:before {
+.suitepicon-module-survey-responses:before {
     content: "\f1f1";
 }
-.suitepicon-module-tasks:before {
+.suitepicon-module-surveys:before {
     content: "\f1f2";
 }
-.suitepicon-module-users:before {
+.suitepicon-module-targets:before {
     content: "\f1f3";
 }
-.suitepicon-template-company:before {
+.suitepicon-module-tasks:before {
     content: "\f1f4";
 }
-.suitepicon-template-file:before {
+.suitepicon-module-users:before {
     content: "\f1f5";
 }
-.suitepicon-template-issue:before {
+.suitepicon-template-company:before {
     content: "\f1f6";
+}
+.suitepicon-template-file:before {
+    content: "\f1f7";
+}
+.suitepicon-template-issue:before {
+    content: "\f1f8";
 }

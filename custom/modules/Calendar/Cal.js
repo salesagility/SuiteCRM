@@ -839,6 +839,8 @@ CAL.update_vcal = function () {
 };
 CAL.remove_edit_dialog();
 var cal_loaded = true;
+
+
 $($.fullCalendar).ready(function () {
     var calendarContainer = $("#calendarContainer");
     $.each(calendar_items, function (user_id, user_calendar_activities) {
@@ -857,6 +859,10 @@ $($.fullCalendar).ready(function () {
             valueToPush["parent_type"] = element["parent_type"];
             valueToPush["status"] = element["status"];
             valueToPush["date_due"] = element["date_due"];
+            // STIC-Custom 20240222 MHP - Add a special class to stic_Work_Calendar events
+            // https://github.com/SinergiaTIC/SinergiaCRM/pull/114            
+            valueToPush["rendering"] = element["rendering"];
+            // END STIC-Custom                      
             valueToPush["start"] = new Date(
                 moment.utc(moment.unix(element["ts_start"])).format("MM/DD/YYYY") +
                     " " +
@@ -874,12 +880,21 @@ $($.fullCalendar).ready(function () {
             if (element.module_name != "Meetings" && element.module_name != "Calls") {
                 valueToPush["editable"] = false;
             }
+            // END STIC-Custom         
             if (undefined !== global_colorList[element.module_name]) {
                 // STIC-Custom 20230811 AAM - Adding Color to Sessions and FollowUps
                 // STIC#1192
-                valueToPush["backgroundColor"] = element.color ? element.color : "#" + global_colorList[element.module_name].body;
-                valueToPush["borderColor"] = element.color ? element.color : "#" + global_colorList[element.module_name].border;
-                valueToPush["textColor"] = element.color ? getContrastYIQ(element.color.substring(1)) : "#" + global_colorList[element.module_name].text;
+                // STIC-Custom 20240222 MHP - Adding Color to working and no-working Work Calendar Records
+                // https://github.com/SinergiaTIC/SinergiaCRM/pull/114
+                if (element.module_name != 'stic_Work_Calendar') {
+                    valueToPush["backgroundColor"] = element.color ? element.color : "#" + global_colorList[element.module_name].body;
+                    valueToPush["borderColor"] = element.color ? element.color : "#" + global_colorList[element.module_name].border;
+                    valueToPush["textColor"] = element.color ? getContrastYIQ(element.color.substring(1)) : "#" + global_colorList[element.module_name].text;
+                } else {
+                    valueToPush["backgroundColor"] = (element.event_type == 'working') ? "#" + global_colorList[element.module_name].body_working : "#" + global_colorList[element.module_name].body_noworking;
+                    valueToPush["borderColor"] = (element.event_type == 'working') ? "#" + global_colorList[element.module_name].border_working : "#" + global_colorList[element.module_name].border_noworking;
+                    valueToPush["textColor"] = (element.event_type == 'working') ? "#" + global_colorList[element.module_name].text_working : "#" + global_colorList[element.module_name].text_noworking;
+                }
                 function getContrastYIQ(hexcolor){
                     var r = parseInt(hexcolor.substr(0,2),16);
                     var g = parseInt(hexcolor.substr(2,2),16);

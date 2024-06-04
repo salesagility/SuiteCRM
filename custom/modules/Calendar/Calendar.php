@@ -59,8 +59,15 @@ class CustomCalendar extends Calendar
     // Overriding the array to add Shared Day option
     public $views = array("agendaDay" => array(), "basicDay" => array(), "basicWeek" => array(), "agendaWeek" => array(), "month" => array(), "sharedMonth" => array(), "sharedWeek" => array(), "sharedDay" => array());
 
+    // STIC-Custom 20210430 AAM - Exception for stic_Sessions module
+    // STIC#438
+    // STIC-Custom 20230811 AAM - Adding Color to Sessions and FollowUps
+    // STIC#1192
+    // STIC-Custom 20240222 MHP - Adding Work Calendar record in Calendar
+    // https://github.com/SinergiaTIC/SinergiaCRM/pull/114
+    //
     /**
-     * This array overrites the original activityList array. It includes the module stic_Sessions
+     * This array overrites the original activityList array. It includes the module stic_Sessions, stic_FollowUps y stic_Work_Calendar
      *
      */
     public $activityList = array(
@@ -69,7 +76,9 @@ class CustomCalendar extends Calendar
         "Tasks" => array("showCompleted" => true, "start" => "date_due", "end" => "date_due"),
         "stic_Sessions" => array("showCompleted" => true, "start" => "start_date", "end" => "end_date"),
         "stic_FollowUps" => array("showCompleted" => true, "start" => "start_date", "end" => "end_date"),
+        "stic_Work_Calendar" => array("showCompleted" => true, "start" => "start_date", "end" => "end_date"),
     );
+    // END STIC-Custom
 
     /**
      * Overriding the funcion load_activities(). It includes an exception for the stic_Sessions module regarding
@@ -79,8 +88,11 @@ class CustomCalendar extends Calendar
     {
         // STIC-Custom 20211015 - Filters the $this->act_arr array
         // STIC#438
+        // STIC-Custom 20240222 MHP - Adding Work Calendar record in Calendar
+        // https://github.com/SinergiaTIC/SinergiaCRM/pull/114
         $this->acts_arr = $this->filterSticSessions($this->acts_arr);
         $this->acts_arr = $this->filterSticFollowUps($this->acts_arr);
+        $this->acts_arr = $this->filterSticWorkCalendar($this->acts_arr);
 
         $field_list = CalendarUtils::get_fields();
 
@@ -100,7 +112,8 @@ class CustomCalendar extends Calendar
                 }
                 continue;
             }
-            foreach ($acts as $act) {
+            foreach ($acts as $act) 
+            {
                 $item = array();
                 $item['user_id'] = $user_id;
                 $item['module_name'] = $act->sugar_bean->module_dir;
@@ -172,6 +185,8 @@ class CustomCalendar extends Calendar
                 // STIC#438
                 // STIC-Custom 20230811 AAM - Adding Color to Sessions and FollowUps
                 // STIC#1192
+                // STIC-Custom 20240222 MHP - Adding Work Calendar record in Calendar
+                // https://github.com/SinergiaTIC/SinergiaCRM/pull/114
                 if ($item['module_name'] == 'stic_Sessions') {
                     $totalMinutes = $act->sugar_bean->duration * 60;
                     $item['duration_hours'] = floor($totalMinutes / 60);
@@ -184,6 +199,13 @@ class CustomCalendar extends Calendar
                     $item['duration_hours'] = floor($totalMinutes / 60);
                     $item['duration_minutes'] = round($totalMinutes - $item['duration_hours'] * 60);
                     $item['color'] = $act->sugar_bean->color ? '#'.$act->sugar_bean->color : '';
+                }
+                if ($item['module_name'] == 'stic_Work_Calendar') {
+                    $item['event_type'] = $act->sugar_bean->type;
+                    $totalMinutes = $act->sugar_bean->duration * 60;
+                    $item['duration_hours'] = floor($totalMinutes / 60);
+                    $item['duration_minutes'] = round($totalMinutes - $item['duration_hours'] * 60);
+                    $item['rendering'] = 'background';
                 }
                 // END STIC-Custom
 
@@ -432,6 +454,52 @@ class CustomCalendar extends Calendar
                                         }
                                         break;
                                     }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $activitiesArray;
+    }
+
+    /**
+     * STIC-Custom 20240222 MHP - Includes/excludes the stic_Work_Calendar records from the activities array according to filters values.
+     * 
+     * Current existing filters:
+     * - stic_work_calendar_type
+     * - assigned_user_department
+     * The filters values are retrieved from the user's configuration
+     *
+     * @return void
+     */
+    protected function filterSticWorkCalendar($activitiesArray)
+    {
+        global $current_user, $db;
+        $userSticWorkCalendarFilters = array(
+            'stic_work_calendar_type' => $current_user->getPreference('calendar_stic_work_calendar_type'),
+            'stic_work_calendar_assigned_user_department' => $current_user->getPreference('calendar_stic_work_calendar_assigned_user_department'),            
+        );
+        foreach ($activitiesArray as $userKey => $activityArray) {
+            foreach ($activityArray as $activityKey => $activity) {
+                $bean = $activity->sugar_bean;
+                if ($bean->module_name == 'stic_Work_Calendar') {
+                    foreach ($userSticWorkCalendarFilters as $filterKey => $filterValue) {
+                        if (!empty($filterValue)) {
+                            switch ($filterKey) {
+                                case 'stic_work_calendar_type': {
+                                    if (!in_array($bean->type, $filterValue)) {
+                                        unset($activitiesArray[$userKey][$activityKey]);
+                                    }
+                                    break;
+                                }
+                                case 'stic_work_calendar_assigned_user_department': {
+                                    $assignedUser = BeanFactory::getBean('Users', $bean->assigned_user_id);
+                                    if ($assignedUser->department != $filterValue) {
+                                        unset($activitiesArray[$userKey][$activityKey]);
+                                    }
+                                    break;
+                                }
                             }
                         }
                     }

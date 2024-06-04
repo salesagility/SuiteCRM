@@ -39,6 +39,18 @@ $app_strings['LBL_SINERGIACRM_NONPROFITIZED_DESC1'] = 'SinergiaCRM ha estat dese
 $app_strings['LBL_SINERGIACRM_NONPROFITIZED_DESC2'] = 'Aquest programa és programari lliure. Podeu redistribuir-lo i/o modificar-lo segons els termes de la Llicència Pública General Affero de GNU versió 3, publicada per la Free Software Foundation, incloent-hi qualsevol permís addicional indicat a la capçalera del codi font.';
 $app_strings['LBL_SINERGIACRM_NONPROFITIZED_DESC3'] = "Tots els noms d'altres empreses i productes esmentats poden ser marques registrades de les empreses amb les quals s'associen.";
 
+// Creació de registre horari via capçalera
+$app_strings['LBL_TIMETRACKER_POPUP_BOX_CREATE'] = 'Es crearà un registre horari amb la informació següent:';
+$app_strings['LBL_TIMETRACKER_POPUP_BOX_UPDATE_1'] = 'Es tancarà el darrer registre horari obert avui:';
+$app_strings['LBL_TIMETRACKER_POPUP_BOX_UPDATE_2'] = 'amb la informació següent: ';
+$app_strings['LBL_TIMETRACKER_POPUP_BOX_NAME'] = 'Nom: ';
+$app_strings['LBL_TIMETRACKER_POPUP_BOX_START_DATE'] = "Data i hora d'inici: ";
+$app_strings['LBL_TIMETRACKER_POPUP_BOX_END_DATE'] = 'Data i hora de finalització: ';
+$app_strings['LBL_TIMETRACKER_POPUP_BOX_EMPLOYEE'] = 'Empleat: ';
+$app_strings['LBL_TIMETRACKER_POPUP_BOX_QUESTION'] = 'Comentaris (opcional):';
+$app_strings['LBL_TIMETRACKER_POPUP_BOX_OK'] = 'Accepta';
+$app_strings['LBL_TIMETRACKER_POPUP_BOX_CANCEL'] = 'Cancel·la';
+
 // Avís d'actualització de SinergiaCRM
 $app_strings['LBL_STIC_UPDATE_ALERT_TITLE'] = 'Actualització de SinergiaCRM realitzada';
 $app_strings['LBL_STIC_UPDATE_ALERT_INFO'] = "En cas que observeu algun comportament anòmal us recomanem que refresqueu la pantalla (ctrl + F5) o que buideu la memòria cau del navegador per forçar la recàrrega completa de la darrera versió de l'aplicació.";
@@ -75,7 +87,7 @@ $app_list_strings['moduleList']['Contacts'] = 'Persones';
 $app_list_strings['moduleList']['Leads'] = 'Interessats';
 $app_list_strings['moduleList']['Opportunities'] = 'Subvencions';
 $app_list_strings['moduleList']['AOS_PDF_Templates'] = 'Plantilles PDF';
-$app_list_strings['moduleList']['FP_events'] = 'Esdeveniments-FP'; // Change the name of this module to avoid confusion with stic_Events
+$app_list_strings['moduleList']['FP_events'] = 'Esdeveniments-FP'; // Es canvia el nom públic del mòdul per evitar confusions amb stic_Events
 $app_list_strings['moduleList']['stic_Accounts_Relationships'] = 'Relacions amb Organitzacions';
 $app_list_strings['moduleList']['stic_Attendances'] = 'Assistències';
 $app_list_strings['moduleList']['stic_Contacts_Relationships'] = 'Relacions amb Persones';
@@ -110,6 +122,8 @@ $app_list_strings['moduleList']['stic_Prescription'] = 'Prescripcions mèdiques'
 $app_list_strings['moduleList']['stic_Security_Groups_Rules'] = 'Grups de Seguretat - Regles per mòduls';
 $app_list_strings['moduleList']['stic_Grants'] = 'Ajuts';
 $app_list_strings['moduleList']['stic_Centers'] = 'Centres';
+$app_list_strings['moduleList']['stic_Time_Tracker'] = 'Registre horari';
+$app_list_strings['moduleList']['stic_Work_Calendar'] = 'Calendari laboral';
 $app_list_strings['moduleList']['stic_Journal'] = 'Diari';
 $app_list_strings['moduleList']['stic_Training'] = 'Formació';
 $app_list_strings['moduleList']['stic_Work_Experience'] = 'Experiència laboral';
@@ -154,6 +168,8 @@ $app_list_strings['moduleListSingular']['stic_Prescription'] = 'Prescripció mè
 $app_list_strings['moduleListSingular']['stic_Security_Groups_Rules'] = 'Grups de Seguretats - Regla per mòdul';
 $app_list_strings['moduleListSingular']['stic_Grants'] = 'Ajut';
 $app_list_strings['moduleListSingular']['stic_Centers'] = 'Centre';
+$app_list_strings['moduleListSingular']['stic_Time_Tracker'] = 'Registre horari';
+$app_list_strings['moduleListSingular']['stic_Work_Calendar'] = 'Calendari laboral';
 $app_list_strings['moduleListSingular']['stic_Journal'] = 'Diari';
 $app_list_strings['moduleListSingular']['stic_Training'] = 'Formació';
 $app_list_strings['moduleListSingular']['stic_Work_Experience'] = 'Experiència laboral';
@@ -194,10 +210,13 @@ $app_list_strings['parent_type_display']['stic_Medication'] = 'Medicaments';
 $app_list_strings['parent_type_display']['stic_Prescription'] = 'Prescripcions mèdiques';
 $app_list_strings['parent_type_display']['stic_Grants'] = 'Ajuts';
 $app_list_strings['parent_type_display']['stic_Centers'] = 'Centres';
+$app_list_strings['parent_type_display']['stic_Time_Tracker'] = 'Registre horari';
+$app_list_strings['parent_type_display']['stic_Work_Calendar'] = 'Calendari laboral';
 $app_list_strings['parent_type_display']['stic_Journal'] = 'Diari';
 $app_list_strings['parent_type_display']['stic_Training'] = 'Formació';
 $app_list_strings['parent_type_display']['stic_Work_Experience'] = 'Experiència laboral';
 $app_list_strings['parent_type_display']['stic_Skills'] = 'Competències';
+
 $app_list_strings['record_type_display']['Accounts'] = 'Organitzacions';
 $app_list_strings['record_type_display']['Contacts'] = 'Persones';
 $app_list_strings['record_type_display']['Leads'] = 'Interessats';
@@ -229,10 +248,13 @@ $app_list_strings['record_type_display']['stic_Medication'] = 'Medicaments';
 $app_list_strings['record_type_display']['stic_Prescription'] = 'Prescripcions mèdiques';
 $app_list_strings['record_type_display']['stic_Grants'] = 'Ajuts';
 $app_list_strings['record_type_display']['stic_Centers'] = 'Centres';
+$app_list_strings['record_type_display']['stic_Time_Tracker'] = 'Registre horari';
+$app_list_strings['record_type_display']['stic_Work_Calendar'] = 'Calendari laboral';
 $app_list_strings['record_type_display']['stic_Journal'] = 'Diari';
 $app_list_strings['record_type_display']['stic_Training'] = 'Formació';
 $app_list_strings['record_type_display']['stic_Work_Experience'] = 'Experiència laboral';
 $app_list_strings['record_type_display']['stic_Skills'] = 'Competències';
+
 $app_list_strings['record_type_display_notes']['Accounts'] = 'Organitzacions';
 $app_list_strings['record_type_display_notes']['Contacts'] = 'Persones';
 $app_list_strings['record_type_display_notes']['Leads'] = 'Interessats';
@@ -264,6 +286,8 @@ $app_list_strings['record_type_display_notes']['stic_Medication'] = 'Medicaments
 $app_list_strings['record_type_display_notes']['stic_Prescription'] = 'Prescripcions mèdiques';
 $app_list_strings['record_type_display_notes']['stic_Grants'] = 'Ajuts';
 $app_list_strings['record_type_display_notes']['stic_Centers'] = 'Centres';
+$app_list_strings['record_type_display_notes']['stic_Time_Tracker'] = 'Registre horari';
+$app_list_strings['record_type_display_notes']['stic_Work_Calendar'] = 'Calendari laboral';
 $app_list_strings['record_type_display_notes']['stic_Journal'] = 'Diari';
 $app_list_strings['record_type_display_notes']['stic_Training'] = 'Formació';
 $app_list_strings['record_type_display_notes']['stic_Work_Experience'] = 'Experiència laboral';
@@ -3205,6 +3229,16 @@ $app_list_strings['stic_centers_types_list']['attention_point'] = "Punt d'atenci
 $app_list_strings['stic_centers_types_list']['training'] = 'Formació';
 $app_list_strings['stic_centers_types_list']['other'] = 'Altres';
 
+// Calendari laboral: Tipus
+$app_list_strings['stic_work_calendar_types_list'][''] = '';
+$app_list_strings['stic_work_calendar_types_list']['working'] = 'Feiner';
+$app_list_strings['stic_work_calendar_types_list']['vacation'] = 'Vacances';
+$app_list_strings['stic_work_calendar_types_list']['holiday'] = 'Festiu';
+$app_list_strings['stic_work_calendar_types_list']['personal'] = 'Assumptes propis';
+$app_list_strings['stic_work_calendar_types_list']['sick'] = 'Baixa';
+$app_list_strings['stic_work_calendar_types_list']['leave'] = 'Permís/Excedència';
+$app_list_strings['stic_work_calendar_types_list']['other'] = 'Altres';
+
 // Diari: Tipus
 $app_list_strings['stic_journal_types_list'][''] = '';
 $app_list_strings['stic_journal_types_list']['journal'] = 'Diari';
@@ -3468,7 +3502,7 @@ $app_list_strings['stic_custom_views_operator_list']['Not_Ends_With'] = 'No fina
 $app_list_strings['stic_custom_views_operator_list']['is_null'] = 'És nul';
 $app_list_strings['stic_custom_views_operator_list']['is_not_null'] = 'No és nul';
 
-// Vistes personalitzades: Tipus Condicions
+// Vistes personalitzades: Tipus de condicions
 $app_list_strings['stic_custom_views_condition_type_list']['value'] = 'Valor';
 $app_list_strings['stic_custom_views_condition_type_list']['date'] = 'Data';
 $app_list_strings['stic_custom_views_condition_type_list']['user'] = 'Usuari';
