@@ -3418,9 +3418,9 @@ $app_list_strings['stic_custom_views_views_list']['editview'] = 'Edit view';
 $app_list_strings['stic_custom_views_views_list']['quickcreate'] = 'Quickcreate view';
 
 // Custom Views: Action Types
-$app_list_strings['stic_custom_views_action_type_list']['field_modification'] = 'Field modification';
-$app_list_strings['stic_custom_views_action_type_list']['panel_modification'] = 'Panel modification';
-$app_list_strings['stic_custom_views_action_type_list']['tab_modification'] = 'Tab modification';
+$app_list_strings['stic_custom_views_action_type_list']['field_modification'] = 'Field';
+$app_list_strings['stic_custom_views_action_type_list']['panel_modification'] = 'Panel';
+$app_list_strings['stic_custom_views_action_type_list']['tab_modification'] = 'Tab';
 
 // Custom Views: Actions
 $app_list_strings['stic_custom_views_action_list']['visible'] = 'Visible';

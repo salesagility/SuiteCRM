@@ -24,7 +24,7 @@
 $mod_strings = array(
     // Campos del módulo
     'LBL_ACTION_ORDER' => 'Orden',
-    'LBL_TYPE' => 'Tipo de acción',
+    'LBL_TYPE' => 'Tipo de elemento',
     'LBL_ELEMENT' => 'Elemento',
     'LBL_ACTION' => 'Acción',
     'LBL_VALUE' => 'Valor',

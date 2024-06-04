@@ -31,6 +31,8 @@ var sticCV_Record_Field_Content = class sticCV_Record_Field_Content extends stic
       $contentElement = $fieldElement.children(".stic-FieldContent").children('[field="' + fieldName + '"]');
     }
     super(field.customView, $contentElement);
+    
+    this.$element.css("height", "auto");
 
     this.field = field;
     this.fieldName = fieldName;
@@ -54,49 +56,59 @@ var sticCV_Record_Field_Content = class sticCV_Record_Field_Content extends stic
         this.$editor = this.$element.find("input,textarea,select");
         break;
     }
+    if (this.customView.view == "detailview") {
+      if (this.$editor.length === 0) {
+        this.$editor = this.$element.find("span");
+      } else {
+        this.$editor.add(this.$element.find("span"));
+      }
+    }
 
     this.$buttons = this.$element.find("button");
     this.$items = this.$element.find(".items,table,option,label");
     this.$fieldText = this.$element.find(".sugar_field");
 
     this.$readonlyLabel = this.$element.parent().find(".stic-ReadonlyInput");
-    var classes = this.$element.attr("class").replace(/\bhidden\b/g, "").replace(/\s+/g, " ").trim();
-    if (this.$readonlyLabel.length == 0 && this.$element.length > 0) {
-      this.$element
-        .parent()
-        .append(
-          '<div class="' +
-            classes +
-            ' stic-ReadonlyInput hidden" ' +
-            'style="min-height:30px; align-items:center; padding-left:5px; border-radius:0.25em; width:90%">' +
-            "</div>"
-        );
-      this.$readonlyLabel = this.$element.parent().find(".stic-ReadonlyInput");
-      sticCVUtils.fillReadonlyText(this);
+    if (this.field.customView.view == "editview" || this.field.customView.view == "quickcreate") {
+      // Create $readonlyLabel
+      var classes = this.$element.attr("class").replace(/\bhidden\b/g, "").replace(/\s+/g, " ").trim();
+      if (this.$readonlyLabel.length == 0 && this.$element.length > 0) {
+        this.$element
+          .parent()
+          .append(
+            '<div class="' +
+              classes +
+              ' stic-ReadonlyInput hidden" ' +
+              'style="min-height:30px; display: inline-flex; align-items:center; padding-left:5px; border-radius:0.25em; width:90%">' +
+              "</div>"
+          );
+        this.$readonlyLabel = this.$element.parent().find(".stic-ReadonlyInput");
+        sticCVUtils.fillReadonlyText(this);
 
-      // Update label when value is changed
-      var self = this;
-      this.onChange(function() {
-        sticCVUtils.fillReadonlyText(self);
-      });
-    }
+        // Update label when value is changed
+        var self = this;
+        this.onChange(function() {
+          sticCVUtils.fillReadonlyText(self);
+        });
+      }
 
-    // Move $element and $readonlyLabel inside new $element div
-    this.$elementEditor = this.$element;
-    this.$element = $fieldElement.find(".stic-FieldContent");
-    if (this.$element.length == 0 && this.$elementEditor.length > 0) {
-      this.$element = $('<div class="' + classes + ' stic-FieldContent" ' + "></div>");
-      this.$elementEditor.after(this.$element);
-      this.$element.append(this.$readonlyLabel);
-      this.$element.append(this.$elementEditor);
+      // Move $element and $readonlyLabel inside new $element div
+      this.$elementEditor = this.$element;
+      this.$element = $fieldElement.find(".stic-FieldContent");
+      if (this.$element.length == 0 && this.$elementEditor.length > 0) {
+        this.$element = $('<div class="' + classes + ' stic-FieldContent" ' + "></div>");
+        this.$elementEditor.after(this.$element);
+        this.$element.append(this.$readonlyLabel);
+        this.$element.append(this.$elementEditor);
 
-      // Remove "col-" classes
-      this.$elementEditor.removeClass(function(index, className) {
-        return (className.match(/\bcol-\S+/g) || []).join(" ");
-      });
-      this.$readonlyLabel.removeClass(function(index, className) {
-        return (className.match(/\bcol-\S+/g) || []).join(" ");
-      });
+        // Remove "col-" classes
+        this.$elementEditor.removeClass(function(index, className) {
+          return (className.match(/\bcol-\S+/g) || []).join(" ");
+        });
+        this.$readonlyLabel.removeClass(function(index, className) {
+          return (className.match(/\bcol-\S+/g) || []).join(" ");
+        });
+      }
     }
   }
 

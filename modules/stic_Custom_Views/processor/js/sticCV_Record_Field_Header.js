@@ -28,12 +28,13 @@ var sticCV_Record_Field_Header = class sticCV_Record_Field_Header extends sticCV
   constructor(customView, $fieldElement) {
     super(customView, $fieldElement.children(".label"));
 
-    // Fix size: same as editor
+    // Fix size: same as Content
     if (this.customView.view == "detailview") {
       this.$element.css("min-height", "42px");
+      this.$element.css("margin-top", "1px");
+      this.$element.css("margin-bottom", "1px");
     } else if (this.customView.view == "editview" || this.customView.view == "quickcreate") {
       this.$element.css("min-height", "20px");
-      this.$element.css("height", "30px");
       this.$element.css("margin-left", "-5px");
       this.$element.css("margin-right", "5px");
       this.$element.css("padding-left", "5px");

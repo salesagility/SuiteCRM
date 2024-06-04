@@ -410,7 +410,7 @@ var sticCVUtils = class sticCVUtils {
   }
 
   static inline_edit(fieldContent, inline_edit = true) {
-    //IEPA!!
+    // TODO
     console.log("Inline not available. Requested:" + inline_edit);
     return false;
   }

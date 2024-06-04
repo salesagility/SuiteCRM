@@ -28,6 +28,45 @@ var sticCV_Record_Field_Container = class sticCV_Record_Field_Container extends 
   constructor(field, $fieldElement) {
     super(field.customView, $fieldElement);
 
+    // Make same height Header and Content
+    this.$element.css("align-items", "stretch");
+
     this.field = field;
+  }
+  applyAction(action) {
+    switch (action.action) {
+      case "color":
+      case "bold":
+      case "italic":
+      case "underline":
+        // Do nothing - These container field actions are made in Header + Content
+        return this;
+      case "background":
+        // Adapt the the style of Header and Content
+        this.field.header.applyAction({
+          action: "style",
+          value: { "border-top-right-radius": 0, "border-bottom-right-radius": 0 }
+        });
+        this.field.content.applyAction({
+          action: "style",
+          value: { "border-top-left-radius": 0, "border-bottom-left-radius": 0 }
+        });
+        sticCVUtils.style(this.field.content.$readonlyLabel, this.field.customView, {
+          "border-top-left-radius": 0,
+          "border-bottom-left-radius": 0
+        });
+        switch (this.field.customView.view) {
+          case "detailview":
+            this.field.content.applyAction({ action: "style", value: { "margin-left": 0 } });
+            break;
+          case "editview":
+          case "quickcreate":
+            this.field.header.applyAction({ action: "style", value: { "margin-left": 0, "margin-right": 0 } });
+            break;
+        }
+
+        return this;
+    }
+    return super.applyAction(action);
   }
 };

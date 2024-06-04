@@ -3419,9 +3419,9 @@ $app_list_strings['stic_custom_views_views_list']['editview'] = 'Vista de edici�
 $app_list_strings['stic_custom_views_views_list']['quickcreate'] = 'Vista de creación rápida';
 
 // Vistas personalizadas: Tipos de acciones
-$app_list_strings['stic_custom_views_action_type_list']['field_modification'] = 'Modificación de campo';
-$app_list_strings['stic_custom_views_action_type_list']['panel_modification'] = 'Modificación de panel';
-$app_list_strings['stic_custom_views_action_type_list']['tab_modification'] = 'Modificación de pestaña';
+$app_list_strings['stic_custom_views_action_type_list']['field_modification'] = 'Campo';
+$app_list_strings['stic_custom_views_action_type_list']['panel_modification'] = 'Panel';
+$app_list_strings['stic_custom_views_action_type_list']['tab_modification'] = 'Pestaña';
 
 // Vistas personalizadas: Acciones
 $app_list_strings['stic_custom_views_action_list']['visible'] = 'Visible';
