@@ -77,7 +77,7 @@ class stic_Skills extends Basic
         $this->fillName();
 
         if ($this->type == 'language') {
-            $this->skill=$app_list_strings['stic_skills_types_list'][$this->type];
+            $this->skill = $app_list_strings['stic_skills_types_list'][$this->type];
         }
         // Save the bean
         parent::save($check_notify);
@@ -99,15 +99,17 @@ class stic_Skills extends Basic
 
             if ($this->type === 'language') {
                 $this->name = $contactName . ' - ' .
-                    $app_list_strings['stic_skills_types_list'][$this->type] . ' - ' .
-                    $app_list_strings['stic_skills_languages_list'][$this->language];
+                    $app_list_strings['stic_skills_types_list'][$this->type] . ' - ';
+                if ($this->language === 'other') {
+                    $this->name .= $this->other;
+                } else {
+                    $this->name .= $app_list_strings['stic_skills_languages_list'][$this->language];
                 }
-            else {
+            } else {
                 $this->name = $contactName . ' - ' .
-                    $app_list_strings['stic_skills_types_list'][$this->type] . ' - ' .
-                    $this->skill;
+                $app_list_strings['stic_skills_types_list'][$this->type] . ' - ' .
+                $this->skill;
             }
-
 
         }
     }
