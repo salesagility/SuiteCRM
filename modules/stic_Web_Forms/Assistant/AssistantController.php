@@ -256,6 +256,10 @@ class stic_Web_FormsAssistantController extends stic_Web_FormsController
     
     	// Treat the persistence field
     	if (! empty($this->persistentData)) {
+			// Ensure $this->persistentData is correct
+			if(strpos($this->persistentData, '"') !== false) {
+				$this->persistentData = htmlentities($this->persistentData);
+			}
     		$this->persistentData = json_decode(html_entity_decode($this->persistentData),true);
     	} 
     	else {
