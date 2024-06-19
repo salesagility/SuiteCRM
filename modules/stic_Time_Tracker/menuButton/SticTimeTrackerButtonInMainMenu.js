@@ -27,8 +27,8 @@ function checkTimeTrackerButtonStatus()
                     }
                 });        
             } else {
-                buttonRow.each(function(index, element) {
-                    buttonRow.classList.add('no-show-time-tracker-button');
+                buttonRow.forEach(function(element) {
+                    element.classList.add('no-show-time-tracker-button');
                 }); 
             }
         })
