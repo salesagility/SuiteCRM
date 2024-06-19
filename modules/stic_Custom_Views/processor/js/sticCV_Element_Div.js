@@ -93,4 +93,11 @@ var sticCV_Element_Div = class sticCV_Element_Div {
     }
     return false;
   }
+
+  onChange(callback) {
+    return sticCVUtils.onChange(this.$element, callback);
+  }
+  change() {
+    return sticCVUtils.change(this.$element, callback);
+  }
 };

@@ -39,11 +39,4 @@ var sticCV_Element_Label = class sticCV_Element_Label extends sticCV_Element_Div
     }
     return super.applyAction(action);
   }
-
-  onChange(callback, alsoInline = false) {
-    return sticCVUtils.onChange(this.$element, callback, alsoInline);
-  }
-  change() {
-    return sticCVUtils.change(this.$element, callback);
-  }
 };

@@ -39,8 +39,8 @@ var sticCV_View_Record_Base = class sticCV_View_Record_Base {
     this._tabs = [];
   }
 
-  field(fieldName) {
-    if (fieldName in this._fields === false) {
+  field(fieldName, forceReloadField = false) {
+    if (forceReloadField || fieldName in this._fields === false) {
       this._fields[fieldName] = new sticCV_Record_Field(this, fieldName);
     }
     return this._fields[fieldName];
@@ -100,7 +100,7 @@ var sticCV_View_Record_Base = class sticCV_View_Record_Base {
       var self = this;
       conditions.forEach(condition => {
         self.field(condition.field).onChange(function() {
-          self.processCustomization(index);
+          self.processCustomization(index, false, true);
         });
       });
     }
@@ -170,8 +170,8 @@ var sticCV_View_Record_Base = class sticCV_View_Record_Base {
      *  value: social_services
      * }
      */
-  checkCondition(condition) {
-    return this.field(condition.field).checkCondition(condition);
+  checkCondition(condition, forceReloadField = false) {
+    return this.field(condition.field, forceReloadField).checkCondition(condition);
   }
 
   /**
@@ -187,12 +187,14 @@ var sticCV_View_Record_Base = class sticCV_View_Record_Base {
   /**
      * Process a Customization: Checks all conditions in order to apply all actions
      */
-  processCustomization(index, resetLastResult = false) {
+  processCustomization(index, resetLastResult = false, forceReloadField = false) {
     var customization = this.customizations[index];
     var value = true;
     if (Array.isArray(customization.conditions) && customization.conditions.length) {
       var self = this;
-      customization.conditions.forEach(condition => (value = value ? self.checkCondition(condition) : value));
+      customization.conditions.forEach(
+        condition => (value = value ? self.checkCondition(condition, forceReloadField) : value)
+      );
     }
     if (resetLastResult) {
       customization.lastResult = false;

@@ -217,8 +217,11 @@ var sticCV_Record_Field_Content = class sticCV_Record_Field_Content extends stic
   }
 
   onChange(callback) {
-    var alsoInline = this.customView.view == "detailview";
-    return sticCVUtils.onChange(this.$editor, callback, alsoInline) || super.onChange(callback, alsoInline);
+    if (this.customView.view == "detailview") {
+      return this.field.container.onChange(callback);
+    } else {
+      return sticCVUtils.onChange(this.$editor, callback) || super.onChange(callback);
+    }
   }
   change() {
     return sticCVUtils.change(this.$editor) || super.change();

@@ -268,7 +268,7 @@ var sticCVUtils = class sticCVUtils {
 
   static getValue(fieldContent, value_list) {
     var $elem = fieldContent.$editor;
-    if (fieldContent.customView.view == "detailview") {
+    if (fieldContent.customView.view == "detailview" && fieldContent.type != "bool") {
       $elem = fieldContent.$fieldText;
     }
     if ($elem.length == 0 || $elem.get(0).parentNode === null) {
@@ -278,6 +278,9 @@ var sticCVUtils = class sticCVUtils {
     if (fieldContent.customView.view == "detailview") {
       if (fieldContent.type == "relate") {
         return $elem.attr("data-id-value") + "|" + $elem.text().trim();
+      }
+      if (fieldContent.type == "bool") {
+        return $elem.prop("checked");
       }
       var text = fieldContent.text();
       if (
@@ -499,11 +502,11 @@ var sticCVUtils = class sticCVUtils {
     return false;
   }
 
-  static onChange($elem, callback, alsoInline = false) {
+  static onChange($elem, callback) {
     $elem.each(function() {
       $(this).on("change paste keyup", callback);
       YAHOO.util.Event.on($(this)[0], "change", callback);
-      if (!$(this).is(":input") || alsoInline) {
+      if (!$(this).is(":input")) {
         var observer = new MutationObserver(callback);
         observer.observe($(this)[0], { attributes: true, childList: true, subtree: true, characterData: true });
       }
