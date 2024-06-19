@@ -490,13 +490,17 @@ class Importer
             $query .= "
             JOIN email_addr_bean_rel as ea ON m.id = ea.bean_id
             JOIN email_addresses as e ON ea.email_address_id = e.id
-            WHERE (e.email_address_caps = '{$emailCap}'";
+            WHERE ( ea.deleted = 0                   
+                AND e.deleted = 0 
+                AND e.email_address_caps = '{$emailCap}'";
 
             // If, in addition to the email, there are more filters to search for duplicates, we add OR operator to the query
             if (count($fields) > 1) {
                 $query .= "
                 OR ";
-            } 
+            } else {
+                $query .= ")";
+            }
 
         } else {
             // If it has not been filtered by Email, we add WHERE to the query
