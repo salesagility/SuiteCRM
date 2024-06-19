@@ -81,6 +81,43 @@ class CustomCalendar extends Calendar
     // END STIC-Custom
 
     /**
+     * loads array of objects
+     * @param User $user user object
+     * @param string $type
+     */
+    public function add_activities($user, $type='sugar')
+    {
+        global $timedate;
+        $start_date_time = $this->date_time;
+        if ($this->view == 'agendaWeek'|| $this->view == 'basicWeek'  || $this->view == 'sharedWeek') {
+            $start_date_time = CalendarUtils::get_first_day_of_week($this->date_time);
+            $end_date_time = $start_date_time->get("+7 days");
+        } else {
+            if ($this->view == 'month' || $this->view == "sharedMonth") {
+                $start_date_time = $this->date_time->get_day_by_index_this_month(0);
+                $end_date_time = $start_date_time->get("+".$start_date_time->format('t')." days");
+                $start_date_time = CalendarUtils::get_first_day_of_week($start_date_time);
+                $end_date_time = CalendarUtils::get_first_day_of_week($end_date_time)->get("+7 days");
+            } else {
+                $end_date_time = $this->date_time->get("+1 day");
+            }
+        }
+        
+        $start_date_time = $start_date_time->get("-5 days"); // 5 days step back to fetch multi-day activities that
+
+        $acts_arr = array();
+        if ($type == 'vfb') {
+            $acts_arr = CustomCalendarActivity::get_freebusy_activities($user, $start_date_time, $end_date_time);
+        } else {
+            $acts_arr = CustomCalendarActivity::get_activities($this->activityList, $user->id, $this->show_tasks, $start_date_time, $end_date_time, $this->view, $this->show_calls, $this->show_completed);
+        }
+
+
+        //$this->acts_arr[$user->id] = $acts_arr;
+        $this->acts_arr[$user->id] = $acts_arr;
+    }
+
+    /**
      * Overriding the funcion load_activities(). It includes an exception for the stic_Sessions module regarding
      * the definition of the variables duration_hours and duration_minutes
      */

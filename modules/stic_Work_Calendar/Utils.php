@@ -72,7 +72,22 @@ class stic_Work_CalendarUtils
                     return true;
                 }
             } else {
-                return true;
+                // Checks if exist a record that does not occupy the entire day, in that case, since the record to be created is an all-day record, it is not possible to create the record.
+                $query = "SELECT * FROM stic_work_calendar
+                    WHERE deleted = 0 
+                        AND id != '". $id . "' 
+                        AND assigned_user_id = '" . $assignedUserId . "' 
+                        AND type NOT IN ('" .  implode("', '", stic_Work_Calendar::ALL_DAY_TYPES) . "')                        
+                        AND TIMESTAMPDIFF(SECOND, start_date,  '" . $endDate . "') > 0
+                        AND TIMESTAMPDIFF(SECOND, '" . $startDate . "',end_date) > 0";
+                $GLOBALS['log']->debug('Line ' . __LINE__ . ': ' . __METHOD__ . ": " . $query);
+                $result = $db->query($query);
+
+                if (!is_null($result) && $result->num_rows > 0) {
+                    return false;
+                } else {
+                    return true;
+                }
             }
         }
     }
@@ -92,9 +107,9 @@ class stic_Work_CalendarUtils
         $startTime = microtime(true);
 
         // Get the data from the smarty template
-        $repeat_type = $_REQUEST['repeat_type'];
-        $interval = $_REQUEST['repeat_interval'];
-        $count = $_REQUEST['repeat_count'];
+        $repeat_type = $_REQUEST['repeat_type'] ?: 'Daily' ;
+        $interval = $_REQUEST['repeat_interval'] ?: '1';
+        $count = $_REQUEST['repeat_count'] ?: '1';
         $until = $_REQUEST['repeat_until'];
         $type = $_REQUEST['type'];
         $startDay = $_REQUEST['repeat_start_day'];

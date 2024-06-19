@@ -157,6 +157,12 @@ class CustomCalendarActivity extends CalendarActivity
             $completedTasks = " AND tasks.status != 'Completed' ";
         }
 
+        // STIC-Custom 20240222 MHP - Get the user preference
+        // https://github.com/SinergiaTIC/SinergiaCRM/pull/114
+        $show_work_calendar = $GLOBALS['current_user']->getPreference('show_work_calendar');
+        $show_work_calendar = $show_work_calendar ?: false;
+        // END STIC-Custom
+
         foreach ($activities as $key => $activity) {
             if (ACLController::checkAccess($key, 'list', true)) {
                 /* END - SECURITY GROUPS */
@@ -189,6 +195,13 @@ class CustomCalendarActivity extends CalendarActivity
                         continue;
                     }
                 }
+
+                // STIC-Custom 20240222 MHP - Get the user preference
+                // https://github.com/SinergiaTIC/SinergiaCRM/pull/114
+                if ($key === 'stic_Work_Calendar' && !$show_work_calendar) {
+                    continue;
+                }
+                // END STIC-Custom
 
                 $focus_list = build_related_list_by_user_id($bean, $user_id, $where);
                 // require_once 'modules/SecurityGroups/SecurityGroup.php';

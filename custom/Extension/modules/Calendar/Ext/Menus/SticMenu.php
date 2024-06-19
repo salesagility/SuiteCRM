@@ -23,12 +23,18 @@
 
 if (ACLController::checkAccess('stic_Sessions', 'edit', true)) {
     $last = array_pop($module_menu);
-    $module_menu[] = array("index.php?module=stic_Sessions&action=EditView&return_module=stic_Sessions&return_action=DetailView", translate('LNK_NEW_RECORD', 'stic_Sessions'), "create-stic-sessions", 'stic_Sessions');
+    $module_menu[] = array("index.php?module=stic_Sessions&action=EditView&return_module=Calendar&return_action=index", translate('LNK_NEW_RECORD', 'stic_Sessions'), "create-stic-sessions", 'stic_Sessions');
     $module_menu[] = $last;
 }
 
 if (ACLController::checkAccess('stic_FollowUps', 'edit', true)) {
     $last = array_pop($module_menu);
-    $module_menu[] = array("index.php?module=stic_FollowUps&action=EditView&return_module=stic_FollowUps&return_action=DetailView", translate('LNK_NEW_RECORD', 'stic_FollowUps'), "create-stic-followups", 'stic_FollowUps');
+    $module_menu[] = array("index.php?module=stic_FollowUps&action=EditView&return_module=Calendar&return_action=index", translate('LNK_NEW_RECORD', 'stic_FollowUps'), "create-stic-followups", 'stic_FollowUps');
+    $module_menu[] = $last;
+}
+
+if (ACLController::checkAccess('stic_Work_Calendar', 'edit', true)) {
+    $last = array_pop($module_menu);
+    $module_menu[] = array("index.php?module=stic_Work_Calendar&action=EditView&return_module=Calendar&return_action=index", translate('LNK_NEW_RECORD', 'stic_Work_Calendar'), "schedule", 'stic_Work_Calendar');
     $module_menu[] = $last;
 }

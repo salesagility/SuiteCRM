@@ -121,20 +121,19 @@ class stic_Time_Tracker extends Basic
     }
   
     /**
-     * Return the last record of the indicated user for today
+     * Return the last record of the indicated user that is within the previous 24 hours
      * @param userId User Identificator
      * @return Stic_time_tracker record or false in case it does not exist
      */
     public static function getLastTodayTimeTrackerRecord($userId)
     {
         global $db, $current_user;
-
         $tzone = $current_user->getPreference('timezone');
 
         $query = "SELECT * FROM stic_time_tracker
             WHERE deleted = 0 
             AND start_date IS NOT NULL AND start_date <> ''
-            AND DATE(CONVERT_TZ(start_date, '+00:00', '" . $tzone . "')) = DATE(NOW())
+            AND TIMESTAMPDIFF(SECOND, CONVERT_TZ(start_date, '+00:00', '" . $tzone . "'), NOW()) BETWEEN 0 AND 86400
             AND assigned_user_id = '" . $userId . "'  
             ORDER BY start_date desc
             LIMIT 1;";

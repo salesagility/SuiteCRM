@@ -28,17 +28,26 @@ switch (viewType()) {
     case "edit":
     case "quickcreate":
     case "popup":
+        // Disable fields if the user is not admin
+        if (isAdminCurrentUser == '0') {
+            let element = document.getElementById('stic_work_calendar_c');
+            element.style.setProperty('display', 'none', 'important');
+            element = document.getElementById('stic_clock_c');
+            element.style.setProperty('display', 'none', 'important');
+        }
         break;
     
     case "detail":
-        // Define button content
-        var buttons = {
-            showWorkCalendarAssistant: {
-            id: "show_work_calendar_assistant",
-            title: SUGAR.language.get(module, "LBL_PERIODIC_WORK_CALENDAR_BUTTON"),
-            onclick: "location.href='" + STIC.siteUrl + "/index.php?module=stic_Work_Calendar&action=showWorkCalendarAssistant&employeeId=" + STIC.record.id + "'",
-            },
-        };
+        if (editACL){    
+            // Define button content
+            var buttons = {
+                showWorkCalendarAssistant: {
+                id: "show_work_calendar_assistant",
+                title: SUGAR.language.get(module, "LBL_PERIODIC_WORK_CALENDAR_BUTTON"),
+                onclick: "location.href='" + STIC.siteUrl + "/index.php?module=stic_Work_Calendar&action=showWorkCalendarAssistant&employeeId=" + STIC.record.id + "'",
+                },
+            };
+        }
 
         createDetailViewButton(buttons.showWorkCalendarAssistant);
         break;

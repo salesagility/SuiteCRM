@@ -31,16 +31,18 @@ switch (viewType()) {
         break;
     
     case "detail":
-        // Define button content
-        var buttons = {
-            showWorkCalendarAssistant: {
-            id: "show_work_calendar_assistant",
-            title: SUGAR.language.get(module, "LBL_PERIODIC_WORK_CALENDAR_BUTTON"),
-            onclick: "location.href='" + STIC.siteUrl + "/index.php?module=stic_Work_Calendar&action=showWorkCalendarAssistant&employeeId=" + STIC.record.id + "'",
-            },
-        };
-
-        createDetailViewButton(buttons.showWorkCalendarAssistant);
+        if (editACL){
+            // Define button content
+            var buttons = {
+                showWorkCalendarAssistant: {
+                    id: "show_work_calendar_assistant",
+                    title: SUGAR.language.get(module, "LBL_PERIODIC_WORK_CALENDAR_BUTTON"),
+                    onclick: "location.href='" + STIC.siteUrl + "/index.php?module=stic_Work_Calendar&action=showWorkCalendarAssistant&employeeId=" + STIC.record.id + "'",
+                },
+            };
+            
+            createDetailViewButton(buttons.showWorkCalendarAssistant);
+        }
         break;
 
     case "list":

@@ -42,6 +42,7 @@ class CustomUsersViewDetail extends UsersViewDetail
 
     public function display()
     {
+        echo '<script> editACL = '. ACLController::checkAccess('stic_Work_Calendar', 'edit', true) .' </script>';            
         parent::display();
 
         SticViews::display($this);
