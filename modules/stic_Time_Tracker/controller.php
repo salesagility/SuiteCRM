@@ -34,7 +34,7 @@ class stic_Time_TrackerController extends SugarController {
     {
         // Check if the user has started any time registration today
         $GLOBALS['log']->debug('Line '.__LINE__.': '.__METHOD__.':  Checking time tracker registration status.');
-        global $timedate, $current_user;
+        global $current_user;
         
         // Check if time tracker module is active
         include_once 'modules/MySettings/TabController.php';
@@ -53,10 +53,12 @@ class stic_Time_TrackerController extends SugarController {
         );
         
         // return the json result
+        ob_clean();
         $json = json_encode($data);
         header('Content-Type: application/json');
         echo $json;
-        sugar_die('');
+        ob_flush();
+        die();
     }
 
     /**
@@ -75,16 +77,18 @@ class stic_Time_TrackerController extends SugarController {
 
         // Get record data
         $recordName = stic_Time_Tracker::getLastTodayTimeTrackerRecord($current_user->id)['name'];
-
-        // return the json result
         $data = array(
             'date' => $currentUserNow,
             'recordName' => $recordName,
         );
+        
+        // return the json result
+        ob_clean();
         $json = json_encode($data);
         header('Content-Type: application/json');
         echo $json;
-        sugar_die('');
+        ob_flush();
+        die();
     }
 
     /**
@@ -122,6 +126,5 @@ class stic_Time_TrackerController extends SugarController {
             '.$data['description']; 
         }
         $bean->save(false);
-        sugar_die('');
     }
 }
