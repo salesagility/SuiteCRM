@@ -109,7 +109,7 @@ class stic_Work_CalendarUtils
         // Get the data from the smarty template
         $repeat_type = $_REQUEST['repeat_type'] ?: 'Daily' ;
         $interval = $_REQUEST['repeat_interval'] ?: '1';
-        $count = $_REQUEST['repeat_count'] ?: '1';
+        $count = $_REQUEST['repeat_count'];
         $until = $_REQUEST['repeat_until'];
         $type = $_REQUEST['type'];
         $startDay = $_REQUEST['repeat_start_day'];
