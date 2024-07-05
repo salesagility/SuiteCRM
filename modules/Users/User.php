@@ -879,7 +879,9 @@ class User extends Person implements EmailInterface
                 $this->setPreference('timezone', $_POST['timezone'], 0, 'global');
             }
             if (isset($_POST['language'])) {
-                $_SESSION['authenticated_user_language'] = $_POST['language'];
+                if ($_SESSION['authenticated_user_id'] === $this->id){
+                    $_SESSION['authenticated_user_language'] = $_POST['language'];
+                }
                 $current_language = $_POST['language'];
                 $mod_strings = return_module_language($_POST['language'], 'Users');
                 $app_strings = return_application_language($_POST['language']);
