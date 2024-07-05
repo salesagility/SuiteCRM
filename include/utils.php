@@ -249,6 +249,7 @@ function make_sugar_config(&$sugar_config)
         'default_navigation_paradigm' => empty($navigation_paradigm) ? 'gm' : $navigation_paradigm,
         'default_call_status' => 'Planned',
         'js_lang_version' => 1,
+        'login_language' => true,
         'passwordsetting' => empty($passwordsetting) ? array(
             'SystemGeneratedPasswordON' => '',
             'generatepasswordtmpl' => '',
@@ -435,6 +436,7 @@ function get_sugar_config_defaults(): array
         'import_max_records_per_file' => 100,
         'import_max_records_total_limit' => '',
         'languages' => ['en_us' => 'English (US)'],
+        'login_language' => true,
         'large_scale_test' => false,
         'list_max_entries_per_page' => 20,
         'list_max_entries_per_subpanel' => 10,
