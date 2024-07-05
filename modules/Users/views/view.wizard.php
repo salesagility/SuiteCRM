@@ -204,6 +204,7 @@ eoq;
 
         //// Name display format
         $this->ss->assign('default_locale_name_format', $locale->getLocaleFormatMacro($current_user));
+        $this->ss->assign('user_language', get_select_options_with_id($sugar_config['languages'], $current_user->getPreference('language')));
         $this->ss->assign('getNameJs', $locale->getNameJs());
 
         $this->ss->assign('TIMEOPTIONS', get_select_options_with_id($sugar_config['time_formats'], $current_user->_userPreferenceFocus->getDefaultPreference('default_time_format')));
