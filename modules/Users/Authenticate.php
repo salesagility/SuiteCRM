@@ -71,7 +71,7 @@ if (isset($_SESSION['authenticated_user_id'])) {
 
     global $current_user;
 
-    if (isset($current_user) && !$sugar_config['login_language']){
+    if (isset($current_user) && ($sugar_config['login_language'] ?? false) === false){
         $language = $current_user->getPreference('language');
         $_SESSION['authenticated_user_language'] = $language;
     }
