@@ -148,7 +148,7 @@ class SugarAuthenticate
     public function postLoginAuthenticate()
     {
         global $reset_language_on_default_user, $sugar_config;
-        
+
         //just do a little house cleaning here
         unset($_SESSION['login_password']);
         unset($_SESSION['login_error']);
@@ -161,10 +161,17 @@ class SugarAuthenticate
         }
 
         //set user language
-        if (isset($reset_language_on_default_user) && $reset_language_on_default_user && $GLOBALS['current_user']->user_name == $sugar_config['default_user_name']) {
+        if (isset($reset_language_on_default_user) &&
+            $reset_language_on_default_user &&
+            $GLOBALS['current_user']->user_name == $sugar_config['default_user_name']
+        ) {
             $authenticated_user_language = $sugar_config['default_language'];
         } else {
-            $authenticated_user_language = isset($_REQUEST['login_language']) ? $_REQUEST['login_language'] : (isset($_REQUEST['ck_login_language_20']) ? $_REQUEST['ck_login_language_20'] : $sugar_config['default_language']);
+            if (isset($_REQUEST['login_language']) || isset($_REQUEST['ck_login_language_20'])){
+                $language = $_REQUEST['login_language'] ?? $_REQUEST['ck_login_language_20'];
+                $GLOBALS['current_user']->setPreference('language', $language, 0, 'global');
+            }
+            $authenticated_user_language = $GLOBALS['current_user']->getPreference('language') ?? $sugar_config['default_language'];
         }
 
         $_SESSION['authenticated_user_language'] = $authenticated_user_language;
