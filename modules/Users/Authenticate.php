@@ -71,15 +71,6 @@ if (isset($_SESSION['authenticated_user_id'])) {
 
     global $current_user;
 
-    if (isset($current_user) && ($sugar_config['login_language'] ?? false) === false){
-        $language = $current_user->getPreference('language');
-        $_SESSION['authenticated_user_language'] = $language;
-    }
-
-    if (isset($current_user) && !empty($_SESSION['authenticated_user_language'])){
-        $current_user->setPreference('language', $_SESSION['authenticated_user_language'], 0, 'global');
-    }
-
     if (isset($current_user)  && empty($login_vars)) {
         if (!empty($GLOBALS['sugar_config']['default_module']) && !empty($GLOBALS['sugar_config']['default_action'])) {
             $url = "index.php?module={$GLOBALS['sugar_config']['default_module']}&action={$GLOBALS['sugar_config']['default_action']}";

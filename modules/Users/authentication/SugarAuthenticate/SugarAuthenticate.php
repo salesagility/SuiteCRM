@@ -167,11 +167,15 @@ class SugarAuthenticate
         ) {
             $authenticated_user_language = $sugar_config['default_language'];
         } else {
-            if (isset($_REQUEST['login_language']) || isset($_REQUEST['ck_login_language_20'])){
-                $language = $_REQUEST['login_language'] ?? $_REQUEST['ck_login_language_20'];
+            if (isset($_REQUEST['login_language'])){
+                $language = $_REQUEST['login_language'];
                 $GLOBALS['current_user']->setPreference('language', $language, 0, 'global');
             }
-            $authenticated_user_language = $GLOBALS['current_user']->getPreference('language') ?? $sugar_config['default_language'];
+            $authenticated_user_language = $GLOBALS['current_user']->getPreference('language') ?? $_REQUEST['ck_login_language_20'] ?? $sugar_config['default_language'];
+        }
+
+        if (str_contains($sugar_config['disabled_languages'], $authenticated_user_language)){
+            $authenticated_user_language = $sugar_config['default_language'];
         }
 
         $_SESSION['authenticated_user_language'] = $authenticated_user_language;
