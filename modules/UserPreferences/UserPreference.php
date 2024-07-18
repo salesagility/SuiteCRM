@@ -98,9 +98,14 @@ class UserPreference extends SugarBean
         $name,
         $category = 'global'
         ) {
-        global $sugar_config;
+        global $sugar_config, $current_user;
 
         $user = $this->_userFocus;
+
+        if ($user->user_name !== $current_user->user_name){
+            $this->loadPreferences($category);
+            return $_SESSION[$user->user_name.'_PREFERENCES'][$category][$name];
+        }
 
         // if the unique key in session doesn't match the app or prefereces are empty
         if (!isset($_SESSION[$user->user_name.'_PREFERENCES'][$category]) || (!empty($_SESSION['unique_key']) && $_SESSION['unique_key'] != $sugar_config['unique_key'])) {
