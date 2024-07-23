@@ -42,6 +42,12 @@ class stic_RegistrationsLogicHooks {
             $bean->name = $subjectName . ' - ' . $eventName;
         }
 
+        // If is a new record (cloned), reset calculated fields
+        if (!isset($bean->fetched_row)) {
+            $bean->attended_hours = null;
+            $bean->attendance_percentage = null;
+        }
+
     }
 
     public function after_save(&$bean, $event, $arguments) {
