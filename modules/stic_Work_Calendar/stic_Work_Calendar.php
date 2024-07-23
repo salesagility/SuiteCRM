@@ -82,6 +82,9 @@ class stic_Work_Calendar extends Basic
         $startDate = $timedate->fromDbFormat($this->start_date, TimeDate::DB_DATETIME_FORMAT);
         $startDate = $timedate->asUser($startDate, $current_user);
 
+        // Date used to calculate weekday field
+        $startDateInTZ = $timedate->fromUser($startDate, $current_user);
+        $startDateInTZ = $startDateInTZ->format(TimeDate::DB_DATE_FORMAT);
         
         if (!in_array($this->type, self::ALL_DAY_TYPES)) 
         {
@@ -122,7 +125,7 @@ class stic_Work_Calendar extends Basic
 
         // Set weekday field
         if ($this->start_date != $this->fetched_row['start_date']) {
-            $this->weekday = date('w', strtotime($this->start_date));
+            $this->weekday = date('w', strtotime($startDateInTZ));
         }
 
         // Save the bean
