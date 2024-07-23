@@ -115,7 +115,9 @@ class stic_DataAnalyzer
         }
 
         // Send email only if there are validation results on the same day
-        $query = "SELECT count(*) as num_results FROM `stic_validation_results` WHERE deleted = 0 AND DATE_FORMAT(date_modified,'%Y-%m-%d') LIKE UTC_DATE();";
+        global $current_user;
+        $tzone = $current_user->getPreference('timezone') ?? $sugar_config['default_timezone'] ?? date_default_timezone_get();        
+        $query = "SELECT count(*) as num_results FROM `stic_validation_results` WHERE deleted = 0 AND DATE_FORMAT(CONVERT_TZ(date_modified, '+00:00', '" . $tzone ."'),'%Y-%m-%d') LIKE CURDATE();";
         $result = $db->query($query);
         $row = $db->fetchByAssoc($result);
         if (isset($row['num_results']) && intval($row['num_results']) > 0) {
