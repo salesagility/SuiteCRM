@@ -477,16 +477,25 @@ var sticCVUtils = class sticCVUtils {
     var oldRequired = sticCVUtils.getRequiredStatus(field);
 
     var customView = field.customView;
+    sticCVUtils.show(field.header.$element.find("span.required"), customView, false);
     if (required) {
       sticCVUtils.addClass(field.header.$element, customView, "conditional-required");
-      sticCVUtils.show(field.header.$element.find("span.required"), customView, false);
       removeFromValidate(customView.formName, field.name);
+      var fieldName = field.header.text();
+      if (fieldName === null || fieldName === undefined || fieldName.trim() === "") {
+        fieldName = SUGAR.language.get("app_strings", "ERR_MISSING_REQUIRED_FIELDS");
+      } else {
+        fieldName = fieldName.trim();
+        if (fieldName.endsWith(":")) {
+          fieldName = fieldName.slice(0, -1);
+        }
+      }
       addToValidate(
         customView.formName,
         field.name,
         field.content.type,
         true,
-        SUGAR.language.get("app_strings", "ERR_MISSING_REQUIRED_FIELDS")
+        fieldName
       );
       if (!oldRequired) {
         customView.addUndoFunction(function() {
