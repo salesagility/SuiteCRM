@@ -593,7 +593,7 @@ var sticCVUtils = class sticCVUtils {
   }
 
   static isTrue(value) {
-    return value === true || value === "1" || value === 1;
+    return value === true || value === "1" || value === 1 || value === "yes" || value === "true";
   }
 
   static normalizeToCompare(value) {
