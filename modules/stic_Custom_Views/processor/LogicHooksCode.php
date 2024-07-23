@@ -34,7 +34,10 @@ class stic_Custom_Views_ProcessorLogicHooks
         if ($action == "subpanelcreates") {
             $view = "quickcreate";
             $module = $_POST["target_module"];
+        } else if ($action == "popup") {
+            $view = "quickcreate";
         }
+        
         $availableViews = $GLOBALS['app_list_strings']['stic_custom_views_views_list'];
         if (!array_key_exists($view, $availableViews)) {
             return "";
