@@ -268,14 +268,21 @@ var sticCVUtils = class sticCVUtils {
 
   static getValue(fieldContent, value_list) {
     var $elem = fieldContent.$editor;
-    if (fieldContent.customView.view == "detailview" && fieldContent.type != "bool") {
+    if (
+      fieldContent.customView.view == "detailview" &&
+      fieldContent.type != "bool" &&
+      !fieldContent.$element.hasClass("inlineEditActive")
+    ) {
       $elem = fieldContent.$fieldText;
+      if ($elem.length > 0 && (fieldContent.type == "multienum" || fieldContent.type == "enum")) {
+        return $elem.val().replaceAll("^", "").split(",").sort().join(",");
+      }
     }
     if ($elem.length == 0 || $elem.get(0).parentNode === null) {
       $elem = fieldContent.$element;
     }
 
-    if (fieldContent.customView.view == "detailview") {
+    if (fieldContent.customView.view == "detailview" && !fieldContent.$element.hasClass("inlineEditActive")) {
       if (fieldContent.type == "relate") {
         return $elem.attr("data-id-value") + "|" + $elem.text().trim();
       }
@@ -288,7 +295,8 @@ var sticCVUtils = class sticCVUtils {
         value_list != "" &&
         fieldContent.type != "date" &&
         fieldContent.type != "datetime" &&
-        fieldContent.type != "datetimecombo"
+        fieldContent.type != "datetimecombo" &&
+        fieldContent.type != "multienum"
       ) {
         return sticCVUtils.getListValueFromLabel(value_list, text);
       }
@@ -502,12 +510,19 @@ var sticCVUtils = class sticCVUtils {
     return false;
   }
 
+  static createObserverCallback($elem, callback) {
+    return function() {
+      sticCVUtils.onChange($elem.find("input"), callback);
+      callback();
+    };
+  }
+
   static onChange($elem, callback) {
     $elem.each(function() {
       $(this).on("change paste keyup", callback);
       YAHOO.util.Event.on($(this)[0], "change", callback);
       if (!$(this).is(":input")) {
-        var observer = new MutationObserver(callback);
+        var observer = new MutationObserver(sticCVUtils.createObserverCallback($(this), callback));
         observer.observe($(this)[0], { attributes: true, childList: true, subtree: true, characterData: true });
       }
     });
@@ -534,6 +549,19 @@ var sticCVUtils = class sticCVUtils {
       }
     });
     return res;
+  }
+
+  static getMultienumLabelFromKeys(app_list_stringsName, keyValues) {
+    var keyValueArray = keyValues.replaceAll("^", "").split(",");
+    var labelValueArray = [];
+  
+    for (var i = 0; i < keyValueArray.length; i++) {
+      var label = SUGAR.language.languages.app_list_strings[app_list_stringsName][keyValueArray[i]];
+      if(label !== undefined) {
+        labelValueArray.push(label);  
+      }
+    }
+    return labelValueArray.join(", ");
   }
 
   static isTrue(value) {
