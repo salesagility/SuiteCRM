@@ -209,9 +209,6 @@ var sticCV_Record_Field_Content = class sticCV_Record_Field_Content extends stic
         return this;
       case "fixed_value":
         return this.value(action.value);
-      case "visible":
-        sticCVUtils.show(this.$element, this.customView, action.value);
-        return this;
     }
     return super.applyAction(action);
   }

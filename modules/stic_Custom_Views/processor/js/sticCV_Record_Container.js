@@ -36,11 +36,15 @@ var sticCV_Record_Container = class sticCV_Record_Container {
     this.content = null;
   }
 
-  show(show = true) {
-    return this.applyAction({ action: "visible", value: show, element_section: "container" });
+  show(show = true, automatically = false) {
+    if (automatically) {
+      return this.applyAction({ action: "visible_auto", value: show, element_section: "container" });
+    } else {
+      return this.applyAction({ action: "visible", value: show, element_section: "container" });
+    }
   }
-  hide() {
-    return this.show(false);
+  hide(automatically = false) {
+    return this.show(false, automatically);
   }
 
   style(style) {

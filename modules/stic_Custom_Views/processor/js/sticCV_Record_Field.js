@@ -58,6 +58,7 @@ var sticCV_Record_Field = class sticCV_Record_Field extends sticCV_Record_Contai
   applyAction(action) {
     switch (action.action) {
       case "visible":
+      case "visible_auto":
         if (action.element_section != "header" && action.element_section != "field_label") {
           super.applyAction(action);
           sticCVUtils.check_required_visible(this);
