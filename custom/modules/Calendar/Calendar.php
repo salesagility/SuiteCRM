@@ -502,6 +502,7 @@ class CustomCalendar extends Calendar
 
     /**
      * STIC-Custom 20240222 MHP - Includes/excludes the stic_Work_Calendar records from the activities array according to filters values.
+     * https://github.com/SinergiaTIC/SinergiaCRM/pull/114
      * 
      * Current existing filters:
      * - stic_work_calendar_type

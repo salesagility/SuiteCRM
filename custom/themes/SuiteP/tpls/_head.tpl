@@ -93,7 +93,8 @@
     <script type="text/javascript" src='{sugar_getjspath file="themes/SuiteP/js/jscolor.js"}'></script>
     <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
     <script type="text/javascript" src='{sugar_getjspath file="vendor/tinymce/tinymce/tinymce.min.js"}'></script>
-    {* STIC-Custom 20240222 MHP - Add CSS and JS for efficient registration button handling *}     
+    {* STIC-Custom 20240222 MHP - Add CSS and JS for efficient registration button handling 
+       https://github.com/SinergiaTIC/SinergiaCRM/pull/114 *}     
     <link href="modules/stic_Time_Tracker/menuButton/SticTimeTrackerButtonInMainMenu.css" rel="stylesheet" type="text/css"/>    
     <script type="text/javascript" src='{sugar_getjspath file="modules/stic_Time_Tracker/menuButton/SticTimeTrackerButtonInMainMenu.js"}'></script>
     {literal}
@@ -102,7 +103,10 @@
             // If used, updates the button color based on whether or not there is an active time record for today
             $(document).ready(function() 
             {
-                checkTimeTrackerButtonStatus();
+                // Check that it is not the login view
+                if (!window.location.href.includes('action=Login') && !window.location.href.includes('module=Users')) {
+                    checkTimeTrackerButtonStatus();
+                }
             });
         </script>
     {/literal}

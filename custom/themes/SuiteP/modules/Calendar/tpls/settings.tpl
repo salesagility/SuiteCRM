@@ -94,7 +94,8 @@ $(function() {
 									</tr>
 									<tr>
 										<td scope="row" valign="top" width="55%">
-											<!-- STIC-Custom 20240222 MHP - Add information icon and informational popup -->	
+											<!-- STIC-Custom 20240222 MHP - Add information icon and informational popup 
+												 https://github.com/SinergiaTIC/SinergiaCRM/pull/114 -->     	
 											<!-- {$MOD.LBL_SETTINGS_DISPLAY_SHARED_CALENDAR_SEPARATE} -->
 											{$MOD.LBL_SETTINGS_DISPLAY_SHARED_CALENDAR_SEPARATE} 
 											<i class="inline-help glyphicon glyphicon-info-sign"></i>
@@ -210,7 +211,8 @@ $(function() {
 										<th>Module</th><th>Body</th><th>Border</th><th>Text</th>
 									</tr>
 									{foreach from=$activity key=name item=def}
-										<!-- STIC-Custom 20240222 MHP - The work calendar records are colored depending on whether they are work type or not. -->	
+										<!-- STIC-Custom 20240222 MHP - The work calendar records are colored depending on whether they are work type or not. 
+										     https://github.com/SinergiaTIC/SinergiaCRM/pull/114 -->	
                                         {if $name != 'stic_Work_Calendar'}
 											<tr>
 												<td>{$def.label}</td>
