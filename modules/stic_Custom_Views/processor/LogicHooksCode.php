@@ -257,7 +257,7 @@ class stic_Custom_Views_ProcessorLogicHooks
             case "date":
             case "datetime":
             case "datetimecombo":
-                return $timedate->to_display_date_time($value, true, false, $current_user);
+                return $timedate->asUser($timedate->fromDbFormat($value, TimeDate::DB_DATETIME_FORMAT), $current_user);
         }
         return $value;
     }
