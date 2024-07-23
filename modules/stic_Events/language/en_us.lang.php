@@ -122,4 +122,5 @@ $mod_strings = array(
     'LBL_SESSION_ENABLE_FIELDS' => 'Show other Sessions fields',
     'LBL_SESSION_ENABLE_FIELDS_INFO' => 'Apart from the mandatory first session start and end fields and repeating frequency, you can also set default values for other fields.',
     'LBL_SESSION_NAME_INFO' => 'The session name can include a numeric counter using the {{$counter}} parameter. Example: if the value "Session {{$counter}}" is specified the sessions will be named "Session 1", "Session 2", etc.',
+    'LBL_SESSION_COLOR_EMPTY_INFO' => 'If the field is not entered, the sessions will be assigned the color that appears in the event.',
 );

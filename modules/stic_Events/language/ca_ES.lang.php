@@ -122,4 +122,5 @@ $mod_strings = array(
     'LBL_SESSION_ENABLE_FIELDS' => 'Mostra altres camps de Sessions',
     'LBL_SESSION_ENABLE_FIELDS_INFO' => "A banda dels camps obligatoris d'inici i final de la primera sessió i de la freqüència de repetició, podeu establir també valors per defecte per a d'altres camps.",
     'LBL_SESSION_NAME_INFO' => 'El nom de la sessió pot incloure un comptador numèric utilitzant el parámetre {{$counter}}. Exemple: si indiqueu el valor "Sessió {{$counter}}" les sessions quedaran anomenades "Sessió 1", "Sessió 2", etc.',
+    'LBL_SESSION_COLOR_EMPTY_INFO' => "Si no s'informa el camp s'assignarà a les sessions el color que consti a l'esdeveniment.",
 );

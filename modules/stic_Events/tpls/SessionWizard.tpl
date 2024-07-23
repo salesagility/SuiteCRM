@@ -217,7 +217,12 @@
 				</td>
 			</tr>
 			<tr id="color_row">
-				<td width="12.5%" valign="top" scope="row">{$MOD_SESSION.LBL_COLOR}:</td>
+				<td width="12.5%" valign="top" scope="row">
+					{$MOD_SESSION.LBL_COLOR}
+					<span id="session_color_empty_info" style='position: relative;'
+						class="inline-help glyphicon glyphicon-info-sign"></span>
+					:
+				</td>
 				<td width="37.5%" valign="top">
 					<select class='sqsEnabled' name='color' id='color' value='' title=''>
 						{html_options options=$COLOR}
@@ -280,7 +285,7 @@
 
 		addQtipFunctionality('#session_enable_fields_info', 'stic_Events', 'LBL_SESSION_ENABLE_FIELDS_INFO');
 		addQtipFunctionality('#session_name_info', 'stic_Events', 'LBL_SESSION_NAME_INFO');
-
+		addQtipFunctionality('#session_color_empty_info', 'stic_Events', 'LBL_SESSION_COLOR_EMPTY_INFO');
 
 
 		buildEditableColorFieldSelectize('color');

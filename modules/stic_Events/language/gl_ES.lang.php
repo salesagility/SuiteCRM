@@ -122,4 +122,5 @@ $mod_strings = array(
     'LBL_SESSION_ENABLE_FIELDS' => 'Mostrar outros campos de Sesións',
     'LBL_SESSION_ENABLE_FIELDS_INFO' => 'Aparte dos campos obrigatorios de inicio e final da primeira sesión  da frecuencia de repetición, é posible establecer tamén valores por defecto para outros campos.',
     'LBL_SESSION_NAME_INFO' => 'O nome da sesión pode incluir un contador numérico utilizando o parámetro {{$counter}}. Exemplo: se se indica ol valor "Sesión {{$counter}}", as sesións denominaranse "Sesión 1", "Sesión 2", etc.',
+    'LBL_SESSION_COLOR_EMPTY_INFO' => 'Se non se informa o campo, asignaráselles ás sesións a cor que aparece no evento.',
 );
