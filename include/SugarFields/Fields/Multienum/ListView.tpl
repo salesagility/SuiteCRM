@@ -42,7 +42,16 @@
 {if !empty($parentFieldArray.$col)}
 {multienum_to_array string=$parentFieldArray.$col assign="vals"}
 {foreach from=$vals item=item name=multiEnum}
-{$vardef.options_list.$item}{if !$smarty.foreach.multiEnum.last},
+{* STIC-Custom 20240717 MHP -  https://github.com/SinergiaTIC/SinergiaCRM/pull/15
+    Show the value in case it does not belong to the values ​​in the list *}
+{* { {$vardef.options_list.$item}{if !$smarty.foreach.multiEnum.last}, *}
+{if $vardef.options_list.$item != ''}
+    {$vardef.options_list.$item}
+{else}
+    {$item}
+{/if}
+{if !$smarty.foreach.multiEnum.last},
+{* END STIC-Custom  *}
 {/if}
 {/foreach}
 {/if}

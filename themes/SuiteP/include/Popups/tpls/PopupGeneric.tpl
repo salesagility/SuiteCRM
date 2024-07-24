@@ -189,7 +189,23 @@
 								{multienum_to_array string=$rowData.$col assign="vals"}
 								{foreach from=$vals item=item}
 									{counter name="oCount"}
-									{sugar_translate label=$params.options select=$item}{if $oCount !=  count($vals)},{/if}
+									{* STIC-Custom 20240717 MHP -  https://github.com/SinergiaTIC/SinergiaCRM/pull/15
+										Show the value in case it does not belong to the values ​​in the list *}
+									{* {sugar_translate label=$params.options select=$item}{if $oCount !=  count($vals)},{/if} *}
+									{assign var=itemInArray value=false}
+									{assign var=fieldName value=$params.name}
+									{foreach from=$fields.$fieldName.options key=key item=value}
+										{if ($key == $item)}
+											{assign var=itemInArray value=true}
+										{/if}
+									{/foreach}	
+									{if ($itemInArray)}
+										{sugar_translate label=$params.options select=$item}
+									{else}
+										{$item}
+									{/if}
+									{if $oCount !=  count($vals)},{/if}
+									{* STIC-Custom *}
 								{/foreach}
                         {else}
                             {sugar_field parentFieldArray=$rowData vardef=$params displayType=ListView field=$col}

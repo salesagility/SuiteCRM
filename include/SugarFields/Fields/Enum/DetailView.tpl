@@ -46,7 +46,15 @@ lists can work. *}
 { {{sugarvar key='options' string=true}} }
 {else}
 <input type="hidden" class="sugar_field" id="{{sugarvar key='name'}}" value="{ {{sugarvar key='value' string=true}} }">
-{ {{sugarvar key='options' string=true}}[{{sugarvar key='value' string=true}}]}
+{* STIC-Custom 20240717 MHP -  https://github.com/SinergiaTIC/SinergiaCRM/pull/15
+    Show the value in case it does not belong to the values ​​in the list *}
+{* { {{sugarvar key='options' string=true}}[{{sugarvar key='value' string=true}}]} *}
+{if !empty({{sugarvar key='options' string=true}}[{{sugarvar key='value' string=true}}])}
+    { {{sugarvar key='options' string=true}}[{{sugarvar key='value' string=true}}] }
+{else}  
+    { {{sugarvar key='value' string=true}} }
+{/if}
+{* END STIC-Custom  *}
 {/if}
 {{if !empty($displayParams.enableConnectors)}}
 {{sugarvar_connector view='DetailView'}}
