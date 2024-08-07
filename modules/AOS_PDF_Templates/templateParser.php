@@ -116,6 +116,13 @@ class templateParser
                         ENT_COMPAT, 'UTF-8');
                     $repl_arr[$key . "_" . $fieldName] = html_entity_decode((string) $focus->{$fieldName},
                         ENT_COMPAT, 'UTF-8');
+                } elseif ($field_def['type'] == 'decimal' || $field_def['type'] == 'float') {
+                    if ($_REQUEST['entryPoint'] == 'formLetter') {
+                        $value = formatDecimalInConfigSettings($focus->$fieldName, true);
+                    } else {
+                        $value = formatDecimalInConfigSettings($focus->$fieldName, false);
+                    }
+                    $repl_arr[$key . "_" . $fieldName] = $value;
                 } else {
                     $repl_arr[$key . "_" . $fieldName] = $focus->{$fieldName};
                 }
