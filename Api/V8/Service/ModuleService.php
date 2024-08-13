@@ -432,6 +432,10 @@ class ModuleService
             throw new AccessDeniedException();
         }
 
+        if (isset($attributes['deleted']) && isTrue($attributes['deleted']) && !$bean->ACLAccess('delete')) {
+            throw new AccessDeniedException();
+        }
+
         $this->setRecordUpdateParams($bean, $attributes);
         $fileUpload = $this->processAttributes($bean, $attributes);
         $bean->save();
