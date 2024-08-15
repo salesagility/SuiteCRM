@@ -1030,6 +1030,9 @@ EOQ;
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
     RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&modulename=$1&lang=$2 [L,QSA]
 
+    #Fix #10345 Microsoft Azure OAuth Redirect URL cannot have query string.
+    RewriteRule "^entryPoint/setExternalOAuthToken" "index.php?entryPoint=setExternalOAuthToken" [PT,L]
+
     # --------- DEPRECATED --------
     RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
     RewriteRule ^api/(.*?)$ lib/API/public/index.php/$1 [L]
