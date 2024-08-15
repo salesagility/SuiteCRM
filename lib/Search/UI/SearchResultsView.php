@@ -55,6 +55,6 @@ class SearchResultsView extends View
      */
     public function __construct()
     {
-        parent::__construct(__DIR__ . '/templates/search.results.tpl');
+        parent::__construct(__DIR__ .'/'. get_custom_file_if_exists('templates/search.results.tpl'));
     }
 }
