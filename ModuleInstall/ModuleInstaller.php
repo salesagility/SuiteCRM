@@ -608,7 +608,7 @@ class ModuleInstaller
                 }
                 $user->retrieve($userId);
                 $prefs = $user->getPreference('globalSearch', 'search');
-                if (array_key_exists($beanDefs['module'], $prefs) == false) {
+                if (empty($prefs) || array_key_exists($beanDefs['module'], $prefs) == false) {
                     continue;
                 }
                 unset($prefs[$beanDefs['module']]);
