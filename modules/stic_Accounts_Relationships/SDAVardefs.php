@@ -52,8 +52,8 @@ $SDAVirtualFields = array(
         'expression' => "CASE
             WHEN (start_date IS NULL OR start_date <= LAST_DAY(CONCAT(YEAR(CURDATE()),'-12-31')))
             AND (end_date IS NULL OR end_date >= CONCAT(YEAR(CURDATE()),'-01-01'))
-            THEN 1
-            ELSE 0
+            THEN '1'
+            ELSE '0'
         END",
     ),
     'SDA_ACTIVE_CURRENT_YEAR_MINUS_1' => array(
@@ -65,8 +65,8 @@ $SDAVirtualFields = array(
         'expression' => "CASE
             WHEN (start_date IS NULL OR start_date <= LAST_DAY(CONCAT(YEAR(CURDATE())-1,'-12-31')))
             AND (end_date IS NULL OR end_date >= CONCAT(YEAR(CURDATE())-1,'-01-01'))
-            THEN 1
-            ELSE 0
+            THEN '1'
+            ELSE '0'
         END",
     ),
     'SDA_ACTIVE_CURRENT_YEAR_MINUS_2' => array(
@@ -78,8 +78,8 @@ $SDAVirtualFields = array(
         'expression' => "CASE
             WHEN (start_date IS NULL OR start_date <= LAST_DAY(CONCAT(YEAR(CURDATE())-2,'-12-31')))
             AND (end_date IS NULL OR end_date >= CONCAT(YEAR(CURDATE())-2,'-01-01'))
-            THEN 1
-            ELSE 0
+            THEN '1'
+            ELSE '0'
         END",
     ),
     'SDA_ACTIVE_CURRENT_YEAR_MINUS_3' => array(
@@ -91,8 +91,8 @@ $SDAVirtualFields = array(
         'expression' => "CASE
             WHEN (start_date IS NULL OR start_date <= LAST_DAY(CONCAT(YEAR(CURDATE())-3,'-12-31')))
             AND (end_date IS NULL OR end_date >= CONCAT(YEAR(CURDATE())-3,'-01-01'))
-            THEN 1
-            ELSE 0
+            THEN '1'
+            ELSE '0'
         END",
     ),
     'SDA_ACTIVE_CURRENT_YEAR_MINUS_4' => array(
@@ -104,8 +104,8 @@ $SDAVirtualFields = array(
         'expression' => "CASE
             WHEN (start_date IS NULL OR start_date <= LAST_DAY(CONCAT(YEAR(CURDATE())-4,'-12-31')))
             AND (end_date IS NULL OR end_date >= CONCAT(YEAR(CURDATE())-4,'-01-01'))
-            THEN 1
-            ELSE 0
+            THEN '1'
+            ELSE '0'
         END",
     ),
 );
