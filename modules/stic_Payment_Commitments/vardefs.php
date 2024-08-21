@@ -868,7 +868,7 @@ while ($i <= 12) {
     
     $dictionary['stic_Payment_Commitments']['fields']['expected_payments_month_' . $i] = array(
         'name' => 'expected_payments_month_' . $i,
-        'vname' => 'LBL_KREPORTER_EXPECTED_PAYMENTS_MONTH_' . $i,
+        'vname' => 'LBL_EXPECTED_PAYMENTS_MONTH_' . $i,
         'type' => 'kreporter',
         'source' => 'non-db',
         'kreporttype' => 'decimal',

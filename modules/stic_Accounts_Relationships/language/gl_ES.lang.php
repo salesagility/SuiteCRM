@@ -21,7 +21,7 @@
  * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
  */
 
-$mod_strings = array (
+$mod_strings = array(
     'LBL_ASSIGNED_TO_ID' => 'Asignado a',
     'LBL_ASSIGNED_TO_NAME' => 'Asignado a',
     'LBL_ASSIGNED_TO' => 'Asignado a',
@@ -77,4 +77,14 @@ $mod_strings = array (
     'LBL_STIC_ACCOUNTS_RELATIONSHIPS_ACCOUNTS_FROM_ACCOUNTS_TITLE' => 'Organización',
     'LBL_START_DATE_ERROR' => 'A data de alta debe ser anterior á data de baixa.',
     'LBL_END_DATE_ERROR' => 'A data de baixa debe ser posterior á data de alta.',
+    'LBL_SDA_ACTIVE_CURRENT_YEAR_MINUS_0' => 'Relación activa este ano',
+    'LBL_SDA_ACTIVE_CURRENT_YEAR_MINUS_0_DESCRIPTION' => 'Indica se a relación estivo activa en calquera momento este ano.',
+    'LBL_SDA_ACTIVE_CURRENT_YEAR_MINUS_1' => 'Relación activa o ano anterior',
+    'LBL_SDA_ACTIVE_CURRENT_YEAR_MINUS_1_DESCRIPTION' => 'Indica se a relación estivo activa en calquera momento o ano anterior.',
+    'LBL_SDA_ACTIVE_CURRENT_YEAR_MINUS_2' => 'Relación activa hai dous anos',
+    'LBL_SDA_ACTIVE_CURRENT_YEAR_MINUS_2_DESCRIPTION' => 'Indica se a relación estivo activa en calquera momento hai dous anos.',
+    'LBL_SDA_ACTIVE_CURRENT_YEAR_MINUS_3' => 'Relación activa hai tres anos',
+    'LBL_SDA_ACTIVE_CURRENT_YEAR_MINUS_3_DESCRIPTION' => 'Indica se a relación estivo activa en calquera momento hai tres anos.',
+    'LBL_SDA_ACTIVE_CURRENT_YEAR_MINUS_4' => 'Relación activa hai catro anos',
+    'LBL_SDA_ACTIVE_CURRENT_YEAR_MINUS_4_DESCRIPTION' => 'Indica se a relación estivo activa en calquera momento hai catro anos.',
 );
