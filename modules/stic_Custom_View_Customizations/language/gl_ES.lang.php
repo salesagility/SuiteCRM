@@ -22,7 +22,7 @@
  */
 
 $mod_strings = array(
-    // Cadenas comunes
+    // Cadeas comúns
     'LBL_ASSIGNED_TO_ID' => 'Asignado a (ID)',
     'LBL_ASSIGNED_TO_NAME' => 'Asignado a',
     'LBL_ASSIGNED_TO' => 'Asignado a',
@@ -49,36 +49,36 @@ $mod_strings = array(
     'LBL_ASCENDING' => 'Ascendente',
     'LBL_DESCENDING' => 'Descendente',
 
-    // Acciones del módulo
-    'LBL_LIST_FORM_TITLE' => 'Lista de Personalizaciones',
-    'LBL_MODULE_NAME' => 'Personalizaciones',
-    'LBL_MODULE_TITLE' => 'Personalizaciones',
-    'LBL_HOMEPAGE_TITLE' => 'Mis Personalizaciones',
-    'LNK_NEW_RECORD' => 'Crear una Personalización',
+    // Accións do módulo
+    'LBL_LIST_FORM_TITLE' => 'Lista de Personalizacións',
+    'LBL_MODULE_NAME' => 'Personalizacións',
+    'LBL_MODULE_TITLE' => 'Personalizacións',
+    'LBL_HOMEPAGE_TITLE' => 'As miñas Personalizacións',
+    'LNK_NEW_RECORD' => 'Crear unha Personalización',
     'LNK_LIST' => 'Ver Personalizaciones',
-    'LNK_IMPORT_STIC_CUSTOM_VIEW_CUSTOMIZATIONS' => 'Importar Personalizaciones',
-    'LBL_SEARCH_FORM_TITLE' => 'Buscar Personalizaciones',
+    'LNK_IMPORT_STIC_CUSTOM_VIEW_CUSTOMIZATIONS' => 'Importar Personalizacións',
+    'LBL_SEARCH_FORM_TITLE' => 'Buscar Personalizacións',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'Historial',
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Actividades',
-    'LBL_STIC_CUSTOM_VIEW_CUSTOMIZATIONS_SUBPANEL_TITLE' => 'Personalizaciones',
-    'LBL_NEW_FORM_TITLE' => 'Nueva Personalización',
+    'LBL_STIC_CUSTOM_VIEW_CUSTOMIZATIONS_SUBPANEL_TITLE' => 'Personalizacións',
+    'LBL_NEW_FORM_TITLE' => 'Nova Personalización',
 
-    // Campos del módulo
-    'LBL_CUSTOMIZATION_ORDER' => 'Orden',
+    // Campos do módulo
+    'LBL_CUSTOMIZATION_ORDER' => 'Orde',
     'LBL_INIT' => 'Inicial',
-    'LBL_CONDITIONS' => 'Condiciones',
-    'LBL_ACTIONS' => 'Acciones',
+    'LBL_CONDITIONS' => 'Condicións',
+    'LBL_ACTIONS' => 'Accións',
     'LBL_STATUS' => 'Estado',
 
-    // Paneles de las vistas
-    'LBL_DEFAULT_PANEL' => 'Datos generales',
-    'LBL_CONDITION_PANEL' => 'Condiciones',
-    'LBL_ACTION_PANEL' => 'Acciones',
+    // Paneis das vistas
+    'LBL_DEFAULT_PANEL' => 'Datos xerais',
+    'LBL_CONDITION_PANEL' => 'Condicións',
+    'LBL_ACTION_PANEL' => 'Accións',
 
     // Relaciones y subpaneles
     'LBL_STIC_CUSTOM_VIEW_CUSTOMIZATIONS_FROM_STIC_CUSTOM_VIEWS_TITLE' => 'Vistas personalizadas',
-    'LBL_STIC_CUSTOM_VIEW_CUSTOMIZATIONS_FROM_STIC_CUSTOM_VIEW_CONDITIONS_TITLE' => 'Condiciones',
-    'LBL_STIC_CUSTOM_VIEW_CUSTOMIZATIONS_FROM_STIC_CUSTOM_VIEW_ACTIONS_TITLE' => 'Acciones',
+    'LBL_STIC_CUSTOM_VIEW_CUSTOMIZATIONS_FROM_STIC_CUSTOM_VIEW_CONDITIONS_TITLE' => 'Condicións',
+    'LBL_STIC_CUSTOM_VIEW_CUSTOMIZATIONS_FROM_STIC_CUSTOM_VIEW_ACTIONS_TITLE' => 'Accións',
 
     // Otras
     'LBL_ADD_CONDITION' => 'Agregar condición',

@@ -44,7 +44,7 @@ $mod_strings['LBL_FILTERS_STIC_WORK_CALENDAR_TITLE'] = 'Calendario laboral';
 $mod_strings['LBL_FILTERS_STIC_WORK_CALENDAR_TYPE'] = 'Tipo';
 $mod_strings['LBL_FILTERS_STIC_WORK_CALENDAR_DEPARTMENT'] = 'Departamento';
 
-$mod_strings['LBL_SETTINGS_SHARED_CALENDAR_SEPARATE_INFO'] = 'Con la opción activada los calendarios laborales de los diferentes usuarios pueden solaparse. Para optimizar su visualización se recomienda mostrarlos por separado.';
-$mod_strings['LBL_SETTINGS_STIC_WORK_CALENDAR_DISPLAY'] = 'Ver registros de Calendario laboral';
+$mod_strings['LBL_SETTINGS_SHARED_CALENDAR_SEPARATE_INFO'] = 'Coa opción activada, os calendarios laborais dos diferentes usuarios poden solaparse. Para optimizar a súa visualización recoméndase amosalos por separado.';
+$mod_strings['LBL_SETTINGS_STIC_WORK_CALENDAR_DISPLAY'] = 'Ver rexistros de Calendario laboral';
 $mod_strings['LBL_SETTINGS_STIC_WORK_CALENDAR_WORKING'] = 'Calendario laboral - Disponible';
-$mod_strings['LBL_SETTINGS_STIC_WORK_CALENDAR_NOWORKING'] = 'Calendario laboral - No disponible';
+$mod_strings['LBL_SETTINGS_STIC_WORK_CALENDAR_NOWORKING'] = 'Calendario laboral - Non disponible';

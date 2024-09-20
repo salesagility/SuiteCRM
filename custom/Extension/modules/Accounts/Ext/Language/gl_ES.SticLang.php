@@ -174,7 +174,7 @@ $mod_strings['MSG_DUPLICATE'] = 'O rexistro que está a punto de crear podería 
 $mod_strings['MSG_SHOW_DUPLICATES'] = 'O rexistro que está a punto de crear podería ser un duplicado doutra organización existente. Os rexistros de organización con nomes similares lístanse a continuación. Para confirmar a creación desta organización faga clic en Gardar. En caso contrario, pulse Cancelar.';
 $mod_strings['LBL_ACCOUNTS_SUBPANEL_TITLE'] = 'Organizacións';
 
-// Cadeas Ayudas
+// Cadeas Axudas
 $mod_strings['LBL_STIC_GRANTS_ACCOUNTS_FROM_STIC_GRANTS_TITLE'] = 'Axudas';
 
 // Cadeas Formación

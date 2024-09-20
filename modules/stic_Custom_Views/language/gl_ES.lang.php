@@ -22,7 +22,7 @@
  */
 
 $mod_strings = array(
-    // Cadenas comunes
+    // Cadeas comúns
     'LBL_ASSIGNED_TO_ID' => 'Asignado a (ID)',
     'LBL_ASSIGNED_TO_NAME' => 'Asignado a',
     'LBL_ASSIGNED_TO' => 'Asignado a',
@@ -49,42 +49,42 @@ $mod_strings = array(
     'LBL_ASCENDING' => 'Ascendente',
     'LBL_DESCENDING' => 'Descendente',
 
-    // Acciones del módulo
+    // Acciones do módulo
     'LBL_LIST_FORM_TITLE' => 'Lista de Vistas personalizadas',
     'LBL_MODULE_NAME' => 'Vistas personalizadas',
     'LBL_MODULE_TITLE' => 'Vistas personalizadas',
-    'LBL_HOMEPAGE_TITLE' => 'Mis Vistas personalizadas',
-    'LNK_NEW_RECORD' => 'Crear una Vista personalizada',
+    'LBL_HOMEPAGE_TITLE' => 'As miñas Vistas personalizadas',
+    'LNK_NEW_RECORD' => 'Crear unha Vista personalizada',
     'LNK_LIST' => 'Ver Vistas personalizadas',
     'LNK_IMPORT_STIC_CUSTOM_VIEWS' => 'Importar Vistas personalizadas',
     'LBL_SEARCH_FORM_TITLE' => 'Buscar Vistas personalizadas',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'Historial',
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Actividades',
     'LBL_STIC_CUSTOM_VIEWS_SUBPANEL_TITLE' => 'Vistas personalizadas',
-    'LBL_NEW_FORM_TITLE' => 'Nueva Vista personalizada',
+    'LBL_NEW_FORM_TITLE' => 'Nova Vista personalizada',
 
-    // Campos del módulo
-    'LBL_CUSTOMIZATION_NAME' => 'Nombre interno',
+    // Campos do módulo
+    'LBL_CUSTOMIZATION_NAME' => 'Nome interno',
     'LBL_VIEW_MODULE' => 'Módulo',
     'LBL_VIEW_TYPE' => 'Vista',
     'LBL_USER_TYPE' => 'Tipo de usuario',
-    'LBL_USER_TYPE_DESC' => 'Tipo de usuario al que se aplicará la vista personalizada',
+    'LBL_USER_TYPE_DESC' => 'Tipo de usuario ao que se aplicará a vista personalizada',
     'LBL_ROLES' => 'Roles',
-    'LBL_ROLES_DESC' => 'Roles a los que se aplicará la vista personalizada',
-    'LBL_SECURITY_GROUPS' => 'Grupos de seguridad',
-    'LBL_SECURITY_GROUPS_DESC' => 'Grupos de seguridad a los que se aplicará la vista personalizada',
+    'LBL_ROLES_DESC' => 'Roles aos que se aplicará a vista personalizada',
+    'LBL_SECURITY_GROUPS' => 'Grupos de seguridade',
+    'LBL_SECURITY_GROUPS_DESC' => 'Grupos de seguridade aos que se aplicará a vista personalizada',
     'LBL_STATUS' => 'Estado',
-    'LBL_ROLES_EXCLUDE' => 'Roles no aplicables',
-    'LBL_ROLES_EXCLUDE_DESC' => 'Roles a los que no se aplicará la vista personalizada',
-    'LBL_SECURITY_GROUPS_EXCLUDE' => 'Grupos de seguridad no aplicables',
-    'LBL_SECURITY_GROUPS_EXCLUDE_DESC' => 'Grupos de seguridad a los que no se aplicará la vista personalizada',
+    'LBL_ROLES_EXCLUDE' => 'Roles non aplicables',
+    'LBL_ROLES_EXCLUDE_DESC' => 'Roles aos que non se aplicará a vista personalizada',
+    'LBL_SECURITY_GROUPS_EXCLUDE' => 'Grupos de seguridade non aplicables',
+    'LBL_SECURITY_GROUPS_EXCLUDE_DESC' => 'Grupos de seguridade aos que non se aplicará a vista personalizada',
 
     // Paneles de las vistas
     'LBL_DEFAULT_PANEL' => 'Datos xerais',
     'LBL_PANEL_RECORD_DETAILS' => 'Detalles do rexistro',
 
     // Relaciones y subpaneles
-    'LBL_STIC_CUSTOM_VIEW_CUSTOMIZATIONS_TITLE' => 'Personalizaciones',
+    'LBL_STIC_CUSTOM_VIEW_CUSTOMIZATIONS_TITLE' => 'Personalizacións',
 
     // Otras
     'LBL_NAME_COPY_SUFFIX' => '(copia)',

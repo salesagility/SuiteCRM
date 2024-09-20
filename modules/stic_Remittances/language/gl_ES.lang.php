@@ -94,9 +94,9 @@ $mod_strings = array(
     'LBL_SEPA_CREDIT_INVALID_TYPE' => 'O ficheiro non se pode xerar porque o seu tipo debería ser <b>transferencias emitidas</b>.',
 
     // Mensaxes SEPA para recibos
-    'LBL_SEPA_DEBIT_INVALID_PAYMENT_COMMITMENT' => 'El pago no está relacionado con ningún compromiso de pago: ',
+    'LBL_SEPA_DEBIT_INVALID_PAYMENT_COMMITMENT' => 'O pago non está relacionado con ningún compromiso de pago: ',
     'LBL_SEPA_DEBIT_INVALID_SIGNATURE_DATE' => 'A <b>data de sinatura</b> do compromiso de pago está baleira: ',
-    'LBL_SEPA_DEBIT_INVALID_MANDATE' => 'O <b>mandato</b> do pago non é válido. Está baleiro, supera os 35 caracteres ou contiene espacios en blanco (verifique tamén o compromiso de pago): ',
+    'LBL_SEPA_DEBIT_INVALID_MANDATE' => 'O <b>mandato</b> do pago non é válido. Está baleiro, supera os 35 caracteres ou contén espazos en branco (verifique tamén o compromiso de pago): ',
     'LBL_SEPA_DEBIT_INVALID_NIF' => 'O <b>número de identificación</b> (NIF, NIE...) da persoa/organización está baleiro: ',
     'LBL_SEPA_DEBIT_INVALID_TYPE' => 'O ficheiro non se pode xerar porque o seu tipo debería ser <b>recibos domiciliados</b>.',
 
