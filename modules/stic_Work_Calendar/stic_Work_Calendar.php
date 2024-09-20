@@ -79,38 +79,32 @@ class stic_Work_Calendar extends Basic
 
         $assignedUser = BeanFactory::getBean('Users', $this->assigned_user_id);
         $typeLabel = $app_list_strings['stic_work_calendar_types_list'][$this->type];
-        $startDate = $timedate->fromDbFormat($this->start_date, TimeDate::DB_DATETIME_FORMAT);
-        $startDate = $timedate->asUser($startDate, $current_user);
-
-        // Date used to calculate weekday field
-        $startDateInTZ = $timedate->fromUser($startDate, $current_user);
-        $startDateInTZ = $startDateInTZ->format(TimeDate::DB_DATE_FORMAT);
+        $startDateInTZ = $timedate->fromDbFormat($this->start_date, TimeDate::DB_DATETIME_FORMAT);
         
-        if (!in_array($this->type, self::ALL_DAY_TYPES)) 
+        if ($_REQUEST["action"] != "Save") // MassUpdate, API, Import..
         {
+            // Disable disable date_format so that $timedate object calculates start and end dates in user format when the action does not come from the user interface
+            $GLOBALS['disable_date_format'] = false;
+            $startDate = $timedate->asUser($startDateInTZ, $current_user);
+        } else {
+            $startDate = $timedate->asUser($startDateInTZ, $current_user);
+        }
+
+        if (!in_array($this->type, self::ALL_DAY_TYPES)) {
             $endDate = $timedate->fromDbFormat($this->end_date, TimeDate::DB_DATETIME_FORMAT);
             $endDate = $timedate->asUser($endDate, $current_user);                
-
-            // Set name
-            if ($_REQUEST["action"] != "MassUpdate"){
-                $this->name = $assignedUser->name . " - " . $typeLabel . " - " . $startDate . " - " . substr($endDate, -5);
-            } else {
-                // In mass update we cannot modify the dates so the part of the name that includes the dates is reused
-                $this->name = $assignedUser->name . " - " . $typeLabel . substr($this->name, -25);
-            }
-        } else { // All day register
-
+            $this->name = $assignedUser->name . " - " . $typeLabel . " - " . $startDate . " - " . substr($endDate, -5);
+        } else {
             $endDate = $timedate->fromDbFormat($this->start_date, TimeDate::DB_DATETIME_FORMAT);
             $endDate = $endDate->modify("next day");
+            $this->name = $assignedUser->name . " - " . $typeLabel . " - " . substr($startDate, 0, 10);            
             $this->end_date = $timedate->asDb($endDate, $current_user);                         
+        }
 
-            // Set name
-            if ($_REQUEST["action"] != "MassUpdate"){
-                $this->name = $assignedUser->name . " - " . $typeLabel . " - " . substr($startDate, 0, 10);
-            } else {
-                // In mass update we cannot modify the dates so the part of the name that includes the dates is reused
-                $this->name = $assignedUser->name . " - " . $typeLabel . " - " . substr($this->name, -10);
-            }
+        if ($_REQUEST["action"] != "Save") // MassUpdate, API, Import..
+        {
+            // Reactivate disable date_format to work with the rest of the date type fields
+            $GLOBALS['disable_date_format'] = true;
         }
 
         // Set duration field
