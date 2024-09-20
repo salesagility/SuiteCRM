@@ -1796,6 +1796,13 @@ class Email extends Basic
         foreach ($this->email_to_text as $textfield => $mailfield) {
             $emailText->{$textfield} = $this->{$mailfield};
         }
+        // STIC-Custom 20240731 MHP - https://github.com/SinergiaTIC/SinergiaCRM/issues/318
+        // CRM sometimes uses the from_addr field and other times the from_addr_name field to store the email that sends the mail. 
+        // Since it does not identify when it uses one and when the other, the from_addr field is always reported before saving.
+        if (isset($this->from_addr) && !empty($this->from_addr)){
+            $emailText->from_addr = $this->from_addr;
+        }
+        // END STIC-Custom        
         $emailText->email_id = $this->id;
         if (!$this->new_with_id) {
             $this->db->update($emailText);
