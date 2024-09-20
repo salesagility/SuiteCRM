@@ -2,8 +2,9 @@
   <img width="180px" height="60px" src="https://github.com/SinergiaTIC/SinergiaCRM-SuiteCRM/assets/125350097/af3300d0-1b17-427c-b681-1971d39a1528" align="right" />
 </a>
 
-# SinergiaCRM 1.1.0
+# SinergiaCRM
 
+![Version (latest by date)](https://img.shields.io/github/v/release/SinergiaTIC/SinergiaCRM?label=Version)
 [![Wiki](https://img.shields.io/badge/Information-Wiki-lightgray)](https://wikisuite.sinergiacrm.org)
 [![LICENSE](https://img.shields.io/badge/License-AGPL_v3-orange.svg)](./LICENSE.txt)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5)](https://twitter.com/SinergiaCRM)
