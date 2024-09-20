@@ -151,7 +151,9 @@
                 renderRecordsNotCreated(currentUserId, pageNumber, pageSize);
                 renderPagination(currentUserId, pageNumber, pageSize, data[currentUserId].numRecordsNotCreated);
             } else {
-               document.getElementById('listContainer').style.display='none';
+                if (document.getElementById('listContainer')) {
+                    document.getElementById('listContainer').style.display='none';
+                }
             }
         }
 
