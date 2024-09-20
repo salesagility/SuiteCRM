@@ -281,6 +281,10 @@ function setEnabledStatus(elementId, clearField) {
   } else {
     $("#" + elementId, $form)
       .prop("readonly", false);
+    $("#" + elementId, $form)
+      .prop("disabled", false);
+    $("#" + elementId, $form).parent().find("button")
+      .prop("disabled", false);
   }
   $("#" + elementId, $form)
     .closest(".edit-view-row-item")
@@ -313,6 +317,10 @@ function setDisabledStatus(elementId, clearField) {
   } else {
     $("#" + elementId, $form)
       .prop("readonly", true);
+    $("#" + elementId, $form)
+      .prop("disabled", true);
+    $("#" + elementId, $form).parent().find("button")
+      .prop("disabled", true);
   }
   $("#" + elementId, $form)
     .closest(".edit-view-row-item")
