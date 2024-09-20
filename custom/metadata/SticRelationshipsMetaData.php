@@ -6707,3 +6707,257 @@ $dictionary["stic_custom_views_stic_custom_view_customizations"] = array (
       ),
     ),
 );
+$dictionary["stic_group_opportunities_accounts"] = array (
+    'true_relationship_type' => 'one-to-many',
+    'relationships' => 
+    array (
+      'stic_group_opportunities_accounts' => 
+      array (
+        'lhs_module' => 'Accounts',
+        'lhs_table' => 'accounts',
+        'lhs_key' => 'id',
+        'rhs_module' => 'stic_Group_Opportunities',
+        'rhs_table' => 'stic_group_opportunities',
+        'rhs_key' => 'id',
+        'relationship_type' => 'many-to-many',
+        'join_table' => 'stic_group_opportunities_accounts_c',
+        'join_key_lhs' => 'stic_group_opportunities_accountsaccounts_ida',
+        'join_key_rhs' => 'stic_group_opportunities_accountsstic_group_opportunities_idb',
+      ),
+    ),
+    'table' => 'stic_group_opportunities_accounts_c',
+    'fields' => 
+    array (
+      0 => 
+      array (
+        'name' => 'id',
+        'type' => 'varchar',
+        'len' => 36,
+      ),
+      1 => 
+      array (
+        'name' => 'date_modified',
+        'type' => 'datetime',
+      ),
+      2 => 
+      array (
+        'name' => 'deleted',
+        'type' => 'bool',
+        'len' => '1',
+        'default' => '0',
+        'required' => true,
+      ),
+      3 => 
+      array (
+        'name' => 'stic_group_opportunities_accountsaccounts_ida',
+        'type' => 'varchar',
+        'len' => 36,
+      ),
+      4 => 
+      array (
+        'name' => 'stic_group_opportunities_accountsstic_group_opportunities_idb',
+        'type' => 'varchar',
+        'len' => 36,
+      ),
+    ),
+    'indices' => 
+    array (
+      0 => 
+      array (
+        'name' => 'stic_group_opportunities_accountsspk',
+        'type' => 'primary',
+        'fields' => 
+        array (
+          0 => 'id',
+        ),
+      ),
+      1 => 
+      array (
+        'name' => 'stic_group_opportunities_accounts_ida1',
+        'type' => 'index',
+        'fields' => 
+        array (
+          0 => 'stic_group_opportunities_accountsaccounts_ida',
+        ),
+      ),
+      2 => 
+      array (
+        'name' => 'stic_group_opportunities_accounts_alt',
+        'type' => 'alternate_key',
+        'fields' => 
+        array (
+          0 => 'stic_group_opportunities_accountsstic_group_opportunities_idb',
+        ),
+      ),
+    ),
+  );
+
+  $dictionary["stic_group_opportunities_documents_1"] = array (
+    'true_relationship_type' => 'many-to-many',
+    'from_studio' => true,
+    'relationships' => 
+    array (
+      'stic_group_opportunities_documents_1' => 
+      array (
+        'lhs_module' => 'stic_Group_Opportunities',
+        'lhs_table' => 'stic_group_opportunities',
+        'lhs_key' => 'id',
+        'rhs_module' => 'Documents',
+        'rhs_table' => 'documents',
+        'rhs_key' => 'id',
+        'relationship_type' => 'many-to-many',
+        'join_table' => 'stic_group_opportunities_documents_1_c',
+        'join_key_lhs' => 'stic_group_opportunities_documents_1stic_group_opportunities_ida',
+        'join_key_rhs' => 'stic_group_opportunities_documents_1documents_idb',
+      ),
+    ),
+    'table' => 'stic_group_opportunities_documents_1_c',
+    'fields' => 
+    array (
+      0 => 
+      array (
+        'name' => 'id',
+        'type' => 'varchar',
+        'len' => 36,
+      ),
+      1 => 
+      array (
+        'name' => 'date_modified',
+        'type' => 'datetime',
+      ),
+      2 => 
+      array (
+        'name' => 'deleted',
+        'type' => 'bool',
+        'len' => '1',
+        'default' => '0',
+        'required' => true,
+      ),
+      3 => 
+      array (
+        'name' => 'stic_group_opportunities_documents_1stic_group_opportunities_ida',
+        'type' => 'varchar',
+        'len' => 36,
+      ),
+      4 => 
+      array (
+        'name' => 'stic_group_opportunities_documents_1documents_idb',
+        'type' => 'varchar',
+        'len' => 36,
+      ),
+      5 => 
+      array (
+        'name' => 'document_revision_id',
+        'type' => 'varchar',
+        'len' => '36',
+      ),
+    ),
+    'indices' => 
+    array (
+      0 => 
+      array (
+        'name' => 'stic_group_opportunities_documents_1spk',
+        'type' => 'primary',
+        'fields' => 
+        array (
+          0 => 'id',
+        ),
+      ),
+      1 => 
+      array (
+        'name' => 'stic_group_opportunities_documents_1_alt',
+        'type' => 'alternate_key',
+        'fields' => 
+        array (
+          0 => 'stic_group_opportunities_documents_1stic_group_opportunities_ida',
+          1 => 'stic_group_opportunities_documents_1documents_idb',
+        ),
+      ),
+    ),
+  );
+
+  $dictionary["stic_group_opportunities_opportunities"] = array (
+    'true_relationship_type' => 'one-to-many',
+    'relationships' => 
+    array (
+      'stic_group_opportunities_opportunities' => 
+      array (
+        'lhs_module' => 'Opportunities',
+        'lhs_table' => 'opportunities',
+        'lhs_key' => 'id',
+        'rhs_module' => 'stic_Group_Opportunities',
+        'rhs_table' => 'stic_group_opportunities',
+        'rhs_key' => 'id',
+        'relationship_type' => 'many-to-many',
+        'join_table' => 'stic_group_opportunities_opportunities_c',
+        'join_key_lhs' => 'stic_group_opportunities_opportunitiesopportunities_ida',
+        'join_key_rhs' => 'stic_grp_opportunities_opportunitiesstic_grp_opportunities_idb',
+      ),
+    ),
+    'table' => 'stic_group_opportunities_opportunities_c',
+    'fields' => 
+    array (
+      0 => 
+      array (
+        'name' => 'id',
+        'type' => 'varchar',
+        'len' => 36,
+      ),
+      1 => 
+      array (
+        'name' => 'date_modified',
+        'type' => 'datetime',
+      ),
+      2 => 
+      array (
+        'name' => 'deleted',
+        'type' => 'bool',
+        'len' => '1',
+        'default' => '0',
+        'required' => true,
+      ),
+      3 => 
+      array (
+        'name' => 'stic_group_opportunities_opportunitiesopportunities_ida',
+        'type' => 'varchar',
+        'len' => 36,
+      ),
+      4 => 
+      array (
+        'name' => 'stic_grp_opportunities_opportunitiesstic_grp_opportunities_idb',
+        'type' => 'varchar',
+        'len' => 36,
+      ),
+    ),
+    'indices' => 
+    array (
+      0 => 
+      array (
+        'name' => 'stic_group_opportunities_opportunitiesspk',
+        'type' => 'primary',
+        'fields' => 
+        array (
+          0 => 'id',
+        ),
+      ),
+      1 => 
+      array (
+        'name' => 'stic_group_opportunities_opportunities_ida1',
+        'type' => 'index',
+        'fields' => 
+        array (
+          0 => 'stic_group_opportunities_opportunitiesopportunities_ida',
+        ),
+      ),
+      2 => 
+      array (
+        'name' => 'stic_group_opportunities_opportunities_alt',
+        'type' => 'alternate_key',
+        'fields' => 
+        array (
+          0 => 'stic_grp_opportunities_opportunitiesstic_grp_opportunities_idb',
+        ),
+      ),
+    ),
+  );
+

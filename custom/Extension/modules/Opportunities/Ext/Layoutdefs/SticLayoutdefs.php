@@ -21,6 +21,29 @@
  * You can contact SinergiaTIC Association at email address info@sinergiacrm.org.
  */
 
+ // Participants subpanel
+ $layout_defs["Opportunities"]["subpanel_setup"]['stic_group_opportunities_opportunities'] = array (
+    'order' => 100,
+    'module' => 'stic_Group_Opportunities',
+    'subpanel_name' => 'ForOpportunities',
+    'sort_order' => 'asc',
+    'sort_by' => 'id',
+    'title_key' => 'LBL_STIC_GROUP_OPPORTUNITIES_OPPORTUNITIES_FROM_STIC_GROUP_OPPORTUNITIES_TITLE',
+    'get_subpanel_data' => 'stic_group_opportunities_opportunities',
+    'top_buttons' => 
+    array (
+      0 => 
+      array (
+        'widget_class' => 'SubPanelTopButtonQuickCreate',
+      ),
+      1 => 
+      array (
+        'widget_class' => 'SubPanelTopSelectButton',
+        'mode' => 'MultiSelect',
+      ),
+    ),
+  );
+
 $layout_defs['Opportunities']['subpanel_setup']['accounts']['override_subpanel_name'] = 'SticDefault';
 $layout_defs['Opportunities']['subpanel_setup']['leads']['override_subpanel_name'] = 'SticDefault';
 

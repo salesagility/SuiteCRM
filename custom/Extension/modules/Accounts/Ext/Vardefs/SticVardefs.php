@@ -1970,6 +1970,18 @@ $dictionary["Account"]["fields"]["stic_work_experience_accounts"] = array(
     'vname' => 'LBL_STIC_WORK_EXPERIENCE_ACCOUNTS_FROM_STIC_WORK_EXPERIENCE_TITLE',
 );
 
+// Participations relationship
+$dictionary["Account"]["fields"]["stic_group_opportunities_accounts"] = array (
+    'name' => 'stic_group_opportunities_accounts',
+    'type' => 'link',
+    'relationship' => 'stic_group_opportunities_accounts',
+    'source' => 'non-db',
+    'module' => 'stic_Group_Opportunities',
+    'bean_name' => false,
+    'side' => 'right',
+    'vname' => 'LBL_STIC_GROUP_OPPORTUNITIES_ACCOUNTS_FROM_STIC_GROUP_OPPORTUNITIES_TITLE',
+);
+
 $dictionary['Account']['fields']['account_type']['massupdate'] = 0;
 $dictionary['Account']['fields']['account_type']['studio'] = false;
 

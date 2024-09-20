@@ -34,4 +34,10 @@ class CustomOpportunitiesController extends SugarController
         OpportunitiesUtils::opportunitiesReminder();
         SugarApplication::redirect('index.php?module=Opportunities&action=index');
     }
+
+    public function action_createParticipantsFromAccounts() {
+        require_once 'custom/modules/Opportunities/SticUtils.php';
+        OpportunitiesUtils::createParticipantsFromAccounts($_REQUEST["accountIds"], $this->bean);
+        SugarApplication::redirect("index.php?module=Opportunities&action=DetailView&record={$this->bean->id}");
+    }
 }

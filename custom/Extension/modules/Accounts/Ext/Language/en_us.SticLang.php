@@ -142,8 +142,11 @@ $mod_strings['LBL_INC_INCORPORA_RECORD_HELP'] = "When this field is enabled, all
 // Resources and Bookings strings
 $mod_strings['LBL_STIC_BOOKINGS_ACCOUNTS_FROM_STIC_BOOKINGS_TITLE'] = 'Bookings';
 
+// Group opportunities Strings
+$mod_strings['LBL_STIC_GROUP_OPPORTUNITIES_ACCOUNTS_FROM_STIC_GROUP_OPPORTUNITIES_TITLE'] = 'Participation in Opportunities';
+
 // Virtual Field Kreporter
-$mod_strings['LBL_KREPORTER_EMAILS_LIST'] = "Email addresses list";
+$mod_strings['LBL_KREPORTER_EMAILS_LIST'] = 'Email addresses list';
 
 // Grants strings
 $mod_strings['LBL_STIC_GRANTS_ACCOUNTS_FROM_STIC_GRANTS_TITLE'] = 'Grants';

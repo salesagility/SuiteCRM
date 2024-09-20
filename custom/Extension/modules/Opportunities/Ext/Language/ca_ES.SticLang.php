@@ -56,6 +56,10 @@ $mod_strings['LBL_EMAIL_OPPORTUNITIES_SUBJECT'] = '[Recordatori del CRM] Data re
 $mod_strings['LBL_EMAIL_OPPORTUNITIES_BODY_1'] = "S'acosta una data rellevant per a la subvenció següent: ";
 $mod_strings['LBL_EMAIL_OPPORTUNITIES_BODY_2'] = ". Feu clic a l'enllaç per revisar-la.";
 
+// Cadenes Organitzacions subvencionades
+$mod_strings['LBL_STIC_GROUP_OPPORTUNITIES_OPPORTUNITIES_FROM_STIC_GROUP_OPPORTUNITIES_TITLE'] = 'Organitzacions subvencionades';
+$mod_strings['LBL_LOAD_PARTICIPANTS'] = 'Càrrega de participants';
+
 // Cadenes adaptades d'Oportunitats a Subvencions
 $mod_strings['LBL_MODULE_NAME'] = 'Subvencions';
 $mod_strings['LBL_MODULE_TITLE'] = 'Subvencions: Inici';
@@ -83,5 +87,5 @@ $mod_strings['LBL_TOTAL_OPPORTUNITIES'] = 'Total de Subvencions';
 $mod_strings['LBL_CLOSED_WON_OPPORTUNITIES'] = 'Subvencions guanyades';
 $mod_strings['LNK_IMPORT_OPPORTUNITIES'] = 'Importa Subvencions';
 
-// Cadenes adaptades Ajuts
+// Cadenes Ajuts
 $mod_strings['LBL_STIC_GRANTS_OPPORTUNITIES_FROM_STIC_GRANTS_TITLE'] = 'Ajuts';

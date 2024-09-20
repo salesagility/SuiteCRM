@@ -354,6 +354,18 @@ $dictionary["Opportunity"]["fields"]["stic_grants_opportunities"] = array (
       'vname' => 'LBL_STIC_GRANTS_OPPORTUNITIES_FROM_STIC_GRANTS_TITLE',
 );
 
+// Participations relationship
+$dictionary["Opportunity"]["fields"]["stic_group_opportunities_opportunities"] = array (
+      'name' => 'stic_group_opportunities_opportunities',
+      'type' => 'link',
+      'relationship' => 'stic_group_opportunities_opportunities',
+      'source' => 'non-db',
+      'module' => 'stic_Group_Opportunities',
+      'bean_name' => false,
+      'side' => 'right',
+      'vname' => 'LBL_STIC_GROUP_OPPORTUNITIES_OPPORTUNITIES_FROM_STIC_GROUP_OPPORTUNITIES_TITLE',
+);
+
 // Base fields from the module
 $dictionary['Opportunity']['fields']['description']['rows'] = '2'; // Make textarea fields shorter
 $dictionary['Opportunity']['fields']['description']['massupdate'] = 0;

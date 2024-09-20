@@ -45,6 +45,7 @@ class CustomOpportunitiesViewDetail extends OpportunitiesViewDetail
         parent::display();
 
         SticViews::display($this);
+        echo getVersionedScript("custom/modules/Opportunities/SticUtils.js");
 
         // Write here you custom code
     }

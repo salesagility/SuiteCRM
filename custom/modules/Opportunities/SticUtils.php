@@ -126,4 +126,30 @@ class OpportunitiesUtils
         }
         return true;
     }
+
+    /**
+     * Create Participants in an Opportunity: All Accounts in $accountIds will be Participants in the $opportunityBean
+     */
+    public static function createParticipantsFromAccounts($accountIds, $opportunityBean) {
+        // For each AccountId in $accountIds: Create a Participant with this $opportunityBean
+
+        global $current_user;
+
+        foreach($accountIds as $accountId) {
+            $accountBean = BeanFactory::getBean('Accounts', $accountId);
+            
+            $participantBean = BeanFactory::newBean('stic_Group_Opportunities');
+
+            // Assign Account and Opportunity
+            $participantBean->stic_group_opportunities_accountsaccounts_ida = $accountId;
+            $participantBean->stic_group_opportunities_opportunitiesopportunities_ida = $opportunityBean->id;
+
+            // Assign other data
+            $participantBean->name = $accountBean->name . ' - ' . $opportunityBean->name;
+            $participantBean->status = "guest";
+            $participantBean->assigned_user_id = $current_user->id;
+
+            $participantBean->save();
+        }
+    }
 }

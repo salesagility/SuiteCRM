@@ -148,6 +148,15 @@ $dictionary["Document"]["fields"]["stic_families_documentsstic_families_ida"] = 
     'side' => 'right',
     'vname' => 'LBL_STIC_FAMILIES_DOCUMENTS_FROM_DOCUMENTS_TITLE',
 );
+$dictionary["Document"]["fields"]["stic_group_opportunities_documents_1"] = array (
+    'name' => 'stic_group_opportunities_documents_1',
+    'type' => 'link',
+    'relationship' => 'stic_group_opportunities_documents_1',
+    'source' => 'non-db',
+    'module' => 'stic_Group_Opportunities',
+    'bean_name' => 'stic_Group_Opportunities',
+    'vname' => 'LBL_STIC_GROUP_OPPORTUNITIES_DOCUMENTS_1_FROM_STIC_GROUP_OPPORTUNITIES_TITLE',
+  );
 
 // Modified properties in native fields
 $dictionary['Document']['fields']['filename']['required'] = 0;
