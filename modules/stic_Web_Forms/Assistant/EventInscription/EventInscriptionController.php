@@ -340,7 +340,6 @@ class EventInscriptionController extends stic_Web_FormsAssistantController {
             'account_name_optional' => ($this->persistentData['account_name_optional'] ? 1 : 0),
             'email_template_id' => $this->persistentData['EMAIL_TEMPLATE_ID'],
             'include_recaptcha' => ($this->persistentData['include_recaptcha'] ? 1 : 0),
-            'recaptcha_configs' => ($this->persistentData['recaptcha_configs']),
             'recaptcha_configKeys' => ($this->persistentData['recaptcha_configKeys']),
             'recaptcha_selected' => ($this->persistentData['recaptcha_selected']),
         ));
