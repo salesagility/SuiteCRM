@@ -199,7 +199,8 @@ class EmailTemplateParser
             }
             // STIC-custom 20210922 - Parse decimal symbol in templates according to configuration
             // STIC#390
-            else if (($this->module->field_name_map[$attribute]['type']) && ($this->module->field_name_map[$attribute]['type']) === 'decimal'){
+            // https://github.com/SinergiaTIC/SinergiaCRM/pull/338
+            else if (($this->module->field_name_map[$attribute]['type']) && (($this->module->field_name_map[$attribute]['type']) === 'decimal' || ($this->module->field_name_map[$attribute]['type']) === 'float')){
                 require_once('SticInclude/Utils.php');
                 $value = SticUtils::formatDecimalInConfigSettings($this->module->$attribute, false);
                 return $value;

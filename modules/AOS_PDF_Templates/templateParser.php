@@ -121,7 +121,8 @@ class templateParser
                         ENT_COMPAT, 'UTF-8');
                 // STIC-custom 20210922 - Parse decimal symbol in templates according to configuration
                 // STIC#390
-                } elseif ($field_def['type'] == 'decimal') {
+                // https://github.com/SinergiaTIC/SinergiaCRM/pull/338
+                } elseif ($field_def['type'] == 'decimal' || $field_def['type'] == 'float') {
                     require_once('SticInclude/Utils.php');
                     if ($_REQUEST['entryPoint'] == 'formLetter') { // If generating a PDF...
                         $value = SticUtils::formatDecimalInConfigSettings($focus->$fieldName, true); // ...get user config

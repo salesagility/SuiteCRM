@@ -76,15 +76,21 @@ class SugarFieldFloat extends SugarFieldInt
         $focus,
         ImportFieldSanitize $settings
         ) {
-        $value = str_replace($settings->num_grp_sep, "", $value);
-        $dec_sep = $settings->dec_sep;
-        if ($dec_sep != '.') {
-            $value = str_replace($dec_sep, ".", $value);
+        // STIC-Custom 20240814 MHP - https://github.com/SinergiaTIC/SinergiaCRM/pull/338
+        // Apply the solution that is applied with the Decimal type fields, which is the one implemented in SugarFieldBase
+        // $value = str_replace($settings->num_grp_sep, "", $value);
+        // $dec_sep = $settings->dec_sep;
+        // if ($dec_sep != '.') {
+        //    $value = str_replace($dec_sep, ".", $value);
+        // }
+        // if (!is_numeric($value)) {
+        //    return false;
+        // }
+        if (isset($vardef['len'])) {
+            // check for field length
+            $value = sugar_substr($value, $vardef['len']);
         }
-        if (!is_numeric($value)) {
-            return false;
-        }
-        
+        // STIC-Custom
         return $value;
     }
 }
