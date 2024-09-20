@@ -63,9 +63,17 @@ class SugarFieldWysiwyg extends SugarFieldBase {
         $config = [];
         $config['height'] = 250;
         $config['menubar'] = false;
-        $config['plugins']  = 'code, table, link, image, wordcount';
+        // STIC-Custom 20240722 MHP - Do not apply the configuration if we are in PDF Templates
+        // 
+        // $config['plugins']  = 'code, table, link, image, wordcount';
+        // $config['selector'] = "#{$form_name} "."#".$vardef['name'];
+        // $config['toolbar1'] = 'fontselect | fontsizeselect | bold italic underline | forecolor backcolor | styleselect | outdent indent | link image | code table';        
         $config['selector'] = "#{$form_name} "."#".$vardef['name'];
-        $config['toolbar1'] = 'fontselect | fontsizeselect | bold italic underline | forecolor backcolor | styleselect | outdent indent | link image | code table';
+        if ($vardef["custom_module"] != "AOS_PDF_Templates") {
+            $config['plugins']  = 'code, table, link, image, wordcount';
+            $config['toolbar1'] = 'fontselect | fontsizeselect | bold italic underline | forecolor backcolor | styleselect | outdent indent | link image | code table';
+        }
+        // END STIC-Custom        
 
         $jsConfig = json_encode($config);
         $initiate = '<script type="text/javascript"> tinyMCE.init('.$jsConfig.')</script>';
