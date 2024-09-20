@@ -279,7 +279,11 @@
     }
 
     //get values to populate from and reply boxes on change of mail box dropdown
-    var ie_stored_options = { IEStoredOptions };
+    // STIC-Custom 20240913 MHP - Remove spaces between {} and variable
+    // https://github.com/SinergiaTIC/SinergiaCRM/pull/387
+    // var ie_stored_options = { IEStoredOptions };
+    var ie_stored_options = {IEStoredOptions};
+    // END STIC-Custom
     var from_emails = new Array({ FROM_EMAILS });
 
     function set_from_email_and_name(mailbox) {
