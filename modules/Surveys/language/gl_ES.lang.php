@@ -100,5 +100,10 @@ $mod_strings = array(
     'LBL_SURVEYS_SENT'                                       => 'Enquisas enviadas:',
     'LBL_SURVEY_DISTINCT'                                    => 'Enquisas distintas enviadas:',
     'LBL_SUBMIT'                                             => 'Enviar',
-    'LBL_STARS'                                              => 'Estrelas'
+    'LBL_STARS'                                              => 'Estrelas',
+    
+    // STIC-Custom 20240814 ART - Thank you message in surveys
+    // https://github.com/SinergiaTIC/SinergiaCRM/pull/339
+    'LBL_SURVEY_THANKS' => 'Grazas por completar esta enquisa.',
+    // END STIC-Custom
 );

@@ -105,5 +105,10 @@ $mod_strings = array(
     // END STIC-Custom
     'LBL_PUBLIC' => 'Public',    
     'LBL_SUBMIT' => 'Submit',
-    'LBL_STARS' => 'Stars'
+    'LBL_STARS' => 'Stars',
+
+    // STIC-Custom 20240814 ART - Thank you message in surveys
+    // https://github.com/SinergiaTIC/SinergiaCRM/pull/339
+    'LBL_SURVEY_THANKS' => 'Thanks for completing this survey.',
+    // END STIC-Custom
 );
