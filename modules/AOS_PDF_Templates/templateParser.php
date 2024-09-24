@@ -135,6 +135,12 @@ class templateParser
                             $sep[1]
                         ) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
                     }
+                } else if ($isValidator->isPercentageField($repl_arr['aos_quotes_discount_amount'])) {
+                    $sep = get_number_separators();
+                    $value = rtrim(
+                        rtrim(format_number($value), '0'),
+                        $sep[1]
+                    ) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
                 } else {
                     $value = '';
                 }
