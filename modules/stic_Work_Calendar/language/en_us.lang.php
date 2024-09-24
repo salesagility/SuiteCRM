@@ -77,7 +77,6 @@ $mod_strings = array (
   // Work Calendar record creation wizard
   'LNK_CREATE_PERIODIC_RECORDS' => 'Create periodic records',
   'LBL_PERIODIC_WORK_CALENDAR_BUTTON' => 'Generate Work calendar',
-  'LBL_PERIODIC_WORK_CALENDAR_SUMMARY_TITLE_BY_USER' => 'Summary by user',  
   'LBL_CANCEL_BUTTON' => 'Cancel',
   'LBL_REPEAT_DOW' => 'Day of week',
   'LBL_REPEAT_END_AFTER' => 'After',
@@ -97,11 +96,14 @@ $mod_strings = array (
 
   // Work Calendar record creation wizard summary
   'LBL_PERIODIC_WORK_CALENDAR_SUMMARY_TITLE' => 'Summary:',
+  'LBL_PERIODIC_WORK_CALENDAR_SUMMARY_TITLE_BY_USER' => 'Summary by user',  
   'LBL_PERIODIC_WORK_CALENDAR_SUMMARY_RECORDS_PROCESSED' => 'Number of records to create',
   'LBL_PERIODIC_WORK_CALENDAR_SUMMARY_RECORDS_CREATED' => 'Number of records created',
   'LBL_PERIODIC_WORK_CALENDAR_SUMMARY_RECORDS_NOT_CREATED' => 'Number of records not created',
   'LBL_PERIODIC_WORK_CALENDAR_SUMMARY_RECORDS_NOT_CREATED_TITLE' => 'List of records not created',
   'LBL_PERIODIC_WORK_CALENDAR_SUMMARY_RECORDS_NOT_CREATED_TEXT' => 'Records have not been created due to overlapping with some other existing records of incompatible types.',
+  'LBL_PERIODIC_WORK_CALENDAR_SUMMARY_RECORDS_NOT_CREATED_TEXT2' => 'The following lists the uncreated records for the different users.',  
+  'LBL_PERIODIC_WORK_CALENDAR_SUMMARY_BUTTON_CONTINUE_WITH_EMPLOYEES' => 'Continue with the same selected Employees',
   'LBL_PERIODIC_WORK_CALENDAR_SUMMARY_BUTTON_EMPLOYEES' => 'Go to Employees',
   'LBL_PERIODIC_WORK_CALENDAR_SUMMARY_BUTTON_WOK_CALENDAR' => 'Go to Work calendar',
 

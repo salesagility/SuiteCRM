@@ -86,8 +86,15 @@
         <div class="pagination-container" id="pagination"></div>
     </div>
 {/if}
-<br /><br />    
 
+<br /><br />    
+<div>
+    <a href="index.php?module=stic_Work_Calendar&action=showWorkCalendarAssistant" style="margin-right: 2em">
+        <button type='button' class='button'>{$MOD.LBL_PERIODIC_WORK_CALENDAR_SUMMARY_BUTTON_CONTINUE_WITH_EMPLOYEES}</button>
+    </a>
+</div>
+
+<br /><br />    
 <div>
     <a href="index.php?module=Employees&action=index" style="margin-right: 2em">
         <button type='button' class='button'>{$MOD.LBL_PERIODIC_WORK_CALENDAR_SUMMARY_BUTTON_EMPLOYEES}</button>

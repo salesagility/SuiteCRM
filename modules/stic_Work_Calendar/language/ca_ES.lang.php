@@ -103,6 +103,7 @@ $mod_strings = array (
   'LBL_PERIODIC_WORK_CALENDAR_SUMMARY_RECORDS_NOT_CREATED_TITLE' => 'Llistat de registres no creats',
   'LBL_PERIODIC_WORK_CALENDAR_SUMMARY_RECORDS_NOT_CREATED_TEXT' => "Els registres no s'han creat per causa del solapament amb altres registres existents de tipus incompatibles.",
   'LBL_PERIODIC_WORK_CALENDAR_SUMMARY_RECORDS_NOT_CREATED_TEXT2' => 'A continuació es llisten els registres no creats dels diferents usuaris.',
+  'LBL_PERIODIC_WORK_CALENDAR_SUMMARY_BUTTON_CONTINUE_WITH_EMPLOYEES' => 'Continuar amb els mateixos empleats seleccionats',
   'LBL_PERIODIC_WORK_CALENDAR_SUMMARY_BUTTON_EMPLOYEES' => 'Ves a Empleats',
   'LBL_PERIODIC_WORK_CALENDAR_SUMMARY_BUTTON_WOK_CALENDAR' => 'Ves al Calendari laboral',
 

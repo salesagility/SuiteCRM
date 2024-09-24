@@ -41,6 +41,13 @@ class stic_Work_CalendarViewWorkCalendarAssistantSummary extends SugarView
         $this->ss->assign('RECORDS_NOT_CREATED_BY_EMPLOYEE', json_encode($_SESSION['summary']['users']));
         $this->ss->assign('RECORDS_PER_PAGE', $sugar_config['list_max_entries_per_page']);
         $this->ss->display('modules/stic_Work_Calendar/tpls/workCalendarAssistantSummary.tpl'); //call tpl file
+        
+        // Session variables for periodic creation without selecting users
+        $_SESSION['summaryEmployeeIds'] = '';
+        foreach ($_SESSION['summary']['users'] as $key => $user){
+            $_SESSION['summaryEmployeeNames'][] = $user['name'];
+            $_SESSION['summaryEmployeeIds'] = $_SESSION['summaryEmployeeIds'] == '' ?  $key : $_SESSION['summaryEmployeeIds'] . ',' . $key;
+        }
         unset($_SESSION['summary']);
     }
 }
