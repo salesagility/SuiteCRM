@@ -138,12 +138,28 @@ $dictionary['AOW_WorkFlow'] = array(
             ),
         'multiple_runs' =>
             array(
+                'required' => false,
                 'name' => 'multiple_runs',
                 'vname' => 'LBL_MULTIPLE_RUNS',
-                'type' => 'bool',
+                'type' => 'enum',
+                'massupdate' => 0,
                 'default' => '0',
+                'comments' => '',
+                'help' => '',
+                'importable' => 'true',
+                'duplicate_merge' => 'disabled',
+                'duplicate_merge_dom_value' => '0',
+                'audited' => false,
                 'reportable' => false,
+                'unified_search' => false,
+                'merge_filter' => 'disabled',
+                'len' => 100,
+                'size' => '20',
+                'options' => 'aow_multiple_runs_list',
+                'studio' => 'visible',
+                'dependency' => false,
             ),
+
         'condition_lines' =>
             array(
                 'required' => false,
