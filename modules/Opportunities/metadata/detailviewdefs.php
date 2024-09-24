@@ -307,7 +307,35 @@ $viewdefs['Opportunities']['DetailView'] = array (
           'label' => 'LBL_STIC_PAYMENT_DATE',
         ),
       ),
+      // STIC-Custom - JBL - 20240718 - Notify new Opportunities: New Opportunity fields
+      // https://github.com/SinergiaTIC/SinergiaCRM/pull/44
+      // 8 => 
+      // array (
+      //   0 => 
+      //   array (
+      //     'name' => 'description',
+      //     'nl2br' => true,
+      //   ),
+      // ),
       8 => 
+      array (
+        0 => 
+        array (
+          'name' => 'stic_opportunity_url_c',
+          'studio' => 'visible',
+          'label' => 'LBL_STIC_OPPORTUNITY_URL',
+        ),
+      ),
+      9 => 
+      array (
+        0 => 
+        array (
+          'name' => 'stic_additional_information_c',
+          'studio' => 'visible',
+          'label' => 'LBL_STIC_ADDITIONAL_INFORMATION',
+        ),
+      ),
+      10 => 
       array (
         0 => 
         array (
@@ -315,6 +343,7 @@ $viewdefs['Opportunities']['DetailView'] = array (
           'nl2br' => true,
         ),
       ),
+      // END STIC-Custom JBL
     ),
     'LBL_STIC_PANEL_RECORD_DETAILS' => 
     array (

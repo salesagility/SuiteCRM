@@ -32,6 +32,7 @@ $mod_strings['LBL_MODIFIED'] = 'Modificado por';
 $mod_strings['LBL_MODIFIED_NAME'] = 'Modificado por';
 $mod_strings['LBL_MODIFIED_USER'] = 'Modificado por';
 $mod_strings['LBL_MODIFIED_ID'] = 'Modificado por';
+$mod_strings['LBL_FLEX_RELATE'] = 'Relacionado con';
 $mod_strings['LBL_EDIT_BUTTON_LABEL'] = 'Editar';
 $mod_strings['LBL_STIC_PAYMENT_COMMITMENTS_CAMPAIGNS_FROM_STIC_PAYMENT_COMMITMENTS_TITLE'] = 'Compromisos de Pago';
 $mod_strings['LBL_CAMPAIGN_INFORMATION'] = 'Datos xerais';
@@ -57,3 +58,24 @@ $mod_strings['LBL_WEBFORMS_INCLUDES_RECAPTCHA'] = 'Incluir validación reCAPTCHA
 $mod_strings['LBL_WEBFORMS_CHOOSE_RECAPTCHA'] = 'Configuración de reCAPTCHA:';
 $mod_strings['LBL_WEBFORMS_RECAPTCHA_KO_URL'] = 'URL de redirección en caso de erro de reCAPTCHA:';
 $mod_strings['LBL_WEBFORMS_RECAPTCHA_HELP'] = 'Para poder incluir validación reCAPTCHA no formulario é necesario telo correctamente configurado. Máis información en: <a href="https://wikisuite.sinergiacrm.org/index.php?title=Google_reCAPTCHA" target="_blank">https://wikisuite.sinergiacrm.org/index.php?title=Google_reCAPTCHA</a>';
+
+$mod_strings['LBL_STIC_NOTIFICATION_PROSPECT_LIST_NAMES_C'] = 'Listas de Público Obxectivo';
+$mod_strings['LBL_NOTIFICATION_PROSPECT_LIST_ID'] = 'Listas de Público Obxectivo';
+$mod_strings['LBL_NOTIFICATION_TEMPLATE_ID'] = 'Plantilla de correo';
+$mod_strings['LBL_NOTIFICATION_EMAIL_TEMPLATE_NAME'] = 'Plantilla de correo';
+$mod_strings['LBL_NOTIFICATION_OUTBOUND_EMAIL_ID'] = 'Correo saliente';
+$mod_strings['LBL_NOTIFICATION_INBOUND_EMAIL_ID'] = 'Usar buzón';
+$mod_strings['LBL_NOTIFICATION_FROM_NAME'] = 'Remitente (nombre)';
+$mod_strings['LBL_NOTIFICATION_FROM_ADDR'] = 'Remitente (dirección)';
+$mod_strings['LBL_NOTIFICATION_REPLY_TO_NAME'] = 'Responder a (nombre)';
+$mod_strings['LBL_NOTIFICATION_REPLY_TO_ADDR'] = 'Responder a (dirección)';
+
+$mod_strings['LBL_NOTIFICATION_INFORMATION_PANEL'] = 'Notificaciones';
+
+$mod_strings['LBL_FLEX_RELATE_HELP'] = 'Registro del que se desea realizar la notificación. Puede ser un evento o una subvención.';
+$mod_strings['LBL_NOTIFICATION_PROSPECT_LIST_ID_HELP'] = "La notificación se enviará a los miembros de las listas de público objetivo seleccionadas, que deben ser del tipo 'Por defecto'.";
+$mod_strings['LBL_NOTIFICATION_TEMPLATE_ID_HELP'] = "La plantilla de correo electrónico debe ser del tipo 'Notificación' y se pueden incluir en ella campos del registro asociado a la notificación (el evento o la subvención).";
+$mod_strings['LBL_NOTIFICATION_OUTBOUND_EMAIL_ID_HELP'] = "Cuenta de correo que se utilizará para enviar la notificación. Se puede configurar en el apartado 'Correo electrónico saliente' del área de Adminstración.";
+$mod_strings['LBL_NOTIFICATION_INBOUND_EMAIL_ID_HELP'] = "Buzón de correo donde recibir los mensajes de error que se puedan producir tras el envío. Se puede configurar en el apartado 'Correo electrónico entrante' del área de Administración.";
+
+$mod_strings['LBL_NOTIFICATION_NEW_INFO'] = "Al guardar la notificación los correos a enviar se añadirán automáticamente a la cola de envío.";

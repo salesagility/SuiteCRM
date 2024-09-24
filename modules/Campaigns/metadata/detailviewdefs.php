@@ -470,14 +470,25 @@ array (
             'label' => 'LBL_CAMPAIGN_END_DATE',
           ),
         ),
+        // STIC-Custom - JBL - 20240626 - Campaign type: Notification 
+        // https://github.com/SinergiaTIC/SinergiaCRM/pull/44
+        // 3 => 
+        // array (
+        //   0 => 
+        //   array (
+        //     'name' => 'frequency',
+        //     'customCode' => '{if $fields.campaign_type.value == "NewsLetter"}<div style=\'none\' id=\'freq_field\'>{$APP_LIST.newsletter_frequency_dom[$fields.frequency.value]}</div>{/if}&nbsp;',
+        //     'customLabel' => '{if $fields.campaign_type.value == "NewsLetter"}<div style=\'none\' id=\'freq_label\'>{$MOD.LBL_CAMPAIGN_FREQUENCY}</div>{/if}&nbsp;',
+        //   ),
+        //   1 => 
+        //   array (
+        //     'name' => 'status',
+        //     'label' => 'LBL_CAMPAIGN_STATUS',
+        //   ),
+        // ),
         3 => 
         array (
-          0 => 
-          array (
-            'name' => 'frequency',
-            'customCode' => '{if $fields.campaign_type.value == "NewsLetter"}<div style=\'none\' id=\'freq_field\'>{$APP_LIST.newsletter_frequency_dom[$fields.frequency.value]}</div>{/if}&nbsp;',
-            'customLabel' => '{if $fields.campaign_type.value == "NewsLetter"}<div style=\'none\' id=\'freq_label\'>{$MOD.LBL_CAMPAIGN_FREQUENCY}</div>{/if}&nbsp;',
-          ),
+          0 => array (), // Frequency in new row
           1 => 
           array (
             'name' => 'status',
@@ -485,6 +496,17 @@ array (
           ),
         ),
         4 => 
+        array (
+          // Hide/Show fields managed in custom/modules/Campaigns/SticUtils.js
+          0 => array (
+            'name' => 'frequency', 
+          ),
+          1 => array(
+            'name' => 'parent_name',
+          ),
+        ),
+        // END STIC-Custom JBL
+        5 => 
         array (
           0 => 
           array (

@@ -371,8 +371,53 @@ if (true) {
         $xtpl->assign("DEFAULT_MODULE", 'Contacts');
     //$xtpl->assign("CAMPAIGN_POPUP_JS", '<script type="text/javascript" src="include/javascript/sugar_3.js"></script>');
     } else {
-        $xtpl->assign("DROPDOWN", genDropDownJS2());
-        $xtpl->assign("DEFAULT_MODULE", 'Accounts');
+        // STIC-Custom - JBL - 20240830 - Notifications: Filter modules for Notifications
+        // https://github.com/SinergiaTIC/SinergiaCRM/pull/44
+        // $xtpl->assign("DROPDOWN", genDropDownJS2());
+        // $xtpl->assign("DEFAULT_MODULE", 'Accounts');
+        if (isset($_REQUEST['type']) && $_REQUEST['type'] == "notification") {
+            $dropdown = '';
+            $defaultModule = isset($_REQUEST['parent_type']) ? $_REQUEST['parent_type'] : "";
+            if(!array_key_exists($defaultModule, $app_list_strings['parent_type_display_notifications'])) {
+                $defaultModule = "";
+            }
+            
+            if ($defaultModule != "") {
+                // Add $defaultModule as first module in dropdown
+                if (isset($app_list_strings['moduleListSingular'][$defaultModule])) {
+                    $dropdown .= "<option value='" . $defaultModule . "'>
+                        " . $app_list_strings['moduleListSingular'][$defaultModule] . "
+                        </option>";
+                } else {
+                    $dropdown .= "<option value='" . $defaultModule . "'>
+                        " . $app_list_strings['moduleList'][$defaultModule] . "
+                        </option>";
+                }
+            }
+            array_multisort($app_list_strings['parent_type_display_notifications'], SORT_ASC, $app_list_strings['parent_type_display_notifications']);
+            foreach ($app_list_strings['parent_type_display_notifications'] as $key => $name) {
+                if ($key != $defaultModule) {
+                    if (isset($app_list_strings['moduleListSingular'][$key])) {
+                        $dropdown .= "<option value='" . $key . "'>
+                            " . $app_list_strings['moduleListSingular'][$key] . "
+                            </option>";
+                    } else {
+                        $dropdown .= "<option value='" . $key . "'>
+                            " . $app_list_strings['moduleList'][$key] . "
+                            </option>";
+                    }
+                    if ($defaultModule == "") {
+                        $defaultModule = $key;
+                    }
+                }
+            }
+            $xtpl->assign("DROPDOWN", $dropdown);
+            $xtpl->assign("DEFAULT_MODULE", $defaultModule);
+        } else {
+            $xtpl->assign("DROPDOWN", genDropDownJS2());
+            $xtpl->assign("DEFAULT_MODULE", 'Accounts');
+        }
+        // END STIC-Custom
     }
     ////	END CAMPAIGNS
     ///////////////////////////////////////
@@ -427,7 +472,21 @@ if (true) {
         if ($templateType == 'workflow') {
             $xtpl->assign("TYPEDROPDOWN", get_select_options_with_id($app_list_strings['emailTemplates_type_list'], $templateType));
         } else {
-            $xtpl->assign("TYPEDROPDOWN", get_select_options_with_id($app_list_strings['emailTemplates_type_list_no_workflow'], $templateType));
+            // STIC-Custom - JBL - 20240830 - Notifications: Edit EmailTemplates with fixed type
+            // https://github.com/SinergiaTIC/SinergiaCRM/pull/44
+            // $xtpl->assign("TYPEDROPDOWN", get_select_options_with_id($app_list_strings['emailTemplates_type_list_no_workflow'], $templateType));
+            if (isset($_REQUEST['type']) && !empty($_REQUEST['type'])) {
+                $type_list = [$_REQUEST['type'] => $app_list_strings['emailTemplates_type_list_no_workflow'][$_REQUEST['type']]];
+                $selected_item = $_REQUEST['type'];
+                if ($templateType != "" && $templateType != $_REQUEST['type']) {
+                    $type_list[$templateType] = $app_list_strings['emailTemplates_type_list_no_workflow'][$templateType];
+                    $selected_item = $templateType;
+                }
+                $xtpl->assign("TYPEDROPDOWN", get_select_options_with_id($type_list, $selected_item));
+            } else {
+                $xtpl->assign("TYPEDROPDOWN", get_select_options_with_id($app_list_strings['emailTemplates_type_list_no_workflow'], $templateType));
+            }
+            // END STIC-Custom
         }
     }
     // done and parse

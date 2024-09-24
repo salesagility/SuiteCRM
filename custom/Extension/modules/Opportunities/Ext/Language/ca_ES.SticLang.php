@@ -87,5 +87,10 @@ $mod_strings['LBL_TOTAL_OPPORTUNITIES'] = 'Total de Subvencions';
 $mod_strings['LBL_CLOSED_WON_OPPORTUNITIES'] = 'Subvencions guanyades';
 $mod_strings['LNK_IMPORT_OPPORTUNITIES'] = 'Importa Subvencions';
 
+// Cadenes per a la notificació de noves subvencions
+$mod_strings['LBL_STIC_OPPORTUNITY_URL'] = 'URL de la convocatòria';
+$mod_strings['LBL_STIC_ADDITIONAL_INFORMATION'] = 'Informació addicional';
+$mod_strings['LBL_STIC_CAMPAIGNS_NOTIFICATION_FROM_OPPORTUNITIES_TITLE'] = 'Notificacions';
+
 // Cadenes Ajuts
 $mod_strings['LBL_STIC_GRANTS_OPPORTUNITIES_FROM_STIC_GRANTS_TITLE'] = 'Ajuts';

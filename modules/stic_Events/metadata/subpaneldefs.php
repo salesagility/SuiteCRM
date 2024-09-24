@@ -71,3 +71,25 @@ $layout_defs['stic_Events']['subpanel_setup']['securitygroups'] = array(
     'add_subpanel_data' => 'securitygroup_id',
     'title_key' => 'LBL_SECURITYGROUPS_SUBPANEL_TITLE',
 );
+// Notifications subpanel
+$layout_defs['stic_Events']['subpanel_setup']['stic_campaigns_notification'] = array(
+    'order' => 100,
+    'module' => 'Campaigns',
+    'subpanel_name' => 'SticForNotifications',
+    'sort_order' => 'asc',
+    'sort_by' => 'name',
+    'get_subpanel_data' => 'function:getNotificationsFromParent',
+    'function_parameters' => array(
+        'import_function_file' => 'custom/modules/Campaigns/SticUtils.php',
+        'parent_id' => $this->_focus->id,
+        'parent_type' => 'stic_Events',
+        'return_as_array' => false,
+    ),
+    'title_key' => 'LBL_STIC_CAMPAIGNS_NOTIFICATION_FROM_STIC_EVENTS_TITLE',
+    'top_buttons' => array(
+        0 => array(
+            'widget_class' => 'SubPanelTopButtonQuickCreate', 
+            'title' => 'LBL_NEW_BUTTON_TITLE',
+        ),
+    ),
+);

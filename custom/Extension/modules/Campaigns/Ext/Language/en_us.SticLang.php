@@ -32,6 +32,7 @@ $mod_strings['LBL_MODIFIED'] = 'Modified By';
 $mod_strings['LBL_MODIFIED_NAME'] = 'Modified By';
 $mod_strings['LBL_MODIFIED_USER'] = 'Modified By';
 $mod_strings['LBL_MODIFIED_ID'] = 'Modified By (ID)';
+$mod_strings['LBL_FLEX_RELATE'] = 'Related to';
 $mod_strings['LBL_EDIT_BUTTON_LABEL'] = 'Edit';
 $mod_strings['LBL_STIC_PAYMENT_COMMITMENTS_CAMPAIGNS_FROM_STIC_PAYMENT_COMMITMENTS_TITLE'] = 'Payment Commitments';
 $mod_strings['LBL_CAMPAIGN_ACCOUNTS_SUBPANEL_TITLE'] = 'Accounts';
@@ -52,3 +53,25 @@ $mod_strings['LBL_WEBFORMS_RECAPTCHA_HELP'] = 'In order to include reCAPTCHA val
 // the proper value has been set in the core files. In English case, it has been set in custom extension
 // language file in order to avoid a core modification.
 $mod_strings['LBL_WEB_TO_LEAD'] = 'Create person web form'; 
+
+$mod_strings['LBL_STIC_NOTIFICATION_PROSPECT_LIST_NAMES_C'] = 'Target Lists';
+$mod_strings['LBL_NOTIFICATION_PROSPECT_LIST_ID'] = 'Target Lists';
+$mod_strings['LBL_NOTIFICATION_TEMPLATE_ID'] = 'Email template';
+$mod_strings['LBL_NOTIFICATION_EMAIL_TEMPLATE_NAME'] = 'Template name';
+$mod_strings['LBL_NOTIFICATION_OUTBOUND_EMAIL_ID'] = 'Outbound email';
+$mod_strings['LBL_NOTIFICATION_INBOUND_EMAIL_ID'] = 'Use mailbox';
+$mod_strings['LBL_NOTIFICATION_FROM_NAME'] = 'From name';
+$mod_strings['LBL_NOTIFICATION_FROM_ADDR'] = 'From address';
+$mod_strings['LBL_NOTIFICATION_REPLY_TO_NAME'] = 'Reply to name';
+$mod_strings['LBL_NOTIFICATION_REPLY_TO_ADDR'] = 'Reply to address';
+
+$mod_strings['LBL_NOTIFICATION_INFORMATION_PANEL'] = 'Notifications';
+
+
+$mod_strings['LBL_FLEX_RELATE_HELP'] = 'Record for which the notification is to be made. It can be an event or an opportunity.';
+$mod_strings['LBL_NOTIFICATION_PROSPECT_LIST_ID_HELP'] = "Notification will be sent to members of selected target lists, which must be of type 'Default'.";
+$mod_strings['LBL_NOTIFICATION_TEMPLATE_ID_HELP'] = "The email template must be of type 'Notification' and can include fields from the record related to the notification (the event or the opportunity).";
+$mod_strings['LBL_NOTIFICATION_OUTBOUND_EMAIL_ID_HELP'] = "Email account that will be used to send the notification. It can be configured in the 'Outbound email' section of the Administration area.";
+$mod_strings['LBL_NOTIFICATION_INBOUND_EMAIL_ID_HELP'] = "Mailbox to receive error messages that may occur after sending. It can be configured in the 'Inbound email' section of the Administration area.";
+
+$mod_strings['LBL_NOTIFICATION_NEW_INFO'] = "When saving the notification the emails to be sent will be automatically added to the sending queue.";

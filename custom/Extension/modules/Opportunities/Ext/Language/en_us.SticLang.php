@@ -56,6 +56,11 @@ $mod_strings['LBL_EMAIL_OPPORTUNITIES_SUBJECT'] = '[CRM reminder] Deadline for t
 $mod_strings['LBL_EMAIL_OPPORTUNITIES_BODY_1'] = 'There is an approaching deadline for the opportunity: ';
 $mod_strings['LBL_EMAIL_OPPORTUNITIES_BODY_2'] = ". Please, click on the following link to review it.";
 
+// Strings for new Opportunities notification
+$mod_strings['LBL_STIC_OPPORTUNITY_URL'] = 'Opportunity URL';
+$mod_strings['LBL_STIC_ADDITIONAL_INFORMATION'] = 'Additional information';
+$mod_strings['LBL_STIC_CAMPAIGNS_NOTIFICATION_FROM_OPPORTUNITIES_TITLE'] = 'Notifications';
+
 //Strings for Grants
 $mod_strings['LBL_STIC_GRANTS_OPPORTUNITIES_FROM_STIC_GRANTS_TITLE'] = 'Grants';
 

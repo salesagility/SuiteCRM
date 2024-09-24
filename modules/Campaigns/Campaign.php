@@ -264,10 +264,134 @@ class Campaign extends SugarBean
             $this->frequency = '';
         }
 
-		return parent::save($check_notify);
+        // STIC-Custom - JBL - 20240612 - New Campaign type (Notification)
+        // https://github.com/SinergiaTIC/SinergiaCRM/pull/44
+		// return parent::save($check_notify);
+        if ($this->campaign_type == "Notification" && 
+            !empty($_REQUEST['relate_to']) && $_REQUEST['relate_to'] == "getNotificationsFromParent" &&
+            !empty($_REQUEST['relate_id']) && !empty($_REQUEST['return_module'])) {
+            // Set parent type and ID for Notification campaigns
+            $this->parent_type = $_REQUEST['return_module'];
+            $this->parent_id = $_REQUEST['relate_id'];
+            $_REQUEST['relate_to'] = null;
+            $_REQUEST['relate_id'] = null;
+        }
 
+        if (empty($this->name)) {
+            // If Name is empty: Name = Parent_Mame - Campaign_Type - Start_Date
+            global $app_list_strings, $current_user, $timedate;
+
+            $nameArray = array();
+            // Add Parent_Name to nameArray
+            if (!empty($this->parent_type) && !empty($this->parent_id)) {
+                if (empty($this->parent_name)) {
+                    global $beanList, $beanFiles;
+    
+                    // Retrieve the parent record to get its name
+                    if (isset($beanList[$this->parent_type])) {
+                        $class = $beanList[$this->parent_type];
+                        if (!class_exists($class)) {
+                            require_once($beanFiles[$class]);
+                        }
+                        $parent = new $class();
+                        $parent->retrieve($this->parent_id);
+                        $this->parent_name = $parent->name;
+                    }
+                }
+                $nameArray[] = $this->parent_name;
+            }
+
+            // Add Campaign_Type to nameArray
+            $nameArray[] = $app_list_strings['campaign_type_dom'][$this->campaign_type];
+
+            // Add Start_Date to nameArray
+            $startDate = $this->start_date;
+            if ($userDate = $timedate->fromUserDate($startDate, false, $current_user)) {
+                $startDate = $userDate->asDBDate();
+            }
+            $date = SugarDateTime::createFromFormat(TimeDate::DB_DATE_FORMAT, $startDate, null);
+            $startDateFormatted = $date->format($timedate->get_date_format($user));
+
+            $nameArray[] = $startDateFormatted;
+            
+            // Set campaign name with nameArray (Parent_Mame - Campaign_Type - Start_Date)
+            $this->name = implode(" - ", $nameArray);
+        }
+        if ($this->campaign_type != "Notification") {
+            // Reset Prospect lists for non-Notification campaigns
+            $this->notification_prospect_list_ids = "";
+        }
+
+        $prospect_list_id_array = explode("^,^", trim($this->notification_prospect_list_ids, "^"));
+        $prospect_list_name_array = array();
+
+        // Set stic_notification_prospect_list_names_c field with Prospect lists names
+        foreach ($prospect_list_id_array as $prospect_list_id) {
+            $prospect_listBean = BeanFactory::getBean('ProspectLists', $prospect_list_id);
+            $prospect_list_name_array[] = $prospect_listBean->name;
+        }
+        $this->stic_notification_prospect_list_names_c = implode(", ", $prospect_list_name_array);
+
+        $isNewCampaign = empty($this->id);
+        $return_id = parent::save($check_notify);
+
+        // For new Notification campaigns, set relationships and queue the campaign
+        if ($isNewCampaign && $this->campaign_type == "Notification") {
+            // Set ProspectList relationships
+            $prospect_list_id_array = explode("^,^", trim($this->notification_prospect_list_ids, "^"));
+            $prospect_list_name_array = array();
+
+            if ($this->load_relationship('prospectlists')) {
+                $relatedProspectLists = $this->prospectlists->get();
+                foreach ($relatedProspectLists as $prospectListId) {
+                    if (!in_array($prospectListId, $prospect_list_id_array)) {
+                        $this->prospectlists->delete($this->id, $prospectListId);
+                    }
+                }
+                foreach ($prospect_list_id_array as $prospect_list_id) {
+                    if (!in_array($prospect_list_id, $relatedProspectLists)) {
+                        $this->prospectlists->add($prospect_list_id);
+                    }
+                }
+            }
+
+            // Save or Update EmailMarketing record
+            $emailMarketing = BeanFactory::newBean('EmailMarketing');
+            $relatedEmailMarketingList = $emailMarketing->get_list("name", "email_marketing.campaign_id='{$return_id}'", 0, -99, -99);
+            if(!empty($relatedEmailMarketingList['list'])) {
+                $emailMarketing = $relatedEmailMarketingList['list'][0];
+            }
+            // Set EmailMarketing fields
+            $emailMarketing->name = $this->name . ' - Email';
+            $emailMarketing->campaign_id = $return_id;
+            $emailMarketing->template_id = $this->notification_template_id;
+            $emailMarketing->inbound_email_id = $this->notification_inbound_email_id;
+            $emailMarketing->outbound_email_id = $this->notification_outbound_email_id;
+            $emailMarketing->from_name = $this->notification_from_name;
+            $emailMarketing->from_addr = $this->notification_from_addr;
+            $emailMarketing->reply_to_name = $this->notification_reply_to_name;
+            $emailMarketing->reply_to_addr = $this->notification_reply_to_addr;
+            $emailMarketing->date_start = $_REQUEST["start_date"];
+            $emailMarketing->status = 'active';
+            $emailMarketing->all_prospect_lists = 1;
+
+            $emailMarketingId = $emailMarketing->save();
+
+            // Queue Notification campaign
+            $_POST['mass'] = array(0 => $emailMarketingId);
+            $_REQUEST['module'] = "Campaigns";
+            $_REQUEST['record'] = $return_id;
+            $_REQUEST['return_action'] = "TrackDetailView";
+            $_REQUEST['return_module'] = "Campaigns";
+            $_REQUEST['return_id'] = $return_id;
+            $_REQUEST['action'] = "QueueCampaign";
+            $_REQUEST['campaign_id'] = $return_id;
+
+            include_once("modules/Campaigns/QueueCampaign.php");
+        }
+        return $return_id;
+        // END STIC-Custom
 	}
-
 
     public function mark_deleted($id)
     {
