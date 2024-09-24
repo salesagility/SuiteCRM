@@ -49,7 +49,7 @@ $SDAVirtualFields = array(
         'type' => 'numeric',
         'precision' => 2,
         'hidden' => 0,
-        'expression' => "SUBSTRING_INDEX(expected_payments_detail, '|', 1)",
+        'expression' => "SUBSTRING_INDEX(m.expected_payments_detail, '|', 1)",
     ),
     'SDA_EXPECTED_PAYMENTS_MONTH_2' => array(
         'label' => 'LBL_EXPECTED_PAYMENTS_MONTH_2',
@@ -57,7 +57,7 @@ $SDAVirtualFields = array(
         'type' => 'numeric',
         'precision' => 2,
         'hidden' => 0,
-        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(expected_payments_detail, '|', 2), '|', -1)",
+        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(m.expected_payments_detail, '|', 2), '|', -1)",
     ),
     'SDA_EXPECTED_PAYMENTS_MONTH_3' => array(
         'label' => 'LBL_EXPECTED_PAYMENTS_MONTH_3',
@@ -65,7 +65,7 @@ $SDAVirtualFields = array(
         'type' => 'numeric',
         'precision' => 2,
         'hidden' => 0,
-        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(expected_payments_detail, '|', 3), '|', -1)",
+        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(m.expected_payments_detail, '|', 3), '|', -1)",
     ),
     'SDA_EXPECTED_PAYMENTS_MONTH_4' => array(
         'label' => 'LBL_EXPECTED_PAYMENTS_MONTH_4',
@@ -73,7 +73,7 @@ $SDAVirtualFields = array(
         'type' => 'numeric',
         'precision' => 2,
         'hidden' => 0,
-        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(expected_payments_detail, '|', 4), '|', -1)",
+        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(m.expected_payments_detail, '|', 4), '|', -1)",
     ),
     'SDA_EXPECTED_PAYMENTS_MONTH_5' => array(
         'label' => 'LBL_EXPECTED_PAYMENTS_MONTH_5',
@@ -81,7 +81,7 @@ $SDAVirtualFields = array(
         'type' => 'numeric',
         'precision' => 2,
         'hidden' => 0,
-        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(expected_payments_detail, '|', 5), '|', -1)",
+        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(m.expected_payments_detail, '|', 5), '|', -1)",
     ),
     'SDA_EXPECTED_PAYMENTS_MONTH_6' => array(
         'label' => 'LBL_EXPECTED_PAYMENTS_MONTH_6',
@@ -89,7 +89,7 @@ $SDAVirtualFields = array(
         'type' => 'numeric',
         'precision' => 2,
         'hidden' => 0,
-        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(expected_payments_detail, '|', 6), '|', -1)",
+        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(m.expected_payments_detail, '|', 6), '|', -1)",
     ),
     'SDA_EXPECTED_PAYMENTS_MONTH_7' => array(
         'label' => 'LBL_EXPECTED_PAYMENTS_MONTH_7',
@@ -97,7 +97,7 @@ $SDAVirtualFields = array(
         'type' => 'numeric',
         'precision' => 2,
         'hidden' => 0,
-        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(expected_payments_detail, '|', 7), '|', -1)",
+        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(m.expected_payments_detail, '|', 7), '|', -1)",
     ),
     'SDA_EXPECTED_PAYMENTS_MONTH_8' => array(
         'label' => 'LBL_EXPECTED_PAYMENTS_MONTH_8',
@@ -105,7 +105,7 @@ $SDAVirtualFields = array(
         'type' => 'numeric',
         'precision' => 2,
         'hidden' => 0,
-        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(expected_payments_detail, '|', 8), '|', -1)",
+        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(m.expected_payments_detail, '|', 8), '|', -1)",
     ),
     'SDA_EXPECTED_PAYMENTS_MONTH_9' => array(
         'label' => 'LBL_EXPECTED_PAYMENTS_MONTH_9',
@@ -113,7 +113,7 @@ $SDAVirtualFields = array(
         'type' => 'numeric',
         'precision' => 2,
         'hidden' => 0,
-        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(expected_payments_detail, '|', 9), '|', -1)",
+        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(m.expected_payments_detail, '|', 9), '|', -1)",
     ),
     'SDA_EXPECTED_PAYMENTS_MONTH_10' => array(
         'label' => 'LBL_EXPECTED_PAYMENTS_MONTH_10',
@@ -121,7 +121,7 @@ $SDAVirtualFields = array(
         'type' => 'numeric',
         'precision' => 2,
         'hidden' => 0,
-        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(expected_payments_detail, '|', 10), '|', -1)",
+        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(m.expected_payments_detail, '|', 10), '|', -1)",
     ),
     'SDA_EXPECTED_PAYMENTS_MONTH_11' => array(
         'label' => 'LBL_EXPECTED_PAYMENTS_MONTH_11',
@@ -129,7 +129,7 @@ $SDAVirtualFields = array(
         'type' => 'numeric',
         'precision' => 2,
         'hidden' => 0,
-        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(expected_payments_detail, '|', 11), '|', -1)",
+        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(m.expected_payments_detail, '|', 11), '|', -1)",
     ),
     'SDA_EXPECTED_PAYMENTS_MONTH_12' => array(
         'label' => 'LBL_EXPECTED_PAYMENTS_MONTH_12',
@@ -137,6 +137,6 @@ $SDAVirtualFields = array(
         'type' => 'numeric',
         'precision' => 2,
         'hidden' => 0,
-        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(expected_payments_detail, '|', 12), '|', -1)",
+        'expression' => "SUBSTRING_INDEX(SUBSTRING_INDEX(m.expected_payments_detail, '|', 12), '|', -1)",
     ),
 );
