@@ -310,6 +310,13 @@ class ListViewData
             $orderBy = 'last_name '.$order['sortOrder'].', first_name '.$order['sortOrder'];
         }
 
+        // STIC-Custom 20240715 MHP - https://github.com/SinergiaTIC/SinergiaCRM/pull/62
+        // If 'uploadfile' field is included in the fields to be displayed, 'filename' is added to the array since in custom modules
+        // that inherit from the file type module, the database field that stores the name is called 'filename'.
+        if (isset($GLOBALS["dictionary"][$seed->module_dir]['templates']['file']) && in_array('uploadfile', $filter_fields)){
+            $filter_fields['filename'] = true;
+        }
+        // END STIC-Custom
         $ret_array = $seed->create_new_list_query($orderBy, $where, $filter_fields, $params, 0, '', true, $seed, $singleSelect);
         $ret_array['inner_join'] = '';
         if (!empty($this->seed->listview_inner_join)) {
@@ -369,6 +376,15 @@ class ListViewData
 
         while (($row = $this->db->fetchByAssoc($result)) != null) {
             if ($count < $limit) {
+                // STIC-Custom 20240715 MHP - https://github.com/SinergiaTIC/SinergiaCRM/pull/62
+                // In custom modules that inherit from the file type module, the field that displays the file name is called 'uploadfile' instead of 'filename'.
+                // The value of the 'filename' field is copied to the 'uploadfile' so that it can be displayed in the list view.
+                if (isset($GLOBALS["dictionary"][$seed->module_dir]['templates']['file']) && 
+                    !isset($row['uploadfile']) && isset($row['filename']) && !empty($row['filename']))
+                {
+                    $row['uploadfile'] = $row['filename'];
+                }   
+                // END STIC-Custom
                 $id_list .= ',\''.$row[$id_field].'\'';
                 $idIndex[$row[$id_field]][] = count($rows);
                 $rows[] = $seed->convertRow($row);

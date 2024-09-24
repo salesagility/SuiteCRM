@@ -52,6 +52,16 @@ $listViewDefs[$module_name] = array(
         'link' => true,
         'default' => true
     ),
+    // STIC-Custom 20240715 MHP - https://github.com/SinergiaTIC/SinergiaCRM/pull/62
+    // Add the file name and options to download and view the file in a new tab in the subpanel of a new module of type File        
+    'UPLOADFILE' => 
+    array (
+      'type' => 'file',
+      'label' => 'LBL_FILE_UPLOAD',
+      'width' => '10%',
+      'default' => true,
+    ),
+    // END STIC-Custom    
     'MODIFIED_BY_NAME' => array(
         'width' => '10',
         'label' => 'LBL_MODIFIED_USER',

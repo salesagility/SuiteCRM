@@ -52,30 +52,76 @@ $subpanel_layout = array(
     'where' => '',
 
     'list_fields' => array(
+        // STIC-Custom 20240715 MHP - https://github.com/SinergiaTIC/SinergiaCRM/pull/62
+        // Add the file name and options to download and view the file in a new tab in the subpanel of a new module of type File    
+        // 'object_image' => array(
+        //     'widget_class' => 'SubPanelIcon',
+        //     'width' => '2%',
+        //     'image2' => 'attachment',
+        //     'image2_url_field' => array(
+        //         'id_field' => 'selected_revision_id',
+        //         'filename_field' => 'selected_revision_filename'
+        //     ),
+        //     'attachment_image_only' => true,
+
+        // ),
+        // 'document_name' => array(
+        //     'name' => 'document_name',
+        //     'vname' => 'LBL_LIST_DOCUMENT_NAME',
+        //     'widget_class' => 'SubPanelDetailViewLink',
+        //     'width' => '45%',
+        // ),
+        // 'active_date' => array(
+        //     'name' => 'active_date',
+        //     'vname' => 'LBL_DOC_ACTIVE_DATE',
+        //     'width' => '45%',
+        // ),        
         'object_image' => array(
+            'vname' => 'LBL_OBJECT_IMAGE',            
             'widget_class' => 'SubPanelIcon',
             'width' => '2%',
             'image2' => 'attachment',
             'image2_url_field' => array(
-                'id_field' => 'selected_revision_id',
-                'filename_field' => 'selected_revision_filename'
+                'id_field' => 'id',
+                'filename_field' => 'filename'
             ),
             'attachment_image_only' => true,
-
         ),
+        'filename' => array(
+            'name' => 'filename',
+            'vname' => 'LBL_LIST_DOCUMENT_NAME',
+            'width' => '20%',
+            'sortable'=>false,
+            'widget_class' => 'SubPanelDetailViewLink',   
+          ),
         'document_name' => array(
             'name' => 'document_name',
-            'vname' => 'LBL_LIST_DOCUMENT_NAME',
-            'widget_class' => 'SubPanelDetailViewLink',
+            'vname' => 'LBL_FILENAME',
+            'widget_class' => 'SubPanelFileDownloadViewLink',
             'width' => '45%',
         ),
-
+        'status_id' => array(
+          'type' => 'enum',
+          'vname' => 'LBL_DOC_STATUS',
+          'width' => '10%',
+        ),
         'active_date' => array(
             'name' => 'active_date',
             'vname' => 'LBL_DOC_ACTIVE_DATE',
             'width' => '45%',
         ),
-
+        'assigned_user_name' => 
+        array (
+          'link' => true,
+          'type' => 'relate',
+          'vname' => 'LBL_ASSIGNED_TO_NAME',
+          'id' => 'ASSIGNED_USER_ID',
+          'width' => '10%',
+          'widget_class' => 'SubPanelDetailViewLink',
+          'target_module' => 'Users',
+          'target_record_key' => 'assigned_user_id',
+        ),        
+        // END STIC-Custom
         'edit_button' => array(
             'vname' => 'LBL_EDIT_BUTTON',
             'widget_class' => 'SubPanelEditButton',
