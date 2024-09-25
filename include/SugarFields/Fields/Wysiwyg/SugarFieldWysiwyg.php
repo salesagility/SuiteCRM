@@ -64,7 +64,7 @@ class SugarFieldWysiwyg extends SugarFieldBase {
         $config['height'] = 250;
         $config['menubar'] = false;
         // STIC-Custom 20240722 MHP - Do not apply the configuration if we are in PDF Templates
-        // 
+        // https://github.com/SinergiaTIC/SinergiaCRM/pull/309
         // $config['plugins']  = 'code, table, link, image, wordcount';
         // $config['selector'] = "#{$form_name} "."#".$vardef['name'];
         // $config['toolbar1'] = 'fontselect | fontsizeselect | bold italic underline | forecolor backcolor | styleselect | outdent indent | link image | code table';        
