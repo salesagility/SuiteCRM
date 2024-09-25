@@ -100,14 +100,21 @@ $(document).ready(function() {
       $("#notification_template_id").on("change paste keyup", template_change);
     }
 
-    var observer = new MutationObserver(function(mutations) {
-      mutations.forEach(function(mutation) {
-        if (mutation.attributeName === 'style') {
-          type_change();
-        }
+    // Check Notification panel exists
+    const targetElement = $(".panel-body[data-id='LBL_NOTIFICATION_INFORMATION_PANEL']").parent()[0];
+    if (targetElement) {
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.attributeName === 'style') {
+            type_change();
+          }
+        });
       });
-    });
-    observer.observe($(".panel-body[data-id='LBL_NOTIFICATION_INFORMATION_PANEL']").parent()[0], { attributes: true, attributeFilter: ['style'] });
+  
+      observer.observe(targetElement, { attributes: true, attributeFilter: ['style'] });
+    } else {
+        console.log("Notification panel does not exists in DOM.");
+    }
 
     type_change();
     template_change();
@@ -180,8 +187,12 @@ function ConvertItems(id) {
 function updateViewNewsLetterType(isNewsLetter) {
   if (isNewsLetter) {
     $('[data-field="frequency"]').show();
+    $('#freq_label').show();
+    $('#freq_field').show();
   } else {
     $('[data-field="frequency"]').hide();
+    $('#freq_label').hide();
+    $('#freq_field').hide();
   }
 }
 

@@ -35,6 +35,7 @@ class CustomCampaignsViewEdit extends ViewEdit
         parent::__construct();
         $this->useForSubpanel = false;
         $this->useModuleQuickCreateTemplate = true;
+        $this->moduleName = 'Campaigns';
     }
 
     public function preDisplay()
@@ -46,6 +47,62 @@ class CustomCampaignsViewEdit extends ViewEdit
         // Write here you custom code
         include_once "custom/modules/Campaigns/SticUtils.php";
         CampaignsUtils::fillDynamicListsForNotifications();
+
+        // Adding the Notification panel dinamically.
+        $this->ev->defs['panels']['templateMeta']['tabdefs']['LBL_NOTIFICATION_INFORMATION_PANEL'] = array(
+            'newTab' => false,
+            'panelDefault' => 'expanded',
+        );
+
+        $this->ev->defs['panels']['LBL_NOTIFICATION_INFORMATION_PANEL'] = array(
+            0 => array(
+                0 => array(
+                    'name' => 'parent_name',
+                    'label' => 'LBL_FLEX_RELATE',
+                ),
+                1 => '',
+            ),
+            1 => array(
+                0 => array(
+                    'name' => 'notification_prospect_list_ids',
+                    'label' => 'LBL_NOTIFICATION_PROSPECT_LIST_ID',
+                ),
+                1 => array(
+                    'name' => 'notification_template_id',
+                    'label' => 'LBL_NOTIFICATION_TEMPLATE_ID',
+                ),
+            ),
+            2 => array(
+                0 => array(
+                    'name' => 'notification_outbound_email_id',
+                    'label' => 'LBL_NOTIFICATION_OUTBOUND_EMAIL_ID',
+                ),
+                1 => array(
+                    'name' => 'notification_inbound_email_id',
+                    'label' => 'LBL_NOTIFICATION_INBOUND_EMAIL_ID',
+                ),
+            ),
+            3 => array(
+                0 => array(
+                    'name' => 'notification_from_name',
+                    'label' => 'LBL_NOTIFICATION_FROM_NAME',
+                ),
+                1 => array(
+                    'name' => 'notification_from_addr',
+                    'label' => 'LBL_NOTIFICATION_FROM_ADDR',
+                ),
+            ),
+            4 => array(
+                0 => array(
+                    'name' => 'notification_reply_to_name',
+                    'label' => 'LBL_NOTIFICATION_REPLY_TO_NAME',
+                ),
+                1 => array(
+                    'name' => 'notification_reply_to_addr',
+                    'label' => 'LBL_NOTIFICATION_REPLY_TO_ADDR',
+                ),
+            ),
+        );
     }
 
     public function display()
