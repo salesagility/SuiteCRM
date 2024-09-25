@@ -310,11 +310,11 @@ $viewdefs['Campaigns']['EditView'] = array (
       ),
       // STIC-Custom - JBL - 20240620 - Notify new Opportunities: New Campaign type (Notification)
       // https://github.com/SinergiaTIC/SinergiaCRM/pull/44
-      'LBL_NOTIFICATION_INFORMATION_PANEL' =>
-      array (
-        'newTab' => false,
-        'panelDefault' => 'expanded',
-      ),
+      // 'LBL_NOTIFICATION_INFORMATION_PANEL' =>
+      // array (
+      //   'newTab' => false,
+      //   'panelDefault' => 'expanded',
+      // ),
       // END STIC-Custom JBL
       'LBL_NAVIGATION_MENU_GEN2' => 
       array (
@@ -411,49 +411,49 @@ $viewdefs['Campaigns']['EditView'] = array (
     ),
     // STIC-Custom - JBL - 20240620 - Notify new Opportunities: New Campaign type (Notification)
     // https://github.com/SinergiaTIC/SinergiaCRM/pull/44
-    'LBL_NOTIFICATION_INFORMATION_PANEL' =>
-    array (
-      0 => array(
-        0 => array(
-          'name' => 'notification_prospect_list_ids',
-          'label' => 'LBL_NOTIFICATION_PROSPECT_LIST_ID',
-        ),
-        1 => array(
-          'name' => 'notification_template_id',
-          'label' => 'LBL_NOTIFICATION_TEMPLATE_ID',
-        ),
-      ),
-      1 => array(
-        0 => array(
-          'name' => 'notification_outbound_email_id',
-          'label' => 'LBL_NOTIFICATION_OUTBOUND_EMAIL_ID',
-        ),
-        1 => array(
-          'name' => 'notification_inbound_email_id',
-          'label' => 'LBL_NOTIFICATION_INBOUND_EMAIL_ID',
-        ),
-      ),
-      2 => array(
-        0 => array(
-          'name' => 'notification_from_name',
-          'label' => 'LBL_NOTIFICATION_FROM_NAME',
-        ),
-        1 => array(
-          'name' => 'notification_from_addr',
-          'label' => 'LBL_NOTIFICATION_FROM_ADDR',
-        ),
-      ),
-      3 => array(
-        0 => array(
-          'name' => 'notification_reply_to_name',
-          'label' => 'LBL_NOTIFICATION_REPLY_TO_NAME',
-        ),
-        1 => array(
-          'name' => 'notification_reply_to_addr',
-          'label' => 'LBL_NOTIFICATION_REPLY_TO_ADDR',
-        ),
-      ),
-    ),
+    // 'LBL_NOTIFICATION_INFORMATION_PANEL' =>
+    // array (
+    //   0 => array(
+    //     0 => array(
+    //       'name' => 'notification_prospect_list_ids',
+    //       'label' => 'LBL_NOTIFICATION_PROSPECT_LIST_ID',
+    //     ),
+    //     1 => array(
+    //       'name' => 'notification_template_id',
+    //       'label' => 'LBL_NOTIFICATION_TEMPLATE_ID',
+    //     ),
+    //   ),
+    //   1 => array(
+    //     0 => array(
+    //       'name' => 'notification_outbound_email_id',
+    //       'label' => 'LBL_NOTIFICATION_OUTBOUND_EMAIL_ID',
+    //     ),
+    //     1 => array(
+    //       'name' => 'notification_inbound_email_id',
+    //       'label' => 'LBL_NOTIFICATION_INBOUND_EMAIL_ID',
+    //     ),
+    //   ),
+    //   2 => array(
+    //     0 => array(
+    //       'name' => 'notification_from_name',
+    //       'label' => 'LBL_NOTIFICATION_FROM_NAME',
+    //     ),
+    //     1 => array(
+    //       'name' => 'notification_from_addr',
+    //       'label' => 'LBL_NOTIFICATION_FROM_ADDR',
+    //     ),
+    //   ),
+    //   3 => array(
+    //     0 => array(
+    //       'name' => 'notification_reply_to_name',
+    //       'label' => 'LBL_NOTIFICATION_REPLY_TO_NAME',
+    //     ),
+    //     1 => array(
+    //       'name' => 'notification_reply_to_addr',
+    //       'label' => 'LBL_NOTIFICATION_REPLY_TO_ADDR',
+    //     ),
+    //   ),
+    // ),
     // END STIC-Custom JBL
     'LBL_NAVIGATION_MENU_GEN2' => 
     array (
