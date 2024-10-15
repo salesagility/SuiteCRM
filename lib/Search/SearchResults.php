@@ -143,11 +143,48 @@ class SearchResults
 
                 $obj->load_relationships();
                 $fieldDefs = $obj->getFieldDefinitions();
+                $obj = $this->formatForDisplay($obj, $fieldDefs);
                 $parsed[$module][] = $this->updateFieldDefLinks($obj, $fieldDefs);
             }
         }
 
         return $parsed;
+    }
+
+    /**
+     * Format data so it can be correctly displayed on search results
+     *
+     * @param SugarBean $obj
+     * @param array $fieldDefs
+     * @return SugarBean
+     */
+    protected function formatForDisplay(SugarBean $obj, array $fieldDefs): SugarBean
+    {
+        global $app_list_strings;
+
+        foreach ($fieldDefs as $fieldDef) {
+            $value = $obj->{$fieldDef['name']};
+            if (isset($value)) {
+                switch ($fieldDef['type']){
+                    case 'enum':
+                    case 'dynamicenum':
+                    case 'multienum':
+                        if (isset($obj->field_name_map[$fieldDef['name']]['options']) &&
+                            isset($app_list_strings[$obj->field_name_map[$fieldDef['name']]['options']]) &&
+                            isset($app_list_strings[$obj->field_name_map[$fieldDef['name']]['options']][$value])
+                        ) {
+                            $obj->{$fieldDef['name']} = $app_list_strings[$obj->field_name_map[$fieldDef['name']]['options']][$value];
+                        }
+                        break;
+
+                    case 'currency':
+                        require_once('modules/Currencies/Currency.php');
+                        $obj->{$fieldDef['name']} = currency_format_number($value);
+                        break;
+                }
+            }
+        }
+        return $obj;
     }
 
     /**
