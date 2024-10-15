@@ -1014,6 +1014,7 @@ function validate_form(formname, startsWith) {
               }
               break;
             case 'int':
+            case 'range':
               if (!isInteger(trim(form[validate[formname][i][nameIndex]].value))) {
                 isError = true;
                 add_error_style(formname, validate[formname][i][nameIndex], invalidTxt + " " + validate[formname][i][msgIndex]);
