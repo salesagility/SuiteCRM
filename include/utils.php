@@ -6341,3 +6341,20 @@ function isWebToLeadAllowedRedirectHost(string $url): bool {
 
     return false;
 }
+
+/**
+ * Set the proper decimal separator according to the user/system configuration
+ *
+ * @param Decimal $decimalValue
+ * @param Boolean $userSetting. Indicates whether to choose user or system configuration
+ * @return Decimal
+ */
+function formatDecimalInConfigSettings($decimalValue, $userSetting = false) {
+    global $current_user, $sugar_config;
+    if ($userSetting) {
+        $user_dec_sep = (!empty($current_user->id) ? $current_user->getPreference('dec_sep') : null);
+    }
+    $dec_sep = empty($user_dec_sep) ? $sugar_config['default_decimal_seperator'] : $user_dec_sep;
+    return str_replace('.', $dec_sep, $decimalValue);
+}
+
