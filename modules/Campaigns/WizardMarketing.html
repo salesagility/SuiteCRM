@@ -547,6 +547,17 @@
 								<input type="checkbox" name="update_exists_template" class="form-checkbox input-sm hidden">
 							</span>
 						</div>
+						{if !$hide_width_set}
+						<script>
+							{literal}
+							$(function(){
+								if(document.getElementById('template_id').value) {
+									onEmailTemplateChange(document.getElementById('template_id'), '{$MOD.LBL_COPY_OF}');
+								}
+							});
+							{/literal}
+                        </script>
+						{/if}
 						<script>
 							{literal}
 							function loadtemplate() {
