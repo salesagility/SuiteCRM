@@ -398,6 +398,12 @@ class EmailTemplate extends SugarBean
     {
         global $beanList, $app_list_strings;
 
+        $decimalTypes = [
+            'currency',
+            'decimal',
+            'float'
+        ];
+
         // generate User instance that owns this "Contact" for contact_user_* macros
         $user = BeanFactory::newBean('Users');
         if (isset($focus->assigned_user_id) && !empty($focus->assigned_user_id)) {
@@ -468,6 +474,10 @@ class EmailTemplate extends SugarBean
                     if (isset($app_list_strings[$matches[0][$i][3]][$value])) {
                         $value = $app_list_strings[$matches[0][$i][3]][$value];
                     }
+                }
+
+                if (in_array($focus->field_defs[$field_name]['type'], $decimalTypes)){
+                    $value = formatDecimalInConfigSettings($value, false);
                 }
 
                 //generate name value pair array of macros and corresponding values for the targed.
