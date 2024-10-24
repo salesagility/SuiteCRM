@@ -602,11 +602,7 @@ class ExternalReporting
                     case 'fullname':
                     case 'name':
                     case 'url':
-                    case 'decimal':
-                    case 'int':
                     case 'html':
-                    case 'currency':
-                    case 'float':
                     case 'user_name':
                     case 'ColorPicker':
                     case 'email':
@@ -623,6 +619,17 @@ class ExternalReporting
                         } else {
                             $fieldSrc = "IFNULL({$fieldPrefix}.{$fieldV['name']},'') AS {$fieldName}";
                         }
+                        break;
+
+                    // Numeric types
+                    case 'decimal':
+                    case 'int':
+                    case 'currency':
+                    case 'float':
+                        $fieldV['alias'] = $fieldV['name'];
+                        // Numeric type columns are converted to decimal to ensure they remain in this type in the view,
+                        // avoiding errors in min and max aggregations due to ordering
+                        $fieldSrc = "CONVERT(IFNULL({$fieldPrefix}.{$fieldV['name']},''), decimal(10,4)  ) AS {$fieldName}";
                         break;
 
                     default:
@@ -1295,16 +1302,15 @@ class ExternalReporting
 
         // 2) eda_def_groups
         $sqlMetadata[] = "CREATE or REPLACE VIEW `sda_def_groups` AS
-                                  SELECT CONCAT('SDA_',name) as name FROM securitygroups WHERE deleted=0
+                                  SELECT CONCAT('SCRM_',name) as name FROM securitygroups WHERE deleted=0
                                   UNION SELECT 'EDA_ADMIN'
-                                  UNION SELECT 'NO_SINERGIACRM_USERS'
                                   ;";
         // 3) eda_def_users_groups
         $sqlMetadata[] = "CREATE or REPLACE VIEW `sda_def_user_groups` AS
                             -- Normal users are assigned to their own security groups.
                             SELECT
                                 user_name,
-                                CONCAT('SDA_',s.name) as name
+                                CONCAT('SCRM_',s.name) as name
                             FROM
                                 users u
                             JOIN securitygroups_users su ON
@@ -1326,8 +1332,38 @@ class ExternalReporting
                             WHERE
                                 u.is_admin = 1
                                 AND u.deleted = 0;";
+        // 4) eda_def_permissions
 
-        // 4) eda_def_security_group_records
+        $sqlMetadata[] = "CREATE or REPLACE VIEW `sda_def_permissions` AS
+                            SELECT * from sda_def_permissions_actions  p where p.stic_permission_source IN ('ACL_ALLOW_ALL', 'ACL_ALLOW_GROUP_priv','ACL_ALLOW_OWNER')
+                            UNION
+                     SELECT
+                        sdug.user_name,
+                        `group`,
+                        `table`,
+                        `column`,
+                        `global`,
+                        stic_permission_source
+                        FROM
+                        sda_def_permissions_actions p
+                        JOIN sda_def_user_groups sdug ON
+                        p.`group` = sdug.name
+                        WHERE
+                        p.stic_permission_source IN('ACL_ALLOW_GROUP') AND(
+                            CONCAT(sdug.user_name, `table`) IN(
+                            SELECT
+                                CONCAT(p.user_name, `table`)
+                            FROM
+                                sda_def_permissions_actions p
+                            WHERE
+                                p.stic_permission_source = 'ACL_ALLOW_GROUP_priv'
+                        )
+                        )
+                        GROUP BY
+                        `group`,
+                        `table`,
+                        sdug.user_name;";
+        // 5) eda_def_security_group_records
 
         // Set a switch to determine whether to populate the sda_def_security_group_records view based
         // on the value of $sugar_config['stic_sinergiada']['group_permissions_enabled']
@@ -1341,7 +1377,7 @@ class ExternalReporting
                             SELECT
                                 CONCAT('{$this->viewPrefix}_', LCASE(module)) as `table`,
                                 record_id,
-                                CONCAT('SDA_',s.name) as `group`
+                                CONCAT('SCRM_',s.name) as `group`
                             FROM
                                 securitygroups_records sr
                                 JOIN securitygroups s on sr.securitygroup_id=s.id
@@ -1427,8 +1463,8 @@ class ExternalReporting
                         ) ENGINE = MyISAM;';
 
         // 5) eda_def_permissions
-        $sqlMetadata[] = 'DROP TABLE IF EXISTS `sda_def_permissions`';
-        $sqlMetadata[] = 'CREATE TABLE IF NOT EXISTS `sda_def_permissions` (
+        $sqlMetadata[] = 'DROP TABLE IF EXISTS `sda_def_permissions_actions`';
+        $sqlMetadata[] = 'CREATE TABLE IF NOT EXISTS `sda_def_permissions_actions` (
                             `user_name` VARCHAR(64) NOT NULL,
                             `group` VARCHAR(64) NOT NULL,
                             `table` VARCHAR(64) NOT NULL,
@@ -1703,7 +1739,7 @@ class ExternalReporting
      * This function retrieves the list of active users from the 'users' table, and for each user,
      * it retrieves their ACL for the specified modules using the 'ACLAction::getUserActions' method.
      * Then it processes the ACL for each module and saves metadata for the user's access level and source of access,
-     * such as 'ACL_ALLOW_GROUP' or 'ACL_ALLOW_OWNER' in the 'sda_def_permissions' table.
+     * such as 'ACL_ALLOW_GROUP' or 'ACL_ALLOW_OWNER' in the 'sda_def_permissions_actions' table.
      * It also saves the user's access level for each module in the 'aclList' array.
      *
      * @return void
@@ -1746,16 +1782,8 @@ class ExternalReporting
                 $key = $key == 'CampaignLog' ? 'Campaign_Log' : $key;
 
                 $currentTable = $this->viewPrefix . '_' . strtolower($key);
-                if ($u['is_admin'] == 1) {
-                    $userModuleAccessMode["{$aclSource}_{$u['user_name']}_{$currentTable}"] = [
-                        'user_name' => $u['user_name'],
-                        'table' => $currentTable,
-                        'column' => 'users_id',
-                        'stic_permission_source' => 'ACL_ALLOW_ALL',
-                        'global' => 1,
-                    ];
-                } elseif ($value['module']['access']['aclaccess'] >= 0 && $value['module']['view']['aclaccess'] >= 0) {
-
+                
+                if ($u['is_admin'] == 0 && $value['module']['access']['aclaccess'] >= 0 && $value['module']['view']['aclaccess'] >= 0) {
                     // Determine the metadata to be saved based on the type of permissions,
                     // first we'll add them to the $userModuleAccessMode array with a unique key to avoid duplicates
                     switch ($value['module']['view']['aclaccess']) {
@@ -1772,8 +1800,8 @@ class ExternalReporting
                             $userGroupsRes = $db->query("SELECT distinct(name) as 'group' FROM sda_def_user_groups ug WHERE user_name='{$u['user_name']}';");
 
                             while ($userGroups = $db->fetchByAssoc($userGroupsRes, false)) {
-                                
-                                $crmGroupName = explode('SDA_', $userGroups['group'])[1];
+
+                                $crmGroupName = explode('SCRM_', $userGroups['group'])[1];
 
                                 // Verify whether or not the group or user has access to the module for their roles
                                 $groupHasAccessToModule = groupHasAccess($crmGroupName, $u['id'], $key, 'view');
@@ -1793,10 +1821,10 @@ class ExternalReporting
                                     // the user_name with the assigned_user_name field content in each module in which the user has group permission
                                     $userModuleAccessMode["{$u['user_name']}_{$aclSource}_{$userGroups['group']}_private_{$currentTable}"] = [
                                         'user_name' => $u['user_name'],
-                                        'group' => null,
+                                        'group' => $userGroups['group'],
                                         'table' => $currentTable,
                                         'column' => 'assigned_user_name',
-                                        'stic_permission_source' => "{$aclSource}_private",
+                                        'stic_permission_source' => "{$aclSource}_priv",
                                         'global' => 0,
                                     ];
                                 }
@@ -1836,7 +1864,7 @@ class ExternalReporting
         // Add the permissions with the values determined in the previous switch case to the metadata table, based on the case.
         foreach (array_unique($userModuleAccessMode, SORT_REGULAR) as $key => $value) {
             $this->addMetadataRecord(
-                'sda_def_permissions',
+                'sda_def_permissions_actions',
                 [
                     'user_name' => $value['user_name'],
                     'group' => $value['group'],
@@ -1911,7 +1939,7 @@ class ExternalReporting
             UNION SELECT `table`,'sda_def_tables', 'table' FROM sda_def_tables
             UNION SELECT source_table,'sda_def_enumerations','source_table' FROM sda_def_enumerations
             UNION SELECT master_table,'sda_def_enumerations', 'master_table' FROM sda_def_enumerations
-            UNION SELECT `table`, 'sda_def_permissions','table' FROM sda_def_permissions
+            UNION SELECT `table`, 'sda_def_permissions_actions','table' FROM sda_def_permissions_actions
             UNION SELECT source_table,'sda_def_relationships','source_table' FROM sda_def_relationships
             UNION SELECT target_table,'sda_def_relationships','target_table' FROM sda_def_relationships)
             AS source WHERE (
@@ -1972,22 +2000,11 @@ function groupHasAccess($group_name, $userId, $category, $action, $type = 'modul
     // Escape the group name to prevent SQL injection
     $group_name = $db->quote($group_name);
 
-    // Get the group ID based on the name
-    $query = "SELECT id FROM securitygroups WHERE name = '$group_name' AND deleted = 0";
-    $result = $db->query($query);
-    $row = $db->fetchByAssoc($result);
-
-    if (empty($row)) {
-        return false; // The group doesn't exist
-    }
-
-    $group_id = $row['id'];
-
     // Get the roles associated with this security group or user
     $query = "SELECT role_id FROM (
                 SELECT role_id FROM securitygroups_acl_roles
-                WHERE securitygroup_id = '$group_id' AND deleted = 0
-                UNION SELECT role_id from acl_roles_users aru
+                WHERE securitygroup_id IN (SELECT DISTINCT securitygroup_id FROM securitygroups_users sgu WHERE sgu.user_id='$userId' AND sgu.deleted = false)
+                UNION SELECT role_id FROM acl_roles_users aru
                 WHERE aru.user_id='$userId' AND deleted=false ) m
              LIMIT 1
                 ";
