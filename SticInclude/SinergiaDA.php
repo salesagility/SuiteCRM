@@ -144,7 +144,7 @@ class ExternalReporting
     public function createViews($callUpdateModel = true, $rebuildFilter = 'all')
     {
 
-        // ini_set('memory_limit', '256M');
+        ini_set('memory_limit', '256M');
 
         $startTime = microtime(true);
         $GLOBALS['log']->stic('Line ' . __LINE__ . ': ' . __METHOD__ . ': ' . "SinergiaDA rebuild script starts!");
@@ -1469,7 +1469,7 @@ class ExternalReporting
         $sqlMetadata[] = 'DROP TABLE IF EXISTS `sda_def_permissions_actions`';
         $sqlMetadata[] = 'CREATE TABLE `sda_def_permissions_actions` (
                             `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                            `user_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+                            `user_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
                             `group` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
                             `table` varchar(64) NOT NULL,
                             `column` varchar(64) NOT NULL,
@@ -1756,151 +1756,151 @@ class ExternalReporting
      * @return void
      */
     public function getAndSaveUserACL($modules)
-{
-    global $sugar_config;
+    {
+        global $sugar_config;
 
-    $db = DBManagerFactory::getInstance();
-    include_once 'modules/ACLActions/ACLAction.php';
+        $db = DBManagerFactory::getInstance();
+        include_once 'modules/ACLActions/ACLAction.php';
 
-    // List of ACL sources
-    $aclSourcesList = [
-        100 => 'ACL_ALLOW_ADMIN_DEV',
-        99 => 'ACL_ALLOW_ADMIN',
-        90 => 'ACL_ALLOW_ALL',
-        89 => 'ACL_ALLOW_ENABLED',
-        80 => 'ACL_ALLOW_GROUP',
-        75 => 'ACL_ALLOW_OWNER',
-        1 => 'ACL_ALLOW_NORMAL',
-        0 => 'ACL_ALLOW_DEFAULT',
-    ];
+        // List of ACL sources
+        $aclSourcesList = [
+            100 => 'ACL_ALLOW_ADMIN_DEV',
+            99 => 'ACL_ALLOW_ADMIN',
+            90 => 'ACL_ALLOW_ALL',
+            89 => 'ACL_ALLOW_ENABLED',
+            80 => 'ACL_ALLOW_GROUP',
+            75 => 'ACL_ALLOW_OWNER',
+            1 => 'ACL_ALLOW_NORMAL',
+            0 => 'ACL_ALLOW_DEFAULT',
+        ];
 
-    // Tamaño del lote
-    $batchSize = 100; // Reducido el tamaño del lote
-    $offset = 0;
+        // Tamaño del lote
+        $batchSize = 100; // Reducido el tamaño del lote
+        $offset = 0;
 
-    do {
-        // Obtener usuarios en lotes
-        $query = "SELECT id, user_name, is_admin 
-                 FROM users 
-                 JOIN users_cstm ON users.id = users_cstm.id_c 
-                 WHERE status='Active' AND deleted=0 AND sda_allowed_c=1 
+        do {
+            // Obtener usuarios en lotes
+            $query = "SELECT id, user_name, is_admin
+                 FROM users
+                 JOIN users_cstm ON users.id = users_cstm.id_c
+                 WHERE status='Active' AND deleted=0 AND sda_allowed_c=1
                  LIMIT {$batchSize} OFFSET {$offset}";
-        
-        $res = $db->query($query);
-        $processedUsers = 0;
 
-        while ($u = $db->fetchByAssoc($res, false)) {
-            $processedUsers++;
-            
-            // Procesar módulos uno por uno para cada usuario
-            foreach ($modules as $moduleName => $moduleData) {
-                if ($u['is_admin'] == 0 && $moduleName == 'Users') {
-                    continue;
-                }
+            $res = $db->query($query);
+            $processedUsers = 0;
 
-                $userActions = ACLAction::getUserActions($u['id'], false, $moduleName);
-                
-                if (empty($userActions[$moduleName])) {
-                    continue;
-                }
+            while ($u = $db->fetchByAssoc($res, false)) {
+                $processedUsers++;
 
-                $value = $userActions[$moduleName];
-                
-                if ($u['is_admin'] == 0 && $value['module']['access']['aclaccess'] >= 0 && $value['module']['view']['aclaccess'] >= 0) {
-                    $aclSource = $aclSourcesList[$value['module']['view']['aclaccess']];
-                    
-                    // Fix for special cases
-                    $key = $moduleName == 'ProjectTask' ? 'Project_Task' : $moduleName;
-                    $key = $key == 'CampaignLog' ? 'Campaign_Log' : $key;
-                    
-                    $currentTable = $this->viewPrefix . '_' . strtolower($key);
+                // Procesar módulos uno por uno para cada usuario
+                foreach ($modules as $moduleName => $moduleData) {
+                    if ($u['is_admin'] == 0 && $moduleName == 'Users') {
+                        continue;
+                    }
 
-                    switch ($value['module']['view']['aclaccess']) {
-                        case '80': // Security groups
-                            if (($sugar_config['stic_sinergiada']['group_permissions_enabled'] ?? null) != true) {
-                                continue 2;
-                            }
+                    $userActions = ACLAction::getUserActions($u['id'], false, $moduleName);
 
-                            $userGroupsQuery = "SELECT distinct(name) as 'group' 
-                                              FROM sda_def_user_groups ug 
-                                              WHERE user_name='{$u['user_name']}';";
-                            $userGroupsRes = $db->query($userGroupsQuery);
+                    if (empty($userActions[$moduleName])) {
+                        continue;
+                    }
 
-                            while ($userGroups = $db->fetchByAssoc($userGroupsRes, false)) {
-                                $crmGroupName = explode('SCRM_', $userGroups['group'])[1];
-                                
-                                if (groupHasAccess($crmGroupName, $u['id'], $key, 'view')) {
-                                    // Guardar registro inmediatamente para el grupo
-                                    $this->addMetadataRecord(
-                                        'sda_def_permissions_actions',
-                                        [
-                                            'user_name' => null,
-                                            'group' => $userGroups['group'],
-                                            'table' => $currentTable,
-                                            'column' => 'id',
-                                            'stic_permission_source' => $aclSource,
-                                            'global' => 0,
-                                        ]
-                                    );
+                    $value = $userActions[$moduleName];
 
-                                    // Guardar registro inmediatamente para el usuario dentro del grupo
-                                    $this->addMetadataRecord(
-                                        'sda_def_permissions_actions',
-                                        [
-                                            'user_name' => $u['user_name'],
-                                            'group' => $userGroups['group'],
-                                            'table' => $currentTable,
-                                            'column' => 'assigned_user_name',
-                                            'stic_permission_source' => "{$aclSource}_priv",
-                                            'global' => 0,
-                                        ]
-                                    );
+                    if ($u['is_admin'] == 0 && $value['module']['access']['aclaccess'] >= 0 && $value['module']['view']['aclaccess'] >= 0) {
+                        $aclSource = $aclSourcesList[$value['module']['view']['aclaccess']];
+
+                        // Fix for special cases
+                        $key = $moduleName == 'ProjectTask' ? 'Project_Task' : $moduleName;
+                        $key = $key == 'CampaignLog' ? 'Campaign_Log' : $key;
+
+                        $currentTable = $this->viewPrefix . '_' . strtolower($key);
+
+                        switch ($value['module']['view']['aclaccess']) {
+                            case '80': // Security groups
+                                if (($sugar_config['stic_sinergiada']['group_permissions_enabled'] ?? null) != true) {
+                                    continue 2;
                                 }
-                            }
-                            break;
 
-                        case '75': // Owner case
-                            $this->addMetadataRecord(
-                                'sda_def_permissions_actions',
-                                [
-                                    'user_name' => $u['user_name'],
-                                    'table' => $currentTable,
-                                    'column' => 'assigned_user_name',
-                                    'stic_permission_source' => $aclSource,
-                                    'global' => 0,
-                                ]
-                            );
-                            break;
+                                $userGroupsQuery = "SELECT distinct(name) as 'group'
+                                              FROM sda_def_user_groups ug
+                                              WHERE user_name='{$u['user_name']}';";
+                                $userGroupsRes = $db->query($userGroupsQuery);
 
-                        default: // Other cases
-                            $this->addMetadataRecord(
-                                'sda_def_permissions_actions',
-                                [
-                                    'user_name' => $u['user_name'],
-                                    'table' => $currentTable,
-                                    'column' => 'users_id',
-                                    'stic_permission_source' => $aclSource,
-                                    'global' => 1,
-                                ]
-                            );
-                            break;
+                                while ($userGroups = $db->fetchByAssoc($userGroupsRes, false)) {
+                                    $crmGroupName = explode('SCRM_', $userGroups['group'])[1];
+
+                                    if (groupHasAccess($crmGroupName, $u['id'], $key, 'view')) {
+                                        // Guardar registro inmediatamente para el grupo
+                                        $this->addMetadataRecord(
+                                            'sda_def_permissions_actions',
+                                            [
+                                                'user_name' => $u['user_name'],
+                                                'group' => $userGroups['group'],
+                                                'table' => $currentTable,
+                                                'column' => 'id',
+                                                'stic_permission_source' => $aclSource,
+                                                'global' => 0,
+                                            ]
+                                        );
+
+                                        // Guardar registro inmediatamente para el usuario dentro del grupo
+                                        $this->addMetadataRecord(
+                                            'sda_def_permissions_actions',
+                                            [
+                                                'user_name' => $u['user_name'],
+                                                'group' => $userGroups['group'],
+                                                'table' => $currentTable,
+                                                'column' => 'assigned_user_name',
+                                                'stic_permission_source' => "{$aclSource}_priv",
+                                                'global' => 0,
+                                            ]
+                                        );
+                                    }
+                                }
+                                break;
+
+                            case '75': // Owner case
+                                $this->addMetadataRecord(
+                                    'sda_def_permissions_actions',
+                                    [
+                                        'user_name' => $u['user_name'],
+                                        'table' => $currentTable,
+                                        'column' => 'assigned_user_name',
+                                        'stic_permission_source' => $aclSource,
+                                        'global' => 0,
+                                    ]
+                                );
+                                break;
+
+                            default: // Other cases
+                                $this->addMetadataRecord(
+                                    'sda_def_permissions_actions',
+                                    [
+                                        'user_name' => $u['user_name'],
+                                        'table' => $currentTable,
+                                        'column' => 'users_id',
+                                        'stic_permission_source' => $aclSource,
+                                        'global' => 1,
+                                    ]
+                                );
+                                break;
+                        }
                     }
                 }
-            }
-            
-            // Limpiar memoria después de procesar cada usuario
-            unset($userActions);
-            gc_collect_cycles();
-        }
 
-        $offset += $batchSize;
-        
-        // Limpiar memoria después de cada lote
-        unset($res);
-        gc_collect_cycles();
-        
-    } while ($processedUsers > 0);
-}
+                // Limpiar memoria después de procesar cada usuario
+                unset($userActions);
+                gc_collect_cycles();
+            }
+
+            $offset += $batchSize;
+
+            // Limpiar memoria después de cada lote
+            unset($res);
+            gc_collect_cycles();
+
+        } while ($processedUsers > 0);
+    }
     /**
      * Check the columns in the sda_def_columns table against the columns in the views.
      * Display the columns that do not exist in the views.
