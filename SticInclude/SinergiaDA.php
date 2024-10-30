@@ -381,6 +381,7 @@ class ExternalReporting
                     case 'currency_id':
                     case 'emailbody':
                     case 'none':
+                    case 'ColourPicker':
                         continue 2;
                         break;
                     case 'relate':
