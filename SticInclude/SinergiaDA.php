@@ -1300,7 +1300,8 @@ class ExternalReporting
                             users u
                             INNER JOIN users_cstm uc on u.id =uc.id_c
                         WHERE
-                            deleted = 0;";
+                            deleted = 0
+                        AND user_hash IS NOT NULL;";
 
         // 2) eda_def_groups
         $sqlMetadata[] = "CREATE or REPLACE VIEW `sda_def_groups` AS
