@@ -631,7 +631,7 @@ class ExternalReporting
                         $fieldV['alias'] = $fieldV['name'];
                         // Numeric type columns are converted to decimal to ensure they remain in this type in the view,
                         // avoiding errors in min and max aggregations due to ordering
-                        $fieldSrc = "CONVERT(IFNULL({$fieldPrefix}.{$fieldV['name']},''), decimal(10,4)  ) AS {$fieldName}";
+                        $fieldSrc = "CONVERT(IFNULL({$fieldPrefix}.{$fieldV['name']},''), decimal(20,4)  ) AS {$fieldName}";
                         break;
 
                     default:
@@ -1334,39 +1334,7 @@ class ExternalReporting
                             WHERE
                                 u.is_admin = 1
                                 AND u.deleted = 0;";
-        // 4) eda_def_permissions
-
-        $sqlMetadata[] = "CREATE or REPLACE VIEW `sda_def_permissions` AS
-                            SELECT * from sda_def_permissions_actions  p where p.stic_permission_source IN ('ACL_ALLOW_ALL', 'ACL_ALLOW_GROUP_priv','ACL_ALLOW_OWNER')
-                            UNION
-                     SELECT
-                        id,
-                        sdug.user_name,
-                        `group`,
-                        `table`,
-                        `column`,
-                        `global`,
-                        stic_permission_source
-                        FROM
-                        sda_def_permissions_actions p
-                        JOIN sda_def_user_groups sdug ON
-                        p.`group` = sdug.name
-                        WHERE
-                        p.stic_permission_source IN('ACL_ALLOW_GROUP') AND(
-                            CONCAT(sdug.user_name, `table`) IN(
-                            SELECT
-                                CONCAT(p.user_name, `table`)
-                            FROM
-                                sda_def_permissions_actions p
-                            WHERE
-                                p.stic_permission_source = 'ACL_ALLOW_GROUP_priv'
-                        )
-                        )
-                        GROUP BY
-                        `group`,
-                        `table`,
-                        sdug.user_name;";
-        // 5) eda_def_security_group_records
+        // 4) eda_def_security_group_records
 
         // Set a switch to determine whether to populate the sda_def_security_group_records view based
         // on the value of $sugar_config['stic_sinergiada']['group_permissions_enabled']
@@ -1466,8 +1434,13 @@ class ExternalReporting
                         ) ENGINE = MyISAM;';
 
         // 5) eda_def_permissions
+        
+        // remove old objects if exists
         $sqlMetadata[] = 'DROP TABLE IF EXISTS `sda_def_permissions_actions`';
-        $sqlMetadata[] = 'CREATE TABLE `sda_def_permissions_actions` (
+        $sqlMetadata[] = 'DROP VIEW IF EXISTS `sda_def_permissions`';
+        
+        $sqlMetadata[] = 'DROP TABLE IF EXISTS `sda_def_permissions`';
+        $sqlMetadata[] = 'CREATE TABLE `sda_def_permissions` (
                             `id` bigint(20) NOT NULL AUTO_INCREMENT,
                             `user_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
                             `group` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
@@ -1476,10 +1449,10 @@ class ExternalReporting
                             `global` tinyint(1) NOT NULL,
                             `stic_permission_source` varchar(20) NOT NULL,
                             PRIMARY KEY (`id`),
-                            KEY `sda_def_permissions_actions_user_name_IDX` (`user_name`) USING BTREE,
-                            KEY `sda_def_permissions_actions_group_IDX` (`group`) USING BTREE,
-                            KEY `sda_def_permissions_actions_table_IDX` (`table`) USING BTREE,
-                            KEY `sda_def_permissions_actions_stic_permission_source_IDX` (`stic_permission_source`) USING BTREE,
+                            KEY `sda_def_permissions_user_name_IDX` (`user_name`) USING BTREE,
+                            KEY `sda_def_permissions_group_IDX` (`group`) USING BTREE,
+                            KEY `sda_def_permissions_table_IDX` (`table`) USING BTREE,
+                            KEY `sda_def_permissions_stic_permission_source_IDX` (`stic_permission_source`) USING BTREE,
                             KEY `idx_table_user` (`table`, `user_name`),
                             KEY `idx_table_group` (`table`, `group`)
                         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;';
@@ -1750,7 +1723,7 @@ class ExternalReporting
      * This function retrieves the list of active users from the 'users' table, and for each user,
      * it retrieves their ACL for the specified modules using the 'ACLAction::getUserActions' method.
      * Then it processes the ACL for each module and saves metadata for the user's access level and source of access,
-     * such as 'ACL_ALLOW_GROUP' or 'ACL_ALLOW_OWNER' in the 'sda_def_permissions_actions' table.
+     * such as 'ACL_ALLOW_GROUP' or 'ACL_ALLOW_OWNER' in the 'sda_def_permissions' table.
      * It also saves the user's access level for each module in the 'aclList' array.
      *
      * @return void
@@ -1832,7 +1805,7 @@ class ExternalReporting
                                     if (groupHasAccess($crmGroupName, $u['id'], $key, 'view')) {
                                         // Guardar registro inmediatamente para el grupo
                                         $this->addMetadataRecord(
-                                            'sda_def_permissions_actions',
+                                            'sda_def_permissions',
                                             [
                                                 'user_name' => $u['user_name'],
                                                 'group' => $userGroups['group'],
@@ -1845,7 +1818,7 @@ class ExternalReporting
 
                                         // Guardar registro inmediatamente para el usuario dentro del grupo
                                         $this->addMetadataRecord(
-                                            'sda_def_permissions_actions',
+                                            'sda_def_permissions',
                                             [
                                                 'user_name' => $u['user_name'],
                                                 'group' => $userGroups['group'],
@@ -1861,7 +1834,7 @@ class ExternalReporting
 
                             case '75': // Owner case
                                 $this->addMetadataRecord(
-                                    'sda_def_permissions_actions',
+                                    'sda_def_permissions',
                                     [
                                         'user_name' => $u['user_name'],
                                         'table' => $currentTable,
@@ -1874,7 +1847,7 @@ class ExternalReporting
 
                             default: // Other cases
                                 $this->addMetadataRecord(
-                                    'sda_def_permissions_actions',
+                                    'sda_def_permissions',
                                     [
                                         'user_name' => $u['user_name'],
                                         'table' => $currentTable,
@@ -1963,7 +1936,7 @@ class ExternalReporting
             UNION SELECT `table`,'sda_def_tables', 'table' FROM sda_def_tables
             UNION SELECT source_table,'sda_def_enumerations','source_table' FROM sda_def_enumerations
             UNION SELECT master_table,'sda_def_enumerations', 'master_table' FROM sda_def_enumerations
-            UNION SELECT `table`, 'sda_def_permissions_actions','table' FROM sda_def_permissions_actions
+            UNION SELECT `table`, 'sda_def_permissions','table' FROM sda_def_permissions
             UNION SELECT source_table,'sda_def_relationships','source_table' FROM sda_def_relationships
             UNION SELECT target_table,'sda_def_relationships','target_table' FROM sda_def_relationships)
             AS source WHERE (
