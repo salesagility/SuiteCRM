@@ -1818,18 +1818,7 @@ class ExternalReporting
                                             ]
                                         );
 
-                                        // Guardar registro inmediatamente para el usuario dentro del grupo
-                                        $this->addMetadataRecord(
-                                            'sda_def_permissions',
-                                            [
-                                                'user_name' => $u['user_name'],
-                                                'group' => $userGroups['group'],
-                                                'table' => $currentTable,
-                                                'column' => 'assigned_user_name',
-                                                'stic_permission_source' => "{$aclSource}_priv",
-                                                'global' => 0,
-                                            ]
-                                        );
+                                        
                                     }
                                 }
                                 break;
