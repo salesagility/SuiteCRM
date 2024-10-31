@@ -59,6 +59,21 @@ class SuiteValidator
     }
 
     /**
+     * @param string|null $key
+     * @return bool
+     */
+    public function isValidKey(?string $key): bool
+    {
+        if (empty($key)) {
+            return false;
+        }
+
+        $pattern = $this->getKeyValidationPattern();
+
+        return is_numeric($key) || preg_match($pattern, $key);
+    }
+
+    /**
      * @param string $fieldname
      * @return bool
      */
@@ -86,6 +101,22 @@ class SuiteValidator
             $pattern = '/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i';
         } else {
             $pattern = get_id_validation_pattern();
+        }
+
+        return $pattern;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getKeyValidationPattern(): string
+    {
+        global $sugar_config;
+
+        if (!empty($sugar_config['key_validation_pattern'])) {
+            $pattern = $sugar_config['key_validation_pattern'];
+        } else {
+            $pattern = '/^[A-Z0-9\-\_\.]*$/i';
         }
 
         return $pattern;

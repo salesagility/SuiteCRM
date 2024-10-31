@@ -976,9 +976,14 @@ class User extends Person implements EmailInterface
                 $this->setPreference('default_email_charset', $_REQUEST['default_email_charset'], 0, 'global');
             }
 
-            if (isset($_POST['calendar_publish_key'])) {
+            $isValidator = new \SuiteCRM\Utility\SuiteValidator();
+
+            if (isset($_POST['calendar_publish_key']) && $isValidator->isValidKey($_POST['calendar_publish_key'])) {
                 $this->setPreference('calendar_publish_key', $_POST['calendar_publish_key'], 0, 'global');
+            } elseif (isset($_POST['calendar_publish_key'])) {
+                $_POST['calendar_publish_key'] = '';
             }
+
             if (isset($_POST['subtheme'])) {
                 $this->setPreference('subtheme', $_POST['subtheme'], 0, 'global');
             }

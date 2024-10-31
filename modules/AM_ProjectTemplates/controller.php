@@ -39,12 +39,15 @@ class AM_ProjectTemplatesController extends SugarController
         global $current_user, $db, $mod_strings;
 
         $project_name = $_POST['p_name'];
-        $template_id = $_POST['template_id'];
+        $template_id = $db->quote($_POST['template_id']);
         $project_start = $_POST['start_date'];
         $copy_all = isset($_POST['copy_all_tasks']) ? 1 : 0;
-        $copy_tasks = isset($_POST['tasks']) ? $_POST['tasks'] : array() ;
 
+        $copy_tasks = array();
 
+        if (isset($_POST['tasks']) && is_array($_POST['tasks'])) {
+            $copy_tasks = $_POST['tasks'];
+        }
 
         //Get project start date
         if ($project_start!='') {
@@ -262,7 +265,7 @@ class AM_ProjectTemplatesController extends SugarController
         include_once('modules/AM_ProjectTemplates/project_table.php');
 
         $project_template = BeanFactory::newBean('AM_ProjectTemplates');
-        $pid = $_POST["pid"];
+        $pid = $db->quote($_POST["pid"]);
         $project_template->retrieve($pid);
 
         //Get project tasks

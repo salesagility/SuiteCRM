@@ -611,6 +611,7 @@ class ModuleScanner
         $checkFunction = false;
         $possibleIssue = '';
         $lastToken = false;
+        $return = false;
         foreach ($tokens as $index=>$token) {
             if (is_string($token[0])) {
                 switch ($token[0]) {
@@ -622,7 +623,16 @@ class ModuleScanner
                             $issues[] = $possibleIssue;
                         }
                         break;
+                    case ']':
+                        if ($checkFunction){
+                            $issues[] = $possibleIssue;
+                        }
                 }
+
+                if ($return && $checkFunction){
+                    $issues[] = $possibleIssue;
+                }
+
                 $checkFunction = false;
                 $possibleIssue = '';
             } else {
@@ -641,7 +651,8 @@ class ModuleScanner
                         $issues[]= translate('ML_INVALID_FUNCTION', 'Administration') . ' exit / die';
                         break;
                     case T_STRING:
-                        $token[1] = strtolower($token[1]);
+                    case T_CONSTANT_ENCAPSED_STRING:
+                        $token[1] = trim(strtolower($token[1]),'\'"');
                         if ($lastToken !== false && $lastToken[0] == T_NEW) {
                             if (!in_array($token[1], $this->classBlackList)) {
                                 break;
@@ -687,6 +698,10 @@ class ModuleScanner
                             }
                             if (in_array($token[1], $this->blackListExempt)) {
                                 break;
+                            }
+
+                            if ($lastToken[1] === 'return'){
+                                $return = true;
                             }
                         }
                         // no break

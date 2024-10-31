@@ -140,7 +140,7 @@ function write_override_label_to_file($the_name, $the_array, $the_file, $mode = 
     }
 
     foreach ($the_array as $labelName => $labelValue) {
-        $the_string .= '$' . "{$the_name}['{$labelName}'] = '{$labelValue}';\n";
+        $the_string .= '$' . "{$the_name}['" . addslashes($labelName) . "'] = '" . addslashes($labelValue) ."';\n";
     }
 
     return sugar_file_put_contents($the_file, $the_string, LOCK_EX) !== false;

@@ -584,12 +584,23 @@
 
   $(document).ready(function () {
     var checkKey = function (key) {
-      if (key != '') {
+      var validation = /^[A-Z0-9\-_.]*$/i;
+      if (key != '' && validation.test(key)) {
+
+        var encodedKey = key.replace(/[&<>'"]/g, function(tag) {
+          return ({
+              '&': '&amp;',
+              '<': '&lt;',
+              '>': '&gt;',
+              "'": '&#39;',
+              '"': '&quot;'
+            }[tag]);
+        })
         $(".calendar_publish_ok").css('display', 'inline');
         $(".calendar_publish_none").css('display', 'none');
-        $('#cal_pub_key_span').html(key);
-        $('#ical_pub_key_span').html(key);
-        $('#search_pub_key_span').html(key);
+        $('#cal_pub_key_span').html(encodedKey);
+        $('#ical_pub_key_span').html(encodedKey);
+        $('#search_pub_key_span').html(encodedKey);
       } else {
         $(".calendar_publish_ok").css('display', 'none');
         $(".calendar_publish_none").css('display', 'inline');
