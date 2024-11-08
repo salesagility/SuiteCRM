@@ -24,7 +24,13 @@
 
 Our vision is to be the most adopted open source enterprise CRM in the world, giving users full control of their data and freedom to own and customise their business solution.
 
-Try out a free fully working [SuiteCRM demo available here](https://suitecrm.com/demo/)
+Try out a free fully working [SuiteCRM demo available](https://suitecrm.com/demo/).
+
+### Documentation
+
+* Get started with the [Installation Guide](https://docs.suitecrm.com/admin/installation-guide) and other [Administration](https://docs.suitecrm.com/admin/) articles
+* Learn your way around with our [User Guide](https://docs.suitecrm.com/user/)
+* Check out the documentation for [Developers](https://docs.suitecrm.com/developer/)
 
 ### Contribute [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/salesagility/SuiteCRM/issues)
 
@@ -36,7 +42,7 @@ There are lots of ways to [contribute](https://docs.suitecrm.com/community/) to 
 * [Contribute bug fixes](https://docs.suitecrm.com/community/contributing-code/bugs/)
 * Help [translate](https://docs.suitecrm.com/community/contributing-to-docs/contributing-to-translation/) language packs
 * [Write and improve](https://docs.suitecrm.com/community/contributing-to-docs/) SuiteCRM documentation
-* Signing CLA - Only needs to be done once for all PRs and contributions.
+* Signing CLA - Only needs to be done once for all PRs and contributions
 
 
 ### Code Contributors
