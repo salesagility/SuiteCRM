@@ -148,6 +148,11 @@ class Surveys extends Basic
      */
     public function save($check_notify = false)
     {
+	if ($_POST["duplicateSave"] && $_POST["duplicateSave"] == "true")
+        {
+            unset($_REQUEST['survey_questions_ids']);
+        }
+
         $res = parent::save($check_notify);
         if (empty($_REQUEST['survey_questions_supplied'])) {
             return $res;
@@ -186,6 +191,11 @@ class Surveys extends Basic
      */
     private function saveOptions(array $options, array $ids, array $deleted, $questionId)
     {
+	if ($_POST["duplicateSave"] && $_POST["duplicateSave"] == "true")
+        {
+            unset($ids);
+        }
+
         foreach ($options as $key => $option) {
             if (!empty($ids[$key])) {
                 $optionBean = BeanFactory::getBean('SurveyQuestionOptions', $ids[$key]);
