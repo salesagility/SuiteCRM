@@ -65,30 +65,30 @@ onchange='document.{{$form_name}}.{{sugarvar key='name'}}.value="";document.{{$f
 <script type="text/javascript">
 if (typeof(changeParentQSSearchView) == 'undefined'){
 function changeParentQSSearchView(field) {
-	field = YAHOO.util.Dom.get(field);
-    var sqs_objects = {};
+    field = YAHOO.util.Dom.get(field);
     var form = field.form;
     var sqsId = form.id + "_" + field.id;
-    var typeField =  form.elements["{{$vardef.type_name}}"];
+    var typeField = form.elements["{{$vardef.type_name}}"];
     var new_module = typeField.value;
-    if(typeof(disabledModules[new_module]) != 'undefined') {
-		sqs_objects[sqsId]["disable"] = true;
-		field.readOnly = true;
-	} else {
-		sqs_objects[sqsId]["disable"] = false;
-		field.readOnly = false;
+
+    if (typeof(sqs_objects[sqsId]) !== 'undefined') {
+        if (typeof(disabledModules[new_module]) != 'undefined') {
+            sqs_objects[sqsId]["disable"] = true;
+            field.readOnly = true;
+        } else {
+            sqs_objects[sqsId]["disable"] = false;
+            field.readOnly = false;
+        }
+        //Update the SQS globals to reflect the new module choice
+        sqs_objects[sqsId]["modules"] = new Array(new_module);
+        if (typeof(QSFieldsArray[sqsId]) != 'undefined') {
+            QSFieldsArray[sqsId].sqs.modules = new Array(new_module);
+        }
+        if (typeof(QSProcessedFieldsArray) != 'undefined') {
+            QSProcessedFieldsArray[sqsId] = false;
+        }
+        enableQS(false);
     }
-	//Update the SQS globals to reflect the new module choice
-    sqs_objects[sqsId]["modules"] = new Array(new_module);
-    if (typeof(QSFieldsArray[sqsId]) != 'undefined')
-    {
-        QSFieldsArray[sqsId].sqs.modules = new Array(new_module);
-    }
-	if(typeof QSProcessedFieldsArray != 'undefined')
-    {
-	   QSProcessedFieldsArray[sqsId] = false;
-    }
-    enableQS(false);
 }}
 YAHOO.util.Event.onContentReady(
 {/literal}
