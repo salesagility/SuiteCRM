@@ -274,6 +274,28 @@ class aSubPanel
 
 
     /**
+     * Check whether the current user can access a module within a collection subpanel.
+     *
+     * @param string $module The module name, eg: Notes
+     * @return bool
+     */
+    public static function canAccessCollectionModule($module)
+    {
+        global $modListHeader, $modules_exempt_from_availability_check;
+
+        // The email module can be hidden but not disabled
+        $available = $module === 'Emails'
+            || array_key_exists($module, (array)$modListHeader)
+            || array_key_exists($module, (array)$modules_exempt_from_availability_check);
+
+        if (!$available) {
+            return false;
+        }
+
+        return !ACLController::moduleSupportsACL($module) || ACLController::checkAccess($module, 'list', true);
+    }
+
+    /**
      * Load the Sub-Panel objects if it can from the metadata files.
      *
      * call this function for sub-panels that have unions.
@@ -307,7 +329,9 @@ class aSubPanel
                 $panels = array();
             }
             foreach ($panels as $panel => $properties) {
-                if (array_key_exists($properties [ 'module' ], $modListHeader) || array_key_exists($properties [ 'module' ], $modules_exempt_from_availability_check)) {
+                // If a user is not able to view a submodule, skip it.
+                // Eg: History depends on Calls, Meetings, Notes, etc.
+                if (self::canAccessCollectionModule($properties['module'])) {
                     $this->sub_subpanels [ $panel ] = new aSubPanel($panel, $properties, $this->parent_bean, false, false, $this->search_query, $this->base_collection_list) ;
                 }
             }
@@ -663,6 +687,10 @@ class SubPanelDefinitions
                 $exempt = array_key_exists($values_array [ 'module' ], $modules_exempt_from_availability_check) ;
                 $ok = $exempt || ((! ACLController::moduleSupportsACL($values_array [ 'module' ]) || ACLController::checkAccess($values_array [ 'module' ], 'list', true))) ;
 
+                if ($ok && !empty($values_array['collection_list']) && !$this->hasAccessibleCollectionModule($values_array['collection_list'])) {
+                    $ok = false;
+                }
+
                 $GLOBALS [ 'log' ]->debug("SubPanelDefinitions->get_available_tabs(): " . $key . "= " . ($exempt ? "exempt " : "not exempt " .($ok ? " ACL OK" : ""))) ;
 
                 if ($ok) {
@@ -677,6 +705,23 @@ class SubPanelDefinitions
 
         ksort($this->_visible_tabs_array) ;
         return $this->_visible_tabs_array ;
+    }
+
+    /**
+     * Check whether the current user can access at least one module in a collection subpanel.
+     *
+     * @param array $collectionList The collection_list of the subpanel definition
+     * @return bool
+     */
+    protected function hasAccessibleCollectionModule($collectionList)
+    {
+        foreach ($collectionList as $properties) {
+            if (!empty($properties['module']) && aSubPanel::canAccessCollectionModule($properties['module'])) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
