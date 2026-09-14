@@ -80,6 +80,8 @@ class Project extends SugarBean
 
     public $importable = true;
 
+    public $skipTemplateTasks = false;
+
     // This is used to retrieve related fields from form posts.
     public $additional_column_fields = array(
         'account_id',
@@ -566,7 +568,7 @@ class Project extends SugarBean
 
             //Create new project tasks from the template tasks
             $count=1;
-            while ($row = $db->fetchByAssoc($tasks)) {
+            while (!$focus->skipTemplateTasks && ($row = $db->fetchByAssoc($tasks))) {
                 $project_task = BeanFactory::newBean('ProjectTask');
                 $project_task->name = $row['name'];
                 $project_task->status = $row['status'];

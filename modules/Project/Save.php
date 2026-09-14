@@ -56,6 +56,7 @@ $sugarbean = populateFromPost('', $sugarbean);
 $projectTasks = array();
 if (isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true") {
     $base_project_id = DBManagerFactory::getInstance()->quote($_REQUEST['duplicateId']);
+    $sugarbean->skipTemplateTasks = true;
 } else {
     $base_project_id = $sugarbean->id;
 }
@@ -115,10 +116,8 @@ $return_id = $sugarbean->id;
 if (isset($_REQUEST['save_type']) || isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true") {
     $projectTasksCount = count($projectTasks);
     for ($i = 0; $i < $projectTasksCount; $i++) {
-        if (isset($_REQUEST['save_type']) || (isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true")) {
-            $projectTasks[$i]->id = '';
-            $projectTasks[$i]->project_id = $sugarbean->id;
-        }
+        $projectTasks[$i]->id = '';
+        $projectTasks[$i]->project_id = $sugarbean->id;
         if ($sugarbean->is_template) {
             $projectTasks[$i]->assigned_user_id = '';
         }
