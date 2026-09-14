@@ -46,6 +46,10 @@ class updateDependencies
 {
     public function update_dependency(&$bean, $event, $arguments)
     {
+        if (empty($bean->project_id)) {
+            return;
+        }
+
         //Get all tasks that are dependant on the current task being saved.
         $Task = BeanFactory::getBean('ProjectTask');
         $tasks = $Task->get_full_list("", "project_task.project_id = '".$bean->project_id."' AND project_task.predecessors = '".$bean->project_task_id."'");
