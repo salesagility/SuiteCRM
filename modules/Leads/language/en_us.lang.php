@@ -99,6 +99,7 @@ $mod_strings = array(
     'LBL_DEPARTMENT' => 'Department:',
     'LBL_DESCRIPTION' => 'Description:',
     'LBL_DO_NOT_CALL' => 'Do Not Call:',
+    'LBL_DOCUMENTS_SUBPANEL_TITLE' => 'Documents',
     'LBL_DUPLICATE' => 'Similar Leads',
     'LBL_EMAIL_ADDRESS' => 'Email Address:',
     'LBL_EMAIL_OPT_OUT' => 'Email Opt Out:',

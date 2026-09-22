@@ -198,7 +198,6 @@ $dictionary['Document'] = array('table' => 'documents',
                 'required' => true,
                 'source' => 'non-db',
                 'importable' => 'required',
-                'required' => true,
                 'default' => '1',
             ),
 
@@ -246,7 +245,7 @@ $dictionary['Document'] = array('table' => 'documents',
             'source' => 'non-db',
             'vname' => 'LBL_CONTRACTS',
         ),
-        //todo remove
+
         'leads' => array(
             'name' => 'leads',
             'type' => 'link',
@@ -461,7 +460,20 @@ $dictionary['Document'] = array('table' => 'documents',
                 'rhs_module' => 'Documents', 'rhs_table' => 'documents', 'rhs_key' => 'created_by',
                 'relationship_type' => 'one-to-many')
     ),
-
+    'leads_documents' => array(
+        'lhs_module' => 'Leads',
+        'lhs_table' => 'leads',
+        'lhs_key' => 'id',
+        'rhs_module' => 'Documents',
+        'rhs_table' => 'documents',
+        'rhs_key' => 'id',
+        'relationship_type' => 'many-to-many',
+        'join_table' => 'linked_documents',
+        'join_key_lhs' => 'parent_id',
+        'join_key_rhs' => 'document_id',
+        'relationship_role_column' => 'parent_type',
+        'relationship_role_column_value' => 'Leads',
+    ),
 );
 VardefManager::createVardef('Documents', 'Document', array('default', 'assignable', 'security_groups',
 ));

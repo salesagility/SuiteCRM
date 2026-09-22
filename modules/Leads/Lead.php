@@ -146,8 +146,7 @@ class Lead extends Person implements EmailInterface
 
     // This is used to retrieve related fields from form posts.
     public $additional_column_fields = array('assigned_user_name', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id');
-    public $relationship_fields = array('email_id'=>'emails','call_id'=>'calls','meeting_id'=>'meetings','task_id'=>'tasks',);
-
+    public $relationship_fields = array('email_id'=>'emails','call_id'=>'calls','meeting_id'=>'meetings','task_id'=>'tasks','document_id'=>'documents',);
     public function __construct()
     {
         parent::__construct();
