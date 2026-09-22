@@ -601,7 +601,14 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                         'listview' => false,
                     ),
             ),
-
+        'documents' =>
+            array(
+                'name' => 'documents',
+                'type' => 'link',
+                'relationship' => 'leads_documents',
+                'source' => 'non-db',
+                'vname' => 'LBL_DOCUMENTS_SUBPANEL_TITLE',
+            ),
     )
 , 'indices' => array(
         array('name' => 'idx_lead_acct_name_first', 'type' => 'index', 'fields' => array('account_name', 'deleted')),
@@ -654,8 +661,26 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
             'relationship_type' => 'one-to-many',
             'relationship_role_column' => 'target_type',
             'relationship_role_column_value' => 'Leads'
-        )
-
+        ),
+        'leads_documents' => array(
+            'lhs_module' => 'Leads',
+            'lhs_table' => 'leads',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Documents',
+            'rhs_table' => 'documents',
+            'rhs_key' => 'id',
+            'relationship_type' => 'many-to-many',
+            'join_table' => 'linked_documents',
+            'join_key_lhs' => 'parent_id',
+            'join_key_rhs' => 'document_id',
+            'relationship_role_column' => 'parent_type',
+            'relationship_role_column_value' => 'Leads',
+            'name' => 'leads_documents',
+            'type' => 'link',
+            'relationship' => 'leads_documents',
+            'source' => 'non-db',
+            'vname' => 'LBL_DOCUMENTS_SUBPANEL_TITLE',
+        ),
     )
     //This enables optimistic locking for Saves From EditView
 , 'optimistic_locking' => true,

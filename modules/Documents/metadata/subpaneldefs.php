@@ -193,5 +193,26 @@ $layout_defs['Documents'] = array(
             'add_subpanel_data' => 'securitygroup_id',
             'title_key' => 'LBL_SECURITYGROUPS_SUBPANEL_TITLE',
         ),
+        'leads' => array(
+            'order' => 100,
+            'module' => 'Leads',
+            'subpanel_name' => 'default',
+            'title_key' => 'LBL_LEADS_SUBPANEL_TITLE',
+            'sort_order' => 'asc',
+            'sort_by' => 'id',
+            'get_subpanel_data' => 'leads',
+            'top_buttons' =>
+                array(
+                    0 =>
+                        array(
+                            'widget_class' => 'SubPanelTopButtonQuickCreate',
+                        ),
+                    1 =>
+                        array(
+                            'widget_class' => 'SubPanelTopSelectButton',
+                            'mode' => 'MultiSelect',
+                        ),
+                ),
+        )
     ),
 );

@@ -164,6 +164,8 @@ $mod_strings = array(
     'LBL_OPPORTUNITIES_SUBPANEL_TITLE' => 'Opportunities',
     'LBL_CASES_SUBPANEL_TITLE' => 'Cases',
     'LBL_BUGS_SUBPANEL_TITLE' => 'Bugs',
+    'LBL_DOCUMENTS_SUBPANEL_TITLE' => 'Documents',
+    'LBL_LEADS_SUBPANEL_TITLE' => 'Leads',
 
     'LBL_AOS_CONTRACTS' => 'Contracts',
 );
