@@ -3661,6 +3661,8 @@ class SugarBean
         $singleSelect = false,
         $ifListForExport = false
     ) {
+        $requiredRelateTableAliases = [];
+        $tableAliases = [];
         $selectedFields = array();
         $secondarySelectedFields = array();
         $ret_array = array();
@@ -3818,9 +3820,15 @@ class SugarBean
                     . " as $field";
                 $selectedFields[$this->db->concat($this->table_name, $data['db_concat_fields'])] = true;
             }
+
             //Custom relate field or relate fields built in module builder which have no link field associated.
             if ($data['type'] == 'relate' && (isset($data['custom_module']) || isset($data['ext2']))) {
                 $joinTableAlias = 'jt' . $jtcount;
+
+                if (isset($data['table'])) {
+                    $requiredRelateTableAliases[$joinTableAlias] = $data['table'];
+                }
+
                 $relateJoinInfo = $this->custom_fields->getRelateJoin($data, $joinTableAlias, false);
                 $ret_array['select'] .= $relateJoinInfo['select'];
                 $ret_array['from'] .= $relateJoinInfo['from'];
@@ -3889,11 +3897,15 @@ class SugarBean
                     } else {
                         $params['join_table_alias'] = 'jt' . $jtcount;
                     }
+                    if (isset($data['table'])) {
+                        $requiredRelateTableAliases[$params['join_table_alias']] = $data['table'];
+                    }
                     if (isset($data['join_link_name'])) {
                         $params['join_table_link_alias'] = $data['join_link_name'];
                     } else {
                         $params['join_table_link_alias'] = 'jtl' . $jtcount;
                     }
+
                     $join_primary = !isset($data['join_primary']) || $data['join_primary'];
 
                     $join = $this->$linkField->getJoin($params, true);
@@ -4066,6 +4078,7 @@ class SugarBean
                         }
 
                         if (!$buildWhere) {
+                            $tableAliases[$params['join_table_alias']] = $data['table'];
                             $db_field = $this->db->concat($params['join_table_alias'], $data['db_concat_fields']);
                             $where = preg_replace('/' . $data['name'] . '/', $db_field, $where);
 
@@ -4078,6 +4091,7 @@ class SugarBean
                             }
                         }
                     } else {
+                        $tableAliases[$params['join_table_alias']] = $data['table'];
                         $where = preg_replace(
                             '/(^|[\s(])' . $data['name'] . '/',
                             '${1}' . $params['join_table_alias'] . '.' . $data['rname'],
@@ -4146,6 +4160,10 @@ class SugarBean
             unset($ret_array['secondary_where']);
             unset($ret_array['secondary_from']);
             unset($ret_array['secondary_select']);
+        }
+
+        if(!empty($requiredRelateTableAliases)) {
+            $ret_array['requiredRelateTableAliases'] = $requiredRelateTableAliases;
         }
 
         if ($return_array) {

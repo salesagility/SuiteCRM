@@ -50,8 +50,28 @@ class Filter
             if (isset($params['deleted']['eq'])) {
                 $deleted = ($params['deleted']['eq'] == 1);
             }
-            
+
             unset($params['deleted']);
+        }
+
+        $result = $bean->create_new_list_query(
+            '',
+            '',
+            [],
+            [],
+            0,
+            '',
+            false,
+            null,
+            false,
+            false,
+            []
+        );
+
+        $requiredRelateTableAliases = [];
+        
+        if (isset($result['requiredRelateTableAliases'])) {
+            $requiredRelateTableAliases = $result['requiredRelateTableAliases'];
         }
 
         $where = [];
@@ -73,6 +93,39 @@ class Filter
 
             foreach ($expr as $op => $value) {
                 $this->checkOperator($op);
+
+                if ($bean->field_defs[$field]['type'] === 'relate'
+                    && ($bean->field_defs[$field]['source'] ?? '') === 'non-db') {
+                    if (isset($bean->field_defs[$field]['link'])
+                        || isset($bean->field_defs[$field]['ext2'])
+                        || isset($bean->field_defs[$field]['custom_module'])) {
+                        $where[] = sprintf(
+                            '%s %s %s',
+                            $field,
+                            constant(sprintf('%s::OP_%s', self::class, strtoupper($op))),
+                            $this->db->quoted($value)
+                        );
+                        continue;
+                    }
+
+                    $fieldOfRelatedBean = $bean->field_defs[$field]['rname'];
+                    $relateTable = $bean->field_defs[$field]['table'];
+
+                    $aliases = array_keys($requiredRelateTableAliases, $relateTable, true);
+                    $aliases = !empty($aliases) ? $aliases : [$relateTable];
+
+                    foreach ($aliases as $alias) {
+                        $where[] = sprintf(
+                            '%s.%s %s %s',
+                            $alias,
+                            $fieldOfRelatedBean,
+                            constant(sprintf('%s::OP_%s', self::class, strtoupper($op))),
+                            $this->db->quoted($value)
+                        );
+                    }
+                    continue;
+                }
+
                 $where[] = sprintf(
                     '%s.%s %s %s',
                     $tableName,
