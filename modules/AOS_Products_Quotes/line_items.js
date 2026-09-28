@@ -770,6 +770,7 @@ function calculateTotal(key)
     var deleted = 0;
     var dis_amt = 0;
     var product_vat_amt = 0;
+    var product_total_price = 0;
 
     var input = row[i].getElementsByTagName('input');
     for (j=0; j < input.length; j++) {
@@ -792,6 +793,10 @@ function calculateTotal(key)
       {
         product_vat_amt = unformat2Number(input[j].value);
       }
+      if (input[j].id.indexOf('product_total_price') != -1)
+      {
+        product_total_price = unformat2Number(input[j].value);
+      }
       if (input[j].id.indexOf('deleted') != -1) {
         deleted = input[j].value;
       }
@@ -804,10 +809,8 @@ function calculateTotal(key)
       head[row[i].parentNode.id] = 0;
     }
 
-    if (qty !== 0 && list !== null && deleted != 1) {
-      tot_amt += list * qty;
-    } else if (qty !== 0 && unit !== 0 && deleted != 1) {
-      tot_amt += unit * qty;
+    if (deleted != 1) {
+      tot_amt += product_total_price;
     }
 
     if (dis_amt !== 0 && deleted != 1) {
