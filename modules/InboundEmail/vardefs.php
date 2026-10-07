@@ -371,6 +371,7 @@ $dictionary['InboundEmail'] = [
             'name' => 'port',
             'vname' => 'LBL_SERVER_PORT',
             'type' => 'int',
+            'disable_num_format' => true,
             'len' => '5',
             'default' => '143',
             'required' => true,
