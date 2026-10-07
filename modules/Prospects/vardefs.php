@@ -45,6 +45,7 @@ $dictionary['Prospect'] = array(
 
     'table' => 'prospects',
     'unified_search' => true,
+    'duplicate_merge' => true,
     'fields' => array(
         'tracker_key' => array(
             'name' => 'tracker_key',
