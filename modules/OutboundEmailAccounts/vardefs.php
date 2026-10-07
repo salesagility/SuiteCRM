@@ -247,7 +247,9 @@ $dictionary["OutboundEmailAccounts"] = [
         'mail_smtpport' => [
             'name' => 'mail_smtpport',
             'vname' => 'LBL_MAIL_SMTPPORT',
-            'type' => 'varchar',
+            'type' => 'int',
+            'disable_num_format' => true,
+            'validation' => ['type' => 'range', 'min' => '110', 'max' => '65535'],
             'len' => 5,
             'default' => 25,
             'reportable' => false,
