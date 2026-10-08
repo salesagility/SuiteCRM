@@ -83,6 +83,19 @@ class EmailManController extends SugarController
 
         $focus->saveConfig();
 
+        if (!empty($_POST['campaignConfig'])) {
+            $submittedHosts = $_POST['web_to_lead_allowed_redirect_hosts-value'] ?? [];
+            $ignoredHosts = [];
+            $configurator->config['web_to_lead_allowed_redirect_hosts'] = $configurator->parseRedirectHosts(is_array($submittedHosts) ? $submittedHosts : [], $ignoredHosts);
+            $configurator->handleOverride();
+            if (!empty($ignoredHosts)) {
+                $escapedHosts = array_map(static function ($host) {
+                    return htmlspecialchars($host, ENT_QUOTES, 'UTF-8', false);
+                }, $ignoredHosts);
+                SugarApplication::appendErrorMessage(sprintf(translate('LBL_WEB_TO_LEAD_ALLOWED_REDIRECT_HOSTS_IGNORED', 'EmailMan'), implode(', ', $escapedHosts)));
+            }
+        }
+
         if (empty($_POST['campaignConfig'])) {
             // save User defaults for emails
             $configurator->config['email_default_delete_attachments'] = (isset($_REQUEST['email_default_delete_attachments'])) ? true : false;

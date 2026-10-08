@@ -116,6 +116,7 @@ class ViewCampaignconfig extends SugarView
             $this->ss->assign("TRACKING_ENTRIES_LOCATION", $focus->settings["massemailer_tracking_entities_location"]);
         }
         $this->ss->assign("SITEURL", $sugar_config['site_url']);
+        $this->ss->assign('WEB_TO_LEAD_ALLOWED_REDIRECT_HOSTS', array_values((array)($sugar_config['web_to_lead_allowed_redirect_hosts'] ?? [])));
         
         
         // Change the default campaign to not store a copy of each message.

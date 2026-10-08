@@ -4,8 +4,8 @@
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SuiteCRM Ltd.
+ * Copyright (C) 2011 - 2026 SuiteCRM Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -75,16 +75,17 @@ function change_state(radiobutton)
 			<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<th align="left" scope="row" colspan="4">
+						<a href="index.php?module=OutboundEmailAccounts&action=index" style="float: right; font-size: 14px; font-weight: normal; text-transform: none; letter-spacing: normal; line-height: 1.4;">{$MOD.LBL_OUTBOUND_EMAIL_ACCOUNT_VIEW}</a>
 						<h4>
 							{$MOD.LBL_OUTBOUND_EMAIL_TITLE}
 						</h4>
 					</th>
 				</tr>
 				<tr>
-					<td width="40%" scope="row">
+					<td width="25%" scope="row">
 						{$MOD.LBL_EMAILS_PER_RUN}&nbsp;<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>
 					</td>
-					<td width="50%" >
+					<td width="75%" >
 						<input name='massemailer_campaign_emails_per_run' tabindex='1' maxlength='128' type="text" value="{$EMAILS_PER_RUN}">
 					</td>
 				</tr>
@@ -92,15 +93,15 @@ function change_state(radiobutton)
 					<td scope="row">
 						{$MOD.LBL_LOCATION_TRACK}&nbsp;<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>
 					</td>
-					<td >
-						<input type='radio' onclick="change_state(this);" name='massemailer_tracking_entities_location_type' value="1" {$default_checked}>
-						{$MOD.LBL_DEFAULT_LOCATION}&nbsp;<input type='radio' {$userdefined_checked} onclick="change_state(this);" name='massemailer_tracking_entities_location_type' value="2">{$MOD.LBL_CUSTOM_LOCATION} 
+					<td style="line-height: 34px">
+						<input type='radio' style="vertical-align: middle; margin: 0 5px 4px 0" onclick="change_state(this);" name='massemailer_tracking_entities_location_type' value="1" {$default_checked}>
+						{$MOD.LBL_DEFAULT_LOCATION}&nbsp;<input type='radio' style="vertical-align: middle; margin: 0 5px 4px 10px" {$userdefined_checked} onclick="change_state(this);" name='massemailer_tracking_entities_location_type' value="2">{$MOD.LBL_CUSTOM_LOCATION} 
 				</tr>
 				<tr>
 					<td scope="row">
 					</td>
 					<td >
-						<input name='massemailer_tracking_entities_location' {$TRACKING_ENTRIES_LOCATION_STATE} maxlength='128' type="text" value="{$TRACKING_ENTRIES_LOCATION}">
+						<input name='massemailer_tracking_entities_location' {$TRACKING_ENTRIES_LOCATION_STATE} maxlength='128' type="text" value="{$TRACKING_ENTRIES_LOCATION}" style="width: 360px; max-width: 100%">
 					</td>
 				</tr>
 				<tr>
@@ -110,19 +111,113 @@ function change_state(radiobutton)
                         <a href="#" class="rollover"><span>{$MOD.LBL_CAMP_MESSAGE_COPY_DESC}</span><img border="0" alt=$mod_strings.LBL_HELP src="index.php?entryPoint=getImage&themeName={$THEME}&imageName=helpInline.gif"></a>
                     </div>
 					</td>
-					<td >
-						<input type='radio' name='massemailer_email_copy' value="1" {$yes_checked}>
-						{$MOD.LBL_YES}&nbsp;<input type='radio' {$no_checked} name='massemailer_email_copy' value="2">{$MOD.LBL_NO} 
+					<td style="line-height: 34px">
+						<input type='radio' style="vertical-align: middle; margin: 0 5px 4px 0" name='massemailer_email_copy' value="1" {$yes_checked}>
+						{$MOD.LBL_YES}&nbsp;<input type='radio' style="vertical-align: middle; margin: 0 5px 4px 10px" {$no_checked} name='massemailer_email_copy' value="2">{$MOD.LBL_NO} 
 					</td>
 				</tr>
 
 				<tr>
+					<th align="left" scope="row" colspan="4">
+						<h4>
+							{$MOD.LBL_WEB_TO_LEAD_TITLE}
+						</h4>
+					</th>
+				</tr>
+				<tr>
 					<td scope="row">
-						<div id="rollover">
-							<a href="index.php?module=OutboundEmailAccounts&action=index">{$MOD.LBL_OUTBOUND_EMAIL_ACCOUNT_VIEW}</a>
+						{$MOD.LBL_WEB_TO_LEAD_ALLOWED_REDIRECT_HOSTS} {sugar_help text=$MOD.LBL_WEB_TO_LEAD_ALLOWED_REDIRECT_HOSTS_HELP}
+					</td>
+					<td >
+						<div class="string-map-container" id="web_to_lead_allowed_redirect_hosts-string-map">
+							<script src='{sugar_getjspath file="include/SugarFields/Fields/Stringmap/js/stringmap.js"}'></script>
+							<script src='{sugar_getjspath file="include/SugarFields/Fields/Stringmap/js/stringmap-factory.js"}'></script>
+							<div class="container-fluid string-map-values-list">
+								{foreach from=$WEB_TO_LEAD_ALLOWED_REDIRECT_HOSTS item=host}
+									<div class="string-map-entry-row">
+										<div class="string-map-value-col">
+											<input type="text" name="web_to_lead_allowed_redirect_hosts-value[]" value="{$host|escape:'html'}" placeholder="www.example.com">
+										</div>
+										<div class="string-map-button-col">
+											<button type="button" class="btn btn-sm btn-primary remove-btn" onclick=""> - </button>
+										</div>
+									</div>
+								{foreachelse}
+									<div class="string-map-entry-row">
+										<div class="string-map-value-col">
+											<input type="text" name="web_to_lead_allowed_redirect_hosts-value[]" value="" placeholder="www.example.com">
+										</div>
+										<div class="string-map-button-col">
+											<button type="button" class="btn btn-sm btn-primary remove-btn" onclick=""> - </button>
+										</div>
+									</div>
+								{/foreach}
+							</div>
+							<div class="container-fluid string-map-actions">
+								<div class="string-map-action">
+									<button type="button" class="btn btn-sm btn-primary add-btn" onclick="">+ {$MOD.LBL_WEB_TO_LEAD_ADD_HOST}</button>
+								</div>
+							</div>
+
+							<script>
+								var webToLeadHostError = {$MOD.LBL_WEB_TO_LEAD_ALLOWED_REDIRECT_HOST_INVALID|json_encode};
+								{literal}
+								function validate_web_to_lead_hosts(form)
+								{
+									var firstInvalid = null;
+									$('#web_to_lead_allowed_redirect_hosts-string-map .web-to-lead-host-error').remove();
+									$(form).find('input[name="web_to_lead_allowed_redirect_hosts-value[]"]').each(function(){
+										var entry = $.trim($(this).val());
+										if (entry === '') {
+											return;
+										}
+										var host = entry.replace(/^https?:\/\//i, '').split(/[\/?#]/)[0].replace(/:\d*$/, '');
+										if (/^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$/i.test(host)) {
+											return;
+										}
+										var $input = $(this);
+										$input.closest('.string-map-entry-row').after($('<div>', {'class': 'web-to-lead-host-error', role: 'alert'}).css({color: '#c00', 'font-size': '12px', 'margin': '-2px 0 4px'}).text(webToLeadHostError));
+										$input.one('input', function(){
+											$input.closest('.string-map-entry-row').next('.web-to-lead-host-error').remove();
+										});
+										if (firstInvalid === null) {
+											firstInvalid = $input;
+										}
+									});
+									if (firstInvalid !== null) {
+										firstInvalid.focus();
+										return false;
+									}
+									return true;
+								}
+								{/literal}
+							</script>
+							{literal}
+								<script>
+									$(document).ready(function(){
+										var fieldIdentifier = 'web_to_lead_allowed_redirect_hosts';
+
+										var options = {
+											containerSelector: '#' + fieldIdentifier + '-string-map',
+											showKeys: false,
+											idName: fieldIdentifier,
+											keyPlaceholder: '',
+											valuePlaceholder: 'www.example.com'
+										};
+
+										var stringMap = StringMapFactory.make(options);
+										stringMap.initEdit();
+
+										$('#' + fieldIdentifier + '-string-map').on('click', '.add-btn', function(){
+											$('#' + fieldIdentifier + '-string-map .string-map-value-col input:not([placeholder])').attr('placeholder', 'www.example.com');
+										});
+
+										$('#' + fieldIdentifier + '-string-map').data('string-map', stringMap);
+									});
+								</script>
+							{/literal}
 						</div>
 					</td>
-					<td >&nbsp;</td>
 				</tr>
 
 			</table>
@@ -131,7 +226,7 @@ function change_state(radiobutton)
 </table>
 
 <div style="padding-top:2px;">
-    <input title="{$APP.LBL_SAVE_BUTTON_TITLE}" class="button" onclick="this.form.action.value='Save';return verify_data(this);" type="submit" name="button" value=" {$APP.LBL_SAVE_BUTTON_LABEL} ">
+    <input title="{$APP.LBL_SAVE_BUTTON_TITLE}" class="button" onclick="this.form.action.value='Save';return validate_web_to_lead_hosts(this.form) && verify_data(this);" type="submit" name="button" value=" {$APP.LBL_SAVE_BUTTON_LABEL} ">
     <input title="{$APP.LBL_CANCEL_BUTTON_TITLE}" class="button" onclick="this.form.action.value='{$RETURN_ACTION}'; this.form.module.value='{$RETURN_MODULE}';" type="submit" name="button" value=" {$APP.LBL_CANCEL_BUTTON_LABEL} ">
 </div>
 
