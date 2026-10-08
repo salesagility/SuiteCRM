@@ -4,8 +4,8 @@
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SuiteCRM Ltd.
+ * Copyright (C) 2011 - 2026 SuiteCRM Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -76,6 +76,13 @@ class Configurator
      */
     protected $keysToIgnoreLoadedOverrideFile = [];
 
+    /**
+     * List settings saved as a whole, so removing entries (or all of them) persists.
+     *
+     * @var string[]
+     */
+    protected $replaceOnSave = ['web_to_lead_allowed_redirect_hosts'];
+
     protected $error = null;
 
     public function __construct()
@@ -119,6 +126,33 @@ class Configurator
                 }
             }
         }
+    }
+
+    /**
+     * Turn the submitted Campaign Settings host entries into a list of bare, valid host names.
+     *
+     * @param string[] $entries
+     * @param string[] $ignored receives the entries that were not valid host names
+     * @return string[]
+     */
+    public function parseRedirectHosts(array $entries, array &$ignored = []): array
+    {
+        $hosts = [];
+        foreach ($entries as $entry) {
+            $entry = trim((string)$entry);
+            if ($entry === '') {
+                continue;
+            }
+            $host = strtolower(trim(getHostFromUrl(preg_match('#^https?://#i', $entry) ? $entry : 'http://' . $entry)));
+            if ($host === '' || !preg_match('/^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$/', $host)) {
+                $GLOBALS['log']->security("Ignoring invalid web_to_lead_allowed_redirect_hosts entry: $entry");
+                $ignored[] = $entry;
+                continue;
+            }
+            $hosts[$host] = $host;
+        }
+
+        return array_values($hosts);
     }
 
     public function checkLoggerFileName()
@@ -248,6 +282,12 @@ class Configurator
 
         foreach ($this->keysToIgnoreLoadedOverrideFile as $key => $val) {
             $overrideArray[$key] = $val;
+        }
+
+        foreach ($this->replaceOnSave as $key) {
+            if (array_key_exists($key, $this->config) && (isset($overrideArray[$key]) || !empty($this->config[$key]))) {
+                $overrideArray[$key] = $this->config[$key];
+            }
         }
 
         // To remember checkbox state
