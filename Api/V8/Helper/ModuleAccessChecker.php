@@ -27,7 +27,8 @@
 
 namespace Api\V8\Helper;
 
-use ACLController;
+use ACLAction;
+use Api\V8\BeanDecorator\BeanManager;
 use SuiteCRM\Exception\NotAllowedException;
 
 /**
@@ -38,6 +39,19 @@ use SuiteCRM\Exception\NotAllowedException;
 class ModuleAccessChecker
 {
     /**
+     * @var BeanManager
+     */
+    private $beanManager;
+
+    /**
+     * @param BeanManager $beanManager
+     */
+    public function __construct(BeanManager $beanManager)
+    {
+        $this->beanManager = $beanManager;
+    }
+
+    /**
      * @param string $module
      * @throws NotAllowedException
      */
@@ -45,8 +59,10 @@ class ModuleAccessChecker
     {
         global $current_user, $adminOnlyList;
 
-        // not in $moduleList, so the tab check below would reject it for everyone; row/field-level
-        // enforcement happens in ModuleService instead
+        $module = $this->beanManager->resolveModuleName($module);
+
+        // ahead of the ACL check, which rejects Employees as it has no ACL actions; ModuleService
+        // enforces the self/admin rules for both
         if ($module === 'Users' || $module === 'Employees') {
             return;
         }
@@ -59,10 +75,11 @@ class ModuleAccessChecker
             return;
         }
 
-        $modules = query_module_access_list($current_user);
-        ACLController::filterModuleList($modules, false);
+        if ($current_user->isAdmin()) {
+            return;
+        }
 
-        if (!in_array($module, $modules, true)) {
+        if (ACLAction::getUserAccessLevel($current_user->id, $module, 'access') < ACL_ALLOW_ENABLED) {
             throw new NotAllowedException('The API user does not have access to this module.');
         }
     }
